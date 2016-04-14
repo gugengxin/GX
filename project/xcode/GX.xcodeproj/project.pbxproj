@@ -1,0 +1,393 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CA01E7581CBF483C004520E6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA01E7681CBF50A9004520E6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		CA01E75A1CBF483C004520E6 /* GX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GX.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA01E76A1CBF50A9004520E6 /* GX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GX.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA01E7841CBF51B9004520E6 /* GX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GX.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CA01E7571CBF483C004520E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA01E7671CBF50A9004520E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA01E7811CBF51B9004520E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CA01E7511CBF483C004520E6 = {
+			isa = PBXGroup;
+			children = (
+				CA01E75B1CBF483C004520E6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CA01E75B1CBF483C004520E6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CA01E75A1CBF483C004520E6 /* GX.a */,
+				CA01E76A1CBF50A9004520E6 /* GX.a */,
+				CA01E7841CBF51B9004520E6 /* GX.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		CA01E7821CBF51B9004520E6 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		CA01E7591CBF483C004520E6 /* GXios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA01E7631CBF483C004520E6 /* Build configuration list for PBXNativeTarget "GXios" */;
+			buildPhases = (
+				CA01E7561CBF483C004520E6 /* Sources */,
+				CA01E7571CBF483C004520E6 /* Frameworks */,
+				CA01E7581CBF483C004520E6 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GXios;
+			productName = GX;
+			productReference = CA01E75A1CBF483C004520E6 /* GX.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		CA01E7691CBF50A9004520E6 /* GXatv */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA01E7721CBF50A9004520E6 /* Build configuration list for PBXNativeTarget "GXatv" */;
+			buildPhases = (
+				CA01E7661CBF50A9004520E6 /* Sources */,
+				CA01E7671CBF50A9004520E6 /* Frameworks */,
+				CA01E7681CBF50A9004520E6 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GXatv;
+			productName = GXatv;
+			productReference = CA01E76A1CBF50A9004520E6 /* GX.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		CA01E7831CBF51B9004520E6 /* GXmac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA01E78A1CBF51B9004520E6 /* Build configuration list for PBXNativeTarget "GXmac" */;
+			buildPhases = (
+				CA01E7801CBF51B9004520E6 /* Sources */,
+				CA01E7811CBF51B9004520E6 /* Frameworks */,
+				CA01E7821CBF51B9004520E6 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GXmac;
+			productName = GXmac;
+			productReference = CA01E7841CBF51B9004520E6 /* GX.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CA01E7521CBF483C004520E6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Gengxin Gu";
+				TargetAttributes = {
+					CA01E7591CBF483C004520E6 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					CA01E7691CBF50A9004520E6 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					CA01E7831CBF51B9004520E6 = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = CA01E7551CBF483C004520E6 /* Build configuration list for PBXProject "GX" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CA01E7511CBF483C004520E6;
+			productRefGroup = CA01E75B1CBF483C004520E6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CA01E7591CBF483C004520E6 /* GXios */,
+				CA01E7691CBF50A9004520E6 /* GXatv */,
+				CA01E7831CBF51B9004520E6 /* GXmac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CA01E7561CBF483C004520E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA01E7661CBF50A9004520E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA01E7801CBF51B9004520E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		CA01E7611CBF483C004520E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = iphoneos;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		CA01E7621CBF483C004520E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(PROJECT_NAME)";
+				SDKROOT = iphoneos;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		CA01E7641CBF483C004520E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = "";
+				OTHER_LDFLAGS = "-ObjC";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		CA01E7651CBF483C004520E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = "";
+				OTHER_LDFLAGS = "-ObjC";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		CA01E7701CBF50A9004520E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = "";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		CA01E7711CBF50A9004520E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = "";
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		CA01E78B1CBF51B9004520E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				EXECUTABLE_PREFIX = "";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		CA01E78C1CBF51B9004520E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				EXECUTABLE_PREFIX = "";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CA01E7551CBF483C004520E6 /* Build configuration list for PBXProject "GX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA01E7611CBF483C004520E6 /* Debug */,
+				CA01E7621CBF483C004520E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA01E7631CBF483C004520E6 /* Build configuration list for PBXNativeTarget "GXios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA01E7641CBF483C004520E6 /* Debug */,
+				CA01E7651CBF483C004520E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA01E7721CBF50A9004520E6 /* Build configuration list for PBXNativeTarget "GXatv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA01E7701CBF50A9004520E6 /* Debug */,
+				CA01E7711CBF50A9004520E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		CA01E78A1CBF51B9004520E6 /* Build configuration list for PBXNativeTarget "GXmac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA01E78B1CBF51B9004520E6 /* Debug */,
+				CA01E78C1CBF51B9004520E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CA01E7521CBF483C004520E6 /* Project object */;
+}
