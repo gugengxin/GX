@@ -28,3 +28,5 @@
 *.app
 xcuserdata
 GX.pro.user
+*.v12.suo
+*.sdf
