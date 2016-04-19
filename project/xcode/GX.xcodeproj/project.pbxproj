@@ -6,6 +6,21 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CA9C16CC1CC6102E00204303 /* GObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16CA1CC6102E00204303 /* GObject.cpp */; };
+		CA9C16CD1CC6102E00204303 /* GObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16CA1CC6102E00204303 /* GObject.cpp */; };
+		CA9C16CE1CC6102E00204303 /* GObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16CA1CC6102E00204303 /* GObject.cpp */; };
+		CA9C16CF1CC6102E00204303 /* GObject.h in Headers */ = {isa = PBXBuildFile; fileRef = CA9C16CB1CC6102E00204303 /* GObject.h */; };
+		CA9C16D21CC6132400204303 /* GClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D01CC6132400204303 /* GClass.cpp */; };
+		CA9C16D31CC6132400204303 /* GClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D01CC6132400204303 /* GClass.cpp */; };
+		CA9C16D41CC6132400204303 /* GClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D01CC6132400204303 /* GClass.cpp */; };
+		CA9C16D51CC6132400204303 /* GClass.h in Headers */ = {isa = PBXBuildFile; fileRef = CA9C16D11CC6132400204303 /* GClass.h */; };
+		CA9C16D81CC615FF00204303 /* GOWHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D61CC615FF00204303 /* GOWHash.cpp */; };
+		CA9C16D91CC615FF00204303 /* GOWHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D61CC615FF00204303 /* GOWHash.cpp */; };
+		CA9C16DA1CC615FF00204303 /* GOWHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D61CC615FF00204303 /* GOWHash.cpp */; };
+		CA9C16DB1CC615FF00204303 /* GOWHash.h in Headers */ = {isa = PBXBuildFile; fileRef = CA9C16D71CC615FF00204303 /* GOWHash.h */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		CA01E7581CBF483C004520E6 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -31,6 +46,29 @@
 		CA01E75A1CBF483C004520E6 /* GX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GX.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA01E76A1CBF50A9004520E6 /* GX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GX.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA01E7841CBF51B9004520E6 /* GX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GX.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA9C16B11CC5EDFF00204303 /* GXLib_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXLib_ios.xcconfig; path = ../../product/xcode/GXLib_ios.xcconfig; sourceTree = "<group>"; };
+		CA9C16B21CC5EDFF00204303 /* GXLib_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXLib_mac.xcconfig; path = ../../product/xcode/GXLib_mac.xcconfig; sourceTree = "<group>"; };
+		CA9C16B31CC5EDFF00204303 /* GXLib_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXLib_atv.xcconfig; path = ../../product/xcode/GXLib_atv.xcconfig; sourceTree = "<group>"; };
+		CA9C16B41CC5EDFF00204303 /* GX_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GX_ios.xcconfig; path = ../../product/xcode/GX_ios.xcconfig; sourceTree = "<group>"; };
+		CA9C16B51CC5EDFF00204303 /* GX_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GX_mac.xcconfig; path = ../../product/xcode/GX_mac.xcconfig; sourceTree = "<group>"; };
+		CA9C16B61CC5EDFF00204303 /* GX_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GX_atv.xcconfig; path = ../../product/xcode/GX_atv.xcconfig; sourceTree = "<group>"; };
+		CA9C16B71CC5EDFF00204303 /* GXExt.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXExt.xcconfig; path = ../../product/xcode/GXExt.xcconfig; sourceTree = "<group>"; };
+		CA9C16B81CC5EDFF00204303 /* GXExt_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXExt_ios.xcconfig; path = ../../product/xcode/GXExt_ios.xcconfig; sourceTree = "<group>"; };
+		CA9C16B91CC5EDFF00204303 /* GXExt_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXExt_mac.xcconfig; path = ../../product/xcode/GXExt_mac.xcconfig; sourceTree = "<group>"; };
+		CA9C16BA1CC5EDFF00204303 /* GXExt_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXExt_atv.xcconfig; path = ../../product/xcode/GXExt_atv.xcconfig; sourceTree = "<group>"; };
+		CA9C16BB1CC5EDFF00204303 /* GXOS_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXOS_ios.xcconfig; path = ../../product/xcode/GXOS_ios.xcconfig; sourceTree = "<group>"; };
+		CA9C16BC1CC5EDFF00204303 /* GXOS_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXOS_mac.xcconfig; path = ../../product/xcode/GXOS_mac.xcconfig; sourceTree = "<group>"; };
+		CA9C16BD1CC5EDFF00204303 /* GXOS_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXOS_atv.xcconfig; path = ../../product/xcode/GXOS_atv.xcconfig; sourceTree = "<group>"; };
+		CA9C16C61CC5FFA800204303 /* GXTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXTypes.h; sourceTree = "<group>"; };
+		CA9C16C71CC6013F00204303 /* GXPrefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXPrefix.h; sourceTree = "<group>"; };
+		CA9C16C81CC601D500204303 /* GXOSs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXOSs.h; sourceTree = "<group>"; };
+		CA9C16C91CC6079000204303 /* GX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GX.h; sourceTree = "<group>"; };
+		CA9C16CA1CC6102E00204303 /* GObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GObject.cpp; sourceTree = "<group>"; };
+		CA9C16CB1CC6102E00204303 /* GObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GObject.h; sourceTree = "<group>"; };
+		CA9C16D01CC6132400204303 /* GClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GClass.cpp; sourceTree = "<group>"; };
+		CA9C16D11CC6132400204303 /* GClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GClass.h; sourceTree = "<group>"; };
+		CA9C16D61CC615FF00204303 /* GOWHash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GOWHash.cpp; sourceTree = "<group>"; };
+		CA9C16D71CC615FF00204303 /* GOWHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOWHash.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +99,8 @@
 		CA01E7511CBF483C004520E6 = {
 			isa = PBXGroup;
 			children = (
+				CA9C16C51CC5FF7500204303 /* src */,
+				CA9C16B01CC5EDAC00204303 /* config */,
 				CA01E75B1CBF483C004520E6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -75,6 +115,44 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		CA9C16B01CC5EDAC00204303 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				CA9C16BB1CC5EDFF00204303 /* GXOS_ios.xcconfig */,
+				CA9C16BC1CC5EDFF00204303 /* GXOS_mac.xcconfig */,
+				CA9C16BD1CC5EDFF00204303 /* GXOS_atv.xcconfig */,
+				CA9C16B81CC5EDFF00204303 /* GXExt_ios.xcconfig */,
+				CA9C16B91CC5EDFF00204303 /* GXExt_mac.xcconfig */,
+				CA9C16BA1CC5EDFF00204303 /* GXExt_atv.xcconfig */,
+				CA9C16B71CC5EDFF00204303 /* GXExt.xcconfig */,
+				CA9C16B11CC5EDFF00204303 /* GXLib_ios.xcconfig */,
+				CA9C16B21CC5EDFF00204303 /* GXLib_mac.xcconfig */,
+				CA9C16B31CC5EDFF00204303 /* GXLib_atv.xcconfig */,
+				CA9C16B41CC5EDFF00204303 /* GX_ios.xcconfig */,
+				CA9C16B51CC5EDFF00204303 /* GX_mac.xcconfig */,
+				CA9C16B61CC5EDFF00204303 /* GX_atv.xcconfig */,
+			);
+			name = config;
+			sourceTree = "<group>";
+		};
+		CA9C16C51CC5FF7500204303 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				CA9C16C81CC601D500204303 /* GXOSs.h */,
+				CA9C16C61CC5FFA800204303 /* GXTypes.h */,
+				CA9C16C71CC6013F00204303 /* GXPrefix.h */,
+				CA9C16C91CC6079000204303 /* GX.h */,
+				CA9C16D11CC6132400204303 /* GClass.h */,
+				CA9C16D01CC6132400204303 /* GClass.cpp */,
+				CA9C16CB1CC6102E00204303 /* GObject.h */,
+				CA9C16CA1CC6102E00204303 /* GObject.cpp */,
+				CA9C16D71CC615FF00204303 /* GOWHash.h */,
+				CA9C16D61CC615FF00204303 /* GOWHash.cpp */,
+			);
+			name = src;
+			path = ../../src;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -82,15 +160,18 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA9C16DB1CC615FF00204303 /* GOWHash.h in Headers */,
+				CA9C16CF1CC6102E00204303 /* GObject.h in Headers */,
+				CA9C16D51CC6132400204303 /* GClass.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		CA01E7591CBF483C004520E6 /* GXios */ = {
+		CA01E7591CBF483C004520E6 /* GX_ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA01E7631CBF483C004520E6 /* Build configuration list for PBXNativeTarget "GXios" */;
+			buildConfigurationList = CA01E7631CBF483C004520E6 /* Build configuration list for PBXNativeTarget "GX_ios" */;
 			buildPhases = (
 				CA01E7561CBF483C004520E6 /* Sources */,
 				CA01E7571CBF483C004520E6 /* Frameworks */,
@@ -100,14 +181,14 @@
 			);
 			dependencies = (
 			);
-			name = GXios;
+			name = GX_ios;
 			productName = GX;
 			productReference = CA01E75A1CBF483C004520E6 /* GX.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CA01E7691CBF50A9004520E6 /* GXatv */ = {
+		CA01E7691CBF50A9004520E6 /* GX_atv */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA01E7721CBF50A9004520E6 /* Build configuration list for PBXNativeTarget "GXatv" */;
+			buildConfigurationList = CA01E7721CBF50A9004520E6 /* Build configuration list for PBXNativeTarget "GX_atv" */;
 			buildPhases = (
 				CA01E7661CBF50A9004520E6 /* Sources */,
 				CA01E7671CBF50A9004520E6 /* Frameworks */,
@@ -117,14 +198,14 @@
 			);
 			dependencies = (
 			);
-			name = GXatv;
+			name = GX_atv;
 			productName = GXatv;
 			productReference = CA01E76A1CBF50A9004520E6 /* GX.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CA01E7831CBF51B9004520E6 /* GXmac */ = {
+		CA01E7831CBF51B9004520E6 /* GX_mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA01E78A1CBF51B9004520E6 /* Build configuration list for PBXNativeTarget "GXmac" */;
+			buildConfigurationList = CA01E78A1CBF51B9004520E6 /* Build configuration list for PBXNativeTarget "GX_mac" */;
 			buildPhases = (
 				CA01E7801CBF51B9004520E6 /* Sources */,
 				CA01E7811CBF51B9004520E6 /* Frameworks */,
@@ -134,7 +215,7 @@
 			);
 			dependencies = (
 			);
-			name = GXmac;
+			name = GX_mac;
 			productName = GXmac;
 			productReference = CA01E7841CBF51B9004520E6 /* GX.a */;
 			productType = "com.apple.product-type.library.static";
@@ -171,9 +252,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CA01E7591CBF483C004520E6 /* GXios */,
-				CA01E7691CBF50A9004520E6 /* GXatv */,
-				CA01E7831CBF51B9004520E6 /* GXmac */,
+				CA01E7591CBF483C004520E6 /* GX_ios */,
+				CA01E7691CBF50A9004520E6 /* GX_atv */,
+				CA01E7831CBF51B9004520E6 /* GX_mac */,
 			);
 		};
 /* End PBXProject section */
@@ -183,6 +264,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA9C16D81CC615FF00204303 /* GOWHash.cpp in Sources */,
+				CA9C16D21CC6132400204303 /* GClass.cpp in Sources */,
+				CA9C16CC1CC6102E00204303 /* GObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,6 +274,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA9C16D91CC615FF00204303 /* GOWHash.cpp in Sources */,
+				CA9C16D31CC6132400204303 /* GClass.cpp in Sources */,
+				CA9C16CD1CC6102E00204303 /* GObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +284,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA9C16DA1CC615FF00204303 /* GOWHash.cpp in Sources */,
+				CA9C16D41CC6132400204303 /* GClass.cpp in Sources */,
+				CA9C16CE1CC6102E00204303 /* GObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +382,7 @@
 		};
 		CA01E7641CBF483C004520E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA9C16B11CC5EDFF00204303 /* GXLib_ios.xcconfig */;
 			buildSettings = {
 				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -301,6 +392,7 @@
 		};
 		CA01E7651CBF483C004520E6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA9C16B11CC5EDFF00204303 /* GXLib_ios.xcconfig */;
 			buildSettings = {
 				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -310,9 +402,9 @@
 		};
 		CA01E7701CBF50A9004520E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA9C16B31CC5EDFF00204303 /* GXLib_atv.xcconfig */;
 			buildSettings = {
 				EXECUTABLE_PREFIX = "";
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -321,6 +413,7 @@
 		};
 		CA01E7711CBF50A9004520E6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA9C16B31CC5EDFF00204303 /* GXLib_atv.xcconfig */;
 			buildSettings = {
 				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -331,10 +424,10 @@
 		};
 		CA01E78B1CBF51B9004520E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA9C16B21CC5EDFF00204303 /* GXLib_mac.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				EXECUTABLE_PREFIX = "";
-				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 			};
@@ -342,6 +435,7 @@
 		};
 		CA01E78C1CBF51B9004520E6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA9C16B21CC5EDFF00204303 /* GXLib_mac.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				EXECUTABLE_PREFIX = "";
@@ -362,7 +456,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA01E7631CBF483C004520E6 /* Build configuration list for PBXNativeTarget "GXios" */ = {
+		CA01E7631CBF483C004520E6 /* Build configuration list for PBXNativeTarget "GX_ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA01E7641CBF483C004520E6 /* Debug */,
@@ -371,21 +465,23 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA01E7721CBF50A9004520E6 /* Build configuration list for PBXNativeTarget "GXatv" */ = {
+		CA01E7721CBF50A9004520E6 /* Build configuration list for PBXNativeTarget "GX_atv" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA01E7701CBF50A9004520E6 /* Debug */,
 				CA01E7711CBF50A9004520E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		CA01E78A1CBF51B9004520E6 /* Build configuration list for PBXNativeTarget "GXmac" */ = {
+		CA01E78A1CBF51B9004520E6 /* Build configuration list for PBXNativeTarget "GX_mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA01E78B1CBF51B9004520E6 /* Debug */,
 				CA01E78C1CBF51B9004520E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
