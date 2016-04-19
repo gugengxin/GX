@@ -33,3 +33,4 @@ GX.pro.user
 project/vs/x64/
 project/vs/Win32/
 project/vs/ipch/
+project/build-GX*

@@ -10,9 +10,19 @@ TARGET = GX
 TEMPLATE = lib
 CONFIG += staticlib
 
-SOURCES +=
+SOURCES += \
+    ../../src/GClass.cpp \
+    ../../src/GObject.cpp \
+    ../../src/GOWHash.cpp
 
-HEADERS +=
+HEADERS += \
+    ../../src/GClass.h \
+    ../../src/GObject.h \
+    ../../src/GOWHash.h \
+    ../../src/GX.h \
+    ../../src/GXOSs.h \
+    ../../src/GXPrefix.h \
+    ../../src/GXTypes.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
