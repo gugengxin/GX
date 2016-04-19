@@ -30,3 +30,6 @@ xcuserdata
 GX.pro.user
 *.v12.suo
 *.sdf
+project/vs/x64/
+project/vs/Win32/
+project/vs/ipch/

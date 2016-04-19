@@ -30,6 +30,20 @@
 #define GX_OS_APPLE
 #define GX_IDE_XCODE
 
+#elif defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+
+#define GX_OS_MICROSOFT
+#define GX_OS_MOBILE
+#define GX_OS_WINPHONE
+#define GX_IDE_VS
+
+#elif defined(WIN32) || defined(WIN64)
+
+#define GX_OS_MICROSOFT
+#define GX_OS_DESKTOP
+#define GX_OS_WINDOWS
+#define GX_IDE_VS
+
 #endif
 
 #define GX_BYTE_ORDER GX_LITTLE_ENDIAN
