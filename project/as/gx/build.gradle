@@ -17,6 +17,24 @@ model {
                 proguardFiles.add(file('proguard-android.txt'))
             }
         }
+
+        ndk {
+            moduleName "GX"
+        }
+
+        sources {
+            main {
+                jni {
+                    exportedHeaders {
+                        srcDir "../../../src"
+                    }
+                    source {
+                        srcDir "src/main/jni"
+                        srcDir "../../../src"
+                    }
+                }
+            }
+        }
     }
 }
 dependencies {

@@ -18,10 +18,14 @@ model {
                 proguardFiles.add(file('proguard-android.txt'))
             }
         }
+        ndk {
+            moduleName "GXTest"
+        }
     }
 }
 
 dependencies {
+    compile project(':gx')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.3.0'
 }
