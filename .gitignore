@@ -1,31 +1,3 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
 xcuserdata
 GX.pro.user
 *.v12.suo
@@ -34,3 +6,7 @@ project/vs/x64/
 project/vs/Win32/
 project/vs/ipch/
 project/build-GX*
+tool/cmd/sed/project/vs/x64/
+tool/cmd/sed/project/vs/Win32/
+bin/
+project/vs/GX.opensdf

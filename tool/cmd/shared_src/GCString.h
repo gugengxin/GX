@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include "GCShared.h"
 #include <string>
 #ifdef GC_OS_MICROSOFT
 #include <tchar.h>

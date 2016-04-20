@@ -69,23 +69,26 @@ p:\
     virtual ~c();\
 public:\
     static GClass   gclass;\
-    virtual GClass* getClass();\
-    static c* alloc()
+    virtual GClass* getClass() {\
+		return &gclass;\
+	}\
+    static c* alloc() {\
+		return new c();\
+	}\
+	void* operator new(size_t size) {\
+		GObject::gnew(size);\
+	}\
+	void operator delete(void* p) {\
+		GObject::gdel(p);\
+	}
 
 #define GX_OBJECT(c)        GX_OBJECT_DECLARE(c,protected)
 #define GX_OBJECT_FINAL(c)  GX_OBJECT_DECLARE(c,private)
 
 #define GX_OBJECT_IMPLEMENT(c,pc) \
 GClass c::gclass(#c,sizeof(c),GX_CAST_R(GClass::Alloc,c::alloc),&(pc::gclass));\
-static GClass::Initializer g_Initializer(&c::gclass);\
-GClass* c::getClass()\
-{\
-    return &gclass;\
-}\
-c* c::alloc()\
-{\
-    return new c();\
-}
+static GClass::Initializer g_Initializer(&c::gclass)
+
 
 
 

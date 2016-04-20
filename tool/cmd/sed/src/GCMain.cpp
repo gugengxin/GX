@@ -9,7 +9,7 @@
 #include "GCString.h"
 
 
-int gcmain(int argc, const TCHAR * argv[])
+int gcmain(int argc, const TCHAR* argv[])
 {
     
     

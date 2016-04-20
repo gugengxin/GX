@@ -9,6 +9,35 @@
 #include "GObject.h"
 
 
+
+void GObject::retain(GObject* obj)
+{
+	if (obj) {
+		++(*((GX_CAST_R(gi32*, obj) - 1)));
+	}
+}
+void GObject::release(GObject* obj)
+{
+	if (obj) {
+		gi32* p = GX_CAST_R(gi32*, obj) - 1;
+		--(*p);
+		if ((*p) <= 0) {
+			delete obj;
+		}
+	}
+}
+void* GObject::gnew(size_t size)
+{
+	void* p = malloc(size+sizeof(gi32));
+	*GX_CAST_R(gi32*, p) = 1;
+	return GX_CAST_R(gi32*, p) + 1;
+}
+void GObject::gdel(void* p)
+{
+	free(GX_CAST_R(gi32*, p) - 1);
+}
+
+
 GClass GObject::gclass("GObject",sizeof(GObject),GX_CAST_R(GClass::Alloc,GObject::alloc),NULL);
 static GClass::Initializer g_Initializer(&GObject::gclass);
 GClass* GObject::getClass()
@@ -19,10 +48,18 @@ GObject* GObject::alloc()
 {
     return new GObject();
 }
+void* GObject::operator new(size_t size)
+{
+	return gnew(size);
+}
+void GObject::operator delete(void* p)
+{
+	gdel(p);
+}
 
 GObject::GObject()
 {
-    m_RefCount=1;
+    
 }
 GObject::~GObject()
 {
@@ -49,20 +86,4 @@ bool  GObject::isKindOfClass(GClass* pClass)
 bool  GObject::isKindOfClass(GClass& cls)
 {
     return getClass()->isKindOf(&cls);
-}
-
-void GXRetain(GObject* obj)
-{
-    if (obj) {
-        ++obj->m_RefCount;
-    }
-}
-void GXRelease(GObject* obj)
-{
-    if (obj) {
-        --obj->m_RefCount;
-        if (obj->m_RefCount<=0) {
-            delete obj;
-        }
-    }
 }

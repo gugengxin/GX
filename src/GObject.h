@@ -13,29 +13,30 @@
 #include "GClass.h"
 
 class GObject {
+public:
+	static void retain(GObject* obj);
+	static void release(GObject* obj);
 protected:
-    friend void GXRetain(GObject*);
-    friend void GXRelease(GObject*);
+	static void* gnew(size_t size);
+	static void gdel(void* p);
+
     GObject();
     virtual ~GObject();
 public:
     static GClass   gclass;
     virtual GClass* getClass();
     static GObject* alloc();
+	void* operator new(size_t size);
+	void operator delete(void* p);
     
     const gchar* getClassName();
     bool  isMemberOfClass(GClass* pClass);
     bool  isMemberOfClass(GClass& cls);
     bool  isKindOfClass(GClass* pClass);
     bool  isKindOfClass(GClass& cls);
-    
-private:
-    gi32 m_RefCount;
 };
 
-
-void GXRetain(GObject* obj);
-void GXRelease(GObject* obj);
+typedef GObject GO;
 
 
 
