@@ -65,16 +65,20 @@ namespace GC {
 #endif
     typedef TString Path;
 
-    extern const int Utf8_BOM_Bytes;
-    extern const unsigned char Utf8_BOM[];
+    extern const int utf8BOM_Bytes;
+    extern const unsigned char utf8BOM[];
     
-    bool ReadFileToString(const TCHAR* filePath,SEncoding guessEC,NString& strOut);
-    bool ReadFileToString(const TCHAR* filePath,SEncoding guessEC,WString& strOut);
+    bool readFileString(const TCHAR* filePath,SEncoding guessEC,NString& strOut);
+    bool readFileString(const TCHAR* filePath,SEncoding guessEC,WString& strOut);
     
-    bool WriteFileString(const TCHAR* filePath, NString& str);
-    bool WriteFileString(const TCHAR* filePath, WString& str);
+    bool writeFileString(const TCHAR* filePath, NString& str);
+    bool writeFileString(const TCHAR* filePath, WString& str);
 
-	void ReplaceString(WString& str, const wchar_t* strFrom, const wchar_t* strTo, int idxStart=0, int idxCount=0);
-	void ReplaceString(NString& str, const char* strFrom, const char* strTo, int idxStart=0, int idxCount=0);
+
+	void replaceString(NString& str, const char* strFrom, const char* strTo, int idxStart = 0, int idxCount = 0);
+	void replaceString(WString& str, const wchar_t* strFrom, const wchar_t* strTo, int idxStart=0, int idxCount=0);
+
+	void replaceString(NString& str, const char* strFromPre, const char* strFromSuf, const char* strTo, int idxStart = 0, int idxCount = 0);
+	void replaceString(WString& str, const wchar_t* strFromPre, const wchar_t* strFromSuf, const wchar_t* strTo, int idxStart = 0, int idxCount = 0);
 
 }
