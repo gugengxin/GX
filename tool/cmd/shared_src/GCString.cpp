@@ -190,7 +190,7 @@ namespace GC {
 		int tlen = (int)strlen(strTo);
 		if (fplen > 0 && fslen > 0) {
 			int i = 0;
-			int idx = 0;
+			int idx = -1;
 			while (true) {
 				i = (int)str.find(strFromPre, i);
 				if (i >= 0) {
@@ -225,7 +225,7 @@ namespace GC {
 		int tlen = (int)wcslen(strTo);
 		if (fplen > 0 && fslen > 0) {
 			int i = 0;
-			int idx = 0;
+			int idx = -1;
 			while (true) {
 				i = (int)str.find(strFromPre, i);
 				if (i >= 0) {

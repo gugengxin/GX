@@ -1,0 +1,17 @@
+//
+//  GC.xcconfig
+//  gx_sed
+//
+//  Created by Gengxin Gu on 16/4/21.
+//  Copyright © 2016年 Gengxin Gu. All rights reserved.
+//
+
+GC_OS = GC_OS_MACOSX
+
+GC_GCC_PREPROCESSOR_DEFINITIONS = $(GC_OS)
+
+
+COMPRESS_PNG_FILES = NO
+CLANG_ENABLE_OBJC_ARC = NO
+ONLY_ACTIVE_ARCH = NO
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) $(GC_GCC_PREPROCESSOR_DEFINITIONS)

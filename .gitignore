@@ -10,3 +10,5 @@ tool/cmd/sed/project/vs/x64/
 tool/cmd/sed/project/vs/Win32/
 bin/
 project/vs/GX.opensdf
+*.pro.user
+tool/cmd/text_editor/project/build-*

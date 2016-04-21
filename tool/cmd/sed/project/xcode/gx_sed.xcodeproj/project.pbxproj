@@ -10,6 +10,7 @@
 		CA4E74E21CC7498300D85F78 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA4E74E11CC7498300D85F78 /* main.mm */; };
 		CA4E74EB1CC7521B00D85F78 /* GCString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA4E74E91CC7521B00D85F78 /* GCString.cpp */; };
 		CA4E74EE1CC777EF00D85F78 /* GCMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA4E74ED1CC777EF00D85F78 /* GCMain.cpp */; };
+		CAF001AE1CC86221004A0C60 /* GCSed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF001AC1CC86221004A0C60 /* GCSed.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,6 +33,9 @@
 		CA4E74ED1CC777EF00D85F78 /* GCMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GCMain.cpp; sourceTree = "<group>"; };
 		CA4E74F11CC7A9B800D85F78 /* GCShared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCShared.h; sourceTree = "<group>"; };
 		CA4E74F21CC7AAF000D85F78 /* GCMain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCMain.h; sourceTree = "<group>"; };
+		CAF001AC1CC86221004A0C60 /* GCSed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GCSed.cpp; sourceTree = "<group>"; };
+		CAF001AD1CC86221004A0C60 /* GCSed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCSed.h; sourceTree = "<group>"; };
+		CAF001AF1CC86348004A0C60 /* GC.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GC.xcconfig; path = ../../../shared_config/xcode/GC.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +52,7 @@
 		CA4E74D51CC7498300D85F78 = {
 			isa = PBXGroup;
 			children = (
+				CAF001AF1CC86348004A0C60 /* GC.xcconfig */,
 				CA4E74EC1CC777C400D85F78 /* src */,
 				CA4E74E81CC7521B00D85F78 /* shared_src */,
 				CA4E74E01CC7498300D85F78 /* gx_sed */,
@@ -77,6 +82,8 @@
 				CA4E74F11CC7A9B800D85F78 /* GCShared.h */,
 				CA4E74EA1CC7521B00D85F78 /* GCString.h */,
 				CA4E74E91CC7521B00D85F78 /* GCString.cpp */,
+				CAF001AD1CC86221004A0C60 /* GCSed.h */,
+				CAF001AC1CC86221004A0C60 /* GCSed.cpp */,
 			);
 			name = shared_src;
 			path = ../../../shared_src;
@@ -148,6 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAF001AE1CC86221004A0C60 /* GCSed.cpp in Sources */,
 				CA4E74EB1CC7521B00D85F78 /* GCString.cpp in Sources */,
 				CA4E74E21CC7498300D85F78 /* main.mm in Sources */,
 				CA4E74EE1CC777EF00D85F78 /* GCMain.cpp in Sources */,
@@ -194,7 +202,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -232,7 +240,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -240,6 +248,7 @@
 		};
 		CA4E74E61CC7498300D85F78 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CAF001AF1CC86348004A0C60 /* GC.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -247,6 +256,7 @@
 		};
 		CA4E74E71CC7498300D85F78 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CAF001AF1CC86348004A0C60 /* GC.xcconfig */;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
