@@ -17,7 +17,7 @@ GCTextEditor::~GCTextEditor()
 
 }
 
-bool GCTextEditor::ReadFile(const QString &filePath, const QString &guessEncode)
+bool GCTextEditor::readFile(const QString &filePath, const QString &guessEncode)
 {
     QFile file(filePath);
     if(file.open(QIODevice::ReadOnly)) {
@@ -43,7 +43,7 @@ bool GCTextEditor::ReadFile(const QString &filePath, const QString &guessEncode)
     return false;
 }
 
-bool GCTextEditor::WriteFile(const QString &filePath, const QString &encode, bool hasBOM8)
+bool GCTextEditor::writeFile(const QString &filePath, const QString &encode, bool hasBOM8)
 {
     QFile file(filePath);
     if(file.open(QIODevice::WriteOnly)) {
@@ -110,7 +110,7 @@ static int _FindPathString(const QString& str,const QString& strPath,int from)
     return res;
 }
 
-int GCTextEditor::Replace(const QString &fromStr, const QString &toStr, Qt::CaseSensitivity fromCs, const QString &fromStrSuf, Qt::CaseSensitivity fromCsSuf, const QString &toStrPS, int idxStart, int idxCount)
+int GCTextEditor::replace(const QString &fromStr, const QString &toStr, Qt::CaseSensitivity fromCs, const QString &fromStrSuf, Qt::CaseSensitivity fromCsSuf, const QString &toStrPS, int idxStart, int idxCount)
 {
     if(fromStr.size()>0 && toStr.size()>0) {
 

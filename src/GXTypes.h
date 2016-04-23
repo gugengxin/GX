@@ -1,4 +1,4 @@
-﻿//
+//
 //  GXTypes.h
 //  GX
 //
@@ -9,14 +9,14 @@
 #ifndef GXTypes_h
 #define GXTypes_h
 
-typedef char                gi8;
-typedef unsigned char       gu8;
-typedef short               gi16;
-typedef unsigned short      gu16;
-typedef int                 gi32;
-typedef unsigned int        gu32;
-typedef long long           gi64;
-typedef unsigned long long  gu64;
+typedef char                gint8;
+typedef unsigned char       guint8;
+typedef short               gint16;
+typedef unsigned short      guint16;
+typedef int                 gint32;
+typedef unsigned int        guint32;
+typedef long long           gint64;
+typedef unsigned long long  guint64;
 
 typedef char gchar;
 typedef wchar_t gwchar;
@@ -30,11 +30,13 @@ typedef wchar_t gwchar;
 #endif
 
 #if GX_PTR_32BIT
-typedef gi32    gint;
-typedef gu32    guint;
+typedef gint32    gint;
+typedef guint32    guint;
+typedef float gfloat;
 #elif GX_PTR_64BIT
-typedef gi64    gint;
-typedef gu64    guint;
+typedef gint64    gint;
+typedef guint64    guint;
+typedef double gfloat;
 #endif
 
 

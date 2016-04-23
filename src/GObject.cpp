@@ -13,13 +13,13 @@
 void GObject::retain(GObject* obj)
 {
 	if (obj) {
-		++(*((GX_CAST_R(gi32*, obj) - 1)));
+		++(*((GX_CAST_R(gint32*, obj) - 1)));
 	}
 }
 void GObject::release(GObject* obj)
 {
 	if (obj) {
-		gi32* p = GX_CAST_R(gi32*, obj) - 1;
+		gint32* p = GX_CAST_R(gint32*, obj) - 1;
 		--(*p);
 		if ((*p) <= 0) {
 			delete obj;
@@ -28,13 +28,13 @@ void GObject::release(GObject* obj)
 }
 void* GObject::gnew(size_t size)
 {
-	void* p = malloc(size+sizeof(gi32));
-	*GX_CAST_R(gi32*, p) = 1;
-	return GX_CAST_R(gi32*, p) + 1;
+	void* p = malloc(size+sizeof(gint32));
+	*GX_CAST_R(gint32*, p) = 1;
+	return GX_CAST_R(gint32*, p) + 1;
 }
 void GObject::gdel(void* p)
 {
-	free(GX_CAST_R(gi32*, p) - 1);
+	free(GX_CAST_R(gint32*, p) - 1);
 }
 
 

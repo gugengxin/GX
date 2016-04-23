@@ -2,27 +2,30 @@
 #include <QTextStream>
 #include "GCTextEditor.h"
 
+#define M_CS_TO_QTCS(cs) ((cs)==0? Qt::CaseSensitive : Qt::CaseInsensitive )
+
 int main(int argc, char *argv[])
 {
     QList<QString> argList;
     for(int i=0;i<argc;i++) {
         argList.append(QString((const char*)argv[i]));
     }
+
     //QTextStream cin(stdin, QIODevice::ReadOnly);
     QTextStream cout(stdout, QIODevice::WriteOnly);
     QTextStream cerr(stderr, QIODevice::WriteOnly);
 
-    if(argc<=1) {
+    if(argList.size()<=1) {
         QString cmd=argList[0];
         int idx=cmd.lastIndexOf("/");
         if(idx<0) {
             idx=cmd.lastIndexOf("\\");
         }
         if(idx>=0) {
-            cmd=cmd.right(cmd.length()-idx);
+            cmd=cmd.right(cmd.length()-idx-1);
         }
         cout<< "Help:\n";
-        cout<< cmd << "\n";
+        cout<< cmd;
         cout<< " -i (file path) [-ie (file guess encoding,default UTF-8)]\n";
 
         cout<< " [-rs (source string)] [-rscs 0=CaseSensitive 1=CaseInsensitive]\n";
@@ -103,7 +106,7 @@ int main(int argc, char *argv[])
         if(!err) {
             GCTextEditor worker;
             if(in.length()>0) {
-                if(!worker.ReadFile(in,ine)) {
+                if(!worker.readFile(in,ine)) {
                     cerr<< "Read Fail:" << in <<endl;
                     err=true;
                 }
@@ -122,7 +125,10 @@ int main(int argc, char *argv[])
                 if(rs.length()>0 && rd.length()>0) {
                     doThings=true;
 
-
+                    if(!worker.replace(rs,rd,M_CS_TO_QTCS(rscs),rss,M_CS_TO_QTCS(rsscs),rsp,ris,ric)) {
+                        cerr<< "Replace Fail!" <<endl;
+                        err=true;
+                    }
                 }
             }
 
@@ -131,7 +137,7 @@ int main(int argc, char *argv[])
             }
 
             if(!err) {
-                if(!worker.WriteFile(out,oute,outbom8!=0)) {
+                if(!worker.writeFile(out,oute,outbom8!=0)) {
                     cerr<< "Write Fail:" << out <<endl;
                     err=true;
                 }

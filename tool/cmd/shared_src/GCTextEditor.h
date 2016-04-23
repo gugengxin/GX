@@ -15,12 +15,12 @@ public:
     ~GCTextEditor();
 
 
-    bool ReadFile(const QString& filePath,const QString& guessEncode);
-    bool WriteFile(const QString& filePath,const QString& encode="",bool hasBOM8=false);
+    bool readFile(const QString& filePath,const QString& guessEncode);
+    bool writeFile(const QString& filePath,const QString& encode="",bool hasBOM8=false);
 
     //fromStrSuf!="" 代表替换 fromStr-fromStrSuf 之间的字符串
     //toStrPS=="\" || toStrPS=="/" 代表替换的是路径，即会先把toStr替换出现的路径分隔符为toStrPS,然后查找路径字符串匹配fromStr和fromStrSuf，最后进行替换
-    int Replace(const QString& fromStr,const QString& toStr,
+    int replace(const QString& fromStr,const QString& toStr,
                  Qt::CaseSensitivity fromCs=Qt::CaseSensitive,
                  const QString& fromStrSuf="",Qt::CaseSensitivity fromCsSuf=Qt::CaseSensitive,
                  const QString& toStrPS="",

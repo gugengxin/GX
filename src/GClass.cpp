@@ -11,7 +11,7 @@
 
 
 GClass* GClass::map[163]={NULL};
-#define M_MAP_COUNT ((gu32)(sizeof(map)/sizeof(map[0])))
+#define M_MAP_COUNT ((guint32)(sizeof(map)/sizeof(map[0])))
 
 GClass::GClass(const gchar* name,guint size,Alloc alloc,GClass* parent)
 {
@@ -93,7 +93,7 @@ GClass::Initializer::Initializer(GClass* cls)
 {
     cls->m_HashCode=GOWHash::compute(cls->m_Name);
     
-    gu32 cdIdx=cls->m_HashCode.codeA%M_MAP_COUNT;
+    guint32 cdIdx=cls->m_HashCode.codeA%M_MAP_COUNT;
     
     if (map[cdIdx]==NULL) {
         map[cdIdx]=cls;
