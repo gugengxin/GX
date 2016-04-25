@@ -10,6 +10,32 @@ int main(int argc, char *argv[])
     for(int i=0;i<argc;i++) {
         argList.append(QString((const char*)argv[i]));
     }
+    /*
+    argList.append("-i");
+    argList.append("C:\\Users\\GuGengxin\\Desktop\\Test.txt");
+    argList.append("-ie");
+    argList.append("UTF-8");
+    argList.append("-rs");
+    argList.append("___A/B/C____");
+    argList.append("-rss");
+    argList.append("__A\\A\\A__");
+    argList.append("-rd");
+    argList.append("___D/E/F____");
+    argList.append("-rsp");
+    argList.append("\\");
+
+    argList.append("-ris");
+    argList.append("0");
+    argList.append("-ric");
+    argList.append("0");
+
+    argList.append("-o");
+    argList.append("C:\\Users\\GuGengxin\\Desktop\\TestO.txt");
+    argList.append("-oe");
+    argList.append("UTF-8");
+    argList.append("-oebom8");
+    argList.append("1");
+    //*/
 
     //QTextStream cin(stdin, QIODevice::ReadOnly);
     QTextStream cout(stdout, QIODevice::WriteOnly);
@@ -125,7 +151,7 @@ int main(int argc, char *argv[])
                 if(rs.length()>0 && rd.length()>0) {
                     doThings=true;
 
-                    if(!worker.replace(rs,rd,M_CS_TO_QTCS(rscs),rss,M_CS_TO_QTCS(rsscs),rsp,ris,ric)) {
+                    if(worker.replace(rs,rd,M_CS_TO_QTCS(rscs),rss,M_CS_TO_QTCS(rsscs),rsp,ris,ric)<0) {
                         cerr<< "Replace Fail!" <<endl;
                         err=true;
                     }

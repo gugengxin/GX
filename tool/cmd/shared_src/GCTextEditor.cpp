@@ -136,7 +136,7 @@ int GCTextEditor::replace(const QString &fromStr, const QString &toStr, Qt::Case
             if(i>=0) {
                 if(fromStrSuf.size()<=0) {
                     idx++;
-                    if (idxCount <= 0 || (idx >= idxStart && idx<idxStart + idxCount)) {
+                    if (idx >= idxStart && (idxCount <= 0 || idx<idxStart + idxCount)) {
                         m_Text.replace(i,fromStr.size(),strTo);
                         res++;
                         if(idxCount>0 && (idx>=idxStart + idxCount)) {
@@ -159,7 +159,7 @@ int GCTextEditor::replace(const QString &fromStr, const QString &toStr, Qt::Case
                     }
                     if(i>=0) {
                         idx++;
-                        if (idxCount <= 0 || (idx >= idxStart && idx<idxStart + idxCount)) {
+                        if (idx >= idxStart && (idxCount <= 0 || idx<idxStart + idxCount)) {
                             int len=i-start;
                             m_Text.replace(start,len,strTo);
                             res++;
