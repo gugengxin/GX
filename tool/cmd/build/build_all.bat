@@ -36,6 +36,9 @@ copy .\release\gx_te.exe %GX_BIN%
 popd
 rd /s /q %BUILD_DIR%
 
+windeployqt.exe --no-translations %GX_BIN%\gx_te.exe
+
+
 goto :EOF
 
 :CMD_EXIST
