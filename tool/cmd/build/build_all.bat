@@ -1,17 +1,15 @@
 @echo off
 
-call :CMD_EXIST qtenv2.bat || (
-	set /p GX_QT_SDK="Please input QT SDK path: "
+call :CMD_EXIST qmake.exe || ( 
+	set /p QT_SDK=Please input QT SDK path: 
 )
-pushd .
-if "%GX_QT_SDK%"=="" (
-	call qtenv2.bat
+if "%QT_SDK%" == "" (
+	set QT_QMAKE=qmake.exe
+	set QT_DEPLOY=windeployqt.exe
 ) else (
-	call %GX_QT_SDK%\bin\qtenv2.bat
+	set QT_QMAKE=%QT_SDK%\bin\qmake.exe
+	set QT_DEPLOY=%QT_SDK%\bin\windeployqt.exe
 )
-popd
-
-set GX_QMAKE=qmake.exe
 
 pushd %~dp0
 cd ..\..\..
@@ -20,23 +18,42 @@ popd
 set GX_BIN=%GX_ROOT%\bin
 call %GX_BIN%\vc12_amd64_vcvars64.bat
 
-::text editor
-set ROOT_DIR=%GX_ROOT%\tool\cmd\text_editor
-set PROJECT_DIR=%ROOT_DIR%\project\qt
-set BUILD_DIR=%PROJECT_DIR%\build
+SET PROJECTS_LEN=0
+SET PROJECTS[%PROJECTS_LEN%].dirName=text_editor
+SET PROJECTS[%PROJECTS_LEN%].projectName=gx_te
+SET /A PROJECTS_LEN=%PROJECTS_LEN%+1
 
-if EXIST %BUILD_DIR% (
+SET Obj_Index=0  
+:LoopStart
+	IF %Obj_Index% EQU %PROJECTS_LEN% GOTO :LoopNext
+
+	SET Obj_Current.dirName=0
+	SET Obj_Current.projectName=0
+	
+	FOR /F "usebackq delims==. tokens=1-3" %%I IN (`SET PROJECTS[%Obj_Index%]`) DO (
+		SET Obj_Current.%%J=%%K
+	)
+	
+	set ROOT_DIR=%GX_ROOT%\tool\cmd\%Obj_Current.dirName%
+	set PROJECT_DIR=%ROOT_DIR%\project\qt
+	set BUILD_DIR=%PROJECT_DIR%\build
+
+	if EXIST %BUILD_DIR% (
+		rd /s /q %BUILD_DIR%
+	)
+	mkdir %BUILD_DIR%
+	pushd %BUILD_DIR%
+	%QT_QMAKE% -makefile %PROJECT_DIR%\%Obj_Current.projectName%.pro
+	nmake
+	copy .\release\%Obj_Current.projectName%.exe %GX_BIN%
+	popd
 	rd /s /q %BUILD_DIR%
-)
-mkdir %BUILD_DIR%
-pushd %BUILD_DIR%
-%GX_QMAKE% -makefile %PROJECT_DIR%\gx_te.pro
-nmake
-copy .\release\gx_te.exe %GX_BIN%
-popd
-rd /s /q %BUILD_DIR%
 
-windeployqt.exe --no-translations %GX_BIN%\gx_te.exe
+	%QT_DEPLOY% --no-translations %GX_BIN%\%Obj_Current.projectName%.exe
+  
+	SET /A Obj_Index=%Obj_Index% + 1
+GOTO LoopStart
+:LoopNext
 
 
 goto :EOF
