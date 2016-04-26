@@ -12,3 +12,7 @@ bin/
 project/vs/GX.opensdf
 *.pro.user
 tool/cmd/text_editor/project/build-*
+product/vs/lib/
+external/pthread-win32/lib/
+external/pthread-win32/include/
+external/pthread-win32/pthread-win32/
