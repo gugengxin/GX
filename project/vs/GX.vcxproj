@@ -20,16 +20,32 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GClass.cpp" />
+    <ClCompile Include="..\..\src\GCondition.cpp" />
+    <ClCompile Include="..\..\src\GData.cpp" />
+    <ClCompile Include="..\..\src\GDataArray.cpp" />
+    <ClCompile Include="..\..\src\GMutex.cpp" />
     <ClCompile Include="..\..\src\GObject.cpp" />
     <ClCompile Include="..\..\src\GOWHash.cpp" />
+    <ClCompile Include="..\..\src\GPieceData.cpp" />
+    <ClCompile Include="..\..\src\GRunLoop.cpp" />
+    <ClCompile Include="..\..\src\GThread.cpp" />
+    <ClCompile Include="..\..\src\GXPthread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h" />
+    <ClInclude Include="..\..\src\GCondition.h" />
+    <ClInclude Include="..\..\src\GData.h" />
+    <ClInclude Include="..\..\src\GDataArray.h" />
+    <ClInclude Include="..\..\src\GMutex.h" />
     <ClInclude Include="..\..\src\GObject.h" />
     <ClInclude Include="..\..\src\GOWHash.h" />
+    <ClInclude Include="..\..\src\GPieceData.h" />
+    <ClInclude Include="..\..\src\GRunLoop.h" />
+    <ClInclude Include="..\..\src\GThread.h" />
     <ClInclude Include="..\..\src\GX.h" />
     <ClInclude Include="..\..\src\GXOSs.h" />
     <ClInclude Include="..\..\src\GXPrefix.h" />
+    <ClInclude Include="..\..\src\GXPthread.h" />
     <ClInclude Include="..\..\src\GXTypes.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -101,7 +117,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(OutDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -116,7 +132,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN64;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(OutDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -133,7 +149,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -151,7 +167,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

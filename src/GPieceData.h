@@ -14,13 +14,19 @@
 
 class GPieceData : public GData {
     GX_OBJECT(GPieceData);
+protected:
+	GPieceData(guint32 pieceSize);
 public:
-    
+	bool setPieceSize(guint32 v);
+
+	virtual bool changeBytes(guint32 toSize);
+	virtual void freeSelf();
+	virtual bool robOther(GData* other);
+
 private:
-    
+	guint32 m_PieceSize;
+	guint32 m_PieceCount;
 };
-
-
 
 
 #endif /* GPieceData_h */

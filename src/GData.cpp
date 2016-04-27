@@ -22,9 +22,6 @@ bool GData::galloc(void*& buf,guint size,guint toSize)
     else if (buf) {
         void* p=realloc(buf, (size_t)toSize);
         if (p) {
-            if (toSize>size) {
-                memset(((char*)p)+size, 0, toSize-size);
-            }
             buf=p;
         }
         else {
@@ -32,7 +29,7 @@ bool GData::galloc(void*& buf,guint size,guint toSize)
         }
     }
     else {
-        buf=calloc(1, toSize);
+        buf=malloc(toSize);
         return buf!=NULL;
     }
     return true;
@@ -61,8 +58,14 @@ GData::~GData()
 
 bool GData::changeBytes(guint toSize)
 {
-    if(m_IsStatic && toSize!=m_Bytes)
-        return false;
+	if (m_IsStatic) {
+		return (toSize == m_Bytes);
+	}
+	else {
+		if (toSize == m_Bytes) {
+			return true;
+		}
+	}
     
 #if GX_PTR_32BIT
     if (toSize&0x80000000) {
@@ -106,7 +109,7 @@ void GData::freeSelf()
     m_IsStatic=0;
 }
 
-void GData::robOther(GData* other)
+bool GData::robOther(GData* other)
 {
     freeSelf();
     
@@ -117,4 +120,5 @@ void GData::robOther(GData* other)
     other->m_Buffer=NULL;
     other->m_Bytes=0;
     other->m_IsStatic=0;
+	return true;
 }
