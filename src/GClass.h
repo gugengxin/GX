@@ -63,31 +63,31 @@ private:
 };
 
 
-#define GX_OBJECT_DECLARE(c,p) \
-p:\
-    c();\
-    virtual ~c();\
+#define GX_OBJECT_DECLARE(cls,vis) \
+vis:\
+    cls();\
+    virtual ~cls();\
 public:\
     static GClass   gclass;\
     virtual GClass* getClass() {\
 		return &gclass;\
 	}\
-    static c* alloc() {\
-		return new c();\
+    static cls* alloc() {\
+		return new cls();\
 	}\
 	void* operator new(size_t size) {\
-		GObject::gnew(size);\
+		return GObject::gnew(size);\
 	}\
 	void operator delete(void* p) {\
 		GObject::gdel(p);\
 	}
 
-#define GX_OBJECT(c)        GX_OBJECT_DECLARE(c,protected)
-#define GX_OBJECT_FINAL(c)  GX_OBJECT_DECLARE(c,private)
+#define GX_OBJECT(cls)        GX_OBJECT_DECLARE(cls,protected)
+#define GX_OBJECT_FINAL(cls)  GX_OBJECT_DECLARE(cls,private)
 
-#define GX_OBJECT_IMPLEMENT(c,pc) \
-GClass c::gclass(#c,sizeof(c),GX_CAST_R(GClass::Alloc,c::alloc),&(pc::gclass));\
-static GClass::Initializer g_Initializer(&c::gclass)
+#define GX_OBJECT_IMPLEMENT(cls,pc) \
+GClass cls::gclass(#cls,sizeof(cls),GX_CAST_R(GClass::Alloc,cls::alloc),&(pc::gclass));\
+static GClass::Initializer g_Initializer(&cls::gclass)
 
 
 
