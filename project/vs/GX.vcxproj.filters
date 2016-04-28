@@ -36,7 +36,12 @@
     <ClCompile Include="..\..\src\GXPthread.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GDataArray.cpp" />
+    <ClCompile Include="..\..\src\GArray.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDataArray.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -81,6 +86,11 @@
     <ClInclude Include="..\..\src\GXPthread.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GDataArray.h" />
+    <ClInclude Include="..\..\src\GArray.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDataArray.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

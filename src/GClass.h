@@ -9,8 +9,7 @@
 #ifndef GClass_hpp
 #define GClass_hpp
 
-#include "GOWHash.h"
-#include <typeinfo>
+#include "GXPrefix.h"
 
 class GObject;
 
@@ -70,6 +69,6 @@ GClass cls::gclass(sizeof(cls),GX_CAST_R(GClass::Alloc,cls::alloc),&(pc::gclass)
 
 #define GX_OBJECT_TEMPLATE_IMPLEMENT(T,cls,pc) \
 template <T> \
-GClass cls::gclass(sizeof(cls),(GClass::Alloc)cls::alloc,&(pc::gclass))
+GClass cls::gclass(sizeof(cls),reinterpret_cast<GClass::Alloc>(cls::alloc),&(pc::gclass))
 
 #endif /* GClass_hpp */

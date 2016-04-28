@@ -16,18 +16,21 @@
 #if defined(GX_OS_IOS)
 
 #define GX_OS_APPLE
+#define GX_OS_MOBILE
 #define GX_OS_IPHONE
 #define GX_IDE_XCODE
 
 #elif defined(GX_OS_APPLETV)
 
 #define GX_OS_APPLE
+#define GX_OS_MOBILE
 #define GX_OS_IPHONE
 #define GX_IDE_XCODE
 
 #elif defined(GX_OS_MACOSX)
 
 #define GX_OS_APPLE
+#define GX_OS_DESKTOP
 #define GX_IDE_XCODE
 
 #elif defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)

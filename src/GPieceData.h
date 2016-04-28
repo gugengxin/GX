@@ -14,6 +14,7 @@
 
 class GPieceData : public GData {
     template<typename T,guint step> friend class GDataArray;
+	template<typename T> friend class GArray;
     GX_OBJECT(GPieceData);
 protected:
 	GPieceData(guint32 pieceSize);

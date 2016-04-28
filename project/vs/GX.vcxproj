@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\GArray.cpp" />
     <ClCompile Include="..\..\src\GClass.cpp" />
     <ClCompile Include="..\..\src\GCondition.cpp" />
     <ClCompile Include="..\..\src\GData.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="..\..\src\GXPthread.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\GArray.h" />
     <ClInclude Include="..\..\src\GClass.h" />
     <ClInclude Include="..\..\src\GCondition.h" />
     <ClInclude Include="..\..\src\GData.h" />
