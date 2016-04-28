@@ -38,8 +38,7 @@ void GObject::gdel(void* p)
 }
 
 
-GClass GObject::gclass("GObject",sizeof(GObject),GX_CAST_R(GClass::Alloc,GObject::alloc),NULL);
-static GClass::Initializer g_Initializer(&GObject::gclass);
+GClass GObject::gclass(sizeof(GObject),GX_CAST_R(GClass::Alloc,GObject::alloc),NULL);
 GClass* GObject::getClass()
 {
     return &gclass;
@@ -66,10 +65,6 @@ GObject::~GObject()
     
 }
 
-const gchar* GObject::getClassName()
-{
-    return getClass()->getName();
-}
 bool  GObject::isMemberOfClass(GClass* pClass)
 {
     return getClass()->isMemberOf(pClass);

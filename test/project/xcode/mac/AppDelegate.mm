@@ -7,16 +7,17 @@
 //
 
 #import "AppDelegate.h"
+#import "GDataArray.h"
 
 @interface AppDelegate ()
-
-@property (weak) IBOutlet NSWindow *window;
+@property (nonatomic,assign) IBOutlet NSWindow *window;
 @end
 
 @implementation AppDelegate
+@synthesize window=_window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
+    GDataArray<int,8>::alloc();
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

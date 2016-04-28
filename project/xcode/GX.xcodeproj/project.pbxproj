@@ -20,6 +20,7 @@
 		CA0B16021CD086F500C33BB5 /* GCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B16011CD086F500C33BB5 /* GCondition.cpp */; };
 		CA0B16031CD086F500C33BB5 /* GCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B16011CD086F500C33BB5 /* GCondition.cpp */; };
 		CA0B16041CD086F500C33BB5 /* GCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B16011CD086F500C33BB5 /* GCondition.cpp */; };
+		CA1C71B81CD2068100BEEA5B /* GDataArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1C71B61CD2068100BEEA5B /* GDataArray.cpp */; };
 		CA9C16CC1CC6102E00204303 /* GObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16CA1CC6102E00204303 /* GObject.cpp */; };
 		CA9C16CD1CC6102E00204303 /* GObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16CA1CC6102E00204303 /* GObject.cpp */; };
 		CA9C16CE1CC6102E00204303 /* GObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16CA1CC6102E00204303 /* GObject.cpp */; };
@@ -78,6 +79,8 @@
 		CA0B15FD1CD0851E00C33BB5 /* GXPthread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXPthread.cpp; sourceTree = "<group>"; };
 		CA0B16011CD086F500C33BB5 /* GCondition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GCondition.cpp; sourceTree = "<group>"; };
 		CA0B16051CD086FD00C33BB5 /* GCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCondition.h; sourceTree = "<group>"; };
+		CA1C71B61CD2068100BEEA5B /* GDataArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDataArray.cpp; sourceTree = "<group>"; };
+		CA1C71B71CD2068100BEEA5B /* GDataArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataArray.h; sourceTree = "<group>"; };
 		CA9C16B11CC5EDFF00204303 /* GXLib_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXLib_ios.xcconfig; path = ../../product/xcode/GXLib_ios.xcconfig; sourceTree = "<group>"; };
 		CA9C16B21CC5EDFF00204303 /* GXLib_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXLib_mac.xcconfig; path = ../../product/xcode/GXLib_mac.xcconfig; sourceTree = "<group>"; };
 		CA9C16B31CC5EDFF00204303 /* GXLib_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXLib_atv.xcconfig; path = ../../product/xcode/GXLib_atv.xcconfig; sourceTree = "<group>"; };
@@ -137,8 +140,8 @@
 		CA01E7511CBF483C004520E6 = {
 			isa = PBXGroup;
 			children = (
-				CA9C16C51CC5FF7500204303 /* src */,
 				CA9C16B01CC5EDAC00204303 /* config */,
+				CA9C16C51CC5FF7500204303 /* src */,
 				CA01E75B1CBF483C004520E6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -225,6 +228,8 @@
 				CAC2D12A1CD0C1EC00A0EBE5 /* GData.cpp */,
 				CAC2D1311CD0D43E00A0EBE5 /* GPieceData.h */,
 				CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */,
+				CA1C71B71CD2068100BEEA5B /* GDataArray.h */,
+				CA1C71B61CD2068100BEEA5B /* GDataArray.cpp */,
 			);
 			name = Struct;
 			sourceTree = "<group>";
@@ -344,6 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA9C16D81CC615FF00204303 /* GOWHash.cpp in Sources */,
+				CA1C71B81CD2068100BEEA5B /* GDataArray.cpp in Sources */,
 				CA9C16D21CC6132400204303 /* GClass.cpp in Sources */,
 				CAC2D1321CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CA0B16021CD086F500C33BB5 /* GCondition.cpp in Sources */,

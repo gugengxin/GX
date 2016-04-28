@@ -13,6 +13,7 @@
 #include "GData.h"
 
 class GPieceData : public GData {
+    template<typename T,guint step> friend class GDataArray;
     GX_OBJECT(GPieceData);
 protected:
 	GPieceData(guint32 pieceSize);
