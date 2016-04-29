@@ -82,3 +82,21 @@ bool  GObject::isKindOfClass(GClass& cls)
 {
     return getClass()->isKindOf(&cls);
 }
+
+guint GObject::getHash()
+{
+    return GX_CAST_R(guint, this);
+}
+
+bool GObject::isEqual(GObject* obj)
+{
+    return this==obj;
+}
+
+
+
+
+
+
+
+

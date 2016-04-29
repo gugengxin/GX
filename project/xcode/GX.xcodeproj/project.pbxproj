@@ -44,6 +44,19 @@
 		CAC2D1331CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */; };
 		CAC2D1341CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */; };
 		CAC2D1351CD0D43E00A0EBE5 /* GPieceData.h in Headers */ = {isa = PBXBuildFile; fileRef = CAC2D1311CD0D43E00A0EBE5 /* GPieceData.h */; };
+		CAE706CF1CD2F6EA0090F4DD /* GArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */; };
+		CAE706D01CD2F8950090F4DD /* GArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */; };
+		CAE706D11CD2F8950090F4DD /* GDataArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1C71B61CD2068100BEEA5B /* GDataArray.cpp */; };
+		CAE706D21CD2F8960090F4DD /* GArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */; };
+		CAE706D31CD2F8960090F4DD /* GDataArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1C71B61CD2068100BEEA5B /* GDataArray.cpp */; };
+		CAE706D91CD2FA850090F4DD /* GMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706D71CD2FA850090F4DD /* GMap.cpp */; };
+		CAE706DA1CD2FA850090F4DD /* GMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706D71CD2FA850090F4DD /* GMap.cpp */; };
+		CAE706DB1CD2FA850090F4DD /* GMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706D71CD2FA850090F4DD /* GMap.cpp */; };
+		CAE706DC1CD2FA850090F4DD /* GMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CAE706D81CD2FA850090F4DD /* GMap.h */; };
+		CAE706E11CD3494F0090F4DD /* GString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706DF1CD3494F0090F4DD /* GString.cpp */; };
+		CAE706E21CD3494F0090F4DD /* GString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706DF1CD3494F0090F4DD /* GString.cpp */; };
+		CAE706E31CD3494F0090F4DD /* GString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706DF1CD3494F0090F4DD /* GString.cpp */; };
+		CAE706E41CD3494F0090F4DD /* GString.h in Headers */ = {isa = PBXBuildFile; fileRef = CAE706E01CD3494F0090F4DD /* GString.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -110,6 +123,12 @@
 		CAC2D12B1CD0C1EC00A0EBE5 /* GData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GData.h; sourceTree = "<group>"; };
 		CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GPieceData.cpp; sourceTree = "<group>"; };
 		CAC2D1311CD0D43E00A0EBE5 /* GPieceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPieceData.h; sourceTree = "<group>"; };
+		CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GArray.cpp; sourceTree = "<group>"; };
+		CAE706CE1CD2F6EA0090F4DD /* GArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GArray.h; sourceTree = "<group>"; };
+		CAE706D71CD2FA850090F4DD /* GMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GMap.cpp; sourceTree = "<group>"; };
+		CAE706D81CD2FA850090F4DD /* GMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMap.h; sourceTree = "<group>"; };
+		CAE706DF1CD3494F0090F4DD /* GString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GString.cpp; sourceTree = "<group>"; };
+		CAE706E01CD3494F0090F4DD /* GString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GString.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +249,12 @@
 				CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */,
 				CA1C71B71CD2068100BEEA5B /* GDataArray.h */,
 				CA1C71B61CD2068100BEEA5B /* GDataArray.cpp */,
+				CAE706CE1CD2F6EA0090F4DD /* GArray.h */,
+				CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */,
+				CAE706D81CD2FA850090F4DD /* GMap.h */,
+				CAE706D71CD2FA850090F4DD /* GMap.cpp */,
+				CAE706E01CD3494F0090F4DD /* GString.h */,
+				CAE706DF1CD3494F0090F4DD /* GString.cpp */,
 			);
 			name = Struct;
 			sourceTree = "<group>";
@@ -246,7 +271,9 @@
 				CA9C16DB1CC615FF00204303 /* GOWHash.h in Headers */,
 				CA9C16CF1CC6102E00204303 /* GObject.h in Headers */,
 				CA9C16D51CC6132400204303 /* GClass.h in Headers */,
+				CAE706E41CD3494F0090F4DD /* GString.h in Headers */,
 				CAC2D1351CD0D43E00A0EBE5 /* GPieceData.h in Headers */,
+				CAE706DC1CD2FA850090F4DD /* GMap.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,11 +380,14 @@
 				CA9C16D21CC6132400204303 /* GClass.cpp in Sources */,
 				CAC2D1321CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CA0B16021CD086F500C33BB5 /* GCondition.cpp in Sources */,
+				CAE706D91CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CAC2D11C1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */,
 				CA9C16CC1CC6102E00204303 /* GObject.cpp in Sources */,
 				CA0B15FE1CD0851E00C33BB5 /* GXPthread.cpp in Sources */,
 				CAC2D12C1CD0C1EC00A0EBE5 /* GData.cpp in Sources */,
+				CAE706CF1CD2F6EA0090F4DD /* GArray.cpp in Sources */,
 				CA0B15F81CD07CD000C33BB5 /* GMutex.cpp in Sources */,
+				CAE706E11CD3494F0090F4DD /* GString.cpp in Sources */,
 				CA0B15F11CD07A3600C33BB5 /* GThread.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,13 +399,17 @@
 				CA9C16D91CC615FF00204303 /* GOWHash.cpp in Sources */,
 				CA9C16D31CC6132400204303 /* GClass.cpp in Sources */,
 				CAC2D1331CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
+				CAE706D11CD2F8950090F4DD /* GDataArray.cpp in Sources */,
 				CA0B16031CD086F500C33BB5 /* GCondition.cpp in Sources */,
+				CAE706DA1CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CAC2D11D1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */,
 				CA9C16CD1CC6102E00204303 /* GObject.cpp in Sources */,
 				CA0B15FF1CD0851E00C33BB5 /* GXPthread.cpp in Sources */,
 				CAC2D12D1CD0C1EC00A0EBE5 /* GData.cpp in Sources */,
 				CA0B15F91CD07CD000C33BB5 /* GMutex.cpp in Sources */,
 				CA0B15F21CD07A3600C33BB5 /* GThread.cpp in Sources */,
+				CAE706E21CD3494F0090F4DD /* GString.cpp in Sources */,
+				CAE706D01CD2F8950090F4DD /* GArray.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,13 +420,17 @@
 				CA9C16DA1CC615FF00204303 /* GOWHash.cpp in Sources */,
 				CA9C16D41CC6132400204303 /* GClass.cpp in Sources */,
 				CAC2D1341CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
+				CAE706D31CD2F8960090F4DD /* GDataArray.cpp in Sources */,
 				CA0B16041CD086F500C33BB5 /* GCondition.cpp in Sources */,
+				CAE706DB1CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CAC2D11E1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */,
 				CA9C16CE1CC6102E00204303 /* GObject.cpp in Sources */,
 				CA0B16001CD0851E00C33BB5 /* GXPthread.cpp in Sources */,
 				CAC2D12E1CD0C1EC00A0EBE5 /* GData.cpp in Sources */,
 				CA0B15FA1CD07CD000C33BB5 /* GMutex.cpp in Sources */,
 				CA0B15F31CD07A3600C33BB5 /* GThread.cpp in Sources */,
+				CAE706E31CD3494F0090F4DD /* GString.cpp in Sources */,
+				CAE706D21CD2F8960090F4DD /* GArray.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "GDataArray.h"
+#import "GMap.h"
 
 @interface AppDelegate ()
 @property (nonatomic,assign) IBOutlet NSWindow *window;
@@ -17,7 +18,14 @@
 @synthesize window=_window;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    GDataArray<int,8>::alloc();
+    GPDArray<int>* arr=GPDArray<int>::alloc();
+    arr->zeroSelf();
+    GO::release(arr);
+    GMap<GObject,GObject>* map=GMap<GObject,GObject>::alloc();
+    map->set(NULL, NULL);
+    GO::release(map);
+    
+    
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {

@@ -16,7 +16,6 @@
 		CA9C16A11CC5E94D00204303 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16A01CC5E94D00204303 /* AppDelegate.mm */; };
 		CA9C16A41CC5E94D00204303 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16A31CC5E94D00204303 /* main.m */; };
 		CA9C16A61CC5E94D00204303 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA9C16A51CC5E94D00204303 /* Assets.xcassets */; };
-		CA9C16A91CC5E94D00204303 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA9C16A71CC5E94D00204303 /* MainMenu.xib */; };
 		CA9C16DC1CC618CB00204303 /* GX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9C164F1CC5E01B00204303 /* GX.a */; };
 		CA9C16DD1CC618D000204303 /* GX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9C16511CC5E01B00204303 /* GX.a */; };
 		CA9C16DE1CC618D600204303 /* GX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9C16531CC5E01B00204303 /* GX.a */; };
@@ -65,7 +64,6 @@
 		CA9C16A01CC5E94D00204303 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		CA9C16A31CC5E94D00204303 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CA9C16A51CC5E94D00204303 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		CA9C16A81CC5E94D00204303 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		CA9C16AA1CC5E94D00204303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA9C16BF1CC5FDCB00204303 /* Config_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_ios.xcconfig; sourceTree = "<group>"; };
 		CA9C16C31CC5FDD600204303 /* Config_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_mac.xcconfig; sourceTree = "<group>"; };
@@ -188,7 +186,6 @@
 				CA9C169F1CC5E94D00204303 /* AppDelegate.h */,
 				CA9C16A01CC5E94D00204303 /* AppDelegate.mm */,
 				CA9C16A51CC5E94D00204303 /* Assets.xcassets */,
-				CA9C16A71CC5E94D00204303 /* MainMenu.xib */,
 				CA9C16AA1CC5E94D00204303 /* Info.plist */,
 				CA9C16A21CC5E94D00204303 /* Supporting Files */,
 			);
@@ -283,7 +280,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = CA9C16241CC5DFE200204303;
 			productRefGroup = CA9C162E1CC5DFE200204303 /* Products */;
@@ -349,7 +345,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA9C16A61CC5E94D00204303 /* Assets.xcassets in Resources */,
-				CA9C16A91CC5E94D00204303 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,17 +379,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		CA9C16A71CC5E94D00204303 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CA9C16A81CC5E94D00204303 /* Base */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		CA9C16421CC5DFE200204303 /* Debug */ = {

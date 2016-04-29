@@ -2,26 +2,27 @@
 
 #include "GXPrefix.h"
 #include "GPieceData.h"
+#include <string.h>
 
 class GDataArrayBase : public GObject {
 	GX_OBJECT(GDataArrayBase);
 };
 
-template <typename T,guint N>
+template <typename T,typename DT>
 class GDataArray : public GDataArrayBase {
     GX_OBJECT(GDataArray);
 public:
 	inline gint getCount() {
 		return (gint)(m_Data.getBytes() / sizeof(T));
 	}
-	inline T get(gint index) {
-		return GX_CAST_R(T*,m_Data.getPtr())[index];
-	}
+    inline guint getBytes() {
+        return m_Data.getBytes();
+    }
+    inline T& get(gint index) {
+        return GX_CAST_R(T*, m_Data.getPtr())[index];
+    }
 	inline T* getPtr(gint index) {
 		return &GX_CAST_R(T*, m_Data.getPtr())[index];
-	}
-	inline T& get(gint index) {
-		return GX_CAST_R(T*, m_Data.getPtr())[index];
 	}
 	inline void set(gint index,const T& v) {
 		GX_CAST_R(T*, m_Data.getPtr())[index] = v;
@@ -34,6 +35,37 @@ public:
 		}
 		return false;
 	}
+    bool add(const T& v,gint count) {
+        if (count<0) {
+            return false;
+        }
+        else if(count==0) {
+            return true;
+        }
+        gint dc = getCount();
+        if (changeCount(dc + count)) {
+            for(gint i=0;i<count;i++) {
+                GX_CAST_R(T*, m_Data.getPtr())[dc+i] = v;
+            }
+            return true;
+        }
+        return false;
+    }
+    bool add(GDataArray* other) {
+        gint oc = other->getCount();
+        if(oc<0) {
+            return false;
+        }
+        else if(oc==0) {
+            return true;
+        }
+        gint dc = getCount();
+        if (changeCount(dc + oc)) {
+            memcpy((void*)&GX_CAST_R(T*, m_Data.getPtr())[dc], other->getPtr(0), other->getBytes());
+            return true;
+        }
+        return false;
+    }
 	bool insert(gint index,const T& v) {
 		if (index < 0) {
 			return false;
@@ -77,46 +109,45 @@ public:
 			(dc - indexFrom - indexCount)*sizeof(T));
 		return changeCount(dc - indexCount);
 	}
-
 	void removeAll() {
 		changeCount(0);
 	}
-
-private:
+    inline void zeroSelf() {
+        m_Data.zeroSelf();
+    }
+protected:
 	inline bool changeCount(gint toCount) {
 		return m_Data.changeBytes(GX_CAST_S(guint,toCount)*sizeof(T));
 	}
+protected:
+    inline DT& getData() {
+        return m_Data;
+    }
 private:
-    GPieceData m_Data;
+    DT m_Data;
 };
 
-GX_OBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA guint N, GDataArray<T GX_COMMA N>, GDataArrayBase);
+GX_OBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA typename DT, GDataArray<T GX_COMMA DT>, GDataArrayBase);
 
-template <typename T,guint N>
-GDataArray<T,N>::GDataArray():
-m_Data(sizeof(T)*N)
+template <typename T,typename DT>
+GDataArray<T,DT>::GDataArray()
 {
 
 }
-template <typename T,guint N>
-GDataArray<T,N>::~GDataArray()
+template <typename T,typename DT>
+GDataArray<T,DT>::~GDataArray()
 {
     
 }
 
 
-#if defined(GX_OS_MOBILE)
-#define GX_DARRAY_N 8
-#else
-#define GX_DARRAY_N 16
-#endif
-
 template <typename T>
-class GDArray : public GDataArray<T, GX_DARRAY_N> {
+class GDArray : public GDataArray<T, GData> {
 	GX_OBJECT(GDArray);
+    template <typename K,typename O> friend class GMap;
 };
 
-GX_OBJECT_TEMPLATE_IMPLEMENT(typename T, GDArray<T>, GDataArray<T GX_COMMA GX_DARRAY_N>);
+GX_OBJECT_TEMPLATE_IMPLEMENT(typename T, GDArray<T>, GDataArray<T GX_COMMA GData>);
 
 template <typename T>
 GDArray<T>::GDArray()
@@ -128,3 +159,48 @@ GDArray<T>::~GDArray()
 {
 
 }
+
+
+template <typename T,guint32 N>
+class GPieceDataArray : public GDataArray<T, GPieceData> {
+    GX_OBJECT(GPieceDataArray);
+};
+
+GX_OBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA guint32 N, GPieceDataArray<T GX_COMMA N>, GDataArray<T GX_COMMA GPieceData>);
+
+template <typename T,guint32 N>
+GPieceDataArray<T,N>::GPieceDataArray()
+{
+    GDataArray<T, GPieceData>::getData().setPieceSize(N);
+}
+template <typename T,guint32 N>
+GPieceDataArray<T,N>::~GPieceDataArray()
+{
+    
+}
+
+
+#if defined(GX_OS_MOBILE)
+#define GX_PDARRAY_N 8
+#else
+#define GX_PDARRAY_N 16
+#endif
+
+template <typename T>
+class GPDArray : public GPieceDataArray<T, GX_PDARRAY_N> {
+    GX_OBJECT(GPDArray);
+};
+
+GX_OBJECT_TEMPLATE_IMPLEMENT(typename T, GPDArray<T>, GPieceDataArray<T GX_COMMA GX_PDARRAY_N>);
+
+template <typename T>
+GPDArray<T>::GPDArray()
+{
+    
+}
+template <typename T>
+GPDArray<T>::~GPDArray()
+{
+    
+}
+

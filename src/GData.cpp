@@ -122,3 +122,8 @@ bool GData::robOther(GData* other)
     other->m_IsStatic=0;
 	return true;
 }
+
+void GData::zeroSelf()
+{
+    memset(m_Buffer, 0, m_Bytes);
+}

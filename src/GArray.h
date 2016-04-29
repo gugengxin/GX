@@ -2,6 +2,7 @@
 
 #include "GXPrefix.h"
 #include "GPieceData.h"
+#include <string.h>
 
 class GArrayBase : public GObject
 {
@@ -84,7 +85,7 @@ public:
 		changeCount(0);
 	}
 
-private:
+protected:
 	inline bool changeCount(gint toCount) {
 		return m_Data.changeBytes(GX_CAST_S(guint, toCount)*sizeof(T*));
 	}

@@ -16,6 +16,7 @@
 class GData : public GObject {
     GX_OBJECT(GData);
 	friend class GPieceData;
+    template <typename T,typename DC> friend class GDataArray;
 public:
     static bool galloc(GX_IN_OUT void*& buf,GX_IN guint size,GX_IN guint toSize);
 public:
@@ -34,6 +35,7 @@ public:
     void setStatic(const void* data,guint bytes);
 	virtual void freeSelf();
 	virtual bool robOther(GX_NONNULL GData* other);
+    void zeroSelf();
     
 private:
     void* m_Buffer;

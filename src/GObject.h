@@ -34,6 +34,9 @@ public:
     bool  isMemberOfClass(GClass& cls);
     bool  isKindOfClass(GClass* pClass);
     bool  isKindOfClass(GClass& cls);
+public:
+    virtual guint getHash();
+    virtual bool isEqual(GObject* obj);
 };
 
 typedef GObject GO;
