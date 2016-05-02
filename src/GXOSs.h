@@ -47,6 +47,12 @@
 #define GX_OS_WINDOWS
 #define GX_IDE_VS
 
+#elif defined(GXOS_ANDROID)
+
+#define GX_OS_GOOGLE
+#define GX_OS_MOBILE
+#define GX_IDE_AS
+
 #endif
 
 #define GX_BYTE_ORDER GX_LITTLE_ENDIAN

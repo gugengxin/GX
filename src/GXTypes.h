@@ -19,7 +19,7 @@ typedef long long           gint64;
 typedef unsigned long long  guint64;
 
 typedef char gchar;
-typedef wchar_t gwchar;
+typedef gint16 gwchar;
 
 #if defined (__LP64__) || defined (__64BIT__) || defined (_LP64) || (__WORDSIZE == 64) || defined(WIN64)
 #define GX_PTR_32BIT  0
