@@ -19,31 +19,39 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\GApplication.cpp" />
     <ClCompile Include="..\..\src\GArray.cpp" />
     <ClCompile Include="..\..\src\GClass.cpp" />
     <ClCompile Include="..\..\src\GCondition.cpp" />
     <ClCompile Include="..\..\src\GData.cpp" />
     <ClCompile Include="..\..\src\GDataArray.cpp" />
+    <ClCompile Include="..\..\src\GMap.cpp" />
     <ClCompile Include="..\..\src\GMutex.cpp" />
     <ClCompile Include="..\..\src\GObject.cpp" />
     <ClCompile Include="..\..\src\GOWHash.cpp" />
     <ClCompile Include="..\..\src\GPieceData.cpp" />
     <ClCompile Include="..\..\src\GRunLoop.cpp" />
+    <ClCompile Include="..\..\src\GString.cpp" />
     <ClCompile Include="..\..\src\GThread.cpp" />
+    <ClCompile Include="..\..\src\GUUID.cpp" />
     <ClCompile Include="..\..\src\GXPthread.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\GApplication.h" />
     <ClInclude Include="..\..\src\GArray.h" />
     <ClInclude Include="..\..\src\GClass.h" />
     <ClInclude Include="..\..\src\GCondition.h" />
     <ClInclude Include="..\..\src\GData.h" />
     <ClInclude Include="..\..\src\GDataArray.h" />
+    <ClInclude Include="..\..\src\GMap.h" />
     <ClInclude Include="..\..\src\GMutex.h" />
     <ClInclude Include="..\..\src\GObject.h" />
     <ClInclude Include="..\..\src\GOWHash.h" />
     <ClInclude Include="..\..\src\GPieceData.h" />
     <ClInclude Include="..\..\src\GRunLoop.h" />
+    <ClInclude Include="..\..\src\GString.h" />
     <ClInclude Include="..\..\src\GThread.h" />
+    <ClInclude Include="..\..\src\GUUID.h" />
     <ClInclude Include="..\..\src\GX.h" />
     <ClInclude Include="..\..\src\GXOSs.h" />
     <ClInclude Include="..\..\src\GXPrefix.h" />
