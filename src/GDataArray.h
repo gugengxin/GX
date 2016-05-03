@@ -109,6 +109,23 @@ public:
 			(dc - indexFrom - indexCount)*sizeof(T));
 		return changeCount(dc - indexCount);
 	}
+    bool removeLast() {
+        gint dc=getCount();
+        if (dc<=0) {
+            return true;
+        }
+        return changeCount(dc-1);
+    }
+    bool removeFrom(gint indexFrom) {
+        if (indexFrom<0) {
+            return false;
+        }
+        gint dc = getCount();
+        if (indexFrom>=dc) {
+            return false;
+        }
+        return changeCount(indexFrom);
+    }
 	void removeAll() {
 		changeCount(0);
 	}
@@ -117,7 +134,7 @@ public:
     }
 protected:
 	inline bool changeCount(gint toCount) {
-		return m_Data.changeBytes(GX_CAST_S(guint,toCount)*sizeof(T));
+		return m_Data.changeBytes(GX_CAST_S(guint,toCount)*GX_CAST_S(guint,sizeof(T)));
 	}
 protected:
     inline DT& getData() {
@@ -188,6 +205,8 @@ GPieceDataArray<T,N>::~GPieceDataArray()
 
 template <typename T>
 class GPDArray : public GPieceDataArray<T, GX_PDARRAY_N> {
+    friend class GAutoreleasePool;
+    friend class GThread;
     GX_OBJECT(GPDArray);
 };
 

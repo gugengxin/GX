@@ -65,7 +65,7 @@ bool GPieceData::setPieceSize(guint32 v)
 }
 
 
-bool GPieceData::changeBytes(guint32 toSize)
+bool GPieceData::changeBytes(guint toSize)
 {
 	if (m_IsStatic) {
 		return (toSize == m_Bytes);
@@ -76,7 +76,7 @@ bool GPieceData::changeBytes(guint32 toSize)
 		}
 	}
 
-	guint32 toBCount = (toSize + m_PieceSize - 1) / m_PieceSize;
+	guint32 toBCount = GX_CAST_S(guint32, (toSize + m_PieceSize - 1) / m_PieceSize);
 	guint toSizeReal = toBCount*(guint)m_PieceSize;
 #if GX_PTR_32BIT
 	if (toSizeReal & 0x80000000) {

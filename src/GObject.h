@@ -16,6 +16,7 @@ class GObject {
 public:
 	static void retain(GObject* obj);
 	static void release(GObject* obj);
+    static void autorelease(GObject* obj);
 protected:
 	static void* gnew(size_t size);
 	static void gdel(void* p);
@@ -26,6 +27,7 @@ public:
     static GClass   gclass;
     virtual GClass* getClass();
     static GObject* alloc();
+    static GObject* autoAlloc();
 	void* operator new(size_t size);
 	void operator delete(void* p);
     

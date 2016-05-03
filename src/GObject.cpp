@@ -7,7 +7,7 @@
 //
 
 #include "GObject.h"
-
+#include "GThread.h"
 
 
 void GObject::retain(GObject* obj)
@@ -25,6 +25,12 @@ void GObject::release(GObject* obj)
 			delete obj;
 		}
 	}
+}
+void GObject::autorelease(GObject* obj)
+{
+    if (obj) {
+        GThread::current()->pushARObj(obj);
+    }
 }
 void* GObject::gnew(size_t size)
 {
@@ -46,6 +52,12 @@ GClass* GObject::getClass()
 GObject* GObject::alloc()
 {
     return new GObject();
+}
+GObject* GObject::autoAlloc()
+{
+    GObject* res=new GObject();
+    autorelease(res);
+    return res;
 }
 void* GObject::operator new(size_t size)
 {

@@ -54,6 +54,11 @@ public:\
     static cls* alloc() {\
 		return new cls();\
 	}\
+    static cls* autoAlloc() {\
+        cls* res=new cls();\
+        GObject::autorelease(res);\
+        return res;\
+    }\
 	void* operator new(size_t size) {\
 		return GObject::gnew(size);\
 	}\

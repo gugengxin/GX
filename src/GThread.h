@@ -11,16 +11,34 @@
 
 #include "GXPrefix.h"
 #include "GObject.h"
+#include "GAutoreleasePool.h"
+#include "GDataArray.h"
+#include "GRunLoop.h"
 
-
-
-class GThread : public GObject {
-    GX_OBJECT(GThread);
+class GThread {
+    friend class GApplication;
+    friend class GAutoreleasePool;
+    friend class GObject;
 public:
+    static GThread* main();
+    static GThread* current();
     
+    GRunLoop* getRunLoop();
+private:
+    static void keyCreate();
+    static void keyDestory(void* p);
+    
+    GThread();
+    ~GThread();
+    void setMain();
+
+    void pushARObj(GObject* v);
+    void popARObj(gint toCount);
     
 private:
     guint m_ID;
+    GPDArray<GObject*> m_ARObjs;
+    GRunLoop* m_RunLoop;
 };
 
 

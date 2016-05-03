@@ -8,9 +8,6 @@
 
 #include "GRunLoop.h"
 
-
-GX_OBJECT_IMPLEMENT(GRunLoop, GObject);
-
 GRunLoop::GRunLoop()
 {
 

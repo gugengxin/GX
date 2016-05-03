@@ -10,6 +10,8 @@
 #define GApplication_h
 
 #include "GXPrefix.h"
+#include "GArray.h"
+#include "GWindow.h"
 
 
 class GApplication {
@@ -24,10 +26,26 @@ public:
 private:
     GApplication();
     ~GApplication();
+    
+    void idle();
+    
+    void didFinishLaunching();
+    void didBecomeActive();
+    void willResignActive();
+    void didEnterBackground();
+    void willEnterForeground();
+    void willTerminate();
+    void didReceiveMemoryWarning();
 public:
 
 private:
     Delegate* m_Delegate;
+    GArray<GWindow> m_Windows;
+    
+#if defined(GX_OS_APPLE)
+    friend class _AppTimerBridge;
+    void* m_Timer;
+#endif
 };
 
 

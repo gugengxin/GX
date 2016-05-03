@@ -22,7 +22,7 @@ protected:
 public:
 	bool setPieceSize(guint32 v);
 
-	virtual bool changeBytes(guint32 toSize);
+	virtual bool changeBytes(guint toSize);
 	virtual void freeSelf();
 	virtual bool robOther(GData* other);
 

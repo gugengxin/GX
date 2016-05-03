@@ -11,6 +11,7 @@ class GArrayBase : public GObject
 
 template <typename T>
 class GArray : public GArrayBase {
+    friend class GApplication;
 	GX_OBJECT(GArray);
 public:
 	inline gint getCount() {
@@ -77,6 +78,16 @@ public:
 			(dc - indexFrom - indexCount)*sizeof(T*));
 		return changeCount(dc - indexCount);
 	}
+    
+    bool removeLast() {
+        gint dc=getCount();
+        if (dc<=0) {
+            return true;
+        }
+        --dc;
+        GO::release(GX_CAST_R(T**, m_Data.getPtr())[dc]);
+        return changeCount(dc);
+    }
 
 	void removeAll() {
 		for (gint i = 0; i < getCount(); i++) {

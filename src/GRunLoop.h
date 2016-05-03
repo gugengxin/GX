@@ -13,9 +13,11 @@
 #include "GObject.h"
 
 
-class GRunLoop : public GObject {
-    GX_OBJECT(GRunLoop);
-public:
+class GRunLoop {
+    friend class GThread;
+private:
+    GRunLoop();
+    ~GRunLoop();
     
 private:
     
