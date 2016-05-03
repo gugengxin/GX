@@ -5,17 +5,20 @@
     <GXRoot>$(GX_ROOT)</GXRoot>
   </PropertyGroup>
   <PropertyGroup>
-    <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
+    <OutDir>$(ProjectDir)$(PlatformTarget)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(GXRoot)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(GXRoot)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(GXRoot)\product\vs\lib\win\vc$(PlatformToolsetVersion)\$(Platform)\$(Configuration);$(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(GXRoot)\product\vs\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>GX.lib;pthread_dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="GXRoot">

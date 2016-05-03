@@ -11,9 +11,15 @@
 
 #include "GXPrefix.h"
 #include "GObject.h"
+#if defined(GX_OS_WINDOWS)
+#include "GXCWnd.h"
+#endif
 
 class GUUID : public GObject {
-    GX_OBJECT(GUUID);
+#if defined(GX_OS_WINDOWS)
+	friend class GX::CWnd;
+#endif
+	GX_OBJECT(GUUID);
 public:
 
 private:

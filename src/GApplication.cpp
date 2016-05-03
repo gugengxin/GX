@@ -13,6 +13,8 @@
 #import <Cocoa/Cocoa.h>
 #elif defined(GX_OS_ANDROID)
 #elif defined(GX_OS_WINDOWS)
+#include <Mmsystem.h>
+#pragma comment(lib, "Winmm.lib")
 #endif
 #include "GThread.h"
 
@@ -194,6 +196,53 @@ private:
 
 @end
 
+#elif defined(GX_OS_WINDOWS)
+
+LRESULT CALLBACK GApplication::winMsgWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message) {
+	case WM_USER:
+	{
+		GX_CAST_R(GApplication*, lParam)->idle();
+	}
+	break;
+	default:
+		break;
+	}
+	return ::DefWindowProc(hWnd, message, wParam, lParam);
+}
+
+void CALLBACK GApplication::winTimerCallBack(UINT uTimerID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2)
+{
+	GApplication* app = GX_CAST_R(GApplication*, dwUser);
+	::PostMessage(app->m_MsgWnd.getHWND(), WM_USER, 0, (LPARAM)app);
+}
+
+void GApplication::createWinMsgWndAndStart()
+{
+	WNDCLASS	wc;
+	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+	wc.lpfnWndProc = (WNDPROC)winMsgWndProc;
+	wc.cbClsExtra = 0;
+	wc.cbWndExtra = 0;
+	wc.hInstance = NULL;
+	wc.hIcon = NULL;
+	wc.hCursor = NULL;
+	wc.hbrBackground = NULL;
+	wc.lpszMenuName = NULL;
+	wc.lpszClassName = NULL;
+	RECT rc = { 0, 0, 1, 1 };
+	m_MsgWnd.create(wc, WS_OVERLAPPEDWINDOW, WS_EX_APPWINDOW | WS_EX_WINDOWEDGE, rc, NULL);
+	m_TimerID = timeSetEvent(1000 / 60, 1000 / 60, winTimerCallBack, (DWORD_PTR)this, TIME_PERIODIC | TIME_KILL_SYNCHRONOUS);
+}
+void GApplication::destroyWinMsgWnd()
+{
+	if (m_TimerID) {
+		timeKillEvent(m_TimerID);
+		m_MsgWnd.destroy();
+	}
+}
+
 #endif
 
 
@@ -214,6 +263,9 @@ void GApplication::main(Delegate* dge)
 #if defined(GX_OS_APPLE)
     [GX_CAST_R(_AppTimer*, app->m_Timer) start];
     app->didFinishLaunching();
+#elif defined(GX_OS_WINDOWS)
+	app->createWinMsgWndAndStart();
+	app->didFinishLaunching();
 #endif
 }
 
@@ -223,6 +275,8 @@ GApplication::GApplication()
     m_Delegate=NULL;
 #if defined(GX_OS_APPLE)
     m_Timer=[[_AppTimer alloc] initWithDelegate:this];
+#elif defined(GX_OS_WINDOWS)
+	m_TimerID = 0;
 #endif
 }
 
@@ -230,14 +284,17 @@ GApplication::~GApplication()
 {
 #if defined(GX_OS_APPLE)
     [GX_CAST_R(_AppTimer*, m_Timer) release];
+#elif defined(GX_OS_WINDOWS)
+	if (m_TimerID) {
+		timeKillEvent(m_TimerID);
+	}
 #endif
 }
 
 void GApplication::idle()
 {
-    
-    
-    GThread::current()->popARObj(0);
+	
+	GThread::current()->popARObj(0);
 }
 
 void GApplication::didFinishLaunching()

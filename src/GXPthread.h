@@ -22,6 +22,13 @@ namespace GX {
         long __sig;
         char __opaque[40];
     } pthread_cond_t;
+
+#if defined(GX_OS_WINDOWS)
+	typedef struct _ptw32_handle_t {
+		void * p;      
+		unsigned int x;
+	} ptw32_handle_t;
+#endif
 }
 
 #endif /* GXPthread_h */

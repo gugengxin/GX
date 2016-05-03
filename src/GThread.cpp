@@ -9,6 +9,14 @@
 #include "GThread.h"
 #include <pthread.h>
 
+#if defined(GX_OS_WINDOWS)
+#define M_PID_TYPE GX::ptw32_handle_t
+#define M_PID_SELF() (*GX_CAST_R(M_PID_TYPE*, &pthread_self()))
+#else
+#define M_PID_TYPE guint
+#define M_PID_SELF() GX_CAST_R(M_PID_TYPE, pthread_self())
+#endif
+
 static GThread* g_MT=NULL;
 static pthread_key_t tsd_key=0;
 
@@ -41,7 +49,7 @@ void GThread::keyDestory(void* p)
 
 GThread::GThread()
 {
-    m_ID=GX_CAST_R(guint, pthread_self());
+	m_ID = M_PID_SELF();
     m_RunLoop=NULL;
 }
 

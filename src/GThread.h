@@ -6,14 +6,15 @@
 //  Copyright © 2016年 Gengxin Gu. All rights reserved.
 //
 
-#ifndef GThread_hpp
-#define GThread_hpp
+#ifndef GThread_h
+#define GThread_h
 
 #include "GXPrefix.h"
 #include "GObject.h"
 #include "GAutoreleasePool.h"
 #include "GDataArray.h"
 #include "GRunLoop.h"
+#include "GXPthread.h"
 
 class GThread {
     friend class GApplication;
@@ -36,7 +37,11 @@ private:
     void popARObj(gint toCount);
     
 private:
-    guint m_ID;
+#if defined(GX_OS_WINDOWS)
+	GX::ptw32_handle_t m_ID;
+#else
+	guint m_ID;
+#endif
     GPDArray<GObject*> m_ARObjs;
     GRunLoop* m_RunLoop;
 };
@@ -45,4 +50,4 @@ private:
 
 
 
-#endif /* GThread_hpp */
+#endif /* GThread_h */

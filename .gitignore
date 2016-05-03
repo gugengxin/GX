@@ -3,11 +3,9 @@ GX.pro.user
 *.v12.suo
 *.sdf
 project/vs/x64/
-project/vs/Win32/
+project/vs/x86/
 project/vs/ipch/
 project/build-GX*
-tool/cmd/sed/project/vs/x64/
-tool/cmd/sed/project/vs/Win32/
 bin/
 project/vs/GX.opensdf
 *.pro.user
@@ -16,3 +14,5 @@ product/vs/lib/
 external/pthread-win32/lib/
 external/pthread-win32/include/
 external/pthread-win32/pthread-win32/
+test/project/vs/x64/
+test/project/vs/x86/

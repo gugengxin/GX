@@ -13,6 +13,14 @@
 #include "GXOSs.h"
 #include "GXTypes.h"
 
+
+#ifndef GX_DEBUG
+#if defined(_DEBUG) || defined(DEBUG)
+#define GX_DEBUG
+#endif
+#endif
+
+
 #include <stddef.h>
 #include <stdlib.h>
 

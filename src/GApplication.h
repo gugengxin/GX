@@ -12,7 +12,7 @@
 #include "GXPrefix.h"
 #include "GArray.h"
 #include "GWindow.h"
-
+#include "GXCWnd.h"
 
 class GApplication {
 public:
@@ -45,6 +45,14 @@ private:
 #if defined(GX_OS_APPLE)
     friend class _AppTimerBridge;
     void* m_Timer;
+#elif defined(GX_OS_WINDOWS)
+	static LRESULT CALLBACK winMsgWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	static void CALLBACK winTimerCallBack(UINT uTimerID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2);
+	void createWinMsgWndAndStart();
+	void destroyWinMsgWnd();
+
+	GX::CWnd m_MsgWnd;
+	UINT m_TimerID;
 #endif
 };
 

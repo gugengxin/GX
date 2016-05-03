@@ -12,5 +12,7 @@
 
 #include "GXPrefix.h"
 
+#include "GApplication.h"
+
 
 #endif /* GX_h */
