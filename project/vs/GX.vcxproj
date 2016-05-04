@@ -26,6 +26,7 @@
     <ClCompile Include="..\..\src\GCondition.cpp" />
     <ClCompile Include="..\..\src\GData.cpp" />
     <ClCompile Include="..\..\src\GDataArray.cpp" />
+    <ClCompile Include="..\..\src\GDataString.cpp" />
     <ClCompile Include="..\..\src\GMap.cpp" />
     <ClCompile Include="..\..\src\GMutex.cpp" />
     <ClCompile Include="..\..\src\GObject.cpp" />
@@ -35,8 +36,10 @@
     <ClCompile Include="..\..\src\GString.cpp" />
     <ClCompile Include="..\..\src\GSystem.cpp" />
     <ClCompile Include="..\..\src\GThread.cpp" />
+    <ClCompile Include="..\..\src\GTString.cpp" />
     <ClCompile Include="..\..\src\GUUID.cpp" />
     <ClCompile Include="..\..\src\GWindow.cpp" />
+    <ClCompile Include="..\..\src\GWString.cpp" />
     <ClCompile Include="..\..\src\GXCWnd.cpp" />
     <ClCompile Include="..\..\src\GXPthread.cpp" />
   </ItemGroup>
@@ -48,6 +51,7 @@
     <ClInclude Include="..\..\src\GCondition.h" />
     <ClInclude Include="..\..\src\GData.h" />
     <ClInclude Include="..\..\src\GDataArray.h" />
+    <ClInclude Include="..\..\src\GDataString.h" />
     <ClInclude Include="..\..\src\GMap.h" />
     <ClInclude Include="..\..\src\GMutex.h" />
     <ClInclude Include="..\..\src\GObject.h" />
@@ -57,10 +61,13 @@
     <ClInclude Include="..\..\src\GString.h" />
     <ClInclude Include="..\..\src\GSystem.h" />
     <ClInclude Include="..\..\src\GThread.h" />
+    <ClInclude Include="..\..\src\GTString.h" />
     <ClInclude Include="..\..\src\GUUID.h" />
     <ClInclude Include="..\..\src\GWindow.h" />
+    <ClInclude Include="..\..\src\GWString.h" />
     <ClInclude Include="..\..\src\GX.h" />
     <ClInclude Include="..\..\src\GXCWnd.h" />
+    <ClInclude Include="..\..\src\GXEncoding.h" />
     <ClInclude Include="..\..\src\GXOSs.h" />
     <ClInclude Include="..\..\src\GXPrefix.h" />
     <ClInclude Include="..\..\src\GXPthread.h" />

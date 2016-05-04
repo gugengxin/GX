@@ -33,7 +33,7 @@
     <ClInclude Include="GXTest.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\AppDelegate.h">
+    <ClInclude Include="..\..\src\AppDge.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClCompile Include="GXTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\AppDelegate.cpp">
+    <ClCompile Include="..\..\src\AppDge.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

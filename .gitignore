@@ -16,3 +16,5 @@ external/pthread-win32/include/
 external/pthread-win32/pthread-win32/
 test/project/vs/x64/
 test/project/vs/x86/
+GX.suo
+*.vcxproj.user

@@ -37,11 +37,7 @@ private:
     void popARObj(gint toCount);
     
 private:
-#if defined(GX_OS_WINDOWS)
-	GX::ptw32_handle_t m_ID;
-#else
-	guint m_ID;
-#endif
+	GX::pthread_t m_ID;
     GPDArray<GObject*> m_ARObjs;
     GRunLoop* m_RunLoop;
 };

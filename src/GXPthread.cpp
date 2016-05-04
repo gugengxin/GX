@@ -10,11 +10,14 @@
 #include <pthread.h>
 #ifdef GX_DEBUG
 #include <assert.h>
-static int _Test()
-{
-    assert(sizeof(GX::pthread_mutex_t)==sizeof(pthread_mutex_t));
-    assert(sizeof(GX::pthread_cond_t)==sizeof(pthread_cond_t));
-    return 0;
+namespace GX {
+	static int _Test()
+	{
+		assert(sizeof(GX::pthread_t) == sizeof(::pthread_t));
+		assert(sizeof(GX::pthread_mutex_t) == sizeof(::pthread_mutex_t));
+		assert(sizeof(GX::pthread_cond_t) == sizeof(::pthread_cond_t));
+		return 0;
+	}
+	int pthread_test = _Test();
 }
-static int g_Test=_Test();
 #endif

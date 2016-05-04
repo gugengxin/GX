@@ -212,7 +212,7 @@ LRESULT CALLBACK GApplication::winMsgWndProc(HWND hWnd, UINT message, WPARAM wPa
 	return ::DefWindowProc(hWnd, message, wParam, lParam);
 }
 
-void CALLBACK GApplication::winTimerCallBack(UINT uTimerID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2)
+void CALLBACK GApplication::winTimerCallBack(UINT uTimerID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2)
 {
 	GApplication* app = GX_CAST_R(GApplication*, dwUser);
 	::PostMessage(app->m_MsgWnd.getHWND(), WM_USER, 0, (LPARAM)app);

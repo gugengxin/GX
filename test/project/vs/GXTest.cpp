@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "GXTest.h"
-#include "AppDelegate.h"
+#include "AppDge.h"
 
 #define MAX_LOADSTRING 100
 
@@ -43,7 +43,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GXTEST));
 
-	GApplication::main(AppDelegate::shared());
+	GApplication::main(AppDge::shared());
 
 	// 主消息循环: 
 	while (GetMessage(&msg, NULL, 0, 0))

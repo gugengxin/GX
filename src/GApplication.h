@@ -47,7 +47,7 @@ private:
     void* m_Timer;
 #elif defined(GX_OS_WINDOWS)
 	static LRESULT CALLBACK winMsgWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-	static void CALLBACK winTimerCallBack(UINT uTimerID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2);
+	static void CALLBACK winTimerCallBack(UINT uTimerID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2);
 	void createWinMsgWndAndStart();
 	void destroyWinMsgWnd();
 

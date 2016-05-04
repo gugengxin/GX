@@ -17,8 +17,12 @@
       <AdditionalDependencies>GX.lib;pthread_dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="GXRoot">

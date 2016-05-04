@@ -10,11 +10,9 @@
 #include <pthread.h>
 
 #if defined(GX_OS_WINDOWS)
-#define M_PID_TYPE GX::ptw32_handle_t
-#define M_PID_SELF() (*GX_CAST_R(M_PID_TYPE*, &pthread_self()))
+#define M_PID_SELF() (*GX_CAST_R(GX::pthread_t*, &pthread_self()))
 #else
-#define M_PID_TYPE guint
-#define M_PID_SELF() GX_CAST_R(M_PID_TYPE, pthread_self())
+#define M_PID_SELF() GX_CAST_R(GX::pthread_t, pthread_self())
 #endif
 
 static GThread* g_MT=NULL;
@@ -64,6 +62,10 @@ GThread::~GThread()
 void GThread::setMain()
 {
     g_MT=this;
+#ifdef GX_DEBUG
+	int test=GX::pthread_test;
+	test++;
+#endif
 }
 
 void GThread::pushARObj(GObject* v)

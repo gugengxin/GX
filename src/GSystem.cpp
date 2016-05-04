@@ -8,7 +8,7 @@
 #include <mach/mach_time.h>
 #elif defined(GX_OS_WINDOWS)
 #include <sys/timeb.h>
-#include "GXUUID.h"
+#include <Windows.h>
 #endif
 
 gint64 GSystem::CurrentTimeMS()
@@ -23,7 +23,7 @@ gint64 GSystem::CurrentTimeMS()
     return now.tv_sec*1000+now.tv_usec/1000;
 #elif defined(GX_OS_WINDOWS)
     struct _timeb tb;
-    _ftime(&tb);
+	_ftime_s(&tb);
     return tb.time*1000LL+tb.millitm;
 #endif
 }
