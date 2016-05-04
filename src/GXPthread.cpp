@@ -13,9 +13,9 @@
 namespace GX {
 	static int _Test()
 	{
-		assert(sizeof(GX::pthread_t) == sizeof(::pthread_t));
-		assert(sizeof(GX::pthread_mutex_t) == sizeof(::pthread_mutex_t));
-		assert(sizeof(GX::pthread_cond_t) == sizeof(::pthread_cond_t));
+		assert(sizeof(pthread_t) == sizeof(::pthread_t));
+		assert(sizeof(pthread_mutex_t) == sizeof(::pthread_mutex_t));
+		assert(sizeof(pthread_cond_t) == sizeof(::pthread_cond_t));
 		return 0;
 	}
 	int pthread_test = _Test();
