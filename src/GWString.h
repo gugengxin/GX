@@ -19,6 +19,11 @@ public:
     const gwchar* c_str() {
         return GX_CAST_R(const gwchar*, getDataPtr());
     }
+	void set(const gchar* v, gint len = -1);
+	void append(const gchar* v, gint len = -1);
+	void insert(gint idx, const gchar* v, gint len = -1);
+
+
 };
 
 #endif /* GWString_h */

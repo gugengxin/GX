@@ -4,6 +4,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{1b127926-5e7b-45fa-85b7-9e5169fbca38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\String">
+      <UniqueIdentifier>{5126b0fe-82ad-4b25-877a-e57a1eaf1628}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GClass.cpp">
@@ -48,9 +51,6 @@
     <ClCompile Include="..\..\src\GMap.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GString.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GUUID.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -66,17 +66,20 @@
     <ClCompile Include="..\..\src\GXCWnd.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GDataString.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GTString.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GWString.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GLog.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDataString.cpp">
+      <Filter>src\String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GTString.cpp">
+      <Filter>src\String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GWString.cpp">
+      <Filter>src\String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GString.cpp">
+      <Filter>src\String</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +137,6 @@
     <ClInclude Include="..\..\src\GMap.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GString.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GUUID.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -152,20 +152,23 @@
     <ClInclude Include="..\..\src\GXCWnd.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GDataString.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GTString.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GWString.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GXEncoding.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GLog.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDataString.h">
+      <Filter>src\String</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GTString.h">
+      <Filter>src\String</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GWString.h">
+      <Filter>src\String</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GString.h">
+      <Filter>src\String</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXEncoding.h">
+      <Filter>src\String</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

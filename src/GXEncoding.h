@@ -23,6 +23,14 @@ namespace GX {
 #endif
         SE_GB2312   =3,
     } StringEncoding;
+
+	typedef enum _StringRadix {
+		SR_Binary		=2,
+		SR_Octal		=8,
+		SR_Decimal		=10,
+		SR_Hex			=16,
+		SR_HEX			=17,
+	} StringRadix;
 }
 
 #endif /* GXEncoding_h */

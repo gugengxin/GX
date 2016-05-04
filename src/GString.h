@@ -11,7 +11,6 @@
 
 #include "GXPrefix.h"
 #include "GDataString.h"
-#include "GXEncoding.h"
 
 
 class GString : public GDataString<gchar> {
@@ -20,6 +19,13 @@ public:
     const gchar* c_str() {
         return GX_CAST_R(const gchar*, getDataPtr());
     }
+
+	void set(const gwchar* v, gint len = -1);
+	void append(const gwchar* v, gint len = -1);
+	void insert(gint idx, const gwchar* v, gint len = -1);
+	
+
+
     /*
     void format(const gchar* fmt,va_list va);
     void format(const gchar* fmt,...);
