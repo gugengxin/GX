@@ -7,11 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA1F60AB1CD984BB00C6307B /* AppDge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A91CD984BB00C6307B /* AppDge.cpp */; };
+		CA1F60AC1CD984BB00C6307B /* AppDge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A91CD984BB00C6307B /* AppDge.cpp */; };
+		CA1F60AD1CD984BB00C6307B /* AppDge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A91CD984BB00C6307B /* AppDge.cpp */; };
+		CA1F60B81CD9894600C6307B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA1F60B51CD9894600C6307B /* MainMenu.xib */; };
+		CA1F60CA1CD99A6500C6307B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA1F60C91CD99A6500C6307B /* LaunchScreen.storyboard */; };
 		CA9C16321CC5DFE200204303 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16311CC5DFE200204303 /* main.m */; };
-		CA9C16351CC5DFE200204303 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16341CC5DFE200204303 /* AppDelegate.m */; };
+		CA9C16351CC5DFE200204303 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16341CC5DFE200204303 /* AppDelegate.mm */; };
 		CA9C163D1CC5DFE200204303 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA9C163C1CC5DFE200204303 /* Assets.xcassets */; };
 		CA9C16891CC5E7D800204303 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16881CC5E7D800204303 /* main.m */; };
-		CA9C168C1CC5E7D800204303 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9C168B1CC5E7D800204303 /* AppDelegate.m */; };
+		CA9C168C1CC5E7D800204303 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA9C168B1CC5E7D800204303 /* AppDelegate.mm */; };
 		CA9C16941CC5E7D800204303 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA9C16931CC5E7D800204303 /* Assets.xcassets */; };
 		CA9C16A11CC5E94D00204303 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16A01CC5E94D00204303 /* AppDelegate.mm */; };
 		CA9C16A41CC5E94D00204303 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16A31CC5E94D00204303 /* main.m */; };
@@ -46,17 +51,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA1F60A91CD984BB00C6307B /* AppDge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDge.cpp; sourceTree = "<group>"; };
+		CA1F60AA1CD984BB00C6307B /* AppDge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDge.h; sourceTree = "<group>"; };
+		CA1F60B51CD9894600C6307B /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		CA1F60C91CD99A6500C6307B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA9C162D1CC5DFE200204303 /* GXTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA9C16311CC5DFE200204303 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CA9C16331CC5DFE200204303 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		CA9C16341CC5DFE200204303 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		CA9C16341CC5DFE200204303 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		CA9C163C1CC5DFE200204303 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA9C16411CC5DFE200204303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA9C16481CC5E01B00204303 /* GX.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GX.xcodeproj; path = ../../../project/xcode/GX.xcodeproj; sourceTree = "<group>"; };
 		CA9C16851CC5E7D800204303 /* GXTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA9C16881CC5E7D800204303 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CA9C168A1CC5E7D800204303 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		CA9C168B1CC5E7D800204303 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		CA9C168B1CC5E7D800204303 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		CA9C16931CC5E7D800204303 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA9C16951CC5E7D800204303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA9C169D1CC5E94D00204303 /* GXTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,12 +107,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA1F60A81CD984BB00C6307B /* src */ = {
+			isa = PBXGroup;
+			children = (
+				CA1F60AA1CD984BB00C6307B /* AppDge.h */,
+				CA1F60A91CD984BB00C6307B /* AppDge.cpp */,
+			);
+			name = src;
+			path = ../../src;
+			sourceTree = "<group>";
+		};
 		CA9C16241CC5DFE200204303 = {
 			isa = PBXGroup;
 			children = (
 				CA9C16BF1CC5FDCB00204303 /* Config_ios.xcconfig */,
 				CA9C16C41CC5FDE200204303 /* Config_atv.xcconfig */,
 				CA9C16C31CC5FDD600204303 /* Config_mac.xcconfig */,
+				CA1F60A81CD984BB00C6307B /* src */,
 				CA9C162F1CC5DFE200204303 /* ios */,
 				CA9C16861CC5E7D800204303 /* atv */,
 				CA9C169E1CC5E94D00204303 /* mac */,
@@ -126,9 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				CA9C16331CC5DFE200204303 /* AppDelegate.h */,
-				CA9C16341CC5DFE200204303 /* AppDelegate.m */,
-				CA9C163C1CC5DFE200204303 /* Assets.xcassets */,
-				CA9C16411CC5DFE200204303 /* Info.plist */,
+				CA9C16341CC5DFE200204303 /* AppDelegate.mm */,
 				CA9C16301CC5DFE200204303 /* Supporting Files */,
 			);
 			path = ios;
@@ -138,6 +156,9 @@
 			isa = PBXGroup;
 			children = (
 				CA9C16311CC5DFE200204303 /* main.m */,
+				CA9C16411CC5DFE200204303 /* Info.plist */,
+				CA9C163C1CC5DFE200204303 /* Assets.xcassets */,
+				CA1F60C91CD99A6500C6307B /* LaunchScreen.storyboard */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -164,7 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				CA9C168A1CC5E7D800204303 /* AppDelegate.h */,
-				CA9C168B1CC5E7D800204303 /* AppDelegate.m */,
+				CA9C168B1CC5E7D800204303 /* AppDelegate.mm */,
 				CA9C16931CC5E7D800204303 /* Assets.xcassets */,
 				CA9C16951CC5E7D800204303 /* Info.plist */,
 				CA9C16871CC5E7D800204303 /* Supporting Files */,
@@ -195,6 +216,7 @@
 		CA9C16A21CC5E94D00204303 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CA1F60B51CD9894600C6307B /* MainMenu.xib */,
 				CA9C16A31CC5E94D00204303 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -329,6 +351,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA9C163D1CC5DFE200204303 /* Assets.xcassets in Resources */,
+				CA1F60CA1CD99A6500C6307B /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA9C16A61CC5E94D00204303 /* Assets.xcassets in Resources */,
+				CA1F60B81CD9894600C6307B /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,8 +379,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA9C16351CC5DFE200204303 /* AppDelegate.m in Sources */,
+				CA9C16351CC5DFE200204303 /* AppDelegate.mm in Sources */,
 				CA9C16321CC5DFE200204303 /* main.m in Sources */,
+				CA1F60AB1CD984BB00C6307B /* AppDge.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,8 +389,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA9C168C1CC5E7D800204303 /* AppDelegate.m in Sources */,
+				CA9C168C1CC5E7D800204303 /* AppDelegate.mm in Sources */,
 				CA9C16891CC5E7D800204303 /* main.m in Sources */,
+				CA1F60AC1CD984BB00C6307B /* AppDge.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +401,7 @@
 			files = (
 				CA9C16A41CC5E94D00204303 /* main.m in Sources */,
 				CA9C16A11CC5E94D00204303 /* AppDelegate.mm in Sources */,
+				CA1F60AD1CD984BB00C6307B /* AppDge.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +503,7 @@
 			baseConfigurationReference = CA9C16BF1CC5FDCB00204303 /* Config_ios.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "$(SRCROOT)/ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;
@@ -487,6 +515,7 @@
 			baseConfigurationReference = CA9C16BF1CC5FDCB00204303 /* Config_ios.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "$(SRCROOT)/ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;

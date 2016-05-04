@@ -10,16 +10,22 @@
 #define GString_h
 
 #include "GXPrefix.h"
-#include "GObject.h"
-#include "GPieceData.h"
+#include "GDataString.h"
+#include "GXEncoding.h"
 
-class GString : public GObject {
+
+class GString : public GDataString<gchar> {
     GX_OBJECT(GString);
 public:
-    
-    
-private:
-    GPieceData m_Data;
+    const gchar* c_str() {
+        return GX_CAST_R(const gchar*, getDataPtr());
+    }
+    /*
+    void format(const gchar* fmt,va_list va);
+    void format(const gchar* fmt,...);
+    void appendFormat(const gchar* fmt,va_list va);
+    void appendFormat(const gchar* fmt,...);
+    //*/
 };
 
 #endif /* GString_h */

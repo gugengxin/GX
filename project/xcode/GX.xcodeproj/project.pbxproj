@@ -10,7 +10,6 @@
 		CA0B15F11CD07A3600C33BB5 /* GThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B15EF1CD07A3600C33BB5 /* GThread.cpp */; };
 		CA0B15F21CD07A3600C33BB5 /* GThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B15EF1CD07A3600C33BB5 /* GThread.cpp */; };
 		CA0B15F31CD07A3600C33BB5 /* GThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B15EF1CD07A3600C33BB5 /* GThread.cpp */; };
-		CA0B15F41CD07A3600C33BB5 /* GThread.h in Headers */ = {isa = PBXBuildFile; fileRef = CA0B15F01CD07A3600C33BB5 /* GThread.h */; };
 		CA0B15F81CD07CD000C33BB5 /* GMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B15F71CD07CD000C33BB5 /* GMutex.cpp */; };
 		CA0B15F91CD07CD000C33BB5 /* GMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B15F71CD07CD000C33BB5 /* GMutex.cpp */; };
 		CA0B15FA1CD07CD000C33BB5 /* GMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B15F71CD07CD000C33BB5 /* GMutex.cpp */; };
@@ -23,43 +22,50 @@
 		CA1AD2771CD87CA900CEA1DC /* GWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */; };
 		CA1AD2781CD87CA900CEA1DC /* GWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */; };
 		CA1AD2791CD87CA900CEA1DC /* GWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */; };
-		CA1AD27A1CD87CA900CEA1DC /* GWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CA1AD2761CD87CA900CEA1DC /* GWindow.h */; };
 		CA1AD27F1CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD27D1CD89DFB00CEA1DC /* GAutoreleasePool.cpp */; };
 		CA1AD2801CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD27D1CD89DFB00CEA1DC /* GAutoreleasePool.cpp */; };
 		CA1AD2811CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD27D1CD89DFB00CEA1DC /* GAutoreleasePool.cpp */; };
-		CA1AD2821CD89DFB00CEA1DC /* GAutoreleasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = CA1AD27E1CD89DFB00CEA1DC /* GAutoreleasePool.h */; };
 		CA1C71B81CD2068100BEEA5B /* GDataArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1C71B61CD2068100BEEA5B /* GDataArray.cpp */; };
+		CA1F60A61CD9834000C6307B /* GSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A21CD9834000C6307B /* GSystem.cpp */; };
+		CA1F60A71CD9834000C6307B /* GXCWnd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A41CD9834000C6307B /* GXCWnd.cpp */; };
+		CA1F60B11CD984C100C6307B /* GSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A21CD9834000C6307B /* GSystem.cpp */; };
+		CA1F60B21CD984C100C6307B /* GXCWnd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A41CD9834000C6307B /* GXCWnd.cpp */; };
+		CA1F60B31CD984C100C6307B /* GSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A21CD9834000C6307B /* GSystem.cpp */; };
+		CA1F60B41CD984C100C6307B /* GXCWnd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A41CD9834000C6307B /* GXCWnd.cpp */; };
+		CA1F60BB1CD995FC00C6307B /* GWString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60B91CD995FC00C6307B /* GWString.cpp */; };
+		CA1F60BC1CD995FC00C6307B /* GWString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60B91CD995FC00C6307B /* GWString.cpp */; };
+		CA1F60BD1CD995FC00C6307B /* GWString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60B91CD995FC00C6307B /* GWString.cpp */; };
+		CA1F60C11CD996F700C6307B /* GDataString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60BF1CD996F700C6307B /* GDataString.cpp */; };
+		CA1F60C21CD996F700C6307B /* GDataString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60BF1CD996F700C6307B /* GDataString.cpp */; };
+		CA1F60C31CD996F700C6307B /* GDataString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60BF1CD996F700C6307B /* GDataString.cpp */; };
+		CA1F60D11CD9ED6A00C6307B /* GTString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */; };
+		CA1F60D21CD9ED6A00C6307B /* GTString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */; };
+		CA1F60D31CD9ED6A00C6307B /* GTString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */; };
+		CA1F60D41CD9ED6A00C6307B /* GTString.h in Headers */ = {isa = PBXBuildFile; fileRef = CA1F60D01CD9ED6A00C6307B /* GTString.h */; };
 		CA7B4DE01CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
 		CA7B4DE11CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
 		CA7B4DE21CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
-		CA7B4DE31CD5906F00F3D826 /* GUUID.h in Headers */ = {isa = PBXBuildFile; fileRef = CA7B4DDF1CD5906F00F3D826 /* GUUID.h */; };
 		CA7B4DE81CD594FF00F3D826 /* GApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DE61CD594FF00F3D826 /* GApplication.cpp */; };
 		CA7B4DE91CD594FF00F3D826 /* GApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DE61CD594FF00F3D826 /* GApplication.cpp */; };
 		CA7B4DEA1CD594FF00F3D826 /* GApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DE61CD594FF00F3D826 /* GApplication.cpp */; };
-		CA7B4DEB1CD594FF00F3D826 /* GApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = CA7B4DE71CD594FF00F3D826 /* GApplication.h */; };
 		CA9C16CC1CC6102E00204303 /* GObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16CA1CC6102E00204303 /* GObject.cpp */; };
 		CA9C16CD1CC6102E00204303 /* GObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16CA1CC6102E00204303 /* GObject.cpp */; };
 		CA9C16CE1CC6102E00204303 /* GObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16CA1CC6102E00204303 /* GObject.cpp */; };
-		CA9C16CF1CC6102E00204303 /* GObject.h in Headers */ = {isa = PBXBuildFile; fileRef = CA9C16CB1CC6102E00204303 /* GObject.h */; };
 		CA9C16D21CC6132400204303 /* GClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D01CC6132400204303 /* GClass.cpp */; };
 		CA9C16D31CC6132400204303 /* GClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D01CC6132400204303 /* GClass.cpp */; };
 		CA9C16D41CC6132400204303 /* GClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D01CC6132400204303 /* GClass.cpp */; };
-		CA9C16D51CC6132400204303 /* GClass.h in Headers */ = {isa = PBXBuildFile; fileRef = CA9C16D11CC6132400204303 /* GClass.h */; };
 		CA9C16D81CC615FF00204303 /* GOWHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D61CC615FF00204303 /* GOWHash.cpp */; };
 		CA9C16D91CC615FF00204303 /* GOWHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D61CC615FF00204303 /* GOWHash.cpp */; };
 		CA9C16DA1CC615FF00204303 /* GOWHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D61CC615FF00204303 /* GOWHash.cpp */; };
-		CA9C16DB1CC615FF00204303 /* GOWHash.h in Headers */ = {isa = PBXBuildFile; fileRef = CA9C16D71CC615FF00204303 /* GOWHash.h */; };
 		CAC2D11C1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D11B1CD0BEC500A0EBE5 /* GRunLoop.cpp */; };
 		CAC2D11D1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D11B1CD0BEC500A0EBE5 /* GRunLoop.cpp */; };
 		CAC2D11E1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D11B1CD0BEC500A0EBE5 /* GRunLoop.cpp */; };
 		CAC2D12C1CD0C1EC00A0EBE5 /* GData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D12A1CD0C1EC00A0EBE5 /* GData.cpp */; };
 		CAC2D12D1CD0C1EC00A0EBE5 /* GData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D12A1CD0C1EC00A0EBE5 /* GData.cpp */; };
 		CAC2D12E1CD0C1EC00A0EBE5 /* GData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D12A1CD0C1EC00A0EBE5 /* GData.cpp */; };
-		CAC2D12F1CD0C1EC00A0EBE5 /* GData.h in Headers */ = {isa = PBXBuildFile; fileRef = CAC2D12B1CD0C1EC00A0EBE5 /* GData.h */; };
 		CAC2D1321CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */; };
 		CAC2D1331CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */; };
 		CAC2D1341CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */; };
-		CAC2D1351CD0D43E00A0EBE5 /* GPieceData.h in Headers */ = {isa = PBXBuildFile; fileRef = CAC2D1311CD0D43E00A0EBE5 /* GPieceData.h */; };
 		CAE706CF1CD2F6EA0090F4DD /* GArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */; };
 		CAE706D01CD2F8950090F4DD /* GArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */; };
 		CAE706D11CD2F8950090F4DD /* GDataArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1C71B61CD2068100BEEA5B /* GDataArray.cpp */; };
@@ -68,11 +74,9 @@
 		CAE706D91CD2FA850090F4DD /* GMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706D71CD2FA850090F4DD /* GMap.cpp */; };
 		CAE706DA1CD2FA850090F4DD /* GMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706D71CD2FA850090F4DD /* GMap.cpp */; };
 		CAE706DB1CD2FA850090F4DD /* GMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706D71CD2FA850090F4DD /* GMap.cpp */; };
-		CAE706DC1CD2FA850090F4DD /* GMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CAE706D81CD2FA850090F4DD /* GMap.h */; };
 		CAE706E11CD3494F0090F4DD /* GString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706DF1CD3494F0090F4DD /* GString.cpp */; };
 		CAE706E21CD3494F0090F4DD /* GString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706DF1CD3494F0090F4DD /* GString.cpp */; };
 		CAE706E31CD3494F0090F4DD /* GString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706DF1CD3494F0090F4DD /* GString.cpp */; };
-		CAE706E41CD3494F0090F4DD /* GString.h in Headers */ = {isa = PBXBuildFile; fileRef = CAE706E01CD3494F0090F4DD /* GString.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -114,6 +118,17 @@
 		CA1AD27E1CD89DFB00CEA1DC /* GAutoreleasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAutoreleasePool.h; sourceTree = "<group>"; };
 		CA1C71B61CD2068100BEEA5B /* GDataArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDataArray.cpp; sourceTree = "<group>"; };
 		CA1C71B71CD2068100BEEA5B /* GDataArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataArray.h; sourceTree = "<group>"; };
+		CA1F60A21CD9834000C6307B /* GSystem.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GSystem.cpp; sourceTree = "<group>"; };
+		CA1F60A31CD9834000C6307B /* GSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSystem.h; sourceTree = "<group>"; };
+		CA1F60A41CD9834000C6307B /* GXCWnd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = GXCWnd.cpp; sourceTree = "<group>"; };
+		CA1F60A51CD9834000C6307B /* GXCWnd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXCWnd.h; sourceTree = "<group>"; };
+		CA1F60B91CD995FC00C6307B /* GWString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GWString.cpp; sourceTree = "<group>"; };
+		CA1F60BA1CD995FC00C6307B /* GWString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWString.h; sourceTree = "<group>"; };
+		CA1F60BF1CD996F700C6307B /* GDataString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDataString.cpp; sourceTree = "<group>"; };
+		CA1F60C01CD996F700C6307B /* GDataString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataString.h; sourceTree = "<group>"; };
+		CA1F60CC1CD9AD2900C6307B /* GXEncoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXEncoding.h; sourceTree = "<group>"; };
+		CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GTString.cpp; sourceTree = "<group>"; };
+		CA1F60D01CD9ED6A00C6307B /* GTString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTString.h; sourceTree = "<group>"; };
 		CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUUID.cpp; sourceTree = "<group>"; };
 		CA7B4DDF1CD5906F00F3D826 /* GUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUUID.h; sourceTree = "<group>"; };
 		CA7B4DE61CD594FF00F3D826 /* GApplication.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GApplication.cpp; sourceTree = "<group>"; };
@@ -199,6 +214,31 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		CA1F60CB1CD9ACA200C6307B /* Unuse */ = {
+			isa = PBXGroup;
+			children = (
+				CA1F60A51CD9834000C6307B /* GXCWnd.h */,
+				CA1F60A41CD9834000C6307B /* GXCWnd.cpp */,
+			);
+			name = Unuse;
+			sourceTree = "<group>";
+		};
+		CA1F60D61CD9F85E00C6307B /* String */ = {
+			isa = PBXGroup;
+			children = (
+				CA1F60CC1CD9AD2900C6307B /* GXEncoding.h */,
+				CA1F60C01CD996F700C6307B /* GDataString.h */,
+				CA1F60BF1CD996F700C6307B /* GDataString.cpp */,
+				CAE706E01CD3494F0090F4DD /* GString.h */,
+				CAE706DF1CD3494F0090F4DD /* GString.cpp */,
+				CA1F60BA1CD995FC00C6307B /* GWString.h */,
+				CA1F60B91CD995FC00C6307B /* GWString.cpp */,
+				CA1F60D01CD9ED6A00C6307B /* GTString.h */,
+				CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */,
+			);
+			name = String;
+			sourceTree = "<group>";
+		};
 		CA9C16B01CC5EDAC00204303 /* config */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,6 +262,9 @@
 		CA9C16C51CC5FF7500204303 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				CA1F60CB1CD9ACA200C6307B /* Unuse */,
+				CA1F60A31CD9834000C6307B /* GSystem.h */,
+				CA1F60A21CD9834000C6307B /* GSystem.cpp */,
 				CA9C16C81CC601D500204303 /* GXOSs.h */,
 				CA9C16C61CC5FFA800204303 /* GXTypes.h */,
 				CA9C16C71CC6013F00204303 /* GXPrefix.h */,
@@ -239,6 +282,7 @@
 				CA1AD27E1CD89DFB00CEA1DC /* GAutoreleasePool.h */,
 				CA1AD27D1CD89DFB00CEA1DC /* GAutoreleasePool.cpp */,
 				CAC2D1231CD0C13800A0EBE5 /* Struct */,
+				CA1F60D61CD9F85E00C6307B /* String */,
 				CAC2D1221CD0C12F00A0EBE5 /* Math */,
 				CAC2D1211CD0C11900A0EBE5 /* Thread */,
 			);
@@ -285,8 +329,6 @@
 				CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */,
 				CAE706D81CD2FA850090F4DD /* GMap.h */,
 				CAE706D71CD2FA850090F4DD /* GMap.cpp */,
-				CAE706E01CD3494F0090F4DD /* GString.h */,
-				CAE706DF1CD3494F0090F4DD /* GString.cpp */,
 			);
 			name = Struct;
 			sourceTree = "<group>";
@@ -298,18 +340,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA0B15F41CD07A3600C33BB5 /* GThread.h in Headers */,
-				CAC2D12F1CD0C1EC00A0EBE5 /* GData.h in Headers */,
-				CA9C16DB1CC615FF00204303 /* GOWHash.h in Headers */,
-				CA7B4DE31CD5906F00F3D826 /* GUUID.h in Headers */,
-				CA9C16CF1CC6102E00204303 /* GObject.h in Headers */,
-				CA7B4DEB1CD594FF00F3D826 /* GApplication.h in Headers */,
-				CA9C16D51CC6132400204303 /* GClass.h in Headers */,
-				CA1AD2821CD89DFB00CEA1DC /* GAutoreleasePool.h in Headers */,
-				CAE706E41CD3494F0090F4DD /* GString.h in Headers */,
-				CAC2D1351CD0D43E00A0EBE5 /* GPieceData.h in Headers */,
-				CAE706DC1CD2FA850090F4DD /* GMap.h in Headers */,
-				CA1AD27A1CD87CA900CEA1DC /* GWindow.h in Headers */,
+				CA1F60D41CD9ED6A00C6307B /* GTString.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,12 +442,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA1F60C11CD996F700C6307B /* GDataString.cpp in Sources */,
 				CA9C16D81CC615FF00204303 /* GOWHash.cpp in Sources */,
+				CA1F60BB1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CA1C71B81CD2068100BEEA5B /* GDataArray.cpp in Sources */,
 				CA7B4DE01CD5906F00F3D826 /* GUUID.cpp in Sources */,
 				CA9C16D21CC6132400204303 /* GClass.cpp in Sources */,
 				CAC2D1321CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CA0B16021CD086F500C33BB5 /* GCondition.cpp in Sources */,
+				CA1F60A71CD9834000C6307B /* GXCWnd.cpp in Sources */,
 				CAE706D91CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CAC2D11C1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */,
 				CA9C16CC1CC6102E00204303 /* GObject.cpp in Sources */,
@@ -425,6 +459,8 @@
 				CAE706CF1CD2F6EA0090F4DD /* GArray.cpp in Sources */,
 				CA1AD27F1CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,
 				CA7B4DE81CD594FF00F3D826 /* GApplication.cpp in Sources */,
+				CA1F60D11CD9ED6A00C6307B /* GTString.cpp in Sources */,
+				CA1F60A61CD9834000C6307B /* GSystem.cpp in Sources */,
 				CA0B15F81CD07CD000C33BB5 /* GMutex.cpp in Sources */,
 				CAE706E11CD3494F0090F4DD /* GString.cpp in Sources */,
 				CA1AD2771CD87CA900CEA1DC /* GWindow.cpp in Sources */,
@@ -436,12 +472,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA1F60C21CD996F700C6307B /* GDataString.cpp in Sources */,
 				CA9C16D91CC615FF00204303 /* GOWHash.cpp in Sources */,
+				CA1F60BC1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CA9C16D31CC6132400204303 /* GClass.cpp in Sources */,
 				CA7B4DE11CD5906F00F3D826 /* GUUID.cpp in Sources */,
 				CAC2D1331CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CAE706D11CD2F8950090F4DD /* GDataArray.cpp in Sources */,
 				CA0B16031CD086F500C33BB5 /* GCondition.cpp in Sources */,
+				CA1F60B21CD984C100C6307B /* GXCWnd.cpp in Sources */,
 				CAE706DA1CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CAC2D11D1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */,
 				CA9C16CD1CC6102E00204303 /* GObject.cpp in Sources */,
@@ -450,6 +489,8 @@
 				CA0B15F91CD07CD000C33BB5 /* GMutex.cpp in Sources */,
 				CA1AD2801CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,
 				CA7B4DE91CD594FF00F3D826 /* GApplication.cpp in Sources */,
+				CA1F60D21CD9ED6A00C6307B /* GTString.cpp in Sources */,
+				CA1F60B11CD984C100C6307B /* GSystem.cpp in Sources */,
 				CA0B15F21CD07A3600C33BB5 /* GThread.cpp in Sources */,
 				CAE706E21CD3494F0090F4DD /* GString.cpp in Sources */,
 				CA1AD2781CD87CA900CEA1DC /* GWindow.cpp in Sources */,
@@ -461,12 +502,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA1F60C31CD996F700C6307B /* GDataString.cpp in Sources */,
 				CA9C16DA1CC615FF00204303 /* GOWHash.cpp in Sources */,
+				CA1F60BD1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CA9C16D41CC6132400204303 /* GClass.cpp in Sources */,
 				CA7B4DE21CD5906F00F3D826 /* GUUID.cpp in Sources */,
 				CAC2D1341CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CAE706D31CD2F8960090F4DD /* GDataArray.cpp in Sources */,
 				CA0B16041CD086F500C33BB5 /* GCondition.cpp in Sources */,
+				CA1F60B41CD984C100C6307B /* GXCWnd.cpp in Sources */,
 				CAE706DB1CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CAC2D11E1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */,
 				CA9C16CE1CC6102E00204303 /* GObject.cpp in Sources */,
@@ -475,6 +519,8 @@
 				CA0B15FA1CD07CD000C33BB5 /* GMutex.cpp in Sources */,
 				CA1AD2811CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,
 				CA7B4DEA1CD594FF00F3D826 /* GApplication.cpp in Sources */,
+				CA1F60D31CD9ED6A00C6307B /* GTString.cpp in Sources */,
+				CA1F60B31CD984C100C6307B /* GSystem.cpp in Sources */,
 				CA0B15F31CD07A3600C33BB5 /* GThread.cpp in Sources */,
 				CAE706E31CD3494F0090F4DD /* GString.cpp in Sources */,
 				CA1AD2791CD87CA900CEA1DC /* GWindow.cpp in Sources */,

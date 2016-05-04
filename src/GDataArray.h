@@ -136,7 +136,6 @@ protected:
 	inline bool changeCount(gint toCount) {
 		return m_Data.changeBytes(GX_CAST_S(guint,toCount)*GX_CAST_S(guint,sizeof(T)));
 	}
-protected:
     inline DT& getData() {
         return m_Data;
     }
@@ -161,7 +160,7 @@ GDataArray<T,DT>::~GDataArray()
 template <typename T>
 class GDArray : public GDataArray<T, GData> {
 	GX_OBJECT(GDArray);
-    template <typename K,typename O> friend class GMap;
+    template <typename,typename> friend class GMap;
 };
 
 GX_OBJECT_TEMPLATE_IMPLEMENT(typename T, GDArray<T>, GDataArray<T GX_COMMA GData>);

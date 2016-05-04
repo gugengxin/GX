@@ -5,7 +5,7 @@
 class GSystem
 {
 public:
-
-
+    static gint64 CurrentTimeMS();
+    static gint64 TickCountNS();
 };
 

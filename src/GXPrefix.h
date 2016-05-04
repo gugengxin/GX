@@ -10,19 +10,25 @@
 #define GXPrefix_h
 
 
-#include "GXOSs.h"
 #include "GXTypes.h"
+#include <stddef.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <memory.h>
 
+#ifndef va_copy
+#ifdef __va_copy
+#define va_copy(DEST,SRC) __va_copy((DEST),(SRC))
+#else
+#define va_copy(DEST, SRC) memcpy((&DEST), (&SRC), sizeof(va_list))
+#endif
+#endif
 
 #ifndef GX_DEBUG
 #if defined(_DEBUG) || defined(DEBUG)
 #define GX_DEBUG
 #endif
 #endif
-
-
-#include <stddef.h>
-#include <stdlib.h>
 
 
 

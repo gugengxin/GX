@@ -23,7 +23,7 @@ namespace GX
 
 	void CWnd::create(WNDCLASS& wc, DWORD style, DWORD exStyle, RECT& rc, HWND parentWnd)
 	{
-		wc.hInstance = ::GetModuleHandle(NULL);// ����ʵ��
+		wc.hInstance = ::GetModuleHandle(NULL);
 
 		TCHAR cn[33];
 		if (!wc.lpszClassName) {
@@ -45,22 +45,21 @@ namespace GX
 				(guint32)uuid.m_Bytes[13],
 				(guint32)uuid.m_Bytes[14],
 				(guint32)uuid.m_Bytes[15]);
-			wc.lpszClassName = cn;// �趨������
+			wc.lpszClassName = cn;
 		}
 		::RegisterClass(&wc);
 
-		// ��������
-		m_Wnd = CreateWindowEx(exStyle,	// ��չ��������
-			wc.lpszClassName,			// ������
-			NULL,						// ���ڱ���
+		m_Wnd = CreateWindowEx(exStyle,
+			wc.lpszClassName,			
+			NULL,
 			style,
-			rc.left,	// ����λ��
+			rc.left,
 			rc.top,
-			rc.right - rc.left,			// ���������õĴ��ڿ���
-			rc.bottom - rc.top,			// ���������õĴ��ڸ߶�
-			parentWnd,					// ������
-			NULL,						// �޲˵�
-			wc.hInstance,				// ʵ��
+			rc.right - rc.left,
+			rc.bottom - rc.top,
+			parentWnd,			
+			NULL,				
+			wc.hInstance,		
 			NULL);
 	}
 	void CWnd::destroy()

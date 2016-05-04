@@ -110,3 +110,12 @@ GOWHash::Code GOWHash::compute(const gwchar* str)
     }
     return res;
 }
+
+bool GOWHash::compare(Code& code0,Code& code1)
+{
+    return code0.codeA==code1.codeA &&
+    code0.codeB==code1.codeB &&
+    code0.codeC==code1.codeC;
+}
+
+

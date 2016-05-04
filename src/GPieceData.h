@@ -13,8 +13,8 @@
 #include "GData.h"
 
 class GPieceData : public GData {
-    template <typename T,typename DC> friend class GDataArray;
-	template<typename T> friend class GArray;
+    template <typename,typename> friend class GDataArray;
+	template<typename> friend class GArray;
     friend class GString;
     GX_OBJECT(GPieceData);
 protected:

@@ -16,7 +16,8 @@
 class GData : public GObject {
     GX_OBJECT(GData);
 	friend class GPieceData;
-    template <typename T,typename DC> friend class GDataArray;
+    template <typename,typename> friend class GDataArray;
+    template <typename> friend class GDataString;
 public:
     static bool galloc(GX_IN_OUT void*& buf,GX_IN guint size,GX_IN guint toSize);
 public:

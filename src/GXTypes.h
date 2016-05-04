@@ -9,6 +9,8 @@
 #ifndef GXTypes_h
 #define GXTypes_h
 
+#include "GXOSs.h"
+
 typedef char                gint8;
 typedef unsigned char       guint8;
 typedef short               gint16;
@@ -19,7 +21,24 @@ typedef long long           gint64;
 typedef unsigned long long  guint64;
 
 typedef char gchar;
-typedef gint16 gwchar;
+typedef wchar_t gwchar;
+
+#if defined(GX_OS_WINDOWS)
+#define GX_WCHAR_16BIT 1
+#define GX_WCHAR_32BIT 0
+#else
+#define GX_WCHAR_16BIT 0
+#define GX_WCHAR_32BIT 1
+#endif
+
+#if defined(GX_OS_WINDOWS) && (defined(UNICODE) || defined(_UNICODE))
+#define _GX_T(x) L##x
+#define GX_T(x) _GX_T(x)
+#define GX_PATH_IS_CHAR
+#else
+#define GX_T(x) x
+#define GX_PATH_IS_WCHAR
+#endif
 
 #if defined (__LP64__) || defined (__64BIT__) || defined (_LP64) || (__WORDSIZE == 64) || defined(WIN64)
 #define GX_PTR_32BIT  0
@@ -53,6 +72,5 @@ typedef double gfloat;
 #define GX_IN_OUT
 #define GX_NULLABLE
 #define GX_NONNULL
-
 
 #endif /* GXTypes_h */

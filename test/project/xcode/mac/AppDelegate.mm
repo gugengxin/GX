@@ -7,8 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "GDataArray.h"
-#import "GMap.h"
+#include "AppDge.h"
 
 @interface AppDelegate ()
 @property (nonatomic,assign) IBOutlet NSWindow *window;
@@ -17,15 +16,14 @@
 @implementation AppDelegate
 @synthesize window=_window;
 
+
+- (void)applicationWillFinishLaunching:(NSNotification *)notification
+{
+    GApplication::main(AppDge::shared());
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    GPDArray<int>* arr=GPDArray<int>::alloc();
-    arr->zeroSelf();
-    GO::release(arr);
-    GMap<GObject,GObject>* map=GMap<GObject,GObject>::alloc();
-    map->set(NULL, NULL);
-    GO::release(map);
-    
-    
+
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
