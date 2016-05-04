@@ -27,6 +27,7 @@
     <ClCompile Include="..\..\src\GData.cpp" />
     <ClCompile Include="..\..\src\GDataArray.cpp" />
     <ClCompile Include="..\..\src\GDataString.cpp" />
+    <ClCompile Include="..\..\src\GLog.cpp" />
     <ClCompile Include="..\..\src\GMap.cpp" />
     <ClCompile Include="..\..\src\GMutex.cpp" />
     <ClCompile Include="..\..\src\GObject.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="..\..\src\GData.h" />
     <ClInclude Include="..\..\src\GDataArray.h" />
     <ClInclude Include="..\..\src\GDataString.h" />
+    <ClInclude Include="..\..\src\GLog.h" />
     <ClInclude Include="..\..\src\GMap.h" />
     <ClInclude Include="..\..\src\GMutex.h" />
     <ClInclude Include="..\..\src\GObject.h" />
