@@ -341,10 +341,10 @@ public:
 	void setPtr(void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
 		setUint(GX_CAST_R(guint, v), radix, vsLen, fillChar);
 	}
-	void appendPtr(void* v) {
+	void appendPtr(void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
 		appendUint(GX_CAST_R(guint, v), radix, vsLen, fillChar);
 	}
-	void insertPtr(gint idx, void* v) {
+	void insertPtr(gint idx, void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
 		insertUint(idx, GX_CAST_R(guint, v), radix, vsLen, fillChar);
 	}
 

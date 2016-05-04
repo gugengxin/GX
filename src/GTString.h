@@ -26,6 +26,8 @@ public:
     
 };
 
+typedef GTString GPath;
+
 
 
 #endif /* GTString_h */
