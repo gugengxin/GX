@@ -11,8 +11,6 @@
 
 static FILE* fpDebugOut = NULL;
 static FILE* fpDebugIn = NULL;
-static bool _ConsoleInit();
-static bool g_ConsoleInit = _ConsoleInit();
 static bool _ConsoleInit()
 {
 	if (!AllocConsole()) {
