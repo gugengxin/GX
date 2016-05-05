@@ -26,6 +26,8 @@
 #include "android_native_app_glue.h"
 #include <android/log.h>
 
+#if defined(GX_OS_ANDROID)
+
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, "threaded_app", __VA_ARGS__))
 #define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, "threaded_app", __VA_ARGS__))
 
@@ -439,3 +441,10 @@ void ANativeActivity_onCreate(ANativeActivity* activity,
 
     activity->instance = android_app_create(activity, savedState, savedStateSize);
 }
+
+void android_main(struct android_app* app)
+{
+
+}
+
+#endif /* GX_OS_ANDROID */

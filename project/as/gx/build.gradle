@@ -13,10 +13,13 @@ model {
         }
         ndk {
             moduleName "GX"
-            CFlags.add("-DGX_OS_ANDROID")
-            cppFlags.add("-DGX_OS_ANDROID")
-
-
+            CFlags.add("-DGX_OS_ANDROID -Wno-multichar -fvisibility=hidden")
+            cppFlags.add("-DGX_OS_ANDROID -std=c++11 -fno-rtti -fvisibility=hidden")
+            ldLibs.add("log")
+            ldLibs.add("EGL")
+            ldLibs.add("GLESv2")
+            ldLibs.add("android")
+            ldLibs.add("OpenSLES")
         }
         buildTypes {
             debug {

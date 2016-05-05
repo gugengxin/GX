@@ -42,7 +42,5 @@
 #define GX_ASSERT(e) assert(e)
 #endif
 
-#include "GLog.h"
-
 
 #endif /* GXPrefix_h */

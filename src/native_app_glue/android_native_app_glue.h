@@ -18,6 +18,9 @@
 #ifndef _ANDROID_NATIVE_APP_GLUE_H
 #define _ANDROID_NATIVE_APP_GLUE_H
 
+#include "GXPrefix.h"
+#if defined(GX_OS_ANDROID)
+
 #include <poll.h>
 #include <pthread.h>
 #include <sched.h>
@@ -340,10 +343,12 @@ void app_dummy();
  * This is the function that application code must implement, representing
  * the main entry to the app.
  */
-extern void android_main(struct android_app* app);
+void android_main(struct android_app* app);
 
 #ifdef __cplusplus
 }
 #endif
+
+#endif /* GX_OS_ANDROID */
 
 #endif /* _ANDROID_NATIVE_APP_GLUE_H */

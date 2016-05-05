@@ -10,37 +10,36 @@
 
 #include <jni.h>
 
-extern jclass GXJavaFindClass(JNIEnv* jniEnv,const char* name);
+namespace GX {
+    extern jclass JavaFindClass(JNIEnv* jniEnv,const char* name);
+}
 
 template <int N>
-class GXJavaClass {
+class GJavaClass {
 public:
-    GXJavaClass() {
+    GJavaClass() {
         m_Class=0;
         for(int i=0;i<N;i++) {
             m_Methods[i]=0;
         }
     }
-    virtual ~GXJavaClass() {
-
+    ~GJavaClass() {
     }
 
     inline jclass GetClass() {
         return m_Class;
     }
     void SetClass(JNIEnv* jniEnv,const char* name) {
-
-        jclass tmp=GXJavaFindClass(jniEnv,name);//jniEnv->FindClass(name);
-        GXASSERT(tmp);
+        jclass tmp=GX::JavaFindClass(jniEnv,name);
+        GX_ASSERT(tmp);
         m_Class=(jclass)jniEnv->NewGlobalRef(tmp);
-
         jniEnv->DeleteLocalRef(tmp);
     }
 
-    inline jmethodID GetMethod(gxInt idx) {
+    inline jmethodID GetMethod(gint idx) {
         return m_Methods[idx];
     }
-    void SetMethod(JNIEnv* jniEnv,gxInt idx,const char* name,const char* sig,gxBool isStatic)
+    void SetMethod(JNIEnv* jniEnv,gint idx,const char* name,const char* sig,bool isStatic)
     {
         if(isStatic) {
             m_Methods[idx]=jniEnv->GetStaticMethodID(m_Class,name,sig);
@@ -48,18 +47,17 @@ public:
         else {
             m_Methods[idx]=jniEnv->GetMethodID(m_Class,name,sig);
         }
-
-        GXASSERT(m_Methods[idx]);
+        GX_ASSERT(m_Methods[idx]);
     }
 
-    void CallStaticVoidMethod(JNIEnv* jniEnv,gxInt idx,...)
+    void CallStaticVoidMethod(JNIEnv* jniEnv,gint idx,...)
     {
         va_list args;
         va_start(args, idx);
         jniEnv->CallStaticVoidMethodV(m_Class, GetMethod(idx), args);
         va_end(args);
     }
-    jobject CallStaticObjectMethod(JNIEnv* jniEnv,gxInt idx,...)
+    jobject CallStaticObjectMethod(JNIEnv* jniEnv,gint idx,...)
     {
         va_list args;
         jobject result;
@@ -68,16 +66,16 @@ public:
         va_end(args);
         return result;
     }
-    jbyte	CallStaticByteMethod(JNIEnv* jniEnv,gxInt idx,...)
+    jbyte	CallStaticByteMethod(JNIEnv* jniEnv,gint idx,...)
     {
         va_list args;
-        jfloat result;
+        jbyte result;
         va_start(args, idx);
         result = jniEnv->CallStaticByteMethodV(m_Class, GetMethod(idx), args);
         va_end(args);
         return result;
     }
-    jfloat	CallStaticFloatMethod(JNIEnv* jniEnv,gxInt idx,...)
+    jfloat	CallStaticFloatMethod(JNIEnv* jniEnv,gint idx,...)
     {
         va_list args;
         jfloat result;
@@ -88,14 +86,14 @@ public:
     }
 
 
-    void CallVoidMethod(JNIEnv* jniEnv,jobject obj,gxInt idx,...)
+    void CallVoidMethod(JNIEnv* jniEnv,jobject obj,gint idx,...)
     {
         va_list args;
         va_start(args, idx);
         jniEnv->CallVoidMethodV(obj, GetMethod(idx), args);
         va_end(args);
     }
-    jobject CallObjectMethod(JNIEnv* jniEnv,jobject obj,gxInt idx,...)
+    jobject CallObjectMethod(JNIEnv* jniEnv,jobject obj,gint idx,...)
     {
         va_list args;
         jobject result;
@@ -104,7 +102,7 @@ public:
         va_end(args);
         return result;
     }
-    jint 	CallIntMethod(JNIEnv* jniEnv,jobject obj,gxInt idx,...)
+    jint 	CallIntMethod(JNIEnv* jniEnv,jobject obj,gint idx,...)
     {
         va_list args;
         int result;

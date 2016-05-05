@@ -5,6 +5,7 @@
 #include "GJavaAPI.h"
 #if defined(GX_OS_ANDROID)
 #include <android/asset_manager_jni.h>
+#include "GLog.h"
 
 namespace GX {
 

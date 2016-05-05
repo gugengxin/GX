@@ -3,3 +3,7 @@
 //
 
 #include "GJavaClass.h"
+
+#if defined(GX_OS_ANDROID)
+
+#endif

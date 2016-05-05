@@ -1,10 +1,7 @@
 ﻿#pragma once
 #include "GXPrefix.h"
 
-
-
-class GLog
-{
+class GLog {
 public:
 	enum Priority {
 		PrioUNKNOWN = 0,
