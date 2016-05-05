@@ -17,6 +17,7 @@
 #pragma comment(lib, "Winmm.lib")
 #endif
 #include "GThread.h"
+#include "GLog.h"
 
 
 #if defined(GX_OS_APPLE)
@@ -293,7 +294,14 @@ GApplication::~GApplication()
 
 void GApplication::idle()
 {
-	
+	/*
+	static int i = 0;
+	GX_LOG_P1(PrioDEBUG, "GApplication", "idle:%d ", i++);
+	//const gchar* str = "\x41\x42\x43\x48\x65\x6C\x6C\x6F\x21\x20\xE4\xBD\xA0\xE5\xA5\xBD\xEF\xBC\x81\xE3\x82\x82\xE3\x81\x97\xE3\x82\x82\xE3\x81\x97\x21\x20\x41\x56\x41\x56\x41\x56\x41";
+	const gchar* str = "中文";
+	GX_LOG_W(PrioDEBUG, "GApplication", str);
+	//*/
+
 	GThread::current()->popARObj(0);
 }
 

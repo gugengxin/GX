@@ -20,6 +20,9 @@ typedef unsigned int        guint32;
 typedef long long           gint64;
 typedef unsigned long long  guint64;
 
+typedef float gfloat32;
+typedef double gfloat64;
+
 typedef char gchar;
 typedef wchar_t gwchar;
 

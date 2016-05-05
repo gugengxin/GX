@@ -7,6 +7,18 @@
     <Filter Include="src\String">
       <UniqueIdentifier>{5126b0fe-82ad-4b25-877a-e57a1eaf1628}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\App">
+      <UniqueIdentifier>{95c16b14-7f34-41eb-9391-66c5f68e5f0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Struct">
+      <UniqueIdentifier>{0812140a-f14c-4c39-8f1b-0ab6180518e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Thread">
+      <UniqueIdentifier>{3c510c6c-262d-4e09-870b-b5d3be8756c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Math">
+      <UniqueIdentifier>{cfdf0899-9b14-43fc-8c90-768fa13b5b00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GClass.cpp">
@@ -15,52 +27,7 @@
     <ClCompile Include="..\..\src\GObject.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GOWHash.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GCondition.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GData.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GMutex.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GPieceData.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GRunLoop.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GThread.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GXPthread.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GArray.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GDataArray.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GApplication.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GMap.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GUUID.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GAutoreleasePool.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GWindow.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GSystem.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GXCWnd.cpp">
@@ -81,15 +48,57 @@
     <ClCompile Include="..\..\src\GString.cpp">
       <Filter>src\String</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GApplication.cpp">
+      <Filter>src\App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GArray.cpp">
+      <Filter>src\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GData.cpp">
+      <Filter>src\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDataArray.cpp">
+      <Filter>src\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GMap.cpp">
+      <Filter>src\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GCondition.cpp">
+      <Filter>src\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GMutex.cpp">
+      <Filter>src\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GPieceData.cpp">
+      <Filter>src\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GRunLoop.cpp">
+      <Filter>src\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GXPthread.cpp">
+      <Filter>src\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GOWHash.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUUID.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GThread.cpp">
+      <Filter>src\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GSystem.cpp">
+      <Filter>src\App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GWindow.cpp">
+      <Filter>src\App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GObject.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GOWHash.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GX.h">
@@ -104,49 +113,7 @@
     <ClInclude Include="..\..\src\GXTypes.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GCondition.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GData.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GMutex.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GPieceData.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GRunLoop.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GThread.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GXPthread.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GArray.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GDataArray.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GApplication.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GMap.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GUUID.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GAutoreleasePool.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GWindow.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GSystem.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GXCWnd.h">
@@ -169,6 +136,51 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GXEncoding.h">
       <Filter>src\String</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GApplication.h">
+      <Filter>src\App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GArray.h">
+      <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GData.h">
+      <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDataArray.h">
+      <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GMap.h">
+      <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GCondition.h">
+      <Filter>src\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GMutex.h">
+      <Filter>src\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GPieceData.h">
+      <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GRunLoop.h">
+      <Filter>src\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXPthread.h">
+      <Filter>src\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GOWHash.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUUID.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GThread.h">
+      <Filter>src\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GWindow.h">
+      <Filter>src\App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GSystem.h">
+      <Filter>src\App</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

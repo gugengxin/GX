@@ -21,31 +21,46 @@ GWString::~GWString()
     
 }
 
-void GWString::set(const gchar* v, gint len)
+void GWString::set(const gchar* v, gint len, gint count)
 {
+	if (count <= 0) {
+		return;
+	}
 	if (len<0) {
 		len = GX::strlen(v);
 	}
 	gint lenTo = GX::strUTF8toUTF16Count(v, len);
-	if (changeCapability(lenTo + 1)) {
+	if (changeCapability(lenTo*count + 1)) {
 		GX::strUTF8toUTF16(v, len, getDataPtr(), lenTo);
-		setLength(lenTo);
+		for (gint i = 1; i < count; i++) {
+			memcpy(getDataPtr(i*lenTo), getDataPtr(), lenTo*sizeof(gwchar));
+		}
+		setLength(lenTo*count);
 	}
 }
-void GWString::append(const gchar* v, gint len)
+void GWString::append(const gchar* v, gint len, gint count)
 {
+	if (count <= 0) {
+		return;
+	}
 	if (len<0) {
 		len = GX::strlen(v);
 	}
 	gint lenTo = GX::strUTF8toUTF16Count(v, len);
 	gint lenCur = getLength();
-	if (changeCapability(lenCur + lenTo + 1)) {
+	if (changeCapability(lenCur + lenTo*count + 1)) {
 		GX::strUTF8toUTF16(v, len, getDataPtr(lenCur), lenTo);
-		setLength(lenCur + lenTo);
+		for (gint i = 1; i < count; i++) {
+			memcpy(getDataPtr(lenCur+i*lenTo), getDataPtr(lenCur), lenTo*sizeof(gwchar));
+		}
+		setLength(lenCur + lenTo*count);
 	}
 }
-void GWString::insert(gint idx, const gchar* v, gint len)
+void GWString::insert(gint idx, const gchar* v, gint len, gint count)
 {
+	if (count <= 0) {
+		return;
+	}
 	if (idx < 0) {
 		return;
 	}
@@ -57,10 +72,13 @@ void GWString::insert(gint idx, const gchar* v, gint len)
 		len = GX::strlen(v);
 	}
 	gint lenTo = GX::strUTF8toUTF16Count(v, len);
-	if (changeCapability(lenCur + lenTo + 1)) {
-		memmove(getDataPtr(idx) + lenTo, getDataPtr(idx), (lenCur - idx)*sizeof(gwchar));
+	if (changeCapability(lenCur + lenTo*count + 1)) {
+		memmove(getDataPtr(idx) + lenTo*count, getDataPtr(idx), (lenCur - idx)*sizeof(gwchar));
 		GX::strUTF8toUTF16(v, len, getDataPtr(idx), lenTo);
-		setLength(lenCur + lenTo);
+		for (gint i = 1; i < count; i++) {
+			memcpy(getDataPtr(idx + i*lenTo), getDataPtr(idx), lenTo*sizeof(gwchar));
+		}
+		setLength(lenCur + lenTo*count);
 	}
 }
 

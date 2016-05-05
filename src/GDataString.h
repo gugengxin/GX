@@ -41,6 +41,105 @@ namespace GX {
 	gint gi64toa(gint64 v, gwchar* strOut, StringRadix radix);
 	gint gu64toa(guint64 v, gwchar* strOut, StringRadix radix);
 
+	template <typename T> gint gf32toa(gfloat32 v, T* strOut, gint precision)
+	{
+		gfloat32 vTemp;
+		gint32 decPos = 1;
+		gfloat32 rv = 0.5f;
+		for (gint i = 0; i < precision; i++) {
+			rv *= 0.1f;
+		}
+		gint res = 0;
+
+		if (v >= 0) {
+			vTemp = v;
+		}
+		else {
+			vTemp = -v;
+			strOut[res++] = GX_CAST_S(T, '-');
+		}
+		vTemp += rv;
+		while (vTemp>10.0f)
+		{
+			decPos++;
+			vTemp /= 10.0f;
+		}
+
+		gint32 nTemp;
+
+		if (precision <= 0) {
+			for (gint i = 0; i < decPos; i++, res++) {
+				nTemp = GX_CAST_S(gint32, vTemp);
+				strOut[res] = GX_CAST_S(T, nTemp);
+				vTemp -= nTemp;
+				vTemp *= 10.0f;
+			}
+		}
+		else {
+			for (gint i = 0; i < decPos + precision + 1; i++, res++) {
+				if (i == decPos) {
+					strOut[res] = GX_CAST_S(T, '.');
+				}
+				else {
+					nTemp = GX_CAST_S(gint32, vTemp);
+					strOut[res] = GX_CAST_S(T, nTemp);
+					vTemp -= nTemp;
+					vTemp *= 10.0f;
+				}
+			}
+		}
+		return res;
+	}
+
+	template <typename T> gint gf64toa(gfloat64 v, T* strOut, gint precision)
+	{
+		gfloat64 vTemp;
+		gint64 decPos = 1;
+		gfloat64 rv = 0.5;
+		for (gint i = 0; i < precision; i++) {
+			rv *= 0.1f;
+		}
+		gint res = 0;
+
+		if (v >= 0) {
+			vTemp = v;
+		}
+		else {
+			vTemp = -v;
+			strOut[res++] = GX_CAST_S(T, '-');
+		}
+		vTemp += rv;
+		while (vTemp>10.0)
+		{
+			decPos++;
+			vTemp /= 10.0;
+		}
+
+		gint64 nTemp;
+		if (precision <= 0) {
+			for (gint i = 0; i < decPos; i++, res++) {
+				nTemp = GX_CAST_S(gint64, vTemp);
+				strOut[res] = GX_CAST_S(T, nTemp);
+				vTemp -= nTemp;
+				vTemp *= 10.0;
+			}
+		}
+		else {
+			for (gint i = 0; i < decPos + precision + 1; i++, res++) {
+				if (i == decPos) {
+					strOut[res] = GX_CAST_S(T, '.');
+				}
+				else {
+					nTemp = GX_CAST_S(gint64, vTemp);
+					strOut[res] = GX_CAST_S(T, nTemp);
+					vTemp -= nTemp;
+					vTemp *= 10.0;
+				}
+			}
+		}
+		return res;
+	}
+
 	void strUTF8toUTF16(const gchar* utf8Text, gint cbUtf8Text, gwchar* utf16Text, gint& ccUtf16Text);
 	gint strUTF8toUTF16Count(const gchar* utf8Text, gint cbUtf8Text);
 	gint strUTF8OneChartoUTF16(const gchar* utf8Text, gint cbUtf8Text, gwchar& utf16Out);
@@ -73,28 +172,42 @@ public:
         return false;
     }
     
-    void set(const T* v,gint len=-1)
+    void set(const T* v,gint len=-1,gint count=1)
     {
+		if (count <= 0) {
+			return;
+		}
         if (len<0) {
             len=GX::strlen(v);
         }
-        if (changeCapability(len+1)) {
-            memcpy(getDataPtr(), v, len*sizeof(T));
-            setLength(len);
+		if (changeCapability(len*count+ 1)) {
+			for (gint i = 0; i < count; i++) {
+				memcpy(getDataPtr(i*len), v, len*sizeof(T));
+			}
+			setLength(len*count);
         }
     }
-    void append(const T* v,gint len=-1)
+	void append(const T* v, gint len = -1, gint count = 1)
     {
+		if (count <= 0) {
+			return;
+		}
         if (len<0) {
             len=GX::strlen(v);
         }
 		gint lenCur = getLength();
-		if (changeCapability(lenCur + len + 1)) {
-			memcpy(getDataPtr(lenCur), v, len*sizeof(T));
-			setLength(lenCur + len);
+		if (changeCapability(lenCur + len*count + 1)) {
+			for (gint i = 0; i < count; i++) {
+				memcpy(getDataPtr(lenCur+i*len), v, len*sizeof(T));
+			}
+			setLength(lenCur + len*count);
         }
     }
-	void insert(gint idx,const T* v, gint len = -1) {
+	void insert(gint idx, const T* v, gint len = -1, gint count = 1)
+	{
+		if (count <= 0) {
+			return;
+		}
 		if (idx < 0) {
 			return;
 		}
@@ -105,10 +218,12 @@ public:
 		if (len<0) {
 			len = GX::strlen(v);
 		}
-		if (changeCapability(lenCur + len + 1)) {
-			memmove(getDataPtr(idx) + len, getDataPtr(idx),(lenCur-idx)*sizeof(T));
-			memcpy(getDataPtr(idx), v, len*sizeof(T));
-			setLength(lenCur + len);
+		if (changeCapability(lenCur + len*count + 1)) {
+			memmove(getDataPtr(idx) + len*count, getDataPtr(idx), (lenCur - idx)*sizeof(T));
+			for (gint i = 0; i < count; i++) {
+				memcpy(getDataPtr(idx + i*len), v, len*sizeof(T));
+			}
+			setLength(lenCur + len*count);
 		}
 	}
     
@@ -288,6 +403,38 @@ public:
 	void insertUint64(gint idx, guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
 		T temp[64];
 		gint tempLen = GX::gu64toa(v, temp, radix);
+		M_INSERT
+	}
+
+	void setFloat32(gfloat32 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
+		T temp[8 + precision];
+		gint tempLen = GX::gf32toa(v, temp, precision);
+		M_SET
+	}
+	void appendFloat32(gfloat32 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
+		T temp[8 + precision];
+		gint tempLen = GX::gf32toa(v, temp, precision);
+		M_APPEND
+	}
+	void insertFloat32(gint idx, gfloat32 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
+		T temp[8 + precision];
+		gint tempLen = GX::gf32toa(v, temp, precision);
+		M_INSERT
+	}
+
+	void setFloat64(gfloat64 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
+		T temp[17 + precision];
+		gint tempLen = GX::gf64toa(v, temp, precision);
+		M_SET
+	}
+	void appendFloat64(gfloat64 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
+		T temp[17 + precision];
+		gint tempLen = GX::gf64toa(v, temp, precision);
+		M_APPEND
+	}
+	void insertFloat64(gint idx, gfloat64 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
+		T temp[17 + precision];
+		gint tempLen = GX::gf64toa(v, temp, precision);
 		M_INSERT
 	}
 

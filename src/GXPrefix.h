@@ -31,6 +31,10 @@
 #endif
 #endif
 
+#if _MSC_VER >= 1600    // VC2010
+#pragma execution_character_set("utf-8")
+#endif
+
 
 
 #endif /* GXPrefix_h */

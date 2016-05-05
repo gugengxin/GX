@@ -23,31 +23,46 @@ GString::~GString()
 
 }
 
-void GString::set(const gwchar* v, gint len)
+void GString::set(const gwchar* v, gint len, gint count)
 {
+	if (count <= 0) {
+		return;
+	}
 	if (len<0) {
 		len = GX::strlen(v);
 	}
 	gint lenTo = GX::strUTF16toUTF8Count(v, len);
-	if (changeCapability(lenTo + 1)) {
+	if (changeCapability(lenTo*count + 1)) {
 		GX::strUTF16toUTF8(v, len, getDataPtr(), lenTo);
-		setLength(lenTo);
+		for (gint i = 1; i < count; i++) {
+			memcpy(getDataPtr(i*lenTo), getDataPtr(), lenTo*sizeof(gchar));
+		}
+		setLength(lenTo*count);
 	}
 }
-void GString::append(const gwchar* v, gint len)
+void GString::append(const gwchar* v, gint len, gint count)
 {
+	if (count <= 0) {
+		return;
+	}
 	if (len<0) {
 		len = GX::strlen(v);
 	}
 	gint lenTo = GX::strUTF16toUTF8Count(v, len);
 	gint lenCur = getLength();
-	if (changeCapability(lenCur + lenTo + 1)) {
+	if (changeCapability(lenCur + lenTo*count + 1)) {
 		GX::strUTF16toUTF8(v, len, getDataPtr(lenCur), lenTo);
-		setLength(lenCur+lenTo);
+		for (gint i = 1; i < count; i++) {
+			memcpy(getDataPtr(lenCur + i*lenTo), getDataPtr(lenCur), lenTo*sizeof(gchar));
+		}
+		setLength(lenCur + lenTo*count);
 	}
 }
-void GString::insert(gint idx, const gwchar* v, gint len) 
+void GString::insert(gint idx, const gwchar* v, gint len, gint count)
 {
+	if (count <= 0) {
+		return;
+	}
 	if (idx < 0) {
 		return;
 	}
@@ -59,10 +74,13 @@ void GString::insert(gint idx, const gwchar* v, gint len)
 		len = GX::strlen(v);
 	}
 	gint lenTo = GX::strUTF16toUTF8Count(v, len);
-	if (changeCapability(lenCur + lenTo + 1)) {
-		memmove(getDataPtr(idx) + lenTo, getDataPtr(idx), (lenCur - idx)*sizeof(gchar));
+	if (changeCapability(lenCur + lenTo*count + 1)) {
+		memmove(getDataPtr(idx) + lenTo*count, getDataPtr(idx), (lenCur - idx)*sizeof(gchar));
 		GX::strUTF16toUTF8(v, len, getDataPtr(idx), lenTo);
-		setLength(lenCur + lenTo);
+		for (gint i = 1; i < count; i++) {
+			memcpy(getDataPtr(idx + i*lenTo), getDataPtr(idx), lenTo*sizeof(gchar));
+		}
+		setLength(lenCur + lenTo*count);
 	}
 }
 

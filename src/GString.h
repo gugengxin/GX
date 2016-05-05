@@ -20,9 +20,9 @@ public:
         return GX_CAST_R(const gchar*, getDataPtr());
     }
 
-	void set(const gwchar* v, gint len = -1);
-	void append(const gwchar* v, gint len = -1);
-	void insert(gint idx, const gwchar* v, gint len = -1);
+	void set(const gwchar* v, gint len = -1, gint count = 1);
+	void append(const gwchar* v, gint len = -1, gint count = 1);
+	void insert(gint idx, const gwchar* v, gint len = -1, gint count = 1);
 	
 
 

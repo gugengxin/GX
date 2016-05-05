@@ -12,6 +12,8 @@
 
 #include "GXPrefix.h"
 
+#include "GLog.h"
+
 #include "GApplication.h"
 
 
