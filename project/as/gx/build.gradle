@@ -11,15 +11,24 @@ model {
             versionCode 1
             versionName "1.0"
         }
+        ndk {
+            moduleName "GX"
+            CFlags.add("-DGX_OS_ANDROID")
+            cppFlags.add("-DGX_OS_ANDROID")
+
+
+        }
         buildTypes {
+            debug {
+                ndk {
+                    CFlags.add("-DGX_DEBUG")
+                    cppFlags.add("-DGX_DEBUG")
+                }
+            }
             release {
                 minifyEnabled false
                 proguardFiles.add(file('proguard-android.txt'))
             }
-        }
-
-        ndk {
-            moduleName "GX"
         }
 
         sources {
@@ -31,6 +40,7 @@ model {
                     source {
                         srcDir "src/main/jni"
                         srcDir "../../../src"
+                        srcDir "../../../src/native_app_glue"
                     }
                 }
             }

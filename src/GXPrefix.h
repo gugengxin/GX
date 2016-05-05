@@ -16,6 +16,7 @@
 #include <stdarg.h>
 #include <memory.h>
 #include <string.h>
+#include <assert.h>
 
 #ifndef va_copy
 #ifdef __va_copy
@@ -35,6 +36,13 @@
 #pragma execution_character_set("utf-8")
 #endif
 
+#ifdef GX_DEBUG
+#define GX_ASSERT(e) assert(e)
+#else
+#define GX_ASSERT(e) assert(e)
+#endif
+
+#include "GLog.h"
 
 
 #endif /* GXPrefix_h */
