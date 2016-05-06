@@ -27,7 +27,7 @@ GUUID::GUUID()
 #elif defined(GX_OS_ANDROID)
     GJavaJNIEnvAutoPtr jniEnv;
 
-    GJavaCAPI::Shared()->UUIDCreate(jniEnv.Get(),m_Bytes);
+    GJavaCAPI::shared()->UUIDCreate(jniEnv.get(),m_Bytes);
 
 #elif defined(GX_OS_MICROSOFT)
     //GUID guid;

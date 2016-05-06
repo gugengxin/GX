@@ -47,7 +47,7 @@
 #define GX_OS_WINDOWS
 #define GX_IDE_VS
 
-#elif defined(GXOS_ANDROID)
+#elif defined(GX_OS_ANDROID)
 
 #define GX_OS_GOOGLE
 #define GX_OS_MOBILE

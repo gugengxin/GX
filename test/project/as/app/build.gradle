@@ -1,5 +1,7 @@
 apply plugin: 'com.android.model.application'
 
+apply from: rootProject.childProjects.gx.projectDir.getAbsolutePath() + "/config.gradle"
+
 model {
     android {
         compileSdkVersion 23
@@ -21,6 +23,23 @@ model {
         ndk {
             moduleName "GXTest"
         }
+
+        sources {
+            main {
+                jni {
+                    exportedHeaders {
+                        srcDir "../../../src"
+                    }
+                    source {
+                        srcDir "src/main/jni"
+                        srcDir "../../../src"
+                    }
+                    dependencies {
+                        project ":gx" linkage "shared"
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -29,3 +48,4 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.3.0'
 }
+

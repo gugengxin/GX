@@ -1,0 +1,44 @@
+/*
+def GXInit(){
+    println "initialize GX build"
+
+    gradle.ext.gx_ndk_CFlags = ["-DGX_OS_ANDROID", "-Wno-multichar", "-fvisibility=hidden"]
+    gradle.ext.gx_ndk_cppFlags = ["-DGX_OS_ANDROID", "-std=c++11", "-fno-rtti", "-fvisibility=hidden"]
+    gradle.ext.gx_ndk_CFlags_debug = ["-DGX_DEBUG"]
+    gradle.ext.gx_ndk_cppFlags_debug = ["-DGX_DEBUG"]
+    gradle.ext.gx_ndk_CFlags_release = []
+    gradle.ext.gx_ndk_cppFlags_release = []
+
+    gradle.ext.gx_ndk_ldLibs=["log", "EGL", "GLESv2", "android", "OpenSLES"]
+}
+
+GXInit()
+//*/
+
+
+model {
+    android {
+        ndk {
+            CFlags.addAll(["-DGX_OS_ANDROID", "-Wno-multichar", "-fvisibility=hidden"])
+            cppFlags.addAll(["-DGX_OS_ANDROID", "-std=c++11", "-fno-rtti", "-fvisibility=hidden"])
+            ldLibs.addAll(["log", "EGL", "GLESv2", "android", "OpenSLES"])
+        }
+        buildTypes {
+            debug {
+                ndk {
+                    CFlags.add("-DGX_DEBUG")
+                    cppFlags.add("-DGX_DEBUG")
+                }
+            }
+        }
+        sources {
+            main {
+                jni {
+                    exportedHeaders {
+                        srcDir rootProject.childProjects.gx.projectDir.getAbsolutePath()+"../../../src"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -11,13 +11,18 @@
 #import <UIKit/UIKit.h>
 #elif defined(GX_OS_MACOSX)
 #import <Cocoa/Cocoa.h>
-#elif defined(GX_OS_ANDROID)
 #elif defined(GX_OS_WINDOWS)
 #include <Mmsystem.h>
 #pragma comment(lib, "Winmm.lib")
+#elif defined(GX_OS_ANDROID)
+#include "GJavaClass.h"
+#include "GJavaCAPI.h"
+#include <android/sensor.h>
+#include "GLog.h"
 #endif
 #include "GThread.h"
 #include "GLog.h"
+#include "GSystem.h"
 
 
 #if defined(GX_OS_APPLE)
@@ -244,6 +249,59 @@ void GApplication::destroyWinMsgWnd()
 	}
 }
 
+#elif defined(GX_OS_ANDROID)
+
+class AndroidApp {
+public:
+    AndroidApp() {
+        app=NULL;
+        sensorManager=NULL;
+        accelerometerSensor=NULL;
+        sensorEventQueue=NULL;
+        animating=0;
+    }
+    ~AndroidApp() {
+
+    }
+
+    struct android_app*     app;
+    ASensorManager*         sensorManager;
+    const ASensor*          accelerometerSensor;
+    ASensorEventQueue*      sensorEventQueue;
+    gint                    animating;
+};
+
+static AndroidApp g_ArdApp;
+
+extern "C" {
+void android_main(struct android_app *app) {
+	GX::JavaInitNative(app->activity);
+
+	g_ArdApp.app->onAppCmd = GApplication::androidHandleCmd;
+	g_ArdApp.app->onInputEvent = GApplication::androidHandleInput;
+
+	g_ArdApp.sensorManager = ASensorManager_getInstance();
+	g_ArdApp.accelerometerSensor = ASensorManager_getDefaultSensor(g_ArdApp.sensorManager,
+																   ASENSOR_TYPE_ACCELEROMETER);
+	g_ArdApp.sensorEventQueue = ASensorManager_createEventQueue(g_ArdApp.sensorManager,
+																g_ArdApp.app->looper,
+																LOOPER_ID_USER, NULL, NULL);
+	g_ArdApp.animating = 0;
+
+	GJavaJNIEnvAutoPtr jniEnv;
+	GJavaCAPI::shared()->appMainNative(jniEnv.get());
+}
+}
+
+void GApplication::androidHandleCmd(struct android_app* androidApp, int32_t cmd)
+{
+
+}
+int32_t GApplication::androidHandleInput(struct android_app* app, AInputEvent* event)
+{
+
+}
+
 #endif
 
 
@@ -267,6 +325,69 @@ void GApplication::main(Delegate* dge)
 #elif defined(GX_OS_WINDOWS)
 	app->createWinMsgWndAndStart();
 	app->didFinishLaunching();
+#elif defined(GX_OS_ANDROID)
+
+	switch (GX::JavaGetLaunchType()) {
+		case GX::JavaLaunchTypeNative: {
+			gint64 frameTimeLast=0LL;
+			while (true) {
+				// Read all pending events.
+				int ident;
+				int events;
+				struct android_poll_source *source;
+
+				// If not animating, we will block forever waiting for events.
+				// If animating, we loop until all events are read, then continue
+				// to draw the next frame of animation.
+				while ((ident = ALooper_pollAll(g_ArdApp.animating ? 0 : -1, NULL, &events,
+												(void **) &source)) >= 0) {
+
+					// Process this event.
+					if (source != NULL) {
+						source->process(g_ArdApp.app, source);
+					}
+
+					// If a sensor has data, process it now.
+					if (ident == LOOPER_ID_USER) {
+						if (g_ArdApp.accelerometerSensor != NULL) {
+							ASensorEvent event;
+							while (ASensorEventQueue_getEvents(g_ArdApp.sensorEventQueue, &event,
+															   1) > 0) {
+								//得到重力感应数据
+							}
+						}
+					}
+
+					// Check if we are exiting.
+					if (g_ArdApp.app->destroyRequested != 0) {
+						exit(0);
+						return;
+					}
+				}
+
+				if (g_ArdApp.animating) {
+					gint64 frameTime=GSystem::currentTimeMS();
+					if(frameTime-frameTimeLast>=1000LL/60LL) {
+						frameTimeLast=frameTime;
+
+						app->idle();
+					}
+				}
+			}
+		}
+			break;
+		case GX::JavaLaunchTypeActivity: {
+
+		}
+			break;
+		case GX::JavaLaunchTypeDaydream: {
+
+		}
+			break;
+		default:
+			GX_ASSERT(0);
+			break;
+	}
 #endif
 }
 

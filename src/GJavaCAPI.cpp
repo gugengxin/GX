@@ -6,6 +6,7 @@
 #if defined(GX_OS_ANDROID)
 
 typedef enum _JavaCAPIM {
+	APIM_AppMainNative,
 	APIM_AppGetDefaultWindowScaleActivity,
 	APIM_AppGetDefaultWindowScaleDreamService,
 	APIM_AppGetCacheDir,
@@ -17,54 +18,66 @@ typedef enum _JavaCAPIM {
 } JavaCAPIM;
 
 
-GJavaCAPI* GJavaCAPI::Shared()
+GJavaCAPI* GJavaCAPI::shared()
 {
-	static GJavaCAPI gav_Cls;
+	static GJavaCAPI g_Cls;
 
-	if (gav_Cls.GetClass()==NULL) {
+	if (g_Cls.getClass()==NULL) {
 		GJavaJNIEnvAutoPtr jniEnv;
 
-		gav_Cls.SetClass(jniEnv.Get(), "com/gxengine/gx/GJavaCAPI");
+		g_Cls.setClass(jniEnv.get(), "com/gxengine/gx/GJavaCAPI");
 
-		gav_Cls.SetMethod(jniEnv.Get(),
-				APIM_AppGetDefaultWindowScaleActivity,
-				"AppGetDefaultWindowScale",
-				"(Landroid/app/Activity;)F",
-				true);
-		gav_Cls.SetMethod(jniEnv.Get(),
-				APIM_AppGetDefaultWindowScaleDreamService,
-				"AppGetDefaultWindowScale",
-				"(Landroid/service/dreams/DreamService;)F",
-				true);
-		gav_Cls.SetMethod(jniEnv.Get(), APIM_AppGetCacheDir,
-				"AppGetCacheDir", "(Landroid/content/ContextWrapper;)Ljava/lang/String;", true);
-		gav_Cls.SetMethod(jniEnv.Get(), APIM_AppGetPackageCodePath,
-				"AppGetPackageCodePath", "(Landroid/content/ContextWrapper;)Ljava/lang/String;", true);
-		gav_Cls.SetMethod(jniEnv.Get(), APIM_AppTerminate,
-						"AppTerminate", "(Landroid/app/Activity;)V", true);
+		g_Cls.setMethod(jniEnv.get(),
+						APIM_AppMainNative,
+						"appMainNative",
+						"()V",
+						true);
+		g_Cls.setMethod(jniEnv.get(),
+						APIM_AppGetDefaultWindowScaleActivity,
+						"appGetDefaultWindowScale",
+						"(Landroid/app/Activity;)F",
+						true);
+		g_Cls.setMethod(jniEnv.get(),
+						APIM_AppGetDefaultWindowScaleDreamService,
+						"appGetDefaultWindowScale",
+						"(Landroid/service/dreams/DreamService;)F",
+						true);
+		g_Cls.setMethod(jniEnv.get(), APIM_AppGetCacheDir,
+						"appGetCacheDir", "(Landroid/content/ContextWrapper;)Ljava/lang/String;",
+						true);
+		g_Cls.setMethod(jniEnv.get(), APIM_AppGetPackageCodePath,
+						"appGetPackageCodePath",
+						"(Landroid/content/ContextWrapper;)Ljava/lang/String;", true);
+		g_Cls.setMethod(jniEnv.get(), APIM_AppTerminate,
+						"appTerminate", "(Landroid/app/Activity;)V", true);
 
-		gav_Cls.SetMethod(jniEnv.Get(), APIM_UUIDCreate,"UUIDCreate","()[B",true);
+		g_Cls.setMethod(jniEnv.get(), APIM_UUIDCreate, "UUIDCreate", "()[B", true);
 	}
 
-	return &gav_Cls;
+	return &g_Cls;
 }
 
-float GJavaCAPI::AppGetDefaultWindowScale(JNIEnv* jniEnv)
+void GJavaCAPI::appMainNative(JNIEnv* jniEnv)
+{
+	callStaticVoidMethod(jniEnv,(int)APIM_AppMainNative);
+}
+
+float GJavaCAPI::appGetDefaultWindowScale(JNIEnv* jniEnv)
 {
 	if(GX::JavaMainInstanceIsActivity()) {
-		return CallStaticFloatMethod(jniEnv,(int)APIM_AppGetDefaultWindowScaleActivity, GX::JavaGetMainInstance());
+		return callStaticFloatMethod(jniEnv,(int)APIM_AppGetDefaultWindowScaleActivity, GX::JavaGetMainInstance());
 	}
-	return CallStaticFloatMethod(jniEnv,(int)APIM_AppGetDefaultWindowScaleDreamService, GX::JavaGetMainInstance());
+	return callStaticFloatMethod(jniEnv,(int)APIM_AppGetDefaultWindowScaleDreamService, GX::JavaGetMainInstance());
 }
 
-void GJavaCAPI::AppTerminate(JNIEnv* jniEnv)
+void GJavaCAPI::appTerminate(JNIEnv* jniEnv)
 {
-	CallStaticVoidMethod(jniEnv,(int)APIM_AppTerminate, GX::JavaGetMainInstance());
+	callStaticVoidMethod(jniEnv,(int)APIM_AppTerminate, GX::JavaGetMainInstance());
 }
 
 void GJavaCAPI::UUIDCreate(JNIEnv* jniEnv,guint8 * uuidOut)
 {
-	jbyteArray barr= (jbyteArray)CallStaticObjectMethod(jniEnv,APIM_UUIDCreate);
+	jbyteArray barr= (jbyteArray)callStaticObjectMethod(jniEnv,APIM_UUIDCreate);
 
 	jbyte* ba = jniEnv->GetByteArrayElements(barr, JNI_FALSE);
 

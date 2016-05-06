@@ -8,29 +8,32 @@ import android.content.ContextWrapper;
 import android.service.dreams.DreamService;
 import android.util.*;
 
+import com.gxengine.GX;
+
 public class GJavaCAPI {
-	
-	public static float AppGetDefaultWindowScale(Activity activity) {
+	public static void appMainNative() {
+		GX.main(GX.LaunchTypeNative);
+	}
+	public static float appGetDefaultWindowScale(Activity activity) {
 		DisplayMetrics dm=new DisplayMetrics();
 		activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
 		return dm.density;
 	}
 	@SuppressLint("NewApi")
-	public static float AppGetDefaultWindowScale(DreamService dream) {
+	public static float appGetDefaultWindowScale(DreamService dream) {
 		DisplayMetrics dm=new DisplayMetrics();
 		dream.getWindowManager().getDefaultDisplay().getMetrics(dm);
 		return dm.density; 
 	}
-	public static String AppGetCacheDir(ContextWrapper cw) {
+	public static String appGetCacheDir(ContextWrapper cw) {
 		return cw.getCacheDir().getAbsolutePath();
 	}
-	public static String AppGetPackageCodePath(ContextWrapper cw) {
+	public static String appGetPackageCodePath(ContextWrapper cw) {
 		return cw.getPackageCodePath();
 	}
-	public static void AppTerminate(Activity activity) {
+	public static void appTerminate(Activity activity) {
 		activity.finish();
 	}
-
 	public static byte[] UUIDCreate() {
 		byte[] res=new byte[16];
 		

@@ -17,6 +17,9 @@
 #include <memory.h>
 #include <string.h>
 #include <assert.h>
+#if defined(GX_OS_ANDROID)
+#include <jni.h>
+#endif
 
 #ifndef va_copy
 #ifdef __va_copy

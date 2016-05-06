@@ -21,7 +21,7 @@ namespace GX {
         JavaLaunchTypeDaydream,
     } JavaLaunchType;
 
-    JavaLaunchType GXJavaGetLaunchType();
+    JavaLaunchType JavaGetLaunchType();
     void JavaInitNative(ANativeActivity* nativaActivity);
     void JavaInitActivity(jobject activity);
     void JavaInitDaydream(jobject daydream);
@@ -49,7 +49,7 @@ public:
         }
     }
 
-    JNIEnv* Get() {
+    JNIEnv* get() {
         return m_Env;
     }
 

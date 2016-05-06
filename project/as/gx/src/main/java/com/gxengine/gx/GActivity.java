@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.Surface;
 
+import com.gxengine.GX;
+
 public class GActivity extends Activity implements GWindow.Delegate {
 
 	public GActivity() {
@@ -25,8 +27,8 @@ public class GActivity extends Activity implements GWindow.Delegate {
         } catch (Exception e) {
             e.printStackTrace();
         }
-		GJavaJAPI.InitActivity();
-		GAndroid.MainActivity(this);
+		GJavaJAPI.initActivity(this);
+		GX.main(GX.LaunchTypeActivity);
 		
 		_window=new GWindow(this,this);
 		this.setContentView(_window);
@@ -35,13 +37,13 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		GJavaJAPI.AppStart();
+		GJavaJAPI.appStart();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		GJavaJAPI.AppResume();
+		GJavaJAPI.appResume();
 		
 		startTimer();
 	}
@@ -51,18 +53,18 @@ public class GActivity extends Activity implements GWindow.Delegate {
 		super.onPause();
 		stopTimer();
 		
-		GJavaJAPI.AppPause();
+		GJavaJAPI.appPause();
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		GJavaJAPI.AppStop();
+		GJavaJAPI.appStop();
 	}
 
 	@Override
 	protected void onDestroy() {
-		GJavaJAPI.AppDestroy();
+		GJavaJAPI.appDestroy();
 		super.onDestroy();
 		
 		int nPid = android.os.Process.myPid();
@@ -72,28 +74,28 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
-		GJavaJAPI.AppLowMemory();
+		GJavaJAPI.appLowMemory();
 	}
 	
 	@Override
 	public void onWindowCreated(GWindow win, Surface surface) {
-		GJavaJAPI.MainWindowHasCreated(surface);
+		GJavaJAPI.mainWindowHasCreated(surface);
 	}
 	
 	@Override
 	public void onWindowChanged(GWindow win, Surface surface, int width, int height) {
-		GJavaJAPI.MainWindowHasChanged(surface, width, height);
+		GJavaJAPI.mainWindowHasChanged(surface, width, height);
 	}
 	
 	@Override
 	public void onWindowDestroyed(GWindow win, Surface surface) {
-		GJavaJAPI.MainWindowHasDestroyed(surface);
+		GJavaJAPI.mainWindowHasDestroyed(surface);
 	}
 	
 	@Override
 	public void onWindowTouchEvent(GWindow win, MotionEvent event) {
 		int idx=event.getActionIndex();
-		GJavaJAPI.MainWindowOnTouchEvent(event.getActionMasked(),
+		GJavaJAPI.mainWindowOnTouchEvent(event.getActionMasked(),
 				event.getPointerId(idx), 
 				event.getX(idx)*event.getXPrecision(), 
 				event.getY(idx)*event.getYPrecision());
@@ -101,7 +103,6 @@ public class GActivity extends Activity implements GWindow.Delegate {
 
 	
 	private void startTimer() {
-		_msPerFrame=1000L/ GJavaJAPI.AppSuggestFPS();
 		_handler.postDelayed(_runnable,_msPerFrame);
 	}
 	private void stopTimer() {
@@ -109,12 +110,12 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	}
 	
 	private void idle() {
-		GJavaJAPI.AppIdle();
+		GJavaJAPI.appIdle();
 	}
 	
 	private GWindow _window;
 
-	private long _msPerFrame=1000L/30;
+	private long _msPerFrame=1000L/60;
 	private Handler _handler = new Handler( );
 	private Runnable _runnable = new Runnable( ) {
 		public void run ( ) {

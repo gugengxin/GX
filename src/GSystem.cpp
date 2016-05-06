@@ -11,7 +11,7 @@
 #include <Windows.h>
 #endif
 
-gint64 GSystem::CurrentTimeMS()
+gint64 GSystem::currentTimeMS()
 {
 #if defined(GX_OS_ANDROID)
     struct timespec now;
@@ -38,7 +38,7 @@ static double GetPerformanceFrequency()
 }
 #endif
 
-gint64 GSystem::TickCountNS()
+gint64 GSystem::tickCountNS()
 {
 #if defined(GX_OS_ANDROID)
     struct timespec now;

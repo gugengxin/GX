@@ -33,9 +33,6 @@ public:
     GObject* alloc();
     
 private:
-    static GClass* map[163];
-    
-private:
     guint           m_Size;
     Alloc           m_Alloc;
     GClass*         m_Parent;

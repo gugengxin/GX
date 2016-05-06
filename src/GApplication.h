@@ -13,6 +13,11 @@
 #include "GArray.h"
 #include "GWindow.h"
 #include "GXCWnd.h"
+#if defined(GX_OS_ANDROID)
+#include <android/input.h>
+#include <android/native_activity.h>
+#include <native_app_glue/android_native_app_glue.h>
+#endif
 
 class GApplication {
 public:
@@ -53,6 +58,24 @@ private:
 
 	GX::CWnd m_MsgWnd;
 	UINT m_TimerID;
+#elif defined(GX_OS_ANDROID)
+    friend class GJavaJAPI;
+    friend void android_main(struct android_app*);
+
+    static void androidHandleCmd(struct android_app* androidApp, int32_t cmd);
+    static int32_t androidHandleInput(struct android_app* app, AInputEvent* event);
+
+    void androidWindowCreated(ANativeWindow*);
+    void androidWindowChanged();
+    void androidWindowDestroyed();
+    void androidWindowOnTouchEvent(jint action,jint pointerId,jfloat x,jfloat y);
+
+    void androidAppStart();
+    void androidAppResume();
+    void androidAppPause();
+    void androidAppStop();
+    void androidAppDestroy();
+    void androidAppLowMemory();
 #endif
 };
 

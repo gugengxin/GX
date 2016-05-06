@@ -9,6 +9,8 @@ import android.service.dreams.DreamService;
 import android.view.MotionEvent;
 import android.view.Surface;
 
+import com.gxengine.GX;
+
 @SuppressLint("NewApi")
 public class GDreamService extends DreamService implements GWindow.Delegate {
 
@@ -27,8 +29,8 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
         } catch (Exception e) {
             e.printStackTrace();
         }
-		GJavaJAPI.InitDaydream();
-		GAndroid.MainDaydream(this);
+		GJavaJAPI.initDaydream(this);
+		GX.main(GX.LaunchTypeDaydream);
 	}
 
 	@Override
@@ -50,19 +52,19 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 		super.onDreamingStarted();
 		
 		startTimer();
-		GJavaJAPI.AppResume();
+		GJavaJAPI.appResume();
 	}
 
 	@Override
 	public void onDreamingStopped() {
 		super.onDreamingStopped();
 		stopTimer();
-		GJavaJAPI.AppPause();
+		GJavaJAPI.appPause();
 	}
 
 	@Override
 	public void onDestroy() {
-		GJavaJAPI.AppDestroy();
+		GJavaJAPI.appDestroy();
 		super.onDestroy();
 		
 		int nPid = android.os.Process.myPid();
@@ -72,22 +74,22 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
-		GJavaJAPI.AppLowMemory();
+		GJavaJAPI.appLowMemory();
 	}
 
 	@Override
 	public void onWindowCreated(GWindow win, Surface surface) {
-		GJavaJAPI.MainWindowHasCreated(surface);
+		GJavaJAPI.mainWindowHasCreated(surface);
 	}
 	
 	@Override
 	public void onWindowChanged(GWindow win, Surface surface, int width, int height) {
-		GJavaJAPI.MainWindowHasChanged(surface, width, height);
+		GJavaJAPI.mainWindowHasChanged(surface, width, height);
 	}
 	
 	@Override
 	public void onWindowDestroyed(GWindow win, Surface surface) {
-		GJavaJAPI.MainWindowHasDestroyed(surface);
+		GJavaJAPI.mainWindowHasDestroyed(surface);
 	}
 	
 	@Override
@@ -96,7 +98,6 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	}
 	
 	private void startTimer() {
-		_msPerFrame=1000L/ GJavaJAPI.AppSuggestFPS();
 		_handler.postDelayed(_runnable,_msPerFrame);
 	}
 	private void stopTimer() {
@@ -104,12 +105,12 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	}
 	
 	private void idle() {
-		GJavaJAPI.AppIdle();
+		GJavaJAPI.appIdle();
 	}
 	
 	GWindow _window;
 	
-	private long _msPerFrame=1000L/30;
+	private long _msPerFrame=1000L/60;
 	private Handler _handler = new Handler( );
 	private Runnable _runnable = new Runnable( ) {
 		public void run ( ) {

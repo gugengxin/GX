@@ -1,21 +1,19 @@
 package com.gxengine.gx;
 
 public class GJavaJAPI {
-	public static native void InitActivity();
-	public static native void InitDaydream();
+	public static native void initActivity(Object activity);
+	public static native void initDaydream(Object daydream);
 	
-	public static native void MainWindowHasCreated(Object surface);
-	public static native void MainWindowHasChanged(Object surface,int wdith,int height);
-	public static native void MainWindowHasDestroyed(Object surface);
-	public static native void MainWindowOnTouchEvent(int action,int pointerId,float x,float y);
+	public static native void mainWindowHasCreated(Object surface);
+	public static native void mainWindowHasChanged(Object surface,int wdith,int height);
+	public static native void mainWindowHasDestroyed(Object surface);
+	public static native void mainWindowOnTouchEvent(int action,int pointerId,float x,float y);
 	
-	public static native int AppSuggestFPS();
-	
-	public static native void AppIdle();
-	public static native void AppStart();
-	public static native void AppResume();
-	public static native void AppPause();
-	public static native void AppStop();
-	public static native void AppDestroy();
-	public static native void AppLowMemory();
+	public static native void appIdle();
+	public static native void appStart();
+	public static native void appResume();
+	public static native void appPause();
+	public static native void appStop();
+	public static native void appDestroy();
+	public static native void appLowMemory();
 }

@@ -1,5 +1,7 @@
 apply plugin: 'com.android.model.library'
 
+apply from: this.projectDir.getAbsolutePath() + "/config.gradle"
+
 model {
     android {
         compileSdkVersion 23
@@ -13,20 +15,11 @@ model {
         }
         ndk {
             moduleName "GX"
-            CFlags.add("-DGX_OS_ANDROID -Wno-multichar -fvisibility=hidden")
-            cppFlags.add("-DGX_OS_ANDROID -std=c++11 -fno-rtti -fvisibility=hidden")
-            ldLibs.add("log")
-            ldLibs.add("EGL")
-            ldLibs.add("GLESv2")
-            ldLibs.add("android")
-            ldLibs.add("OpenSLES")
+            platformVersion 9
         }
         buildTypes {
             debug {
-                ndk {
-                    CFlags.add("-DGX_DEBUG")
-                    cppFlags.add("-DGX_DEBUG")
-                }
+
             }
             release {
                 minifyEnabled false
@@ -43,7 +36,6 @@ model {
                     source {
                         srcDir "src/main/jni"
                         srcDir "../../../src"
-                        srcDir "../../../src/native_app_glue"
                     }
                 }
             }

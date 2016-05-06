@@ -442,9 +442,4 @@ void ANativeActivity_onCreate(ANativeActivity* activity,
     activity->instance = android_app_create(activity, savedState, savedStateSize);
 }
 
-void android_main(struct android_app* app)
-{
-
-}
-
 #endif /* GX_OS_ANDROID */

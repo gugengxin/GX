@@ -1,2 +1,4 @@
 include ':gx',':app'
 project(':app').projectDir = new File('../../test/project/as/app')
+
+
