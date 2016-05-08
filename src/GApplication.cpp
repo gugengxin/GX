@@ -273,10 +273,15 @@ public:
 
 static AndroidApp g_ArdApp;
 
+
 extern "C" {
+
+extern JNIEXPORT void JNICALL Java_com_gxengine_GX_main
+		(JNIEnv *, jclass, jint);
 void android_main(struct android_app *app) {
 	GX::JavaInitNative(app->activity);
-
+	app->userData=GApplication::shared();
+	g_ArdApp.app=app;
 	g_ArdApp.app->onAppCmd = GApplication::androidHandleCmd;
 	g_ArdApp.app->onInputEvent = GApplication::androidHandleInput;
 
@@ -288,14 +293,62 @@ void android_main(struct android_app *app) {
 																LOOPER_ID_USER, NULL, NULL);
 	g_ArdApp.animating = 0;
 
-	GJavaJNIEnvAutoPtr jniEnv;
-	GJavaCAPI::shared()->appMainNative(jniEnv.get());
+	//GJavaJNIEnvAutoPtr jniEnv;
+	//GJavaCAPI::shared()->appMainNative(jniEnv.get());
+	Java_com_gxengine_GX_main(NULL,NULL,GX::JavaLaunchTypeNative);
 }
 }
 
 void GApplication::androidHandleCmd(struct android_app* androidApp, int32_t cmd)
 {
-
+	GApplication* pApp = GX_CAST_R(GApplication*, androidApp->userData);
+	switch (cmd) {
+		case APP_CMD_INPUT_CHANGED:
+			break;
+		case APP_CMD_INIT_WINDOW:
+			//pApp->AndroidWindowCreated(androidApp->window);
+			break;
+		case APP_CMD_TERM_WINDOW:
+			//pApp->AndroidWindowDestroyed();
+			break;
+		case APP_CMD_WINDOW_RESIZED:
+			break;
+		case APP_CMD_WINDOW_REDRAW_NEEDED:
+			break;
+		case APP_CMD_CONTENT_RECT_CHANGED:
+			break;
+		case APP_CMD_GAINED_FOCUS:
+			break;
+		case APP_CMD_LOST_FOCUS:
+			break;
+		case APP_CMD_CONFIG_CHANGED:
+			//pApp->AndroidWindowChanged();
+			break;
+		case APP_CMD_LOW_MEMORY:
+			//pApp->AndroidAppLowMemory();
+			break;
+		case APP_CMD_START:
+			//pApp->AndroidAppStart();
+			break;
+		case APP_CMD_RESUME:
+			//pApp->AndroidAppResume();
+			g_ArdApp.animating = 1;
+			break;
+		case APP_CMD_SAVE_STATE:
+			break;
+		case APP_CMD_PAUSE:
+			g_ArdApp.animating = 0;
+			//pApp->AndroidAppPause();
+			break;
+		case APP_CMD_STOP:
+			//pApp->AndroidAppStop();
+			break;
+		case APP_CMD_DESTROY:
+			//pApp->AndroidAppDestroy();
+			break;
+		default:
+			break;
+	}
 }
 int32_t GApplication::androidHandleInput(struct android_app* app, AInputEvent* event)
 {
@@ -415,7 +468,7 @@ GApplication::~GApplication()
 
 void GApplication::idle()
 {
-	/*
+	//*
 	static int i = 0;
 	GX_LOG_P1(PrioDEBUG, "GApplication", "idle:%d ", i++);
 	//const gchar* str = "\x41\x42\x43\x48\x65\x6C\x6C\x6F\x21\x20\xE4\xBD\xA0\xE5\xA5\xBD\xEF\xBC\x81\xE3\x82\x82\xE3\x81\x97\xE3\x82\x82\xE3\x81\x97\x21\x20\x41\x56\x41\x56\x41\x56\x41";

@@ -62,9 +62,11 @@ GThread::~GThread()
 void GThread::setMain()
 {
     g_MT=this;
+#if defined(GX_NO_PTHREAD_H)
 #ifdef GX_DEBUG
 	int test=GX::pthread_test;
 	test++;
+#endif
 #endif
 }
 

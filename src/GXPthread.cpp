@@ -8,6 +8,8 @@
 
 #include "GXPthread.h"
 #include <pthread.h>
+
+#if defined(GX_NO_PTHREAD_H)
 #ifdef GX_DEBUG
 #include <assert.h>
 namespace GX {
@@ -20,4 +22,5 @@ namespace GX {
 	}
 	int pthread_test = _Test();
 }
+#endif
 #endif

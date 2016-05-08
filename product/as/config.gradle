@@ -1,0 +1,54 @@
+
+println "Initialize GX build"
+
+//def GXInit(){
+//    Properties properties = new Properties()
+//    File propertyFile = new File(rootDir.getAbsolutePath() + "/local.properties")
+//    properties.load(propertyFile.newDataInputStream())
+//    this.ext.GX_NDK_DIR = relativePath(properties.getProperty('ndk.dir'))
+//    //println("GX_NDK_DIR="+this.GX_NDK_DIR)
+//}
+//GXInit()
+
+model {
+    android {
+        ndk {
+            CFlags.addAll(["-DGX_OS_ANDROID", "-Wno-multichar"])    //, "-fvisibility=hidden"
+            cppFlags.addAll(["-DGX_OS_ANDROID", "-std=c++11", "-fno-rtti"]) //, "-fvisibility=hidden"
+            ldLibs.addAll(["log", "EGL", "GLESv2", "android", "OpenSLES"])
+            platformVersion 9
+        }
+        buildTypes {
+            debug {
+                ndk {
+                    CFlags.add("-DGX_DEBUG")
+                    cppFlags.add("-DGX_DEBUG")
+                    debuggable true
+                }
+            }
+        }
+        sources {
+            main {
+                java {
+                    source {
+                        srcDir this.GX_ROOT+"/project/as/gx/src/main/java"
+                    }
+                }
+                jni {
+                    exportedHeaders {
+                        //srcDir this.GX_NDK_DIR+"/sources/android/native_app_glue"
+                        srcDir this.GX_ROOT+"/src/native_app_glue"
+                        srcDir this.GX_ROOT+"/src"
+                    }
+                    source {
+                        //srcDir this.GX_NDK_DIR+"/sources/android/native_app_glue"
+                        srcDir this.GX_ROOT+"/src"
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+println "Initialize GX build done"

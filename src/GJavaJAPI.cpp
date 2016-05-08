@@ -26,7 +26,7 @@ public:
 //        GApplication::shared()->AndroidWindowOnTouchEvent(action,pointerId,x,y);
     }
     static void appIdle() {
-
+        GApplication::shared()->idle();
     }
     static void appStart() {
 //        GApplication::shared()->AndroidAppStart();

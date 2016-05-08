@@ -1,6 +1,9 @@
 apply plugin: 'com.android.model.application'
 
-apply from: rootProject.childProjects.gx.projectDir.getAbsolutePath() + "/config.gradle"
+ext {
+    GX_ROOT="../../../.."
+}
+apply from: GX_ROOT+"/product/as/config.gradle"
 
 model {
     android {
@@ -29,13 +32,11 @@ model {
                 jni {
                     exportedHeaders {
                         srcDir "../../../src"
+                        srcDir "src/main/jni"
                     }
                     source {
                         srcDir "src/main/jni"
                         srcDir "../../../src"
-                    }
-                    dependencies {
-                        project ":gx" linkage "shared"
                     }
                 }
             }
@@ -44,8 +45,9 @@ model {
 }
 
 dependencies {
-    compile project(':gx')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.3.0'
 }
+
+
 

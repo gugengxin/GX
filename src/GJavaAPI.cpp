@@ -19,17 +19,6 @@ namespace GX {
     static JavaLaunchType g_LaunchType=JavaLaunchTypeNative;
     static AAssetManager* g_AssetManager=NULL;
 
-    JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved)
-    {
-        g_VM=vm;
-        GX_LOG_P1(PrioDEBUG,"JNI_OnLoad","%p",vm);
-        return JNI_VERSION_1_6;
-    }
-    JNIEXPORT void JNICALL JNI_OnUnload(JavaVM* vm, void* reserved)
-    {
-
-    }
-
     JavaVM* JavaGetVM()
     {
         return g_VM;
@@ -168,4 +157,20 @@ namespace GX {
     }
 }
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
+    GX::g_VM = vm;
+    GX_LOG_P1(PrioDEBUG, "JNI_OnLoad", "%p", vm);
+    return JNI_VERSION_1_6;
+}
+JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *vm, void *reserved) {
+
+#ifdef __cplusplus
+}
+#endif
+
+}
 #endif

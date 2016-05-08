@@ -1,2 +1,1 @@
-include ':app','gx'
-project(':gx').projectDir = new File('../../../project/as/gx')
+include ':app'

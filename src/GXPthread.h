@@ -11,43 +11,36 @@
 
 #include "GXPrefix.h"
 
-namespace GX {
-#ifdef GX_DEBUG
-	extern int pthread_test;
+#if defined(GX_OS_WINDOWS)
+#define GX_NO_PTHREAD_H
+#else
+#include <pthread.h>
 #endif
+
+namespace GX {
+
+
+#if defined(GX_NO_PTHREAD_H)
+
+#ifdef GX_DEBUG
+    extern int pthread_test;
+#endif
+
 #if defined(GX_OS_WINDOWS)
     typedef struct _pthread_t {
         void * p;
         unsigned int x;
     } pthread_t;
+    typedef void* pthread_mutex_t;
+    typedef void* pthread_cond_t;
+#endif
+
 #else
-    typedef void* pthread_t;
-#endif
-    
-#if defined(GX_OS_WINDOWS)
-	typedef void* pthread_mutex_t;
-#else
-    typedef struct _pthread_mutex_t {
-        long __sig;
-#if GX_PTR_32BIT
-        char __opaque[40];
-#elif GX_PTR_64BIT
-        char __opaque[56];
-#endif
-    } pthread_mutex_t;
-#endif
-    
-#if defined(GX_OS_WINDOWS)
-	typedef void* pthread_cond_t;
-#else
-    typedef struct _pthread_cond_t {
-        long __sig;
-#if GX_PTR_32BIT
-        char __opaque[24];
-#elif GX_PTR_64BIT
-        char __opaque[40];
-#endif
-    } pthread_cond_t;
+
+    typedef ::pthread_t pthread_t;
+    typedef ::pthread_mutex_t pthread_mutex_t;
+    typedef ::pthread_cond_t pthread_cond_t;
+
 #endif
 
 

@@ -9,7 +9,7 @@
 #if defined(GX_OS_ANDROID)
 
 #include <jni.h>
-#include <native_app_glue/android_native_app_glue.h>
+#include <android_native_app_glue.h>
 
 namespace GX {
 

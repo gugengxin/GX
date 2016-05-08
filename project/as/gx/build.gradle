@@ -1,6 +1,9 @@
 apply plugin: 'com.android.model.library'
 
-apply from: this.projectDir.getAbsolutePath() + "/config.gradle"
+ext {
+    GX_ROOT="../../.."
+}
+apply from: GX_ROOT + "/product/as/config.gradle"
 
 model {
     android {
@@ -15,12 +18,8 @@ model {
         }
         ndk {
             moduleName "GX"
-            platformVersion 9
         }
         buildTypes {
-            debug {
-
-            }
             release {
                 minifyEnabled false
                 proguardFiles.add(file('proguard-android.txt'))
@@ -30,12 +29,8 @@ model {
         sources {
             main {
                 jni {
-                    exportedHeaders {
-                        srcDir "../../../src"
-                    }
                     source {
                         srcDir "src/main/jni"
-                        srcDir "../../../src"
                     }
                 }
             }
