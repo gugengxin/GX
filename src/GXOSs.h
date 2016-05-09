@@ -58,5 +58,21 @@
 #define GX_BYTE_ORDER GX_LITTLE_ENDIAN
 
 
+#ifndef GX_OPENGL
+#if defined(GX_OS_APPLE) || defined(GX_OS_ANDROID)
+#define GX_OPENGL
+#if defined(GX_OS_MOBILE)
+#define GX_OPENGL_ES
+#endif
+#endif
+#endif
+
+#ifndef GX_DIRECTX
+#if defined(GX_OS_WINDOWS)
+#define GX_DIRECTX
+#endif
+#endif
+
+
 
 #endif /* GXOSs_h */

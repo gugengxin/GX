@@ -57,6 +57,16 @@
 		CA9C16D81CC615FF00204303 /* GOWHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D61CC615FF00204303 /* GOWHash.cpp */; };
 		CA9C16D91CC615FF00204303 /* GOWHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D61CC615FF00204303 /* GOWHash.cpp */; };
 		CA9C16DA1CC615FF00204303 /* GOWHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16D61CC615FF00204303 /* GOWHash.cpp */; };
+		CABB5CCA1CE0E40500D5B648 /* GContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CB61CE0E40500D5B648 /* GContext.cpp */; };
+		CABB5CCB1CE0E40500D5B648 /* GD3DContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CB81CE0E40500D5B648 /* GD3DContext.cpp */; };
+		CABB5CCC1CE0E40500D5B648 /* GJavaAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CBA1CE0E40500D5B648 /* GJavaAPI.cpp */; };
+		CABB5CCD1CE0E40500D5B648 /* GJavaCAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CBC1CE0E40500D5B648 /* GJavaCAPI.cpp */; };
+		CABB5CCE1CE0E40500D5B648 /* GJavaClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CBE1CE0E40500D5B648 /* GJavaClass.cpp */; };
+		CABB5CCF1CE0E40500D5B648 /* GJavaJAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CC01CE0E40500D5B648 /* GJavaJAPI.cpp */; };
+		CABB5CD01CE0E40500D5B648 /* GLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CC21CE0E40500D5B648 /* GLog.cpp */; };
+		CABB5CD11CE0E40500D5B648 /* GOGLContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CC41CE0E40500D5B648 /* GOGLContext.cpp */; };
+		CABB5CD21CE0E40500D5B648 /* GXDirectX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CC61CE0E40500D5B648 /* GXDirectX.cpp */; };
+		CABB5CD31CE0E40500D5B648 /* GXOpenGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CC81CE0E40500D5B648 /* GXOpenGL.cpp */; };
 		CAC2D11C1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D11B1CD0BEC500A0EBE5 /* GRunLoop.cpp */; };
 		CAC2D11D1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D11B1CD0BEC500A0EBE5 /* GRunLoop.cpp */; };
 		CAC2D11E1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D11B1CD0BEC500A0EBE5 /* GRunLoop.cpp */; };
@@ -156,6 +166,28 @@
 		CA9C16D11CC6132400204303 /* GClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GClass.h; sourceTree = "<group>"; };
 		CA9C16D61CC615FF00204303 /* GOWHash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GOWHash.cpp; sourceTree = "<group>"; };
 		CA9C16D71CC615FF00204303 /* GOWHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOWHash.h; sourceTree = "<group>"; };
+		CABB5CB41CE0E40500D5B648 /* com_gxengine_gx_GJavaJAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_gx_GJavaJAPI.h; sourceTree = "<group>"; };
+		CABB5CB51CE0E40500D5B648 /* com_gxengine_GX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_GX.h; sourceTree = "<group>"; };
+		CABB5CB61CE0E40500D5B648 /* GContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GContext.cpp; sourceTree = "<group>"; };
+		CABB5CB71CE0E40500D5B648 /* GContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GContext.h; sourceTree = "<group>"; };
+		CABB5CB81CE0E40500D5B648 /* GD3DContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GD3DContext.cpp; sourceTree = "<group>"; };
+		CABB5CB91CE0E40500D5B648 /* GD3DContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GD3DContext.h; sourceTree = "<group>"; };
+		CABB5CBA1CE0E40500D5B648 /* GJavaAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GJavaAPI.cpp; sourceTree = "<group>"; };
+		CABB5CBB1CE0E40500D5B648 /* GJavaAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJavaAPI.h; sourceTree = "<group>"; };
+		CABB5CBC1CE0E40500D5B648 /* GJavaCAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GJavaCAPI.cpp; sourceTree = "<group>"; };
+		CABB5CBD1CE0E40500D5B648 /* GJavaCAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJavaCAPI.h; sourceTree = "<group>"; };
+		CABB5CBE1CE0E40500D5B648 /* GJavaClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GJavaClass.cpp; sourceTree = "<group>"; };
+		CABB5CBF1CE0E40500D5B648 /* GJavaClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJavaClass.h; sourceTree = "<group>"; };
+		CABB5CC01CE0E40500D5B648 /* GJavaJAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GJavaJAPI.cpp; sourceTree = "<group>"; };
+		CABB5CC11CE0E40500D5B648 /* GJavaJAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GJavaJAPI.h; sourceTree = "<group>"; };
+		CABB5CC21CE0E40500D5B648 /* GLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLog.cpp; sourceTree = "<group>"; };
+		CABB5CC31CE0E40500D5B648 /* GLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLog.h; sourceTree = "<group>"; };
+		CABB5CC41CE0E40500D5B648 /* GOGLContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GOGLContext.cpp; sourceTree = "<group>"; };
+		CABB5CC51CE0E40500D5B648 /* GOGLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOGLContext.h; sourceTree = "<group>"; };
+		CABB5CC61CE0E40500D5B648 /* GXDirectX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXDirectX.cpp; sourceTree = "<group>"; };
+		CABB5CC71CE0E40500D5B648 /* GXDirectX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXDirectX.h; sourceTree = "<group>"; };
+		CABB5CC81CE0E40500D5B648 /* GXOpenGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXOpenGL.cpp; sourceTree = "<group>"; };
+		CABB5CC91CE0E40500D5B648 /* GXOpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXOpenGL.h; sourceTree = "<group>"; };
 		CAC2D11A1CD0BEB400A0EBE5 /* GRunLoop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRunLoop.h; sourceTree = "<group>"; };
 		CAC2D11B1CD0BEC500A0EBE5 /* GRunLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRunLoop.cpp; sourceTree = "<group>"; };
 		CAC2D12A1CD0C1EC00A0EBE5 /* GData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GData.cpp; sourceTree = "<group>"; };
@@ -217,6 +249,16 @@
 		CA1F60CB1CD9ACA200C6307B /* Unuse */ = {
 			isa = PBXGroup;
 			children = (
+				CABB5CB41CE0E40500D5B648 /* com_gxengine_gx_GJavaJAPI.h */,
+				CABB5CB51CE0E40500D5B648 /* com_gxengine_GX.h */,
+				CABB5CBA1CE0E40500D5B648 /* GJavaAPI.cpp */,
+				CABB5CBB1CE0E40500D5B648 /* GJavaAPI.h */,
+				CABB5CBC1CE0E40500D5B648 /* GJavaCAPI.cpp */,
+				CABB5CBD1CE0E40500D5B648 /* GJavaCAPI.h */,
+				CABB5CBE1CE0E40500D5B648 /* GJavaClass.cpp */,
+				CABB5CBF1CE0E40500D5B648 /* GJavaClass.h */,
+				CABB5CC01CE0E40500D5B648 /* GJavaJAPI.cpp */,
+				CABB5CC11CE0E40500D5B648 /* GJavaJAPI.h */,
 				CA1F60A51CD9834000C6307B /* GXCWnd.h */,
 				CA1F60A41CD9834000C6307B /* GXCWnd.cpp */,
 			);
@@ -262,30 +304,50 @@
 		CA9C16C51CC5FF7500204303 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				CA1F60CB1CD9ACA200C6307B /* Unuse */,
-				CA1F60A31CD9834000C6307B /* GSystem.h */,
-				CA1F60A21CD9834000C6307B /* GSystem.cpp */,
 				CA9C16C81CC601D500204303 /* GXOSs.h */,
 				CA9C16C61CC5FFA800204303 /* GXTypes.h */,
 				CA9C16C71CC6013F00204303 /* GXPrefix.h */,
 				CA9C16C91CC6079000204303 /* GX.h */,
+				CA1F60CB1CD9ACA200C6307B /* Unuse */,
+				CA7B4DE71CD594FF00F3D826 /* GApplication.h */,
+				CA7B4DE61CD594FF00F3D826 /* GApplication.cpp */,
+				CA1F60A31CD9834000C6307B /* GSystem.h */,
+				CA1F60A21CD9834000C6307B /* GSystem.cpp */,
+				CABB5CC31CE0E40500D5B648 /* GLog.h */,
+				CABB5CC21CE0E40500D5B648 /* GLog.cpp */,
 				CA9C16D11CC6132400204303 /* GClass.h */,
 				CA9C16D01CC6132400204303 /* GClass.cpp */,
 				CA9C16CB1CC6102E00204303 /* GObject.h */,
 				CA9C16CA1CC6102E00204303 /* GObject.cpp */,
-				CA7B4DE71CD594FF00F3D826 /* GApplication.h */,
-				CA7B4DE61CD594FF00F3D826 /* GApplication.cpp */,
-				CA1AD2761CD87CA900CEA1DC /* GWindow.h */,
-				CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */,
 				CA1AD27E1CD89DFB00CEA1DC /* GAutoreleasePool.h */,
 				CA1AD27D1CD89DFB00CEA1DC /* GAutoreleasePool.cpp */,
 				CAC2D1231CD0C13800A0EBE5 /* Struct */,
 				CA1F60D61CD9F85E00C6307B /* String */,
 				CAC2D1221CD0C12F00A0EBE5 /* Math */,
 				CAC2D1211CD0C11900A0EBE5 /* Thread */,
+				CABB5CD41CE0E45000D5B648 /* Window */,
 			);
 			name = src;
 			path = ../../src;
+			sourceTree = "<group>";
+		};
+		CABB5CD41CE0E45000D5B648 /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				CA1AD2761CD87CA900CEA1DC /* GWindow.h */,
+				CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */,
+				CABB5CB61CE0E40500D5B648 /* GContext.cpp */,
+				CABB5CB71CE0E40500D5B648 /* GContext.h */,
+				CABB5CB81CE0E40500D5B648 /* GD3DContext.cpp */,
+				CABB5CB91CE0E40500D5B648 /* GD3DContext.h */,
+				CABB5CC41CE0E40500D5B648 /* GOGLContext.cpp */,
+				CABB5CC51CE0E40500D5B648 /* GOGLContext.h */,
+				CABB5CC61CE0E40500D5B648 /* GXDirectX.cpp */,
+				CABB5CC71CE0E40500D5B648 /* GXDirectX.h */,
+				CABB5CC81CE0E40500D5B648 /* GXOpenGL.cpp */,
+				CABB5CC91CE0E40500D5B648 /* GXOpenGL.h */,
+			);
+			name = Window;
 			sourceTree = "<group>";
 		};
 		CAC2D1211CD0C11900A0EBE5 /* Thread */ = {
@@ -446,12 +508,20 @@
 				CA9C16D81CC615FF00204303 /* GOWHash.cpp in Sources */,
 				CA1F60BB1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CA1C71B81CD2068100BEEA5B /* GDataArray.cpp in Sources */,
+				CABB5CCD1CE0E40500D5B648 /* GJavaCAPI.cpp in Sources */,
 				CA7B4DE01CD5906F00F3D826 /* GUUID.cpp in Sources */,
 				CA9C16D21CC6132400204303 /* GClass.cpp in Sources */,
 				CAC2D1321CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CA0B16021CD086F500C33BB5 /* GCondition.cpp in Sources */,
 				CA1F60A71CD9834000C6307B /* GXCWnd.cpp in Sources */,
+				CABB5CCA1CE0E40500D5B648 /* GContext.cpp in Sources */,
+				CABB5CCC1CE0E40500D5B648 /* GJavaAPI.cpp in Sources */,
 				CAE706D91CD2FA850090F4DD /* GMap.cpp in Sources */,
+				CABB5CD31CE0E40500D5B648 /* GXOpenGL.cpp in Sources */,
+				CABB5CCB1CE0E40500D5B648 /* GD3DContext.cpp in Sources */,
+				CABB5CCE1CE0E40500D5B648 /* GJavaClass.cpp in Sources */,
+				CABB5CCF1CE0E40500D5B648 /* GJavaJAPI.cpp in Sources */,
+				CABB5CD21CE0E40500D5B648 /* GXDirectX.cpp in Sources */,
 				CAC2D11C1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */,
 				CA9C16CC1CC6102E00204303 /* GObject.cpp in Sources */,
 				CA0B15FE1CD0851E00C33BB5 /* GXPthread.cpp in Sources */,
@@ -460,8 +530,10 @@
 				CA1AD27F1CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,
 				CA7B4DE81CD594FF00F3D826 /* GApplication.cpp in Sources */,
 				CA1F60D11CD9ED6A00C6307B /* GTString.cpp in Sources */,
+				CABB5CD01CE0E40500D5B648 /* GLog.cpp in Sources */,
 				CA1F60A61CD9834000C6307B /* GSystem.cpp in Sources */,
 				CA0B15F81CD07CD000C33BB5 /* GMutex.cpp in Sources */,
+				CABB5CD11CE0E40500D5B648 /* GOGLContext.cpp in Sources */,
 				CAE706E11CD3494F0090F4DD /* GString.cpp in Sources */,
 				CA1AD2771CD87CA900CEA1DC /* GWindow.cpp in Sources */,
 				CA0B15F11CD07A3600C33BB5 /* GThread.cpp in Sources */,
