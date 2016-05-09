@@ -36,12 +36,9 @@ model {
                 }
                 jni {
                     exportedHeaders {
-                        //srcDir this.GX_NDK_DIR+"/sources/android/native_app_glue"
-                        srcDir this.GX_ROOT+"/src/native_app_glue"
                         srcDir this.GX_ROOT+"/src"
                     }
                     source {
-                        //srcDir this.GX_NDK_DIR+"/sources/android/native_app_glue"
                         srcDir this.GX_ROOT+"/src"
                     }
                 }

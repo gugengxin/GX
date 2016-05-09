@@ -11,11 +11,10 @@
 #include "GJavaClass.h"
 
 
-class GJavaCAPI : public GJavaClass<7> {
+class GJavaCAPI : public GJavaClass<6> {
 public:
 	static GJavaCAPI* shared();
 
-	void appMainNative(JNIEnv* jniEnv);
 	float appGetDefaultWindowScale(JNIEnv* jniEnv);
 	void appTerminate(JNIEnv* jniEnv);
 	void UUIDCreate(JNIEnv* jniEnv,guint8* uuidOut);

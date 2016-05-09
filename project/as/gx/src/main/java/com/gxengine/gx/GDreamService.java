@@ -14,10 +14,6 @@ import com.gxengine.GX;
 @SuppressLint("NewApi")
 public class GDreamService extends DreamService implements GWindow.Delegate {
 
-	public GDreamService() {
-
-	}
-
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -29,28 +25,28 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
         } catch (Exception e) {
             e.printStackTrace();
         }
-		GJavaJAPI.initDaydream(this);
+		GJavaJAPI.appCreate(GX.LaunchTypeDaydream,this);
 		GX.main(GX.LaunchTypeDaydream);
 	}
 
 	@Override
 	public void onAttachedToWindow() {
 		super.onAttachedToWindow();
-		
+
 		_window=new GWindow(this,this);
 		this.setContentView(_window);
 	}
 
 	@Override
 	public void onDetachedFromWindow() {
-		
+
 		super.onDetachedFromWindow();
 	}
 
 	@Override
 	public void onDreamingStarted() {
 		super.onDreamingStarted();
-		
+
 		startTimer();
 		GJavaJAPI.appResume();
 	}
@@ -66,11 +62,11 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	public void onDestroy() {
 		GJavaJAPI.appDestroy();
 		super.onDestroy();
-		
+
 		int nPid = android.os.Process.myPid();
 	    android.os.Process.killProcess(nPid);
 	}
-	
+
 	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
@@ -98,7 +94,7 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	}
 	
 	private void startTimer() {
-		_handler.postDelayed(_runnable,_msPerFrame);
+		_handler.postDelayed(_runnable,GActivity.IDLE_MS_PE_RFRAME);
 	}
 	private void stopTimer() {
 		_handler.removeCallbacks(_runnable);
@@ -110,11 +106,10 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	
 	GWindow _window;
 	
-	private long _msPerFrame=1000L/60;
 	private Handler _handler = new Handler( );
 	private Runnable _runnable = new Runnable( ) {
 		public void run ( ) {
-			_handler.postDelayed(this,_msPerFrame);
+			_handler.postDelayed(this,GActivity.IDLE_MS_PE_RFRAME);
 			idle();
 		}
 	};

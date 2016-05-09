@@ -251,106 +251,31 @@ void GApplication::destroyWinMsgWnd()
 
 #elif defined(GX_OS_ANDROID)
 
-class AndroidApp {
-public:
-    AndroidApp() {
-        app=NULL;
-        sensorManager=NULL;
-        accelerometerSensor=NULL;
-        sensorEventQueue=NULL;
-        animating=0;
-    }
-    ~AndroidApp() {
-
-    }
-
-    struct android_app*     app;
-    ASensorManager*         sensorManager;
-    const ASensor*          accelerometerSensor;
-    ASensorEventQueue*      sensorEventQueue;
-    gint                    animating;
-};
-
-static AndroidApp g_ArdApp;
-
-
-extern "C" {
-
-extern JNIEXPORT void JNICALL Java_com_gxengine_GX_main
-		(JNIEnv *, jclass, jint);
-void android_main(struct android_app *app) {
-	GX::JavaInitNative(app->activity);
-	app->userData=GApplication::shared();
-	g_ArdApp.app=app;
-	g_ArdApp.app->onAppCmd = GApplication::androidHandleCmd;
-	g_ArdApp.app->onInputEvent = GApplication::androidHandleInput;
-
-	g_ArdApp.sensorManager = ASensorManager_getInstance();
-	g_ArdApp.accelerometerSensor = ASensorManager_getDefaultSensor(g_ArdApp.sensorManager,
-																   ASENSOR_TYPE_ACCELEROMETER);
-	g_ArdApp.sensorEventQueue = ASensorManager_createEventQueue(g_ArdApp.sensorManager,
-																g_ArdApp.app->looper,
-																LOOPER_ID_USER, NULL, NULL);
-	g_ArdApp.animating = 0;
-
-	//GJavaJNIEnvAutoPtr jniEnv;
-	//GJavaCAPI::shared()->appMainNative(jniEnv.get());
-	Java_com_gxengine_GX_main(NULL,NULL,GX::JavaLaunchTypeNative);
-}
-}
-
-void GApplication::androidHandleCmd(struct android_app* androidApp, int32_t cmd)
+void GApplication::androidAppCreate()
 {
-	GApplication* pApp = GX_CAST_R(GApplication*, androidApp->userData);
-	switch (cmd) {
-		case APP_CMD_INPUT_CHANGED:
-			break;
-		case APP_CMD_INIT_WINDOW:
-			//pApp->AndroidWindowCreated(androidApp->window);
-			break;
-		case APP_CMD_TERM_WINDOW:
-			//pApp->AndroidWindowDestroyed();
-			break;
-		case APP_CMD_WINDOW_RESIZED:
-			break;
-		case APP_CMD_WINDOW_REDRAW_NEEDED:
-			break;
-		case APP_CMD_CONTENT_RECT_CHANGED:
-			break;
-		case APP_CMD_GAINED_FOCUS:
-			break;
-		case APP_CMD_LOST_FOCUS:
-			break;
-		case APP_CMD_CONFIG_CHANGED:
-			//pApp->AndroidWindowChanged();
-			break;
-		case APP_CMD_LOW_MEMORY:
-			//pApp->AndroidAppLowMemory();
-			break;
-		case APP_CMD_START:
-			//pApp->AndroidAppStart();
-			break;
-		case APP_CMD_RESUME:
-			//pApp->AndroidAppResume();
-			g_ArdApp.animating = 1;
-			break;
-		case APP_CMD_SAVE_STATE:
-			break;
-		case APP_CMD_PAUSE:
-			g_ArdApp.animating = 0;
-			//pApp->AndroidAppPause();
-			break;
-		case APP_CMD_STOP:
-			//pApp->AndroidAppStop();
-			break;
-		case APP_CMD_DESTROY:
-			//pApp->AndroidAppDestroy();
-			break;
-		default:
-			break;
-	}
+
 }
-int32_t GApplication::androidHandleInput(struct android_app* app, AInputEvent* event)
+void GApplication::androidAppStart()
+{
+
+}
+void GApplication::androidAppResume()
+{
+
+}
+void GApplication::androidAppPause()
+{
+
+}
+void GApplication::androidAppStop()
+{
+
+}
+void GApplication::androidAppDestroy()
+{
+
+}
+void GApplication::androidAppLowMemory()
 {
 
 }
@@ -381,54 +306,6 @@ void GApplication::main(Delegate* dge)
 #elif defined(GX_OS_ANDROID)
 
 	switch (GX::JavaGetLaunchType()) {
-		case GX::JavaLaunchTypeNative: {
-			gint64 frameTimeLast=0LL;
-			while (true) {
-				// Read all pending events.
-				int ident;
-				int events;
-				struct android_poll_source *source;
-
-				// If not animating, we will block forever waiting for events.
-				// If animating, we loop until all events are read, then continue
-				// to draw the next frame of animation.
-				while ((ident = ALooper_pollAll(g_ArdApp.animating ? 0 : -1, NULL, &events,
-												(void **) &source)) >= 0) {
-
-					// Process this event.
-					if (source != NULL) {
-						source->process(g_ArdApp.app, source);
-					}
-
-					// If a sensor has data, process it now.
-					if (ident == LOOPER_ID_USER) {
-						if (g_ArdApp.accelerometerSensor != NULL) {
-							ASensorEvent event;
-							while (ASensorEventQueue_getEvents(g_ArdApp.sensorEventQueue, &event,
-															   1) > 0) {
-								//得到重力感应数据
-							}
-						}
-					}
-
-					// Check if we are exiting.
-					if (g_ArdApp.app->destroyRequested != 0) {
-						exit(0);
-						return;
-					}
-				}
-
-				if (g_ArdApp.animating) {
-					gint64 frameTime=GSystem::currentTimeMS();
-					if(frameTime-frameTimeLast>=1000LL/60LL) {
-						frameTimeLast=frameTime;
-
-						app->idle();
-					}
-				}
-			}
-		}
-			break;
 		case GX::JavaLaunchTypeActivity: {
 
 		}
@@ -468,7 +345,7 @@ GApplication::~GApplication()
 
 void GApplication::idle()
 {
-	//*
+	/*
 	static int i = 0;
 	GX_LOG_P1(PrioDEBUG, "GApplication", "idle:%d ", i++);
 	//const gchar* str = "\x41\x42\x43\x48\x65\x6C\x6C\x6F\x21\x20\xE4\xBD\xA0\xE5\xA5\xBD\xEF\xBC\x81\xE3\x82\x82\xE3\x81\x97\xE3\x82\x82\xE3\x81\x97\x21\x20\x41\x56\x41\x56\x41\x56\x41";

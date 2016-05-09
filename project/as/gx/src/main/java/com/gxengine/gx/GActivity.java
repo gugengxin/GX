@@ -12,9 +12,7 @@ import com.gxengine.GX;
 
 public class GActivity extends Activity implements GWindow.Delegate {
 
-	public GActivity() {
-		
-	}
+	public static final long IDLE_MS_PE_RFRAME=1000L/60;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +23,9 @@ public class GActivity extends Activity implements GWindow.Delegate {
             String libName = bundle.getString("android.app.lib_name");
             System.loadLibrary(libName);
         } catch (Exception e) {
-            e.printStackTrace();
+			throw new RuntimeException("Error getting application info", e);
         }
-		GJavaJAPI.initActivity(this);
+		GJavaJAPI.appCreate(GX.LaunchTypeActivity,this);
 		GX.main(GX.LaunchTypeActivity);
 		
 		_window=new GWindow(this,this);
@@ -103,7 +101,7 @@ public class GActivity extends Activity implements GWindow.Delegate {
 
 	
 	private void startTimer() {
-		_handler.postDelayed(_runnable,_msPerFrame);
+		_handler.postDelayed(_runnable,IDLE_MS_PE_RFRAME);
 	}
 	private void stopTimer() {
 		_handler.removeCallbacks(_runnable);
@@ -115,11 +113,10 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	
 	private GWindow _window;
 
-	private long _msPerFrame=1000L/60;
 	private Handler _handler = new Handler( );
 	private Runnable _runnable = new Runnable( ) {
 		public void run ( ) {
-			_handler.postDelayed(this,_msPerFrame);
+			_handler.postDelayed(this,IDLE_MS_PE_RFRAME);
 			idle();
 		}
 	};

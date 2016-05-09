@@ -9,22 +9,21 @@
 #if defined(GX_OS_ANDROID)
 
 #include <jni.h>
-#include <android_native_app_glue.h>
+#include <android/asset_manager_jni.h>
 
 namespace GX {
 
     JavaVM* JavaGetVM();
 
     typedef enum _JavaLaunchType {
-        JavaLaunchTypeNative,
         JavaLaunchTypeActivity,
         JavaLaunchTypeDaydream,
+
+        JavaLaunchTypeDefault=JavaLaunchTypeActivity,
     } JavaLaunchType;
 
     JavaLaunchType JavaGetLaunchType();
-    void JavaInitNative(ANativeActivity* nativaActivity);
-    void JavaInitActivity(jobject activity);
-    void JavaInitDaydream(jobject daydream);
+    void JavaInit(JavaLaunchType launchType,jobject mainInstance);
 
     bool JavaMainInstanceIsActivity();
     bool JavaMainInstanceIsDreamService();

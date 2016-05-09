@@ -11,9 +11,6 @@ import android.util.*;
 import com.gxengine.GX;
 
 public class GJavaCAPI {
-	public static void appMainNative() {
-		GX.main(GX.LaunchTypeNative);
-	}
 	public static float appGetDefaultWindowScale(Activity activity) {
 		DisplayMetrics dm=new DisplayMetrics();
 		activity.getWindowManager().getDefaultDisplay().getMetrics(dm);

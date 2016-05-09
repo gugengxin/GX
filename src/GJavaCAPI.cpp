@@ -6,7 +6,6 @@
 #if defined(GX_OS_ANDROID)
 
 typedef enum _JavaCAPIM {
-	APIM_AppMainNative,
 	APIM_AppGetDefaultWindowScaleActivity,
 	APIM_AppGetDefaultWindowScaleDreamService,
 	APIM_AppGetCacheDir,
@@ -27,11 +26,6 @@ GJavaCAPI* GJavaCAPI::shared()
 
 		g_Cls.setClass(jniEnv.get(), "com/gxengine/gx/GJavaCAPI");
 
-		g_Cls.setMethod(jniEnv.get(),
-						APIM_AppMainNative,
-						"appMainNative",
-						"()V",
-						true);
 		g_Cls.setMethod(jniEnv.get(),
 						APIM_AppGetDefaultWindowScaleActivity,
 						"appGetDefaultWindowScale",
@@ -55,11 +49,6 @@ GJavaCAPI* GJavaCAPI::shared()
 	}
 
 	return &g_Cls;
-}
-
-void GJavaCAPI::appMainNative(JNIEnv* jniEnv)
-{
-	callStaticVoidMethod(jniEnv,(int)APIM_AppMainNative);
 }
 
 float GJavaCAPI::appGetDefaultWindowScale(JNIEnv* jniEnv)

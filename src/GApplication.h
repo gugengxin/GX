@@ -16,7 +16,7 @@
 #if defined(GX_OS_ANDROID)
 #include <android/input.h>
 #include <android/native_activity.h>
-#include <android_native_app_glue.h>
+#include "com_gxengine_gx_GJavaJAPI.h"
 #endif
 
 class GApplication {
@@ -59,23 +59,36 @@ private:
 	GX::CWnd m_MsgWnd;
 	UINT m_TimerID;
 #elif defined(GX_OS_ANDROID)
-    friend class GJavaJAPI;
-    friend void android_main(struct android_app*);
-
-    static void androidHandleCmd(struct android_app* androidApp, int32_t cmd);
-    static int32_t androidHandleInput(struct android_app* app, AInputEvent* event);
-
-    void androidWindowCreated(ANativeWindow*);
-    void androidWindowChanged();
-    void androidWindowDestroyed();
-    void androidWindowOnTouchEvent(jint action,jint pointerId,jfloat x,jfloat y);
-
+    friend void Java_com_gxengine_gx_GJavaJAPI_appCreate
+            (JNIEnv *, jclass, jint, jobject);
+    friend void Java_com_gxengine_gx_GJavaJAPI_appStart
+            (JNIEnv *, jclass);
+    friend void Java_com_gxengine_gx_GJavaJAPI_appResume
+            (JNIEnv *, jclass);
+    friend void Java_com_gxengine_gx_GJavaJAPI_appIdle
+            (JNIEnv *, jclass);
+    friend void Java_com_gxengine_gx_GJavaJAPI_appPause
+            (JNIEnv *, jclass);
+    friend void Java_com_gxengine_gx_GJavaJAPI_appStop
+            (JNIEnv *, jclass);
+    friend void Java_com_gxengine_gx_GJavaJAPI_appDestroy
+            (JNIEnv *, jclass);
+    friend void Java_com_gxengine_gx_GJavaJAPI_appLowMemory
+            (JNIEnv *, jclass);
+    void androidAppCreate();
     void androidAppStart();
     void androidAppResume();
     void androidAppPause();
     void androidAppStop();
     void androidAppDestroy();
     void androidAppLowMemory();
+
+//    void androidWindowCreated(ANativeWindow*);
+//    void androidWindowChanged();
+//    void androidWindowDestroyed();
+//    void androidWindowOnTouchEvent(jint action,jint pointerId,jfloat x,jfloat y);
+
+
 #endif
 };
 

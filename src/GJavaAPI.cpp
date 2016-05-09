@@ -3,48 +3,75 @@
 //
 
 #include "GJavaAPI.h"
+
 #if defined(GX_OS_ANDROID)
+
 #include <android/asset_manager_jni.h>
 #include "GLog.h"
 
 namespace GX {
 
-    static JavaVM* g_VM=NULL;
-    static struct {
-        jobject 	instance;
-        jclass  	classId;
-        jmethodID 	loadClassMId;
-    } g_ClassLoader;
-    static jobject g_MainInstance=NULL;
-    static JavaLaunchType g_LaunchType=JavaLaunchTypeNative;
-    static AAssetManager* g_AssetManager=NULL;
+    class _JavaClassLoader {
+    public:
+        _JavaClassLoader() :
+                instance(NULL),
+                classId(NULL),
+                loadClassMId(NULL) { }
 
-    JavaVM* JavaGetVM()
-    {
-        return g_VM;
+        ~_JavaClassLoader() { }
+
+        jobject instance;
+        jclass classId;
+        jmethodID loadClassMId;
+    };
+
+    class _JavaData {
+    public:
+        _JavaData() :
+                vm(NULL),
+                launchType(JavaLaunchTypeDefault),
+                assetManager(NULL),
+                classLoader(),
+                mainInstance(NULL) { }
+
+        ~_JavaData() { }
+
+        JavaVM *vm;
+        JavaLaunchType launchType;
+        AAssetManager *assetManager;
+        _JavaClassLoader classLoader;
+        jobject mainInstance;
+    };
+
+
+    static _JavaData g_JavaData;
+
+    JavaVM *JavaGetVM() {
+        return g_JavaData.vm;
     }
 
-    JavaLaunchType JavaGetLaunchType()
-    {
-        return g_LaunchType;
+    JavaLaunchType JavaGetLaunchType() {
+        return g_JavaData.launchType;
     }
 
-    static void _JavaInit(JNIEnv* env,const char* aiyClassName)
-    {
-        jclass activityClass=env->FindClass(aiyClassName);
-        jmethodID getClassLoader=env->GetMethodID(activityClass,"getClassLoader","()Ljava/lang/ClassLoader;");
-        jobject cls=env->CallObjectMethod(g_MainInstance,getClassLoader);
-        jclass classLoader=env->FindClass("java/lang/ClassLoader");
-        jmethodID findClass=env->GetMethodID(classLoader,"loadClass","(Ljava/lang/String;)Ljava/lang/Class;");
+    static void _JavaInit(JNIEnv *env, const char *aiyClassName) {
+        jclass activityClass = env->FindClass(aiyClassName);
+        jmethodID getClassLoader = env->GetMethodID(activityClass, "getClassLoader",
+                                                    "()Ljava/lang/ClassLoader;");
+        jobject cls = env->CallObjectMethod(g_JavaData.mainInstance, getClassLoader);
+        jclass classLoader = env->FindClass("java/lang/ClassLoader");
+        jmethodID findClass = env->GetMethodID(classLoader, "loadClass",
+                                               "(Ljava/lang/String;)Ljava/lang/Class;");
 
-        g_ClassLoader.instance=env->NewGlobalRef(cls);
-        g_ClassLoader.classId=(jclass)env->NewGlobalRef(classLoader);
-        g_ClassLoader.loadClassMId=findClass;
+        g_JavaData.classLoader.instance = env->NewGlobalRef(cls);
+        g_JavaData.classLoader.classId = (jclass) env->NewGlobalRef(classLoader);
+        g_JavaData.classLoader.loadClassMId = findClass;
 
-        if(!g_AssetManager) {
-            jmethodID getAsset=env->GetMethodID(activityClass,"getAssets","()Landroid/content/res/AssetManager;");
-            jobject am=env->CallObjectMethod(g_MainInstance,getAsset);
-            g_AssetManager=AAssetManager_fromJava(env,am);
+        {
+            jmethodID getAsset = env->GetMethodID(activityClass, "getAssets",
+                                                  "()Landroid/content/res/AssetManager;");
+            jobject am = env->CallObjectMethod(g_JavaData.mainInstance, getAsset);
+            g_JavaData.assetManager = AAssetManager_fromJava(env, am);
             env->DeleteLocalRef(am);
         }
 
@@ -53,75 +80,52 @@ namespace GX {
         env->DeleteLocalRef(activityClass);
     }
 
-    void JavaInitNative(ANativeActivity* nativaActivity)
+    void JavaInit(JavaLaunchType launchType,jobject mainInstance)
     {
-        GX_LOG_P1(PrioDEBUG,"JavaInitNative","%p",nativaActivity->vm);
-        g_LaunchType=JavaLaunchTypeNative;
-        g_VM=nativaActivity->vm;
+        GX_LOG_P1(PrioDEBUG, "JavaInit", "%p", mainInstance);
+        g_JavaData.launchType = JavaLaunchTypeActivity;
         GJavaJNIEnvAutoPtr jniEnv;
+        g_JavaData.mainInstance = jniEnv.get()->NewGlobalRef(mainInstance);
 
-        g_MainInstance=nativaActivity->clazz;
-        g_AssetManager=nativaActivity->assetManager;
-        _JavaInit(jniEnv.get(),"android/app/NativeActivity");
+        if(launchType==JavaLaunchTypeActivity) {
+            _JavaInit(jniEnv.get(), "android/app/Activity");
+        }
+        else {
+            _JavaInit(jniEnv.get(), "android/service/dreams/DreamService");
+        }
     }
 
-    void JavaInitActivity(jobject activity)
-    {
-        GX_LOG_P1(PrioDEBUG,"JavaInitActivity","%p",activity);
-        g_LaunchType=JavaLaunchTypeActivity;
-        GJavaJNIEnvAutoPtr jniEnv;
-
-        g_MainInstance=jniEnv.get()->NewGlobalRef(activity);
-        g_AssetManager=NULL;
-        _JavaInit(jniEnv.get(),"android/app/Activity");
+    bool JavaMainInstanceIsActivity() {
+        return g_JavaData.launchType == JavaLaunchTypeActivity;
     }
 
-    void JavaInitDaydream(jobject daydream)
-    {
-        GX_LOG_P1(PrioDEBUG,"JavaInitDaydream","%p",daydream);
-        g_LaunchType=JavaLaunchTypeDaydream;
-        GJavaJNIEnvAutoPtr jniEnv;
-
-        g_MainInstance=jniEnv.get()->NewGlobalRef(daydream);
-        g_AssetManager=NULL;
-        _JavaInit(jniEnv.get(),"android/service/dreams/DreamService");
+    bool JavaMainInstanceIsDreamService() {
+        return g_JavaData.launchType == JavaLaunchTypeDaydream;
     }
 
-    bool JavaMainInstanceIsActivity()
-    {
-        return g_LaunchType==JavaLaunchTypeNative || g_LaunchType==JavaLaunchTypeActivity;
-    }
-    bool JavaMainInstanceIsDreamService()
-    {
-        return g_LaunchType==JavaLaunchTypeDaydream;
+    jobject JavaGetMainInstance() {
+        return g_JavaData.mainInstance;
     }
 
-    jobject JavaGetMainInstance()
-    {
-        return g_MainInstance;
+    AAssetManager *JavaGetAssetManager() {
+        return g_JavaData.assetManager;
     }
 
-    AAssetManager* JavaGetAssetManager()
-    {
-        return g_AssetManager;
-    }
-
-    JNIEnv* JavaGetEnv(bool* needDetach)
-    {
-        JNIEnv* env;
-        jint res=g_VM->GetEnv((void**) &env, JNI_VERSION_1_6);
-        if(JNI_EDETACHED==res) {
-            if(JNI_OK==g_VM->AttachCurrentThread(&env, NULL)) {
-                if(needDetach)
-                    (*needDetach)=true;
+    JNIEnv *JavaGetEnv(bool *needDetach) {
+        JNIEnv *env;
+        jint res = g_JavaData.vm->GetEnv((void **) &env, JNI_VERSION_1_6);
+        if (JNI_EDETACHED == res) {
+            if (JNI_OK == g_JavaData.vm->AttachCurrentThread(&env, NULL)) {
+                if (needDetach)
+                    (*needDetach) = true;
             }
             else {
                 GX_ASSERT(0);
             }
         }
-        else if(JNI_OK==res) {
-            if(needDetach)
-                (*needDetach)=false;
+        else if (JNI_OK == res) {
+            if (needDetach)
+                (*needDetach) = false;
         }
         else {
             GX_ASSERT(0);
@@ -129,29 +133,28 @@ namespace GX {
         return env;
     }
 
-    void JavaDetachEnv()
-    {
-        g_VM->DetachCurrentThread();
+    void JavaDetachEnv() {
+        g_JavaData.vm->DetachCurrentThread();
     }
 
-    jclass JavaFindClass(JNIEnv* jniEnv,const char* name)
-    {
+    jclass JavaFindClass(JNIEnv *jniEnv, const char *name) {
         char cTemp[256];
-        int i=0;
-        while(true) {
-            if(name[i]=='/') {
-                cTemp[i]='.';
+        int i = 0;
+        while (true) {
+            if (name[i] == '/') {
+                cTemp[i] = '.';
             }
             else {
-                cTemp[i]=name[i];
-                if(!name[i]) {
+                cTemp[i] = name[i];
+                if (!name[i]) {
                     break;
                 }
             }
             i++;
         }
-        jstring strClassName=jniEnv->NewStringUTF(cTemp);
-        jclass res=(jclass)jniEnv->CallObjectMethod(g_ClassLoader.instance,g_ClassLoader.loadClassMId,strClassName);
+        jstring strClassName = jniEnv->NewStringUTF(cTemp);
+        jclass res = (jclass) jniEnv->CallObjectMethod(g_JavaData.classLoader.instance,
+                                                       g_JavaData.classLoader.loadClassMId, strClassName);
         jniEnv->DeleteLocalRef(strClassName);
         return res;
     }
@@ -162,7 +165,7 @@ extern "C" {
 #endif
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
-    GX::g_VM = vm;
+    GX::g_JavaData.vm = vm;
     GX_LOG_P1(PrioDEBUG, "JNI_OnLoad", "%p", vm);
     return JNI_VERSION_1_6;
 }
