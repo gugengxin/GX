@@ -7,10 +7,16 @@
 //
 
 #include "GRunLoop.h"
+#include "GThread.h"
 
-GRunLoop::GRunLoop()
+GRunLoop* GRunLoop::current()
 {
+	return GThread::current()->getRunLoop();
+}
 
+GRunLoop::GRunLoop(GThread* td)
+{
+	m_Thread = td;
 }
 
 GRunLoop::~GRunLoop()

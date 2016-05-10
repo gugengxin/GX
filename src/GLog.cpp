@@ -27,13 +27,11 @@ static bool _ConsoleInit()
 	font.dwFontSize.X = 10;
 	font.dwFontSize.Y = 14;
 	font.FontFamily = FF_DONTCARE;
-	_tcscpy(font.FaceName, _T("Lucida Console"));
+	_tcscpy_s(font.FaceName, 31, _T("Lucida Console"));
 	SetCurrentConsoleFontEx(toScreen, FALSE, &font);
 
 	_tfreopen_s(&fpDebugOut, _T("CONOUT$"), _T("w"), stdout);
 	_tfreopen_s(&fpDebugIn, _T("CONIN$"), _T("r"), stdin);
-	//setlocale(LC_CTYPE, "C");
-	//setlocale(LC_ALL, "chs");
 	return true;
 }
 

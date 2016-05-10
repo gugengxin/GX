@@ -12,15 +12,16 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 
-
 class GRunLoop {
     friend class GThread;
+public:
+	static GRunLoop* current();
 private:
-    GRunLoop();
+	GRunLoop(GThread* td);
     ~GRunLoop();
     
 private:
-    
+	GThread* m_Thread;
 };
 
 

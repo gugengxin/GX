@@ -19,6 +19,12 @@
     <Filter Include="src\Math">
       <UniqueIdentifier>{cfdf0899-9b14-43fc-8c90-768fa13b5b00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Unuse">
+      <UniqueIdentifier>{85f3a215-27c5-4181-9cef-8e62cdba9596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Window">
+      <UniqueIdentifier>{91633f66-2b1b-460b-9747-2329acf4da93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GClass.cpp">
@@ -92,6 +98,39 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GWindow.cpp">
       <Filter>src\App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GJavaAPI.cpp">
+      <Filter>src\Unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GJavaCAPI.cpp">
+      <Filter>src\Unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GJavaClass.cpp">
+      <Filter>src\Unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GJavaJAPI.cpp">
+      <Filter>src\Unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GContext.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GD3DContext.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GOGLContext.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GXDirectX.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GXOpenGL.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GNumber.cpp">
+      <Filter>src\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GPtr.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -173,14 +212,53 @@
     <ClInclude Include="..\..\src\GUUID.h">
       <Filter>src\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GThread.h">
-      <Filter>src\Math</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GWindow.h">
       <Filter>src\App</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GSystem.h">
       <Filter>src\App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\com_gxengine_GX.h">
+      <Filter>src\Unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\com_gxengine_gx_GJavaJAPI.h">
+      <Filter>src\Unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GJavaAPI.h">
+      <Filter>src\Unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GJavaCAPI.h">
+      <Filter>src\Unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GJavaClass.h">
+      <Filter>src\Unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GJavaJAPI.h">
+      <Filter>src\Unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GContext.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GD3DContext.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GOGLContext.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXDirectX.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXOpenGL.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GThread.h">
+      <Filter>src\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GNumber.h">
+      <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GPtr.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

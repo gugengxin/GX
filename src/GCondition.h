@@ -13,6 +13,7 @@
 #include "GMutex.h"
 
 class GCondition : protected GMutex {
+	friend class GThread;
     GX_OBJECT(GCondition);
 public:
     void wait();
