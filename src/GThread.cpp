@@ -9,13 +9,13 @@
 #include "GThread.h"
 #include <pthread.h>
 #include "GCondition.h"
-#if defined(GX_NO_PTHREAD_H)
+#if defined(GX_OS_WINDOWS)
 #include <Windows.h>
 #define M_PID_SELF() (*GX_CAST_R(GX::pthread_t*, &pthread_self()))
-#define M_PID(pid) (*GX_CAST_R(GX::pthread_t*, &(pid)))
+#define M_TO_PID(pid) (*GX_CAST_R(::pthread_t*, &(pid)))
 #else
 #define M_PID_SELF() GX_CAST_R(GX::pthread_t, pthread_self())
-#define M_PID(pid) GX_CAST_R(GX::pthread_t, pid))
+#define M_TO_PID(pid) GX_CAST_R(::pthread_t, pid)
 #endif
 
 static GThread* g_MT=NULL;
@@ -32,6 +32,11 @@ GThread::Holder::Holder()
 
 GThread::Holder::~Holder()
 {
+}
+
+void GThread::Holder::detchThread()
+{
+	pthread_detach(M_TO_PID(m_TID));
 }
 
 
@@ -60,7 +65,7 @@ private:
 
 class _HelperFunData {
 public:
-	_HelperFunData(GThread::Fun fun, GObject* obj) {
+	_HelperFunData(GObject::Fun fun, GObject* obj) {
 		m_Fun = fun;
 		GO::retain(obj);
 		m_Obj = obj;
@@ -73,7 +78,7 @@ public:
 	}
 
 private:
-	GThread::Fun m_Fun;
+	GObject::Fun m_Fun;
 	GObject* m_Obj;
 };
 
@@ -87,7 +92,12 @@ public:
 
 	}
 
-	void check
+	void setThread() {
+		if (m_Cond) {
+			m_Holder->m_Thread = GThread::current();
+			m_Cond->signal();
+		}
+	}
 
 private:
 	GThread::Holder* m_Holder;
@@ -109,7 +119,7 @@ public:
 
 class _CreateHelperFunData : public _HelperFunData, public _CreateData {
 public:
-	_CreateHelperFunData(GThread::Fun fun, GObject* obj, GThread::Holder* holder, GCondition* cond) :
+	_CreateHelperFunData(GObject::Fun fun, GObject* obj, GThread::Holder* holder, GCondition* cond) :
 		_HelperFunData(fun, obj),
 		_CreateData(holder, cond)
 	{
@@ -167,10 +177,11 @@ void* GThread::detchHelperObj(void* data)
 {
 	GX_CAST_R(_HelperObjData*, data)->run();
 	delete GX_CAST_R(_HelperObjData*, data);
+	return NULL;
 }
 
 
-void GThread::detch(Fun fun, GObject* obj)
+void GThread::detch(GObject::Fun fun, GObject* obj)
 {
 	_HelperFunData* data = new _HelperFunData(fun, obj);
 
@@ -185,6 +196,7 @@ void* GThread::detchHelperFun(void* data)
 {
 	GX_CAST_R(_HelperFunData*, data)->run();
 	delete GX_CAST_R(_HelperFunData*, data);
+	return NULL;
 }
 
 GThread::Holder* GThread::create(GObject* target, GObject::Selector selector, GObject* obj, bool waitRun)
@@ -206,33 +218,25 @@ GThread::Holder* GThread::create(GObject* target, GObject::Selector selector, GO
 }
 void* GThread::createHelperObj(void* data)
 {
-	if (GX_CAST_R(_CreateHelperObjData*, data)->cond) {
-		GX_CAST_R(_CreateHelperObjData*, data)->holder->m_Thread = current();
-		GX_CAST_R(_CreateHelperObjData*, data)->cond->signal();
-	}
-	(GX_CAST_R(_CreateHelperObjData*, data)->run();
-	delete (GX_CAST_R(_CreateHelperObjData*, data);
+	GX_CAST_R(_CreateHelperObjData*, data)->setThread();
+	GX_CAST_R(_CreateHelperObjData*, data)->run();
+	delete GX_CAST_R(_CreateHelperObjData*, data);
+	return NULL;
 }
 
 
-GThread::Holder* GThread::create(Fun fun, GObject* obj, bool waitRun)
+GThread::Holder* GThread::create(GObject::Fun fun, GObject* obj, bool waitRun)
 {
 	Holder* holder = Holder::autoAlloc();
 
-	_CreateHelperFunData* data = new _CreateHelperFunData;
-	data->fun = fun;
-	data->obj = obj;
-	data->holder = holder;
-
-	GO::retain(obj);
-
 	if (waitRun) {
 		GCondition cond;
-		data->cond = &cond;
+		_CreateHelperFunData* data = new _CreateHelperFunData(fun,obj,holder,&cond);
 		pthread_create(GX_CAST_R(pthread_t*, &(holder->m_TID)), NULL, GThread::createHelperFun, data);
 		cond.wait();
 	}
 	else {
+		_CreateHelperFunData* data = new _CreateHelperFunData(fun, obj, holder, NULL);
 		pthread_create(GX_CAST_R(pthread_t*, &(holder->m_TID)), NULL, GThread::createHelperFun, data);
 	}
 
@@ -240,13 +244,10 @@ GThread::Holder* GThread::create(Fun fun, GObject* obj, bool waitRun)
 }
 void* GThread::createHelperFun(void* data)
 {
-	if (GX_CAST_R(_CreateHelperFunData*, data)->cond) {
-		GX_CAST_R(_CreateHelperFunData*, data)->holder->m_Thread = current();
-		GX_CAST_R(_CreateHelperFunData*, data)->cond->signal();
-	}
-	GX_CAST_R(_CreateHelperFunData*, data)->fun(GX_CAST_R(_CreateHelperFunData*, data)->obj);
-	GO::release(GX_CAST_R(_CreateHelperFunData*, data)->obj);
-	delete 
+	GX_CAST_R(_CreateHelperFunData*, data)->setThread();
+	GX_CAST_R(_CreateHelperFunData*, data)->run();
+	delete GX_CAST_R(_CreateHelperFunData*, data);
+	return NULL;
 }
 
 
@@ -263,6 +264,7 @@ GThread::GThread()
 {
 	m_ID = M_PID_SELF();
     m_RunLoop=NULL;
+	m_NoteCenter = NULL;
 }
 
 GThread::~GThread()
@@ -271,6 +273,7 @@ GThread::~GThread()
         GO::release(m_ARObjs.get(i));
     }
     delete m_RunLoop;
+	delete m_NoteCenter;
 }
 
 void GThread::setMain()
@@ -303,6 +306,14 @@ GRunLoop* GThread::getRunLoop()
         m_RunLoop=new GRunLoop(this);
     }
     return m_RunLoop;
+}
+
+GNoticeCenter* GThread::getNoticeCenter()
+{
+	if (!m_NoteCenter) {
+		m_NoteCenter = new GNoticeCenter();
+	}
+	return m_NoteCenter;
 }
 
 

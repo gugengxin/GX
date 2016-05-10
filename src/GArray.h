@@ -12,6 +12,7 @@ class GArrayBase : public GObject
 template <typename T>
 class GArray : public GArrayBase {
     friend class GApplication;
+	friend class GRunLoop;
 	GX_OBJECT(GArray);
 public:
 	inline gint getCount() {
@@ -26,6 +27,18 @@ public:
 		if (changeCount(dc + 1)) {
 			GX_CAST_R(T**, m_Data.getPtr())[dc] = v;
 			GO::retain(v);
+			return true;
+		}
+		return false;
+	}
+	bool add(GArray<T>* arr) {
+		gint dc = getCount();
+		if (changeCount(dc + arr->getCount())) {
+			for (gint i = 0; i < arr->getCount(); i++) {
+				T* v = arr->get(i);
+				GX_CAST_R(T**, m_Data.getPtr())[dc] = v;
+				GO::retain(v);
+			}
 			return true;
 		}
 		return false;

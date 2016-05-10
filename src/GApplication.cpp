@@ -353,7 +353,7 @@ void GApplication::idle()
 	GX_LOG_W(PrioDEBUG, "GApplication", str);
 	//*/
 
-	GThread::current()->popARObj(0);
+	GRunLoop::current()->run();
 }
 
 void GApplication::didFinishLaunching()

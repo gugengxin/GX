@@ -12,8 +12,9 @@
 #include "GXPrefix.h"
 #include "GMutex.h"
 
-class GCondition : protected GMutex {
+class GCondition : public GMutex {
 	friend class GThread;
+	friend class GRunLoop;
     GX_OBJECT(GCondition);
 public:
     void wait();

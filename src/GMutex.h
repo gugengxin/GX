@@ -14,6 +14,7 @@
 #include "GXPthread.h"
 
 class GMutex : public GObject {
+	friend class GRunLoop;
     GX_OBJECT(GMutex);
 public:
     void lock();

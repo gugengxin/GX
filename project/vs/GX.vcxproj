@@ -36,6 +36,8 @@
     <ClCompile Include="..\..\src\GLog.cpp" />
     <ClCompile Include="..\..\src\GMap.cpp" />
     <ClCompile Include="..\..\src\GMutex.cpp" />
+    <ClCompile Include="..\..\src\GNotice.cpp" />
+    <ClCompile Include="..\..\src\GNoticeCenter.cpp" />
     <ClCompile Include="..\..\src\GNumber.cpp" />
     <ClCompile Include="..\..\src\GObject.cpp" />
     <ClCompile Include="..\..\src\GOGLContext.cpp" />
@@ -75,6 +77,8 @@
     <ClInclude Include="..\..\src\GLog.h" />
     <ClInclude Include="..\..\src\GMap.h" />
     <ClInclude Include="..\..\src\GMutex.h" />
+    <ClInclude Include="..\..\src\GNotice.h" />
+    <ClInclude Include="..\..\src\GNoticeCenter.h" />
     <ClInclude Include="..\..\src\GNumber.h" />
     <ClInclude Include="..\..\src\GObject.h" />
     <ClInclude Include="..\..\src\GOGLContext.h" />
