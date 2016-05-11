@@ -138,6 +138,9 @@
     <ClCompile Include="..\..\src\GNoticeCenter.cpp">
       <Filter>src\Thread</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GAction.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -271,6 +274,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GNoticeCenter.h">
       <Filter>src\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GAction.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,10 +1,18 @@
 ﻿#pragma once
 
 #include "GXPrefix.h"
+#include "GMap.h"
 
-class GNoticeCenter
-{
+class GNoticeCenter {
 	friend class GThread;
+private:
+	class Observer : public GObject {
+		GX_OBJECT(Observer);
+	public:
+
+	private:
+
+	};
 public:
 	static GNoticeCenter* current();
 private:
@@ -13,6 +21,6 @@ private:
 public:
 
 private:
-
+	GMap<GObject, Observer> m_Observers;
 };
 

@@ -16,6 +16,7 @@
 #include "GDataArray.h"
 #include "GRunLoop.h"
 #include "GNoticeCenter.h"
+#include "GAction.h"
 
 class GThread {
     friend class GApplication;
@@ -27,7 +28,7 @@ public:
 	class Holder : public GObject
 	{
 		friend class GThread;
-		friend class _CreateData;
+		friend class _HelperCreateData;
 		GX_OBJECT(Holder);
 	public:
 		inline GThread* getThread() {
@@ -46,16 +47,20 @@ public:
     static GThread* current();
 	static void sleep(gint ms);
 
-	static void detch(GObject* target, GObject::Selector selector, GObject* obj);
-	static void detch(GObject::Fun fun, GObject* obj);
-	static Holder* create(GObject* target, GObject::Selector selector, GObject* obj,bool waitRun);
-	static Holder* create(GObject::Fun fun, GObject* obj, bool waitRun);
+	static void detch(GAction* action);
+	static void detch(GObject* target, GX::Selector selector, GObject* obj);
+	static void detch(GX::Callback cbk, GObject* obj);
+	static Holder* create(GAction* action, bool waitRun);
+	static Holder* create(GObject* target, GX::Selector selector, GObject* obj,bool waitRun);
+	static Holder* create(GX::Callback cbk, GObject* obj, bool waitRun);
 
     GRunLoop* getRunLoop();
 	GNoticeCenter* getNoticeCenter();
 private:
     static void keyCreate();
     static void keyDestory(void* p);
+	static void* detchHelper(void*);
+	static void* createHelper(void*);
 	static void* detchHelperObj(void*);
 	static void* detchHelperFun(void*);
 	static void* createHelperObj(void*);

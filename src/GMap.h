@@ -22,6 +22,7 @@ public:
 
 template <typename K,typename O>
 class GMap : public GMapBase {
+	friend class GNoticeCenter;
     GX_OBJECT(GMap);
 private:
     class Node {

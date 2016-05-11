@@ -41,96 +41,36 @@ void GThread::Holder::detchThread()
 
 
 
-class _HelperObjData {
+class _HelperCreateData
+{
 public:
-	_HelperObjData(GObject* target, GObject::Selector selector, GObject* obj) {
-		GO::retain(target);
-		m_Target = target;
-		m_Selector = selector;
-		GO::retain(obj);
-		m_Obj = obj;
-	}
-	~_HelperObjData() {
-		GO::release(m_Obj);
-		GO::release(m_Target);
-	}
-	inline void run() {
-		(m_Target->*m_Selector)(m_Obj);
-	}
-private:
-	GObject* m_Target;
-	GObject::Selector m_Selector;
-	GObject* m_Obj;
-};
-
-class _HelperFunData {
-public:
-	_HelperFunData(GObject::Fun fun, GObject* obj) {
-		m_Fun = fun;
-		GO::retain(obj);
-		m_Obj = obj;
-	}
-	~_HelperFunData() {
-		GO::release(m_Obj);
-	}
-	inline void run() {
-		m_Fun(m_Obj);
-	}
-
-private:
-	GObject::Fun m_Fun;
-	GObject* m_Obj;
-};
-
-class _CreateData {
-public:
-	_CreateData(GThread::Holder* holder, GCondition* cond) {
+	_HelperCreateData(GAction* action, GThread::Holder* holder, GCondition* cond) {
+		GO::retain(action);
+		m_Action = action;
+		GO::retain(holder);
 		m_Holder = holder;
 		m_Cond = cond;
 	}
-	~_CreateData() {
-
+	~_HelperCreateData() {
+		GO::release(m_Action);
+		GO::release(m_Holder);
 	}
 
+	inline void run() {
+		m_Action->run();
+	}
+	
 	void setThread() {
 		if (m_Cond) {
 			m_Holder->m_Thread = GThread::current();
 			m_Cond->signal();
 		}
 	}
-
 private:
+	GAction* m_Action;
 	GThread::Holder* m_Holder;
 	GCondition* m_Cond;
 };
-
-class _CreateHelperObjData : public _HelperObjData, public _CreateData {
-public:
-	_CreateHelperObjData(GObject* target, GObject::Selector selector, GObject* obj, GThread::Holder* holder, GCondition* cond) :
-		_HelperObjData(target, selector, obj),
-		_CreateData(holder, cond)
-	{
-
-	}
-	~_CreateHelperObjData() {
-
-	}
-};
-
-class _CreateHelperFunData : public _HelperFunData, public _CreateData {
-public:
-	_CreateHelperFunData(GObject::Fun fun, GObject* obj, GThread::Holder* holder, GCondition* cond) :
-		_HelperFunData(fun, obj),
-		_CreateData(holder, cond)
-	{
-
-	}
-	~_CreateHelperFunData() {
-
-	}
-};
-
-
 
 
 
@@ -162,92 +102,77 @@ void GThread::sleep(gint ms)
 }
 
 
-void GThread::detch(GObject* target, GObject::Selector selector, GObject* obj)
+void GThread::detch(GAction* action)
 {
-	_HelperObjData* data = new _HelperObjData(target, selector, obj);
+	GO::retain(action);
 
 	pthread_t thread_id;
 	pthread_attr_t attr;
 	pthread_attr_init(&attr);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-	pthread_create(&thread_id, &attr, GThread::detchHelperObj, data);
+	pthread_create(&thread_id, &attr, GThread::detchHelper, action);
 	pthread_attr_destroy(&attr);
 }
-void* GThread::detchHelperObj(void* data)
+void* GThread::detchHelper(void* action)
 {
-	GX_CAST_R(_HelperObjData*, data)->run();
-	delete GX_CAST_R(_HelperObjData*, data);
+	GX_CAST_R(GAction*, action)->run();
+	GO::release(GX_CAST_R(GAction*, action));
 	return NULL;
 }
-
-
-void GThread::detch(GObject::Fun fun, GObject* obj)
+void GThread::detch(GObject* target, GX::Selector selector, GObject* obj)
 {
-	_HelperFunData* data = new _HelperFunData(fun, obj);
-
-	pthread_t thread_id;
-	pthread_attr_t attr;
-	pthread_attr_init(&attr);
-	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-	pthread_create(&thread_id, &attr, GThread::detchHelperFun, data);
-	pthread_attr_destroy(&attr);
+	GAction* action = GAction::alloc();
+	action->set(target, selector, obj);
+	detch(action);
+	GO::release(action);
 }
-void* GThread::detchHelperFun(void* data)
+void GThread::detch(GX::Callback cbk, GObject* obj)
 {
-	GX_CAST_R(_HelperFunData*, data)->run();
-	delete GX_CAST_R(_HelperFunData*, data);
-	return NULL;
+	GAction* action = GAction::alloc();
+	action->set(cbk, obj);
+	detch(action);
+	GO::release(action);
 }
 
-GThread::Holder* GThread::create(GObject* target, GObject::Selector selector, GObject* obj, bool waitRun)
+GThread::Holder* GThread::create(GAction* action, bool waitRun)
 {
 	Holder* holder = Holder::autoAlloc();
-
+	
 	if (waitRun) {
 		GCondition cond;
-		_CreateHelperObjData* data = new _CreateHelperObjData(target, selector, obj, holder, &cond);
-		pthread_create(GX_CAST_R(pthread_t*, &(holder->m_TID)), NULL, GThread::createHelperObj, data);
+		_HelperCreateData* data = new _HelperCreateData(action, holder, &cond);
+		pthread_create(GX_CAST_R(pthread_t*, &(holder->m_TID)), NULL, GThread::createHelper, data);
 		cond.wait();
 	}
 	else {
-		_CreateHelperObjData* data = new _CreateHelperObjData(target, selector, obj, holder, NULL);
-		pthread_create(GX_CAST_R(pthread_t*, &(holder->m_TID)), NULL, GThread::createHelperObj, data);
+		_HelperCreateData* data = new _HelperCreateData(action, holder, NULL);
+		pthread_create(GX_CAST_R(pthread_t*, &(holder->m_TID)), NULL, GThread::createHelper, data);
 	}
 
 	return holder;
 }
-void* GThread::createHelperObj(void* data)
+void* GThread::createHelper(void* data)
 {
-	GX_CAST_R(_CreateHelperObjData*, data)->setThread();
-	GX_CAST_R(_CreateHelperObjData*, data)->run();
-	delete GX_CAST_R(_CreateHelperObjData*, data);
+	GX_CAST_R(_HelperCreateData*, data)->setThread();
+	GX_CAST_R(_HelperCreateData*, data)->run();
+	delete GX_CAST_R(_HelperCreateData*, data);
 	return NULL;
 }
-
-
-GThread::Holder* GThread::create(GObject::Fun fun, GObject* obj, bool waitRun)
+GThread::Holder* GThread::create(GObject* target, GX::Selector selector, GObject* obj, bool waitRun)
 {
-	Holder* holder = Holder::autoAlloc();
-
-	if (waitRun) {
-		GCondition cond;
-		_CreateHelperFunData* data = new _CreateHelperFunData(fun,obj,holder,&cond);
-		pthread_create(GX_CAST_R(pthread_t*, &(holder->m_TID)), NULL, GThread::createHelperFun, data);
-		cond.wait();
-	}
-	else {
-		_CreateHelperFunData* data = new _CreateHelperFunData(fun, obj, holder, NULL);
-		pthread_create(GX_CAST_R(pthread_t*, &(holder->m_TID)), NULL, GThread::createHelperFun, data);
-	}
-
-	return holder;
+	GAction* action = GAction::alloc();
+	action->set(target, selector, obj);
+	GThread::Holder* res = create(action,waitRun);
+	GO::release(action);
+	return res;
 }
-void* GThread::createHelperFun(void* data)
+GThread::Holder* GThread::create(GX::Callback cbk, GObject* obj, bool waitRun)
 {
-	GX_CAST_R(_CreateHelperFunData*, data)->setThread();
-	GX_CAST_R(_CreateHelperFunData*, data)->run();
-	delete GX_CAST_R(_CreateHelperFunData*, data);
-	return NULL;
+	GAction* action = GAction::alloc();
+	action->set(cbk, obj);
+	GThread::Holder* res = create(action, waitRun);
+	GO::release(action);
+	return res;
 }
 
 

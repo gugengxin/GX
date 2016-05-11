@@ -1,13 +1,29 @@
 ﻿#include "GNoticeCenter.h"
+#include "GThread.h"
 
+GX_OBJECT_IMPLEMENT(GNoticeCenter::Observer, GObject);
 
-GNoticeCenter* current()
+GNoticeCenter::Observer::Observer()
 {
 
 }
 
+GNoticeCenter::Observer::~Observer()
+{
+
+}
+
+
+
+
+GNoticeCenter* current()
+{
+	return GThread::current()->getNoticeCenter();
+}
+
 GNoticeCenter::GNoticeCenter()
 {
+
 }
 
 

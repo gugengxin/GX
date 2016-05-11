@@ -14,9 +14,6 @@
 
 class GObject {
 public:
-	typedef void (GObject::*Selector)(GObject*);
-	typedef void (*Fun)(GObject*);
-public:
 	static void retain(GObject* obj);
 	static void release(GObject* obj);
     static void autorelease(GObject* obj);

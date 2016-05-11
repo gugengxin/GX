@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\GAction.cpp" />
     <ClCompile Include="..\..\src\GApplication.cpp" />
     <ClCompile Include="..\..\src\GArray.cpp" />
     <ClCompile Include="..\..\src\GAutoreleasePool.cpp" />
@@ -60,6 +61,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\com_gxengine_GX.h" />
     <ClInclude Include="..\..\src\com_gxengine_gx_GJavaJAPI.h" />
+    <ClInclude Include="..\..\src\GAction.h" />
     <ClInclude Include="..\..\src\GApplication.h" />
     <ClInclude Include="..\..\src\GArray.h" />
     <ClInclude Include="..\..\src\GAutoreleasePool.h" />

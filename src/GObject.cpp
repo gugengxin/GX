@@ -8,16 +8,40 @@
 
 #include "GObject.h"
 #include "GThread.h"
+#include <pthread.h>
+
+class _ObjMutex {
+public:
+	_ObjMutex() {
+		pthread_mutex_init(&m_PData, NULL);
+	}
+	~_ObjMutex() {
+		pthread_mutex_destroy(&m_PData);
+	}
+	inline void lock() {
+		pthread_mutex_lock(GX_CAST_R(pthread_mutex_t*, &m_PData));
+	}
+	inline void unlock() {
+		pthread_mutex_unlock(GX_CAST_R(pthread_mutex_t*, &m_PData));
+	}
+private:
+	pthread_mutex_t m_PData;
+};
+
+static _ObjMutex g_ObjMutex;
 
 
 void GObject::retain(GObject* obj)
 {
+	g_ObjMutex.lock();
 	if (obj) {
 		++(*((GX_CAST_R(gint32*, obj) - 1)));
 	}
+	g_ObjMutex.unlock();
 }
 void GObject::release(GObject* obj)
 {
+	g_ObjMutex.lock();
 	if (obj) {
 		gint32* p = GX_CAST_R(gint32*, obj) - 1;
 		--(*p);
@@ -25,6 +49,7 @@ void GObject::release(GObject* obj)
 			delete obj;
 		}
 	}
+	g_ObjMutex.unlock();
 }
 void GObject::autorelease(GObject* obj)
 {

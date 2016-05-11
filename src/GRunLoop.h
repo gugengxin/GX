@@ -14,6 +14,7 @@
 #include "GMutex.h"
 #include "GCondition.h"
 #include "GArray.h"
+#include "GAction.h"
 
 class GRunLoop {
     friend class GThread;
@@ -21,17 +22,10 @@ private:
 	class Action : public GObject {
 		GX_OBJECT(Action);
 	public:
-		inline GObject* getTarget() {
-			return m_Target;
+		inline GAction* getAction() {
+			return m_Action;
 		}
-		inline GObject::Selector getSel() {
-			return m_Action.sel;
-		}
-		inline GObject::Fun getFun() {
-			return m_Action.fun;
-		}
-		void set(GObject* target, GObject::Selector sel, GObject* obj);
-		void set(GObject::Fun fun, GObject* obj);
+		void setAction(GAction* v);
 		inline gint64 getRunTime() {
 			return m_RunTime;
 		}
@@ -50,15 +44,12 @@ private:
 		inline bool isDone() {
 			return m_Done;
 		}
-		void run();
+		inline void run() {
+			m_Action->run();
+		}
 		void signalIfNeed();
 	private:
-		GObject*	m_Target;
-		union {
-			GObject::Selector sel;
-			GObject::Fun fun;
-		} m_Action;
-		GObject*	m_Obj;
+		GAction*	m_Action;
 		gint64		m_RunTime;
 		GCondition* m_Cond;
 		bool		m_Cancelled;
@@ -72,11 +63,14 @@ private:
 public:
 	void run();
     
-	void perform(GObject* target, GObject::Selector selector, GObject* obj, gint delayMS, bool waitUntilDone);
-	void perform(GObject::Fun fun, GObject* obj, gint delayMS, bool waitUntilDone);
-	void cancel(GObject* target, GObject::Selector selector);
+	void perform(GAction* action, gint delayMS, bool waitUntilDone);
+	void perform(GObject* target, GX::Selector selector, GObject* obj, gint delayMS, bool waitUntilDone);
+	void perform(GX::Callback cbk, GObject* obj, gint delayMS, bool waitUntilDone);
+
+	void cancel(GAction* action);
+	void cancel(GObject* target, GX::Selector selector);
 	void cancel(GObject* target);
-	void cancel(GObject::Fun fun);
+	void cancel(GX::Callback cbk);
 
 private:
 	GThread* m_Thread;
