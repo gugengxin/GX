@@ -12,6 +12,11 @@
 #include "GXPrefix.h"
 #include "GClass.h"
 
+namespace GX {
+	typedef void(GObject::*Selector)(GObject*);
+	typedef void(*Callback)(GObject*);
+}
+
 class GObject {
 public:
 	static void retain(GObject* obj);
@@ -31,7 +36,6 @@ public:
 	void* operator new(size_t size);
 	void operator delete(void* p);
     
-    const gchar* getClassName();
     bool  isMemberOfClass(GClass* pClass);
     bool  isMemberOfClass(GClass& cls);
     bool  isKindOfClass(GClass* pClass);
@@ -39,6 +43,9 @@ public:
 public:
     virtual guint getHash();
     virtual bool isEqual(GObject* obj);
+public:
+	void exLock();
+	void exUnlock();
 };
 
 typedef GObject GO;

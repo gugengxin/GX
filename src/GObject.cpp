@@ -10,38 +10,45 @@
 #include "GThread.h"
 #include <pthread.h>
 
-class _ObjMutex {
-public:
-	_ObjMutex() {
-		pthread_mutex_init(&m_PData, NULL);
-	}
-	~_ObjMutex() {
-		pthread_mutex_destroy(&m_PData);
-	}
-	inline void lock() {
-		pthread_mutex_lock(GX_CAST_R(pthread_mutex_t*, &m_PData));
-	}
-	inline void unlock() {
-		pthread_mutex_unlock(GX_CAST_R(pthread_mutex_t*, &m_PData));
-	}
-private:
-	pthread_mutex_t m_PData;
-};
 
-static _ObjMutex g_ObjMutex;
+typedef struct __ObjExData {
+	gint32 refCount;
+	pthread_mutex_t mutex;
+} _ObjExData;
+
+static inline void _ObjExDataInit(_ObjExData* om)
+{
+	om->refCount = 1;
+	pthread_mutex_init(&om->mutex, NULL);
+}
+
+static inline void _ObjExDataFina(_ObjExData* om)
+{
+	pthread_mutex_destroy(&om->mutex);
+}
+
+static inline void _ObjMutexLock(GObject* obj)
+{
+	pthread_mutex_lock(&(GX_CAST_R(_ObjExData*, obj)-1)->mutex);
+}
+static inline void _ObjMutexUnlock(GObject* obj)
+{
+	pthread_mutex_unlock(&(GX_CAST_R(_ObjExData*, obj) - 1)->mutex);
+}
+
 
 
 void GObject::retain(GObject* obj)
 {
-	g_ObjMutex.lock();
+	_ObjMutexLock(obj);
 	if (obj) {
 		++(*((GX_CAST_R(gint32*, obj) - 1)));
 	}
-	g_ObjMutex.unlock();
+	_ObjMutexUnlock(obj);
 }
 void GObject::release(GObject* obj)
 {
-	g_ObjMutex.lock();
+	_ObjMutexLock(obj);
 	if (obj) {
 		gint32* p = GX_CAST_R(gint32*, obj) - 1;
 		--(*p);
@@ -49,7 +56,7 @@ void GObject::release(GObject* obj)
 			delete obj;
 		}
 	}
-	g_ObjMutex.unlock();
+	_ObjMutexUnlock(obj);
 }
 void GObject::autorelease(GObject* obj)
 {
@@ -59,13 +66,15 @@ void GObject::autorelease(GObject* obj)
 }
 void* GObject::gnew(size_t size)
 {
-	void* p = malloc(size+sizeof(gint32));
-	*GX_CAST_R(gint32*, p) = 1;
-	return GX_CAST_R(gint32*, p) + 1;
+	void* p = malloc(size + sizeof(_ObjExData));
+	_ObjExDataInit(GX_CAST_R(_ObjExData*,p));
+	return GX_CAST_R(guint8*, p) + sizeof(_ObjExData);
 }
 void GObject::gdel(void* p)
 {
-	free(GX_CAST_R(gint32*, p) - 1);
+	_ObjExData* exData = GX_CAST_R(_ObjExData*, p) - 1;
+	_ObjExDataFina(exData);
+	free(exData);
 }
 
 
@@ -130,7 +139,14 @@ bool GObject::isEqual(GObject* obj)
     return this==obj;
 }
 
-
+void GObject::exLock()
+{
+	_ObjMutexLock(this);
+}
+void GObject::exUnlock()
+{
+	_ObjMutexUnlock(this);
+}
 
 
 

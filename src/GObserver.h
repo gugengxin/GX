@@ -4,9 +4,8 @@
 #include "GObject.h"
 
 
-class GAction : public GObject
-{
-	GX_OBJECT(GAction);
+class GObserver : public GObject {
+	GX_OBJECT(GObserver);
 public:
 	inline GObject* getTarget() {
 		return m_Target;
@@ -23,7 +22,7 @@ public:
 
 	void set(GObject* target, GX::Selector sel, GObject* obj);
 	void set(GX::Callback cbk, GObject* obj);
-	void run();
+	void run(GObject* obj);
 private:
 	GObject* m_Target;
 	union {
@@ -32,4 +31,7 @@ private:
 	} m_Action;
 	GObject* m_Obj;
 };
+
+
+
 

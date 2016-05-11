@@ -11,6 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GDataArray.h"
+#include "GArray.h"
 
 
 class GMapBase : public GObject {
@@ -151,6 +152,32 @@ public:
         m_ObjCount=0;
     }
     
+	GArray<K>* getAllKeys() {
+		GArray<K>* res = GArray<K>::autoAlloc();
+		if (m_ObjCount > 0) {
+			for (gint i = 0; i < m_ObjArray.getCount(); i++) {
+				Node* p = m_ObjArray.get(idx);
+				while (p) {
+					res->add(p->getKey());
+					p->p->getNext();
+				}
+			}
+		}
+		return res;
+	}
+	GArray<O>* getAllObjects() {
+		GArray<O>* res = GArray<O>::autoAlloc();
+		if (m_ObjCount > 0) {
+			for (gint i = 0; i < m_ObjArray.getCount(); i++) {
+				Node* p = m_ObjArray.get(idx);
+				while (p) {
+					res->add(p->getObj());
+					p->p->getNext();
+				}
+			}
+		}
+		return res;
+	}
 private:
     bool increaseCapability(gint dc) {
         for (gint i=0;; i++) {

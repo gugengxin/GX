@@ -138,8 +138,11 @@
     <ClCompile Include="..\..\src\GNoticeCenter.cpp">
       <Filter>src\Thread</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GObserver.cpp">
+      <Filter>src\Thread</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\GAction.cpp">
-      <Filter>src</Filter>
+      <Filter>src\Thread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -275,8 +278,11 @@
     <ClInclude Include="..\..\src\GNoticeCenter.h">
       <Filter>src\Thread</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\GObserver.h">
+      <Filter>src\Thread</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\GAction.h">
-      <Filter>src</Filter>
+      <Filter>src\Thread</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

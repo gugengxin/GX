@@ -162,13 +162,20 @@ public:
         return m_OWHash.codeA;
     }
     virtual bool isEqual(GObject* obj) {
-        if (obj->isKindOfClass(GDataString<T>::gclass)) {
+        if (obj->isKindOfClass(GDataString<gchar>::gclass)) {
             if (getHash()==obj->getHash()) {
                 
-                return m_OWHash.codeB==GX_CAST_R(GDataString<T>*, obj)->m_OWHash.codeB &&
-                    m_OWHash.codeC==GX_CAST_R(GDataString<T>*, obj)->m_OWHash.codeC;
+				return m_OWHash.codeB == GX_CAST_R(GDataString<gchar>*, obj)->m_OWHash.codeB &&
+					m_OWHash.codeC == GX_CAST_R(GDataString<gchar>*, obj)->m_OWHash.codeC;
             }
         }
+		else if (obj->isKindOfClass(GDataString<gwchar>::gclass)) {
+			if (getHash() == obj->getHash()) {
+
+				return m_OWHash.codeB == GX_CAST_R(GDataString<gwchar>*, obj)->m_OWHash.codeB &&
+					m_OWHash.codeC == GX_CAST_R(GDataString<gwchar>*, obj)->m_OWHash.codeC;
+			}
+		}
         return false;
     }
     

@@ -13,6 +13,7 @@ template <typename T>
 class GArray : public GArrayBase {
     friend class GApplication;
 	friend class GRunLoop;
+	friend class GNoticeCenter::Observer;
 	GX_OBJECT(GArray);
 public:
 	inline gint getCount() {
