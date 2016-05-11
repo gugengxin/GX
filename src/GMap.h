@@ -156,7 +156,7 @@ public:
 		GArray<K>* res = GArray<K>::autoAlloc();
 		if (m_ObjCount > 0) {
 			for (gint i = 0; i < m_ObjArray.getCount(); i++) {
-				Node* p = m_ObjArray.get(idx);
+				Node* p = m_ObjArray.get(i);
 				while (p) {
 					res->add(p->getKey());
 					p=p->getNext();

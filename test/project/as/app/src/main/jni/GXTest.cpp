@@ -13,7 +13,8 @@ extern "C" {
 JNIEXPORT void JNICALL Java_com_gxengine_GX_main
 (JNIEnv *, jclass, jint)
 {
-    GApplication::main(AppDge::shared());
+    GApplication::InitData initData(NULL);
+    GApplication::main(AppDge::shared(),&initData);
 }
 
 #ifdef __cplusplus

@@ -35,7 +35,10 @@ namespace GX
 #pragma comment(lib, "opengl32.lib")
 #pragma comment(lib, "glu32.lib")
 
-
+#elif defined(GX_OS_ANDROID)
+#define GL_GLEXT_PROTOTYPES
+#include <GLES2/gl2.h>
+#include <GLES2/gl2ext.h>
 #endif
 
 

@@ -13,6 +13,9 @@
 #include "GObject.h"
 #include "GContext.h"
 #include "GXCWnd.h"
+#if defined(GX_OS_ANDROID)
+
+#endif
 
 class GWindow : public GObject {
 #if defined(GX_OPENGL)

@@ -16,6 +16,8 @@
 #include "GArray.h"
 #include "GAction.h"
 
+class GThread;
+
 class GRunLoop {
     friend class GThread;
 private:
