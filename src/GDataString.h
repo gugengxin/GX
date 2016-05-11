@@ -150,6 +150,8 @@ namespace GX {
 
 template <typename T>
 class GDataString : public GObject {
+	friend class GString;
+	friend class GWString;
     GX_OBJECT(GDataString);
 public:
     inline gint getLength() {
@@ -160,23 +162,6 @@ public:
             m_OWHash=GOWHash::compute(getDataPtr());
         }
         return m_OWHash.codeA;
-    }
-    virtual bool isEqual(GObject* obj) {
-        if (obj->isKindOfClass(GDataString<gchar>::gclass)) {
-            if (getHash()==obj->getHash()) {
-                
-				return m_OWHash.codeB == GX_CAST_R(GDataString<gchar>*, obj)->m_OWHash.codeB &&
-					m_OWHash.codeC == GX_CAST_R(GDataString<gchar>*, obj)->m_OWHash.codeC;
-            }
-        }
-		else if (obj->isKindOfClass(GDataString<gwchar>::gclass)) {
-			if (getHash() == obj->getHash()) {
-
-				return m_OWHash.codeB == GX_CAST_R(GDataString<gwchar>*, obj)->m_OWHash.codeB &&
-					m_OWHash.codeC == GX_CAST_R(GDataString<gwchar>*, obj)->m_OWHash.codeC;
-			}
-		}
-        return false;
     }
     
     void set(const T* v,gint len=-1,gint count=1)
@@ -520,6 +505,15 @@ protected:
         m_Length=v;
         m_OWHash.codeA=0;
     }
+	inline guint32 getOWHashA() {
+		return m_OWHash.codeA;
+	}
+	inline guint32 getOWHashB() {
+		return m_OWHash.codeB;
+	}
+	inline guint32 getOWHashC() {
+		return m_OWHash.codeC;
+	}
 private:
     GData           m_Data;
     gint            m_Length;

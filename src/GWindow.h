@@ -11,14 +11,48 @@
 
 #include "GXPrefix.h"
 #include "GObject.h"
+#include "GContext.h"
+#include "GXCWnd.h"
 
 class GWindow : public GObject {
+#if defined(GX_OPENGL)
+	friend class GOGLContext;
+#endif
     GX_OBJECT(GWindow);
 public:
+	inline void* getOSWindow() {
+#if defined(GX_OS_WINDOWS)
+		return m_OSWin.getHWND();
+#else
+		return m_OSWin;
+#endif
+	}
+	bool create(void* osWinP);
     
-    
+public:
+	virtual void idle();
+	void renderIfNeed();
+protected:
+	void renderForce();
+	virtual void render();
+
 private:
-    
+	GContext m_Context;
+	gint	m_RenderStepTime;
+	gint64	m_RenderLastTime;
+
+	void* m_OSWinP;
+#if defined(GX_OS_WINDOWS)
+	GX::CChildWnd m_OSWin;
+	WNDPROC m_WndProcP;
+#else
+	void* m_OSWin;
+#endif
+private:
+#if defined(GX_OS_WINDOWS)
+	static LRESULT CALLBACK wndProcP(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+#endif
 };
 
 

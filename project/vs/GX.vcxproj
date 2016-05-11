@@ -34,6 +34,7 @@
     <ClCompile Include="..\..\src\GJavaCAPI.cpp" />
     <ClCompile Include="..\..\src\GJavaClass.cpp" />
     <ClCompile Include="..\..\src\GJavaJAPI.cpp" />
+    <ClCompile Include="..\..\src\glew.c" />
     <ClCompile Include="..\..\src\GLog.cpp" />
     <ClCompile Include="..\..\src\GMap.cpp" />
     <ClCompile Include="..\..\src\GMutex.cpp" />
@@ -78,6 +79,9 @@
     <ClInclude Include="..\..\src\GJavaClass.h" />
     <ClInclude Include="..\..\src\GJavaJAPI.h" />
     <ClInclude Include="..\..\src\GLog.h" />
+    <ClInclude Include="..\..\src\GL\glew.h" />
+    <ClInclude Include="..\..\src\GL\glxew.h" />
+    <ClInclude Include="..\..\src\GL\wglew.h" />
     <ClInclude Include="..\..\src\GMap.h" />
     <ClInclude Include="..\..\src\GMutex.h" />
     <ClInclude Include="..\..\src\GNotice.h" />

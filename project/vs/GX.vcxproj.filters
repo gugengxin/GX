@@ -25,6 +25,9 @@
     <Filter Include="src\Window">
       <UniqueIdentifier>{91633f66-2b1b-460b-9747-2329acf4da93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Window\glew">
+      <UniqueIdentifier>{78e8958d-1015-4cf7-b851-bbad82f4bbcb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GClass.cpp">
@@ -143,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GAction.cpp">
       <Filter>src\Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\glew.c">
+      <Filter>src\Window\glew</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +289,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GAction.h">
       <Filter>src\Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GL\glew.h">
+      <Filter>src\Window\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GL\glxew.h">
+      <Filter>src\Window\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GL\wglew.h">
+      <Filter>src\Window\glew</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

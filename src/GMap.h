@@ -107,7 +107,7 @@ public:
                 if(p->getKey()->isEqual(key)) {
                     return p->getObj();
                 }
-                p->p->getNext();
+                p=p->getNext();
             }
         }
         return NULL;
@@ -159,7 +159,7 @@ public:
 				Node* p = m_ObjArray.get(idx);
 				while (p) {
 					res->add(p->getKey());
-					p->p->getNext();
+					p=p->getNext();
 				}
 			}
 		}
@@ -169,10 +169,10 @@ public:
 		GArray<O>* res = GArray<O>::autoAlloc();
 		if (m_ObjCount > 0) {
 			for (gint i = 0; i < m_ObjArray.getCount(); i++) {
-				Node* p = m_ObjArray.get(idx);
+				Node* p = m_ObjArray.get(i);
 				while (p) {
 					res->add(p->getObj());
-					p->p->getNext();
+					p=p->getNext();
 				}
 			}
 		}

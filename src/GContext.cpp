@@ -3,3 +3,13 @@
 //
 
 #include "GContext.h"
+
+GContext::GContext()
+{
+
+}
+
+GContext::~GContext()
+{
+
+}

@@ -7,7 +7,7 @@
 //
 
 #include "GWString.h"
-
+#include "GString.h"
 
 GX_OBJECT_IMPLEMENT(GWString, GDataString<gwchar>);
 
@@ -19,6 +19,23 @@ GWString::GWString()
 GWString::~GWString()
 {
     
+}
+
+bool GWString::isEqual(GObject* obj) 
+{
+	if (obj->isKindOfClass(GWString::gclass)) {
+		if (getHash() == obj->getHash()) {
+			return getOWHashB() == GX_CAST_R(GWString*, obj)->getOWHashB() &&
+				getOWHashC() == GX_CAST_R(GWString*, obj)->getOWHashC();
+		}
+	}
+	else if (obj->isKindOfClass(GString::gclass)) {
+		if (getHash() == obj->getHash()) {
+			return getOWHashB() == GX_CAST_R(GString*, obj)->getOWHashB() &&
+				getOWHashC() == GX_CAST_R(GString*, obj)->getOWHashC();
+		}
+	}
+	return false;
 }
 
 void GWString::set(const gchar* v, gint len, gint count)

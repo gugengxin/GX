@@ -16,6 +16,8 @@
 class GString : public GDataString<gchar> {
     GX_OBJECT(GString);
 public:
+	virtual bool isEqual(GObject* obj);
+
     const gchar* c_str() {
         return GX_CAST_R(const gchar*, getDataPtr());
     }

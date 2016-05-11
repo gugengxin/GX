@@ -9,7 +9,7 @@ private:
 	AppDge();
 	~AppDge();
 public:
-
+	virtual void AppDidFinishLaunching(GApplication* application, GApplication::InitData* initData);
 
 
 };

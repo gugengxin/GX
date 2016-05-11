@@ -15,3 +15,10 @@ AppDge::AppDge()
 AppDge::~AppDge()
 {
 }
+
+void AppDge::AppDidFinishLaunching(GApplication* application, GApplication::InitData* initData)
+{
+	GWindow* win = GWindow::autoAlloc();
+	win->create(initData->getOSWindow());
+	application->addWindow(win);
+}

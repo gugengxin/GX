@@ -18,8 +18,9 @@ class GContext : public
 #elif defined(GX_DIRECTX)
                  GD3DContext
 #endif
-        {
-protected:
+{
+	friend class GWindow;
+private:
     GContext();
     ~GContext();
 private:

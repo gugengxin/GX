@@ -6,37 +6,41 @@
 #include "GObserver.h"
 #include "GNotice.h"
 
+
+class GNCObserver : public GObject {
+	friend class GNoticeCenter;
+	GX_OBJECT_DECLARE(GNCObserver,private,private);
+public:
+	inline GObject* getKey() {
+		return m_Key;
+	}
+	void setKey(GObject* v) {
+		GO::retain(v);
+		GO::release(m_Key);
+		m_Key = v;
+	}
+	void add(GObserver* obs) {
+		m_Observers.add(obs);
+	}
+	gint getObsCount() {
+		return m_Observers.getCount();
+	}
+	GObserver* getObs(gint idx) {
+		return m_Observers.get(idx);
+	}
+	void removeObs(GObserver* obs);
+	void removeObs(GObject* target, GX::Selector sel);
+	void removeObs(GObject* target);
+	void removeObs(GX::Callback cbk);
+private:
+	GObject* m_Key;
+	GArray<GObserver> m_Observers;
+};
+
+
+
 class GNoticeCenter {
 	friend class GThread;
-private:
-	class Observer : public GObject {
-		GX_OBJECT(Observer);
-	public:
-		inline GObject* getKey() {
-			return m_Key;
-		}
-		void setKey(GObject* v) {
-			GO::retain(v);
-			GO::release(m_Key);
-			m_Key = v;
-		}
-		void add(GObserver* obs) {
-			m_Observers.add(obs);
-		}
-		gint getObsCount() {
-			return m_Observers.getCount();
-		}
-		GObserver* getObs(gint idx) {
-			return m_Observers.get(idx);
-		}
-		void removeObs(GObserver* obs);
-		void removeObs(GObject* target, GX::Selector sel);
-		void removeObs(GObject* target);
-		void removeObs(GX::Callback cbk);
-	private:
-		GObject* m_Key;
-		GArray<GObserver> m_Observers;
-	};
 public:
 	static GNoticeCenter* current();
 private:
@@ -51,6 +55,6 @@ public:
 	void postNotice(GNotice* note);
 
 private:
-	GMap<GObject, Observer> m_Observers;
+	GMap<GObject, GNCObserver> m_Observers;
 };
 

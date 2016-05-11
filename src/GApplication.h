@@ -21,20 +21,58 @@
 
 class GApplication {
 public:
+	class InitData {
+	public:
+		InitData(void* osWin) {
+			m_OSWindow = osWin;
+		}
+		~InitData() {
+
+		}
+
+		void* getOSWindow() {
+			return m_OSWindow;
+		}
+
+	private:
+		void* m_OSWindow;
+	};
+
     class Delegate {
     public:
+		virtual void AppDidFinishLaunching(GApplication* application, InitData* initData) = 0;
+		virtual void AppDidBecomeActive(GApplication* application){}
+		virtual void AppWillResignActive(GApplication* application){}
+		virtual void AppDidEnterBackground(GApplication* application){}
+		virtual void AppWillEnterForeground(GApplication* application){}
+		virtual void AppWillTerminate(GApplication* application){}
+		virtual void AppDidReceiveMemoryWarning(GApplication* application){}
+		virtual bool AppShouldTerminateAfterLastWindowClosed(GApplication* application){
+			return true;
+		}
 
+		virtual gint WindowsSuggestedSamples() {
+			return 4;
+		}
+		virtual gint WindowsSuggestedDepth() {
+			return 24;
+		}
+		virtual gint WindowsSuggestedStencil() {
+			return 8;
+		}
     };
+	
 public:
     static GApplication* shared();
-    static void main(Delegate* dge);
+	static GApplication::Delegate* sharedDelegate();
+	static void main(Delegate* dge, InitData* initData);
 private:
     GApplication();
     ~GApplication();
     
     void idle();
     
-    void didFinishLaunching();
+    void didFinishLaunching(InitData* initData);
     void didBecomeActive();
     void willResignActive();
     void didEnterBackground();
@@ -42,6 +80,17 @@ private:
     void willTerminate();
     void didReceiveMemoryWarning();
 public:
+
+	gint getWindowCount() {
+		return m_Windows.getCount();
+	}
+
+	GWindow* getWindow(gint idx) {
+		return m_Windows.get(idx);
+	}
+
+	void addWindow(GWindow* win);
+
 
 private:
     Delegate* m_Delegate;

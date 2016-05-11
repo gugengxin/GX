@@ -227,16 +227,9 @@ void CALLBACK GApplication::winTimerCallBack(UINT uTimerID, UINT uMsg, DWORD_PTR
 void GApplication::createWinMsgWndAndStart()
 {
 	WNDCLASS	wc;
+	memset(&wc, 0, sizeof(wc));
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 	wc.lpfnWndProc = (WNDPROC)winMsgWndProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = NULL;
-	wc.hIcon = NULL;
-	wc.hCursor = NULL;
-	wc.hbrBackground = NULL;
-	wc.lpszMenuName = NULL;
-	wc.lpszClassName = NULL;
 	RECT rc = { 0, 0, 1, 1 };
 	m_MsgWnd.create(wc, WS_OVERLAPPEDWINDOW, WS_EX_APPWINDOW | WS_EX_WINDOWEDGE, rc, NULL);
 	m_TimerID = timeSetEvent(1000 / 60, 1000 / 60, winTimerCallBack, (DWORD_PTR)this, TIME_PERIODIC | TIME_KILL_SYNCHRONOUS);
@@ -291,7 +284,12 @@ GApplication* GApplication::shared()
     return &g_Obj;
 }
 
-void GApplication::main(Delegate* dge)
+GApplication::Delegate* GApplication::sharedDelegate()
+{
+	return shared()->m_Delegate;
+}
+
+void GApplication::main(Delegate* dge, InitData* initData)
 {
     GApplication* app=shared();
     app->m_Delegate=dge;
@@ -299,10 +297,10 @@ void GApplication::main(Delegate* dge)
     
 #if defined(GX_OS_APPLE)
     [GX_CAST_R(_AppTimer*, app->m_Timer) start];
-    app->didFinishLaunching();
+	app->didFinishLaunching(initData);
 #elif defined(GX_OS_WINDOWS)
 	app->createWinMsgWndAndStart();
-	app->didFinishLaunching();
+	app->didFinishLaunching(initData);
 #elif defined(GX_OS_ANDROID)
 
 	switch (GX::JavaGetLaunchType()) {
@@ -353,36 +351,53 @@ void GApplication::idle()
 	GX_LOG_W(PrioDEBUG, "GApplication", str);
 	//*/
 
+	for (gint i = 0; i < m_Windows.getCount(); i++) {
+		GWindow* win = m_Windows.get(i);
+		win->idle();
+		win->renderIfNeed();
+	}
+
 	GRunLoop::current()->run();
 }
 
-void GApplication::didFinishLaunching()
+void GApplication::didFinishLaunching(InitData* initData)
 {
+	m_Delegate->AppDidFinishLaunching(this,initData);
 }
 
 void GApplication::didBecomeActive()
 {
+	m_Delegate->AppDidBecomeActive(this);
 }
 
 void GApplication::willResignActive()
 {
+	m_Delegate->AppWillResignActive(this);
 }
 
 void GApplication::didEnterBackground()
 {
+	m_Delegate->AppDidEnterBackground(this);
 }
 
 void GApplication::willEnterForeground()
 {
+	m_Delegate->AppWillEnterForeground(this);
 }
 
 void GApplication::willTerminate()
 {
+	m_Delegate->AppWillTerminate(this);
 }
 
 void GApplication::didReceiveMemoryWarning()
 {
+	m_Delegate->AppDidReceiveMemoryWarning(this);
 }
 
 
 
+void GApplication::addWindow(GWindow* win)
+{
+	m_Windows.add(win);
+}
