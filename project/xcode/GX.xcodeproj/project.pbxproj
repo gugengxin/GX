@@ -7,6 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA04FDE01CE4557E00C9B596 /* GAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDCF1CE4557E00C9B596 /* GAction.cpp */; };
+		CA04FDE11CE4557E00C9B596 /* GAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDCF1CE4557E00C9B596 /* GAction.cpp */; };
+		CA04FDE21CE4557E00C9B596 /* GAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDCF1CE4557E00C9B596 /* GAction.cpp */; };
+		CA04FDE71CE4557E00C9B596 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDD51CE4557E00C9B596 /* glew.c */; };
+		CA04FDE81CE4557E00C9B596 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDD51CE4557E00C9B596 /* glew.c */; };
+		CA04FDE91CE4557E00C9B596 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDD51CE4557E00C9B596 /* glew.c */; };
+		CA04FDEA1CE4557E00C9B596 /* GNotice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDD61CE4557E00C9B596 /* GNotice.cpp */; };
+		CA04FDEB1CE4557E00C9B596 /* GNotice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDD61CE4557E00C9B596 /* GNotice.cpp */; };
+		CA04FDEC1CE4557E00C9B596 /* GNotice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDD61CE4557E00C9B596 /* GNotice.cpp */; };
+		CA04FDEE1CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDD81CE4557E00C9B596 /* GNoticeCenter.cpp */; };
+		CA04FDEF1CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDD81CE4557E00C9B596 /* GNoticeCenter.cpp */; };
+		CA04FDF01CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDD81CE4557E00C9B596 /* GNoticeCenter.cpp */; };
+		CA04FDF21CE4557E00C9B596 /* GNumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDDA1CE4557E00C9B596 /* GNumber.cpp */; };
+		CA04FDF31CE4557E00C9B596 /* GNumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDDA1CE4557E00C9B596 /* GNumber.cpp */; };
+		CA04FDF41CE4557E00C9B596 /* GNumber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDDA1CE4557E00C9B596 /* GNumber.cpp */; };
+		CA04FDF61CE4557E00C9B596 /* GObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDDC1CE4557E00C9B596 /* GObserver.cpp */; };
+		CA04FDF71CE4557E00C9B596 /* GObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDDC1CE4557E00C9B596 /* GObserver.cpp */; };
+		CA04FDF81CE4557E00C9B596 /* GObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDDC1CE4557E00C9B596 /* GObserver.cpp */; };
+		CA04FDFA1CE4557E00C9B596 /* GPtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDDE1CE4557E00C9B596 /* GPtr.cpp */; };
+		CA04FDFB1CE4557E00C9B596 /* GPtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDDE1CE4557E00C9B596 /* GPtr.cpp */; };
+		CA04FDFC1CE4557E00C9B596 /* GPtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA04FDDE1CE4557E00C9B596 /* GPtr.cpp */; };
 		CA0B15F11CD07A3600C33BB5 /* GThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B15EF1CD07A3600C33BB5 /* GThread.cpp */; };
 		CA0B15F21CD07A3600C33BB5 /* GThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B15EF1CD07A3600C33BB5 /* GThread.cpp */; };
 		CA0B15F31CD07A3600C33BB5 /* GThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B15EF1CD07A3600C33BB5 /* GThread.cpp */; };
@@ -41,7 +62,6 @@
 		CA1F60D11CD9ED6A00C6307B /* GTString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */; };
 		CA1F60D21CD9ED6A00C6307B /* GTString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */; };
 		CA1F60D31CD9ED6A00C6307B /* GTString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */; };
-		CA1F60D41CD9ED6A00C6307B /* GTString.h in Headers */ = {isa = PBXBuildFile; fileRef = CA1F60D01CD9ED6A00C6307B /* GTString.h */; };
 		CA7B4DE01CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
 		CA7B4DE11CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
 		CA7B4DE21CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
@@ -114,6 +134,22 @@
 		CA01E75A1CBF483C004520E6 /* GX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GX.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA01E76A1CBF50A9004520E6 /* GX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GX.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA01E7841CBF51B9004520E6 /* GX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GX.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA04FDCF1CE4557E00C9B596 /* GAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAction.cpp; sourceTree = "<group>"; };
+		CA04FDD01CE4557E00C9B596 /* GAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAction.h; sourceTree = "<group>"; };
+		CA04FDD21CE4557E00C9B596 /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
+		CA04FDD31CE4557E00C9B596 /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
+		CA04FDD41CE4557E00C9B596 /* wglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wglew.h; sourceTree = "<group>"; };
+		CA04FDD51CE4557E00C9B596 /* glew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glew.c; sourceTree = "<group>"; };
+		CA04FDD61CE4557E00C9B596 /* GNotice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GNotice.cpp; sourceTree = "<group>"; };
+		CA04FDD71CE4557E00C9B596 /* GNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNotice.h; sourceTree = "<group>"; };
+		CA04FDD81CE4557E00C9B596 /* GNoticeCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GNoticeCenter.cpp; sourceTree = "<group>"; };
+		CA04FDD91CE4557E00C9B596 /* GNoticeCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNoticeCenter.h; sourceTree = "<group>"; };
+		CA04FDDA1CE4557E00C9B596 /* GNumber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GNumber.cpp; sourceTree = "<group>"; };
+		CA04FDDB1CE4557E00C9B596 /* GNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNumber.h; sourceTree = "<group>"; };
+		CA04FDDC1CE4557E00C9B596 /* GObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GObserver.cpp; sourceTree = "<group>"; };
+		CA04FDDD1CE4557E00C9B596 /* GObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GObserver.h; sourceTree = "<group>"; };
+		CA04FDDE1CE4557E00C9B596 /* GPtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GPtr.cpp; sourceTree = "<group>"; };
+		CA04FDDF1CE4557E00C9B596 /* GPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPtr.h; sourceTree = "<group>"; };
 		CA0B15EF1CD07A3600C33BB5 /* GThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GThread.cpp; sourceTree = "<group>"; };
 		CA0B15F01CD07A3600C33BB5 /* GThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GThread.h; sourceTree = "<group>"; };
 		CA0B15F71CD07CD000C33BB5 /* GMutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GMutex.cpp; sourceTree = "<group>"; };
@@ -246,6 +282,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		CA04FDD11CE4557E00C9B596 /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				CA04FDD21CE4557E00C9B596 /* glew.h */,
+				CA04FDD31CE4557E00C9B596 /* glxew.h */,
+				CA04FDD41CE4557E00C9B596 /* wglew.h */,
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
 		CA1F60CB1CD9ACA200C6307B /* Unuse */ = {
 			isa = PBXGroup;
 			children = (
@@ -304,6 +350,20 @@
 		CA9C16C51CC5FF7500204303 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				CA04FDCF1CE4557E00C9B596 /* GAction.cpp */,
+				CA04FDD01CE4557E00C9B596 /* GAction.h */,
+				CA04FDD11CE4557E00C9B596 /* GL */,
+				CA04FDD51CE4557E00C9B596 /* glew.c */,
+				CA04FDD61CE4557E00C9B596 /* GNotice.cpp */,
+				CA04FDD71CE4557E00C9B596 /* GNotice.h */,
+				CA04FDD81CE4557E00C9B596 /* GNoticeCenter.cpp */,
+				CA04FDD91CE4557E00C9B596 /* GNoticeCenter.h */,
+				CA04FDDA1CE4557E00C9B596 /* GNumber.cpp */,
+				CA04FDDB1CE4557E00C9B596 /* GNumber.h */,
+				CA04FDDC1CE4557E00C9B596 /* GObserver.cpp */,
+				CA04FDDD1CE4557E00C9B596 /* GObserver.h */,
+				CA04FDDE1CE4557E00C9B596 /* GPtr.cpp */,
+				CA04FDDF1CE4557E00C9B596 /* GPtr.h */,
 				CA9C16C81CC601D500204303 /* GXOSs.h */,
 				CA9C16C61CC5FFA800204303 /* GXTypes.h */,
 				CA9C16C71CC6013F00204303 /* GXPrefix.h */,
@@ -397,17 +457,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		CA01E7821CBF51B9004520E6 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CA1F60D41CD9ED6A00C6307B /* GTString.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		CA01E7591CBF483C004520E6 /* GX_ios */ = {
 			isa = PBXNativeTarget;
@@ -449,7 +498,6 @@
 			buildPhases = (
 				CA01E7801CBF51B9004520E6 /* Sources */,
 				CA01E7811CBF51B9004520E6 /* Frameworks */,
-				CA01E7821CBF51B9004520E6 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -505,20 +553,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA1F60C11CD996F700C6307B /* GDataString.cpp in Sources */,
+				CA04FDEE1CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */,
 				CA9C16D81CC615FF00204303 /* GOWHash.cpp in Sources */,
 				CA1F60BB1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CA1C71B81CD2068100BEEA5B /* GDataArray.cpp in Sources */,
 				CABB5CCD1CE0E40500D5B648 /* GJavaCAPI.cpp in Sources */,
+				CA04FDF61CE4557E00C9B596 /* GObserver.cpp in Sources */,
 				CA7B4DE01CD5906F00F3D826 /* GUUID.cpp in Sources */,
 				CA9C16D21CC6132400204303 /* GClass.cpp in Sources */,
 				CAC2D1321CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CA0B16021CD086F500C33BB5 /* GCondition.cpp in Sources */,
 				CA1F60A71CD9834000C6307B /* GXCWnd.cpp in Sources */,
+				CA04FDE71CE4557E00C9B596 /* glew.c in Sources */,
 				CABB5CCA1CE0E40500D5B648 /* GContext.cpp in Sources */,
+				CA04FDFA1CE4557E00C9B596 /* GPtr.cpp in Sources */,
 				CABB5CCC1CE0E40500D5B648 /* GJavaAPI.cpp in Sources */,
+				CA04FDEA1CE4557E00C9B596 /* GNotice.cpp in Sources */,
 				CAE706D91CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CABB5CD31CE0E40500D5B648 /* GXOpenGL.cpp in Sources */,
 				CABB5CCB1CE0E40500D5B648 /* GD3DContext.cpp in Sources */,
+				CA04FDF21CE4557E00C9B596 /* GNumber.cpp in Sources */,
 				CABB5CCE1CE0E40500D5B648 /* GJavaClass.cpp in Sources */,
 				CABB5CCF1CE0E40500D5B648 /* GJavaJAPI.cpp in Sources */,
 				CABB5CD21CE0E40500D5B648 /* GXDirectX.cpp in Sources */,
@@ -533,6 +587,7 @@
 				CABB5CD01CE0E40500D5B648 /* GLog.cpp in Sources */,
 				CA1F60A61CD9834000C6307B /* GSystem.cpp in Sources */,
 				CA0B15F81CD07CD000C33BB5 /* GMutex.cpp in Sources */,
+				CA04FDE01CE4557E00C9B596 /* GAction.cpp in Sources */,
 				CABB5CD11CE0E40500D5B648 /* GOGLContext.cpp in Sources */,
 				CAE706E11CD3494F0090F4DD /* GString.cpp in Sources */,
 				CA1AD2771CD87CA900CEA1DC /* GWindow.cpp in Sources */,
@@ -548,11 +603,16 @@
 				CA9C16D91CC615FF00204303 /* GOWHash.cpp in Sources */,
 				CA1F60BC1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CA9C16D31CC6132400204303 /* GClass.cpp in Sources */,
+				CA04FDF31CE4557E00C9B596 /* GNumber.cpp in Sources */,
 				CA7B4DE11CD5906F00F3D826 /* GUUID.cpp in Sources */,
 				CAC2D1331CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CAE706D11CD2F8950090F4DD /* GDataArray.cpp in Sources */,
 				CA0B16031CD086F500C33BB5 /* GCondition.cpp in Sources */,
 				CA1F60B21CD984C100C6307B /* GXCWnd.cpp in Sources */,
+				CA04FDEF1CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */,
+				CA04FDEB1CE4557E00C9B596 /* GNotice.cpp in Sources */,
+				CA04FDE11CE4557E00C9B596 /* GAction.cpp in Sources */,
+				CA04FDE81CE4557E00C9B596 /* glew.c in Sources */,
 				CAE706DA1CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CAC2D11D1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */,
 				CA9C16CD1CC6102E00204303 /* GObject.cpp in Sources */,
@@ -563,7 +623,9 @@
 				CA7B4DE91CD594FF00F3D826 /* GApplication.cpp in Sources */,
 				CA1F60D21CD9ED6A00C6307B /* GTString.cpp in Sources */,
 				CA1F60B11CD984C100C6307B /* GSystem.cpp in Sources */,
+				CA04FDFB1CE4557E00C9B596 /* GPtr.cpp in Sources */,
 				CA0B15F21CD07A3600C33BB5 /* GThread.cpp in Sources */,
+				CA04FDF71CE4557E00C9B596 /* GObserver.cpp in Sources */,
 				CAE706E21CD3494F0090F4DD /* GString.cpp in Sources */,
 				CA1AD2781CD87CA900CEA1DC /* GWindow.cpp in Sources */,
 				CAE706D01CD2F8950090F4DD /* GArray.cpp in Sources */,
@@ -578,11 +640,16 @@
 				CA9C16DA1CC615FF00204303 /* GOWHash.cpp in Sources */,
 				CA1F60BD1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CA9C16D41CC6132400204303 /* GClass.cpp in Sources */,
+				CA04FDF41CE4557E00C9B596 /* GNumber.cpp in Sources */,
 				CA7B4DE21CD5906F00F3D826 /* GUUID.cpp in Sources */,
 				CAC2D1341CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CAE706D31CD2F8960090F4DD /* GDataArray.cpp in Sources */,
 				CA0B16041CD086F500C33BB5 /* GCondition.cpp in Sources */,
 				CA1F60B41CD984C100C6307B /* GXCWnd.cpp in Sources */,
+				CA04FDF01CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */,
+				CA04FDEC1CE4557E00C9B596 /* GNotice.cpp in Sources */,
+				CA04FDE21CE4557E00C9B596 /* GAction.cpp in Sources */,
+				CA04FDE91CE4557E00C9B596 /* glew.c in Sources */,
 				CAE706DB1CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CAC2D11E1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */,
 				CA9C16CE1CC6102E00204303 /* GObject.cpp in Sources */,
@@ -593,7 +660,9 @@
 				CA7B4DEA1CD594FF00F3D826 /* GApplication.cpp in Sources */,
 				CA1F60D31CD9ED6A00C6307B /* GTString.cpp in Sources */,
 				CA1F60B31CD984C100C6307B /* GSystem.cpp in Sources */,
+				CA04FDFC1CE4557E00C9B596 /* GPtr.cpp in Sources */,
 				CA0B15F31CD07A3600C33BB5 /* GThread.cpp in Sources */,
+				CA04FDF81CE4557E00C9B596 /* GObserver.cpp in Sources */,
 				CAE706E31CD3494F0090F4DD /* GString.cpp in Sources */,
 				CA1AD2791CD87CA900CEA1DC /* GWindow.cpp in Sources */,
 				CAE706D21CD2F8960090F4DD /* GArray.cpp in Sources */,

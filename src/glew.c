@@ -29,10 +29,10 @@
 ** ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 ** THE POSSIBILITY OF SUCH DAMAGE.
 */
+#include "GXOSs.h"
+#if (defined(_WIN32) || defined(WIN32) || defined(WIN64)) && defined(GX_OPENGL)
 
 #include <GL/glew.h>
-
-#if (defined(_WIN32) || defined(WIN32) || defined(WIN64)) && defined(GX_OPENGL)
 
 #if defined(_WIN32)
 #  include <GL/wglew.h>

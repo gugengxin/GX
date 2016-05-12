@@ -9,15 +9,13 @@
 #include "GThread.h"
 #include <pthread.h>
 #include "GCondition.h"
-#if defined(GX_OS_ANDROID)
-#include <unistd.h>
-#endif
 
 #if defined(GX_OS_WINDOWS)
 #include <Windows.h>
 #define M_PID_SELF() (*GX_CAST_R(GX::pthread_t*, &pthread_self()))
 #define M_TO_PID(pid) (*GX_CAST_R(::pthread_t*, &(pid)))
 #else
+#include <unistd.h>
 #define M_PID_SELF() GX_CAST_R(GX::pthread_t, pthread_self())
 #define M_TO_PID(pid) GX_CAST_R(::pthread_t, pid)
 #endif

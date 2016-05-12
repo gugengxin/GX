@@ -49,6 +49,7 @@ static void _ConsoleFina()
 #ifdef GX_OS_ANDROID
 #include <android/log.h>
 #else
+#include <stdio.h>
 static const gchar* PrioString[] = {
 	"UNKNOWN",
 	"DEFAULT",
