@@ -244,35 +244,6 @@ void GApplication::destroyWinMsgWnd()
 
 #elif defined(GX_OS_ANDROID)
 
-void GApplication::androidAppCreate()
-{
-
-}
-void GApplication::androidAppStart()
-{
-
-}
-void GApplication::androidAppResume()
-{
-
-}
-void GApplication::androidAppPause()
-{
-
-}
-void GApplication::androidAppStop()
-{
-
-}
-void GApplication::androidAppDestroy()
-{
-
-}
-void GApplication::androidAppLowMemory()
-{
-
-}
-
 #endif
 
 
@@ -360,41 +331,39 @@ void GApplication::idle()
 	GRunLoop::current()->run();
 }
 
-void GApplication::didFinishLaunching(InitData* initData)
+void GApplication::eventCreate()
 {
-	m_Delegate->AppDidFinishLaunching(this,initData);
+	m_Delegate->appCreate(this);
+}
+void GApplication::eventStart()
+{
+	m_Delegate->appStart(this);
+}
+void GApplication::eventResume()
+{
+	m_Delegate->appResume(this);
+}
+void GApplication::eventPause()
+{
+	m_Delegate->appPause(this);
+}
+void GApplication::eventStop()
+{
+	m_Delegate->appStop(this);
+}
+void GApplication::eventDestroy()
+{
+	m_Delegate->appDestroy(this);
 }
 
-void GApplication::didBecomeActive()
-{
-	m_Delegate->AppDidBecomeActive(this);
-}
 
-void GApplication::willResignActive()
+void GApplication::eventCanCreateWindow(void* osWindow)
 {
-	m_Delegate->AppWillResignActive(this);
+	GWindow* win=m_Delegate->appCanCreateWindow(this,osWindow);
+	if(win) {
+		addWindow(win);
+	}
 }
-
-void GApplication::didEnterBackground()
-{
-	m_Delegate->AppDidEnterBackground(this);
-}
-
-void GApplication::willEnterForeground()
-{
-	m_Delegate->AppWillEnterForeground(this);
-}
-
-void GApplication::willTerminate()
-{
-	m_Delegate->AppWillTerminate(this);
-}
-
-void GApplication::didReceiveMemoryWarning()
-{
-	m_Delegate->AppDidReceiveMemoryWarning(this);
-}
-
 
 
 void GApplication::addWindow(GWindow* win)

@@ -18,6 +18,7 @@
 #include <android/native_activity.h>
 #include "com_gxengine_gx_GJavaJAPI.h"
 #endif
+class GWindow;
 
 class GApplication {
 public:
@@ -40,24 +41,25 @@ public:
 
     class Delegate {
     public:
-		virtual void AppDidFinishLaunching(GApplication* application, InitData* initData) = 0;
-		virtual void AppDidBecomeActive(GApplication* application){}
-		virtual void AppWillResignActive(GApplication* application){}
-		virtual void AppDidEnterBackground(GApplication* application){}
-		virtual void AppWillEnterForeground(GApplication* application){}
-		virtual void AppWillTerminate(GApplication* application){}
-		virtual void AppDidReceiveMemoryWarning(GApplication* application){}
-		virtual bool AppShouldTerminateAfterLastWindowClosed(GApplication* application){
-			return true;
-		}
+		virtual void appCreate(GApplication* application) {}
+		virtual void appStart(GApplication* application) {}
+		virtual void appResume(GApplication* application) {}
+		virtual void appPause(GApplication* application) {}
+		virtual void appStop(GApplication* application) {}
+		virtual void appDestroy(GApplication* application) {}
 
-		virtual gint WindowsSuggestedSamples() {
+		virtual GWindow* appCanCreateWindow(GApplication* application,void* osWindow) {
+			return NULL;
+		}
+		virtual void appReceivedMemoryWarning(GApplication* application){}
+
+		virtual gint windowsSuggestedSamples() {
 			return 4;
 		}
-		virtual gint WindowsSuggestedDepth() {
+		virtual gint windowsSuggestedDepth() {
 			return 24;
 		}
-		virtual gint WindowsSuggestedStencil() {
+		virtual gint windowsSuggestedStencil() {
 			return 8;
 		}
     };
@@ -71,14 +73,16 @@ private:
     ~GApplication();
     
     void idle();
-    
-    void didFinishLaunching(InitData* initData);
-    void didBecomeActive();
-    void willResignActive();
-    void didEnterBackground();
-    void willEnterForeground();
-    void willTerminate();
-    void didReceiveMemoryWarning();
+
+	void eventCreate();
+	void eventStart();
+	void eventResume();
+	void eventPause();
+	void eventStop();
+	void eventDestroy();
+
+	void eventCanCreateWindow(void* osWindow);
+
 public:
 
 	gint getWindowCount() {
@@ -124,20 +128,8 @@ private:
             (JNIEnv *, jclass);
     friend void Java_com_gxengine_gx_GJavaJAPI_appLowMemory
             (JNIEnv *, jclass);
-    void androidAppCreate();
-    void androidAppStart();
-    void androidAppResume();
-    void androidAppPause();
-    void androidAppStop();
-    void androidAppDestroy();
-    void androidAppLowMemory();
-
-//    void androidWindowCreated(ANativeWindow*);
-//    void androidWindowChanged();
-//    void androidWindowDestroyed();
-//    void androidWindowOnTouchEvent(jint action,jint pointerId,jfloat x,jfloat y);
-
-
+	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasCreated
+			(JNIEnv *, jclass, jobject);
 #endif
 };
 

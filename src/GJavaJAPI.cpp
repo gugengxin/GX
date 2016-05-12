@@ -16,17 +16,17 @@ extern "C" {
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appCreate
         (JNIEnv *, jclass, jint lt, jobject mi) {
     GX::JavaInit(GX_CAST_S(GX::JavaLaunchType,lt),mi);
-    GApplication::shared()->androidAppCreate();
+    GApplication::shared()->eventCreate();
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appStart
         (JNIEnv *, jclass) {
-    GApplication::shared()->androidAppStart();
+    GApplication::shared()->eventStart();
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appResume
         (JNIEnv *, jclass) {
-    GApplication::shared()->androidAppResume();
+    GApplication::shared()->eventResume();
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appIdle
@@ -36,27 +36,34 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appIdle
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appPause
         (JNIEnv *, jclass) {
-    GApplication::shared()->androidAppPause();
+    GApplication::shared()->eventPause();
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appStop
         (JNIEnv *, jclass) {
-    GApplication::shared()->androidAppStop();
+    GApplication::shared()->eventStop();
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appDestroy
         (JNIEnv *, jclass) {
-    GApplication::shared()->androidAppDestroy();
+    GApplication::shared()->eventDestroy();
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appLowMemory
         (JNIEnv *, jclass) {
-    GApplication::shared()->androidAppLowMemory();
+
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_mainWindowHasCreated
-        (JNIEnv *, jclass, jobject) {
+        (JNIEnv *, jclass, jobject surface) {
+    static bool first=true;
+    if(first) {
+        first=false;
+        GApplication::shared()->eventCanCreateWindow(surface);
+    }
+    else {
 
+    }
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_mainWindowHasChanged
