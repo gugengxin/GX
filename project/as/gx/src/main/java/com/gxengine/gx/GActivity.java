@@ -38,6 +38,7 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	protected void onStart() {
 		super.onStart();
         Log.d(this.getClass().getSimpleName(),"onStart");
+		startTimer();
 		GJavaJAPI.appStart();
 	}
 
@@ -46,16 +47,12 @@ public class GActivity extends Activity implements GWindow.Delegate {
 		super.onResume();
         Log.d(this.getClass().getSimpleName(),"onResume");
 		GJavaJAPI.appResume();
-		
-		startTimer();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
         Log.d(this.getClass().getSimpleName(),"onPause");
-		stopTimer();
-		
 		GJavaJAPI.appPause();
 	}
 
@@ -64,6 +61,7 @@ public class GActivity extends Activity implements GWindow.Delegate {
 		super.onStop();
         Log.d(this.getClass().getSimpleName(),"onStop");
 		GJavaJAPI.appStop();
+		stopTimer();
 	}
 
 	@Override

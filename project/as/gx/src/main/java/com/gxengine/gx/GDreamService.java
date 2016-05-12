@@ -35,24 +35,16 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	public void onAttachedToWindow() {
 		super.onAttachedToWindow();
 		Log.d(this.getClass().getSimpleName(),"onAttachedToWindow");
-
-		_window=new GWindow(this,this);
-		this.setContentView(_window);
-	}
-
-	@Override
-	public void onDetachedFromWindow() {
-
-		Log.d(this.getClass().getSimpleName(),"onDetachedFromWindow");
-		super.onDetachedFromWindow();
+		startTimer();
+		GJavaJAPI.appStart();
 	}
 
 	@Override
 	public void onDreamingStarted() {
 		super.onDreamingStarted();
-
 		Log.d(this.getClass().getSimpleName(),"onDreamingStarted");
-		startTimer();
+		_window=new GWindow(this,this);
+		this.setContentView(_window);
 		GJavaJAPI.appResume();
 	}
 
@@ -60,8 +52,15 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	public void onDreamingStopped() {
 		super.onDreamingStopped();
 		Log.d(this.getClass().getSimpleName(),"onDreamingStopped");
-		stopTimer();
 		GJavaJAPI.appPause();
+	}
+
+	@Override
+	public void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+		Log.d(this.getClass().getSimpleName(),"onDetachedFromWindow");
+		GJavaJAPI.appStop();
+		stopTimer();
 	}
 
 	@Override

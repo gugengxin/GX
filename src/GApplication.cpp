@@ -27,10 +27,10 @@
 
 #if defined(GX_OS_APPLE)
 
-class _AppTimerBridge {
+class _AppHelperBridge {
 public:
-    _AppTimerBridge(){}
-    ~_AppTimerBridge(){}
+    _AppHelperBridge(){}
+    ~_AppHelperBridge(){}
     inline void SetTarget(GApplication* v) {
         m_Target=v;
     }
@@ -38,29 +38,29 @@ public:
         m_Target->idle();
     }
     inline void AppDidBecomeActive() {
-        m_Target->didBecomeActive();
+        m_Target->eventResume();
     }
     inline void AppWillResignActive() {
-        m_Target->willResignActive();
+        m_Target->eventPause();
     }
     inline void AppDidEnterBackground() {
-        m_Target->didEnterBackground();
+        m_Target->eventStop();
     }
     inline void AppWillEnterForeground() {
-        m_Target->willEnterForeground();
+        m_Target->eventStart();
     }
     inline void AppWillTerminate() {
-        m_Target->willTerminate();
+        m_Target->eventDestroy();
     }
     inline void AppDidReceiveMemoryWarning() {
-        m_Target->didReceiveMemoryWarning();
+        
     }
 private:
     GApplication* m_Target;
 };
 
-@interface _AppTimer : NSObject {
-    _AppTimerBridge _delegate;
+@interface _AppHelper : NSObject {
+    _AppHelperBridge _delegate;
 }
 #if defined(GX_OS_IPHONE)
 @property (nonatomic,retain) CADisplayLink* displayTimer;
@@ -70,7 +70,7 @@ private:
 @end
 
 
-@implementation _AppTimer
+@implementation _AppHelper
 @synthesize displayTimer=_displayTimer;
 
 - (id)initWithDelegate:(GApplication*)dge
@@ -264,16 +264,17 @@ void GApplication::main(Delegate* dge, InitData* initData)
 {
     GApplication* app=shared();
     app->m_Delegate=dge;
-    GThread::current()->setMain();
-    
-#if defined(GX_OS_APPLE)
-    [GX_CAST_R(_AppTimer*, app->m_Timer) start];
-	app->didFinishLaunching(initData);
-#elif defined(GX_OS_WINDOWS)
-	app->createWinMsgWndAndStart();
-	app->didFinishLaunching(initData);
-#elif defined(GX_OS_ANDROID)
+	memcpy(&app->m_InitData,initData, sizeof(InitData));
 
+    GThread::current()->setMain();
+
+	app->eventCreate();
+
+#if defined(GX_OS_APPLE)
+    app->eventStart();
+#elif defined(GX_OS_WINDOWS)
+	app->eventStart();
+#elif defined(GX_OS_ANDROID)
 	switch (GX::JavaGetLaunchType()) {
 		case GX::JavaLaunchTypeActivity: {
 
@@ -295,7 +296,7 @@ GApplication::GApplication()
 {
     m_Delegate=NULL;
 #if defined(GX_OS_APPLE)
-    m_Timer=[[_AppTimer alloc] initWithDelegate:this];
+    m_Timer=[[_AppHelper alloc] initWithDelegate:this];
 #elif defined(GX_OS_WINDOWS)
 	m_TimerID = 0;
 #endif
@@ -304,7 +305,7 @@ GApplication::GApplication()
 GApplication::~GApplication()
 {
 #if defined(GX_OS_APPLE)
-    [GX_CAST_R(_AppTimer*, m_Timer) release];
+    [GX_CAST_R(_AppHelper*, m_Timer) release];
 #elif defined(GX_OS_WINDOWS)
 	if (m_TimerID) {
 		timeKillEvent(m_TimerID);
@@ -337,11 +338,20 @@ void GApplication::eventCreate()
 }
 void GApplication::eventStart()
 {
+#if defined(GX_OS_APPLE)
+    [GX_CAST_R(_AppHelper*, m_Timer) start];
+#elif defined(GX_OS_WINDOWS)
+    app->createWinMsgWndAndStart();
+#endif
 	m_Delegate->appStart(this);
 }
 void GApplication::eventResume()
 {
 	m_Delegate->appResume(this);
+
+#if defined(GX_OS_APPLE) || defined(GX_OS_WINDOWS)
+	m_Delegate->appCanCreateWindow(this,m_InitData.getOSWindow());
+#endif
 }
 void GApplication::eventPause()
 {
@@ -350,6 +360,12 @@ void GApplication::eventPause()
 void GApplication::eventStop()
 {
 	m_Delegate->appStop(this);
+    
+#if defined(GX_OS_APPLE)
+	[GX_CAST_R(_AppHelper*, m_Timer) stop];
+#elif defined(GX_OS_WINDOWS)
+#error
+#endif
 }
 void GApplication::eventDestroy()
 {

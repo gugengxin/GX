@@ -16,13 +16,12 @@
 05-12 13:51:25.695 15388-15388/com.gxengine.gxtest D/GActivity: onStop
 05-12 13:51:25.695 15388-15388/com.gxengine.gxtest D/GActivity: onDestroy
 
-
-05-12 13:58:55.309 16360-16360/com.gxengine.gxtest D/GDreamService: onCreate
-05-12 13:58:55.349 16360-16360/com.gxengine.gxtest D/GDreamService: onAttachedToWindow
-05-12 13:58:55.429 16360-16360/com.gxengine.gxtest D/GDreamService: onWindowCreated
-05-12 13:58:55.429 16360-16360/com.gxengine.gxtest D/GDreamService: onWindowChanged
-05-12 13:58:55.440 16360-16360/com.gxengine.gxtest D/GDreamService: onDreamingStarted
-05-12 13:58:59.110 16360-16360/com.gxengine.gxtest D/GDreamService: onDreamingStopped
-05-12 13:58:59.115 16360-16360/com.gxengine.gxtest D/GDreamService: onWindowDestroyed
-05-12 13:58:59.119 16360-16360/com.gxengine.gxtest D/GDreamService: onDetachedFromWindow
-05-12 13:58:59.134 16360-16360/com.gxengine.gxtest D/GDreamService: onDestroy
+05-12 11:10:45.390 2392-2392/? D/GDreamService: onCreate
+05-12 11:10:45.410 2392-2392/? D/GDreamService: onAttachedToWindow
+05-12 11:10:45.500 2392-2392/? D/GDreamService: onDreamingStarted
+05-12 11:10:45.550 2392-2392/? D/GDreamService: onWindowCreated
+05-12 11:10:45.550 2392-2392/? D/GDreamService: onWindowChanged
+05-12 11:11:00.950 2392-2392/? D/GDreamService: onDreamingStopped
+05-12 11:11:00.960 2392-2392/? D/GDreamService: onWindowDestroyed
+05-12 11:11:00.960 2392-2392/? D/GDreamService: onDetachedFromWindow
+05-12 11:11:00.970 2392-2392/? D/GDreamService: onDestroy

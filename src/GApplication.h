@@ -24,6 +24,9 @@ class GApplication {
 public:
 	class InitData {
 	public:
+        InitData() {
+            m_OSWindow=NULL;
+        }
 		InitData(void* osWin) {
 			m_OSWindow = osWin;
 		}
@@ -99,9 +102,10 @@ public:
 private:
     Delegate* m_Delegate;
     GArray<GWindow> m_Windows;
+	InitData m_InitData;
     
 #if defined(GX_OS_APPLE)
-    friend class _AppTimerBridge;
+    friend class _AppHelperBridge;
     void* m_Timer;
 #elif defined(GX_OS_WINDOWS)
 	static LRESULT CALLBACK winMsgWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

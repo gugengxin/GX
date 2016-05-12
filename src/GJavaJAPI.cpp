@@ -16,7 +16,6 @@ extern "C" {
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appCreate
         (JNIEnv *, jclass, jint lt, jobject mi) {
     GX::JavaInit(GX_CAST_S(GX::JavaLaunchType,lt),mi);
-    GApplication::shared()->eventCreate();
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appStart
