@@ -5,6 +5,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
 
@@ -17,6 +18,7 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d(this.getClass().getSimpleName(),"onCreate");
 		try {
 			ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             Bundle bundle = ai.metaData;
@@ -35,12 +37,14 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	@Override
 	protected void onStart() {
 		super.onStart();
+        Log.d(this.getClass().getSimpleName(),"onStart");
 		GJavaJAPI.appStart();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+        Log.d(this.getClass().getSimpleName(),"onResume");
 		GJavaJAPI.appResume();
 		
 		startTimer();
@@ -49,6 +53,7 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	@Override
 	protected void onPause() {
 		super.onPause();
+        Log.d(this.getClass().getSimpleName(),"onPause");
 		stopTimer();
 		
 		GJavaJAPI.appPause();
@@ -57,11 +62,13 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	@Override
 	protected void onStop() {
 		super.onStop();
+        Log.d(this.getClass().getSimpleName(),"onStop");
 		GJavaJAPI.appStop();
 	}
 
 	@Override
 	protected void onDestroy() {
+        Log.d(this.getClass().getSimpleName(),"onDestroy");
 		GJavaJAPI.appDestroy();
 		super.onDestroy();
 		
@@ -77,16 +84,19 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	
 	@Override
 	public void onWindowCreated(GWindow win, Surface surface) {
+        Log.d(this.getClass().getSimpleName(),"onWindowCreated");
 		GJavaJAPI.mainWindowHasCreated(surface);
 	}
 	
 	@Override
 	public void onWindowChanged(GWindow win, Surface surface, int width, int height) {
+        Log.d(this.getClass().getSimpleName(),"onWindowChanged");
 		GJavaJAPI.mainWindowHasChanged(surface, width, height);
 	}
 	
 	@Override
 	public void onWindowDestroyed(GWindow win, Surface surface) {
+        Log.d(this.getClass().getSimpleName(),"onWindowDestroyed");
 		GJavaJAPI.mainWindowHasDestroyed(surface);
 	}
 	
