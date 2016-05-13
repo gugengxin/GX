@@ -22,6 +22,7 @@ public:
 	void renderBegin();
 	void renderEnd();
 
+public:
 	void makeCurrent();
 	void makeClear();
 
@@ -30,6 +31,20 @@ private:
 #if defined(GX_OS_WINDOWS)
 	HDC   m_DC;
 	HGLRC m_Context;
+#elif defined(GX_OS_APPLE)
+    void* m_Context;
+#if defined(GX_OS_IPHONE)
+    bool resize(void* layer,gint32 width,gint32 height);
+    
+    gint32   m_BackingWidth;
+    gint32   m_BackingHeight;
+    gint32   m_Samples;
+    guint32  m_DefaultFramebuffer;
+    guint32  m_ColorRenderbuffer;
+    guint32  m_DepthRenderbuffer;
+    guint32  m_SaaFramebuffer;
+    guint32  m_SaaRenderbuffer;
+#endif
 #endif
 };
 

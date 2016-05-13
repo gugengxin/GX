@@ -1,4 +1,4 @@
-﻿//
+//
 //  GWindow.cpp
 //  GX
 //
@@ -78,6 +78,230 @@ LRESULT CALLBACK GWindow::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 	return ::DefWindowProc(hWnd, message, wParam, lParam);
 }
 
+#elif defined(GX_OS_APPLE)
+#if defined(GX_OS_IPHONE)
+#import <UIKit/UIKit.h>
+#elif defined(GX_OS_MACOSX)
+#import <Cocoa/Cocoa.h>
+#endif
+
+class _WindowBridge {
+public:
+    inline GWindow* getTarget() {
+        return m_Target;
+    }
+    inline void setTarget(GWindow* v) {
+        m_Target=v;
+    }
+    
+private:
+    GWindow* m_Target;
+};
+
+@interface _OGLView :
+#if defined(GX_OS_IPHONE)
+UIView
+#elif defined(GX_OS_MACOSX)
+NSView
+#endif
+{
+    _WindowBridge _bridge;
+}
+
+@end
+
+@implementation _OGLView
+
+- (id)initWithDelegate:(GWindow*)dge frame:(CGRect)rc
+{
+    self = [super initWithFrame:rc];
+    if (self) {
+        _bridge.setTarget(dge);
+#if defined(GX_OS_IPHONE)
+        CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+        self.contentScaleFactor=[UIScreen mainScreen].scale;
+        eaglLayer.opaque = YES;
+        eaglLayer.drawableProperties = @{
+        kEAGLDrawablePropertyRetainedBacking: [NSNumber numberWithBool:NO],
+        kEAGLDrawablePropertyColorFormat: kEAGLColorFormatRGBA8
+        };
+#if defined(GX_OS_IOS)
+        self.multipleTouchEnabled=YES;
+#endif
+        
+#elif defined(GX_OS_MACOSX)
+        self.autoresizingMask=NSViewWidthSizable|NSViewHeightSizable;
+        
+        [self setWantsBestResolutionOpenGLSurface:YES];
+        
+        NSNotificationCenter* nc=[NSNotificationCenter defaultCenter];
+        [nc addObserver:self selector:@selector(noteWindowWillClose:) name:NSWindowWillCloseNotification object:nil];
+#endif
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+#if defined(GX_OS_MACOSX)
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+#endif
+    [super dealloc];
+}
+
+#if defined(GX_OS_IPHONE)
++ (Class)layerClass
+{
+    return [CAEAGLLayer class];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    
+}
+
+#elif defined(GX_OS_MACOSX)
+
+- (float)scale
+{
+    return (float)[self.window backingScaleFactor];
+}
+
+- (void)resizeWithOldSuperviewSize:(NSSize)oldSize
+{
+    [super resizeWithOldSuperviewSize:oldSize];
+}
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
+
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+}
+
+- (void)otherMouseDown:(NSEvent *)theEvent
+{
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent
+{
+}
+
+- (void)rightMouseDragged:(NSEvent *)theEvent
+{
+}
+
+- (void)otherMouseDragged:(NSEvent *)theEvent
+{
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+}
+
+- (void)rightMouseUp:(NSEvent *)theEvent
+{
+}
+
+- (void)otherMouseUp:(NSEvent *)theEvent
+{
+}
+
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+}
+
+- (void)scrollWheel:(NSEvent *)theEvent
+{
+}
+
+- (void)keyDown:(NSEvent *)theEvent
+{
+}
+- (void)keyUp:(NSEvent *)theEvent
+{
+}
+
+- (void)noteWindowWillClose:(NSNotification*)note
+{
+    NSWindow* win;
+    if ([_window isKindOfClass:[NSWindow class]]) {
+        win=_window;
+    }
+    else {
+        win=[(NSView*)_window window];
+    }
+    if (note.object==win) {
+        
+    }
+}
+
+#endif
+
+@end
+
+
+@interface _OGLViewController :
+#if defined(GX_OS_IPHONE)
+UIViewController
+#elif defined(GX_OS_MACOSX)
+NSViewController
+#endif
+{
+    _WindowBridge _bridge;
+}
+
+
+@end
+
+@implementation _OGLViewController
+
+- (id)initWithDelegate:(GWindow*)dge view:(_OGLView*)vw
+{
+    self=[super initWithNibName:nil bundle:nil];
+    if (self) {
+        _bridge.setTarget(dge);
+        self.view=vw;
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+ 
+    [super dealloc];
+}
+
+- (void)loadView
+{
+}
+
+@end
+
+
+
 #endif
 
 
@@ -104,12 +328,19 @@ GWindow::GWindow()
 	m_WndProcP=NULL;
 #else
 	m_OSWin = NULL;
+#if defined(GX_OS_APPLE)
+    m_OSWinCtrler=NULL;
+#endif
 #endif
 }	
 
 GWindow::~GWindow()
 {
 	m_Context.destroy();
+#if defined(GX_OS_APPLE)
+    [GX_CAST_R(id, m_OSWin) release];
+    [GX_CAST_R(id, m_OSWinCtrler) release];
+#endif
 }
 
 bool GWindow::create(void* osWinP)
@@ -153,9 +384,45 @@ bool GWindow::create(void* osWinP)
 
 	::ShowWindow(m_OSWin.getHWND(), SW_SHOW);
 	UpdateWindow(m_OSWin.getHWND());
+    
+#elif defined(GX_OS_APPLE)
+    
+#if defined(GX_OS_IPHONE)
+    m_OSWin=[[_OGLView alloc] initWithDelegate:this frame:GX_CAST_R(UIView*, osWinP).bounds];
+    
+#elif defined(GX_OS_MACOSX)
+    if ([GX_CAST_R(id, osWinP) isKindOfClass:[NSWindow class]]) {
+        m_OSWin=[[_OGLView alloc] initWithDelegate:this frame:GX_CAST_R(NSWindow*, osWinP).contentView.bounds];
+    }
+    else {
+        m_OSWin=[[_OGLView alloc] initWithDelegate:this frame:GX_CAST_R(NSView*, osWinP).bounds];
+    }
 #endif
+    
+    m_OSWinCtrler=[[_OGLViewController alloc] initWithDelegate:this view:GX_CAST_R(_OGLView*, m_OSWin)];
+    
+#endif
+    
+    
 
 	m_Context.create(this);
+    
+#if defined(GX_OS_IPHONE)
+    if ([GX_CAST_R(UIView*, osWinP) isKindOfClass:[UIWindow class]]) {
+        GX_CAST_R(UIWindow*, osWinP).rootViewController=GX_CAST_R(UIViewController*, m_OSWinCtrler);
+    }
+    else {
+        [GX_CAST_R(UIView*, osWinP) addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
+    }
+    
+#elif defined(GX_OS_MACOSX)
+    if ([GX_CAST_R(id, osWinP) isKindOfClass:[NSWindow class]]) {
+        [GX_CAST_R(NSWindow*, osWinP).contentView addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
+    }
+    else {
+        [GX_CAST_R(NSView*, osWinP) addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
+    }
+#endif
 
 	return true;
 }

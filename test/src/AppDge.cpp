@@ -16,9 +16,9 @@ AppDge::~AppDge()
 {
 }
 
-void AppDge::AppDidFinishLaunching(GApplication* application, GApplication::InitData* initData)
+GWindow* AppDge::appCanCreateWindow(GApplication* application,void* osWindow)
 {
 	GWindow* win = GWindow::autoAlloc();
-	win->create(initData->getOSWindow());
-	application->addWindow(win);
+	win->create(osWindow);
+    return win;
 }

@@ -42,7 +42,6 @@
     NSLog(@"%s",__FUNCTION__);
     _window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [_window makeKeyAndVisible];
-    _window.rootViewController=[[[UIViewController alloc] init] autorelease];
     
     GApplication::InitData initData(_window);
     GApplication::main(AppDge::shared(),&initData);

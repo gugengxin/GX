@@ -84,10 +84,12 @@ private:
 	void eventStop();
 	void eventDestroy();
 
-	void eventCanCreateWindow(void* osWindow);
+	void setCanCreateWindow(void* osWindow);
 
 public:
-
+    GWindow* firstWindow() {
+        return m_Windows.first();
+    }
 	gint getWindowCount() {
 		return m_Windows.getCount();
 	}
@@ -105,7 +107,7 @@ private:
 	InitData m_InitData;
     
 #if defined(GX_OS_APPLE)
-    friend class _AppHelperBridge;
+    friend class _AppBridge;
     void* m_Timer;
 #elif defined(GX_OS_WINDOWS)
 	static LRESULT CALLBACK winMsgWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

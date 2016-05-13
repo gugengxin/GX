@@ -42,6 +42,9 @@ namespace GX
 #elif defined(GX_OS_IPHONE)
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGLES/ES2/glext.h>
+#elif defined(GX_OS_MACOSX)
+#import <OpenGL/gl.h>
+#import <OpenGL/glu.h>
 #endif
 
 

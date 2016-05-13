@@ -58,7 +58,7 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_mainWindowHasCreated
     static bool first=true;
     if(first) {
         first=false;
-        GApplication::shared()->eventCanCreateWindow(surface);
+        GApplication::shared()->setCanCreateWindow(surface);
     }
     else {
 

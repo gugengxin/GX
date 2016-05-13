@@ -27,10 +27,10 @@
 
 #if defined(GX_OS_APPLE)
 
-class _AppHelperBridge {
+class _AppBridge {
 public:
-    _AppHelperBridge(){}
-    ~_AppHelperBridge(){}
+    _AppBridge(){}
+    ~_AppBridge(){}
     inline void SetTarget(GApplication* v) {
         m_Target=v;
     }
@@ -60,7 +60,7 @@ private:
 };
 
 @interface _AppHelper : NSObject {
-    _AppHelperBridge _delegate;
+    _AppBridge _bridge;
 }
 #if defined(GX_OS_IPHONE)
 @property (nonatomic,retain) CADisplayLink* displayTimer;
@@ -77,7 +77,7 @@ private:
 {
     self=[super init];
     if (self) {
-        _delegate.SetTarget(dge);
+        _bridge.SetTarget(dge);
         
 #if defined(GX_OS_IPHONE)
         NSNotificationCenter* nc=[NSNotificationCenter defaultCenter];
@@ -144,7 +144,7 @@ private:
         dispatch_source_set_timer(_displayTimer, DISPATCH_TIME_NOW, (1.0/60.0) * NSEC_PER_SEC, 0);
         dispatch_source_set_event_handler(_displayTimer, ^{
             dispatch_async(dispatch_get_main_queue(), ^{
-                _delegate.AppIdle();
+                _bridge.AppIdle();
             });
         });
         dispatch_resume(_displayTimer);
@@ -169,35 +169,35 @@ private:
 
 - (void)displayTimerFun:(id)sender
 {
-    _delegate.AppIdle();
+    _bridge.AppIdle();
 }
 
 - (void)noteAppDidBecomeActive:(NSNotification*)note
 {
-    _delegate.AppDidBecomeActive();
+    _bridge.AppDidBecomeActive();
 }
 - (void)noteAppWillResignActive:(NSNotification*)note
 {
-    _delegate.AppWillResignActive();
+    _bridge.AppWillResignActive();
 }
 - (void)noteAppDidEnterBackground:(NSNotification*)note
 {
-    _delegate.AppDidEnterBackground();
+    _bridge.AppDidEnterBackground();
 }
 - (void)noteAppWillEnterForeground:(NSNotification*)note
 {
-    _delegate.AppWillEnterForeground();
+    _bridge.AppWillEnterForeground();
 }
 - (void)noteAppDidReceiveMemoryWarning:(NSNotification*)note
 {
-    _delegate.AppDidReceiveMemoryWarning();
+    _bridge.AppDidReceiveMemoryWarning();
 }
 
 #endif
 
 - (void)noteAppWillTerminate:(NSNotification*)note
 {
-    _delegate.AppWillTerminate();
+    _bridge.AppWillTerminate();
 }
 
 @end
@@ -272,8 +272,12 @@ void GApplication::main(Delegate* dge, InitData* initData)
 
 #if defined(GX_OS_APPLE)
     app->eventStart();
+#if defined(GX_OS_MACOSX)
+    app->eventResume();
+#endif
 #elif defined(GX_OS_WINDOWS)
 	app->eventStart();
+    app->eventResume();
 #elif defined(GX_OS_ANDROID)
 	switch (GX::JavaGetLaunchType()) {
 		case GX::JavaLaunchTypeActivity: {
@@ -350,7 +354,7 @@ void GApplication::eventResume()
 	m_Delegate->appResume(this);
 
 #if defined(GX_OS_APPLE) || defined(GX_OS_WINDOWS)
-	m_Delegate->appCanCreateWindow(this,m_InitData.getOSWindow());
+    setCanCreateWindow(m_InitData.getOSWindow());
 #endif
 }
 void GApplication::eventPause()
@@ -373,14 +377,13 @@ void GApplication::eventDestroy()
 }
 
 
-void GApplication::eventCanCreateWindow(void* osWindow)
+void GApplication::setCanCreateWindow(void* osWindow)
 {
 	GWindow* win=m_Delegate->appCanCreateWindow(this,osWindow);
 	if(win) {
 		addWindow(win);
 	}
 }
-
 
 void GApplication::addWindow(GWindow* win)
 {

@@ -22,6 +22,18 @@ public:
 	inline T* get(gint index) {
 		return GX_CAST_R(T**, m_Data.getPtr())[index];
 	}
+    inline T* first() {
+        if (m_Data.getBytes()>0) {
+            return GX_CAST_R(T**, m_Data.getPtr())[0];
+        }
+        return NULL;
+    }
+    inline T* last() {
+        if (m_Data.getBytes()>0) {
+            return GX_CAST_R(T**, m_Data.getPtr())[(m_Data.getBytes() / sizeof(T*))-1];
+        }
+        return NULL;
+    }
 
 	bool add(T* v) {
 		gint dc = getCount();

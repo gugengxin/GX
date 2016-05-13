@@ -50,6 +50,9 @@ private:
 	WNDPROC m_WndProcP;
 #else
 	void* m_OSWin;
+#if defined(GX_OS_APPLE)
+    void* m_OSWinCtrler;
+#endif
 #endif
 private:
 #if defined(GX_OS_WINDOWS)
