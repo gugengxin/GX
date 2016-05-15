@@ -278,7 +278,7 @@ bool GOGLContext::create(GWindow* win)
     }
     
     m_Context=[[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:shared];
-    GX_CAST_R(NSOpenGLContext*, m_Context).view=GX_CAST_R(NSView*, m_Window->getOSWindow());
+    [GX_CAST_R(NSOpenGLContext*, m_Context) setView:GX_CAST_R(NSView*, m_Window->getOSWindow())];
 #endif
     
 	return true;

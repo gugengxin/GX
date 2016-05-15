@@ -385,44 +385,29 @@ bool GWindow::create(void* osWinP)
 	::ShowWindow(m_OSWin.getHWND(), SW_SHOW);
 	UpdateWindow(m_OSWin.getHWND());
     
-#elif defined(GX_OS_APPLE)
-    
-#if defined(GX_OS_IPHONE)
+#elif defined(GX_OS_IPHONE)
     m_OSWin=[[_OGLView alloc] initWithDelegate:this frame:GX_CAST_R(UIView*, osWinP).bounds];
-    
-#elif defined(GX_OS_MACOSX)
-    if ([GX_CAST_R(id, osWinP) isKindOfClass:[NSWindow class]]) {
-        m_OSWin=[[_OGLView alloc] initWithDelegate:this frame:GX_CAST_R(NSWindow*, osWinP).contentView.bounds];
-    }
-    else {
-        m_OSWin=[[_OGLView alloc] initWithDelegate:this frame:GX_CAST_R(NSView*, osWinP).bounds];
-    }
-#endif
-    
     m_OSWinCtrler=[[_OGLViewController alloc] initWithDelegate:this view:GX_CAST_R(_OGLView*, m_OSWin)];
-    
-#endif
-    
-    
-
-	m_Context.create(this);
-    
-#if defined(GX_OS_IPHONE)
     if ([GX_CAST_R(UIView*, osWinP) isKindOfClass:[UIWindow class]]) {
         GX_CAST_R(UIWindow*, osWinP).rootViewController=GX_CAST_R(UIViewController*, m_OSWinCtrler);
     }
     else {
         [GX_CAST_R(UIView*, osWinP) addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
     }
-    
 #elif defined(GX_OS_MACOSX)
     if ([GX_CAST_R(id, osWinP) isKindOfClass:[NSWindow class]]) {
+        m_OSWin=[[_OGLView alloc] initWithDelegate:this frame:GX_CAST_R(NSWindow*, osWinP).contentView.bounds];
         [GX_CAST_R(NSWindow*, osWinP).contentView addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
     }
     else {
+        m_OSWin=[[_OGLView alloc] initWithDelegate:this frame:GX_CAST_R(NSView*, osWinP).bounds];
         [GX_CAST_R(NSView*, osWinP) addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
     }
+    m_OSWinCtrler=[[_OGLViewController alloc] initWithDelegate:this view:GX_CAST_R(_OGLView*, m_OSWin)];
+    
 #endif
+
+	m_Context.create(this);
 
 	return true;
 }
