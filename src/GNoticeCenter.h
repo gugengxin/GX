@@ -3,8 +3,8 @@
 #include "GXPrefix.h"
 #include "GMap.h"
 #include "GArray.h"
-#include "GObserver.h"
 #include "GNotice.h"
+#include "GAction.h"
 
 
 class GNCObserver : public GObject {
@@ -19,22 +19,22 @@ public:
 		GO::release(m_Key);
 		m_Key = v;
 	}
-	void add(GObserver* obs) {
+	void add(GAction* obs) {
 		m_Observers.add(obs);
 	}
 	gint getObsCount() {
 		return m_Observers.getCount();
 	}
-	GObserver* getObs(gint idx) {
+	GAction* getObs(gint idx) {
 		return m_Observers.get(idx);
 	}
-
+	void removeObs(GAction* obs);
 	void removeObs(GObject* target, GX::Selector sel);
 	void removeObs(GObject* target);
 	void removeObs(GX::Callback cbk);
 private:
 	GObject* m_Key;
-	GPDArray<GObserver*> m_Observers;
+	GArray<GAction> m_Observers;
 };
 
 
@@ -47,9 +47,8 @@ private:
 	GNoticeCenter();
 	~GNoticeCenter();
 public:
-private:
-	void addObserver(GObject* key,GObserver* obs);
-public:
+	void addObserver(GObject* key,GAction* obs);
+	void removeObserver(GAction* obs);
 	void removeObserver(GObject* target,GX::Selector sel);
 	void removeObserver(GObject* target);
 	void removeObserver(GX::Callback cbk);

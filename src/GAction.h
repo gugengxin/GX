@@ -4,14 +4,8 @@
 #include "GObject.h"
 
 
-class GAction
-{
-	friend class GThread;
-	friend class _HelperCreateData;
-	friend class GRunLoop;
-private:
-	GAction();
-	~GAction();
+class GAction : public GObject {
+    GX_OBJECT(GAction);
 public:
 	inline GObject* getTarget() {
 		return m_Target;
@@ -29,6 +23,7 @@ public:
 	void set(GObject* target, GX::Selector sel, GObject* obj);
 	void set(GX::Callback cbk, GObject* obj);
 	void run();
+    void run(GObject* obj);
 private:
 	GObject* m_Target;
 	union {

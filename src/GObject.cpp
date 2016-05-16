@@ -11,6 +11,13 @@
 #include <pthread.h>
 
 
+static pthread_mutex_t g_Mutex;
+static pthread_once_t key_once=PTHREAD_ONCE_INIT;
+static void keyCreate()
+{
+    pthread_mutex_init(&g_Mutex, NULL);
+}
+
 typedef struct __ObjExData {
 	gint32 refCount;
 	//pthread_mutex_t mutex;
@@ -19,40 +26,40 @@ typedef struct __ObjExData {
 static inline void _ObjExDataInit(_ObjExData* om)
 {
 	om->refCount = 1;
-	//pthread_mutex_init(&om->mutex, NULL);
 }
 
 static inline void _ObjExDataFina(_ObjExData* om)
 {
-	//pthread_mutex_destroy(&om->mutex);
 }
-
-//static inline void _ObjMutexLock(GObject* obj)
-//{
-//	pthread_mutex_lock(&(GX_CAST_R(_ObjExData*, obj)-1)->mutex);
-//}
-//static inline void _ObjMutexUnlock(GObject* obj)
-//{
-//	pthread_mutex_unlock(&(GX_CAST_R(_ObjExData*, obj) - 1)->mutex);
-//}
 
 
 
 void GObject::retain(GObject* obj)
 {
 	if (obj) {
-		//_ObjMutexLock(obj);
 		__ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
+        
+        pthread_once(&key_once,keyCreate);
+        pthread_mutex_lock(&g_Mutex);
+        
 		++p->refCount;
-		//_ObjMutexUnlock(obj);
+        
+        pthread_mutex_unlock(&g_Mutex);
 	}
 }
 void GObject::release(GObject* obj)
 {
 	if (obj) {
 		__ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
-		--p->refCount;
-		if (p->refCount <= 0) {
+        
+        pthread_once(&key_once,keyCreate);
+        pthread_mutex_lock(&g_Mutex);
+		
+        --p->refCount;
+		
+        pthread_mutex_unlock(&g_Mutex);
+        
+        if (p->refCount <= 0) {
 			delete obj;
 		}
 	}

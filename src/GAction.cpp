@@ -1,5 +1,9 @@
 ﻿#include "GAction.h"
 
+
+
+GX_OBJECT_IMPLEMENT(GAction, GObject);
+
 GAction::GAction()
 {
 	m_Target = NULL;
@@ -10,14 +14,11 @@ GAction::GAction()
 
 GAction::~GAction()
 {
-	GO::release(m_Target);
 	GO::release(m_Obj);
 }
 
 void GAction::set(GObject* target, GX::Selector sel, GObject* obj)
 {
-	GO::retain(target);
-	GO::release(m_Target);
 	m_Target = target;
 	m_Action.sel = sel;
 	GO::retain(obj);
@@ -26,7 +27,6 @@ void GAction::set(GObject* target, GX::Selector sel, GObject* obj)
 }
 void GAction::set(GX::Callback cbk, GObject* obj)
 {
-	GO::release(m_Target);
 	m_Target = NULL;
 	m_Action.cbk = cbk;
 	GO::retain(obj);
@@ -41,4 +41,14 @@ void GAction::run()
 	else {
 		m_Action.cbk(m_Obj);
 	}
+}
+
+void GAction::run(GObject* obj)
+{
+    if (m_Target) {
+        (m_Target->*m_Action.sel)(obj);
+    }
+    else {
+        m_Action.cbk(obj);
+    }
 }

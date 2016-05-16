@@ -47,15 +47,10 @@ public:
     static GThread* current();
 	static void sleep(gint ms);
 
-private:
 	static void detch(GAction* action);
-public:
 	static void detch(GObject* target, GX::Selector selector, GObject* obj);
 	static void detch(GX::Callback cbk, GObject* obj);
-
-private:
 	static Holder* create(GAction* action, bool waitRun);
-public:
 	static Holder* create(GObject* target, GX::Selector selector, GObject* obj,bool waitRun);
 	static Holder* create(GX::Callback cbk, GObject* obj, bool waitRun);
 
