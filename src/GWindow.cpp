@@ -310,6 +310,7 @@ NSViewController
 
 void GWindow::androidDestory()
 {
+	//TODO 考虑重建
 	m_Context.destroy();
 	if(m_OSWin) {
 		ANativeWindow_release(GX_CAST_R(ANativeWindow*,m_OSWin));

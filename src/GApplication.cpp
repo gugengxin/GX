@@ -326,7 +326,6 @@ void GApplication::idle()
 	const gchar* str = "中文";
 	GX_LOG_W(PrioDEBUG, "GApplication", str);
 	//*/
-	GX_LOG_W(PrioDEBUG,"GWindow","idle");
 	for (gint i = 0; i < m_Windows.getCount(); i++) {
 		GWindow* win = m_Windows.get(i);
 		win->idle();
