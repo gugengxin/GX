@@ -8,6 +8,9 @@
 #include "GXPrefix.h"
 #if defined(GX_OPENGL)
 #include "GXOpenGL.h"
+#if defined(GX_OS_ANDROID)
+#include <EGL/egl.h>
+#endif
 
 class GWindow;
 
@@ -45,6 +48,9 @@ private:
     guint32  m_SaaFramebuffer;
     guint32  m_SaaRenderbuffer;
 #endif
+#elif defined(GX_OS_ANDROID)
+	EGLSurface m_Surface;
+	EGLContext m_Context;
 #endif
 };
 

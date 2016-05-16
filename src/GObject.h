@@ -22,6 +22,7 @@ public:
 	static void retain(GObject* obj);
 	static void release(GObject* obj);
     static void autorelease(GObject* obj);
+	static gint32 refCount(GObject* obj);
 protected:
 	static void* gnew(size_t size);
 	static void gdel(void* p);
@@ -44,8 +45,8 @@ public:
     virtual guint getHash();
     virtual bool isEqual(GObject* obj);
 public:
-	void exLock();
-	void exUnlock();
+//	void exLock();
+//	void exUnlock();
 };
 
 typedef GObject GO;

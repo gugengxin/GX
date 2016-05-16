@@ -1,7 +1,5 @@
 ﻿#include "GObserver.h"
 
-GX_OBJECT_IMPLEMENT(GObserver, GObject);
-
 GObserver::GObserver()
 {
 	m_Target = NULL;

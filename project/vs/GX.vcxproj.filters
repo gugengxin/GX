@@ -99,9 +99,6 @@
     <ClCompile Include="..\..\src\GSystem.cpp">
       <Filter>src\App</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GWindow.cpp">
-      <Filter>src\App</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GJavaAPI.cpp">
       <Filter>src\Unuse</Filter>
     </ClCompile>
@@ -149,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\glew.c">
       <Filter>src\Window\glew</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GWindow.cpp">
+      <Filter>src\Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,9 +230,6 @@
     <ClInclude Include="..\..\src\GUUID.h">
       <Filter>src\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GWindow.h">
-      <Filter>src\App</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GSystem.h">
       <Filter>src\App</Filter>
     </ClInclude>
@@ -298,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GL\wglew.h">
       <Filter>src\Window\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GWindow.h">
+      <Filter>src\Window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

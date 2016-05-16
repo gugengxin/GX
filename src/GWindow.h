@@ -16,6 +16,7 @@
 #if defined(GX_OS_ANDROID)
 #include <android/native_window.h>
 #include <android/native_window_jni.h>
+#include "com_gxengine_gx_GJavaJAPI.h"
 #endif
 
 class GWindow : public GObject {
@@ -52,19 +53,25 @@ private:
 
 	void* m_OSWinP;
 #if defined(GX_OS_WINDOWS)
+	static LRESULT CALLBACK wndProcP(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
 	GX::CChildWnd m_OSWin;
 	WNDPROC m_WndProcP;
 #elif defined(GX_OS_APPLE)
     friend class _WindowBridge;
+
 	void* m_OSWin;
 	void* m_OSWinCtrler;
 #elif defined(GX_OS_ANDROID)
+	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasCreated(JNIEnv *env, jclass, jobject surface);
+	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasChanged(JNIEnv *, jclass, jobject, jint, jint);
+	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasDestroyed(JNIEnv *, jclass, jobject);
+	void androidDestory();
+	void androidRecreate(ANativeWindow* nw);
+
+    gfloat32 m_OSWinScale;
 	ANativeWindow* m_OSWin;
-#endif
-private:
-#if defined(GX_OS_WINDOWS)
-	static LRESULT CALLBACK wndProcP(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-	static LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 #endif
 };
 

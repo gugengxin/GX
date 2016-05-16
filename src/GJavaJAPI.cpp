@@ -7,7 +7,7 @@
 
 #include "GApplication.h"
 #include "GJavaAPI.h"
-#include <android/native_window_jni.h>
+#include "GLog.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -63,16 +63,29 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_mainWindowHasCreated
         ANativeWindow_release(nw);
     }
     else {
-
+        GWindow* aw=GApplication::shared()->firstWindow();
+        if(aw) {
+            ANativeWindow* nw=ANativeWindow_fromSurface(env, surface);
+            aw->androidRecreate(nw);
+            ANativeWindow_release(nw);
+        }
     }
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_mainWindowHasChanged
         (JNIEnv *, jclass, jobject, jint, jint) {
+    GWindow* aw=GApplication::shared()->firstWindow();
+    if(aw) {
+        aw->eventResize();
+    }
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_mainWindowHasDestroyed
         (JNIEnv *, jclass, jobject) {
+    GWindow* aw=GApplication::shared()->firstWindow();
+    if(aw) {
+        aw->androidDestory();
+    }
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_mainWindowOnTouchEvent

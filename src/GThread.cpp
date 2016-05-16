@@ -47,15 +47,12 @@ class _HelperCreateData
 {
 public:
 	_HelperCreateData(GAction* action, GThread::Holder* holder, GCondition* cond) {
-		GO::retain(action);
 		m_Action = action;
-		GO::retain(holder);
 		m_Holder = holder;
 		m_Cond = cond;
 	}
 	~_HelperCreateData() {
-		GO::release(m_Action);
-		GO::release(m_Holder);
+		delete m_Action;
 	}
 
 	inline void run() {
@@ -106,8 +103,6 @@ void GThread::sleep(gint ms)
 
 void GThread::detch(GAction* action)
 {
-	GO::retain(action);
-
 	pthread_t thread_id;
 	pthread_attr_t attr;
 	pthread_attr_init(&attr);
@@ -118,22 +113,20 @@ void GThread::detch(GAction* action)
 void* GThread::detchHelper(void* action)
 {
 	GX_CAST_R(GAction*, action)->run();
-	GO::release(GX_CAST_R(GAction*, action));
+	delete action;
 	return NULL;
 }
 void GThread::detch(GObject* target, GX::Selector selector, GObject* obj)
 {
-	GAction* action = GAction::alloc();
+	GAction* action = new GAction();
 	action->set(target, selector, obj);
 	detch(action);
-	GO::release(action);
 }
 void GThread::detch(GX::Callback cbk, GObject* obj)
 {
-	GAction* action = GAction::alloc();
+	GAction* action = new GAction();
 	action->set(cbk, obj);
 	detch(action);
-	GO::release(action);
 }
 
 GThread::Holder* GThread::create(GAction* action, bool waitRun)
@@ -162,18 +155,16 @@ void* GThread::createHelper(void* data)
 }
 GThread::Holder* GThread::create(GObject* target, GX::Selector selector, GObject* obj, bool waitRun)
 {
-	GAction* action = GAction::alloc();
+	GAction* action = new GAction();
 	action->set(target, selector, obj);
 	GThread::Holder* res = create(action,waitRun);
-	GO::release(action);
 	return res;
 }
 GThread::Holder* GThread::create(GX::Callback cbk, GObject* obj, bool waitRun)
 {
-	GAction* action = GAction::alloc();
+	GAction* action = new GAction();
 	action->set(cbk, obj);
 	GThread::Holder* res = create(action, waitRun);
-	GO::release(action);
 	return res;
 }
 

@@ -64,12 +64,13 @@ private:
     ~GRunLoop();
 public:
 	void run();
-    
+
+private:
 	void perform(GAction* action, gint delayMS, bool waitUntilDone);
+public:
 	void perform(GObject* target, GX::Selector selector, GObject* obj, gint delayMS, bool waitUntilDone);
 	void perform(GX::Callback cbk, GObject* obj, gint delayMS, bool waitUntilDone);
 
-	void cancel(GAction* action);
 	void cancel(GObject* target, GX::Selector selector);
 	void cancel(GObject* target);
 	void cancel(GX::Callback cbk);

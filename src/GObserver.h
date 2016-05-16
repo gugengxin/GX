@@ -5,7 +5,11 @@
 
 
 class GObserver : public GObject {
-	GX_OBJECT(GObserver);
+	friend class GNoticeCenter;
+	friend class GNCObserver;
+private:
+	GObserver();
+	~GObserver();
 public:
 	inline GObject* getTarget() {
 		return m_Target;

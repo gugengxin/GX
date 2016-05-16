@@ -1,7 +1,5 @@
 ﻿#include "GAction.h"
 
-GX_OBJECT_IMPLEMENT(GAction, GObject);
-
 GAction::GAction()
 {
 	m_Target = NULL;

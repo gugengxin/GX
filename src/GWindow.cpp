@@ -12,8 +12,6 @@
 
 #if defined(GX_OS_WINDOWS)
 
-#define M_OS_WND(p) GX_CAST_R(HWND,p)
-
 static void SetWindowToHWND(HWND hWnd, GWindow* win)
 {
 #if GX_PTR_64BIT
@@ -64,8 +62,10 @@ LRESULT CALLBACK GWindow::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 		win->m_OSWin.releaseHWND();
 	}
 	break;
-	case WM_SIZE: {
+	case WM_SIZE:
+	case WM_SIZING: {
 		//GX_LOG_W(PrioDEBUG, "GWindow", "wndProc WM_SIZE");
+		win->eventResize();
 	}
 	break;
 	case WM_PAINT: {
@@ -304,17 +304,24 @@ NSViewController
 
 @end
 
+#elif defined(GX_OS_ANDROID)
 
+#include "GJavaCAPI.h"
+
+void GWindow::androidDestory()
+{
+	m_Context.destroy();
+	if(m_OSWin) {
+		ANativeWindow_release(GX_CAST_R(ANativeWindow*,m_OSWin));
+		m_OSWin=NULL;
+	}
+}
+void GWindow::androidRecreate(ANativeWindow* nw)
+{
+	create(nw);
+}
 
 #endif
-
-
-
-
-
-
-
-
 
 
 
@@ -330,11 +337,12 @@ GWindow::GWindow()
 	m_OSWinP = NULL;
 #if defined(GX_OS_WINDOWS)
 	m_WndProcP=NULL;
-#else
+#elif defined(GX_OS_APPLE)
+	m_OSWin=NULL;
+	m_OSWinCtrler=NULL;
+#elif defined(GX_OS_ANDROID)
 	m_OSWin = NULL;
-#if defined(GX_OS_APPLE)
-    m_OSWinCtrler=NULL;
-#endif
+	m_OSWinScale=0.0f;
 #endif
 }	
 
@@ -375,20 +383,20 @@ bool GWindow::create(void* osWinP)
 	wc.lpfnWndProc = (WNDPROC)wndProc;					// WndProc处理消息
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);			// 装入鼠标指针
 
-	::GetClientRect(M_OS_WND(m_OSWinP), &rc);
+	::GetClientRect(GX_CAST_R(HWND, m_OSWinP), &rc);
 
 	dwExStyle = WS_EX_APPWINDOW;			// 扩展窗体风格
 	dwStyle = WS_CHILDWINDOW;
 
-	m_OSWin.create(wc, dwStyle, dwExStyle, rc, M_OS_WND(m_OSWinP));
+	m_OSWin.create(wc, dwStyle, dwExStyle, rc, GX_CAST_R(HWND, m_OSWinP));
 	SetWindowToHWND(m_OSWin.getHWND(),this);
 #if GX_PTR_64BIT
-	m_WndProcP = (WNDPROC)SetWindowLong(M_OS_WND(m_OSWinP), GWLP_WNDPROC, (LONG)wndProcP);
+	m_WndProcP = (WNDPROC)SetWindowLong(GX_CAST_R(HWND, m_OSWinP), GWLP_WNDPROC, (LONG)wndProcP);
 #else
-	m_WndProcP = (WNDPROC)SetWindowLong(M_OS_WND(m_OSWinP), GWL_WNDPROC, (LONG)wndProcP);
+	m_WndProcP = (WNDPROC)SetWindowLong(GX_CAST_R(HWND, m_OSWinP), GWL_WNDPROC, (LONG)wndProcP);
 #endif
-	GX_ASSERT(!GetWindowFromHWND(M_OS_WND(m_OSWinP)));
-	SetWindowToHWND(M_OS_WND(m_OSWinP), this);
+	GX_ASSERT(!GetWindowFromHWND(GX_CAST_R(HWND, m_OSWinP)));
+	SetWindowToHWND(GX_CAST_R(HWND, m_OSWinP), this);
 
 	::ShowWindow(m_OSWin.getHWND(), SW_SHOW);
 	UpdateWindow(m_OSWin.getHWND());
@@ -413,35 +421,52 @@ bool GWindow::create(void* osWinP)
     }
     m_OSWinCtrler=[[_OGLViewController alloc] initWithDelegate:this view:GX_CAST_R(_OGLView*, m_OSWin)];
 #elif defined(GX_OS_ANDROID)
-	ANativeWindow_acquire (GX_CAST_R(ANativeWindow*, osWinP));
+	ANativeWindow_acquire(GX_CAST_R(ANativeWindow*, osWinP));
 	m_OSWin=GX_CAST_R(ANativeWindow*, osWinP);
+	GJavaJNIEnvAutoPtr jniEnv;
+	m_OSWinScale=GJavaCAPI::shared()->appGetDefaultWindowScale(jniEnv.get());
 #endif
-
 	return m_Context.create(this);
 }
 
 gfloat32 GWindow::getWidth()
 {
-#if defined(GX_OS_IPHONE)
+#if defined(GX_OS_WINDOWS)
+	RECT rc;
+	::GetClientRect(m_OSWin.getHWND(), &rc);
+	return GX_CAST_S(gfloat32,rc.right - rc.left);
+#elif defined(GX_OS_IPHONE)
     return (gfloat32)GX_CAST_R(UIView*, m_OSWin).bounds.size.width;
 #elif defined(GX_OS_MACOSX)
     return (gfloat32)GX_CAST_R(NSView*, m_OSWin).bounds.size.width;
+#elif defined(GX_OS_ANDROID)
+    return ANativeWindow_getWidth(GX_CAST_R(ANativeWindow*, m_OSWin))/m_OSWinScale;
 #endif
 }
 gfloat32 GWindow::getHeight()
 {
-#if defined(GX_OS_IPHONE)
+#if defined(GX_OS_WINDOWS)
+	RECT rc;
+	::GetClientRect(m_OSWin.getHWND(), &rc);
+	return GX_CAST_S(gfloat32, rc.bottom - rc.top);
+#elif defined(GX_OS_IPHONE)
     return (gfloat32)GX_CAST_R(UIView*, m_OSWin).bounds.size.height;
 #elif defined(GX_OS_MACOSX)
     return (gfloat32)GX_CAST_R(NSView*, m_OSWin).bounds.size.height;
+#elif defined(GX_OS_ANDROID)
+	return ANativeWindow_getHeight(GX_CAST_R(ANativeWindow*, m_OSWin))/m_OSWinScale;
 #endif
 }
 gfloat32 GWindow::getScale()
 {
-#if defined(GX_OS_IPHONE)
+#if defined(GX_OS_WINDOWS)
+	return 1.0f;
+#elif defined(GX_OS_IPHONE)
     return (gfloat32)GX_CAST_R(UIView*, m_OSWin).contentScaleFactor;
 #elif defined(GX_OS_MACOSX)
     return (gfloat32)GX_CAST_R(NSView*, m_OSWin).window.backingScaleFactor;
+#elif defined(GX_OS_ANDROID)
+	return m_OSWinScale;
 #endif
 }
 
@@ -459,11 +484,8 @@ void GWindow::render()
 void GWindow::renderForce()
 {
 	m_RenderLastTime = GSystem::currentTimeMS();
-
 	m_Context.renderBegin();
-
 	this->render();
-
 	m_Context.renderEnd();
 }
 
@@ -477,7 +499,6 @@ void GWindow::renderIfNeed()
 
 void GWindow::eventResize()
 {
-    
     gfloat32 nw=getWidth();
     gfloat32 nh=getHeight();
     gfloat32 s=getScale();

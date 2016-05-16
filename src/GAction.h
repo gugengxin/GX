@@ -4,9 +4,14 @@
 #include "GObject.h"
 
 
-class GAction : public GObject
+class GAction
 {
-	GX_OBJECT(GAction);
+	friend class GThread;
+	friend class _HelperCreateData;
+	friend class GRunLoop;
+private:
+	GAction();
+	~GAction();
 public:
 	inline GObject* getTarget() {
 		return m_Target;

@@ -1,4 +1,5 @@
 ﻿#include "GSystem.h"
+#include "GLog.h"
 #if defined(GX_OS_ANDROID)
 #include "GJavaCAPI.h"
 #include "time.h"
@@ -16,7 +17,7 @@ gint64 GSystem::currentTimeMS()
 #if defined(GX_OS_ANDROID)
     struct timespec now;
     clock_gettime(CLOCK_REALTIME,&now);
-    return now.tv_sec*1000 + now.tv_nsec/1000000;
+    return GX_CAST_S(gint64,now.tv_sec)*1000LL + GX_CAST_S(gint64,now.tv_nsec)/1000000LL;
 #elif defined(GX_OS_APPLE)
     struct timeval now;
     gettimeofday(&now,NULL);
@@ -42,8 +43,8 @@ gint64 GSystem::tickCountNS()
 {
 #if defined(GX_OS_ANDROID)
     struct timespec now;
-    clock_gettime(CLOCK_REALTIME,&now);
-    return now.tv_sec*1000000000L + now.tv_nsec;
+    clock_gettime(CLOCK_MONOTONIC,&now);
+    return GX_CAST_S(gint64,now.tv_sec)*1000000000LL + GX_CAST_S(gint64,now.tv_nsec);
 #elif defined(GX_OS_APPLE)
     static double conversion = 0.0;
     if( conversion == 0.0 )

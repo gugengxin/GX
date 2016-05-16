@@ -23,13 +23,11 @@ GRunLoop::Action::Action()
 
 GRunLoop::Action::~Action()
 {
-	GO::release(m_Action);
+	delete m_Action;
 }
 
 void GRunLoop::Action::setAction(GAction* v)
 {
-	GO::retain(v);
-	GO::release(m_Action);
 	m_Action = v;
 }
 
@@ -141,34 +139,15 @@ void GRunLoop::perform(GAction* action, gint delayMS, bool waitUntilDone)
 }
 void GRunLoop::perform(GObject* target, GX::Selector selector, GObject* obj, gint delayMS, bool waitUntilDone)
 {
-	GAction* action = GAction::alloc();
+	GAction* action = new GAction;
 	action->set(target, selector, obj);
 	perform(action, delayMS, waitUntilDone);
-	GO::release(action);
 }
 void GRunLoop::perform(GX::Callback cbk, GObject* obj, gint delayMS, bool waitUntilDone)
 {
-	GAction* action = GAction::alloc();
+	GAction* action = new GAction;
 	action->set(cbk, obj);
 	perform(action, delayMS, waitUntilDone);
-	GO::release(action);
-}
-
-void GRunLoop::cancel(GAction* action)
-{
-	m_Mutex.lock();
-	for (gint i = m_ActsReady.getCount() - 1; i >= 0; --i) {
-		if (m_ActsReady.get(i)->getAction() == action) {
-			m_ActsReady.remove(i);
-		}
-	}
-	for (gint i = 0; i<m_ActsRunning.getCount(); i++) {
-		Action* act = m_ActsRunning.get(i);
-		if (m_ActsReady.get(i)->getAction() == action) {
-			act->setCancelled();
-		}
-	}
-	m_Mutex.unlock();
 }
 
 void GRunLoop::cancel(GObject* target, GX::Selector selector)

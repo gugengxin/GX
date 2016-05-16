@@ -206,6 +206,7 @@ template <typename T>
 class GPDArray : public GPieceDataArray<T, GX_PDARRAY_N> {
     friend class GAutoreleasePool;
     friend class GThread;
+	friend class GNCObserver;
     GX_OBJECT(GPDArray);
 };
 

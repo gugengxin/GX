@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by Gengxin Gu on 16/5/9.
 //
 
@@ -106,7 +106,59 @@ static NSOpenGLPixelFormat* CreatePF()
     return pixelFormat;
 }
 
-#elif defined(GXOS_ANDROID)
+#elif defined(GX_OS_ANDROID)
+
+static EGLDisplay g_Display=NULL;
+static EGLConfig g_Config=NULL;
+
+static void CreateDC()
+{
+	if(!g_Display) {
+		GApplication::Delegate* appDge=GApplication::sharedDelegate();
+		EGLint depth = (EGLint)appDge->windowsSuggestedDepth();
+		EGLint stencil = (EGLint)appDge->windowsSuggestedStencil();
+		EGLint samples = (EGLint)appDge->windowsSuggestedSamples();
+
+		{
+			EGLint attribs[] = {
+				EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+				EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+				EGL_BLUE_SIZE, 8,
+				EGL_GREEN_SIZE, 8,
+				EGL_RED_SIZE, 8,
+				EGL_ALPHA_SIZE, 8,
+				EGL_DEPTH_SIZE, depth,
+				EGL_STENCIL_SIZE, stencil,
+				EGL_SAMPLES, samples,
+				EGL_NONE };
+			EGLint numConfigs;
+			g_Display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+			eglInitialize(g_Display, 0, 0);
+
+			if(!eglChooseConfig(g_Display, attribs, &g_Config, 1, &numConfigs) || numConfigs==0) {
+				EGLint attChanged[][6] = {
+					{ EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, stencil,EGL_SAMPLES, samples, },
+					{ EGL_DEPTH_SIZE, depth,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, samples, },
+					{ EGL_DEPTH_SIZE, depth,EGL_STENCIL_SIZE, stencil,EGL_SAMPLES, 0, },
+
+					{ EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, samples, },
+					{ EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, stencil,EGL_SAMPLES, 0, },
+					{ EGL_DEPTH_SIZE, depth,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, 0, },
+
+					{ EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, 0, },
+				};
+				for(int i=0;i<sizeof(attChanged)/sizeof(attChanged[0]);++i) {
+					for(int j=0;j<6;j++) {
+						attribs[sizeof(attribs)/sizeof(attribs[0])-1-6+j]=attChanged[i][j];
+					}
+					if(eglChooseConfig(g_Display, attribs, &g_Config, 1, &numConfigs) && numConfigs) {
+						break;
+					}
+				}
+			}
+		}
+	}
+}
 
 #endif
 
@@ -131,6 +183,9 @@ GOGLContext::GOGLContext()
     m_SaaFramebuffer=0;
     m_SaaRenderbuffer=0;
 #endif
+#elif defined(GX_OS_ANDROID)
+	m_Surface=EGL_NO_SURFACE;
+	m_Context=EGL_NO_CONTEXT;
 #endif
 }
 
@@ -164,6 +219,13 @@ GOGLContext::~GOGLContext()
     [EAGLContext setCurrentContext:nil];
 #endif
     [GX_CAST_R(id, m_Context) release];
+#elif defined(GX_OS_ANDROID)
+    if(m_Context!=EGL_NO_CONTEXT) {
+		eglDestroyContext(g_Display, m_Context);
+	}
+	if(m_Surface!=EGL_NO_SURFACE) {
+		eglDestroySurface(g_Display,m_Surface);
+	}
 #endif
 }
 
@@ -244,6 +306,25 @@ bool GOGLContext::create(GWindow* win)
     m_Context=[[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:shared];
     [GX_CAST_R(NSOpenGLContext*, m_Context) setView:GX_CAST_R(NSView*, m_Window->getOSWindow())];
     [GX_CAST_R(NSOpenGLContext*, m_Context) update];
+#elif defined(GX_OS_ANDROID)
+	CreateDC();
+
+	EGLint format;
+	eglGetConfigAttrib(g_Display, g_Config, EGL_NATIVE_VISUAL_ID, &format);
+	ANativeWindow_setBuffersGeometry(win->m_OSWin, 0, 0, format);
+
+	m_Surface = eglCreateWindowSurface(g_Display, g_Config, win->m_OSWin, NULL);
+
+	const EGLint attribs_context[] = {
+			EGL_CONTEXT_CLIENT_VERSION, 2,
+			EGL_NONE
+	};
+	EGLContext shared=EGL_NO_CONTEXT;
+	GWindow *aw = GApplication::shared()->firstWindow();
+	if (aw && aw != m_Window) {
+		shared = GX_CAST_R(EGLContext, GX_CAST_R(GOGLContext * , &aw->m_Context)->m_Context);
+	}
+	m_Context=eglCreateContext(g_Display, g_Config, shared, attribs_context);
 #endif
     
 	return true;
@@ -289,13 +370,23 @@ void GOGLContext::destroy()
 #endif
     [GX_CAST_R(id, m_Context) release];
     m_Context=NULL;
+#elif defined(GX_OS_ANDROID)
+	if(m_Context!=EGL_NO_CONTEXT) {
+		eglDestroyContext(g_Display, m_Context);
+		m_Context=EGL_NO_CONTEXT;
+	}
+	if(m_Surface!=EGL_NO_SURFACE) {
+		eglDestroySurface(g_Display,m_Surface);
+		m_Surface=EGL_NO_SURFACE;
+	}
 #endif
 }
 
 
-bool GOGLContext::resize(gfloat32 width,gfloat32 height)
-{
-#if defined(GX_OS_IPHONE)
+bool GOGLContext::resize(gfloat32 width,gfloat32 height) {
+#if defined(GX_OS_WINDOWS)
+	return true;
+#elif defined(GX_OS_IPHONE)
     if(m_BackingWidth>0 && m_BackingHeight>0 && width == m_BackingWidth && height == m_BackingHeight) {
         return true;
     }
@@ -330,6 +421,12 @@ bool GOGLContext::resize(gfloat32 width,gfloat32 height)
 #elif defined(GX_OS_MACOSX)
     [GX_CAST_R(NSOpenGLContext*, m_Context) update];
     return true;
+#elif defined(GX_OS_ANDROID)
+	if (m_Surface != EGL_NO_SURFACE) {
+		eglDestroySurface(g_Display, m_Surface);
+		m_Surface = eglCreateWindowSurface(g_Display, g_Config, m_Window->m_OSWin, NULL);
+	}
+	return true;
 #endif
 }
 
@@ -341,6 +438,8 @@ void GOGLContext::makeCurrent()
     [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*,m_Context)];
 #elif defined(GX_OS_MACOSX)
     [GX_CAST_R(NSOpenGLContext*,m_Context) makeCurrentContext];
+#elif defined(GX_OS_ANDROID)
+	eglMakeCurrent(g_Display, m_Surface, m_Surface, m_Context);
 #endif
 }
 void GOGLContext::makeClear()
@@ -351,6 +450,8 @@ void GOGLContext::makeClear()
     [EAGLContext setCurrentContext:nil];
 #elif defined(GX_OS_MACOSX)
     [NSOpenGLContext clearCurrentContext];
+#elif defined(GX_OS_ANDROID)
+	eglMakeCurrent(g_Display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 #endif
 }
 
@@ -395,6 +496,8 @@ void GOGLContext::renderEnd()
     [GX_CAST_R(EAGLContext*,m_Context) presentRenderbuffer:GL_RENDERBUFFER];
 #elif defined(GX_OS_MACOSX)
     [GX_CAST_R(NSOpenGLContext*,m_Context) flushBuffer];
+#elif defined(GX_OS_ANDROID)
+	eglSwapBuffers(g_Display, m_Surface);
 #endif
 	makeClear();
 }

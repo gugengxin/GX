@@ -10,22 +10,18 @@ GNCObserver::GNCObserver()
 
 GNCObserver::~GNCObserver()
 {
+	for(gint i=0;i<m_Observers.getCount();i++) {
+		delete m_Observers.get(i);
+	}
 	GO::release(m_Key);
 }
 
-void GNCObserver::removeObs(GObserver* obs)
-{
-	for (gint i = m_Observers.getCount() - 1; i >= 0; i--) {
-		if (m_Observers.get(i) == obs) {
-			m_Observers.remove(i);
-		}
-	}
-}
 void GNCObserver::removeObs(GObject* target, GX::Selector sel)
 {
 	for (gint i = m_Observers.getCount() - 1; i >= 0; i--) {
 		GObserver* obs = m_Observers.get(i);
 		if (obs->getTarget() == target && obs->getSelector()==sel) {
+			delete obs;
 			m_Observers.remove(i);
 		}
 	}
@@ -35,6 +31,7 @@ void GNCObserver::removeObs(GObject* target)
 	for (gint i = m_Observers.getCount() - 1; i >= 0; i--) {
 		GObserver* obs = m_Observers.get(i);
 		if (obs->getTarget() == target) {
+			delete obs;
 			m_Observers.remove(i);
 		}
 	}
@@ -44,6 +41,7 @@ void GNCObserver::removeObs(GX::Callback cbk)
 	for (gint i = m_Observers.getCount() - 1; i >= 0; i--) {
 		GObserver* obs = m_Observers.get(i);
 		if (obs->getTarget() == NULL && obs->getCallback()==cbk) {
+			delete obs;
 			m_Observers.remove(i);
 		}
 	}
@@ -77,19 +75,7 @@ void GNoticeCenter::addObserver(GObject* key, GObserver* obs)
 	observer->add(obs);
 }
 
-void GNoticeCenter::removeObserver(GObserver* obs)
-{
-	GArray<GNCObserver>* arr = m_Observers.getAllObjects();
 
-	for (gint i = 0; i < arr->getCount(); i++) {
-		GNCObserver* observer = arr->get(i);
-		observer->removeObs(obs);
-		if (observer->getObsCount() <= 0) {
-			m_Observers.remove(observer->getKey());
-		}
-	}
-
-}
 void GNoticeCenter::removeObserver(GObject* target, GX::Selector sel)
 {
 	GArray<GNCObserver>* arr = m_Observers.getAllObjects();

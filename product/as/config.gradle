@@ -14,7 +14,7 @@ model {
     android {
         ndk {
             CFlags.addAll(["-DGX_OS_ANDROID", "-Wno-multichar"])    //, "-fvisibility=hidden"
-            cppFlags.addAll(["-DGX_OS_ANDROID", "-std=c++11", "-fno-rtti"]) //, "-fvisibility=hidden"
+            cppFlags.addAll(["-DGX_OS_ANDROID", "-fno-rtti"]) //, "-fvisibility=hidden", "-std=c++11"
             ldLibs.addAll(["log", "EGL", "GLESv2", "android", "OpenSLES"])
             platformVersion 9
         }

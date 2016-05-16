@@ -13,50 +13,49 @@
 
 typedef struct __ObjExData {
 	gint32 refCount;
-	pthread_mutex_t mutex;
+	//pthread_mutex_t mutex;
 } _ObjExData;
 
 static inline void _ObjExDataInit(_ObjExData* om)
 {
 	om->refCount = 1;
-	pthread_mutex_init(&om->mutex, NULL);
+	//pthread_mutex_init(&om->mutex, NULL);
 }
 
 static inline void _ObjExDataFina(_ObjExData* om)
 {
-	pthread_mutex_destroy(&om->mutex);
+	//pthread_mutex_destroy(&om->mutex);
 }
 
-static inline void _ObjMutexLock(GObject* obj)
-{
-	pthread_mutex_lock(&(GX_CAST_R(_ObjExData*, obj)-1)->mutex);
-}
-static inline void _ObjMutexUnlock(GObject* obj)
-{
-	pthread_mutex_unlock(&(GX_CAST_R(_ObjExData*, obj) - 1)->mutex);
-}
+//static inline void _ObjMutexLock(GObject* obj)
+//{
+//	pthread_mutex_lock(&(GX_CAST_R(_ObjExData*, obj)-1)->mutex);
+//}
+//static inline void _ObjMutexUnlock(GObject* obj)
+//{
+//	pthread_mutex_unlock(&(GX_CAST_R(_ObjExData*, obj) - 1)->mutex);
+//}
 
 
 
 void GObject::retain(GObject* obj)
 {
-	_ObjMutexLock(obj);
 	if (obj) {
-		++(*((GX_CAST_R(gint32*, obj) - 1)));
+		//_ObjMutexLock(obj);
+		__ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
+		++p->refCount;
+		//_ObjMutexUnlock(obj);
 	}
-	_ObjMutexUnlock(obj);
 }
 void GObject::release(GObject* obj)
 {
-	_ObjMutexLock(obj);
 	if (obj) {
-		gint32* p = GX_CAST_R(gint32*, obj) - 1;
-		--(*p);
-		if ((*p) <= 0) {
+		__ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
+		--p->refCount;
+		if (p->refCount <= 0) {
 			delete obj;
 		}
 	}
-	_ObjMutexUnlock(obj);
 }
 void GObject::autorelease(GObject* obj)
 {
@@ -64,6 +63,16 @@ void GObject::autorelease(GObject* obj)
         GThread::current()->pushARObj(obj);
     }
 }
+
+gint32 GObject::refCount(GObject* obj)
+{
+	if (obj) {
+		__ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
+		return p->refCount;
+	}
+	return 0;
+}
+
 void* GObject::gnew(size_t size)
 {
 	void* p = malloc(size + sizeof(_ObjExData));
@@ -139,14 +148,14 @@ bool GObject::isEqual(GObject* obj)
     return this==obj;
 }
 
-void GObject::exLock()
-{
-	_ObjMutexLock(this);
-}
-void GObject::exUnlock()
-{
-	_ObjMutexUnlock(this);
-}
+//void GObject::exLock()
+//{
+//	_ObjMutexLock(this);
+//}
+//void GObject::exUnlock()
+//{
+//	_ObjMutexUnlock(this);
+//}
 
 
 
