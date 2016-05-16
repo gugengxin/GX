@@ -345,7 +345,7 @@ void GApplication::eventStart()
 #if defined(GX_OS_APPLE)
     [GX_CAST_R(_AppHelper*, m_Timer) start];
 #elif defined(GX_OS_WINDOWS)
-    app->createWinMsgWndAndStart();
+    createWinMsgWndAndStart();
 #endif
 	m_Delegate->appStart(this);
 }
@@ -368,7 +368,7 @@ void GApplication::eventStop()
 #if defined(GX_OS_APPLE)
 	[GX_CAST_R(_AppHelper*, m_Timer) stop];
 #elif defined(GX_OS_WINDOWS)
-#error
+	destroyWinMsgWnd();
 #endif
 }
 void GApplication::eventDestroy()

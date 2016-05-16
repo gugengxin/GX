@@ -1,4 +1,4 @@
-//
+﻿//
 //  GWindow.cpp
 //  GX
 //
@@ -340,6 +340,10 @@ GWindow::~GWindow()
 #if defined(GX_OS_APPLE)
     [GX_CAST_R(id, m_OSWin) release];
     [GX_CAST_R(id, m_OSWinCtrler) release];
+#elif defined(GX_OS_ANDROID)
+    if(m_OSWin) {
+    	ANativeWindow_release(GX_CAST_R(ANativeWindow*,m_OSWin));
+    }
 #endif
 }
 
@@ -404,12 +408,12 @@ bool GWindow::create(void* osWinP)
         [GX_CAST_R(NSView*, osWinP) addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
     }
     m_OSWinCtrler=[[_OGLViewController alloc] initWithDelegate:this view:GX_CAST_R(_OGLView*, m_OSWin)];
-    
+#elif defined(GX_OS_ANDROID)
+	ANativeWindow_acquire (GX_CAST_R(ANativeWindow*, osWinP));
+	m_OSWin=GX_CAST_R(ANativeWindow*, osWinP);
 #endif
 
-	m_Context.create(this);
-
-	return true;
+	return m_Context.create(this);
 }
 
 

@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by Gengxin Gu on 16/5/9.
 //
 
@@ -15,9 +15,9 @@
 static void ConfigDC(HDC dc)
 {
 	GApplication::Delegate* dge = GApplication::sharedDelegate();
-	int depth = (int)dge->WindowsSuggestedDepth();
-	int stencil = (int)dge->WindowsSuggestedStencil();
-	int multiSamples = (int)dge->WindowsSuggestedSamples();
+	int depth = (int)dge->windowsSuggestedDepth();
+	int stencil = (int)dge->windowsSuggestedStencil();
+	int multiSamples = (int)dge->windowsSuggestedSamples();
 
 	int		pixelFormat;			// 保存查找匹配的结果
 	PIXELFORMATDESCRIPTOR pfd;

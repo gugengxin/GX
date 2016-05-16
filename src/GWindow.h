@@ -14,7 +14,8 @@
 #include "GContext.h"
 #include "GXCWnd.h"
 #if defined(GX_OS_ANDROID)
-
+#include <android/native_window.h>
+#include <android/native_window_jni.h>
 #endif
 
 class GWindow : public GObject {
@@ -48,11 +49,11 @@ private:
 #if defined(GX_OS_WINDOWS)
 	GX::CChildWnd m_OSWin;
 	WNDPROC m_WndProcP;
-#else
+#elif defined(GX_OS_APPLE)
 	void* m_OSWin;
-#if defined(GX_OS_APPLE)
-    void* m_OSWinCtrler;
-#endif
+	void* m_OSWinCtrler;
+#elif defined(GX_OS_ANDROID)
+	ANativeWindow* m_OSWin;
 #endif
 private:
 #if defined(GX_OS_WINDOWS)

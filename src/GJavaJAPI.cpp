@@ -54,11 +54,13 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_appLowMemory
 }
 
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_mainWindowHasCreated
-        (JNIEnv *, jclass, jobject surface) {
+        (JNIEnv *env, jclass, jobject surface) {
     static bool first=true;
     if(first) {
         first=false;
-        GApplication::shared()->setCanCreateWindow(surface);
+        ANativeWindow* nw=ANativeWindow_fromSurface(env, surface);
+        GApplication::shared()->setCanCreateWindow(nw);
+        ANativeWindow_release(nw);
     }
     else {
 
