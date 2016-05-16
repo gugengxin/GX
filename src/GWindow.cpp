@@ -94,6 +94,11 @@ public:
         m_Target=v;
     }
     
+    inline void eventResize() {
+        m_Target->eventResize();
+    }
+    
+    
 private:
     GWindow* m_Target;
 };
@@ -159,6 +164,8 @@ NSView
 {
     [super layoutSubviews];
     
+    _bridge.eventResize();
+    
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -183,14 +190,11 @@ NSView
 
 #elif defined(GX_OS_MACOSX)
 
-- (float)scale
-{
-    return (float)[self.window backingScaleFactor];
-}
-
 - (void)resizeWithOldSuperviewSize:(NSSize)oldSize
 {
     [super resizeWithOldSuperviewSize:oldSize];
+    
+    _bridge.eventResize();
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
@@ -416,6 +420,31 @@ bool GWindow::create(void* osWinP)
 	return m_Context.create(this);
 }
 
+gfloat32 GWindow::getWidth()
+{
+#if defined(GX_OS_IPHONE)
+    return (gfloat32)GX_CAST_R(UIView*, m_OSWin).bounds.size.width;
+#elif defined(GX_OS_MACOSX)
+    return (gfloat32)GX_CAST_R(NSView*, m_OSWin).bounds.size.width;
+#endif
+}
+gfloat32 GWindow::getHeight()
+{
+#if defined(GX_OS_IPHONE)
+    return (gfloat32)GX_CAST_R(UIView*, m_OSWin).bounds.size.height;
+#elif defined(GX_OS_MACOSX)
+    return (gfloat32)GX_CAST_R(NSView*, m_OSWin).bounds.size.height;
+#endif
+}
+gfloat32 GWindow::getScale()
+{
+#if defined(GX_OS_IPHONE)
+    return (gfloat32)GX_CAST_R(UIView*, m_OSWin).contentScaleFactor;
+#elif defined(GX_OS_MACOSX)
+    return (gfloat32)GX_CAST_R(NSView*, m_OSWin).window.backingScaleFactor;
+#endif
+}
+
 
 
 void GWindow::idle()
@@ -444,3 +473,15 @@ void GWindow::renderIfNeed()
 		renderForce();
 	}
 }
+
+
+void GWindow::eventResize()
+{
+    
+    gfloat32 nw=getWidth();
+    gfloat32 nh=getHeight();
+    gfloat32 s=getScale();
+    
+    m_Context.resize(nw*s, nh*s);
+}
+

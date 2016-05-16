@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Gengxin Gu on 16/5/9.
 //
 
@@ -57,40 +57,6 @@ static void ConfigDC(HDC dc)
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
 
-bool GOGLContext::resize(void* layer,gint32 width,gint32 height)
-{
-    if(m_BackingWidth>0 && m_BackingHeight>0 && width == m_BackingWidth && height == m_BackingHeight) {
-        return true;
-    }
-    [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*, m_Context)];
-    
-    glBindRenderbuffer(GL_RENDERBUFFER, m_ColorRenderbuffer);
-    [GX_CAST_R(EAGLContext*, m_Context) renderbufferStorage:GL_RENDERBUFFER fromDrawable:(id<EAGLDrawable>)layer];
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &m_BackingWidth);
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &m_BackingHeight);
-    
-    if (m_SaaFramebuffer)
-    {
-        glBindFramebuffer(GL_FRAMEBUFFER, m_SaaFramebuffer);
-        
-        glBindRenderbuffer(GL_RENDERBUFFER, m_SaaRenderbuffer);
-        glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, m_Samples, GL_RGBA8_OES, m_BackingWidth, m_BackingHeight);
-        
-        glBindRenderbuffer(GL_RENDERBUFFER, m_DepthRenderbuffer);
-        glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, m_Samples, GL_DEPTH_COMPONENT24_OES, m_BackingWidth, m_BackingHeight);
-    }
-    else {
-        glBindRenderbuffer(GL_RENDERBUFFER, m_DepthRenderbuffer);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24_OES, m_BackingWidth, m_BackingHeight);
-    }
-    
-    bool res=glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
-
-    [EAGLContext setCurrentContext:nil];
-    
-    return res;
-}
-
 #elif defined(GX_OS_MACOSX)
 #import <Cocoa/Cocoa.h>
 
@@ -104,8 +70,9 @@ static NSOpenGLPixelFormat* CreatePF()
     if (samples>0) {
         NSOpenGLPixelFormatAttribute attribs[] =
         {
-            //NSOpenGLPFAAllowOfflineRenderers,
             NSOpenGLPFAAccelerated,
+            NSOpenGLPFAClosestPolicy,
+            NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core,
             NSOpenGLPFADoubleBuffer,
             NSOpenGLPFAColorSize, 24,
             NSOpenGLPFAAlphaSize, 8,
@@ -122,15 +89,15 @@ static NSOpenGLPixelFormat* CreatePF()
     if (!pixelFormat) {
         NSOpenGLPixelFormatAttribute attribs[] =
         {
-            //NSOpenGLPFAAllowOfflineRenderers,
             NSOpenGLPFAAccelerated,
+            NSOpenGLPFAClosestPolicy,
+            NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core,
             NSOpenGLPFADoubleBuffer,
             NSOpenGLPFAColorSize, 24,
             NSOpenGLPFAAlphaSize, 8,
             NSOpenGLPFADepthSize, depth,
             NSOpenGLPFAStencilSize, stencil,
             NSOpenGLPFASampleBuffers, 0,
-            NSOpenGLPFASamples, samples,
             NSOpenGLPFANoRecovery,
             0
         };
@@ -223,9 +190,6 @@ bool GOGLContext::create(GWindow* win)
     m_Context=[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:group];
     [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*, m_Context)];
     
-    m_BackingWidth=0;
-    m_BackingHeight=0;
-    
     glGenFramebuffers(1, &m_DefaultFramebuffer);
     glGenRenderbuffers(1, &m_ColorRenderbuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, m_DefaultFramebuffer);
@@ -261,7 +225,7 @@ bool GOGLContext::create(GWindow* win)
     
     [EAGLContext setCurrentContext:nil];
     
-    resize(GX_CAST_R(UIView*, m_Window->getOSWindow()).layer, m_BackingWidth, m_BackingHeight);
+    resize(0, 0);
     
 #elif defined(GX_OS_MACOSX)
     NSOpenGLPixelFormat *pixelFormat=nil;
@@ -279,6 +243,7 @@ bool GOGLContext::create(GWindow* win)
     
     m_Context=[[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:shared];
     [GX_CAST_R(NSOpenGLContext*, m_Context) setView:GX_CAST_R(NSView*, m_Window->getOSWindow())];
+    [GX_CAST_R(NSOpenGLContext*, m_Context) update];
 #endif
     
 	return true;
@@ -324,6 +289,47 @@ void GOGLContext::destroy()
 #endif
     [GX_CAST_R(id, m_Context) release];
     m_Context=NULL;
+#endif
+}
+
+
+bool GOGLContext::resize(gfloat32 width,gfloat32 height)
+{
+#if defined(GX_OS_IPHONE)
+    if(m_BackingWidth>0 && m_BackingHeight>0 && width == m_BackingWidth && height == m_BackingHeight) {
+        return true;
+    }
+    [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*, m_Context)];
+    
+    glBindRenderbuffer(GL_RENDERBUFFER, m_ColorRenderbuffer);
+    [GX_CAST_R(EAGLContext*, m_Context) renderbufferStorage:GL_RENDERBUFFER
+                                               fromDrawable:(id<EAGLDrawable>)GX_CAST_R(UIView*, m_Window->m_OSWin).layer];
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &m_BackingWidth);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &m_BackingHeight);
+    
+    if (m_SaaFramebuffer)
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, m_SaaFramebuffer);
+        
+        glBindRenderbuffer(GL_RENDERBUFFER, m_SaaRenderbuffer);
+        glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, m_Samples, GL_RGBA8_OES, m_BackingWidth, m_BackingHeight);
+        
+        glBindRenderbuffer(GL_RENDERBUFFER, m_DepthRenderbuffer);
+        glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, m_Samples, GL_DEPTH_COMPONENT24_OES, m_BackingWidth, m_BackingHeight);
+    }
+    else {
+        glBindRenderbuffer(GL_RENDERBUFFER, m_DepthRenderbuffer);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24_OES, m_BackingWidth, m_BackingHeight);
+    }
+    
+    bool res=glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE;
+    
+    [EAGLContext setCurrentContext:nil];
+    
+    return res;
+#elif defined(GX_OS_MACOSX)
+    [GX_CAST_R(NSOpenGLContext*, m_Context) update];
+    return true;
 #endif
 }
 

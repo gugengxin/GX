@@ -32,6 +32,9 @@ public:
 #endif
 	}
 	bool create(void* osWinP);
+    gfloat32 getWidth();
+    gfloat32 getHeight();
+    gfloat32 getScale();
     
 public:
 	virtual void idle();
@@ -39,6 +42,8 @@ public:
 protected:
 	void renderForce();
 	virtual void render();
+protected:
+    void eventResize();
 
 private:
 	GContext m_Context;
@@ -50,6 +55,7 @@ private:
 	GX::CChildWnd m_OSWin;
 	WNDPROC m_WndProcP;
 #elif defined(GX_OS_APPLE)
+    friend class _WindowBridge;
 	void* m_OSWin;
 	void* m_OSWinCtrler;
 #elif defined(GX_OS_ANDROID)

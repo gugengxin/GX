@@ -17,7 +17,8 @@ protected:
     ~GOGLContext();
 public:
 	bool create(GWindow* win);
-	void destroy();
+    void destroy();
+    bool resize(gfloat32 width,gfloat32 height);
 
 	void renderBegin();
 	void renderEnd();
@@ -34,7 +35,6 @@ private:
 #elif defined(GX_OS_APPLE)
     void* m_Context;
 #if defined(GX_OS_IPHONE)
-    bool resize(void* layer,gint32 width,gint32 height);
     
     gint32   m_BackingWidth;
     gint32   m_BackingHeight;
