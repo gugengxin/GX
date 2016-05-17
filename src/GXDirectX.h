@@ -8,6 +8,14 @@
 #include "GXPrefix.h"
 #if defined(GX_DIRECTX)
 
+#include <d3d10.h>
+#pragma comment(lib, "d3d10.lib")
+
+namespace GX {
+	ID3D10Device* D3DDevice();
+}
+
+
 
 #endif
 #endif //AS_GXDIRECTX_H

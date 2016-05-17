@@ -32,49 +32,48 @@ static GWindow* GetWindowFromHWND(HWND hWnd)
 LRESULT CALLBACK GWindow::wndProcP(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	GWindow* win = GetWindowFromHWND(hWnd);
-
-	switch (message)
-	{
-	case WM_SIZE:
-	case WM_SIZING:
-	{
-		RECT rc;
-		::GetClientRect(hWnd, &rc);
-		::MoveWindow(win->m_OSWin.getHWND(), 0, 0, rc.right - rc.left, rc.bottom - rc.top, FALSE);
-		win->renderForce();
-	}
-	break;
-	default:
+	if (win) {
+		switch (message)
+		{
+		case WM_SIZE:
+		case WM_SIZING:
+		{
+			RECT rc;
+			::GetClientRect(hWnd, &rc);
+			::MoveWindow(win->m_OSWin.getHWND(), 0, 0, rc.right - rc.left, rc.bottom - rc.top, FALSE);
+			win->renderForce();
+		}
 		break;
+		default:
+			break;
+		}
 	}
-
-
 	return CallWindowProc(win->m_WndProcP, hWnd, message, wParam, lParam);
 }
 
 LRESULT CALLBACK GWindow::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	GWindow* win = GetWindowFromHWND(hWnd);
-
-	switch (message)
-	{
-	case WM_DESTROY: {
-		win->m_OSWin.releaseHWND();
+	if (win) {
+		switch (message)
+		{
+		case WM_DESTROY: {
+			win->m_OSWin.releaseHWND();
+		}
+						 break;
+		case WM_SIZE:
+		case WM_SIZING: {
+			//GX_LOG_W(PrioDEBUG, "GWindow", "wndProc WM_SIZE");
+			win->eventResize();
+		}
+						break;
+		case WM_PAINT: {
+			
+		}
+		default:
+			break;
+		}
 	}
-	break;
-	case WM_SIZE:
-	case WM_SIZING: {
-		//GX_LOG_W(PrioDEBUG, "GWindow", "wndProc WM_SIZE");
-		win->eventResize();
-	}
-	break;
-	case WM_PAINT: {
-		win->renderForce();
-	}
-	default:
-		break;
-	}
-
 	return ::DefWindowProc(hWnd, message, wParam, lParam);
 }
 

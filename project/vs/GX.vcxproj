@@ -42,7 +42,6 @@
     <ClCompile Include="..\..\src\GNoticeCenter.cpp" />
     <ClCompile Include="..\..\src\GNumber.cpp" />
     <ClCompile Include="..\..\src\GObject.cpp" />
-    <ClCompile Include="..\..\src\GObserver.cpp" />
     <ClCompile Include="..\..\src\GOGLContext.cpp" />
     <ClCompile Include="..\..\src\GOWHash.cpp" />
     <ClCompile Include="..\..\src\GPieceData.cpp" />
@@ -88,7 +87,6 @@
     <ClInclude Include="..\..\src\GNoticeCenter.h" />
     <ClInclude Include="..\..\src\GNumber.h" />
     <ClInclude Include="..\..\src\GObject.h" />
-    <ClInclude Include="..\..\src\GObserver.h" />
     <ClInclude Include="..\..\src\GOGLContext.h" />
     <ClInclude Include="..\..\src\GOWHash.h" />
     <ClInclude Include="..\..\src\GPieceData.h" />
