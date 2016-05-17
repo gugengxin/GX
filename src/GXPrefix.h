@@ -45,5 +45,9 @@
 #define GX_ASSERT(e) assert(e)
 #endif
 
+#if defined(GX_OS_WINDOWS) && GX_PTR_32BIT
+#define GX_ASM
+#endif
+
 
 #endif /* GXPrefix_h */
