@@ -18,3 +18,4 @@ test/project/vs/x64/
 test/project/vs/x86/
 GX.suo
 *.vcxproj.user
+tool/cmd/sl/project/qt/build-*
