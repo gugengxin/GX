@@ -114,6 +114,9 @@ public:
     }
     bool remove(K* key) {
         if (m_ObjCount>0) {
+			if (m_ObjCount < m_ObjArray.getCount() / 2) {
+				decreaseCapability(m_ObjArray.getCount());
+			}
             gint idx=GX_CAST_S(gint, key->getHash())%m_ObjArray.getCount();
             Node* p=m_ObjArray.get(idx);
             Node* pLast=NULL;
@@ -150,6 +153,7 @@ public:
             }
         }
         m_ObjCount=0;
+		m_ObjArray.changeCount(0);
     }
     
 	GArray<K>* getAllKeys() {
@@ -178,6 +182,83 @@ public:
 		}
 		return res;
 	}
+public:
+	class Cursor {
+		friend class GMap;
+	public:
+		Cursor() {
+			m_Index = 0;
+			m_Node = NULL;
+			m_NodeEnd = NULL;
+		}
+		~Cursor() {
+
+		}
+
+		K* getKey() {
+			return m_Node->getKey();
+		}
+		O* getObj() {
+			return m_Node->getObj();
+		}
+
+	private:
+		void setIndex(gint v) {
+			m_Index = v;
+		}
+		void setNode(Node* v) {
+			m_Node = v;
+		}
+		void setNodeEnd(Node* v) {
+			m_NodeEnd = v;
+		}
+		gint getIndex() {
+			return m_Index;
+		}
+		Node* getNode() {
+			return m_Node;
+		}
+		Node* getNodeEnd() {
+			return m_NodeEnd;
+		}
+	private:
+		gint m_Index;
+		Node* m_Node;
+		Node* m_NodeEnd;
+	};
+
+	Cursor cursor() {
+		Cursor res;
+		for (gint i = 0; i < m_ObjArray.getCount(); i++) {
+			Node* p = m_ObjArray.get(i);
+			if (p) {
+				res.setIndex(i);
+				res.setNode(p);
+			}
+		}
+		for (gint i = m_ObjArray.getCount() - 1; i >= 0; i--) {
+			Node* p = m_ObjArray.get(i);
+			if (p) {
+				while (p->getNext()) {
+					p = p->getNext();
+				}
+				res.setNodeEnd(p);
+				break;
+			}
+		}
+		return res;
+	}
+	void cursorNext(Cursor& cur) {
+		cur.setNode(cur.getNode()->getNext());
+		while (!cur.getNode()) {
+			cur.setIndex(cur.getIndex() + 1);
+			cur.setNode(m_ObjArray.get(cur.getIndex()));
+		}
+	}
+	bool cursorValid(Cursor& cur) {
+		return cur.getNode() != cur.getNodeEnd();
+	}
+
 private:
     bool increaseCapability(gint dc) {
         for (gint i=0;; i++) {
@@ -190,37 +271,59 @@ private:
             }
         }
         
-        GDArray<Node*> tempArr;
-        tempArr.add(&m_ObjArray);
-        
-        if (!m_ObjArray.changeCount(dc)) {
-            return false;
-        }
-        
-        m_ObjArray.zeroSelf();
-        
-        for (gint i=0; i<tempArr.getCount(); i++) {
-            Node* p=tempArr.get(i);
-            while(p) {
-                gint idx=GX_CAST_S(gint, p->getKey()->getHash())%dc;
-                
-                Node* pNew=m_ObjArray.get(idx);
-                if(pNew) {
-                    while (pNew->getNext()) {
-                        pNew=pNew->getNext();
-                    }
-                    pNew->setNext(p);
-                }
-                else {
-                    m_ObjArray.set(idx,p);
-                }
-                pNew=p;
-                p=p->getNext();
-                pNew->setNext(NULL);
-            }
-        }
-        return true;
+		return changeCapability(dc);
     }
+
+	bool decreaseCapability(gint dc) {
+		for (gint i = 0;; i++) {
+			if (capabilitys[i]>=dc) {
+				if (i <= 0) {
+					return false;
+				}
+				else {
+					dc = capabilitys[i - 1];
+					break;
+				}
+			}
+			else if (capabilitys[i] <= 0) {
+				return false;
+			}
+		}
+		return changeCapability(dc);
+	}
+
+	bool changeCapability(gint dc) {
+		GDArray<Node*> tempArr;
+		tempArr.add(&m_ObjArray);
+
+		if (!m_ObjArray.changeCount(dc)) {
+			return false;
+		}
+
+		m_ObjArray.zeroSelf();
+
+		for (gint i = 0; i<tempArr.getCount(); i++) {
+			Node* p = tempArr.get(i);
+			while (p) {
+				gint idx = GX_CAST_S(gint, p->getKey()->getHash()) % dc;
+
+				Node* pNew = m_ObjArray.get(idx);
+				if (pNew) {
+					while (pNew->getNext()) {
+						pNew = pNew->getNext();
+					}
+					pNew->setNext(p);
+				}
+				else {
+					m_ObjArray.set(idx, p);
+				}
+				pNew = p;
+				p = p->getNext();
+				pNew->setNext(NULL);
+			}
+		}
+		return true;
+	}
     
 private:
     GDArray<Node*>  m_ObjArray;

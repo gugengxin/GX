@@ -16,16 +16,16 @@ gxsl(GX Shading Language) 将被翻译成 glsl或hlsl
 vs {
     layout {
         high vec4 pos:POSITION;
-        medi vec2 tex:TEXCOORD0;
+        medi vec2 tex:TEXCOORD[0];
         #if MASK
-        medi vec2 texMask:TEXCOORD0;
+        medi vec2 texMask:TEXCOORD[1];
         #end
-        lowp vec4 color:COLOR0;
+        lowp vec4 color:COLOR[0];
         #if COLOR_MASK
-        lowp vec4 colorMask:COLOR0;
+        lowp vec4 colorMask:COLOR[1];
         #end
     }
-    buffer(0) {
+    buffer[0] {
         high mat4 mvpMatrix;
     }
     bridge {
@@ -39,8 +39,7 @@ vs {
         #end
     }
 
-    void main()
-    {
+    main {
         gx_Position=mvpMatrix*pos;
         v_tex=tex;
         #if MASK
@@ -54,14 +53,13 @@ vs {
 }
 
 fp {
-    buffer(0) {
+    buffer[0] {
         lowp vec4 colorMul;
     }
-    lowp tex2d(0) tex;
-    lowp tex2d(1) texMask;
+    lowp tex2d[0] tex;
+    lowp tex2d[1] texMask;
 
-    void main()
-    {
+    main {
         gx_FragColor=tex[v_tex];
         #if MASK
         gx_FragColor+=texMask[v_tex_mask];
@@ -77,6 +75,12 @@ fp {
 
 
 GCSL::GCSL(QObject *parent) : QObject(parent)
+{
+    m_Writer=NULL;
+}
+
+
+GCSL::~GCSL()
 {
 
 }
@@ -105,68 +109,142 @@ bool GCSL::compile(const QString &filePath, const QString &guessEncode, GCSLErro
     }
     if(!res) {
         if(errOut) {
-            errOut->m_Code=GCSLError::C_ReadFile;
+            errOut->setCode(GCSLError::C_ReadFile);
         }
         return false;
     }
 
-    TextInputStream semIn(&m_Text);
+    initWords();
 
-    if(!translateToTokens(semIn,errOut)) {
+    if(!translateToTokens(errOut)) {
         return false;
     }
 
-
-
-    return true;
+    GCSLTokenReader reader(&m_Tokens);
+    m_Writer=new GCSLWRoot(this);
+    return m_Writer->compile(reader,errOut);
 }
 
-static void skip_white_space(QChar& ch, GCSL::TextInputStream& sem)
+void GCSL::clean()
+{
+    delete m_Writer;
+    m_Writer=NULL;
+    for(int i=0;i<m_Tokens.length();i++) {
+        delete m_Tokens[i];
+    }
+    m_Tokens.clear();
+    for(QMap<QString,GCSLWord*>::Iterator it=m_WordMap.begin();it!=m_WordMap.end();it++) {
+        delete it.value();
+    }
+    m_WordMap.clear();
+    m_Text.clear();
+}
+
+void GCSL::initWords()
+{
+#define  M_WORD_MAP_ADD(t,s) m_WordMap.insert(QString(s),new GCSLWord(GCSLToken::t,s,this))
+
+    M_WORD_MAP_ADD(T_Semicolon     , ";"           );
+    M_WORD_MAP_ADD(T_S_Brackets_L  , "("           );
+    M_WORD_MAP_ADD(T_S_Brackets_R  , ")"           );
+    M_WORD_MAP_ADD(T_M_Brackets_L  , "["           );
+    M_WORD_MAP_ADD(T_M_Brackets_R  , "]"           );
+    M_WORD_MAP_ADD(T_B_Brackets_L  , "{"           );
+    M_WORD_MAP_ADD(T_B_Brackets_R  , "}"           );
+    M_WORD_MAP_ADD(T_Comma         , ","           );
+    M_WORD_MAP_ADD(T_Equal         , "="           );
+    M_WORD_MAP_ADD(T_EqualEqual    , "=="          );
+    M_WORD_MAP_ADD(T_Plus          , "+"           );
+    M_WORD_MAP_ADD(T_PlusPlus      , "++"          );
+    M_WORD_MAP_ADD(T_PlusEqual     , "+="          );
+    M_WORD_MAP_ADD(T_Minus         , "-"           );
+    M_WORD_MAP_ADD(T_MinusMinus    , "--"          );
+    M_WORD_MAP_ADD(T_MinusEqual    , "-="          );
+    M_WORD_MAP_ADD(T_Multiply      , "*"           );
+    M_WORD_MAP_ADD(T_MultiplyEqual , "*="          );
+    M_WORD_MAP_ADD(T_Div           , "/"           );
+    M_WORD_MAP_ADD(T_DivEqual      , "/="          );
+    M_WORD_MAP_ADD(T_Period        , "."           );
+    M_WORD_MAP_ADD(T_And           , "&&"          );
+    M_WORD_MAP_ADD(T_Or            , "||"          );
+    M_WORD_MAP_ADD(T_HT_Def        , "#def"        );
+    M_WORD_MAP_ADD(T_HT_If         , "#if"         );
+    M_WORD_MAP_ADD(T_HT_Else       , "#else"       );
+    M_WORD_MAP_ADD(T_HT_Elif       , "#elif"       );
+    M_WORD_MAP_ADD(T_HT_End        , "#end"        );
+    M_WORD_MAP_ADD(T_Vs            , "vs"          );
+    M_WORD_MAP_ADD(T_Fp            , "fp"          );
+    M_WORD_MAP_ADD(T_Main          , "main"        );
+    M_WORD_MAP_ADD(T_Lowp          , "lowp"        );
+    M_WORD_MAP_ADD(T_Medi          , "medi"        );
+    M_WORD_MAP_ADD(T_High          , "high"        );
+    M_WORD_MAP_ADD(T_Float         , "float"       );
+    M_WORD_MAP_ADD(T_Vec2          , "vec2"        );
+    M_WORD_MAP_ADD(T_Vec3          , "vec3"        );
+    M_WORD_MAP_ADD(T_Vec4          , "vec4"        );
+    M_WORD_MAP_ADD(T_Mat2          , "mat2"        );
+    M_WORD_MAP_ADD(T_Mat3          , "mat3"        );
+    M_WORD_MAP_ADD(T_Mat4          , "mat4"        );
+    M_WORD_MAP_ADD(T_Tex1d         , "tex1d"       );
+    M_WORD_MAP_ADD(T_Tex2d         , "tex2d"       );
+    M_WORD_MAP_ADD(T_Layout        , "layout"      );
+    M_WORD_MAP_ADD(T_Buffer        , "buffer"      );
+    M_WORD_MAP_ADD(T_Bridge        , "bridge"      );
+    M_WORD_MAP_ADD(T_POSITION      , "POSITION"    );
+    M_WORD_MAP_ADD(T_TEXCOORD      , "TEXCOORD"    );
+    M_WORD_MAP_ADD(T_COLOR         , "COLOR"       );
+    M_WORD_MAP_ADD(T_gx_Position   , "gx_Position" );
+    M_WORD_MAP_ADD(T_gx_FragColor  , "gx_FragColor");
+
+#undef M_WORD_MAP_ADD
+}
+
+void GCSL::skip_white_space(QChar& ch, GCSLReader& reader)
 {
     while (ch==' ' || ch=='\t' || ch=='\n' || ch=='\r') {
        if(ch=='\r') {
-           sem.wrap();
-           ch=sem.getChar();
+           reader.wrap();
+           ch=reader.getChar();
            if(ch!='\n') {
                return;
            }
        }
        else if(ch=='\n') {
-           sem.wrap();
-           ch=sem.getChar();
+           reader.wrap();
+           ch=reader.getChar();
            if(ch!='\r') {
                return;
            }
        }
-       ch=sem.getChar();
+       ch=reader.getChar();
     }
 }
 
-static void parse_comment0(QChar& ch, GCSL::TextInputStream& sem)
+void GCSL::parse_comment0(QChar& ch, GCSLReader& reader)
 {
-    ch=sem.getChar();
+    ch=reader.getChar();
     while(true) {
         while(true) {
             if(ch=='\n' || ch=='\r' || ch<=0) {
                 break;
             }
             else {
-                ch=sem.getChar();
+                ch=reader.getChar();
             }
         }
         if(ch=='\n') {
-            sem.wrap();
-            ch=sem.getChar();
+            reader.wrap();
+            ch=reader.getChar();
             if(ch=='\r') {
-                ch=sem.getChar();
+                ch=reader.getChar();
             }
             return;
         }
         else if(ch=='\r') {
-            sem.wrap();
-            ch=sem.getChar();
+            reader.wrap();
+            ch=reader.getChar();
             if(ch=='\n') {
-                ch=sem.getChar();
+                ch=reader.getChar();
             }
             return;
         }
@@ -176,36 +254,36 @@ static void parse_comment0(QChar& ch, GCSL::TextInputStream& sem)
     }
 }
 
-static void parse_comment1(QChar& ch, GCSL::TextInputStream& sem)
+void GCSL::parse_comment1(QChar& ch, GCSLReader& reader)
 {
-    ch=sem.getChar();
+    ch=reader.getChar();
     while(true) {
         while(true) {
             if(ch=='\n' || ch=='\r' || ch=='*' || ch<=0) {
                 break;
             }
             else {
-                ch=sem.getChar();
+                ch=reader.getChar();
             }
         }
         if(ch=='\n') {
-            sem.wrap();
-            ch=sem.getChar();
+            reader.wrap();
+            ch=reader.getChar();
             if(ch=='\r') {
-                ch=sem.getChar();
+                ch=reader.getChar();
             }
         }
         else if(ch=='\r') {
-            sem.wrap();
-            ch=sem.getChar();
+            reader.wrap();
+            ch=reader.getChar();
             if(ch=='\n') {
-                ch=sem.getChar();
+                ch=reader.getChar();
             }
         }
         else if(ch=='*') {
-            ch=sem.getChar();
+            ch=reader.getChar();
             if(ch=='/') {
-                ch=sem.getChar();
+                ch=reader.getChar();
                 return;
             }
         }
@@ -215,22 +293,22 @@ static void parse_comment1(QChar& ch, GCSL::TextInputStream& sem)
     }
 }
 
-static void preprocess(QChar& ch, GCSL::TextInputStream& sem)
+void GCSL::preprocess(QChar& ch, GCSLReader& reader)
 {
     while(true) {
         if(ch==' ' || ch=='\t' || ch=='\n' || ch=='\r') {
-            skip_white_space(ch,sem);
+            skip_white_space(ch,reader);
         }
         else if(ch=='/') {
-            ch=sem.getChar();
+            ch=reader.getChar();
             if(ch=='/') {
-                parse_comment0(ch,sem);
+                parse_comment0(ch,reader);
             }
             else if(ch=='*') {
-                parse_comment1(ch,sem);
+                parse_comment1(ch,reader);
             }
             else {
-                sem.ungetChar();
+                reader.ungetChar();
                 ch='/';
                 break;
             }
@@ -241,151 +319,254 @@ static void preprocess(QChar& ch, GCSL::TextInputStream& sem)
     }
 }
 
-bool GCSL::translateToTokens(GCSL::TextInputStream &sem, GCSLError *errOut)
+void GCSL::parse_ID(QChar &ch, GCSLReader &reader, QString& strOut)
 {
-    QChar ch=sem.getChar();
+    strOut.append(ch);
+    ch=reader.getChar();
+    while(ch.isLetterOrNumber() || ch=='_') {
+        strOut.append(ch);
+        ch=reader.getChar();
+    }
+}
 
-    while(true) {
-        preprocess(ch,sem);
+void GCSL::parse_number(QChar &ch, GCSLReader &reader, QString& strOut)
+{
+    strOut.append(ch);
+    ch=reader.getChar();
+    bool hasPoint=false;
+    while(ch.isNumber() || (ch=='.' && !hasPoint)) {
+        strOut.append(ch);
+        if(ch=='.') {
+            hasPoint=true;
+        }
+        ch=reader.getChar();
+    }
+}
 
-        if( ch.isLetter() ) {
+bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* errOut)
+{
+    preprocess(ch,reader);
 
+    if( ch.isLetter() || ch=='_' || ch=='#' ) {
+        QString str;
+        parse_ID(ch,reader,str);
+        GCSLWord* p=m_WordMap[str];
+        if(!p) {
+            p=new GCSLWord(GCSLToken::T_Variable,str,this);
+            m_WordMap[str]=p;
         }
-        else if (ch.isNumber()) {
+        tokenOut->setType(p->getTokenType(),str);
+        tokenOut->setRC(reader);
+    }
+    else if (ch.isNumber()) {
+        QString str;
+        parse_number(ch,reader,str);
+        if(str.contains('.')) {
+            tokenOut->setType(GCSLToken::T_Integer,str);
+        }
+        else {
+            tokenOut->setType(GCSLToken::T_Floating,str);
+        }
+        tokenOut->setRC(reader);
+    }
+    else if(ch==';') {
+        tokenOut->setType(GCSLToken::T_Semicolon,";");
+        tokenOut->setRC(reader);
 
+        ch=reader.getChar();
+    }
+    else if(ch=='(') {
+
+        tokenOut->setType(GCSLToken::T_S_Brackets_L,"(");
+        tokenOut->setRC(reader);
+
+        ch=reader.getChar();
+    }
+    else if(ch==')') {
+
+        tokenOut->setType(GCSLToken::T_S_Brackets_R,")");
+        tokenOut->setRC(reader);
+
+        ch=reader.getChar();
+    }
+    else if(ch=='[') {
+
+        tokenOut->setType(GCSLToken::T_M_Brackets_L,"[");
+        tokenOut->setRC(reader);
+
+        ch=reader.getChar();
+    }
+    else if(ch==']') {
+
+        tokenOut->setType(GCSLToken::T_M_Brackets_R,"]");
+        tokenOut->setRC(reader);
+
+        ch=reader.getChar();
+    }
+    else if(ch=='{') {
+
+        tokenOut->setType(GCSLToken::T_B_Brackets_L,"{");
+        tokenOut->setRC(reader);
+
+        ch=reader.getChar();
+    }
+    else if(ch=='}') {
+
+        tokenOut->setType(GCSLToken::T_B_Brackets_R,"}");
+        tokenOut->setRC(reader);
+
+        ch=reader.getChar();
+    }
+    else if(ch==',') {
+
+        tokenOut->setType(GCSLToken::T_Comma,",");
+        tokenOut->setRC(reader);
+
+        ch=reader.getChar();
+    }
+    else if(ch=='=') {
+        ch=reader.getChar();
+
+        if(ch=='=') {
+            tokenOut->setType(GCSLToken::T_EqualEqual,"==");
+            ch=reader.getChar();
         }
-        else if(ch==';') {
-            GCSLToken* token=new GCSLToken(this);
-            token->setType(GCSLToken::T_Semicolon);
-            m_Tokens.append(token);
-            ch=sem.getChar();
+        else {
+            tokenOut->setType(GCSLToken::T_Equal,"=");
         }
-        else if(ch=='(') {
-            GCSLToken* token=new GCSLToken(this);
-            token->setType(GCSLToken::T_S_Brackets_L);
-            m_Tokens.append(token);
-            ch=sem.getChar();
-        }
-        else if(ch==')') {
-            GCSLToken* token=new GCSLToken(this);
-            token->setType(GCSLToken::T_S_Brackets_R);
-            m_Tokens.append(token);
-            ch=sem.getChar();
-        }
-        else if(ch=='[') {
-            GCSLToken* token=new GCSLToken(this);
-            token->setType(GCSLToken::T_M_Brackets_L);
-            m_Tokens.append(token);
-            ch=sem.getChar();
-        }
-        else if(ch==']') {
-            GCSLToken* token=new GCSLToken(this);
-            token->setType(GCSLToken::T_M_Brackets_R);
-            m_Tokens.append(token);
-            ch=sem.getChar();
-        }
-        else if(ch=='{') {
-            GCSLToken* token=new GCSLToken(this);
-            token->setType(GCSLToken::T_B_Brackets_L);
-            m_Tokens.append(token);
-            ch=sem.getChar();
-        }
-        else if(ch=='}') {
-            GCSLToken* token=new GCSLToken(this);
-            token->setType(GCSLToken::T_B_Brackets_R);
-            m_Tokens.append(token);
-            ch=sem.getChar();
-        }
-        else if(ch==',') {
-            GCSLToken* token=new GCSLToken(this);
-            token->setType(GCSLToken::T_Comma);
-            m_Tokens.append(token);
-            ch=sem.getChar();
+        tokenOut->setRC(reader);
+
+    }
+    else if(ch=='+') {
+        ch=reader.getChar();
+
+        if(ch=='+') {
+            tokenOut->setType(GCSLToken::T_PlusPlus,"++");
+            ch=reader.getChar();
         }
         else if(ch=='=') {
-            ch=sem.getChar();
-            GCSLToken* token=new GCSLToken(this);
-            if(ch=='=') {
-                token->setType(GCSLToken::T_EqualEqual);
-                ch=sem.getChar();
-            }
-            else {
-                token->setType(GCSLToken::T_Equal);
-            }
-            m_Tokens.append(token);
+            tokenOut->setType(GCSLToken::T_PlusEqual,"+=");
+            ch=reader.getChar();
         }
-        else if(ch=='+') {
-            ch=sem.getChar();
-            GCSLToken* token=new GCSLToken(this);
-            if(ch=='+') {
-                token->setType(GCSLToken::T_PlusPlus);
-                ch=sem.getChar();
-            }
-            else if(ch=='=') {
-                token->setType(GCSLToken::T_PlusEqual);
-                ch=sem.getChar();
-            }
-            else {
-                token->setType(GCSLToken::T_Plus);
-            }
-            m_Tokens.append(token);
+        else {
+            tokenOut->setType(GCSLToken::T_Plus,"+");
         }
-        else if(ch=='-') {
-            ch=sem.getChar();
-            GCSLToken* token=new GCSLToken(this);
-            if(ch=='-') {
-                token->setType(GCSLToken::T_MinusMinus);
-                ch=sem.getChar();
-            }
-            else if(ch=='=') {
-                token->setType(GCSLToken::T_MinusEqual);
-                ch=sem.getChar();
-            }
-            else {
-                token->setType(GCSLToken::T_Minus);
-            }
-            m_Tokens.append(token);
+        tokenOut->setRC(reader);
+
+    }
+    else if(ch=='-') {
+        ch=reader.getChar();
+
+        if(ch=='-') {
+            tokenOut->setType(GCSLToken::T_MinusMinus,"--");
+            ch=reader.getChar();
         }
-        else if(ch=='*') {
-            ch=sem.getChar();
-            GCSLToken* token=new GCSLToken(this);
-            if(ch=='=') {
-                token->setType(GCSLToken::T_MultiplyEqual);
-                ch=sem.getChar();
-            }
-            else {
-                token->setType(GCSLToken::T_Multiply);
-            }
-            m_Tokens.append(token);
+        else if(ch=='=') {
+            tokenOut->setType(GCSLToken::T_MinusEqual,"-=");
+            ch=reader.getChar();
         }
-        else if(ch=='/') {
-            ch=sem.getChar();
-            GCSLToken* token=new GCSLToken(this);
-            if(ch=='=') {
-                token->setType(GCSLToken::T_DivEqual);
-                ch=sem.getChar();
-            }
-            else {
-                token->setType(GCSLToken::T_Div);
-            }
-            m_Tokens.append(token);
+        else {
+            tokenOut->setType(GCSLToken::T_Minus,"-");
         }
-        else if(ch=='.') {
-            GCSLToken* token=new GCSLToken(this);
-            token->setType(GCSLToken::T_Period);
-            m_Tokens.append(token);
-            ch=sem.getChar();
+        tokenOut->setRC(reader);
+
+    }
+    else if(ch=='*') {
+        ch=reader.getChar();
+
+        if(ch=='=') {
+            tokenOut->setType(GCSLToken::T_MultiplyEqual,"*=");
+            ch=reader.getChar();
         }
-        else if(ch<=0) {
-            break;
+        else {
+            tokenOut->setType(GCSLToken::T_Multiply,"*");
+        }
+        tokenOut->setRC(reader);
+
+    }
+    else if(ch=='/') {
+        ch=reader.getChar();
+
+        if(ch=='=') {
+            tokenOut->setType(GCSLToken::T_DivEqual,"/=");
+            ch=reader.getChar();
+        }
+        else {
+            tokenOut->setType(GCSLToken::T_Div,"/");
+        }
+        tokenOut->setRC(reader);
+
+    }
+    else if(ch=='.') {
+
+        tokenOut->setType(GCSLToken::T_Period,".");
+        tokenOut->setRC(reader);
+
+        ch=reader.getChar();
+    }
+    else if(ch=='&') {
+        ch=reader.getChar();
+        if(ch=='&') {
+            tokenOut->setType(GCSLToken::T_And,"&&");
+            tokenOut->setRC(reader);
         }
         else {
             if(errOut) {
-                errOut->m_Code=GCSLError::C_UnknownChar;
-                errOut->m_Row=sem.getRow();
-                errOut->m_Column=sem.getColumn();
-                errOut->m_Message=ch;
+                reader.ungetChar();
+                errOut->setCode(GCSLError::C_UnknownChar);
+                errOut->setRC(reader);
             }
+            return false;
+        }
+        ch=reader.getChar();
+    }
+    else if(ch=='|') {
+        ch=reader.getChar();
+        if(ch=='|') {
+            tokenOut->setType(GCSLToken::T_And,"&&");
+            tokenOut->setRC(reader);
+        }
+        else {
+            if(errOut) {
+                reader.ungetChar();
+                errOut->setCode(GCSLError::C_UnknownChar);
+                errOut->setRC(reader);
+            }
+            return false;
+        }
+        ch=reader.getChar();
+    }
+    else if(ch<=0) {
+        tokenOut->setType(GCSLToken::T_EOF,"");
+        tokenOut->setRC(reader);
+    }
+    else {
+        if(errOut) {
+            errOut->setCode(GCSLError::C_UnknownChar);
+            errOut->setRC(reader);
+            errOut->setMessage(ch);
+        }
+        return false;
+    }
+    return true;
+}
+
+bool GCSL::translateToTokens(GCSLError *errOut)
+{
+    GCSLReader reader(&m_Text);
+    QChar ch=reader.getChar();
+
+    while(true) {
+        GCSLToken* token=new GCSLToken(this);
+
+        if(getToken(ch,reader,token,errOut)) {
+            m_Tokens.append(token);
+            if(token->getType()==GCSLToken::T_EOF) {
+                break;
+            }
+        }
+        else {
+            delete token;
             return false;
         }
     }
