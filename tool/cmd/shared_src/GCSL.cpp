@@ -167,6 +167,7 @@ void GCSL::initWords()
     M_WORD_MAP_ADD(T_Period        , "."           );
     M_WORD_MAP_ADD(T_And           , "&&"          );
     M_WORD_MAP_ADD(T_Or            , "||"          );
+    M_WORD_MAP_ADD(T_Not           , "!"           );
     M_WORD_MAP_ADD(T_HT_Def        , "#def"        );
     M_WORD_MAP_ADD(T_HT_If         , "#if"         );
     M_WORD_MAP_ADD(T_HT_Else       , "#else"       );
@@ -495,10 +496,8 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
             tokenOut->setType(GCSLToken::T_Div,"/");
         }
         tokenOut->setRC(reader);
-
     }
     else if(ch=='.') {
-
         tokenOut->setType(GCSLToken::T_Period,".");
         tokenOut->setRC(reader);
 
@@ -523,7 +522,7 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
     else if(ch=='|') {
         ch=reader.getChar();
         if(ch=='|') {
-            tokenOut->setType(GCSLToken::T_And,"&&");
+            tokenOut->setType(GCSLToken::T_Or,"||");
             tokenOut->setRC(reader);
         }
         else {
@@ -534,6 +533,12 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
             }
             return false;
         }
+        ch=reader.getChar();
+    }
+    else if(ch=='!') {
+        tokenOut->setType(GCSLToken::T_Not,"!");
+        tokenOut->setRC(reader);
+
         ch=reader.getChar();
     }
     else if(ch<=0) {

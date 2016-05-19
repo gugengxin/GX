@@ -14,6 +14,8 @@ public:
         C_ReadFile,
         C_UnknownChar,
         C_UnsupportToken,
+        C_UnexceptToken,
+        C_NeedWarp,
     } Code;
 
 public:

@@ -10,7 +10,8 @@ class GCSLToken : public QObject
     Q_OBJECT
 public:
     typedef enum _Type {
-        T_Semicolon     , // ";"
+        T_Unknown    =-1,
+        T_Semicolon  =0 , // ";"
         T_S_Brackets_L  , // "("
         T_S_Brackets_R  , // ")"
         T_M_Brackets_L  , // "["
@@ -33,6 +34,7 @@ public:
         T_Period        , // "."
         T_And           , // "&&"
         T_Or            , // "||"
+        T_Not           , // "!"
         T_HT_Def        , // "#def"
         T_HT_If         , // "#if"
         T_HT_Else       , // "#else"
@@ -91,6 +93,10 @@ public:
     Type getType() {
         return m_Type;
     }
+    QString& getID() {
+        return m_ID;
+    }
+
     int getRow() {
         return m_Row;
     }

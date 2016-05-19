@@ -8,7 +8,6 @@
 #include "GCSLToken.h"
 #include "GCSLWord.h"
 #include "GCSLError.h"
-#include "GCSLMacro.h"
 #include "GCSLWRoot.h"
 
 class GCSL : public QObject

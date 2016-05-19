@@ -19,7 +19,7 @@ SOURCES += main.cpp \
     ../../../shared_src/GCSLReader.cpp \
     ../../../shared_src/GCSLWord.cpp \
     ../../../shared_src/GCSLTokenReader.cpp \
-    ../../../shared_src/GCSLWHTDef.cpp
+    ../../../shared_src/GCSLWHT.cpp
 
 HEADERS += \
     ../../../shared_src/GCSL.h \
@@ -31,4 +31,4 @@ HEADERS += \
     ../../../shared_src/GCSLReader.h \
     ../../../shared_src/GCSLWord.h \
     ../../../shared_src/GCSLTokenReader.h \
-    ../../../shared_src/GCSLWHTDef.h
+    ../../../shared_src/GCSLWHT.h
