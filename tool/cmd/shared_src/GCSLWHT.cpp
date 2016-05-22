@@ -1,6 +1,56 @@
 ﻿#include "GCSLWHT.h"
 
 
+int GCSLWHT::compile(GCSLWriter *parent, GCSLToken *token, GCSLTokenReader &reader, GCSLError *errOut)
+{
+    if(token->getType()==GCSLToken::T_HT_Def) {
+        GCSLWHTDef* wr=new GCSLWHTDef(parent);
+        parent->addSubWrite(wr);
+
+        if(wr->compile(reader,errOut)) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
+    }
+    else if(token->getType()==GCSLToken::T_HT_If) {
+        GCSLWHTIf* wr=new GCSLWHTIf(parent);
+        parent->addSubWrite(wr);
+
+        if(wr->compile(reader,errOut)) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
+    }
+    else if(token->getType()==GCSLToken::T_HT_Elif) {
+        GCSLWHTElif* wr=new GCSLWHTElif(parent);
+        parent->addSubWrite(wr);
+
+        if(wr->compile(reader,errOut)) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
+    }
+    else if(token->getType()==GCSLToken::T_HT_Else) {
+        GCSLWHTElse* wr=new GCSLWHTElse(parent);
+        parent->addSubWrite(wr);
+
+        if(wr->compile(reader,errOut)) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
+    }
+
+    return 0;
+}
+
 
 GCSLWHTDef::GCSLWHTDef(QObject *parent) :
     GCSLWriter(parent)
@@ -92,7 +142,7 @@ bool GCSLWHTIf::compile(GCSLTokenReader &reader, GCSLError *errOut)
             return false;
         }
     }
-
+    return true;
 }
 
 
@@ -105,3 +155,95 @@ GCSLWHTElif::GCSLWHTElif(QObject *parent) :
 {
 
 }
+
+bool GCSLWHTElif::compile(GCSLTokenReader &reader, GCSLError *errOut)
+{
+    if(reader.nextIsWarpped()) {
+        if(errOut) {
+            errOut->setCode(GCSLError::C_NotNeedWarp);
+            errOut->setRC(reader);
+        }
+        return false;
+    }
+
+    GCSLToken::Type types[]={
+        GCSLToken::T_Variable,
+        GCSLToken::T_S_Brackets_L,
+        GCSLToken::T_S_Brackets_R,
+        GCSLToken::T_And,
+        GCSLToken::T_Or,
+        GCSLToken::T_Not,
+    };
+
+    while(true) {
+
+        GCSLToken* token=reader.getToken();
+
+        int i=0;
+        for(;i<(int)(sizeof(types)/sizeof(types[0]));i++) {
+            if(token->getType()==types[i]) {
+                m_Conds.append(token);
+
+                if(reader.nextIsWarpped()) {
+                    return true;
+                }
+                break;
+            }
+        }
+
+        if(i>=(int)(sizeof(types)/sizeof(types[0]))) {
+            if(errOut) {
+                errOut->setCode(GCSLError::C_UnexceptToken);
+                errOut->setRC(token);
+            }
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+
+GCSLWHTElse::GCSLWHTElse(QObject *parent) :
+    GCSLWriter(parent)
+{
+
+}
+
+bool GCSLWHTElse::compile(GCSLTokenReader &reader, GCSLError *errOut)
+{
+    if(!reader.nextIsWarpped()) {
+        if(errOut) {
+            errOut->setCode(GCSLError::C_NeedWarp);
+            errOut->setRC(reader);
+        }
+        return false;
+    }
+    return true;
+}
+
+
+
+
+GCSLWHTEnd::GCSLWHTEnd(QObject *parent) :
+    GCSLWriter(parent)
+{
+
+}
+
+bool GCSLWHTEnd::compile(GCSLTokenReader &reader, GCSLError *errOut)
+{
+    if(!reader.nextIsWarpped()) {
+        if(errOut) {
+            errOut->setCode(GCSLError::C_NeedWarp);
+            errOut->setRC(reader);
+        }
+        return false;
+    }
+    return true;
+}
+
+
+
+

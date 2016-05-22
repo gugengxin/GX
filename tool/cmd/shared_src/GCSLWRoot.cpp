@@ -1,5 +1,7 @@
 ﻿#include "GCSLWRoot.h"
 #include "GCSLWHT.h"
+#include "GCSLWVS.h"
+#include "GCSLWFP.h"
 
 
 GCSLWRoot::GCSLWRoot(QObject* parent) :
@@ -13,31 +15,35 @@ bool GCSLWRoot::compile(GCSLTokenReader& reader,GCSLError* errOut)
     while(true) {
         GCSLToken* token=reader.getToken();
 
-        if(token->getType()==GCSLToken::T_EOF) {
-            break;
-        }
-        else if(token->getType()==GCSLToken::T_HT_Def) {
-            GCSLWHTDef* wr=new GCSLWHTDef(this);
-            this->addSubWrite(wr);
-
-            if(!wr->compile(reader,errOut)) {
-                return false;
-            }
-        }
-        else if(token->getType()==GCSLToken::T_HT_If) {
-            GCSLWHTIf* wr=new GCSLWHTIf(this);
-            this->addSubWrite(wr);
-
-            if(!wr->compile(reader,errOut)) {
-                return false;
-            }
-        }
-        else {
-            if(errOut) {
-                errOut->setCode(GCSLError::C_UnsupportToken);
-                errOut->setRC(token);
-            }
+        int htRes=GCSLWHT::compile(this,token,reader,errOut);
+        if(htRes<0) {
             return false;
+        }
+        else if(htRes==0) {
+            if(token->getType()==GCSLToken::T_EOF) {
+                break;
+            }
+            else if(token->getType()==GCSLToken::T_Vs) {
+                GCSLWVS* wr=new GCSLWVS(this);
+                this->addSubWrite(wr);
+                if(!wr->compile(reader,errOut)) {
+                    return false;
+                }
+            }
+            else if(token->getType()==GCSLToken::T_Fp) {
+                GCSLWFP* wr=new GCSLWFP(this);
+                this->addSubWrite(wr);
+                if(!wr->compile(reader,errOut)) {
+                    return false;
+                }
+            }
+            else {
+                if(errOut) {
+                    errOut->setCode(GCSLError::C_UnsupportToken);
+                    errOut->setRC(token);
+                }
+                return false;
+            }
         }
     }
     return true;

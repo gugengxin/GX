@@ -6,9 +6,7 @@
 class GCSLWHT
 {
 public:
-    static bool tokenIsHT(GCSLToken* token) {
-
-    }
+    static int compile(GCSLWriter* parent,GCSLToken* token,GCSLTokenReader& reader,GCSLError* errOut);
 };
 
 
@@ -25,8 +23,6 @@ private:
     int m_Index;
 };
 
-
-
 class GCSLWHTIf : public GCSLWriter
 {
     Q_OBJECT
@@ -37,7 +33,6 @@ public:
 private:
     QList<GCSLToken*> m_Conds;
 };
-
 
 class GCSLWHTElif : public GCSLWriter
 {
@@ -50,7 +45,23 @@ private:
     QList<GCSLToken*> m_Conds;
 };
 
+class GCSLWHTElse : public GCSLWriter
+{
+    Q_OBJECT
+public:
+    GCSLWHTElse(QObject* parent);
 
+    virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+};
+
+class GCSLWHTEnd : public GCSLWriter
+{
+    Q_OBJECT
+public:
+    GCSLWHTEnd(QObject* parent);
+
+    virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+};
 
 
 
