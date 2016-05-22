@@ -14,6 +14,12 @@ public:
     GCSLToken* getToken();
     void ungetToken();
 
+    bool currentIsWarpped();
+    bool nextIsWarpped();
+
+    int getRow();
+    int getColumn();
+
 private:
     QList<GCSLToken*>* m_Tokens;
     int m_Index;

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "GCSLReader.h"
+#include "GCSLTokenReader.h"
 #include "GCSLToken.h"
 
 class GCSLError : public QObject
@@ -16,6 +17,7 @@ public:
         C_UnsupportToken,
         C_UnexceptToken,
         C_NeedWarp,
+        C_NotNeedWarp,
     } Code;
 
 public:
@@ -35,6 +37,10 @@ public:
     void setRC(GCSLToken* token) {
         m_Row=token->getRow();
         m_Column=token->getColumn();
+    }
+    void setRC(GCSLTokenReader& reader) {
+        m_Row=reader.getRow();
+        m_Column=reader.getColumn();
     }
 
     void setMessage(QString& v) {

@@ -1,5 +1,7 @@
 ﻿#include "GCSLWHT.h"
 
+
+
 GCSLWHTDef::GCSLWHTDef(QObject *parent) :
     GCSLWriter(parent)
 {
@@ -21,16 +23,15 @@ bool GCSLWHTDef::compile(GCSLTokenReader &reader, GCSLError *errOut)
         return false;
     }
 
-    GCSLToken* token0=reader.getToken();
-    if(token0->getType()==GCSLToken::T_Integer) {
-        m_Index=token0->getID().toInt();
-        token0=reader.getToken();
+    token=reader.getToken();
+    if(token->getType()==GCSLToken::T_Integer) {
+        m_Index=token->getID().toInt();
     }
 
-    if(token0->getRow()<=token->getRow()) {
+    if( !reader.nextIsWarpped() ) {
         if(errOut) {
             errOut->setCode(GCSLError::C_NeedWarp);
-            errOut->setRC(token0);
+            errOut->setRC(token);
         }
         return false;
     }
@@ -50,41 +51,40 @@ GCSLWHTIf::GCSLWHTIf(QObject *parent) :
 
 bool GCSLWHTIf::compile(GCSLTokenReader &reader, GCSLError *errOut)
 {
-    GCSLToken* token=reader.getToken();
+    if(reader.nextIsWarpped()) {
+        if(errOut) {
+            errOut->setCode(GCSLError::C_NotNeedWarp);
+            errOut->setRC(reader);
+        }
+        return false;
+    }
 
-    int bkLv=0;
+    GCSLToken::Type types[]={
+        GCSLToken::T_Variable,
+        GCSLToken::T_S_Brackets_L,
+        GCSLToken::T_S_Brackets_R,
+        GCSLToken::T_And,
+        GCSLToken::T_Or,
+        GCSLToken::T_Not,
+    };
+
     while(true) {
-        if(token->getType()==GCSLToken::T_Variable) {
-            m_Conds.append(token);
-            token=reader.getToken();
-        }
-        else if(token->getType()==GCSLToken::T_S_Brackets_L) {
-            bkLv++;
-            m_Conds.append(token);
-            token=reader.getToken();
-        }
-        else if(token->getType()==GCSLToken::T_S_Brackets_R) {
-            bkLv--;
-            if(bkLv>=0) {
+
+        GCSLToken* token=reader.getToken();
+
+        int i=0;
+        for(;i<(int)(sizeof(types)/sizeof(types[0]));i++) {
+            if(token->getType()==types[i]) {
                 m_Conds.append(token);
-                token=reader.getToken();
 
-                if(token->getType()==GCSLToken::T_And ||
-                        token->getType()==GCSLToken::T_Or ) {
-
-
+                if(reader.nextIsWarpped()) {
+                    return true;
                 }
-
-            }
-            else {
-                if(errOut) {
-                    errOut->setCode(GCSLError::C_UnexceptToken);
-                    errOut->setRC(token);
-                }
-                return false;
+                break;
             }
         }
-        else {
+
+        if(i>=(int)(sizeof(types)/sizeof(types[0]))) {
             if(errOut) {
                 errOut->setCode(GCSLError::C_UnexceptToken);
                 errOut->setRC(token);
@@ -97,3 +97,11 @@ bool GCSLWHTIf::compile(GCSLTokenReader &reader, GCSLError *errOut)
 
 
 
+
+
+
+GCSLWHTElif::GCSLWHTElif(QObject *parent) :
+    GCSLWriter(parent)
+{
+
+}

@@ -1,6 +1,5 @@
 ﻿#include "GCSLWRoot.h"
-#include "GCSLWHTDef.h"
-#include "GCSLWHTIf.h"
+#include "GCSLWHT.h"
 
 
 GCSLWRoot::GCSLWRoot(QObject* parent) :
@@ -11,9 +10,9 @@ GCSLWRoot::GCSLWRoot(QObject* parent) :
 
 bool GCSLWRoot::compile(GCSLTokenReader& reader,GCSLError* errOut)
 {
-    GCSLToken* token=reader.getToken();
-
     while(true) {
+        GCSLToken* token=reader.getToken();
+
         if(token->getType()==GCSLToken::T_EOF) {
             break;
         }
@@ -26,7 +25,12 @@ bool GCSLWRoot::compile(GCSLTokenReader& reader,GCSLError* errOut)
             }
         }
         else if(token->getType()==GCSLToken::T_HT_If) {
+            GCSLWHTIf* wr=new GCSLWHTIf(this);
+            this->addSubWrite(wr);
 
+            if(!wr->compile(reader,errOut)) {
+                return false;
+            }
         }
         else {
             if(errOut) {
