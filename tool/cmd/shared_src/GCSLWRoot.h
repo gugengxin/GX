@@ -2,6 +2,7 @@
 #define GCSLWROOT_H
 
 #include "GCSLWriter.h"
+#include "GCSLWHT.h"
 
 class GCSLWRoot : public GCSLWriter
 {
@@ -10,8 +11,12 @@ public:
     GCSLWRoot(QObject *parent);
 
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
-private:
+    virtual bool make(QString& strWarp,QString& strOut,GCSLError* errOut);
 
+    virtual void addMainWHTDef(GCSLWHTMDef* v);
+
+private:
+    QList<GCSLWHTMDef*> m_MainWHTDefs;
 };
 
 #endif // GCSLWROOT_H

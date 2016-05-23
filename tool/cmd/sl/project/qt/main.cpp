@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     }
     //*
     argList.append("-i");
-    argList.append("C:\\Users\\gengxin.gu\\Desktop\\Test.txt");
+    argList.append("E:\\gxsl_test.txt");
     argList.append("-ie");
     argList.append("UTF-8");
     //*/

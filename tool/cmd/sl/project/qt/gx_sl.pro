@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     ../../../shared_src/GCSLWBridge.cpp \
     ../../../shared_src/GCSLWVSMain.cpp \
     ../../../shared_src/GCSLWTexture.cpp \
-    ../../../shared_src/GCSLWFPMain.cpp
+    ../../../shared_src/GCSLWFPMain.cpp \
+    ../../../shared_src/GCSLWMainLine.cpp
 
 HEADERS += \
     ../../../shared_src/GCSL.h \
@@ -47,6 +48,7 @@ HEADERS += \
     ../../../shared_src/GCSLWBridge.h \
     ../../../shared_src/GCSLWVSMain.h \
     ../../../shared_src/GCSLWTexture.h \
-    ../../../shared_src/GCSLWFPMain.h
+    ../../../shared_src/GCSLWFPMain.h \
+    ../../../shared_src/GCSLWMainLine.h
 
 INCLUDEPATH += $$PWD/../../../shared_src

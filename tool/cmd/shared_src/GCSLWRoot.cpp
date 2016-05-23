@@ -47,3 +47,18 @@ bool GCSLWRoot::compile(GCSLTokenReader& reader,GCSLError* errOut)
     }
     return true;
 }
+
+bool GCSLWRoot::make(QString &strWarp, QString &strOut, GCSLError *errOut)
+{
+   if(!GCSLWriter::make(strWarp,strOut,errOut)) {
+       return false;
+   }
+
+   return true;
+}
+
+void GCSLWRoot::addMainWHTDef(GCSLWHTMDef *v)
+{
+    v->setParent(this);
+    m_MainWHTDefs.append(v);
+}

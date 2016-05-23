@@ -9,6 +9,18 @@ public:
     static bool compile(GCSLWriter* parent,GCSLToken* token,GCSLTokenReader& reader,GCSLError* errOut);
 };
 
+class GCSLWHTMDef : public GCSLWriter
+{
+    Q_OBJECT
+public:
+    GCSLWHTMDef(QObject* parent);
+
+    virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+
+private:
+    QString m_Name;
+    int m_Index;
+};
 
 class GCSLWHTDef : public GCSLWriter
 {
@@ -20,7 +32,6 @@ public:
 
 private:
     QString m_Name;
-    int m_Index;
 };
 
 class GCSLWHTIf : public GCSLWriter

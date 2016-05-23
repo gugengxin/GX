@@ -18,6 +18,7 @@ public:
     ~GCSL();
 
     bool compile(const QString& filePath,const QString& guessEncode="UTF-8", GCSLError* errOut=NULL);
+    bool make(QString& strWarp,QString& strOut,GCSLError* errOut=NULL);
     void clean();
 private:
     void initWords();

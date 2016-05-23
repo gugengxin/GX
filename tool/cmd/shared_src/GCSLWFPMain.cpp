@@ -1,5 +1,6 @@
 ﻿#include "GCSLWFPMain.h"
 #include "GCSLWHT.h"
+#include "GCSLWMainLine.h"
 
 GCSLWFPMain::GCSLWFPMain(QObject *parent) : GCSLWriter(parent)
 {
@@ -35,15 +36,13 @@ bool GCSLWFPMain::compile(GCSLTokenReader &reader, GCSLError *errOut)
                 return false;
             }
         }
-        else if (token->isLMH()) {
-            //TODO
-        }
         else {
-            if(errOut) {
-                errOut->setCode(GCSLError::C_UnsupportToken);
-                errOut->setRC(token);
+            GCSLWMainLine* wr=new GCSLWMainLine(this);
+            this->addSubWrite(wr);
+
+            if(!wr->compile(myReader,errOut)) {
+                return false;
             }
-            return false;
         }
 
     }

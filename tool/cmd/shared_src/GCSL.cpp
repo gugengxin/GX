@@ -6,12 +6,9 @@
 /*
 gxsl(GX Shading Language) 将被翻译成 glsl或hlsl
 
-
-
-
 例子：
-#def MASK 0
-#def COLOR_MASK 1
+#mdef MASK
+#mdef COLOR_MASK
 
 vs {
     layout {
@@ -40,7 +37,8 @@ vs {
     }
 
     main {
-        gx_Position=mvpMatrix*pos;
+        vec4 abc(1.0,2.0,3.0,1.0);
+        gx_Position=mvpMatrix*pos*abc;
         v_tex=tex;
         #if MASK
         v_tex_mask=texMask;
@@ -61,9 +59,9 @@ fp {
         lowp tex2d[1] texMask;
     }
     main {
-        gx_FragColor=tex[v_tex];
+        gx_FragColor=tex2d(tex,v_tex);
         #if MASK
-        gx_FragColor+=texMask[v_tex_mask];
+        gx_FragColor+=tex2d(texMask,v_tex_mask);
         #end
         gx_FragColor+=v_color;
         #if COLOR_MASK
@@ -72,6 +70,7 @@ fp {
         gx_FragColor*=colorMul;
     }
 }
+
 //*/
 
 
@@ -126,6 +125,11 @@ bool GCSL::compile(const QString &filePath, const QString &guessEncode, GCSLErro
     return m_Writer->compile(reader,errOut);
 }
 
+bool GCSL::make(QString &strWarp, QString &strOut, GCSLError *errOut)
+{
+    return m_Writer->make(strWarp,strOut,errOut);
+}
+
 void GCSL::clean()
 {
     delete m_Writer;
@@ -170,6 +174,7 @@ void GCSL::initWords()
     M_WORD_MAP_ADD(T_Or            , "||"          );
     M_WORD_MAP_ADD(T_Not           , "!"           );
     M_WORD_MAP_ADD(T_Colon         , ":"           );
+    M_WORD_MAP_ADD(T_HT_MDef       , "#mdef"       );
     M_WORD_MAP_ADD(T_HT_Def        , "#def"        );
     M_WORD_MAP_ADD(T_HT_If         , "#if"         );
     M_WORD_MAP_ADD(T_HT_Else       , "#else"       );

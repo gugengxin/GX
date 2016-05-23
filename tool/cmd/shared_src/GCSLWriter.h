@@ -9,6 +9,7 @@
 
 
 class GCSL;
+class GCSLWHTMDef;
 
 class GCSLWriter : public QObject
 {
@@ -18,11 +19,14 @@ public:
 
 
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut)=0;
+    virtual bool make(QString& strWarp,QString& strOut,GCSLError* errOut);
 
     void addSubWrite(GCSLWriter* v) {
         v->setParent(this);
         m_SubWrites.append(v);
     }
+
+    virtual void addMainWHTDef(GCSLWHTMDef *v);
 
     int getSubWriteCount() {
         return m_SubWrites.length();
