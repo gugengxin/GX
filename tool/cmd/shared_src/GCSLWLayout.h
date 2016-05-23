@@ -1,0 +1,33 @@
+﻿#ifndef GCSLWLAYOUT_H
+#define GCSLWLAYOUT_H
+
+#include "GCSLWriter.h"
+
+class GCSLWLayout : public GCSLWriter
+{
+    Q_OBJECT
+public:
+    explicit GCSLWLayout(QObject *parent = 0);
+
+    virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+};
+
+
+class GCSLWLayoutVar : public GCSLWriter
+{
+    Q_OBJECT
+public:
+    explicit GCSLWLayoutVar(QObject *parent = 0);
+
+    virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+
+private:
+    GCSLToken*  m_LMH;
+    GCSLToken*  m_Type;
+    QString     m_Name;
+    GCSLToken*  m_SemanticName;
+    int         m_SemanticIndex;
+};
+
+
+#endif // GCSLWLAYOUT_H

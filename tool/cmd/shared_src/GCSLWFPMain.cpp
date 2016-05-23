@@ -1,15 +1,12 @@
-﻿#include "GCSLWFP.h"
+﻿#include "GCSLWFPMain.h"
 #include "GCSLWHT.h"
-#include "GCSLWBuffer.h"
-#include "GCSLWTexture.h"
-#include "GCSLWFPMain.h"
 
-GCSLWFP::GCSLWFP(QObject *parent) : GCSLWriter(parent)
+GCSLWFPMain::GCSLWFPMain(QObject *parent) : GCSLWriter(parent)
 {
 
 }
 
-bool GCSLWFP::compile(GCSLTokenReader &reader, GCSLError *errOut)
+bool GCSLWFPMain::compile(GCSLTokenReader &reader, GCSLError *errOut)
 {
     GCSLToken* token=reader.getToken();
     if(token->getType()!=GCSLToken::T_B_Brackets_L) {
@@ -33,35 +30,13 @@ bool GCSLWFP::compile(GCSLTokenReader &reader, GCSLError *errOut)
         if(!token) {
             return true;
         }
-
         if(token->isHT()) {
             if(!GCSLWHT::compile(this,token,myReader,errOut)) {
                 return false;
             }
         }
-        else if (token->getType()==GCSLToken::T_Buffer) {
-            GCSLWBuffer* wr=new GCSLWBuffer(this);
-            this->addSubWrite(wr);
-
-            if(!wr->compile(myReader,errOut)) {
-                return false;
-            }
-        }
-        else if (token->getType()==GCSLToken::T_Texture) {
-            GCSLWTexture* wr=new GCSLWTexture(this);
-            this->addSubWrite(wr);
-
-            if(!wr->compile(myReader,errOut)) {
-                return false;
-            }
-        }
-        else if (token->getType()==GCSLToken::T_Main) {
-            GCSLWFPMain* wr=new GCSLWFPMain(this);
-            this->addSubWrite(wr);
-
-            if(!wr->compile(myReader,errOut)) {
-                return false;
-            }
+        else if (token->isLMH()) {
+            //TODO
         }
         else {
             if(errOut) {

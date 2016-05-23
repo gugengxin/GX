@@ -35,6 +35,7 @@ public:
         T_And           , // "&&"
         T_Or            , // "||"
         T_Not           , // "!"
+        T_Colon         , // ":"
         T_HT_Def        , // "#def"
         T_HT_If         , // "#if"
         T_HT_Else       , // "#else"
@@ -58,6 +59,7 @@ public:
         T_Layout        , // "layout"
         T_Buffer        , // "buffer"
         T_Bridge        , // "bridge"
+        T_Texture       , // "texture"
         T_POSITION      , // "POSITION"
         T_TEXCOORD      , // "TEXCOORD"
         T_COLOR         , // "COLOR"
@@ -103,23 +105,49 @@ public:
     int getColumn() {
         return m_Column;
     }
-signals:
 
-public slots:
+    bool isHT() {
+        return m_Type==T_HT_Def     ||
+               m_Type==T_HT_If      ||
+               m_Type==T_HT_Else    ||
+               m_Type==T_HT_Elif    ||
+               m_Type==T_HT_End;
+    }
+    bool isLMH() {
+        return m_Type==T_Lowp     ||
+               m_Type==T_Medi      ||
+               m_Type==T_High;
+    }
+    bool isSemantic() {
+        return m_Type==T_POSITION     ||
+               m_Type==T_TEXCOORD      ||
+               m_Type==T_COLOR;
+    }
+    bool isSemicolon() {
+        return m_Type==T_Semicolon;
+    }
+    bool isVec() {
+        return m_Type==T_Vec2     ||
+               m_Type==T_Vec3      ||
+               m_Type==T_Vec4;
+    }
+    bool isMat() {
+        return m_Type==T_Mat2     ||
+               m_Type==T_Mat3      ||
+               m_Type==T_Mat4;
+    }
+    bool isFloat() {
+        return m_Type==T_Float;
+    }
+    bool isTex() {
+        return m_Type==T_Tex1d || m_Type==T_Tex2d;
+    }
 
 private:
     Type    m_Type;
     QString m_ID;
     int     m_Row;
     int     m_Column;
-};
-
-class GCSLTokenList : public QObject, public QList<GCSLToken *>
-{
-    Q_OBJECT
-public:
-
-
 };
 
 #endif // GCSLTOKEN_H

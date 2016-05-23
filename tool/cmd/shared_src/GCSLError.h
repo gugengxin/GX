@@ -18,6 +18,8 @@ public:
         C_UnexceptToken,
         C_NeedWarp,
         C_NotNeedWarp,
+        C_UnexceptEOF,
+        C_NeedSemicolon,
     } Code;
 
 public:
@@ -48,6 +50,17 @@ public:
     }
     void setMessage(QChar& ch) {
         m_Message=ch;
+    }
+
+
+    Code getCode() {
+        return m_Code;
+    }
+    int getRow() {
+        return m_Row;
+    }
+    int getColumn() {
+        return m_Column;
     }
 
 private:

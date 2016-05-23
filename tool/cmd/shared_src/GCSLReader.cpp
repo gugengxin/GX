@@ -14,6 +14,7 @@ QChar GCSLReader::getChar()
     if(m_CurIdx>=m_Text->length()) {
         return '\0';
     }
+    m_Column++;
     return m_Text->at(m_CurIdx++);
 }
 

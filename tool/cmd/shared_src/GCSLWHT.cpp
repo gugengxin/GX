@@ -1,54 +1,34 @@
 ﻿#include "GCSLWHT.h"
 
 
-int GCSLWHT::compile(GCSLWriter *parent, GCSLToken *token, GCSLTokenReader &reader, GCSLError *errOut)
+bool GCSLWHT::compile(GCSLWriter *parent, GCSLToken *token, GCSLTokenReader &reader, GCSLError *errOut)
 {
     if(token->getType()==GCSLToken::T_HT_Def) {
         GCSLWHTDef* wr=new GCSLWHTDef(parent);
         parent->addSubWrite(wr);
 
-        if(wr->compile(reader,errOut)) {
-            return 1;
-        }
-        else {
-            return -1;
-        }
+        return wr->compile(reader,errOut);
     }
     else if(token->getType()==GCSLToken::T_HT_If) {
         GCSLWHTIf* wr=new GCSLWHTIf(parent);
         parent->addSubWrite(wr);
 
-        if(wr->compile(reader,errOut)) {
-            return 1;
-        }
-        else {
-            return -1;
-        }
+        return wr->compile(reader,errOut);
     }
     else if(token->getType()==GCSLToken::T_HT_Elif) {
         GCSLWHTElif* wr=new GCSLWHTElif(parent);
         parent->addSubWrite(wr);
 
-        if(wr->compile(reader,errOut)) {
-            return 1;
-        }
-        else {
-            return -1;
-        }
+        return wr->compile(reader,errOut);
     }
     else if(token->getType()==GCSLToken::T_HT_Else) {
         GCSLWHTElse* wr=new GCSLWHTElse(parent);
         parent->addSubWrite(wr);
 
-        if(wr->compile(reader,errOut)) {
-            return 1;
-        }
-        else {
-            return -1;
-        }
+        return wr->compile(reader,errOut);
     }
 
-    return 0;
+    return false;
 }
 
 
@@ -78,7 +58,7 @@ bool GCSLWHTDef::compile(GCSLTokenReader &reader, GCSLError *errOut)
         m_Index=token->getID().toInt();
     }
 
-    if( !reader.nextIsWarpped() ) {
+    if( !reader.currentIsWarpped() ) {
         if(errOut) {
             errOut->setCode(GCSLError::C_NeedWarp);
             errOut->setRC(token);
@@ -101,7 +81,7 @@ GCSLWHTIf::GCSLWHTIf(QObject *parent) :
 
 bool GCSLWHTIf::compile(GCSLTokenReader &reader, GCSLError *errOut)
 {
-    if(reader.nextIsWarpped()) {
+    if(reader.currentIsWarpped()) {
         if(errOut) {
             errOut->setCode(GCSLError::C_NotNeedWarp);
             errOut->setRC(reader);
@@ -127,7 +107,7 @@ bool GCSLWHTIf::compile(GCSLTokenReader &reader, GCSLError *errOut)
             if(token->getType()==types[i]) {
                 m_Conds.append(token);
 
-                if(reader.nextIsWarpped()) {
+                if(reader.currentIsWarpped()) {
                     return true;
                 }
                 break;
@@ -158,7 +138,7 @@ GCSLWHTElif::GCSLWHTElif(QObject *parent) :
 
 bool GCSLWHTElif::compile(GCSLTokenReader &reader, GCSLError *errOut)
 {
-    if(reader.nextIsWarpped()) {
+    if(reader.currentIsWarpped()) {
         if(errOut) {
             errOut->setCode(GCSLError::C_NotNeedWarp);
             errOut->setRC(reader);
@@ -184,7 +164,7 @@ bool GCSLWHTElif::compile(GCSLTokenReader &reader, GCSLError *errOut)
             if(token->getType()==types[i]) {
                 m_Conds.append(token);
 
-                if(reader.nextIsWarpped()) {
+                if(reader.currentIsWarpped()) {
                     return true;
                 }
                 break;
@@ -213,7 +193,7 @@ GCSLWHTElse::GCSLWHTElse(QObject *parent) :
 
 bool GCSLWHTElse::compile(GCSLTokenReader &reader, GCSLError *errOut)
 {
-    if(!reader.nextIsWarpped()) {
+    if(!reader.currentIsWarpped()) {
         if(errOut) {
             errOut->setCode(GCSLError::C_NeedWarp);
             errOut->setRC(reader);
@@ -234,7 +214,7 @@ GCSLWHTEnd::GCSLWHTEnd(QObject *parent) :
 
 bool GCSLWHTEnd::compile(GCSLTokenReader &reader, GCSLError *errOut)
 {
-    if(!reader.nextIsWarpped()) {
+    if(!reader.currentIsWarpped()) {
         if(errOut) {
             errOut->setCode(GCSLError::C_NeedWarp);
             errOut->setRC(reader);

@@ -11,6 +11,9 @@ public:
 
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
 
+
+private:
+
 };
 
 #endif // GCSLWVS_H

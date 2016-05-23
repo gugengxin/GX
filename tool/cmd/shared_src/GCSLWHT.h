@@ -6,7 +6,7 @@
 class GCSLWHT
 {
 public:
-    static int compile(GCSLWriter* parent,GCSLToken* token,GCSLTokenReader& reader,GCSLError* errOut);
+    static bool compile(GCSLWriter* parent,GCSLToken* token,GCSLTokenReader& reader,GCSLError* errOut);
 };
 
 

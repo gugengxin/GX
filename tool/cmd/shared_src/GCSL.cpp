@@ -56,9 +56,10 @@ fp {
     buffer[0] {
         lowp vec4 colorMul;
     }
-    lowp tex2d[0] tex;
-    lowp tex2d[1] texMask;
-
+    texture {
+        lowp tex2d[0] tex;
+        lowp tex2d[1] texMask;
+    }
     main {
         gx_FragColor=tex[v_tex];
         #if MASK
@@ -120,7 +121,7 @@ bool GCSL::compile(const QString &filePath, const QString &guessEncode, GCSLErro
         return false;
     }
 
-    GCSLTokenReader reader(&m_Tokens);
+    GCSLTokenReader reader(m_Tokens);
     m_Writer=new GCSLWRoot(this);
     return m_Writer->compile(reader,errOut);
 }
@@ -168,6 +169,7 @@ void GCSL::initWords()
     M_WORD_MAP_ADD(T_And           , "&&"          );
     M_WORD_MAP_ADD(T_Or            , "||"          );
     M_WORD_MAP_ADD(T_Not           , "!"           );
+    M_WORD_MAP_ADD(T_Colon         , ":"           );
     M_WORD_MAP_ADD(T_HT_Def        , "#def"        );
     M_WORD_MAP_ADD(T_HT_If         , "#if"         );
     M_WORD_MAP_ADD(T_HT_Else       , "#else"       );
@@ -191,6 +193,7 @@ void GCSL::initWords()
     M_WORD_MAP_ADD(T_Layout        , "layout"      );
     M_WORD_MAP_ADD(T_Buffer        , "buffer"      );
     M_WORD_MAP_ADD(T_Bridge        , "bridge"      );
+    M_WORD_MAP_ADD(T_Texture       , "texture"     );
     M_WORD_MAP_ADD(T_POSITION      , "POSITION"    );
     M_WORD_MAP_ADD(T_TEXCOORD      , "TEXCOORD"    );
     M_WORD_MAP_ADD(T_COLOR         , "COLOR"       );
@@ -348,6 +351,8 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
 {
     preprocess(ch,reader);
 
+    tokenOut->setRC(reader);
+
     if( ch.isLetter() || ch=='_' || ch=='#' ) {
         QString str;
         parse_ID(ch,reader,str);
@@ -357,71 +362,55 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
             m_WordMap[str]=p;
         }
         tokenOut->setType(p->getTokenType(),str);
-        tokenOut->setRC(reader);
     }
     else if (ch.isNumber()) {
         QString str;
         parse_number(ch,reader,str);
-        if(str.contains('.')) {
+        if(!str.contains('.')) {
             tokenOut->setType(GCSLToken::T_Integer,str);
         }
         else {
             tokenOut->setType(GCSLToken::T_Floating,str);
         }
-        tokenOut->setRC(reader);
     }
     else if(ch==';') {
         tokenOut->setType(GCSLToken::T_Semicolon,";");
-        tokenOut->setRC(reader);
 
         ch=reader.getChar();
     }
     else if(ch=='(') {
-
         tokenOut->setType(GCSLToken::T_S_Brackets_L,"(");
-        tokenOut->setRC(reader);
 
         ch=reader.getChar();
     }
     else if(ch==')') {
-
         tokenOut->setType(GCSLToken::T_S_Brackets_R,")");
-        tokenOut->setRC(reader);
 
         ch=reader.getChar();
     }
     else if(ch=='[') {
-
         tokenOut->setType(GCSLToken::T_M_Brackets_L,"[");
-        tokenOut->setRC(reader);
 
         ch=reader.getChar();
     }
     else if(ch==']') {
-
         tokenOut->setType(GCSLToken::T_M_Brackets_R,"]");
-        tokenOut->setRC(reader);
 
         ch=reader.getChar();
     }
     else if(ch=='{') {
-
         tokenOut->setType(GCSLToken::T_B_Brackets_L,"{");
-        tokenOut->setRC(reader);
 
         ch=reader.getChar();
     }
     else if(ch=='}') {
 
         tokenOut->setType(GCSLToken::T_B_Brackets_R,"}");
-        tokenOut->setRC(reader);
 
         ch=reader.getChar();
     }
     else if(ch==',') {
-
         tokenOut->setType(GCSLToken::T_Comma,",");
-        tokenOut->setRC(reader);
 
         ch=reader.getChar();
     }
@@ -435,7 +424,6 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         else {
             tokenOut->setType(GCSLToken::T_Equal,"=");
         }
-        tokenOut->setRC(reader);
 
     }
     else if(ch=='+') {
@@ -452,7 +440,6 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         else {
             tokenOut->setType(GCSLToken::T_Plus,"+");
         }
-        tokenOut->setRC(reader);
 
     }
     else if(ch=='-') {
@@ -469,7 +456,6 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         else {
             tokenOut->setType(GCSLToken::T_Minus,"-");
         }
-        tokenOut->setRC(reader);
 
     }
     else if(ch=='*') {
@@ -482,7 +468,6 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         else {
             tokenOut->setType(GCSLToken::T_Multiply,"*");
         }
-        tokenOut->setRC(reader);
 
     }
     else if(ch=='/') {
@@ -495,11 +480,9 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         else {
             tokenOut->setType(GCSLToken::T_Div,"/");
         }
-        tokenOut->setRC(reader);
     }
     else if(ch=='.') {
         tokenOut->setType(GCSLToken::T_Period,".");
-        tokenOut->setRC(reader);
 
         ch=reader.getChar();
     }
@@ -507,7 +490,6 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         ch=reader.getChar();
         if(ch=='&') {
             tokenOut->setType(GCSLToken::T_And,"&&");
-            tokenOut->setRC(reader);
         }
         else {
             if(errOut) {
@@ -523,7 +505,6 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         ch=reader.getChar();
         if(ch=='|') {
             tokenOut->setType(GCSLToken::T_Or,"||");
-            tokenOut->setRC(reader);
         }
         else {
             if(errOut) {
@@ -537,13 +518,16 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
     }
     else if(ch=='!') {
         tokenOut->setType(GCSLToken::T_Not,"!");
-        tokenOut->setRC(reader);
+
+        ch=reader.getChar();
+    }
+    else if(ch==':') {
+        tokenOut->setType(GCSLToken::T_Colon,":");
 
         ch=reader.getChar();
     }
     else if(ch<=0) {
         tokenOut->setType(GCSLToken::T_EOF,"");
-        tokenOut->setRC(reader);
     }
     else {
         if(errOut) {

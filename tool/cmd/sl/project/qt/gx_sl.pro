@@ -21,7 +21,13 @@ SOURCES += main.cpp \
     ../../../shared_src/GCSLTokenReader.cpp \
     ../../../shared_src/GCSLWHT.cpp \
     ../../../shared_src/GCSLWVS.cpp \
-    ../../../shared_src/GCSLWFP.cpp
+    ../../../shared_src/GCSLWFP.cpp \
+    ../../../shared_src/GCSLWLayout.cpp \
+    ../../../shared_src/GCSLWBuffer.cpp \
+    ../../../shared_src/GCSLWBridge.cpp \
+    ../../../shared_src/GCSLWVSMain.cpp \
+    ../../../shared_src/GCSLWTexture.cpp \
+    ../../../shared_src/GCSLWFPMain.cpp
 
 HEADERS += \
     ../../../shared_src/GCSL.h \
@@ -35,4 +41,12 @@ HEADERS += \
     ../../../shared_src/GCSLTokenReader.h \
     ../../../shared_src/GCSLWHT.h \
     ../../../shared_src/GCSLWVS.h \
-    ../../../shared_src/GCSLWFP.h
+    ../../../shared_src/GCSLWFP.h \
+    ../../../shared_src/GCSLWLayout.h \
+    ../../../shared_src/GCSLWBuffer.h \
+    ../../../shared_src/GCSLWBridge.h \
+    ../../../shared_src/GCSLWVSMain.h \
+    ../../../shared_src/GCSLWTexture.h \
+    ../../../shared_src/GCSLWFPMain.h
+
+INCLUDEPATH += $$PWD/../../../shared_src
