@@ -26,21 +26,40 @@ void GCSLTokenReader::ungetToken()
 
 bool GCSLTokenReader::currentIsWarpped()
 {
-    return m_Index>0 && m_Tokens[m_Index]->getRow() > m_Tokens[m_Index-1]->getRow();
+    return  m_Index>=m_Tokens.length() || (m_Index>0 && m_Tokens[m_Index]->getRow() > m_Tokens[m_Index-1]->getRow());
 }
 
 //bool GCSLTokenReader::nextIsWarpped()
 //{
-//    return m_Index<m_Tokens.length()-1 && m_Tokens[m_Index]->getRow() < m_Tokens[m_Index+1]->getRow();
+//    return m_Index>=0 && m_Index<m_Tokens.length()-1 && m_Tokens[m_Index]->getRow() < m_Tokens[m_Index+1]->getRow();
 //}
 
 int GCSLTokenReader::getRow()
 {
+    if(m_Tokens.length()<=0) {
+        return 0;
+    }
+
+    if(m_Index<0) {
+        return m_Tokens[0]->getRow();
+    }
+    else if(m_Index>=m_Tokens.length()) {
+        return m_Tokens[m_Tokens.length()-1]->getRow();
+    }
     return m_Tokens[m_Index]->getRow();
 }
 
 int GCSLTokenReader::getColumn()
 {
+    if(m_Tokens.length()<=0) {
+        return -1;
+    }
+    if(m_Index<0) {
+        return m_Tokens[0]->getColumn();
+    }
+    else if(m_Index>=m_Tokens.length()) {
+        return m_Tokens[m_Tokens.length()-1]->getColumn();
+    }
     return m_Tokens[m_Index]->getColumn();
 }
 

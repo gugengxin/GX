@@ -125,9 +125,9 @@ bool GCSL::compile(const QString &filePath, const QString &guessEncode, GCSLErro
     return m_Writer->compile(reader,errOut);
 }
 
-bool GCSL::make(QString &strWarp, QString &strOut, GCSLError *errOut)
+bool GCSL::make(QString &strWarp, QString &vsOut, QString &fpOut, GCSLError *errOut)
 {
-    return m_Writer->make(strWarp,strOut,errOut);
+    return m_Writer->make(strWarp,vsOut,fpOut,errOut);
 }
 
 void GCSL::clean()

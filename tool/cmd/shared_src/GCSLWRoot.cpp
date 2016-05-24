@@ -10,6 +10,14 @@ GCSLWRoot::GCSLWRoot(QObject* parent) :
 
 }
 
+
+void GCSLWRoot::addMainWHTDef(GCSLWHTMDef *v)
+{
+    v->setParent(this);
+    m_MainWHTDefs.append(v);
+}
+
+
 bool GCSLWRoot::compile(GCSLTokenReader& reader,GCSLError* errOut)
 {
     while(true) {
@@ -48,17 +56,31 @@ bool GCSLWRoot::compile(GCSLTokenReader& reader,GCSLError* errOut)
     return true;
 }
 
-bool GCSLWRoot::make(QString &strWarp, QString &strOut, GCSLError *errOut)
+bool GCSLWRoot::make(QString &strWarp, QString &vsOut, QString &fpOut, GCSLError *errOut)
 {
-   if(!GCSLWriter::make(strWarp,strOut,errOut)) {
-       return false;
-   }
+    GCSLWriter::MakeParam mp(strWarp,0);
+    for(int i=0;i<m_MainWHTDefs.length();i++) {
+        if(!m_MainWHTDefs[i]->makeVS(mp,vsOut,errOut)) {
+            return false;
+        }
+    }
+    for(int i=0;i<getSubWriteCount();i++) {
+        if(!getSubWrites(i)->makeVS(mp,vsOut,errOut)) {
+            return false;
+        }
+    }
 
-   return true;
-}
+    mp.lineLevel=0;
+    for(int i=0;i<m_MainWHTDefs.length();i++) {
+        if(!m_MainWHTDefs[i]->makeFP(mp,fpOut,errOut)) {
+            return false;
+        }
+    }
+    for(int i=0;i<getSubWriteCount();i++) {
+        if(!getSubWrites(i)->makeFP(mp,fpOut,errOut)) {
+            return false;
+        }
+    }
 
-void GCSLWRoot::addMainWHTDef(GCSLWHTMDef *v)
-{
-    v->setParent(this);
-    m_MainWHTDefs.append(v);
+    return true;
 }

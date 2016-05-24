@@ -11,10 +11,20 @@ GCSLWriter::GCSLWriter(QObject *parent) : QObject(parent)
     m_SL=(GCSL*)obj;
 }
 
-bool GCSLWriter::make(QString &strWarp, QString &strOut, GCSLError *errOut)
+bool GCSLWriter::makeVS(MakeParam& param, QString &strOut, GCSLError *errOut)
 {
     for(int i=0;i<m_SubWrites.length();i++) {
-        if(!m_SubWrites[i]->make(strWarp,strOut,errOut)) {
+        if(!m_SubWrites[i]->makeVS(param,strOut,errOut)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool GCSLWriter::makeFP(MakeParam& param, QString &strOut, GCSLError *errOut)
+{
+    for(int i=0;i<m_SubWrites.length();i++) {
+        if(!m_SubWrites[i]->makeFP(param,strOut,errOut)) {
             return false;
         }
     }

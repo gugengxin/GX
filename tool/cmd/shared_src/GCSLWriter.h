@@ -15,11 +15,22 @@ class GCSLWriter : public QObject
 {
     Q_OBJECT
 public:
+    class MakeParam {
+    public:
+        MakeParam(const QString& sw,int ll) {
+            strWarp=sw;
+            lineLevel=ll;
+        }
+
+        QString strWarp;
+        int lineLevel;
+    };
+public:
     GCSLWriter(QObject *parent);
 
-
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut)=0;
-    virtual bool make(QString& strWarp,QString& strOut,GCSLError* errOut);
+    virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
+    virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
 
     void addSubWrite(GCSLWriter* v) {
         v->setParent(this);

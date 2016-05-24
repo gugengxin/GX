@@ -19,7 +19,6 @@ public:
 
 private:
     QString m_Name;
-    int m_Index;
 };
 
 class GCSLWHTDef : public GCSLWriter

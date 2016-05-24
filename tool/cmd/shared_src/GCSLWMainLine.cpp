@@ -42,6 +42,10 @@ bool GCSLWMainLine::compile(GCSLTokenReader &reader, GCSLError *errOut)
         GCSLToken::T_Tex2d         , // "tex2d"
         GCSLToken::T_gx_Position   , // "gx_Position"
         GCSLToken::T_gx_FragColor  , // "gx_FragColor"
+
+        GCSLToken::T_Variable      ,
+        GCSLToken::T_Integer       ,
+        GCSLToken::T_Floating      ,
     };
 
     reader.ungetToken();
