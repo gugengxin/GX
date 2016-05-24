@@ -64,10 +64,10 @@ bool GCSLWHTMDef::compile(GCSLTokenReader &reader, GCSLError *errOut)
         return false;
     }
 
-//    token=reader.getToken();
-//    if(token->getType()==GCSLToken::T_Integer) {
-//        m_Index=token->getID().toInt();
-//    }
+    //    token=reader.getToken();
+    //    if(token->getType()==GCSLToken::T_Integer) {
+    //        m_Index=token->getID().toInt();
+    //    }
 
     if( !reader.currentIsWarpped() ) {
         if(errOut) {
@@ -78,6 +78,21 @@ bool GCSLWHTMDef::compile(GCSLTokenReader &reader, GCSLError *errOut)
     }
 
     return true;
+}
+
+bool GCSLWHTMDef::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
+{
+    strAppendTab(strOut,param.lineLevel);
+    strOut.append("#define ");
+    strOut.append(m_Name);
+    strOut.append(param.strWarp);
+
+    return true;
+}
+
+bool GCSLWHTMDef::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
+{
+    return makeVS(param,strOut,errOut);
 }
 
 
@@ -116,6 +131,21 @@ bool GCSLWHTDef::compile(GCSLTokenReader &reader, GCSLError *errOut)
     }
 
     return true;
+}
+
+bool GCSLWHTDef::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
+{
+    strAppendTab(strOut,param.lineLevel);
+    strOut.append("#define ");
+    strOut.append(m_Name);
+    strOut.append(param.strWarp);
+
+    return true;
+}
+
+bool GCSLWHTDef::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
+{
+    return makeVS(param,strOut,errOut);
 }
 
 
@@ -172,6 +202,31 @@ bool GCSLWHTIf::compile(GCSLTokenReader &reader, GCSLError *errOut)
         }
     }
     return true;
+}
+
+bool GCSLWHTIf::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
+{
+    strAppendTab(strOut,param.lineLevel);
+    strOut.append("#if");
+
+    for(int i=0;i<m_Conds.length();i++) {
+        strOut.append(" ");
+        if(m_Conds[i]->getType()==GCSLToken::T_Variable) {
+            strOut+=QString("defined(%1)").arg(m_Conds[i]->getID());
+        }
+        else {
+            strOut.append(m_Conds[i]->getID());
+        }
+    }
+
+    strOut.append(param.strWarp);
+
+    return true;
+}
+
+bool GCSLWHTIf::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
+{
+    return makeVS(param,strOut,errOut);
 }
 
 
@@ -231,6 +286,31 @@ bool GCSLWHTElif::compile(GCSLTokenReader &reader, GCSLError *errOut)
     return true;
 }
 
+bool GCSLWHTElif::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
+{
+    strAppendTab(strOut,param.lineLevel);
+    strOut.append("#elif");
+
+    for(int i=0;i<m_Conds.length();i++) {
+        strOut.append(" ");
+        if(m_Conds[i]->getType()==GCSLToken::T_Variable) {
+            strOut+=QString("defined(%1)").arg(m_Conds[i]->getID());
+        }
+        else {
+            strOut.append(m_Conds[i]->getID());
+        }
+    }
+
+    strOut.append(param.strWarp);
+
+    return true;
+}
+
+bool GCSLWHTElif::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
+{
+    return makeVS(param,strOut,errOut);
+}
+
 
 
 
@@ -252,6 +332,20 @@ bool GCSLWHTElse::compile(GCSLTokenReader &reader, GCSLError *errOut)
     return true;
 }
 
+bool GCSLWHTElse::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
+{
+    strAppendTab(strOut,param.lineLevel);
+    strOut.append("#else");
+    strOut.append(param.strWarp);
+
+    return true;
+}
+
+bool GCSLWHTElse::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
+{
+    return makeVS(param,strOut,errOut);
+}
+
 
 
 
@@ -271,6 +365,20 @@ bool GCSLWHTEnd::compile(GCSLTokenReader &reader, GCSLError *errOut)
         return false;
     }
     return true;
+}
+
+bool GCSLWHTEnd::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
+{
+    strAppendTab(strOut,param.lineLevel);
+    strOut.append("#endif");
+    strOut.append(param.strWarp);
+
+    return true;
+}
+
+bool GCSLWHTEnd::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
+{
+    return makeVS(param,strOut,errOut);
 }
 
 

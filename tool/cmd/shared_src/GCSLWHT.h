@@ -16,6 +16,8 @@ public:
     GCSLWHTMDef(QObject* parent);
 
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+    virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
+    virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
 
 private:
     QString m_Name;
@@ -28,6 +30,8 @@ public:
     GCSLWHTDef(QObject* parent);
 
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+    virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
+    virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
 
 private:
     QString m_Name;
@@ -40,6 +44,9 @@ public:
     GCSLWHTIf(QObject* parent);
 
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+    virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
+    virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
+
 private:
     QList<GCSLToken*> m_Conds;
 };
@@ -51,6 +58,8 @@ public:
     GCSLWHTElif(QObject* parent);
 
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+    virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
+    virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
 private:
     QList<GCSLToken*> m_Conds;
 };
@@ -62,6 +71,8 @@ public:
     GCSLWHTElse(QObject* parent);
 
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+    virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
+    virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
 };
 
 class GCSLWHTEnd : public GCSLWriter
@@ -71,6 +82,8 @@ public:
     GCSLWHTEnd(QObject* parent);
 
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+    virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
+    virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
 };
 
 

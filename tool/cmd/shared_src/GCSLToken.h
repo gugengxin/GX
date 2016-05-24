@@ -66,6 +66,7 @@ public:
         T_COLOR         , // "COLOR"
         T_gx_Position   , // "gx_Position"
         T_gx_FragColor  , // "gx_FragColor"
+        T_Return        , // "return"
 
         T_Variable      ,
         T_Integer       ,

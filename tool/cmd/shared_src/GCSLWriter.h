@@ -15,16 +15,26 @@ class GCSLWriter : public QObject
 {
     Q_OBJECT
 public:
+    typedef enum _SLType {
+        SLT_GLSL=0,
+        SLT_GLSL_ES,
+        SLT_HLSL,
+    } SLType;
+
     class MakeParam {
     public:
-        MakeParam(const QString& sw,int ll) {
+        MakeParam(SLType slt,const QString& sw) {
+            slType=slt;
             strWarp=sw;
-            lineLevel=ll;
+            lineLevel=0;
         }
 
+        SLType slType;
         QString strWarp;
         int lineLevel;
     };
+    static void strAppend(QString& qs,const char* str,int count);
+    static void strAppendTab(QString& qs,int count);
 public:
     GCSLWriter(QObject *parent);
 

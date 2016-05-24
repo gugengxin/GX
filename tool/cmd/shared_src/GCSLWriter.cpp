@@ -2,6 +2,18 @@
 #include "GCSL.h"
 #include "GCSLWRoot.h"
 
+void GCSLWriter::strAppend(QString &qs, const char *str, int count)
+{
+    for(int i=0;i<count;i++) {
+        qs.append(str);
+    }
+}
+
+void GCSLWriter::strAppendTab(QString &qs, int count)
+{
+    strAppend(qs,"\t",count);
+}
+
 GCSLWriter::GCSLWriter(QObject *parent) : QObject(parent)
 {
     QObject* obj=parent;

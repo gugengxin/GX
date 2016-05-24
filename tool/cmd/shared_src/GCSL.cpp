@@ -125,9 +125,20 @@ bool GCSL::compile(const QString &filePath, const QString &guessEncode, GCSLErro
     return m_Writer->compile(reader,errOut);
 }
 
-bool GCSL::make(QString &strWarp, QString &vsOut, QString &fpOut, GCSLError *errOut)
+bool GCSL::make(GCSLWriter::SLType slType, QString &strWarp, QString &vsOut, QString &fpOut, GCSLError *errOut)
 {
-    return m_Writer->make(strWarp,vsOut,fpOut,errOut);
+    GCSLWriter::MakeParam param(slType,strWarp);
+
+    if(!m_Writer->makeVS(param,vsOut,errOut)) {
+        return false;
+    }
+
+    param.lineLevel=0;
+    if(!m_Writer->makeFP(param,fpOut,errOut)) {
+        return false;
+    }
+
+    return true;
 }
 
 void GCSL::clean()
@@ -148,6 +159,7 @@ void GCSL::clean()
 void GCSL::initWords()
 {
 #define  M_WORD_MAP_ADD(t,s) m_WordMap.insert(QString(s),new GCSLWord(GCSLToken::t,s,this))
+#define  M_WORD_MAP_ADD_OID(t,s,gl,gles,hl) m_WordMap.insert(QString(s),new GCSLWord(GCSLToken::t,s,gl,gles,hl,this))
 
     M_WORD_MAP_ADD(T_Semicolon     , ";"           );
     M_WORD_MAP_ADD(T_S_Brackets_L  , "("           );
@@ -174,25 +186,25 @@ void GCSL::initWords()
     M_WORD_MAP_ADD(T_Or            , "||"          );
     M_WORD_MAP_ADD(T_Not           , "!"           );
     M_WORD_MAP_ADD(T_Colon         , ":"           );
-    M_WORD_MAP_ADD(T_HT_MDef       , "#mdef"       );
-    M_WORD_MAP_ADD(T_HT_Def        , "#def"        );
-    M_WORD_MAP_ADD(T_HT_If         , "#if"         );
-    M_WORD_MAP_ADD(T_HT_Else       , "#else"       );
-    M_WORD_MAP_ADD(T_HT_Elif       , "#elif"       );
-    M_WORD_MAP_ADD(T_HT_End        , "#end"        );
+    M_WORD_MAP_ADD_OID(T_HT_MDef   , "#mdef"       ,"#define"   ,"#define"  ,"#define"  );
+    M_WORD_MAP_ADD_OID(T_HT_Def    , "#def"        ,"#define"   ,"#define"  ,"#define"  );
+    M_WORD_MAP_ADD_OID(T_HT_If     , "#if"         ,"#if"       ,"#if"      ,"#if"      );
+    M_WORD_MAP_ADD_OID(T_HT_Else   , "#else"       ,"#else"     ,"#else"    ,"#else"    );
+    M_WORD_MAP_ADD_OID(T_HT_Elif   , "#elif"       ,"#elif"     ,"#elif"    ,"#elif"    );
+    M_WORD_MAP_ADD_OID(T_HT_End    , "#end"        ,"#endif"    ,"#endif"   ,"#endif"   );
     M_WORD_MAP_ADD(T_Vs            , "vs"          );
     M_WORD_MAP_ADD(T_Fp            , "fp"          );
     M_WORD_MAP_ADD(T_Main          , "main"        );
-    M_WORD_MAP_ADD(T_Lowp          , "lowp"        );
-    M_WORD_MAP_ADD(T_Medi          , "medi"        );
-    M_WORD_MAP_ADD(T_High          , "high"        );
-    M_WORD_MAP_ADD(T_Float         , "float"       );
-    M_WORD_MAP_ADD(T_Vec2          , "vec2"        );
-    M_WORD_MAP_ADD(T_Vec3          , "vec3"        );
-    M_WORD_MAP_ADD(T_Vec4          , "vec4"        );
-    M_WORD_MAP_ADD(T_Mat2          , "mat2"        );
-    M_WORD_MAP_ADD(T_Mat3          , "mat3"        );
-    M_WORD_MAP_ADD(T_Mat4          , "mat4"        );
+    M_WORD_MAP_ADD_OID(T_Lowp          , "lowp"    ,"","lowp"   ,""    );
+    M_WORD_MAP_ADD_OID(T_Medi          , "medi"    ,"","mediump",""    );
+    M_WORD_MAP_ADD_OID(T_High          , "high"    ,"","highp"  ,""    );
+    M_WORD_MAP_ADD_OID(T_Float         , "float"   ,"float" ,"float","float"    );
+    M_WORD_MAP_ADD_OID(T_Vec2          , "vec2"    ,"vec2"  ,"vec2" ,"float2"    );
+    M_WORD_MAP_ADD_OID(T_Vec3          , "vec3"    ,"vec3"  ,"vec3" ,"float3"    );
+    M_WORD_MAP_ADD_OID(T_Vec4          , "vec4"    ,"vec4"  ,"vec4" ,"float4"    );
+    M_WORD_MAP_ADD_OID(T_Mat2          , "mat2"    ,"mat2"  ,"mat2" ,"float2x2"    );
+    M_WORD_MAP_ADD_OID(T_Mat3          , "mat3"    ,"mat3"  ,"mat3" ,"float3x3"    );
+    M_WORD_MAP_ADD_OID(T_Mat4          , "mat4"    ,"mat4"  ,"mat4" ,"float4x4"    );
     M_WORD_MAP_ADD(T_Tex1d         , "tex1d"       );
     M_WORD_MAP_ADD(T_Tex2d         , "tex2d"       );
     M_WORD_MAP_ADD(T_Layout        , "layout"      );
@@ -204,6 +216,7 @@ void GCSL::initWords()
     M_WORD_MAP_ADD(T_COLOR         , "COLOR"       );
     M_WORD_MAP_ADD(T_gx_Position   , "gx_Position" );
     M_WORD_MAP_ADD(T_gx_FragColor  , "gx_FragColor");
+    M_WORD_MAP_ADD(T_Return        , "return"      );
 
 #undef M_WORD_MAP_ADD
 }
