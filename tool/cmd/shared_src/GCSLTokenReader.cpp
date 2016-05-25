@@ -86,3 +86,51 @@ bool GCSLTokenReader::addTokensToBBR(GCSLTokenReader &reader)
     }
     return true;
 }
+
+bool GCSLTokenReader::addTokensToSBR(GCSLTokenReader &reader)
+{
+    int lvBB=0;
+    while (true) {
+        GCSLToken* token=reader.getToken();
+        if(!token || token->getType()==GCSLToken::T_EOF) {
+            return false;
+        }
+        else if(token->getType()==GCSLToken::T_S_Brackets_L) {
+            lvBB++;
+        }
+        else if(token->getType()==GCSLToken::T_S_Brackets_R) {
+            if(lvBB<=0) {
+                break;
+            }
+            else {
+                lvBB--;
+            }
+        }
+        m_Tokens.append(token);
+    }
+    return true;
+}
+
+bool GCSLTokenReader::addTokensToComma(GCSLTokenReader &reader)
+{
+    int lvBB=0;
+    while (true) {
+        GCSLToken* token=reader.getToken();
+        if(!token || token->getType()==GCSLToken::T_EOF) {
+            return false;
+        }
+        else if(token->getType()==GCSLToken::T_S_Brackets_L) {
+            lvBB++;
+        }
+        else if(token->getType()==GCSLToken::T_S_Brackets_R) {
+            lvBB--;
+        }
+        else if(token->getType()==GCSLToken::T_Comma) {
+            if(lvBB<=0) {
+                break;
+            }
+        }
+        m_Tokens.append(token);
+    }
+    return true;
+}

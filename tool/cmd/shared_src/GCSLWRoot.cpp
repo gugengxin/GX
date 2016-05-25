@@ -53,6 +53,38 @@ bool GCSLWRoot::compile(GCSLTokenReader& reader,GCSLError* errOut)
             return false;
         }
     }
+
+    //bridge add to fp
+    GCSLWriter* wrBridge=NULL;
+    for(int i=0;i<getSubWriteCount();i++) {
+        GCSLWriter* wr=getSubWrites(i);
+        if(wr->inherits("GCSLWVS")) {
+            for(int j=0;j<wr->getSubWriteCount();j++) {
+                GCSLWriter* wr0=wr->getSubWrites(j);
+                if(wr0->inherits("GCSLWBridge")) {
+                    wrBridge=wr0;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    if(wrBridge) {
+        for(int i=0;i<getSubWriteCount();i++) {
+            GCSLWriter* wr=getSubWrites(i);
+            if(wr->inherits("GCSLWFP")) {
+                for(int j=0;j<wr->getSubWriteCount();j++) {
+                    if(wr->getSubWrites(j)->inherits("GCSLWFPMain")) {
+                        wr->insertSubWrites(j,wrBridge);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+
     return true;
 }
 

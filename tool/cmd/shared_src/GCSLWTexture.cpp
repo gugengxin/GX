@@ -140,3 +140,38 @@ bool GCSLWTextureVar::compile(GCSLTokenReader &reader, GCSLError *errOut)
 
     return true;
 }
+
+bool GCSLWTextureVar::makeVS(GCSLWriter::MakeParam &, QString &, GCSLError *)
+{
+    return true;
+}
+
+bool GCSLWTextureVar::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
+{
+    strAppendTab(strOut,param.lineLevel);
+    if(param.slType==SLT_GLSL || param.slType==SLT_GLSL_ES) {
+        strOut.append("uniform ");
+        if(param.slType==SLT_GLSL_ES) {
+            strOut.append(getWordSLID(m_LMH,param.slType));
+            strOut.append(" ");
+        }
+    }
+    strOut.append(getWordSLID(m_Type,param.slType));
+    strOut.append(" ");
+    strOut.append(m_Name);
+
+    if(param.slType==SLT_HLSL) {
+        strOut.append(QString(":register(t%1);").arg(m_Slot));
+        strOut.append(param.strWarp);
+
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("SamplerState ");
+        strOut.append(m_Name);
+        strOut.append("_s");
+        strOut.append(QString(":register(s%1)").arg(m_Slot));
+    }
+    strOut.append(";");
+    strOut.append(param.strWarp);
+
+    return true;
+}

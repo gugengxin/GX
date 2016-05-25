@@ -68,18 +68,25 @@ int main(int argc, char *argv[])
             GCSL worker;
             GCSLError error;
             if(worker.compile(in,ine,&error)) {
-                QString vsStr,fpStr;
-                if(worker.make(GCSLWriter::SLT_GLSL,QString("\n"),vsStr,fpStr,&error)) {
-                    cout<< "vs:\n" << vsStr << "\n";
-                    cout<< "fp:\n" << fpStr << "\n";
-                    cout<< endl;
-                }
-                else {
-                    cerr<< "make error: " << error.getCode() <<endl;
+
+                for(int i=0;i<3;i++) {
+
+                    cout << "******************************************************************" << endl;
+                    cout << i << "\n";
+
+                    QString vsStr,fpStr;
+                    if(worker.make((GCSLWriter::SLType)i,QString("\n"),vsStr,fpStr,&error)) {
+                        cout<< "vs:\n" << vsStr << "\n";
+                        cout<< "fp:\n" << fpStr << "\n";
+                        cout<< endl;
+                    }
+                    else {
+                        cerr<< "make error: " << error.getCode() << "(" << error.getRow() << "," << error.getColumn() <<")" <<endl;
+                    }
                 }
             }
             else {
-                cerr<< "compile error: " << error.getCode() <<endl;
+                cerr<< "compile error: " << error.getCode() << "(" << error.getRow() << "," << error.getColumn() <<")" <<endl;
             }
         }
         else {

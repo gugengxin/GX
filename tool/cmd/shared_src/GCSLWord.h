@@ -23,6 +23,9 @@ public:
     QString& getID() {
         return m_ID;
     }
+    QString& getSLID(int i) {
+        return m_SLID[i];
+    }
 
 private:
     GCSLToken::Type m_TkType;

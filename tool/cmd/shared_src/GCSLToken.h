@@ -66,7 +66,8 @@ public:
         T_COLOR         , // "COLOR"
         T_gx_Position   , // "gx_Position"
         T_gx_FragColor  , // "gx_FragColor"
-        T_Return        , // "return"
+
+        T_Mul           , // "mul"
 
         T_Variable      ,
         T_Integer       ,
@@ -144,6 +145,9 @@ public:
     }
     bool isTex() {
         return m_Type==T_Tex1d || m_Type==T_Tex2d;
+    }
+    bool isSymbol() {
+        return m_Type<T_HT_MDef;
     }
 
 private:

@@ -74,3 +74,13 @@ bool GCSLWFP::compile(GCSLTokenReader &reader, GCSLError *errOut)
     }
     return true;
 }
+
+bool GCSLWFP::makeVS(GCSLWriter::MakeParam &, QString &, GCSLError *)
+{
+    return true;
+}
+
+bool GCSLWFP::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
+{
+    return GCSLWriter::makeFP(param,strOut,errOut);
+}

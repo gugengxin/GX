@@ -12,6 +12,7 @@
 
 class GCSL : public QObject
 {
+    friend class GCSLWriter;
     Q_OBJECT
 public:
     explicit GCSL(QObject *parent = 0);
@@ -32,7 +33,7 @@ private:
     bool getToken(QChar &ch, GCSLReader& reader, GCSLToken* tokenOut, GCSLError* errOut);
     bool translateToTokens(GCSLError* errOut);
 private:
-
+    GCSLWord* getWord(const QString& key);
 signals:
 
 public slots:

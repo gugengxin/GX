@@ -38,24 +38,29 @@ public:
 public:
     GCSLWriter(QObject *parent);
 
-    virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut)=0;
-    virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
-    virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
-
     void addSubWrite(GCSLWriter* v) {
         v->setParent(this);
         m_SubWrites.append(v);
     }
-
     virtual void addMainWHTDef(GCSLWHTMDef *v);
+    void insertSubWrites(int idx,GCSLWriter* v) {
+        v->setParent(this);
+        m_SubWrites.insert(idx,v);
+    }
 
     int getSubWriteCount() {
         return m_SubWrites.length();
     }
-
     GCSLWriter* getSubWrites(int idx) {
         return m_SubWrites[idx];
     }
+
+    QString &getWordSLID(GCSLToken* token,SLType slt);
+
+
+    virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut)=0;
+    virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
+    virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
 
 private:
     GCSL* m_SL;

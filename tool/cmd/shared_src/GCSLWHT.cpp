@@ -82,7 +82,6 @@ bool GCSLWHTMDef::compile(GCSLTokenReader &reader, GCSLError *errOut)
 
 bool GCSLWHTMDef::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
 {
-    strAppendTab(strOut,param.lineLevel);
     strOut.append("#define ");
     strOut.append(m_Name);
     strOut.append(param.strWarp);
@@ -135,7 +134,6 @@ bool GCSLWHTDef::compile(GCSLTokenReader &reader, GCSLError *errOut)
 
 bool GCSLWHTDef::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
 {
-    strAppendTab(strOut,param.lineLevel);
     strOut.append("#define ");
     strOut.append(m_Name);
     strOut.append(param.strWarp);
@@ -206,11 +204,9 @@ bool GCSLWHTIf::compile(GCSLTokenReader &reader, GCSLError *errOut)
 
 bool GCSLWHTIf::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
 {
-    strAppendTab(strOut,param.lineLevel);
-    strOut.append("#if");
+    strOut.append("#if ");
 
     for(int i=0;i<m_Conds.length();i++) {
-        strOut.append(" ");
         if(m_Conds[i]->getType()==GCSLToken::T_Variable) {
             strOut+=QString("defined(%1)").arg(m_Conds[i]->getID());
         }
@@ -288,11 +284,9 @@ bool GCSLWHTElif::compile(GCSLTokenReader &reader, GCSLError *errOut)
 
 bool GCSLWHTElif::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
 {
-    strAppendTab(strOut,param.lineLevel);
-    strOut.append("#elif");
+    strOut.append("#elif ");
 
     for(int i=0;i<m_Conds.length();i++) {
-        strOut.append(" ");
         if(m_Conds[i]->getType()==GCSLToken::T_Variable) {
             strOut+=QString("defined(%1)").arg(m_Conds[i]->getID());
         }
@@ -334,7 +328,6 @@ bool GCSLWHTElse::compile(GCSLTokenReader &reader, GCSLError *errOut)
 
 bool GCSLWHTElse::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
 {
-    strAppendTab(strOut,param.lineLevel);
     strOut.append("#else");
     strOut.append(param.strWarp);
 
@@ -369,7 +362,6 @@ bool GCSLWHTEnd::compile(GCSLTokenReader &reader, GCSLError *errOut)
 
 bool GCSLWHTEnd::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
 {
-    strAppendTab(strOut,param.lineLevel);
     strOut.append("#endif");
     strOut.append(param.strWarp);
 

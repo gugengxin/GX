@@ -23,6 +23,21 @@ GCSLWriter::GCSLWriter(QObject *parent) : QObject(parent)
     m_SL=(GCSL*)obj;
 }
 
+void GCSLWriter::addMainWHTDef(GCSLWHTMDef *v)
+{
+    GCSLWriter* wr=(GCSLWriter*)this->parent();
+    while(!inherits("GCSLWRoot")) {
+        wr=(GCSLWriter*)wr->parent();
+    }
+    wr->addMainWHTDef(v);
+}
+
+QString &GCSLWriter::getWordSLID(GCSLToken *token, GCSLWriter::SLType slt)
+{
+    return m_SL->getWord(token->getID())->getSLID(slt);
+}
+
+
 bool GCSLWriter::makeVS(MakeParam& param, QString &strOut, GCSLError *errOut)
 {
     for(int i=0;i<m_SubWrites.length();i++) {
@@ -41,13 +56,4 @@ bool GCSLWriter::makeFP(MakeParam& param, QString &strOut, GCSLError *errOut)
         }
     }
     return true;
-}
-
-void GCSLWriter::addMainWHTDef(GCSLWHTMDef *v)
-{
-    GCSLWriter* wr=(GCSLWriter*)this->parent();
-    while(!inherits("GCSLWRoot")) {
-        wr=(GCSLWriter*)wr->parent();
-    }
-    wr->addMainWHTDef(v);
 }

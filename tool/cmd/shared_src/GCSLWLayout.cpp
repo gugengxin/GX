@@ -55,6 +55,41 @@ bool GCSLWLayout::compile(GCSLTokenReader &reader, GCSLError *errOut)
     return true;
 }
 
+bool GCSLWLayout::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
+{
+    switch (param.slType) {
+    case SLT_GLSL:
+    case SLT_GLSL_ES:
+    {
+        return GCSLWriter::makeVS(param,strOut,errOut);
+    }
+        break;
+    case SLT_HLSL:
+    {
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("struct VertexInputType {");
+        strOut.append(param.strWarp);
+        param.lineLevel++;
+        if(!GCSLWriter::makeVS(param,strOut,errOut)) {
+            return false;
+        }
+        param.lineLevel--;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("};");
+        strOut.append(param.strWarp);
+    }
+        break;
+    default:
+        return false;
+    }
+    return true;
+}
+
+bool GCSLWLayout::makeFP(GCSLWriter::MakeParam &, QString &, GCSLError *)
+{
+    return true;
+}
+
 
 
 
@@ -151,5 +186,35 @@ bool GCSLWLayoutVar::compile(GCSLTokenReader &reader, GCSLError *errOut)
         return false;
     }
 
+    return true;
+}
+
+bool GCSLWLayoutVar::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
+{
+    strAppendTab(strOut,param.lineLevel);
+    if(param.slType==SLT_GLSL || param.slType==SLT_GLSL_ES) {
+        strOut.append("attribute ");
+        if(param.slType==SLT_GLSL_ES) {
+            strOut.append(getWordSLID(m_LMH,param.slType));
+            strOut.append(" ");
+        }
+    }
+    strOut.append(getWordSLID(m_Type,param.slType));
+    strOut.append(" ");
+    strOut.append(m_Name);
+
+    if(param.slType==SLT_HLSL) {
+        strOut.append(":");
+        strOut.append(getWordSLID(m_SemanticName,param.slType));
+        strOut.append(QString::number(m_SemanticIndex));
+    }
+    strOut.append(";");
+    strOut.append(param.strWarp);
+
+    return true;
+}
+
+bool GCSLWLayoutVar::makeFP(GCSLWriter::MakeParam &, QString &, GCSLError *)
+{
     return true;
 }

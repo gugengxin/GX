@@ -20,6 +20,8 @@ public:
     explicit GCSLWTextureVar(QObject *parent = 0);
 
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
+    virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
+    virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
 
 private:
     GCSLToken*  m_LMH;

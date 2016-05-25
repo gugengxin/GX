@@ -47,3 +47,67 @@ bool GCSLWVSMain::compile(GCSLTokenReader &reader, GCSLError *errOut)
     }
     return true;
 }
+
+bool GCSLWVSMain::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
+{
+    switch (param.slType) {
+    case SLT_GLSL:
+    case SLT_GLSL_ES:
+    {
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("void main()");
+        strOut.append(param.strWarp);
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("{");
+        strOut.append(param.strWarp);
+
+        param.lineLevel++;
+        if(!GCSLWriter::makeVS(param,strOut,errOut)) {
+            return false;
+        }
+        param.lineLevel--;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("}");
+        strOut.append(param.strWarp);
+    }
+        break;
+    case SLT_HLSL:
+    {
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("PixelInputType main(VertexInputType layout)");
+        strOut.append(param.strWarp);
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("{");
+        strOut.append(param.strWarp);
+
+        param.lineLevel++;
+
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("PixelInputType bridge;");
+        strOut.append(param.strWarp);
+
+
+        if(!GCSLWriter::makeVS(param,strOut,errOut)) {
+            return false;
+        }
+
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("return bridge;");
+        strOut.append(param.strWarp);
+
+        param.lineLevel--;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("}");
+        strOut.append(param.strWarp);
+    }
+        break;
+    default:
+        return false;
+    }
+    return true;
+}
+
+bool GCSLWVSMain::makeFP(GCSLWriter::MakeParam &, QString &, GCSLError *)
+{
+    return true;
+}

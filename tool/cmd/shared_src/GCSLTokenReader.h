@@ -22,7 +22,8 @@ public:
     int getColumn();
 
     bool addTokensToBBR(GCSLTokenReader& reader);
-
+    bool addTokensToSBR(GCSLTokenReader& reader);
+    bool addTokensToComma(GCSLTokenReader& reader);
 
 private:
     QList<GCSLToken*>  m_Tokens;

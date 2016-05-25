@@ -48,3 +48,65 @@ bool GCSLWFPMain::compile(GCSLTokenReader &reader, GCSLError *errOut)
     }
     return true;
 }
+
+bool GCSLWFPMain::makeVS(GCSLWriter::MakeParam &, QString &, GCSLError *)
+{
+    return true;
+}
+
+bool GCSLWFPMain::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
+{
+    switch (param.slType) {
+    case SLT_GLSL:
+    case SLT_GLSL_ES:
+    {
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("void main()");
+        strOut.append(param.strWarp);
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("{");
+        strOut.append(param.strWarp);
+
+        param.lineLevel++;
+        if(!GCSLWriter::makeVS(param,strOut,errOut)) {
+            return false;
+        }
+        param.lineLevel--;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("}");
+        strOut.append(param.strWarp);
+    }
+        break;
+    case SLT_HLSL:
+    {
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("float4 main(PixelInputType bridge):SV_TARGET");
+        strOut.append(param.strWarp);
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("{");
+        strOut.append(param.strWarp);
+        param.lineLevel++;
+
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("float4 gx_FragColor;");
+        strOut.append(param.strWarp);
+
+        if(!GCSLWriter::makeVS(param,strOut,errOut)) {
+            return false;
+        }
+
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("return gx_FragColor;");
+        strOut.append(param.strWarp);
+
+        param.lineLevel--;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("}");
+        strOut.append(param.strWarp);
+    }
+        break;
+    default:
+        return false;
+    }
+    return true;
+}
