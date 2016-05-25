@@ -10,6 +10,8 @@
 #include "GXOpenGL.h"
 #if defined(GX_OS_ANDROID)
 #include <EGL/egl.h>
+#elif defined(GX_OS_QT)
+#include <QOpenGLContext>
 #endif
 
 class GWindow;
@@ -51,6 +53,8 @@ private:
 #elif defined(GX_OS_ANDROID)
 	EGLSurface m_Surface;
 	EGLContext m_Context;
+#elif defined(GX_OS_QT)
+    QOpenGLContext* m_Context;
 #endif
 };
 

@@ -19,6 +19,8 @@
 #include <assert.h>
 #if defined(GX_OS_ANDROID)
 #include <jni.h>
+#elif defined(GX_OS_QT)
+#include <QtCore>
 #endif
 
 #ifndef va_copy
@@ -30,7 +32,7 @@
 #endif
 
 #ifndef GX_DEBUG
-#if defined(_DEBUG) || defined(DEBUG)
+#if defined(_DEBUG) || defined(DEBUG) || (defined(GX_OS_QT) && !defined(QT_NO_DEBUG))
 #define GX_DEBUG
 #endif
 #endif

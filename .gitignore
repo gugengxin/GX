@@ -19,3 +19,4 @@ test/project/vs/x86/
 GX.suo
 *.vcxproj.user
 tool/cmd/sl/project/build-*
+test/project/build-*

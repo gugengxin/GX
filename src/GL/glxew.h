@@ -78,7 +78,7 @@
 */
 
 #include "GXOSs.h"
-#if (defined(_WIN32) || defined(WIN32) || defined(WIN64)) && defined(GX_OPENGL)
+#if defined(GX_OS_WINDOWS) && defined(GX_OPENGL)
 #ifndef GLEW_MX
 #define GLEW_MX
 #define GLEW_STATIC

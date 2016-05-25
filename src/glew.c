@@ -1,4 +1,4 @@
-/*
+﻿/*
 ** The OpenGL Extension Wrangler Library
 ** Copyright (C) 2008-2015, Nigel Stewart <nigels[]users sourceforge net>
 ** Copyright (C) 2002-2008, Milan Ikits <milan ikits[]ieee org>
@@ -30,7 +30,7 @@
 ** THE POSSIBILITY OF SUCH DAMAGE.
 */
 #include "GXOSs.h"
-#if (defined(_WIN32) || defined(WIN32) || defined(WIN64)) && defined(GX_OPENGL)
+#if defined(GX_OS_WINDOWS) && defined(GX_OPENGL)
 
 #include <GL/glew.h>
 

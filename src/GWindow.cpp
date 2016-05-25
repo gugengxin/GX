@@ -343,6 +343,8 @@ GWindow::GWindow()
 #elif defined(GX_OS_ANDROID)
 	m_OSWin = NULL;
 	m_OSWinScale=0.0f;
+#elif defined(GX_OS_QT)
+    m_OSWin=NULL;
 #endif
 }	
 
@@ -356,6 +358,8 @@ GWindow::~GWindow()
     if(m_OSWin) {
     	ANativeWindow_release(GX_CAST_R(ANativeWindow*,m_OSWin));
     }
+#elif defined(GX_OS_QT)
+    delete m_OSWin;
 #endif
 }
 
@@ -425,6 +429,9 @@ bool GWindow::create(void* osWinP)
 	m_OSWin=GX_CAST_R(ANativeWindow*, osWinP);
 	GJavaJNIEnvAutoPtr jniEnv;
 	m_OSWinScale=GJavaCAPI::shared()->appGetDefaultWindowScale(jniEnv.get());
+#elif defined(GX_OS_QT)
+    m_OSWin=new QOpenGLWidget();
+    GX_CAST_R(QWidget*,m_OSWinP)->layout()->addWidget(m_OSWin);
 #endif
 	return m_Context.create(this);
 }
@@ -441,6 +448,8 @@ gfloat32 GWindow::getWidth()
     return (gfloat32)GX_CAST_R(NSView*, m_OSWin).bounds.size.width;
 #elif defined(GX_OS_ANDROID)
     return ANativeWindow_getWidth(GX_CAST_R(ANativeWindow*, m_OSWin))/m_OSWinScale;
+#elif defined(GX_OS_QT)
+    return m_OSWin->geometry().width();
 #endif
 }
 gfloat32 GWindow::getHeight()
@@ -455,6 +464,8 @@ gfloat32 GWindow::getHeight()
     return (gfloat32)GX_CAST_R(NSView*, m_OSWin).bounds.size.height;
 #elif defined(GX_OS_ANDROID)
 	return ANativeWindow_getHeight(GX_CAST_R(ANativeWindow*, m_OSWin))/m_OSWinScale;
+#elif defined(GX_OS_QT)
+    return m_OSWin->geometry().width();
 #endif
 }
 gfloat32 GWindow::getScale()
@@ -467,6 +478,8 @@ gfloat32 GWindow::getScale()
     return (gfloat32)GX_CAST_R(NSView*, m_OSWin).window.backingScaleFactor;
 #elif defined(GX_OS_ANDROID)
 	return m_OSWinScale;
+#elif defined(GX_OS_QT)
+    return 1.0f;
 #endif
 }
 

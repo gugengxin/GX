@@ -13,7 +13,9 @@
 #define GX_LITTLE_ENDIAN 1234
 #define GX_BIG_ENDIAN 4321
 
-#if defined(GX_OS_IOS)
+#if defined(GX_OS_QT)
+
+#elif defined(GX_OS_IOS)
 
 #define GX_OS_APPLE
 #define GX_OS_MOBILE
@@ -59,7 +61,7 @@
 
 
 #ifndef GX_OPENGL
-#if defined(GX_OS_APPLE) || defined(GX_OS_ANDROID) //|| defined(GX_OS_WINDOWS)
+#if defined(GX_OS_APPLE) || defined(GX_OS_ANDROID) || defined(GX_OS_QT) //|| defined(GX_OS_WINDOWS)
 #define GX_OPENGL
 #if defined(GX_OS_MOBILE)
 #define GX_OPENGL_ES
@@ -67,7 +69,7 @@
 #endif
 #endif
 
-#ifndef GX_DIRECTX
+#if !defined(GX_OPENGL) && !defined(GX_DIRECTX)
 #if defined(GX_OS_WINDOWS)
 #define GX_DIRECTX
 #endif

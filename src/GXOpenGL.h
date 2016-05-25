@@ -45,6 +45,8 @@ namespace GX
 #elif defined(GX_OS_MACOSX)
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
+#elif defined(GX_OS_QT)
+#include <QtOpenGL>
 #endif
 
 

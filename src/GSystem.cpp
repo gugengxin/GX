@@ -10,6 +10,8 @@
 #elif defined(GX_OS_WINDOWS)
 #include <sys/timeb.h>
 #include <Windows.h>
+#elif defined(GX_OS_QT)
+#include <QDateTime>
 #endif
 
 gint64 GSystem::currentTimeMS()
@@ -26,6 +28,8 @@ gint64 GSystem::currentTimeMS()
     struct _timeb tb;
 	_ftime_s(&tb);
     return tb.time*1000LL+tb.millitm;
+#elif defined(GX_OS_QT)
+    return QDateTime::currentMSecsSinceEpoch();
 #endif
 }
 
@@ -63,5 +67,7 @@ gint64 GSystem::tickCountNS()
     __int64 res;
     QueryPerformanceCounter((LARGE_INTEGER*)&res);
     return GX_CAST_S(gint64,((double)res/Frequency)*1000000000.0);
+#elif defined(GX_OS_QT)
+    return QDateTime::currentMSecsSinceEpoch()*1000000;
 #endif
 }
