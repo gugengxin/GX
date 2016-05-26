@@ -510,7 +510,7 @@ gfloat32 GWindow::getScale()
 #elif defined(GX_OS_ANDROID)
 	return m_OSWinScale;
 #elif defined(GX_OS_QT)
-    return 1.0f;
+    return (gfloat32)m_OSWin->devicePixelRatio();
 #endif
 }
 

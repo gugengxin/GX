@@ -22,6 +22,9 @@ class GUUID : public GObject {
 #endif
 	GX_OBJECT(GUUID);
 public:
+    inline guint8* getPtr() {
+        return m_Bytes;
+    }
 
 private:
     guint8 m_Bytes[16];

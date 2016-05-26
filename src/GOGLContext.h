@@ -59,7 +59,7 @@ private:
 	EGLSurface m_Surface;
 	EGLContext m_Context;
 #elif defined(GX_OS_QT)
-    QOpenGLContext m_Context;
+    QOpenGLContext* m_Context;
 #endif
 };
 

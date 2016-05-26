@@ -125,7 +125,7 @@ namespace GX
 	/// 反正弦函数
 	inline float asin(float v)
 	{
-		return (float)asin(v);
+        return (float)::asin(v);
 	}
 	/// 余弦函数
 	inline float cos(float radian)
@@ -146,7 +146,7 @@ namespace GX
 	/// 反余弦函数
 	inline float acos(float v)
 	{
-		return (float)acos(v);
+        return (float)::acos(v);
 	}
 	/// 正余弦函数，同时得到正弦和余弦值
 	inline void sincos(float radian, float &sinvalue, float &cosvalue)

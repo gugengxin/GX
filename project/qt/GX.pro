@@ -22,14 +22,14 @@ SOURCES += \
     ../../src/GAutoreleasePool.cpp \
     ../../src/GCondition.cpp \
     ../../src/GContext.cpp \
-    ../../src/GD3DContext.cpp \
+    #../../src/GD3DContext.cpp \
     ../../src/GData.cpp \
     ../../src/GDataArray.cpp \
     ../../src/GDataString.cpp \
-    ../../src/GJavaAPI.cpp \
-    ../../src/GJavaCAPI.cpp \
-    ../../src/GJavaClass.cpp \
-    ../../src/GJavaJAPI.cpp \
+    #../../src/GJavaAPI.cpp \
+    #../../src/GJavaCAPI.cpp \
+    #../../src/GJavaClass.cpp \
+    #../../src/GJavaJAPI.cpp \
     ../../src/GLog.cpp \
     ../../src/GMap.cpp \
     ../../src/GMatrix.cpp \
@@ -50,12 +50,17 @@ SOURCES += \
     ../../src/GVector.cpp \
     ../../src/GWindow.cpp \
     ../../src/GWString.cpp \
-    ../../src/GXCWnd.cpp \
-    ../../src/GXDirectX.cpp \
+    #../../src/GXCWnd.cpp \
+    #../../src/GXDirectX.cpp \
     ../../src/GXMath.cpp \
-    ../../src/GXOpenGL.cpp \
-    ../../src/GXPthread.cpp \
-    ../../src/glew.c
+    #../../src/GXOpenGL.cpp \
+    #../../src/GXPthread.cpp \
+    #../../src/glew.c
+
+win32 {
+    SOURCES += ../../src/GXPthread.cpp \
+        ../../src/GXOpenGL.cpp
+}
 
 HEADERS += \
     ../../src/GClass.h \

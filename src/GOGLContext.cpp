@@ -187,7 +187,7 @@ GOGLContext::GOGLContext()
 	m_Surface=EGL_NO_SURFACE;
 	m_Context=EGL_NO_CONTEXT;
 #elif defined(GX_OS_QT)
-
+    m_Context=NULL;
 #endif
 }
 
@@ -228,6 +228,8 @@ GOGLContext::~GOGLContext()
 	if(m_Surface!=EGL_NO_SURFACE) {
 		eglDestroySurface(g_Display,m_Surface);
 	}
+#elif defined(GX_OS_QT)
+    //delete m_Context;
 #endif
 }
 
@@ -328,16 +330,16 @@ bool GOGLContext::create(GWindow* win)
 	}
 	m_Context=eglCreateContext(g_Display, g_Config, shared, attribs_context);
 #elif defined(GX_OS_QT)
-
-    m_Context.setFormat(m_Window->m_OSWin->format());
+    m_Context=new QOpenGLContext();
+    m_Context->setFormat(m_Window->m_OSWin->format());
     GWindow *aw = GApplication::shared()->firstWindow();
     if (aw && aw != m_Window) {
-        m_Context.setShareContext(&GX_CAST_R(GOGLContext* , &aw->m_Context)->m_Context);
+        m_Context->setShareContext(GX_CAST_R(GOGLContext* , &aw->m_Context)->m_Context);
     }
-    bool res=m_Context.create();
-    res=m_Context.makeCurrent(m_Window->m_OSWin);
+    bool res=m_Context->create();
+    res=m_Context->makeCurrent(m_Window->m_OSWin);
     initializeOpenGLFunctions();
-    m_Context.doneCurrent();
+    m_Context->doneCurrent();
 #endif
 	return true;
 }
@@ -392,7 +394,8 @@ void GOGLContext::destroy()
 		m_Surface=EGL_NO_SURFACE;
 	}
 #elif defined(GX_OS_QT)
-    //暂时不销毁 m_Context.destroy();
+    //delete m_Context;
+    m_Context=NULL;
 #endif
 }
 
@@ -459,7 +462,7 @@ void GOGLContext::makeCurrent()
 #elif defined(GX_OS_ANDROID)
 	eglMakeCurrent(g_Display, m_Surface, m_Surface, m_Context);
 #elif defined(GX_OS_QT)
-    m_Context.makeCurrent(m_Window->m_OSWin);
+    m_Context->makeCurrent(m_Window->m_OSWin);
 #endif
 }
 void GOGLContext::makeClear()
@@ -473,7 +476,7 @@ void GOGLContext::makeClear()
 #elif defined(GX_OS_ANDROID)
 	eglMakeCurrent(g_Display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 #elif defined(GX_OS_QT)
-    m_Context.doneCurrent();
+    m_Context->doneCurrent();
 #endif
 }
 
@@ -521,7 +524,7 @@ void GOGLContext::renderEnd()
 #elif defined(GX_OS_ANDROID)
 	eglSwapBuffers(g_Display, m_Surface);
 #elif defined(GX_OS_QT)
-    m_Context.swapBuffers(m_Window->m_OSWin);
+    m_Context->swapBuffers(m_Window->m_OSWin);
 #endif
 	makeClear();
 }

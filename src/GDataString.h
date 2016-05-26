@@ -450,9 +450,9 @@ public:
 	}
 	void insertInt(gint idx, gint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
 #if GX_PTR_32BIT
-		insertInt32(v, radix, vsLen, fillChar);
+        insertInt32(idx, v, radix, vsLen, fillChar);
 #elif GX_PTR_64BIT
-		insertInt64(v, radix, vsLen, fillChar);
+        insertInt64(idx, v, radix, vsLen, fillChar);
 #endif
 	}
 	void setUint(guint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
@@ -471,9 +471,9 @@ public:
 	}
 	void insertUint(gint idx, guint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
 #if GX_PTR_32BIT
-		insertUint32(v, radix, vsLen, fillChar);
+        insertUint32(idx, v, radix, vsLen, fillChar);
 #elif GX_PTR_64BIT
-		insertUint64(v, radix, vsLen, fillChar);
+        insertUint64(idx, v, radix, vsLen, fillChar);
 #endif
 	}
 
