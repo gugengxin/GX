@@ -20,16 +20,18 @@ bool GData::galloc(void*& buf,guint size,guint toSize)
         }
     }
     else if (buf) {
-        void* p=realloc(buf, (size_t)toSize);
-        if (p) {
-            buf=p;
-        }
-        else {
-            return false;
+        if(size!=toSize) {
+            void* p=::realloc(buf, (size_t)toSize);
+            if (p) {
+                buf=p;
+            }
+            else {
+                return false;
+            }
         }
     }
     else {
-        buf=malloc(toSize);
+        buf=::malloc(toSize);
         return buf!=NULL;
     }
     return true;

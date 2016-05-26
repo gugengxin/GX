@@ -8,5 +8,8 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
+    GApplication::InitData initData(&w);
+    GApplication::main(AppDge::shared(),&initData);
+
     return a.exec();
 }

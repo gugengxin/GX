@@ -9,6 +9,7 @@
 #include "GWindow.h"
 #include "GSystem.h"
 #include "GLog.h"
+#include "GApplication.h"
 
 #if defined(GX_OS_WINDOWS)
 
@@ -321,6 +322,8 @@ void GWindow::androidRecreate(ANativeWindow* nw)
 	create(nw);
 }
 
+#elif defined(GX_OS_QT)
+
 #endif
 
 
@@ -345,6 +348,7 @@ GWindow::GWindow()
 	m_OSWinScale=0.0f;
 #elif defined(GX_OS_QT)
     m_OSWin=NULL;
+    m_Container=NULL;
 #endif
 }	
 
@@ -359,7 +363,8 @@ GWindow::~GWindow()
     	ANativeWindow_release(GX_CAST_R(ANativeWindow*,m_OSWin));
     }
 #elif defined(GX_OS_QT)
-    delete m_OSWin;
+    //delete m_OSWin;
+    //delete m_Container;
 #endif
 }
 
@@ -430,10 +435,36 @@ bool GWindow::create(void* osWinP)
 	GJavaJNIEnvAutoPtr jniEnv;
 	m_OSWinScale=GJavaCAPI::shared()->appGetDefaultWindowScale(jniEnv.get());
 #elif defined(GX_OS_QT)
-    m_OSWin=new QOpenGLWidget();
-    GX_CAST_R(QWidget*,m_OSWinP)->layout()->addWidget(m_OSWin);
+    m_OSWin=new QWindow();
+    m_OSWin->setSurfaceType(QWindow::OpenGLSurface);
+    GApplication::Delegate* dge = GApplication::sharedDelegate();
+    int depth = (int)dge->windowsSuggestedDepth();
+    int stencil = (int)dge->windowsSuggestedStencil();
+    int samples = (int)dge->windowsSuggestedSamples();
+    QSurfaceFormat sf;
+    sf.setDepthBufferSize(depth);
+    sf.setStencilBufferSize(stencil);
+    sf.setSamples(samples);
+    m_OSWin->setFormat(sf);
+    m_OSWin->create();
+    m_Container=QWidget::createWindowContainer(m_OSWin,NULL);
+
+    if(GX_CAST_R(QObject*,m_OSWinP)->inherits("QMainWindow")) {
+        GX_CAST_R(QMainWindow*,m_OSWinP)->setCentralWidget(m_Container);
+    }
+    else {
+        QLayout* lt=GX_CAST_R(QWidget*,m_OSWinP)->layout();
+        if(!lt) {
+            lt=new QHBoxLayout();
+            lt->addWidget(m_Container);
+            GX_CAST_R(QWidget*,m_OSWinP)->setLayout(lt);
+        }
+        else {
+            lt->addWidget(m_Container);
+        }
+    }
 #endif
-	return m_Context.create(this);
+    return m_Context.create(this);
 }
 
 gfloat32 GWindow::getWidth()

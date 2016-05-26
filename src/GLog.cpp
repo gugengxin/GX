@@ -48,18 +48,23 @@ static void _ConsoleFina()
 
 #ifdef GX_OS_ANDROID
 #include <android/log.h>
+#elif defined(GX_OS_QT)
+#include <QDebug>
 #else
 #include <stdio.h>
+#endif
+
+#if !defined(GX_OS_ANDROID)
 static const gchar* PrioString[] = {
-	"UNKNOWN",
-	"DEFAULT",
-	"VERBOSE",
-	"DEBUG",
-	"INFO",
-	"WARN",
-	"ERROR",
-	"FATAL",
-	"SILENT",
+    "UNKNOWN",
+    "DEFAULT",
+    "VERBOSE",
+    "DEBUG",
+    "INFO",
+    "WARN",
+    "ERROR",
+    "FATAL",
+    "SILENT",
 };
 #endif
 
@@ -75,8 +80,13 @@ void GLog::Print(gint prio, const gchar* tag, const gchar* fmt, ...)
 	va_start(args, fmt);
 	__android_log_vprint(prio, tag, fmt, args);
 	va_end(args);
+#elif defined(GX_OS_QT)
+    va_list args;
+    va_start(args, fmt);
+    qDebug()<<"["<<PrioString[prio]<<"]"<<tag<<" "<<QString().vsprintf(fmt,args);
+    va_end(args);
 #else
-	printf("[%-7s]", PrioString[prio]);
+    printf("[%s]", PrioString[prio]);
 	printf("%s ", tag);
 	va_list args;
 	va_start(args, fmt);
@@ -84,6 +94,10 @@ void GLog::Print(gint prio, const gchar* tag, const gchar* fmt, ...)
 	va_end(args);
 	printf("\n");
 #endif
+#else
+    GX_UNUSED(prio);
+    GX_UNUSED(tag);
+    GX_UNUSED(fmt);
 #endif
 }
 void GLog::Write(gint prio, const gchar* tag, const gchar* msg)
@@ -92,9 +106,15 @@ void GLog::Write(gint prio, const gchar* tag, const gchar* msg)
 	M_CONSOLE_INIT();
 #ifdef GX_OS_ANDROID
 	__android_log_write(prio, tag, msg);
+#elif defined(GX_OS_QT)
+    qDebug()<<"["<<PrioString[prio]<<"]"<<tag<<" "<<msg;
 #else
-	printf("[%-7s]%s %s\n", PrioString[prio], tag, msg);
+    printf("[%s]%s %s\n", PrioString[prio], tag, msg);
 #endif
+#else
+    GX_UNUSED(prio);
+    GX_UNUSED(tag);
+    GX_UNUSED(msg);
 #endif
 }
 

@@ -10,6 +10,7 @@ TARGET = GX
 TEMPLATE = lib
 CONFIG += staticlib
 DEFINES += GX_OS_QT
+DESTDIR = ../../product/qt
 
 SOURCES += \
     ../../src/GClass.cpp \
@@ -110,9 +111,16 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+win32 {
+    QMAKE_LIBFLAGS += /ignore:4221
+    INCLUDEPATH += $$PWD/../../external/pthread-win32/include
+    DEPENDPATH += $$PWD/../../external/pthread-win32/include
+    debug {
+        LIBS += -L$$PWD/../../external/pthread-win32/lib/win/vc120/x64/debug/ -lpthread_dll
+    }
+    release {
+        LIBS += -L$$PWD/../../external/pthread-win32/lib/win/vc120/x64/release/ -lpthread_dll
+    }
+}
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../external/pthread-win32/lib/win/vc120/x64/release/ -lpthread_dll
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../external/pthread-win32/lib/win/vc120/x64/debug/ -lpthread_dll
 
-INCLUDEPATH += $$PWD/../../external/pthread-win32/include
-DEPENDPATH += $$PWD/../../external/pthread-win32/include

@@ -18,7 +18,7 @@
 #include <android/native_window_jni.h>
 #include "com_gxengine_gx_GJavaJAPI.h"
 #elif defined(GX_OS_QT)
-#include <QOpenGLWidget>
+#include <QWindow>
 #endif
 
 class GWindow : public GObject {
@@ -75,7 +75,8 @@ private:
     gfloat32 m_OSWinScale;
 	ANativeWindow* m_OSWin;
 #elif defined(GX_OS_QT)
-    QOpenGLWidget* m_OSWin;
+    QWindow* m_OSWin;
+    QWidget* m_Container;
 #endif
 };
 

@@ -292,15 +292,21 @@ void GApplication::main(Delegate* dge, InitData* initData)
 			GX_ASSERT(0);
 			break;
 	}
+#elif defined(GX_OS_QT)
+    app->eventStart();
+    app->eventResume();
 #endif
 }
 
 
 GApplication::GApplication()
+#if defined(GX_OS_QT)
+        : QObject(NULL)
+#endif
 {
     m_Delegate=NULL;
 #if defined(GX_OS_APPLE)
-    m_Timer=[[_AppHelper alloc] initWithDelegate:this];
+    m_Helper=[[_AppHelper alloc] initWithDelegate:this];
 #elif defined(GX_OS_WINDOWS)
 	m_TimerID = 0;
 #endif
@@ -309,7 +315,7 @@ GApplication::GApplication()
 GApplication::~GApplication()
 {
 #if defined(GX_OS_APPLE)
-    [GX_CAST_R(_AppHelper*, m_Timer) release];
+    [GX_CAST_R(_AppHelper*, m_Helper) release];
 #elif defined(GX_OS_WINDOWS)
 	if (m_TimerID) {
 		timeKillEvent(m_TimerID);
@@ -319,7 +325,7 @@ GApplication::~GApplication()
 
 void GApplication::idle()
 {
-	/*
+    /*
 	static int i = 0;
 	GX_LOG_P1(PrioDEBUG, "GApplication", "idle:%d ", i++);
 	//const gchar* str = "\x41\x42\x43\x48\x65\x6C\x6C\x6F\x21\x20\xE4\xBD\xA0\xE5\xA5\xBD\xEF\xBC\x81\xE3\x82\x82\xE3\x81\x97\xE3\x82\x82\xE3\x81\x97\x21\x20\x41\x56\x41\x56\x41\x56\x41";
@@ -341,9 +347,12 @@ void GApplication::eventCreate()
 void GApplication::eventStart()
 {
 #if defined(GX_OS_APPLE)
-    [GX_CAST_R(_AppHelper*, m_Timer) start];
+    [GX_CAST_R(_AppHelper*, m_Helper) start];
 #elif defined(GX_OS_WINDOWS)
     createWinMsgWndAndStart();
+#elif defined(GX_OS_QT)
+    connect(&m_Timer,SIGNAL(timeout()),this,SLOT(idle()));
+    m_Timer.start(1000/60);
 #endif
 	m_Delegate->appStart(this);
 }
@@ -351,7 +360,7 @@ void GApplication::eventResume()
 {
 	m_Delegate->appResume(this);
 
-#if defined(GX_OS_APPLE) || defined(GX_OS_WINDOWS)
+#if defined(GX_OS_APPLE) || defined(GX_OS_WINDOWS) || defined(GX_OS_QT)
     setCanCreateWindow(m_InitData.getOSWindow());
 #endif
 }
@@ -364,9 +373,12 @@ void GApplication::eventStop()
 	m_Delegate->appStop(this);
     
 #if defined(GX_OS_APPLE)
-	[GX_CAST_R(_AppHelper*, m_Timer) stop];
+    [GX_CAST_R(_AppHelper*, m_Helper) stop];
 #elif defined(GX_OS_WINDOWS)
 	destroyWinMsgWnd();
+#elif defined(GX_OS_QT)
+    m_Timer.stop();
+    disconnect(&m_Timer,SIGNAL(timeout()),this,SLOT(idle()));
 #endif
 }
 void GApplication::eventDestroy()

@@ -32,7 +32,7 @@
 #endif
 
 #ifndef GX_DEBUG
-#if defined(_DEBUG) || defined(DEBUG) || (defined(GX_OS_QT) && !defined(QT_NO_DEBUG))
+#if defined(_DEBUG) || defined(DEBUG) || defined(QT_DEBUG)
 #define GX_DEBUG
 #endif
 #endif
@@ -49,6 +49,12 @@
 
 #if defined(GX_OS_WINDOWS) && GX_PTR_32BIT
 #define GX_ASM
+#endif
+
+#if defined(GX_OS_QT)
+#define GX_UNUSED(x) Q_UNUSED(x)
+#else
+#define GX_UNUSED(x)
 #endif
 
 

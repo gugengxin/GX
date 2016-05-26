@@ -17,10 +17,19 @@
 #include <android/input.h>
 #include <android/native_activity.h>
 #include "com_gxengine_gx_GJavaJAPI.h"
+#elif defined(GX_OS_QT)
+#include <QTimer>
 #endif
 class GWindow;
 
-class GApplication {
+class GApplication
+#if defined(GX_OS_QT)
+        : public QObject
+#endif
+{
+#if defined(GX_OS_QT)
+        Q_OBJECT
+#endif
 public:
 	class InitData {
 	public:
@@ -44,17 +53,19 @@ public:
 
     class Delegate {
     public:
-		virtual void appCreate(GApplication* application) {}
-		virtual void appStart(GApplication* application) {}
-		virtual void appResume(GApplication* application) {}
-		virtual void appPause(GApplication* application) {}
-		virtual void appStop(GApplication* application) {}
-		virtual void appDestroy(GApplication* application) {}
+        virtual void appCreate(GApplication* application) {GX_UNUSED(application)}
+        virtual void appStart(GApplication* application) {GX_UNUSED(application)}
+        virtual void appResume(GApplication* application) {GX_UNUSED(application)}
+        virtual void appPause(GApplication* application) {GX_UNUSED(application)}
+        virtual void appStop(GApplication* application) {GX_UNUSED(application)}
+        virtual void appDestroy(GApplication* application) {GX_UNUSED(application)}
 
 		virtual GWindow* appCanCreateWindow(GApplication* application,void* osWindow) {
+            GX_UNUSED(application)
+            GX_UNUSED(osWindow)
 			return NULL;
 		}
-		virtual void appReceivedMemoryWarning(GApplication* application){}
+        virtual void appReceivedMemoryWarning(GApplication* application){GX_UNUSED(application)}
 
 		virtual gint windowsSuggestedSamples() {
 			return 4;
@@ -74,8 +85,14 @@ public:
 private:
     GApplication();
     ~GApplication();
-    
+
+#if defined(GX_OS_QT)
+private slots:
     void idle();
+private:
+#else
+    void idle();
+#endif
 
 	void eventCreate();
 	void eventStart();
@@ -108,7 +125,7 @@ private:
     
 #if defined(GX_OS_APPLE)
     friend class _AppBridge;
-    void* m_Timer;
+    void* m_Helper;
 #elif defined(GX_OS_WINDOWS)
 	static LRESULT CALLBACK winMsgWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	static void CALLBACK winTimerCallBack(UINT uTimerID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2);
@@ -136,6 +153,8 @@ private:
             (JNIEnv *, jclass);
 	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasCreated
 			(JNIEnv *, jclass, jobject);
+#elif defined(GX_OS_QT)
+    QTimer m_Timer;
 #endif
 };
 

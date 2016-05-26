@@ -30,6 +30,7 @@ static inline void _ObjExDataInit(_ObjExData* om)
 
 static inline void _ObjExDataFina(_ObjExData* om)
 {
+    GX_UNUSED(om)
 }
 
 

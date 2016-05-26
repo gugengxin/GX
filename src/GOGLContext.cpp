@@ -187,7 +187,7 @@ GOGLContext::GOGLContext()
 	m_Surface=EGL_NO_SURFACE;
 	m_Context=EGL_NO_CONTEXT;
 #elif defined(GX_OS_QT)
-    m_Context=NULL;
+
 #endif
 }
 
@@ -328,9 +328,17 @@ bool GOGLContext::create(GWindow* win)
 	}
 	m_Context=eglCreateContext(g_Display, g_Config, shared, attribs_context);
 #elif defined(GX_OS_QT)
-    m_Context=m_Window->m_OSWin->context();
+
+    m_Context.setFormat(m_Window->m_OSWin->format());
+    GWindow *aw = GApplication::shared()->firstWindow();
+    if (aw && aw != m_Window) {
+        m_Context.setShareContext(&GX_CAST_R(GOGLContext* , &aw->m_Context)->m_Context);
+    }
+    bool res=m_Context.create();
+    res=m_Context.makeCurrent(m_Window->m_OSWin);
+    initializeOpenGLFunctions();
+    m_Context.doneCurrent();
 #endif
-    
 	return true;
 }
 
@@ -384,7 +392,7 @@ void GOGLContext::destroy()
 		m_Surface=EGL_NO_SURFACE;
 	}
 #elif defined(GX_OS_QT)
-    m_Context=NULL;
+    //暂时不销毁 m_Context.destroy();
 #endif
 }
 
@@ -434,6 +442,8 @@ bool GOGLContext::resize(gfloat32 width,gfloat32 height) {
 	}
 	return true;
 #elif defined(GX_OS_QT)
+    GX_UNUSED(width)
+    GX_UNUSED(height)
     return true;
 #endif
 }
@@ -449,7 +459,7 @@ void GOGLContext::makeCurrent()
 #elif defined(GX_OS_ANDROID)
 	eglMakeCurrent(g_Display, m_Surface, m_Surface, m_Context);
 #elif defined(GX_OS_QT)
-    m_Window->m_OSWin->makeCurrent();
+    m_Context.makeCurrent(m_Window->m_OSWin);
 #endif
 }
 void GOGLContext::makeClear()
@@ -463,7 +473,7 @@ void GOGLContext::makeClear()
 #elif defined(GX_OS_ANDROID)
 	eglMakeCurrent(g_Display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 #elif defined(GX_OS_QT)
-    m_Window->m_OSWin->doneCurrent();
+    m_Context.doneCurrent();
 #endif
 }
 
@@ -510,6 +520,8 @@ void GOGLContext::renderEnd()
     [GX_CAST_R(NSOpenGLContext*,m_Context) flushBuffer];
 #elif defined(GX_OS_ANDROID)
 	eglSwapBuffers(g_Display, m_Surface);
+#elif defined(GX_OS_QT)
+    m_Context.swapBuffers(m_Window->m_OSWin);
 #endif
 	makeClear();
 }

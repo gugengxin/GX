@@ -12,11 +12,16 @@
 #include <EGL/egl.h>
 #elif defined(GX_OS_QT)
 #include <QOpenGLContext>
+#include <QOpenGLFunctions>
 #endif
 
 class GWindow;
 
-class GOGLContext {
+class GOGLContext
+#if defined(GX_OS_QT)
+        : protected QOpenGLFunctions
+#endif
+{
 protected:
     GOGLContext();
     ~GOGLContext();
@@ -54,7 +59,7 @@ private:
 	EGLSurface m_Surface;
 	EGLContext m_Context;
 #elif defined(GX_OS_QT)
-    QOpenGLContext* m_Context;
+    QOpenGLContext m_Context;
 #endif
 };
 
