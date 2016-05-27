@@ -187,30 +187,10 @@ bool GCSLWBridgeVar::compile(GCSLTokenReader &reader, GCSLError *errOut)
     }
 
     token=reader.getToken();
-    if(token->getType()==GCSLToken::T_M_Brackets_L) {
-        token=reader.getToken();
-        if(token->getType()==GCSLToken::T_Integer) {
-            m_SemanticIndex=token->getID().toInt();
+    if(token->getType()==GCSLToken::T_Integer) {
+        m_SemanticIndex=token->getID().toInt();
 
-            token=reader.getToken();
-            if(token->getType()==GCSLToken::T_M_Brackets_R) {
-                token=reader.getToken();
-            }
-            else {
-                if(errOut) {
-                    errOut->setCode(GCSLError::C_UnexceptToken);
-                    errOut->setRC(token);
-                }
-                return false;
-            }
-        }
-        else {
-            if(errOut) {
-                errOut->setCode(GCSLError::C_UnexceptToken);
-                errOut->setRC(token);
-            }
-            return false;
-        }
+        token=reader.getToken();
     }
 
     if(!token->isSemicolon()) {

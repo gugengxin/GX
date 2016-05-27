@@ -40,6 +40,7 @@ public slots:
 
 private:
     QString                 m_Text;
+    QList<GCSLWord*>        m_WordList;
     QMap<QString,GCSLWord*> m_WordMap;
     QList<GCSLToken*>       m_Tokens;
     GCSLWRoot*              m_Writer;

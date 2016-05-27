@@ -24,11 +24,21 @@ void GCSLReader::ungetChar()
     m_Column--;
     if(m_Column<0) {
         m_Row--;
+        m_Column=m_ColList.last();
+        m_ColList.removeLast();
+    }
+}
+
+void GCSLReader::ungetChar(int num)
+{
+    for(int i=0;i<num;i++) {
+        ungetChar();
     }
 }
 
 void GCSLReader::wrap()
 {
     m_Row++;
+    m_ColList.append(m_Column);
     m_Column=-1;
 }

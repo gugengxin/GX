@@ -13,26 +13,26 @@ gxsl(GX Shading Language) 将被翻译成 glsl或hlsl
 vs {
     layout {
         high vec4 pos:POSITION;
-        medi vec2 texCoord:TEXCOORD[0];
+        medi vec2 texCoord:TEXCOORD0;
         #if MASK
-        medi vec2 texCoordMask:TEXCOORD[1];
+        medi vec2 texCoordMask:TEXCOORD1;
         #end
-        lowp vec4 color:COLOR[0];
+        lowp vec4 color:COLOR0;
         #if COLOR_MASK
-        lowp vec4 colorMask:COLOR[1];
+        lowp vec4 colorMask:COLOR1;
         #end
     }
     buffer {
         high mat4 mvpMatrix;
     }
     bridge {
-        medi vec2 v_texCoord:TEXCOORD[0];
+        medi vec2 v_texCoord:TEXCOORD0;
         #if MASK
-        medi vec2 v_texCoord_mask:TEXCOORD[1];
+        medi vec2 v_texCoord_mask:TEXCOORD1;
         #end
-        lowp vec4 v_color:COLOR[0];
+        lowp vec4 v_color:COLOR0;
         #if COLOR_MASK
-        lowp vec4 v_color_mask:COLOR[1];
+        lowp vec4 v_color_mask:COLOR1;
         #end
     }
 
@@ -153,14 +153,17 @@ void GCSL::clean()
     for(QMap<QString,GCSLWord*>::Iterator it=m_WordMap.begin();it!=m_WordMap.end();it++) {
         delete it.value();
     }
+    m_WordList.clear();
     m_WordMap.clear();
     m_Text.clear();
 }
 
 void GCSL::initWords()
 {
-#define  M_WORD_MAP_ADD(t,s) m_WordMap.insert(QString(s),new GCSLWord(GCSLToken::t,s,this))
-#define  M_WORD_MAP_ADD_OID(t,s,gl,gles,hl) m_WordMap.insert(QString(s),new GCSLWord(GCSLToken::t,s,gl,gles,hl,this))
+#define M_WORD_MAP_ADD(t,s) \
+    {GCSLWord* word=new GCSLWord(GCSLToken::t,s,this);m_WordList.append(word);m_WordMap.insert(QString(s),word);}
+#define M_WORD_MAP_ADD_OID(t,s,gl,gles,hl) \
+    {GCSLWord* word=new GCSLWord(GCSLToken::t,s,gl,gles,hl,this);m_WordList.append(word);m_WordMap.insert(QString(s),word);}
 
     M_WORD_MAP_ADD(T_Semicolon     , ";"           );
     M_WORD_MAP_ADD(T_S_Brackets_L  , "("           );
@@ -375,12 +378,28 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
     if( ch.isLetter() || ch=='_' || ch=='#' ) {
         QString str;
         parse_ID(ch,reader,str);
-        GCSLWord* p=m_WordMap[str];
-        if(!p) {
-            p=new GCSLWord(GCSLToken::T_Variable,str,this);
-            m_WordMap[str]=p;
+
+        bool notFound=true;
+        for(int i=(int)GCSLToken::T_POSITION;i<=(int)GCSLToken::T_COLOR;i++) {
+            QString& wid=m_WordList[i]->getID();
+            if(str.startsWith(wid) && (str.length()<=wid.length() || str[wid.length()].isNumber())) {
+                tokenOut->setType((GCSLToken::Type)i,wid);
+
+                reader.ungetChar(str.length()-wid.length()+1);
+                ch=reader.getChar();
+                notFound=false;
+                break;
+            }
         }
-        tokenOut->setType(p->getTokenType(),str);
+
+        if(notFound) {
+            GCSLWord* p=m_WordMap[str];
+            if(!p) {
+                p=new GCSLWord(GCSLToken::T_Variable,str,this);
+                m_WordMap[str]=p;
+            }
+            tokenOut->setType(p->getTokenType(),str);
+        }
     }
     else if (ch.isNumber()) {
         QString str;

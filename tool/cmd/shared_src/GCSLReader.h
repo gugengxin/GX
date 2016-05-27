@@ -2,6 +2,7 @@
 #define GCSLREADER_H
 
 #include <QObject>
+#include <QList>
 
 class GCSLReader : public QObject
 {
@@ -11,6 +12,7 @@ public:
 
     QChar getChar();
     void ungetChar();
+    void ungetChar(int num);
 
     void wrap();
 
@@ -26,6 +28,7 @@ private:
     int m_CurIdx;
     int m_Row;
     int m_Column;
+    QList<int> m_ColList;
 };
 
 #endif // GCSLREADER_H
