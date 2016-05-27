@@ -3,13 +3,7 @@
 
 bool GCSLWHT::compile(GCSLWriter *parent, GCSLToken *token, GCSLTokenReader &reader, GCSLError *errOut)
 {
-    if(token->getType()==GCSLToken::T_HT_MDef) {
-        GCSLWHTMDef* wr=new GCSLWHTMDef(parent);
-        parent->addMainWHTDef(wr);
-
-        return wr->compile(reader,errOut);
-    }
-    else if(token->getType()==GCSLToken::T_HT_Def) {
+    if(token->getType()==GCSLToken::T_HT_Def) {
         GCSLWHTDef* wr=new GCSLWHTDef(parent);
         parent->addSubWrite(wr);
 
@@ -42,60 +36,6 @@ bool GCSLWHT::compile(GCSLWriter *parent, GCSLToken *token, GCSLTokenReader &rea
 
     return false;
 }
-
-
-GCSLWHTMDef::GCSLWHTMDef(QObject *parent) :
-    GCSLWriter(parent)
-{
-}
-
-bool GCSLWHTMDef::compile(GCSLTokenReader &reader, GCSLError *errOut)
-{
-    GCSLToken* token=reader.getToken();
-
-    if(token->getType()==GCSLToken::T_Variable) {
-        m_Name=token->getID();
-    }
-    else {
-        if(errOut) {
-            errOut->setCode(GCSLError::C_UnexceptToken);
-            errOut->setRC(token);
-        }
-        return false;
-    }
-
-    //    token=reader.getToken();
-    //    if(token->getType()==GCSLToken::T_Integer) {
-    //        m_Index=token->getID().toInt();
-    //    }
-
-    if( !reader.currentIsWarpped() ) {
-        if(errOut) {
-            errOut->setCode(GCSLError::C_NeedWarp);
-            errOut->setRC(token);
-        }
-        return false;
-    }
-
-    return true;
-}
-
-bool GCSLWHTMDef::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *)
-{
-    strOut.append("#define ");
-    strOut.append(m_Name);
-    strOut.append(param.strWarp);
-
-    return true;
-}
-
-bool GCSLWHTMDef::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
-{
-    return makeVS(param,strOut,errOut);
-}
-
-
-
 
 
 

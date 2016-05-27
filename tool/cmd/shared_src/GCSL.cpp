@@ -7,20 +7,13 @@
 gxsl(GX Shading Language) 将被翻译成 glsl或hlsl
 
 例子：
-#mdef MASK
-#mdef COLOR_MASK
-
 vs {
     layout {
         high vec4 pos:POSITION;
         medi vec2 texCoord:TEXCOORD0;
-        #if MASK
         medi vec2 texCoordMask:TEXCOORD1;
-        #end
         lowp vec4 color:COLOR0;
-        #if COLOR_MASK
         lowp vec4 colorMask:COLOR1;
-        #end
     }
     buffer {
         high mat4 mvpMatrix;
@@ -190,7 +183,6 @@ void GCSL::initWords()
     M_WORD_MAP_ADD(T_Or            , "||"          );
     M_WORD_MAP_ADD(T_Not           , "!"           );
     M_WORD_MAP_ADD(T_Colon         , ":"           );
-    M_WORD_MAP_ADD_OID(T_HT_MDef   , "#mdef"       ,"#define"   ,"#define"  ,"#define"  );
     M_WORD_MAP_ADD_OID(T_HT_Def    , "#def"        ,"#define"   ,"#define"  ,"#define"  );
     M_WORD_MAP_ADD_OID(T_HT_If     , "#if"         ,"#if"       ,"#if"      ,"#if"      );
     M_WORD_MAP_ADD_OID(T_HT_Else   , "#else"       ,"#else"     ,"#else"    ,"#else"    );

@@ -9,20 +9,6 @@ public:
     static bool compile(GCSLWriter* parent,GCSLToken* token,GCSLTokenReader& reader,GCSLError* errOut);
 };
 
-class GCSLWHTMDef : public GCSLWriter
-{
-    Q_OBJECT
-public:
-    GCSLWHTMDef(QObject* parent);
-
-    virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
-    virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
-    virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
-
-private:
-    QString m_Name;
-};
-
 class GCSLWHTDef : public GCSLWriter
 {
     Q_OBJECT

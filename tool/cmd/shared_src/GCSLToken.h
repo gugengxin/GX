@@ -36,7 +36,6 @@ public:
         T_Or            , // "||"
         T_Not           , // "!"
         T_Colon         , // ":"
-        T_HT_MDef       , // "#mdef"
         T_HT_Def        , // "#def"
         T_HT_If         , // "#if"
         T_HT_Else       , // "#else"
@@ -110,8 +109,7 @@ public:
     }
 
     bool isHT() {
-        return m_Type==T_HT_MDef    ||
-               m_Type==T_HT_Def     ||
+        return m_Type==T_HT_Def     ||
                m_Type==T_HT_If      ||
                m_Type==T_HT_Else    ||
                m_Type==T_HT_Elif    ||
@@ -147,7 +145,7 @@ public:
         return m_Type==T_Tex1d || m_Type==T_Tex2d;
     }
     bool isSymbol() {
-        return m_Type<T_HT_MDef;
+        return m_Type<T_HT_Def;
     }
 
 private:

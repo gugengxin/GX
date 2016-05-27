@@ -11,13 +11,6 @@ GCSLWRoot::GCSLWRoot(QObject* parent) :
 }
 
 
-void GCSLWRoot::addMainWHTDef(GCSLWHTMDef *v)
-{
-    v->setParent(this);
-    m_MainWHTDefs.append(v);
-}
-
-
 bool GCSLWRoot::compile(GCSLTokenReader& reader,GCSLError* errOut)
 {
     while(true) {
@@ -90,11 +83,6 @@ bool GCSLWRoot::compile(GCSLTokenReader& reader,GCSLError* errOut)
 
 bool GCSLWRoot::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
 {
-    for(int i=0;i<m_MainWHTDefs.length();i++) {
-        if(!m_MainWHTDefs[i]->makeVS(param,strOut,errOut)) {
-            return false;
-        }
-    }
     for(int i=0;i<getSubWriteCount();i++) {
         if(!getSubWrites(i)->makeVS(param,strOut,errOut)) {
             return false;
@@ -105,11 +93,6 @@ bool GCSLWRoot::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError 
 
 bool GCSLWRoot::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
 {
-    for(int i=0;i<m_MainWHTDefs.length();i++) {
-        if(!m_MainWHTDefs[i]->makeFP(param,strOut,errOut)) {
-            return false;
-        }
-    }
     for(int i=0;i<getSubWriteCount();i++) {
         if(!getSubWrites(i)->makeFP(param,strOut,errOut)) {
             return false;

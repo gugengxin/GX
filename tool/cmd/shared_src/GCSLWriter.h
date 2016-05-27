@@ -9,7 +9,6 @@
 
 
 class GCSL;
-class GCSLWHTMDef;
 
 class GCSLWriter : public QObject
 {
@@ -42,7 +41,6 @@ public:
         v->setParent(this);
         m_SubWrites.append(v);
     }
-    virtual void addMainWHTDef(GCSLWHTMDef *v);
     void insertSubWrites(int idx,GCSLWriter* v) {
         v->setParent(this);
         m_SubWrites.insert(idx,v);

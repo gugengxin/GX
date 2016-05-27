@@ -10,8 +10,6 @@ class GCSLWRoot : public GCSLWriter
 public:
     GCSLWRoot(QObject *parent);
 
-    virtual void addMainWHTDef(GCSLWHTMDef* v);
-
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut);
     virtual bool makeVS(MakeParam& param,QString& strOut,GCSLError* errOut);
     virtual bool makeFP(MakeParam& param,QString& strOut,GCSLError* errOut);
@@ -19,7 +17,7 @@ public:
 
 
 private:
-    QList<GCSLWHTMDef*> m_MainWHTDefs;
+
 };
 
 #endif // GCSLWROOT_H
