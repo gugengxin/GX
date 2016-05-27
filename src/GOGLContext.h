@@ -36,6 +36,9 @@ public:
 public:
 	void makeCurrent();
 	void makeClear();
+protected:
+	void makeShader();
+	void makeTexture();
 
 private:
 	GWindow* m_Window;

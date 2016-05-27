@@ -13,6 +13,7 @@
 
 static pthread_mutex_t g_Mutex;
 static pthread_once_t key_once=PTHREAD_ONCE_INIT;
+
 static void keyCreate()
 {
     pthread_mutex_init(&g_Mutex, NULL);
@@ -20,7 +21,6 @@ static void keyCreate()
 
 typedef struct __ObjExData {
 	gint32 refCount;
-	//pthread_mutex_t mutex;
 } _ObjExData;
 
 static inline void _ObjExDataInit(_ObjExData* om)
@@ -155,15 +155,6 @@ bool GObject::isEqual(GObject* obj)
 {
     return this==obj;
 }
-
-//void GObject::exLock()
-//{
-//	_ObjMutexLock(this);
-//}
-//void GObject::exUnlock()
-//{
-//	_ObjMutexUnlock(this);
-//}
 
 
 

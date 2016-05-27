@@ -44,9 +44,6 @@ public:
 public:
     virtual guint getHash();
     virtual bool isEqual(GObject* obj);
-public:
-//	void exLock();
-//	void exUnlock();
 };
 
 typedef GObject GO;

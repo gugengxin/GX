@@ -42,9 +42,6 @@
     <ClCompile Include="..\..\src\GAutoreleasePool.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GXCWnd.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GLog.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -162,6 +159,15 @@
     <ClCompile Include="..\..\src\GShader.cpp">
       <Filter>src\Window\shader</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GXCWnd.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDShader.cpp">
+      <Filter>src\Window\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GOShader.cpp">
+      <Filter>src\Window\shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -183,9 +189,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GAutoreleasePool.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GXCWnd.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GLog.h">
@@ -318,6 +321,15 @@
       <Filter>src\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GShader.h">
+      <Filter>src\Window\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXCWnd.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDShader.h">
+      <Filter>src\Window\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GOShader.h">
       <Filter>src\Window\shader</Filter>
     </ClInclude>
   </ItemGroup>

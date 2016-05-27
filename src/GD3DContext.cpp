@@ -316,11 +316,12 @@ void GD3DContext::renderBegin()
 {
 	makeCurrent();
 
+	const FLOAT color[] = {1.0f,0.0f,1.0f,1.0f};
+	device->ClearRenderTargetView(m_RenderTargetView, color);
+	device->ClearDepthStencilView(m_DepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 }
 void GD3DContext::renderEnd()
 {
-
-
 	m_SwapChain->Present(0,0);
 	makeClear();
 }
@@ -329,17 +330,12 @@ void GD3DContext::renderEnd()
 void GD3DContext::makeCurrent()
 {
 	ID3D10Device* device = GX::D3DDevice();
-
 	// 设置深度模版状态，使其生效 
 	device->OMSetDepthStencilState(m_DepthStencilState, 1);
 	// 绑定渲染目标视图和深度缓冲到渲染管线. 
 	device->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
 	//设置光栅化状态，使其生效 
 	device->RSSetState(m_RasterState);
-
-	const FLOAT color[] = {1.0f,0.0f,1.0f,1.0f};
-	device->ClearRenderTargetView(m_RenderTargetView, color);
-	device->ClearDepthStencilView(m_DepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 }
 
 void GD3DContext::makeClear()

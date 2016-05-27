@@ -108,12 +108,14 @@ static NSOpenGLPixelFormat* CreatePF()
 
 #elif defined(GX_OS_ANDROID)
 
-static EGLDisplay g_Display=NULL;
-static EGLConfig g_Config=NULL;
+static EGLDisplay 	g_Display=EGL_NO_DISPLAY;
+static EGLConfig 	g_Config=NULL;
+static EGLSurface 	g_Surface=EGL_NO_SURFACE;
+static EGLContext 	g_Context=EGL_NO_CONTEXT;
 
 static void CreateDC()
 {
-	if(!g_Display) {
+	if(g_Display==EGL_NO_DISPLAY) {
 		GApplication::Delegate* appDge=GApplication::sharedDelegate();
 		EGLint depth = (EGLint)appDge->windowsSuggestedDepth();
 		EGLint stencil = (EGLint)appDge->windowsSuggestedStencil();
@@ -222,10 +224,10 @@ GOGLContext::~GOGLContext()
 #endif
     [GX_CAST_R(id, m_Context) release];
 #elif defined(GX_OS_ANDROID)
-    if(m_Context!=EGL_NO_CONTEXT) {
+    if(m_Context!=EGL_NO_CONTEXT && m_Context!=g_Context) {
 		eglDestroyContext(g_Display, m_Context);
 	}
-	if(m_Surface!=EGL_NO_SURFACE) {
+	if(m_Surface!=EGL_NO_SURFACE && m_Surface!=g_Surface) {
 		eglDestroySurface(g_Display,m_Surface);
 	}
 #elif defined(GX_OS_QT)
@@ -233,14 +235,13 @@ GOGLContext::~GOGLContext()
 #endif
 }
 
-bool GOGLContext::create(GWindow* win)
-{
+bool GOGLContext::create(GWindow* win) {
 	m_Window = win;
 
 #if defined(GX_OS_WINDOWS)
-	m_DC = ::GetDC(M_OS_WND(m_Window->getOSWindow()));
-	ConfigDC(m_DC);
-	m_Context = ::wglCreateContext(m_DC);
+    m_DC = ::GetDC(M_OS_WND(m_Window->getOSWindow()));
+    ConfigDC(m_DC);
+    m_Context = ::wglCreateContext(m_DC);
     //shared
     GWindow* aw = GApplication::shared()->firstWindow();
     if (aw && aw != m_Window) {
@@ -292,7 +293,7 @@ bool GOGLContext::create(GWindow* win)
     [EAGLContext setCurrentContext:nil];
     
     resize(0, 0);
-    
+
 #elif defined(GX_OS_MACOSX)
     NSOpenGLPixelFormat *pixelFormat=nil;
     NSOpenGLContext* shared=nil;
@@ -323,12 +324,20 @@ bool GOGLContext::create(GWindow* win)
 			EGL_CONTEXT_CLIENT_VERSION, 2,
 			EGL_NONE
 	};
-	EGLContext shared=EGL_NO_CONTEXT;
-	GWindow *aw = GApplication::shared()->firstWindow();
-	if (aw && aw != m_Window) {
-		shared = GX_CAST_R(EGLContext, GX_CAST_R(GOGLContext * , &aw->m_Context)->m_Context);
+	EGLContext shared = g_Context;
+	if (shared == EGL_NO_CONTEXT) {
+		GWindow *aw = GApplication::shared()->firstWindow();
+		if (aw && aw != m_Window) {
+			shared = GX_CAST_R(EGLContext, GX_CAST_R(GOGLContext * , &aw->m_Context)->m_Context);
+		}
 	}
-	m_Context=eglCreateContext(g_Display, g_Config, shared, attribs_context);
+	m_Context = eglCreateContext(g_Display, g_Config, shared, attribs_context);
+
+	if (g_Surface==EGL_NO_SURFACE) {
+		g_Surface = m_Surface;
+		g_Context = m_Context;
+	}
+
 #elif defined(GX_OS_QT)
     m_Context=new QOpenGLContext();
     m_Context->setFormat(m_Window->m_OSWin->format());
@@ -386,11 +395,15 @@ void GOGLContext::destroy()
     m_Context=NULL;
 #elif defined(GX_OS_ANDROID)
 	if(m_Context!=EGL_NO_CONTEXT) {
-		eglDestroyContext(g_Display, m_Context);
+		if(m_Context!=g_Context) {
+			eglDestroyContext(g_Display, m_Context);
+		}
 		m_Context=EGL_NO_CONTEXT;
 	}
 	if(m_Surface!=EGL_NO_SURFACE) {
-		eglDestroySurface(g_Display,m_Surface);
+		if(m_Surface!=g_Surface) {
+			eglDestroySurface(g_Display, m_Surface);
+		}
 		m_Surface=EGL_NO_SURFACE;
 	}
 #elif defined(GX_OS_QT)
@@ -477,6 +490,23 @@ void GOGLContext::makeClear()
 	eglMakeCurrent(g_Display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 #elif defined(GX_OS_QT)
     m_Context->doneCurrent();
+#endif
+}
+
+void GOGLContext::makeShader()
+{
+#if defined(GX_OS_ANDROID)
+	eglMakeCurrent(g_Display, g_Surface, g_Surface, g_Context);
+#else
+	makeCurrent();
+#endif
+}
+void GOGLContext::makeTexture()
+{
+#if defined(GX_OS_ANDROID)
+	eglMakeCurrent(g_Display, g_Surface, g_Surface, g_Context);
+#else
+	makeCurrent();
 #endif
 }
 

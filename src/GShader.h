@@ -1,8 +1,14 @@
 ﻿#pragma once
+
+#include "GXPrefix.h"
+
 class GShader
 {
 public:
 	GShader();
-	~GShader();
+	virtual ~GShader();
+
+private:
+	
 };
 

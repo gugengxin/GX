@@ -12,6 +12,8 @@
 #include "GD3DContext.h"
 #endif
 
+#include "GShader.h"
+
 class GContext : public
 #if defined(GX_OPENGL)
                  GOGLContext
@@ -21,10 +23,16 @@ class GContext : public
 {
 	friend class GWindow;
 private:
+	enum ShaderID {
+		SRID_Graphics=0,
+
+		SRIDCount,
+	};
+private:
     GContext();
     ~GContext();
 private:
-
+	GShader* m_Shaders[SRIDCount];
 };
 
 

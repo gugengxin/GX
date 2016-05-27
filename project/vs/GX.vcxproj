@@ -30,6 +30,7 @@
     <ClCompile Include="..\..\src\GData.cpp" />
     <ClCompile Include="..\..\src\GDataArray.cpp" />
     <ClCompile Include="..\..\src\GDataString.cpp" />
+    <ClCompile Include="..\..\src\GDShader.cpp" />
     <ClCompile Include="..\..\src\GJavaAPI.cpp" />
     <ClCompile Include="..\..\src\GJavaCAPI.cpp" />
     <ClCompile Include="..\..\src\GJavaClass.cpp" />
@@ -44,6 +45,7 @@
     <ClCompile Include="..\..\src\GNumber.cpp" />
     <ClCompile Include="..\..\src\GObject.cpp" />
     <ClCompile Include="..\..\src\GOGLContext.cpp" />
+    <ClCompile Include="..\..\src\GOShader.cpp" />
     <ClCompile Include="..\..\src\GOWHash.cpp" />
     <ClCompile Include="..\..\src\GPieceData.cpp" />
     <ClCompile Include="..\..\src\GPtr.cpp" />
@@ -77,6 +79,7 @@
     <ClInclude Include="..\..\src\GData.h" />
     <ClInclude Include="..\..\src\GDataArray.h" />
     <ClInclude Include="..\..\src\GDataString.h" />
+    <ClInclude Include="..\..\src\GDShader.h" />
     <ClInclude Include="..\..\src\GJavaAPI.h" />
     <ClInclude Include="..\..\src\GJavaCAPI.h" />
     <ClInclude Include="..\..\src\GJavaClass.h" />
@@ -93,6 +96,7 @@
     <ClInclude Include="..\..\src\GNumber.h" />
     <ClInclude Include="..\..\src\GObject.h" />
     <ClInclude Include="..\..\src\GOGLContext.h" />
+    <ClInclude Include="..\..\src\GOShader.h" />
     <ClInclude Include="..\..\src\GOWHash.h" />
     <ClInclude Include="..\..\src\GPieceData.h" />
     <ClInclude Include="..\..\src\GPtr.h" />
