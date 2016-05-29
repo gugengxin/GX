@@ -1,4 +1,6 @@
 ﻿#include "GOShader.h"
+#if defined(GX_OPENGL)
+#include "GLog.h"
 
 
 GOShader::GOShader()
@@ -17,31 +19,16 @@ GOShader::~GOShader()
 
 bool GOShader::load(const gchar* srcVS,gint vsLen,const gchar* srcFP,gchar fpLen)
 {
-    GAString strMarco;
-
-    GXShaderMacro* pSM=(GXShaderMacro*)marco;
-    while (pSM->name) {
-        strMarco.AppendFormat(40, "#define %s\n",pSM->name);
-        pSM++;
-    }
-
-    gxInt smLen=strMarco.GetLength();
-
-    strMarco.AppendString(srcVS, vsLen);
-
     GLuint vertShader=0;
 
-    if (!this->CompileShader(&vertShader,GL_VERTEX_SHADER,(const GLchar*)strMarco.GetDataPtr()))
+    if (!this->compileShader(&vertShader,GL_VERTEX_SHADER,(const GLchar*)srcVS))
     {
         return false;
     }
 
     GLuint fragShader=0;
 
-    strMarco.CutOff(smLen);
-    strMarco.AppendString(srcPS, psLen);
-
-    if (!this->CompileShader(&fragShader,GL_FRAGMENT_SHADER,(const GLchar*)strMarco.GetDataPtr()))
+    if (!this->compileShader(&fragShader,GL_FRAGMENT_SHADER,(const GLchar*)srcFP))
     {
         if (vertShader)
         {
@@ -59,10 +46,10 @@ bool GOShader::load(const gchar* srcVS,gint vsLen,const gchar* srcFP,gchar fpLen
     // Attach fragment shader to program
     glAttachShader(m_Program, fragShader);
 
-    this->BindAttribLocations();
+    this->bindAttribLocations();
 
     // Link program
-    if (!this->LinkProgram(m_Program))
+    if (!this->linkProgram(m_Program))
     {
         if (vertShader)
         {
@@ -83,7 +70,7 @@ bool GOShader::load(const gchar* srcVS,gint vsLen,const gchar* srcFP,gchar fpLen
         return false;
     }
 
-    this->BindUniformLocations();
+    this->bindUniformLocations();
 
     // Release vertex and fragment shaders
     if (vertShader)
@@ -93,3 +80,83 @@ bool GOShader::load(const gchar* srcVS,gint vsLen,const gchar* srcFP,gchar fpLen
 
     return true;
 }
+
+bool GOShader::compileShader(GLuint* shader, GLenum type, const GLchar* pGLchars)
+{
+	GLint status;
+
+	*shader = glCreateShader(type);
+	glShaderSource(*shader, 1, &pGLchars, NULL);
+	glCompileShader(*shader);
+
+#if defined(GX_DEBUG)
+	GLint logLength;
+	glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
+	if (logLength > 1)
+	{
+		GLchar *log = (GLchar *)malloc((size_t)logLength);
+		glGetShaderInfoLog(*shader, logLength, &logLength, log);
+		GX_LOG_P1(PrioDEBUG, "GOShader", "compileShader:%s", log);
+		free(log);
+	}
+#endif
+
+	glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
+	if (status == 0)
+	{
+		glDeleteShader(*shader);
+		*shader = 0;
+		return false;
+	}
+
+	return true;
+}
+bool GOShader::linkProgram(GLuint prog)
+{
+	GLint status;
+
+	glLinkProgram(prog);
+
+#if defined(GX_DEBUG)
+	GLint logLength;
+	glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+	if (logLength > 1)
+	{
+		GLchar *log = (GLchar *)malloc((size_t)logLength);
+		glGetProgramInfoLog(prog, logLength, &logLength, log);
+		GX_LOG_P1(PrioDEBUG, "GOShader", "linkProgram:%s", log);
+		free(log);
+	}
+#endif
+
+	glGetProgramiv(prog, GL_LINK_STATUS, &status);
+	if (status == 0)
+		return false;
+
+	return true;
+}
+bool GOShader::validateProgram(GLuint prog)
+{
+	glValidateProgram(prog);
+#if defined(GX_DEBUG)
+	GLint logLength;
+	glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+	if (logLength > 1)
+	{
+		GLchar *log = (GLchar *)malloc((size_t)logLength);
+		glGetProgramInfoLog(prog, logLength, &logLength, log);
+		GX_LOG_P1(PrioDEBUG, "GOShader", "validateProgram:%s", log);
+		free(log);
+	}
+#endif
+	GLint status;
+	glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
+	if (status == 0)
+		return false;
+
+	return true;
+}
+
+
+
+#endif

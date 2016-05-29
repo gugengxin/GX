@@ -4,6 +4,7 @@
 
 class GShader
 {
+	friend class GContext;
 protected:
 	GShader();
 	virtual ~GShader();

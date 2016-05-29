@@ -316,6 +316,7 @@ void GD3DContext::renderBegin()
 {
 	makeCurrent();
 
+	ID3D10Device* device = GX::D3DDevice();
 	const FLOAT color[] = {1.0f,0.0f,1.0f,1.0f};
 	device->ClearRenderTargetView(m_RenderTargetView, color);
 	device->ClearDepthStencilView(m_DepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
