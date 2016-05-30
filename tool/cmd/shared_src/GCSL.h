@@ -20,7 +20,7 @@ public:
 
     bool compile(const QString& filePath,const QString& guessEncode="UTF-8", GCSLError* errOut=NULL);
     bool compile(const QString& src,GCSLError* errOut=NULL);
-    bool make(GCSLWriter::SLType slType,QString& strWarp,QString& vsOut,QString& fpOut,GCSLError* errOut=NULL);
+    bool make(GCSLWriter::SLType slType,const char* strWarp,QString& vsOut,QString& fpOut,GCSLError* errOut=NULL);
     void clean();
 private:
     void initWords();

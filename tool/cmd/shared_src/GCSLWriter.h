@@ -22,7 +22,7 @@ public:
 
     class MakeParam {
     public:
-        MakeParam(SLType slt,const QString& sw) {
+        MakeParam(SLType slt,const char* sw) {
             slType=slt;
             strWarp=sw;
             lineLevel=0;

@@ -134,7 +134,7 @@ bool GCSL::compile(const QString &src, GCSLError *errOut)
     return m_Writer->compile(reader,errOut);
 }
 
-bool GCSL::make(GCSLWriter::SLType slType, QString &strWarp, QString &vsOut, QString &fpOut, GCSLError *errOut)
+bool GCSL::make(GCSLWriter::SLType slType, const char *strWarp, QString &vsOut, QString &fpOut, GCSLError *errOut)
 {
     GCSLWriter::MakeParam param(slType,strWarp);
 
