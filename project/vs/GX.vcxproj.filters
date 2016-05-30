@@ -171,6 +171,9 @@
     <ClCompile Include="..\..\src\GSRGraphics.cpp">
       <Filter>src\Window\shader</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GColor.cpp">
+      <Filter>src\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -337,6 +340,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GSRGraphics.h">
       <Filter>src\Window\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GColor.h">
+      <Filter>src\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

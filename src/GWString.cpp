@@ -38,6 +38,14 @@ bool GWString::isEqual(GObject* obj)
 	return false;
 }
 
+const gwchar* GWString::c_str()
+{
+	if (getLength() <= 0) {
+		return L"";
+	}
+	return GX_CAST_R(const gwchar*, getDataPtr());
+}
+
 void GWString::set(const gchar* v, gint len, gint count)
 {
 	if (count <= 0) {

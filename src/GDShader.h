@@ -1,18 +1,25 @@
 ﻿#pragma once
 #include "GXPrefix.h"
 #if defined(GX_DIRECTX)
+#include "GShader.h"
 #include "GXDirectX.h"
 
 
-class GDShader
+class GDShader : public GShader
 {
 protected:
-	GDShader();
+	
+protected:
+	GDShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
 	virtual ~GDShader();
 
-	bool load(const gchar* srcVS, gint vsLen, const gchar* srcFP, gchar fpLen);
+	bool load(const gchar* srcVS, gint vsLen, const gchar* srcFP, gint fpLen, const Macro* macro);
+	bool setInputLayout(gint idx, ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength, D3D10_INPUT_ELEMENT_DESC* elements, UINT numElements);
+	bool setConstantBuffer(gint idx, ID3D10Device* device, const D3D10_BUFFER_DESC *pDesc, const D3D10_SUBRESOURCE_DATA *pInitialData);
 
 private:
+	virtual ID3D10InputLayout** getILs()=0;
+	virtual ID3D10Buffer** getCBs() = 0;
 	virtual bool createInputLayout(ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength) = 0;
 	virtual bool createConstantBuffer(ID3D10Device* device) = 0;
 
@@ -20,6 +27,28 @@ private:
 	ID3D10VertexShader*	m_VertexShader;
 	ID3D10PixelShader*	m_PixelShader;
 };
+
+typedef GDShader GShaderBase;
+
+#define GX_SHADER_INPUT(OU,DIL,DCB) \
+private:\
+	virtual ID3D10InputLayout** getILs() { return (ID3D10InputLayout**)&m_Layouts; }\
+	virtual ID3D10Buffer** getCBs() { return (ID3D10Buffer**)&m_ConstBuffers; }\
+	ID3D10InputLayout*	m_Layouts[DIL];\
+	ID3D10Buffer*		m_ConstBuffers[DCB]
+	
+#define GX_SHADER_INPUT_INIT() \
+	memset(m_Layouts,0,sizeof(m_Layouts));\
+	memset(m_ConstBuffers,0,sizeof(m_ConstBuffers))
+#define GX_SHADER_INPUT_FINA() \
+	for(int i=0;i<sizeof(m_Layouts)/sizeof(m_Layouts[0]);i++) {\
+		if(m_Layouts[i])\
+			m_Layouts[i]->Release();\
+	}\
+	for(int i=0;i<sizeof(m_ConstBuffers)/sizeof(m_ConstBuffers[0]);i++) {\
+		if(m_ConstBuffers[i])\
+			m_ConstBuffers[i]->Release();\
+	}
 
 
 #endif

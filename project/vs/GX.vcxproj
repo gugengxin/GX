@@ -24,6 +24,7 @@
     <ClCompile Include="..\..\src\GArray.cpp" />
     <ClCompile Include="..\..\src\GAutoreleasePool.cpp" />
     <ClCompile Include="..\..\src\GClass.cpp" />
+    <ClCompile Include="..\..\src\GColor.cpp" />
     <ClCompile Include="..\..\src\GCondition.cpp" />
     <ClCompile Include="..\..\src\GContext.cpp" />
     <ClCompile Include="..\..\src\GD3DContext.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="..\..\src\GArray.h" />
     <ClInclude Include="..\..\src\GAutoreleasePool.h" />
     <ClInclude Include="..\..\src\GClass.h" />
+    <ClInclude Include="..\..\src\GColor.h" />
     <ClInclude Include="..\..\src\GCondition.h" />
     <ClInclude Include="..\..\src\GContext.h" />
     <ClInclude Include="..\..\src\GD3DContext.h" />

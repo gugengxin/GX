@@ -1,9 +1,11 @@
 ﻿#include "GOShader.h"
 #if defined(GX_OPENGL)
 #include "GLog.h"
+#include "GString.h"
 
 
-GOShader::GOShader()
+GOShader::GOShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
+GShader(idxA,idxB,idxC,idxD)
 {
     m_Program=0;
 }
@@ -17,21 +19,31 @@ GOShader::~GOShader()
     }
 }
 
-bool GOShader::load(const gchar* srcVS,gint vsLen,const gchar* srcFP,gchar fpLen)
+bool GOShader::load(const gchar* srcVS, gint vsLen, const gchar* srcFP, gint fpLen, const Macro* macro)
 {
-    GLuint vertShader=0;
 
-    if (!this->compileShader(&vertShader,GL_VERTEX_SHADER,(const GLchar*)srcVS))
-    {
+	GString str;
+	const Macro* pSM = macro;
+	while (pSM->name) {
+		str.append("#define ");
+		str.append(pSM->name);
+		str.append("\n");
+		pSM++;
+	}
+	gint mlen = str.getLength();
+	str.append(srcVS, vsLen);
+
+    GLuint vertShader=0;
+	if (!compileShader(&vertShader, GL_VERTEX_SHADER, (const GLchar*)str.c_str())) {
         return false;
     }
 
-    GLuint fragShader=0;
+	str.cutOff(mlen);
+	str.append(srcFP, fpLen);
 
-    if (!this->compileShader(&fragShader,GL_FRAGMENT_SHADER,(const GLchar*)srcFP))
-    {
-        if (vertShader)
-        {
+    GLuint fragShader=0;
+	if (!compileShader(&fragShader, GL_FRAGMENT_SHADER, (const GLchar*)str.c_str())) {
+        if (vertShader) {
             glDeleteShader(vertShader);
             vertShader = 0;
         }

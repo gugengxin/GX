@@ -138,11 +138,14 @@ int main(int argc, char *argv[])
                         vsStr.append("const gchar* g_SrcVS=\\\n\"");
                         fpStr.append("const gchar* g_SrcFP=\\\n\"");
                         if(worker.make((GCSLWriter::SLType)i,QString(" \\n\\\n"),vsStr,fpStr,&error)) {
-                            vsStr.append("\";\n");
-                            fpStr.append("\";\n");
-
                             outStr.append(vsStr);
+                            outStr.append("\";\n");
+                            outStr.append(QString("const gint g_SrcVSLen=%1;\n").arg(vsStr.length()));
+
+
                             outStr.append(fpStr);
+                            outStr.append("\";\n");
+                             outStr.append(QString("const gint g_SrcFPLen=%1;\n").arg(fpStr.length()));
 
                             outStr.append("#endif\n");
 

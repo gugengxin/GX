@@ -487,6 +487,11 @@ public:
 		insertUint(idx, GX_CAST_R(guint, v), radix, vsLen, fillChar);
 	}
 
+	void cutOff(gint len) {
+		changeCapability(len + 1);
+		setLength(len);
+	}
+
 protected:
     inline T* getDataPtr() {
         return GX_CAST_R(T*, m_Data.getPtr());

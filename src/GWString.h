@@ -18,9 +18,7 @@ class GWString : public GDataString<gwchar> {
 public:
 	virtual bool isEqual(GObject* obj);
 
-    const gwchar* c_str() {
-        return GX_CAST_R(const gwchar*, getDataPtr());
-    }
+	const gwchar* c_str();
 	void set(const gchar* v, gint len = -1, gint count=1);
 	void append(const gchar* v, gint len = -1, gint count = 1);
 	void insert(gint idx, const gchar* v, gint len = -1, gint count = 1);

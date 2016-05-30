@@ -14,13 +14,22 @@
 
 
 class GString : public GDataString<gchar> {
+	friend class GOShader;
     GX_OBJECT(GString);
 public:
 	virtual bool isEqual(GObject* obj);
 
-    const gchar* c_str() {
-        return GX_CAST_R(const gchar*, getDataPtr());
-    }
+	const gchar* c_str();
+
+	void set(const gchar* v, gint len = -1, gint count = 1) {
+		return GDataString::set(v, len, count);
+	}
+	void append(const gchar* v, gint len = -1, gint count = 1) {
+		return GDataString::append(v, len, count);
+	}
+	void insert(gint idx, const gchar* v, gint len = -1, gint count = 1) {
+		return GDataString::insert(idx, v, len, count);
+	}
 
 	void set(const gwchar* v, gint len = -1, gint count = 1);
 	void append(const gwchar* v, gint len = -1, gint count = 1);
