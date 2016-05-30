@@ -1,24 +1,21 @@
 ﻿#include "GShader.h"
+#include "GContext.h"
 
 
-GShader::GShader()
+GShader::GShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
+#if defined(GX_OPENGL)
+GOShader()
+#elif defined(GX_DIRECTX)
+GDShader()
+#endif
 {
-    m_Index[0]=0;
-    m_Index[1]=0;
-    m_Index[2]=0;
-    m_Index[3]=0;
+	m_Index[0] = idxA;
+	m_Index[1] = idxB;
+	m_Index[2] = idxC;
+	m_Index[3] = idxD;
 }
 
 
 GShader::~GShader()
 {
-}
-
-
-void GShader::setIndex(guint8 idx0,guint8 idx1,guint8 idx2,guint8 idx3)
-{
-    m_Index[0]=idx0;
-    m_Index[1]=idx1;
-    m_Index[2]=idx2;
-    m_Index[3]=idx3;
 }

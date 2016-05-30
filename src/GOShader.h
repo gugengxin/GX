@@ -2,15 +2,12 @@
 
 #include "GXPrefix.h"
 #if defined(GX_OPENGL)
-#include "GShader.h"
 #include "GXOpenGL.h"
 
 
-
-class GOShader :
-	public GShader
+class GOShader 
 {
-public:
+protected:
 	GOShader();
 	virtual ~GOShader();
 

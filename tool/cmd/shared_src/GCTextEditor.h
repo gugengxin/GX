@@ -25,6 +25,10 @@ public:
                  const QString& fromStrSuf="",Qt::CaseSensitivity fromCsSuf=Qt::CaseSensitive,
                  const QString& toStrPS="",
                  int idxStart=0,int idxCount=0);
+    const QString& getText() {
+        return m_Text;
+    }
+
 
 signals:
 

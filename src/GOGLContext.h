@@ -37,8 +37,10 @@ public:
 	void makeCurrent();
 	void makeClear();
 protected:
-	void makeShader();
-	void makeTexture();
+	void readyShader();
+	void doneShader();
+	void readyTexture();
+	void doneTexture();
 
 private:
 	GWindow* m_Window;

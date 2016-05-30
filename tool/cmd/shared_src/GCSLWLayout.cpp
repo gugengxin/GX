@@ -30,7 +30,12 @@ bool GCSLWLayout::compile(GCSLTokenReader &reader, GCSLError *errOut)
         if(!token) {
             return true;
         }
-        if (token->isLMH()) {
+        if(token->isHT()) {
+            if(!GCSLWHT::compile(this,token,myReader,errOut)) {
+                return false;
+            }
+        }
+        else if (token->isLMH()) {
             GCSLWLayoutVar* wr=new GCSLWLayoutVar(this);
             this->addSubWrite(wr);
 

@@ -15,3 +15,13 @@ GContext::~GContext()
 		delete m_Shaders[i];
 	}
 }
+
+GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)
+{
+	if (!m_Shaders[SRID_Graphics + srID]) {
+		readyShader();
+		m_Shaders[SRID_Graphics + srID] = new GSRGraphics(srID);
+		doneShader();
+	}
+	return (GSRGraphics*)m_Shaders[SRID_Graphics + srID];
+}

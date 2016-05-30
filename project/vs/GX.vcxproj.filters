@@ -168,6 +168,9 @@
     <ClCompile Include="..\..\src\GOShader.cpp">
       <Filter>src\Window\shader</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GSRGraphics.cpp">
+      <Filter>src\Window\shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -330,6 +333,9 @@
       <Filter>src\Window\shader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GOShader.h">
+      <Filter>src\Window\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GSRGraphics.h">
       <Filter>src\Window\shader</Filter>
     </ClInclude>
   </ItemGroup>

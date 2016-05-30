@@ -1,15 +1,21 @@
 ﻿#pragma once
 
 #include "GXPrefix.h"
+#include "GOShader.h"
+#include "GDShader.h"
 
-class GShader
+
+class GShader : public
+#if defined(GX_OPENGL)
+	GOShader
+#elif defined(GX_DIRECTX)
+	GDShader
+#endif
 {
 	friend class GContext;
 protected:
-	GShader();
+	GShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
 	virtual ~GShader();
-
-    void setIndex(guint8 idx0,guint8 idx1,guint8 idx2,guint8 idx3);
 
 private:
     guint8 m_Index[4];

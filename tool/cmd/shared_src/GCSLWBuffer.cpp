@@ -29,7 +29,12 @@ bool GCSLWBuffer::compile(GCSLTokenReader &reader, GCSLError *errOut)
         if(!token) {
             return true;
         }
-        if (token->isLMH()) {
+        if(token->isHT()) {
+            if(!GCSLWHT::compile(this,token,myReader,errOut)) {
+                return false;
+            }
+        }
+        else if (token->isLMH()) {
             GCSLWBufferVar* wr=new GCSLWBufferVar(this);
             this->addSubWrite(wr);
 

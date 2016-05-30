@@ -347,4 +347,17 @@ void GD3DContext::makeClear()
 	device->OMSetDepthStencilState(NULL, 1);
 }
 
+void GD3DContext::readyShader()
+{
+}
+void GD3DContext::doneShader()
+{
+}
+void GD3DContext::readyTexture()
+{
+}
+void GD3DContext::doneTexture()
+{
+}
+
 #endif

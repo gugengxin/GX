@@ -19,8 +19,13 @@ set GX_BIN=%GX_ROOT%\bin
 call %GX_BIN%\vc12_amd64_vcvars64.bat
 
 SET PROJECTS_LEN=0
+
 SET PROJECTS[%PROJECTS_LEN%].dirName=text_editor
 SET PROJECTS[%PROJECTS_LEN%].projectName=gx_te
+SET /A PROJECTS_LEN=%PROJECTS_LEN%+1
+
+SET PROJECTS[%PROJECTS_LEN%].dirName=sl
+SET PROJECTS[%PROJECTS_LEN%].projectName=gx_sl
 SET /A PROJECTS_LEN=%PROJECTS_LEN%+1
 
 SET Obj_Index=0  

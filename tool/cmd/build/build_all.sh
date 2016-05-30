@@ -19,8 +19,8 @@ GX_ROOT=$(pwd)
 cd ${GX_CURRENT}
 GX_BIN=${GX_ROOT}/bin
 
-PROJECT_DIRS=("text_editor") 
-PROJECT_NAMES=("gx_te")
+PROJECT_DIRS=("text_editor","sl") 
+PROJECT_NAMES=("gx_te","gx_sl")
 
 for ((i=0;i<${#PROJECT_DIRS[@]};i++))
 do

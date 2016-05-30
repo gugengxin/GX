@@ -13,6 +13,7 @@
 #endif
 
 #include "GShader.h"
+#include "GSRGraphics.h"
 
 class GContext : public
 #if defined(GX_OPENGL)
@@ -24,13 +25,16 @@ class GContext : public
 	friend class GWindow;
 private:
 	enum ShaderID {
-		SRID_Graphics=0,
-
+		SRID_Graphics = 0,
+		SRID_GraphicsEnd = SRID_Graphics + 3 - 1,
 		SRIDCount,
 	};
 private:
     GContext();
     ~GContext();
+public:
+	GSRGraphics* getSRGraphics(GSRGraphics::ID srID);
+
 private:
 	GShader* m_Shaders[SRIDCount];
 };

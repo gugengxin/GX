@@ -23,9 +23,14 @@ public:
 
 	void renderBegin();
 	void renderEnd();
-
+public:
 	void makeCurrent();
 	void makeClear();
+protected:
+	void readyShader();
+	void doneShader();
+	void readyTexture();
+	void doneTexture();
 
 private:
 	bool createView(UINT width, UINT height);

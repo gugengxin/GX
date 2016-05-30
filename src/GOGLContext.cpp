@@ -464,6 +464,53 @@ bool GOGLContext::resize(gfloat32 width,gfloat32 height) {
 #endif
 }
 
+void GOGLContext::renderBegin()
+{
+	makeCurrent();
+
+#if defined(GX_OS_IPHONE)
+	if (m_SaaFramebuffer) {
+		glBindFramebuffer(GL_FRAMEBUFFER, m_SaaFramebuffer);
+	}
+	else {
+		glBindFramebuffer(GL_FRAMEBUFFER, m_DefaultFramebuffer);
+	}
+#endif
+
+	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+}
+void GOGLContext::renderEnd()
+{
+#if defined(GX_OS_WINDOWS)
+	::SwapBuffers(m_DC);
+#elif defined(GX_OS_IPHONE)
+	if (m_SaaFramebuffer)
+	{
+		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, m_SaaFramebuffer);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, m_DefaultFramebuffer);
+		glResolveMultisampleFramebufferAPPLE();
+
+		GLenum attachments[] = { GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT, GL_STENCIL_ATTACHMENT };
+		glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 3, attachments);
+	}
+	else
+	{
+		GLenum attachments[] = { GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT };
+		glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
+	}
+	glBindRenderbuffer(GL_RENDERBUFFER, m_ColorRenderbuffer);
+	[GX_CAST_R(EAGLContext*,m_Context) presentRenderbuffer:GL_RENDERBUFFER];
+#elif defined(GX_OS_MACOSX)
+	[GX_CAST_R(NSOpenGLContext*,m_Context) flushBuffer];
+#elif defined(GX_OS_ANDROID)
+	eglSwapBuffers(g_Display, m_Surface);
+#elif defined(GX_OS_QT)
+	m_Context->swapBuffers(m_Window->m_OSWin);
+#endif
+	makeClear();
+}
+
 void GOGLContext::makeCurrent()
 {
 #if defined(GX_OS_WINDOWS)
@@ -493,7 +540,7 @@ void GOGLContext::makeClear()
 #endif
 }
 
-void GOGLContext::makeShader()
+void GOGLContext::readyShader()
 {
 #if defined(GX_OS_ANDROID)
 	eglMakeCurrent(g_Display, g_Surface, g_Surface, g_Context);
@@ -501,65 +548,22 @@ void GOGLContext::makeShader()
 	makeCurrent();
 #endif
 }
-void GOGLContext::makeTexture()
+void GOGLContext::doneShader()
 {
-#if defined(GX_OS_ANDROID)
-	eglMakeCurrent(g_Display, g_Surface, g_Surface, g_Context);
-#else
-	makeCurrent();
-#endif
-}
-
-
-
-void GOGLContext::renderBegin()
-{
-	makeCurrent();
-
-#if defined(GX_OS_IPHONE)
-    if (m_SaaFramebuffer) {
-        glBindFramebuffer(GL_FRAMEBUFFER, m_SaaFramebuffer);
-    }
-    else {
-        glBindFramebuffer(GL_FRAMEBUFFER, m_DefaultFramebuffer);
-    }
-#endif
-    
-	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-}
-void GOGLContext::renderEnd()
-{
-#if defined(GX_OS_WINDOWS)
-	::SwapBuffers(m_DC);
-#elif defined(GX_OS_IPHONE)
-    if (m_SaaFramebuffer)
-    {
-        glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, m_SaaFramebuffer);
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, m_DefaultFramebuffer);
-        glResolveMultisampleFramebufferAPPLE();
-        
-        GLenum attachments[] = { GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT, GL_STENCIL_ATTACHMENT };
-        glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 3, attachments);
-    }
-    else
-    {
-        GLenum attachments[] = { GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT };
-        glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
-    }
-    glBindRenderbuffer(GL_RENDERBUFFER, m_ColorRenderbuffer);
-    [GX_CAST_R(EAGLContext*,m_Context) presentRenderbuffer:GL_RENDERBUFFER];
-#elif defined(GX_OS_MACOSX)
-    [GX_CAST_R(NSOpenGLContext*,m_Context) flushBuffer];
-#elif defined(GX_OS_ANDROID)
-	eglSwapBuffers(g_Display, m_Surface);
-#elif defined(GX_OS_QT)
-    m_Context->swapBuffers(m_Window->m_OSWin);
-#endif
 	makeClear();
 }
 
-
-
+void GOGLContext::readyTexture()
+{
+#if defined(GX_OS_ANDROID)
+	eglMakeCurrent(g_Display, g_Surface, g_Surface, g_Context);
+#else
+	makeCurrent();
+#endif
+}
+void GOGLContext::doneTexture()
+{
+	makeClear();
+}
 
 #endif

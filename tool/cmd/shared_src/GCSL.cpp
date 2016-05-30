@@ -7,11 +7,17 @@
 gxsl(GX Shading Language) 将被翻译成 glsl或hlsl
 
 例子：
+#def TEX
+#def TEX_MASK
 vs {
     layout {
         high vec4 pos:POSITION;
+        #if TEX
         medi vec2 texCoord:TEXCOORD0;
+        #end
+        #if TEX_MASK
         medi vec2 texCoordMask:TEXCOORD1;
+        #end
         lowp vec4 color:COLOR0;
         lowp vec4 colorMask:COLOR1;
     }
@@ -81,6 +87,8 @@ GCSL::~GCSL()
 
 bool GCSL::compile(const QString &filePath, const QString &guessEncode, GCSLError *errOut)
 {
+    QString src;
+
     bool res=false;
     QFile file(filePath);
     if(file.open(QIODevice::ReadOnly)) {
@@ -89,14 +97,14 @@ bool GCSL::compile(const QString &filePath, const QString &guessEncode, GCSLErro
         if(data.size()>=GCTextEditor::BOM8Bytes && memcmp(GCTextEditor::BOM8,data.data(),GCTextEditor::BOM8Bytes)==0) {
             QTextCodec* codec=QTextCodec::codecForName("UTF-8");
             if(codec) {
-                m_Text=codec->toUnicode(data.data()+GCTextEditor::BOM8Bytes,data.size()-GCTextEditor::BOM8Bytes);
+                src=codec->toUnicode(data.data()+GCTextEditor::BOM8Bytes,data.size()-GCTextEditor::BOM8Bytes);
                 res=true;
             }
         }
         else {
             QTextCodec* codec=QTextCodec::codecForName(guessEncode.toUtf8());
             if(codec) {
-                m_Text=codec->toUnicode(data);
+                src=codec->toUnicode(data);
                 res=true;
             }
         }
@@ -107,6 +115,13 @@ bool GCSL::compile(const QString &filePath, const QString &guessEncode, GCSLErro
         }
         return false;
     }
+
+    return compile(src,errOut);
+}
+
+bool GCSL::compile(const QString &src, GCSLError *errOut)
+{
+    m_Text=src;
 
     initWords();
 

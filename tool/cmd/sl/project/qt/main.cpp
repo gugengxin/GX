@@ -2,6 +2,8 @@
 #include <QTextStream>
 #include <QTextCodec>
 #include "GCSL.h"
+#include <QFile>
+#include "GCTextEditor.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,11 +11,13 @@ int main(int argc, char *argv[])
     for(int i=0;i<argc;i++) {
         argList.append(QString((const char*)argv[i]));
     }
-    //*
+    /*
     argList.append("-i");
     argList.append("E:\\gxsl_test.txt");
     argList.append("-ie");
     argList.append("UTF-8");
+    argList.append("-o");
+    argList.append("E:\\gxsl_test.gxsl");
     //*/
 
     //QTextStream cin(stdin, QIODevice::ReadOnly);
@@ -34,6 +38,7 @@ int main(int argc, char *argv[])
         cout<< "Help:\n";
         cout<< cmd;
         cout<< " -i (file path) [-ie (file guess encoding,default UTF-8)]\n";
+        cout<< " -o (out file)\n";
 
         QList<QByteArray> acs=QTextCodec::availableCodecs();
         if(acs.size()>0) {
@@ -50,6 +55,7 @@ int main(int argc, char *argv[])
     else {
         bool err=false;
         QString in,ine="UTF-8";
+        QString out;
         for(int i=1;i+1<argList.size();i+=2) {
             QString& str=argList[i];
             if(str=="-i") {
@@ -58,6 +64,9 @@ int main(int argc, char *argv[])
             else if(str=="-ie") {
                 ine=argList[i+1];
             }
+            else if(str=="-o") {
+                out=argList[i+1];
+            }
             else {
                 cerr<< "unknown option \"" << str << "\"" <<endl;
                 err=true;
@@ -65,28 +74,98 @@ int main(int argc, char *argv[])
             }
         }
         if(!err) {
-            GCSL worker;
-            GCSLError error;
-            if(worker.compile(in,ine,&error)) {
 
-                for(int i=0;i<3;i++) {
+            QString src;
+            {
+                QString srcTemp;
+                QFile file(in);
+                if(file.open(QIODevice::ReadOnly)) {
+                    QByteArray data=file.readAll();
 
-                    cout << "******************************************************************" << endl;
-                    cout << i << "\n";
-
-                    QString vsStr,fpStr;
-                    if(worker.make((GCSLWriter::SLType)i,QString("\n"),vsStr,fpStr,&error)) {
-                        cout<< "vs:\n" << vsStr << "\n";
-                        cout<< "fp:\n" << fpStr << "\n";
-                        cout<< endl;
+                    if(data.size()>=GCTextEditor::BOM8Bytes && memcmp(GCTextEditor::BOM8,data.data(),GCTextEditor::BOM8Bytes)==0) {
+                        QTextCodec* codec=QTextCodec::codecForName("UTF-8");
+                        if(codec) {
+                            srcTemp=codec->toUnicode(data.data()+GCTextEditor::BOM8Bytes,data.size()-GCTextEditor::BOM8Bytes);
+                        }
                     }
                     else {
-                        cerr<< "make error: " << error.getCode() << "(" << error.getRow() << "," << error.getColumn() <<")" <<endl;
+                        QTextCodec* codec=QTextCodec::codecForName(ine.toUtf8());
+                        if(codec) {
+                            srcTemp=codec->toUnicode(data);
+                        }
                     }
                 }
+                if(srcTemp.length()>0) {
+                    bool find=false;
+                    QString s("/*//GX_SL"),e("*///GX_SL");
+                    int idxS=srcTemp.indexOf(s);
+                    if(idxS>=0) {
+                        int idxE=srcTemp.indexOf(e,idxS+s.length());
+                        if(idxE>=0) {
+                            src=srcTemp.mid(idxS+s.length(),idxE-(idxS+s.length()));
+                            find=true;
+                        }
+                    }
+                    if(!find) {
+                        src=srcTemp;
+                    }
+                }
+                else {
+                    cerr<< "src nothing" <<endl;
+                    err=true;
+                }
             }
-            else {
-                cerr<< "compile error: " << error.getCode() << "(" << error.getRow() << "," << error.getColumn() <<")" <<endl;
+
+            if(!err) {
+                GCSL worker;
+                GCSLError error;
+                if(worker.compile(src,&error)) {
+
+                    QString outStr;
+
+                    for(int i=0;i<3;i++) {
+                        if(i==0) {
+                            outStr.append("#if defined(GX_OPENGL) && !defined(GX_OPENGL_ES)\n");
+                        }
+                        else if(i==1) {
+                            outStr.append("#if defined(GX_OPENGL) && defined(GX_OPENGL_ES)\n");
+                        }
+                        else if(i==2) {
+                            outStr.append("#if defined(GX_DIRECTX)\n");
+                        }
+
+                        QString vsStr,fpStr;
+                        vsStr.append("const gchar* g_SrcVS=\\\n\"");
+                        fpStr.append("const gchar* g_SrcFP=\\\n\"");
+                        if(worker.make((GCSLWriter::SLType)i,QString(" \\n\\\n"),vsStr,fpStr,&error)) {
+                            vsStr.append("\";\n");
+                            fpStr.append("\";\n");
+
+                            outStr.append(vsStr);
+                            outStr.append(fpStr);
+
+                            outStr.append("#endif\n");
+
+                            QFile file(out);
+                            if(file.open(QIODevice::WriteOnly)) {
+                                QTextCodec* codec=QTextCodec::codecForName("UTF-8");
+                                QByteArray data=codec->fromUnicode(outStr);
+                                if(file.write(data)!=data.size()) {
+                                    cerr<< "write file error" <<endl;
+                                }
+                            }
+                            else {
+                                cerr<< "can't open out file" <<endl;
+                            }
+                        }
+                        else {
+                            cerr<< "make error: " << error.getCode() << "(" << error.getRow() << "," << error.getColumn() <<")" <<endl;
+                        }
+                    }
+                }
+                else {
+                    cerr<< "compile error: " << error.getCode() << "(" << error.getRow() << "," << error.getColumn() <<")" <<endl;
+                }
             }
         }
         else {
