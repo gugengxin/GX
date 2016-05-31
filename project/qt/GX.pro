@@ -13,19 +13,19 @@ DEFINES += GX_OS_QT
 DESTDIR = ../../product/qt
 
 SOURCES += \
-    ../../src/GClass.cpp \
-    ../../src/GObject.cpp \
-    ../../src/GOWHash.cpp \
     ../../src/GAction.cpp \
     ../../src/GApplication.cpp \
     ../../src/GArray.cpp \
     ../../src/GAutoreleasePool.cpp \
+    ../../src/GClass.cpp \
+    ../../src/GColor.cpp \
     ../../src/GCondition.cpp \
     ../../src/GContext.cpp \
     #../../src/GD3DContext.cpp \
     ../../src/GData.cpp \
     ../../src/GDataArray.cpp \
     ../../src/GDataString.cpp \
+    #../../src/GDShader.cpp \
     #../../src/GJavaAPI.cpp \
     #../../src/GJavaCAPI.cpp \
     #../../src/GJavaClass.cpp \
@@ -37,11 +37,15 @@ SOURCES += \
     ../../src/GNotice.cpp \
     ../../src/GNoticeCenter.cpp \
     ../../src/GNumber.cpp \
+    ../../src/GObject.cpp \
     ../../src/GOGLContext.cpp \
+    ../../src/GOShader.cpp \
+    ../../src/GOWHash.cpp \
     ../../src/GPieceData.cpp \
     ../../src/GPtr.cpp \
     ../../src/GRunLoop.cpp \
     ../../src/GShader.cpp \
+    ../../src/GSRGraphics.cpp \
     ../../src/GString.cpp \
     ../../src/GSystem.cpp \
     ../../src/GThread.cpp \
@@ -111,7 +115,11 @@ HEADERS += \
     ../../src/GXEncoding.h \
     ../../src/GXMath.h \
     ../../src/GXOpenGL.h \
-    ../../src/GXPthread.h
+    ../../src/GXPthread.h \
+    ../../src/GColor.h \
+    ../../src/GSRGraphics.h \
+    ../../src/GDShader.h \
+    ../../src/GOShader.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
