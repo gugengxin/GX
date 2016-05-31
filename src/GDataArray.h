@@ -24,6 +24,13 @@ public:
 	inline T* getPtr(gint index) {
 		return &GX_CAST_R(T*, m_Data.getPtr())[index];
 	}
+	inline T& first() {
+		return GX_CAST_R(T*, m_Data.getPtr())[0];
+	}
+	inline T& last() {
+		return GX_CAST_R(T*, m_Data.getPtr())[(m_Data.getBytes() / sizeof(T))-1];
+	}
+
 	inline void set(gint index,const T& v) {
 		GX_CAST_R(T*, m_Data.getPtr())[index] = v;
 	}
@@ -206,6 +213,7 @@ template <typename T>
 class GPDArray : public GPieceDataArray<T, GX_PDARRAY_N> {
     friend class GAutoreleasePool;
     friend class GThread;
+	friend class GPainter;
     GX_OBJECT(GPDArray);
 };
 

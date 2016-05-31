@@ -46,7 +46,7 @@ bool GDShader::load(const gchar* srcVS, gint vsLen, const gchar* srcFP, gint fpL
 		// 如果vs编译失败，输出错误消息. 
 		if (errorMessage)
 		{
-			GX_LOG_W(PrioDEBUG, "GDShader", "load:error");
+			GX_LOG_P1(PrioDEBUG, "GDShader", "load error:%s", (const char*)errorMessage->GetBufferPointer());
 			errorMessage->Release();
 			errorMessage = 0;
 		}
@@ -60,7 +60,7 @@ bool GDShader::load(const gchar* srcVS, gint vsLen, const gchar* srcFP, gint fpL
 		// 如果ps编译失败，输出错误信息. 
 		if (errorMessage)
 		{
-			GX_LOG_W(PrioDEBUG, "GDShader", "load:error");
+			GX_LOG_P1(PrioDEBUG, "GDShader", "load error:%s", (const char*)errorMessage->GetBufferPointer());
 			errorMessage->Release();
 			errorMessage = 0;
 		}

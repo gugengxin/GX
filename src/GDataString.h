@@ -500,7 +500,7 @@ protected:
         return &GX_CAST_R(T*, m_Data.getPtr())[idx];
     }
     bool changeCapability(gint count) {
-        count=(count+32-1)/32;
+        count=(count+32-1)/32*32;
         return m_Data.changeBytes(GX_CAST_S(guint, count)*sizeof(T));
     }
     void setLength(gint v) {

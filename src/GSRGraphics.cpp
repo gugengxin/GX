@@ -27,9 +27,9 @@ vs {
 #end
 	}
 	main {
-		gx_Position = mvp_mat * position;
+		gx_Position = mul(mvp_mat,layout.position);
 #if MI_COLOR || MI_CANDCM
-		b_color=color;
+		bridge.b_color=layout.color;
 #end
 	}
 }
@@ -43,9 +43,9 @@ fp {
 #if MI_COLORMUL
 		gx_FragColor=color_mul;
 #elif MI_COLOR
-		gx_FragColor=b_color;
+		gx_FragColor=bridge.b_color;
 #elif MI_CANDCM
-		gx_FragColor=b_color*color_mul;
+		gx_FragColor=bridge.b_color*color_mul;
 #end
 	}
 }

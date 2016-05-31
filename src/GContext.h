@@ -11,8 +11,7 @@
 #elif defined(GX_DIRECTX)
 #include "GD3DContext.h"
 #endif
-
-#include "GShader.h"
+#include "GPainter.h"
 #include "GSRGraphics.h"
 
 class GContext : public
@@ -26,7 +25,9 @@ class GContext : public
 private:
 	enum ShaderID {
 		SRID_Graphics = 0,
-		SRID_GraphicsEnd = SRID_Graphics + 3 - 1,
+		SRID_GraphicsEnd = SRID_Graphics + GSRGraphics::IDCount - 1,
+
+
 		SRIDCount,
 	};
 private:
@@ -34,8 +35,12 @@ private:
     ~GContext();
 public:
 	GSRGraphics* getSRGraphics(GSRGraphics::ID srID);
-
+public:
+	GPainter& getPainter() {
+		return m_Painter;
+	}
 private:
+	GPainter m_Painter;
 	GShader* m_Shaders[SRIDCount];
 };
 

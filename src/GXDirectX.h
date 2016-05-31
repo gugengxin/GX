@@ -10,6 +10,7 @@
 
 #include <d3d10.h>
 #pragma comment(lib, "d3d10.lib")
+#pragma comment(lib, "D3DCompiler.lib")
 
 namespace GX {
 	ID3D10Device* D3DDevice();

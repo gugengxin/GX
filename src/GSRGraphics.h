@@ -11,6 +11,8 @@ public:
 		ID_ColorMul=0,
 		ID_Color,
 		ID_CAndCM,
+
+		IDCount,
 	} ID;
 	typedef enum _InputType {
 		ITFloat,

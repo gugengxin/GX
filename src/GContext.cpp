@@ -11,9 +11,11 @@ GContext::GContext()
 
 GContext::~GContext()
 {
+	readyShader();
 	for (gint i = 0; i < SRIDCount; i++) {
 		delete m_Shaders[i];
 	}
+	doneShader();
 }
 
 GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)

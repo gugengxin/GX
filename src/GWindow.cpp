@@ -10,6 +10,7 @@
 #include "GSystem.h"
 #include "GLog.h"
 #include "GApplication.h"
+#include "GXMath.h"
 
 #if defined(GX_OS_WINDOWS)
 
@@ -517,10 +518,16 @@ gfloat32 GWindow::getScale()
 
 void GWindow::idle()
 {
-
 }
 void GWindow::render()
 {
+	GPainter& painter = m_Context.getPainter();
+
+	painter.enable3D(getWidth(), getHeight(), GX_PI / 3, 0.1, 1000.0f);
+
+	GSRGraphics* graph = m_Context.getSRGraphics(GSRGraphics::ID_ColorMul);
+
+
 
 }
 
