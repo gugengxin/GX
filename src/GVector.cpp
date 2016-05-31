@@ -12,7 +12,7 @@ void GVector3::cross(const GVector3& v1, const GVector3& v2, GVector3& dst)
 {
 	GX::vector3Cross(&v1.x, &v2.x, &dst.x);
 }
-float dot(const GVector3& v1, const GVector3& v2)
+float GVector3::dot(const GVector3& v1, const GVector3& v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }

@@ -20,6 +20,12 @@ public:
 		float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44);
 
 	void setIdentity();
+    void setTranslation(float xTranslation, float yTranslation, float zTranslation);
+    void setScale(float xScale, float yScale, float zScale);
+    void setRotation(float axisX,float axisY,float axisZ, float radians);
+    void setRotationX(float radians);
+    void setRotationY(float radians);
+    void setRotationZ(float radians);
 	void setPerspective(float fieldOfView, float aspectRatio, float zNearPlane, float zFarPlane);
 	void setOrthographic(float left, float right, float bottom, float top, float zNearPlane, float zFarPlane);
 	void setLookAt(float eyePositionX, float eyePositionY, float eyePositionZ,
@@ -29,7 +35,7 @@ public:
 	void transpose();
 	void translate(float tx, float ty, float tz);
 	void scale(float sx, float sy, float sz);
-	void rotate(float radians, float rx, float ry, float rz);
+	void rotate(float rx, float ry, float rz, float radians);
 	void rotateX(float radians);
 	void rotateY(float radians);
 	void rotateZ(float radians);

@@ -73,6 +73,118 @@ void GMatrix4::setIdentity()
 {
 	memcpy(m, Identity.m, GX_MATRIX_SIZE);
 }
+void GMatrix4::setTranslation(float xTranslation, float yTranslation, float zTranslation)
+{
+    memcpy(m, &Identity, GX_MATRIX_SIZE);
+    
+    m[12] = xTranslation;
+    m[13] = yTranslation;
+    m[14] = zTranslation;
+}
+void GMatrix4::setScale(float xScale, float yScale, float zScale)
+{
+    memcpy(m, &Identity, GX_MATRIX_SIZE);
+    
+    m[0] = xScale;
+    m[5] = yScale;
+    m[10] = zScale;
+}
+void GMatrix4::setRotation(float axisX,float axisY,float axisZ, float radians)
+{
+    float x = axisX;
+    float y = axisY;
+    float z = axisZ;
+    
+    // Make sure the input axis is normalized.
+    float n = x*x + y*y + z*z;
+    if (n != 1.0f)
+    {
+        // Not normalized.
+        n = sqrtf(n);
+        // Prevent divide too close to zero.
+        if (n > 0.000001f)
+        {
+            n = 1.0f / n;
+            x *= n;
+            y *= n;
+            z *= n;
+        }
+    }
+    
+    float c;
+    float s;
+    GX::sincos(radians, s, c);
+    
+    float t = 1.0f - c;
+    float tx = t * x;
+    float ty = t * y;
+    float tz = t * z;
+    float txy = tx * y;
+    float txz = tx * z;
+    float tyz = ty * z;
+    float sx = s * x;
+    float sy = s * y;
+    float sz = s * z;
+    
+    m[0] = c + tx*x;
+    m[1] = txy + sz;
+    m[2] = txz - sy;
+    m[3] = 0.0f;
+    
+    m[4] = txy - sz;
+    m[5] = c + ty*y;
+    m[6] = tyz + sx;
+    m[7] = 0.0f;
+    
+    m[8] = txz + sy;
+    m[9] = tyz - sx;
+    m[10] = c + tz*z;
+    m[11] = 0.0f;
+    
+    m[12] = 0.0f;
+    m[13] = 0.0f;
+    m[14] = 0.0f;
+    m[15] = 1.0f;
+}
+void GMatrix4::setRotationX(float radians)
+{
+    memcpy(m, &Identity, GX_MATRIX_SIZE);
+    
+    float c;
+    float s;
+    GX::sincos(radians, s, c);
+    
+    m[5]  = c;
+    m[6]  = s;
+    m[9]  = -s;
+    m[10] = c;
+}
+void GMatrix4::setRotationY(float radians)
+{
+    memcpy(m, &Identity, GX_MATRIX_SIZE);
+    
+    float c;
+    float s;
+    GX::sincos(radians, s, c);
+    
+    m[0]  = c;
+    m[2]  = -s;
+    m[8]  = s;
+    m[10] = c;
+}
+void GMatrix4::setRotationZ(float radians)
+{
+    memcpy(m, &Identity, GX_MATRIX_SIZE);
+    
+    float c;
+    float s;
+    GX::sincos(radians, s, c);
+    
+    m[0] = c;
+    m[1] = s;
+    m[4] = -s;
+    m[5] = c;
+}
 void GMatrix4::setPerspective(float fieldOfView, float aspectRatio, float zNearPlane, float zFarPlane)
 {
 	float f_n = 1.0f / (zFarPlane - zNearPlane);
@@ -140,6 +252,52 @@ void GMatrix4::setLookAt(float eyePositionX, float eyePositionY, float eyePositi
 	m[13] = -GVector3::dot(yaxis, eye);
 	m[14] = -GVector3::dot(zaxis, eye);
 	m[15] = 1.0f;
+}
+
+void GMatrix4::transpose()
+{
+    GX::matrixTranspose(m, m);
+}
+void GMatrix4::translate(float tx, float ty, float tz)
+{
+    GMatrix4 t;
+    t.setTranslation(tx, ty, tz);
+    GX::matrixMultiply(m, t.m, m);
+}
+void GMatrix4::scale(float sx, float sy, float sz)
+{
+    GMatrix4 s;
+    s.setScale(sx, sy, sz);
+    GX::matrixMultiply(m, s.m, m);
+}
+void GMatrix4::rotate(float rx, float ry, float rz, float radians)
+{
+    GMatrix4 r;
+    r.setRotation(rx, ry, rz, radians);
+    GX::matrixMultiply(m, r.m, m);
+}
+void GMatrix4::rotateX(float radians)
+{
+    GMatrix4 r;
+    r.setRotationX(radians);
+    GX::matrixMultiply(m, r.m, m);
+}
+void GMatrix4::rotateY(float radians)
+{
+    GMatrix4 r;
+    r.setRotationY(radians);
+    GX::matrixMultiply(m, r.m, m);
+}
+void GMatrix4::rotateZ(float radians)
+{
+    GMatrix4 r;
+    r.setRotationZ(radians);
+    GX::matrixMultiply(m, r.m, m);
+}
+
+void GMatrix4::multiply(const GMatrix4& mat)
+{
+    GX::matrixMultiply(m, mat.m, m);
 }
 
 
