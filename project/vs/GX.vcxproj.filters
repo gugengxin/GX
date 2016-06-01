@@ -150,12 +150,6 @@
     <ClCompile Include="..\..\src\GXMath.cpp">
       <Filter>src\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GMatrix.cpp">
-      <Filter>src\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GVector.cpp">
-      <Filter>src\Math</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GShader.cpp">
       <Filter>src\Window\shader</Filter>
     </ClCompile>
@@ -171,9 +165,6 @@
     <ClCompile Include="..\..\src\GSRGraphics.cpp">
       <Filter>src\Window\shader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GColor.cpp">
-      <Filter>src\Math</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GPainter.cpp">
       <Filter>src\Window</Filter>
     </ClCompile>
@@ -182,6 +173,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GDataBuffer.cpp">
       <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GColor.cpp">
+      <Filter>src\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GMatrix.cpp">
+      <Filter>src\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GVector.cpp">
+      <Filter>src\Struct</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -329,12 +329,6 @@
     <ClInclude Include="..\..\src\GXMath.h">
       <Filter>src\Math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GMatrix.h">
-      <Filter>src\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GVector.h">
-      <Filter>src\Math</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GShader.h">
       <Filter>src\Window\shader</Filter>
     </ClInclude>
@@ -350,9 +344,6 @@
     <ClInclude Include="..\..\src\GSRGraphics.h">
       <Filter>src\Window\shader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GColor.h">
-      <Filter>src\Math</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GPainter.h">
       <Filter>src\Window</Filter>
     </ClInclude>
@@ -362,10 +353,19 @@
     <ClInclude Include="..\..\src\GDataBuffer.h">
       <Filter>src\Window</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\GColor.h">
+      <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GMatrix.h">
+      <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GVector.h">
+      <Filter>src\Struct</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\GSRGraphics.gxsl">
-      <Filter>src\Window</Filter>
+      <Filter>src\Window\shader</Filter>
     </None>
   </ItemGroup>
 </Project>

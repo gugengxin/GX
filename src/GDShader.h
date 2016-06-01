@@ -13,9 +13,16 @@ protected:
 	GDShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
 	virtual ~GDShader();
 
-	bool load(const gchar* srcVS, gint vsLen, const gchar* srcFP, gint fpLen, const Macro* macro);
+	bool load(const gchar* srcVS, const gchar* srcFP, const Macro* macro);
 	bool setInputLayout(gint idx, ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength, D3D10_INPUT_ELEMENT_DESC* elements, UINT numElements);
 	bool setConstantBuffer(gint idx, ID3D10Device* device, const D3D10_BUFFER_DESC *pDesc, const D3D10_SUBRESOURCE_DATA *pInitialData);
+
+	inline ID3D10VertexShader* getVertexShader() {
+		return m_VertexShader;
+	}
+	inline ID3D10PixelShader* getPixelShader() {
+		return m_PixelShader;
+	}
 
 private:
 	virtual ID3D10InputLayout** getILs()=0;

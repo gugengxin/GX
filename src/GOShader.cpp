@@ -19,7 +19,7 @@ GOShader::~GOShader()
     }
 }
 
-bool GOShader::load(const gchar* srcVS, gint vsLen, const gchar* srcFP, gint fpLen, const Macro* macro)
+bool GOShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
 {
 
 	GString str;

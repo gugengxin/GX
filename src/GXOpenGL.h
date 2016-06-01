@@ -49,6 +49,15 @@ namespace GX
 #include <QtOpenGL>
 #endif
 
+#define GX_POINTS			GL_POINTS
+#define GX_LINES			GL_LINES
+#define GX_LINE_STRIP		GL_LINE_STRIP
+#define GX_TRIANGLES		GL_TRIANGLES
+#define GX_TRIANGLE_STRIP	GL_TRIANGLE_STRIP
+
+#define GX_UINT8		GL_UNSIGNED_BYTE
+#define GX_UINT16		GL_UNSIGNED_SHORT
+
 
 #endif
 #endif //AS_GXOPENGL_H

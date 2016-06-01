@@ -27,6 +27,18 @@ protected:
 	inline guint8 getIndex3() {
 		return m_Index[3];
 	}
+	inline guint8 getIndexA() {
+		return m_Index[0];
+	}
+	inline guint8 getIndexB() {
+		return m_Index[1];
+	}
+	inline guint8 getIndexC() {
+		return m_Index[2];
+	}
+	inline guint8 getIndexD() {
+		return m_Index[3];
+	}
 
 private:
     guint8 m_Index[4];

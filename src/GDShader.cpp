@@ -24,7 +24,7 @@ GDShader::~GDShader()
 }
 
 
-bool GDShader::load(const gchar* srcVS, gint vsLen, const gchar* srcFP, gint fpLen, const Macro* macro)
+bool GDShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
 {
 	HRESULT result;
 	ID3D10Blob* errorMessage;
@@ -40,7 +40,7 @@ bool GDShader::load(const gchar* srcVS, gint vsLen, const gchar* srcFP, gint fpL
 
 	// 编译vs代码. 
 	
-	result = D3DCompile(srcVS, vsLen, NULL, (const D3D_SHADER_MACRO*)macro, NULL, "main", "vs_4_0", D3DCOMPILE_ENABLE_STRICTNESS, 0, &vertexShaderBuffer, &errorMessage);
+	result = D3DCompile(srcVS, strlen(srcVS), NULL, (const D3D_SHADER_MACRO*)macro, NULL, "main", "vs_4_0", D3DCOMPILE_ENABLE_STRICTNESS, 0, &vertexShaderBuffer, &errorMessage);
 	if (FAILED(result))
 	{
 		// 如果vs编译失败，输出错误消息. 
@@ -54,7 +54,7 @@ bool GDShader::load(const gchar* srcVS, gint vsLen, const gchar* srcFP, gint fpL
 	}
 
 	// 编译ps. 
-	result = D3DCompile(srcFP, fpLen, 0, (const D3D_SHADER_MACRO*)macro, 0, "main", "ps_4_0", D3DCOMPILE_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
+	result = D3DCompile(srcFP, strlen(srcFP), 0, (const D3D_SHADER_MACRO*)macro, 0, "main", "ps_4_0", D3DCOMPILE_ENABLE_STRICTNESS, 0, &pixelShaderBuffer, &errorMessage);
 	if (FAILED(result))
 	{
 		// 如果ps编译失败，输出错误信息. 

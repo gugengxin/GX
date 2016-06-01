@@ -41,7 +41,7 @@ bool GDataBufferBase::changeBytes(guint toSize)
 	D3D10_BUFFER_DESC bd={0};
 
 	bd.Usage = D3D10_USAGE_DYNAMIC;//D3D11_USAGE_STAGING
-	bd.ByteWidth = toSize;
+	bd.ByteWidth = (UINT)toSize;
 	bd.BindFlags = getBindFlags();
 	bd.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;//|D3D11_CPU_ACCESS_READ;
 
@@ -87,7 +87,7 @@ void* GDataBufferBase::map()
 #elif defined(GX_DIRECTX)
 	if (m_Buffer) {
 		void* res = NULL;
-		if (SUCCEEDED(m_Buffer->Map(D3D10_MAP_WRITE_DISCARD, D3D10_MAP_FLAG_DO_NOT_WAIT, &res))) {
+		if (SUCCEEDED(m_Buffer->Map(D3D10_MAP_WRITE_DISCARD, 0, &res))) {
 			return res;
 		}
 	}

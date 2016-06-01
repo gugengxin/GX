@@ -321,6 +321,18 @@ void GD3DContext::renderBegin()
 	device->ClearRenderTargetView(m_RenderTargetView, color);
 	device->ClearDepthStencilView(m_DepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 }
+void GD3DContext::setViewport(float x, float y, float w, float h)
+{
+	D3D10_VIEWPORT viewport;
+	viewport.TopLeftX = (INT)x;
+	viewport.TopLeftY = (INT)y;
+	viewport.Width = (UINT)w;
+	viewport.Height = (UINT)h;
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+
+	GX::D3DDevice()->RSSetViewports(1, &viewport);
+}
 void GD3DContext::renderEnd()
 {
 	m_SwapChain->Present(0,0);

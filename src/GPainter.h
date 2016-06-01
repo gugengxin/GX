@@ -2,6 +2,7 @@
 #include "GXPrefix.h"
 #include "GMatrix.h"
 #include "GDataArray.h"
+#include "GColor.h"
 
 class GPainter
 {
@@ -51,8 +52,14 @@ public:
 	const float* updateModelViewMatrix();
 	const float* updateMVPMatrix();
 
+public:
+	const float* updateColorMul() {
+		return &m_ColorMul.r;
+	}
+
 private:
 	GMatrix4 m_Matrixs[MatrixCount];
 	GPDArray<GMatrix4> m_MatrixStack;
+	GColor4F m_ColorMul;
 };
 

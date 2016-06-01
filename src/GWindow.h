@@ -35,9 +35,9 @@ public:
 #endif
 	}
 	bool create(void* osWinP);
-    gfloat32 getWidth();
-    gfloat32 getHeight();
-    gfloat32 getScale();
+    float getWidth();
+    float getHeight();
+    float getScale();
     
 public:
 	virtual void idle();
@@ -72,7 +72,7 @@ private:
 	void androidDestory();
 	void androidRecreate(ANativeWindow* nw);
 
-    gfloat32 m_OSWinScale;
+    float m_OSWinScale;
 	ANativeWindow* m_OSWin;
 #elif defined(GX_OS_QT)
     QWindow* m_OSWin;

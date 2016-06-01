@@ -10,7 +10,6 @@
 #include "GSystem.h"
 #include "GLog.h"
 #include "GApplication.h"
-#include "GXMath.h"
 
 #if defined(GX_OS_WINDOWS)
 
@@ -400,7 +399,7 @@ bool GWindow::create(void* osWinP)
 	m_OSWin.create(wc, dwStyle, dwExStyle, rc, GX_CAST_R(HWND, m_OSWinP));
 	SetWindowToHWND(m_OSWin.getHWND(),this);
 #if GX_PTR_64BIT
-	m_WndProcP = (WNDPROC)SetWindowLong(GX_CAST_R(HWND, m_OSWinP), GWLP_WNDPROC, (LONG)wndProcP);
+	m_WndProcP = (WNDPROC)SetWindowLongPtr(GX_CAST_R(HWND, m_OSWinP), GWLP_WNDPROC, (LONG_PTR)wndProcP);
 #else
 	m_WndProcP = (WNDPROC)SetWindowLong(GX_CAST_R(HWND, m_OSWinP), GWL_WNDPROC, (LONG)wndProcP);
 #endif
@@ -467,50 +466,50 @@ bool GWindow::create(void* osWinP)
     return m_Context.create(this);
 }
 
-gfloat32 GWindow::getWidth()
+float GWindow::getWidth()
 {
 #if defined(GX_OS_WINDOWS)
 	RECT rc;
 	::GetClientRect(m_OSWin.getHWND(), &rc);
-	return GX_CAST_S(gfloat32,rc.right - rc.left);
+	return GX_CAST_S(float,rc.right - rc.left);
 #elif defined(GX_OS_IPHONE)
-    return (gfloat32)GX_CAST_R(UIView*, m_OSWin).bounds.size.width;
+    return (float)GX_CAST_R(UIView*, m_OSWin).bounds.size.width;
 #elif defined(GX_OS_MACOSX)
-    return (gfloat32)GX_CAST_R(NSView*, m_OSWin).bounds.size.width;
+    return (float)GX_CAST_R(NSView*, m_OSWin).bounds.size.width;
 #elif defined(GX_OS_ANDROID)
     return ANativeWindow_getWidth(GX_CAST_R(ANativeWindow*, m_OSWin))/m_OSWinScale;
 #elif defined(GX_OS_QT)
     return m_OSWin->geometry().width();
 #endif
 }
-gfloat32 GWindow::getHeight()
+float GWindow::getHeight()
 {
 #if defined(GX_OS_WINDOWS)
 	RECT rc;
 	::GetClientRect(m_OSWin.getHWND(), &rc);
-	return GX_CAST_S(gfloat32, rc.bottom - rc.top);
+	return GX_CAST_S(float, rc.bottom - rc.top);
 #elif defined(GX_OS_IPHONE)
-    return (gfloat32)GX_CAST_R(UIView*, m_OSWin).bounds.size.height;
+    return (float)GX_CAST_R(UIView*, m_OSWin).bounds.size.height;
 #elif defined(GX_OS_MACOSX)
-    return (gfloat32)GX_CAST_R(NSView*, m_OSWin).bounds.size.height;
+    return (float)GX_CAST_R(NSView*, m_OSWin).bounds.size.height;
 #elif defined(GX_OS_ANDROID)
 	return ANativeWindow_getHeight(GX_CAST_R(ANativeWindow*, m_OSWin))/m_OSWinScale;
 #elif defined(GX_OS_QT)
     return m_OSWin->geometry().width();
 #endif
 }
-gfloat32 GWindow::getScale()
+float GWindow::getScale()
 {
 #if defined(GX_OS_WINDOWS)
 	return 1.0f;
 #elif defined(GX_OS_IPHONE)
-    return (gfloat32)GX_CAST_R(UIView*, m_OSWin).contentScaleFactor;
+    return (float)GX_CAST_R(UIView*, m_OSWin).contentScaleFactor;
 #elif defined(GX_OS_MACOSX)
-    return (gfloat32)GX_CAST_R(NSView*, m_OSWin).window.backingScaleFactor;
+    return (float)GX_CAST_R(NSView*, m_OSWin).window.backingScaleFactor;
 #elif defined(GX_OS_ANDROID)
 	return m_OSWinScale;
 #elif defined(GX_OS_QT)
-    return (gfloat32)m_OSWin->devicePixelRatio();
+    return (float)m_OSWin->devicePixelRatio();
 #endif
 }
 
@@ -519,14 +518,40 @@ gfloat32 GWindow::getScale()
 void GWindow::idle()
 {
 }
+
+
+#include "GXMath.h"
+#include "GDataBuffer.h"
+#include "GVector.h"
+
 void GWindow::render()
 {
+	m_Context.setViewport(0.0f, 0.0f, getWidth(), getHeight());
+
 	GPainter& painter = m_Context.getPainter();
 
 	painter.enable3D(getWidth(), getHeight(), GX_PI / 3, 0.1f, 1000.0f);
+	painter.lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
 	GSRGraphics* graph = m_Context.getSRGraphics(GSRGraphics::ID_ColorMul);
 
+	static GDataBuffer* data = NULL;
+	if (!data) {
+		data = GDataBuffer::alloc();
+
+		GVector3 pos[3];
+
+		pos[0].set(-100.0f, -100.0f, 0.0f);
+		pos[1].set(100.0f, -100.0f, 0.0f);
+		pos[2].set(0.0f, 100.0f, 0.0f);
+		
+		data->changeBytes(sizeof(pos));
+		void* p = data->map();
+		memcpy(p, pos, sizeof(pos));
+		data->unmap();
+	}
+
+	graph->draw(painter, data, GSRGraphics::ITFloat, GX_TRIANGLES, 0, 3);
 
 
 }
@@ -549,9 +574,9 @@ void GWindow::renderIfNeed()
 
 void GWindow::eventResize()
 {
-    gfloat32 nw=getWidth();
-    gfloat32 nh=getHeight();
-    gfloat32 s=getScale();
+    float nw=getWidth();
+    float nh=getHeight();
+    float s=getScale();
     
     m_Context.resize(nw*s, nh*s);
 }

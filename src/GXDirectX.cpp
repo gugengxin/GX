@@ -12,10 +12,9 @@ namespace GX {
 	{
 		if (!g_D3DDevice) {
 			UINT createDeviceFlags = 0;
-#ifdef GX_DEBUG
-			createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
-#endif
-
+//#ifdef GX_DEBUG
+//			createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
+//#endif
 			HRESULT hr=D3D10CreateDevice(NULL, D3D10_DRIVER_TYPE_HARDWARE, NULL, createDeviceFlags, D3D10_SDK_VERSION, &g_D3DDevice);
 			GX_ASSERT(SUCCEEDED(hr));
 		}

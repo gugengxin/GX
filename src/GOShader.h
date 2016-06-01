@@ -12,7 +12,7 @@ protected:
 	GOShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
 	virtual ~GOShader();
 
-	bool load(const gchar* srcVS, gint vsLen, const gchar* srcFP, gint fpLen, const Macro* macro);
+	bool load(const gchar* srcVS, const gchar* srcFP, const Macro* macro);
 
 	inline void setAttribLocation(GLuint index, const GLchar* name) {
 		glBindAttribLocation(m_Program, index, name);

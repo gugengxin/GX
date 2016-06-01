@@ -3,6 +3,7 @@
 #include "GContext.h"
 #include "GMatrix.h"
 #include "GColor.h"
+#include "GXMath.h"
 
 
 
@@ -62,7 +63,7 @@ GSRGraphics::GSRGraphics(ID srID) :GShaderBase((guint8)srID, 0, 0, 0)
 		{ "MI_CANDCM", NULL },
 	};
 	Macro macros[] = { g_Macros[srID], {NULL,NULL} };
-	load(g_SrcVS, g_SrcVSLen, g_SrcFP, g_SrcFPLen, macros);
+	load(g_SrcVS, g_SrcFP, macros);
 }
 
 
@@ -118,7 +119,7 @@ bool GSRGraphics::createConstantBuffer(ID3D10Device* device)
 
 	if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
 		cbDesc.Usage = D3D10_USAGE_DYNAMIC;
-		cbDesc.ByteWidth = sizeof(GColor4);
+		cbDesc.ByteWidth = sizeof(GColor4F);
 		cbDesc.BindFlags = D3D10_BIND_CONSTANT_BUFFER;
 		cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
 		cbDesc.MiscFlags = 0;
@@ -159,4 +160,88 @@ void GSRGraphics::bindUniformLocations()
 	}
 }
 
+
+typedef void(*InputBeginFunction)(gint idx, GIBuffer* buffer);
+typedef void(*InputEndFunction)(gint idx);
+
+static void _InputBFunFloat(gint idx, GIBuffer* buffer)
+{
+	buffer->readyUse();
+
+	glEnableVertexAttribArray(A_position);
+	glVertexAttribPointer(A_position, 3, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(0));
+
+	if (idx != GSRGraphics::ID_ColorMul) {
+		glEnableVertexAttribArray(A_color);
+		glVertexAttribPointer(A_color, 4, GL_UNSIGNED_BYTE, GL_TRUE, (GLsizei)buffer->getStride(), buffer->getData(3 * sizeof(float)));
+	}
+
+	buffer->doneUse();
+}
+static void _InputEFunFloat(gint idx)
+{
+	glDisableVertexAttribArray(A_position);
+	if (idx != GSRGraphics::ID_ColorMul) {
+		glDisableVertexAttribArray(A_color);
+	}
+}
+
+static InputBeginFunction g_InputBFuns[] = {
+	_InputBFunFloat,
+};
+static InputEndFunction g_InputEFuns[] = {
+	_InputEFunFloat,
+};
+
 #endif
+
+
+void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType, gint mode, gint first, gint count)
+{
+#if defined(GX_DIRECTX)
+
+	ID3D10Device* device = GX::D3DDevice();
+
+	UINT offset = (UINT)buffer->getOffset();
+	UINT stride = (UINT)buffer->getStride();
+	device->IASetVertexBuffers(0, 1, buffer->getBufferPtr(), &stride, &offset);
+	device->IASetPrimitiveTopology((D3D10_PRIMITIVE_TOPOLOGY)mode);
+
+	ID3D10Buffer* cbToMapped;
+	void* pMap;
+
+	cbToMapped = m_ConstBuffers[CB_mvp_mat];
+	cbToMapped->Map(D3D10_MAP_WRITE_DISCARD, 0, &pMap);
+	const float* mvp = painter.updateMVPMatrix();
+	//mvp->Transpose();
+	memcpy(pMap, mvp, GX_MATRIX_SIZE);
+	cbToMapped->Unmap();
+	device->VSSetConstantBuffers(0, 1, &cbToMapped);
+
+	cbToMapped = m_ConstBuffers[CB_color_mul];
+	cbToMapped->Map(D3D10_MAP_WRITE_DISCARD, 0, &pMap);
+	memcpy(pMap, painter.updateColorMul(), sizeof(GColor4F));
+	cbToMapped->Unmap();
+	device->PSSetConstantBuffers(0, 1, &cbToMapped);
+
+	device->IASetInputLayout(m_Layouts[inputType]);
+
+	device->VSSetShader(getVertexShader());
+	device->PSSetShader(getPixelShader());
+
+	device->Draw((UINT)count, (UINT)first);
+
+#elif defined(GX_OPENGL)
+	useProgram();
+
+	g_InputBFuns[inputType](getIndex0(), buffer);
+
+	setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)painter.updateMVPMatrix());
+
+	setUniform4fv(U_color_mul, 1, (const GLfloat*)painter.updateColorMul());
+
+	glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
+
+	g_InputEFuns[inputType](getIndex0());
+#endif
+}
