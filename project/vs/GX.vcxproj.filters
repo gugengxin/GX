@@ -177,6 +177,12 @@
     <ClCompile Include="..\..\src\GPainter.cpp">
       <Filter>src\Window</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GBuffer.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDataBuffer.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -350,5 +356,16 @@
     <ClInclude Include="..\..\src\GPainter.h">
       <Filter>src\Window</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\GBuffer.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDataBuffer.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\GSRGraphics.gxsl">
+      <Filter>src\Window</Filter>
+    </None>
   </ItemGroup>
 </Project>

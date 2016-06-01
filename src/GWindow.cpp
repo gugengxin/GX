@@ -523,7 +523,7 @@ void GWindow::render()
 {
 	GPainter& painter = m_Context.getPainter();
 
-	painter.enable3D(getWidth(), getHeight(), GX_PI / 3, 0.1, 1000.0f);
+	painter.enable3D(getWidth(), getHeight(), GX_PI / 3, 0.1f, 1000.0f);
 
 	GSRGraphics* graph = m_Context.getSRGraphics(GSRGraphics::ID_ColorMul);
 
