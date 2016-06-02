@@ -17,6 +17,7 @@ SOURCES += \
     ../../src/GApplication.cpp \
     ../../src/GArray.cpp \
     ../../src/GAutoreleasePool.cpp \
+    ../../src/GBuffer.cpp \
     ../../src/GClass.cpp \
     ../../src/GColor.cpp \
     ../../src/GCondition.cpp \
@@ -24,12 +25,14 @@ SOURCES += \
     #../../src/GD3DContext.cpp \
     ../../src/GData.cpp \
     ../../src/GDataArray.cpp \
+    ../../src/GDataBuffer.cpp \
     ../../src/GDataString.cpp \
     #../../src/GDShader.cpp \
     #../../src/GJavaAPI.cpp \
     #../../src/GJavaCAPI.cpp \
     #../../src/GJavaClass.cpp \
     #../../src/GJavaJAPI.cpp \
+    #../../src/glew.c \
     ../../src/GLog.cpp \
     ../../src/GMap.cpp \
     ../../src/GMatrix.cpp \
@@ -41,6 +44,7 @@ SOURCES += \
     ../../src/GOGLContext.cpp \
     ../../src/GOShader.cpp \
     ../../src/GOWHash.cpp \
+    ../../src/GPainter.cpp \
     ../../src/GPieceData.cpp \
     ../../src/GPtr.cpp \
     ../../src/GRunLoop.cpp \
@@ -57,13 +61,12 @@ SOURCES += \
     #../../src/GXCWnd.cpp \
     #../../src/GXDirectX.cpp \
     ../../src/GXMath.cpp \
-    #../../src/GXOpenGL.cpp \
+    ../../src/GXOpenGL.cpp \
     #../../src/GXPthread.cpp \
-    #../../src/glew.c
+
 
 win32 {
-    SOURCES += ../../src/GXPthread.cpp \
-        ../../src/GXOpenGL.cpp
+    SOURCES += ../../src/GXPthread.cpp
 }
 
 HEADERS += \

@@ -168,21 +168,21 @@ static void _InputBFunFloat(gint idx, GIBuffer* buffer)
 {
 	buffer->readyUse();
 
-	glEnableVertexAttribArray(A_position);
-	glVertexAttribPointer(A_position, 3, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(0));
+    GX_glEnableVertexAttribArray(A_position);
+    GX_glVertexAttribPointer(A_position, 3, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(0));
 
 	if (idx != GSRGraphics::ID_ColorMul) {
-		glEnableVertexAttribArray(A_color);
-		glVertexAttribPointer(A_color, 4, GL_UNSIGNED_BYTE, GL_TRUE, (GLsizei)buffer->getStride(), buffer->getData(3 * sizeof(float)));
+        GX_glEnableVertexAttribArray(A_color);
+        GX_glVertexAttribPointer(A_color, 4, GL_UNSIGNED_BYTE, GL_TRUE, (GLsizei)buffer->getStride(), buffer->getData(3 * sizeof(float)));
 	}
 
 	buffer->doneUse();
 }
 static void _InputEFunFloat(gint idx)
 {
-	glDisableVertexAttribArray(A_position);
+    GX_glDisableVertexAttribArray(A_position);
 	if (idx != GSRGraphics::ID_ColorMul) {
-		glDisableVertexAttribArray(A_color);
+        GX_glDisableVertexAttribArray(A_color);
 	}
 }
 
@@ -240,7 +240,7 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
 
 	setUniform4fv(U_color_mul, 1, (const GLfloat*)painter.updateColorMul());
 
-	glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
+    GX_glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
 
 	g_InputEFuns[inputType](getIndex0());
 #endif

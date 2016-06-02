@@ -19,7 +19,7 @@ class GWindow;
 
 class GOGLContext
 #if defined(GX_OS_QT)
-        : protected QOpenGLFunctions
+        : public QOpenGLFunctions
 #endif
 {
 protected:

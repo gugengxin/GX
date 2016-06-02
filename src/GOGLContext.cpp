@@ -531,6 +531,7 @@ void GOGLContext::makeCurrent()
 	eglMakeCurrent(g_Display, m_Surface, m_Surface, m_Context);
 #elif defined(GX_OS_QT)
     m_Context->makeCurrent(m_Window->m_OSWin);
+    GX::openGLFunsSet(this);
 #endif
 }
 void GOGLContext::makeClear()
@@ -544,6 +545,7 @@ void GOGLContext::makeClear()
 #elif defined(GX_OS_ANDROID)
 	eglMakeCurrent(g_Display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 #elif defined(GX_OS_QT)
+    GX::openGLFunsSet(NULL);
     m_Context->doneCurrent();
 #endif
 }

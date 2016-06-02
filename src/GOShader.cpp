@@ -14,7 +14,7 @@ GShader(idxA,idxB,idxC,idxD)
 GOShader::~GOShader()
 {
     if (m_Program) {
-        glDeleteProgram(m_Program);
+        GX_glDeleteProgram(m_Program);
         m_Program=0;
     }
 }
@@ -44,19 +44,19 @@ bool GOShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
     GLuint fragShader=0;
 	if (!compileShader(&fragShader, GL_FRAGMENT_SHADER, (const GLchar*)str.c_str())) {
         if (vertShader) {
-            glDeleteShader(vertShader);
+            GX_glDeleteShader(vertShader);
             vertShader = 0;
         }
         return false;
     }
 
     // Create shader program
-    m_Program = glCreateProgram();
+    m_Program = GX_glCreateProgram();
 
     // Attach vertex shader to program
-    glAttachShader(m_Program, vertShader);
+    GX_glAttachShader(m_Program, vertShader);
     // Attach fragment shader to program
-    glAttachShader(m_Program, fragShader);
+    GX_glAttachShader(m_Program, fragShader);
 
     this->bindAttribLocations();
 
@@ -65,17 +65,17 @@ bool GOShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
     {
         if (vertShader)
         {
-            glDeleteShader(vertShader);
+            GX_glDeleteShader(vertShader);
             vertShader = 0;
         }
         if (fragShader)
         {
-            glDeleteShader(fragShader);
+            GX_glDeleteShader(fragShader);
             fragShader = 0;
         }
         if (m_Program)
         {
-            glDeleteProgram(m_Program);
+            GX_glDeleteProgram(m_Program);
             m_Program = 0;
         }
 
@@ -86,9 +86,9 @@ bool GOShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
 
     // Release vertex and fragment shaders
     if (vertShader)
-        glDeleteShader(vertShader);
+        GX_glDeleteShader(vertShader);
     if (fragShader)
-        glDeleteShader(fragShader);
+        GX_glDeleteShader(fragShader);
 
     return true;
 }
@@ -97,26 +97,26 @@ bool GOShader::compileShader(GLuint* shader, GLenum type, const GLchar* pGLchars
 {
 	GLint status;
 
-	*shader = glCreateShader(type);
-	glShaderSource(*shader, 1, &pGLchars, NULL);
-	glCompileShader(*shader);
+    *shader = GX_glCreateShader(type);
+    GX_glShaderSource(*shader, 1, &pGLchars, NULL);
+    GX_glCompileShader(*shader);
 
 #if defined(GX_DEBUG)
 	GLint logLength;
-	glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
+    GX_glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
 	if (logLength > 1)
 	{
 		GLchar *log = (GLchar *)malloc((size_t)logLength);
-		glGetShaderInfoLog(*shader, logLength, &logLength, log);
+        GX_glGetShaderInfoLog(*shader, logLength, &logLength, log);
 		GX_LOG_P1(PrioDEBUG, "GOShader", "compileShader:%s", log);
 		free(log);
 	}
 #endif
 
-	glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
+    GX_glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
 	if (status == 0)
 	{
-		glDeleteShader(*shader);
+        GX_glDeleteShader(*shader);
 		*shader = 0;
 		return false;
 	}
@@ -127,21 +127,21 @@ bool GOShader::linkProgram(GLuint prog)
 {
 	GLint status;
 
-	glLinkProgram(prog);
+    GX_glLinkProgram(prog);
 
 #if defined(GX_DEBUG)
 	GLint logLength;
-	glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+    GX_glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
 	if (logLength > 1)
 	{
 		GLchar *log = (GLchar *)malloc((size_t)logLength);
-		glGetProgramInfoLog(prog, logLength, &logLength, log);
+        GX_glGetProgramInfoLog(prog, logLength, &logLength, log);
 		GX_LOG_P1(PrioDEBUG, "GOShader", "linkProgram:%s", log);
 		free(log);
 	}
 #endif
 
-	glGetProgramiv(prog, GL_LINK_STATUS, &status);
+    GX_glGetProgramiv(prog, GL_LINK_STATUS, &status);
 	if (status == 0)
 		return false;
 
@@ -149,20 +149,20 @@ bool GOShader::linkProgram(GLuint prog)
 }
 bool GOShader::validateProgram(GLuint prog)
 {
-	glValidateProgram(prog);
+    GX_glValidateProgram(prog);
 #if defined(GX_DEBUG)
 	GLint logLength;
-	glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+    GX_glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
 	if (logLength > 1)
 	{
 		GLchar *log = (GLchar *)malloc((size_t)logLength);
-		glGetProgramInfoLog(prog, logLength, &logLength, log);
+        GX_glGetProgramInfoLog(prog, logLength, &logLength, log);
 		GX_LOG_P1(PrioDEBUG, "GOShader", "validateProgram:%s", log);
 		free(log);
 	}
 #endif
 	GLint status;
-	glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
+    GX_glGetProgramiv(prog, GL_VALIDATE_STATUS, &status);
 	if (status == 0)
 		return false;
 
