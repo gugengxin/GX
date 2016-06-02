@@ -7,6 +7,9 @@
 
 
 class GOShader : public GShader
+#if defined(GX_OS_QT)
+        , protected QOpenGLFunctions
+#endif
 {
 protected:
 	GOShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);

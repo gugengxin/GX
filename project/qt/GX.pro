@@ -124,7 +124,7 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
-win32 {
+win32-msvc2013 {
     QMAKE_LIBFLAGS += /ignore:4221
     INCLUDEPATH += $$PWD/../../external/pthread-win32/include
     DEPENDPATH += $$PWD/../../external/pthread-win32/include

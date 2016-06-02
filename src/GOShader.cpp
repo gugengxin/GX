@@ -31,7 +31,7 @@ bool GOShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
 		pSM++;
 	}
 	gint mlen = str.getLength();
-	str.append(srcVS, vsLen);
+    str.append(srcVS);
 
     GLuint vertShader=0;
 	if (!compileShader(&vertShader, GL_VERTEX_SHADER, (const GLchar*)str.c_str())) {
@@ -39,7 +39,7 @@ bool GOShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
     }
 
 	str.cutOff(mlen);
-	str.append(srcFP, fpLen);
+    str.append(srcFP);
 
     GLuint fragShader=0;
 	if (!compileShader(&fragShader, GL_FRAGMENT_SHADER, (const GLchar*)str.c_str())) {
