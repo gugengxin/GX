@@ -162,6 +162,28 @@ static void CreateDC()
 	}
 }
 
+void GOGLContext::pushOSHandle(EGLSurface surface,EGLContext context)
+{
+    OSHandle handle;
+    handle.surface=surface;
+    handle.context=context;
+    m_OSHandles.add(handle);
+
+    eglMakeCurrent(g_Display, surface, surface, context);
+}
+
+void GOGLContext::popOSHandle()
+{
+    if(m_OSHandles.getCount()>0) {
+        OSHandle& handle=m_OSHandles.last();
+        eglMakeCurrent(g_Display, handle.surface, handle.surface, handle.context);
+        m_OSHandles.removeLast();
+    }
+    else {
+        eglMakeCurrent(g_Display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+    }
+}
+
 #endif
 
 GOGLContext::GOGLContext()
@@ -190,6 +212,11 @@ GOGLContext::GOGLContext()
 	m_Context=EGL_NO_CONTEXT;
 #elif defined(GX_OS_QT)
     m_Context=NULL;
+#endif
+#if defined(GX_OS_ANDROID)
+
+#else
+    m_ContextMakeCount=0;
 #endif
 }
 
@@ -350,11 +377,22 @@ bool GOGLContext::create(GWindow* win) {
     initializeOpenGLFunctions();
     m_Context->doneCurrent();
 #endif
+
+#if defined(GX_OS_ANDROID)
+    m_OSHandles.removeAll();
+#else
+    m_ContextMakeCount=0;
+#endif
 	return true;
 }
 
 void GOGLContext::destroy()
 {
+#if defined(GX_OS_ANDROID)
+    m_OSHandles.removeAll();
+#else
+    m_ContextMakeCount=0;
+#endif
 #if defined(GX_OS_WINDOWS)
 	if (m_Context) {
 		wglDeleteContext(m_Context);
@@ -483,9 +521,9 @@ void GOGLContext::renderBegin()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void GOGLContext::setViewport(float x, float y, float w, float h)
+void GOGLContext::setViewport(float x, float y, float w, float h, float scale)
 {
-	glViewport((GLint)x, (GLint)y, (GLint)w, (GLint)h);
+	glViewport((GLint)(x*scale), (GLint)(y*scale), (GLint)(w*scale), (GLint)(h*scale));
 }
 
 void GOGLContext::renderEnd()
@@ -521,59 +559,77 @@ void GOGLContext::renderEnd()
 
 void GOGLContext::makeCurrent()
 {
+#if defined(GX_OS_ANDROID)
+    pushOSHandle(m_Surface,m_Context);
+#else
+    if(m_ContextMakeCount==0) {
 #if defined(GX_OS_WINDOWS)
-	wglMakeCurrent(m_DC, m_Context);
+        wglMakeCurrent(m_DC, m_Context);
 #elif defined(GX_OS_IPHONE)
-    [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*,m_Context)];
+        [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*,m_Context)];
 #elif defined(GX_OS_MACOSX)
-    [GX_CAST_R(NSOpenGLContext*,m_Context) makeCurrentContext];
-#elif defined(GX_OS_ANDROID)
-	eglMakeCurrent(g_Display, m_Surface, m_Surface, m_Context);
+        [GX_CAST_R(NSOpenGLContext*,m_Context) makeCurrentContext];
 #elif defined(GX_OS_QT)
-    m_Context->makeCurrent(m_Window->m_OSWin);
-    GX::openGLFunsSet(this);
+        m_Context->makeCurrent(m_Window->m_OSWin);
+        GX::openGLFunsSet(this);
+#endif
+    }
+    m_ContextMakeCount++;
 #endif
 }
 void GOGLContext::makeClear()
 {
+#if defined(GX_OS_ANDROID)
+    popOSHandle();
+#else
+    m_ContextMakeCount--;
+    if(m_ContextMakeCount==0) {
 #if defined(GX_OS_WINDOWS)
-	wglMakeCurrent(NULL, NULL);
+        wglMakeCurrent(NULL, NULL);
 #elif defined(GX_OS_IPHONE)
-    [EAGLContext setCurrentContext:nil];
+        [EAGLContext setCurrentContext:nil];
 #elif defined(GX_OS_MACOSX)
-    [NSOpenGLContext clearCurrentContext];
-#elif defined(GX_OS_ANDROID)
-	eglMakeCurrent(g_Display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+        [NSOpenGLContext clearCurrentContext];
 #elif defined(GX_OS_QT)
-    GX::openGLFunsSet(NULL);
-    m_Context->doneCurrent();
+        GX::openGLFunsSet(NULL);
+        m_Context->doneCurrent();
+#endif
+    }
 #endif
 }
 
 void GOGLContext::readyShader()
 {
 #if defined(GX_OS_ANDROID)
-	eglMakeCurrent(g_Display, g_Surface, g_Surface, g_Context);
+    pushOSHandle(g_Surface,g_Context);
 #else
 	makeCurrent();
 #endif
 }
 void GOGLContext::doneShader()
 {
-	makeClear();
+#if defined(GX_OS_ANDROID)
+    popOSHandle();
+#else
+    makeClear();
+#endif
 }
 
 void GOGLContext::readyTexture()
 {
 #if defined(GX_OS_ANDROID)
-	eglMakeCurrent(g_Display, g_Surface, g_Surface, g_Context);
+    pushOSHandle(g_Surface,g_Context);
 #else
-	makeCurrent();
+    makeCurrent();
 #endif
 }
 void GOGLContext::doneTexture()
 {
-	makeClear();
+#if defined(GX_OS_ANDROID)
+    popOSHandle();
+#else
+    makeClear();
+#endif
 }
 
 #endif

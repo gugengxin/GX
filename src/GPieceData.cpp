@@ -87,7 +87,7 @@ bool GPieceData::changeBytes(guint toSize)
 		return false;
 	}
 #endif
-	if (toBCount != m_PieceCount) {
+    if (toBCount > m_PieceCount || toBCount+1<m_PieceCount) {
 		if (!GData::galloc(m_Buffer, m_PieceSize*(guint)m_PieceCount, toSizeReal)) {
 			return false;
 		}

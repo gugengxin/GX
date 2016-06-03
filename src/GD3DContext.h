@@ -22,7 +22,7 @@ public:
 	bool resize(gfloat32 width, gfloat32 height);
 
 	void renderBegin();
-	void setViewport(float x, float y, float w, float h);
+	void setViewport(float x, float y, float w, float h, float scale);
 	void renderEnd();
 public:
 	void makeCurrent();

@@ -433,6 +433,7 @@ bool GWindow::create(void* osWinP)
 	m_OSWin=GX_CAST_R(ANativeWindow*, osWinP);
 	GJavaJNIEnvAutoPtr jniEnv;
 	m_OSWinScale=GJavaCAPI::shared()->appGetDefaultWindowScale(jniEnv.get());
+	GX_LOG_P1(PrioDEBUG,"GWindow","create scale=%f", m_OSWinScale);
 #elif defined(GX_OS_QT)
     m_OSWin=new QWindow();
     m_OSWin->setSurfaceType(QWindow::OpenGLSurface);
@@ -526,7 +527,7 @@ void GWindow::idle()
 
 void GWindow::render()
 {
-	m_Context.setViewport(0.0f, 0.0f, getWidth(), getHeight());
+	m_Context.setViewport(0.0f, 0.0f, getWidth(), getHeight(), getScale());
 
 	GPainter& painter = m_Context.getPainter();
 

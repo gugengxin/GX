@@ -14,6 +14,7 @@
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 #endif
+#include "GDataArray.h"
 
 class GWindow;
 
@@ -31,7 +32,7 @@ public:
     bool resize(gfloat32 width,gfloat32 height);
 
 	void renderBegin();
-	void setViewport(float x, float y, float w, float h);
+	void setViewport(float x, float y, float w, float h, float scale);
 	void renderEnd();
 
 public:
@@ -51,7 +52,6 @@ private:
 #elif defined(GX_OS_APPLE)
     void* m_Context;
 #if defined(GX_OS_IPHONE)
-    
     gint32   m_BackingWidth;
     gint32   m_BackingHeight;
     gint32   m_Samples;
@@ -66,6 +66,19 @@ private:
 	EGLContext m_Context;
 #elif defined(GX_OS_QT)
     QOpenGLContext* m_Context;
+#endif
+#if defined(GX_OS_ANDROID)
+    class OSHandle {
+    public:
+        EGLSurface surface;
+        EGLContext context;
+    };
+    void pushOSHandle(EGLSurface surface,EGLContext context);
+    void popOSHandle();
+
+    GPDArray<OSHandle> m_OSHandles;
+#else
+    gint m_ContextMakeCount;
 #endif
 };
 
