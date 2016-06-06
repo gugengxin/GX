@@ -19,6 +19,24 @@
 #include "com_gxengine_gx_GJavaJAPI.h"
 #elif defined(GX_OS_QT)
 #include <QWindow>
+
+class GWindow;
+
+class _GQWindow : public QWindow
+{
+    Q_OBJECT
+public:
+    _GQWindow();
+    virtual ~_GQWindow();
+
+    void setDelegate(GWindow* v) {
+        m_Delegate=v;
+    }
+protected:
+private:
+    GWindow* m_Delegate;
+};
+
 #endif
 
 class GWindow : public GObject {
@@ -75,7 +93,9 @@ private:
     float m_OSWinScale;
 	ANativeWindow* m_OSWin;
 #elif defined(GX_OS_QT)
-    QWindow* m_OSWin;
+    friend class _GQWindow;
+    void qtWindowDestoryed();
+    _GQWindow* m_OSWin;
     QWidget* m_Container;
 #endif
 };

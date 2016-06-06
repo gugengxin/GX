@@ -397,5 +397,10 @@ void GApplication::setCanCreateWindow(void* osWindow)
 
 void GApplication::addWindow(GWindow* win)
 {
-	m_Windows.add(win);
+    m_Windows.add(win);
+}
+
+void GApplication::eventWindowDestroyed(GWindow *win)
+{
+    m_Windows.remove(win);
 }

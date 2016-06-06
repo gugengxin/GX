@@ -11,13 +11,17 @@ TEMPLATE = lib
 CONFIG += staticlib
 DEFINES += GX_OS_QT
 DESTDIR = ../../product/qt
+OBJECTS_DIR = obj
+UI_DIR = ui
+RCC_DIR = rcc
+MOC_DIR = moc
 
 SOURCES += \
     ../../src/GAction.cpp \
     ../../src/GApplication.cpp \
     ../../src/GArray.cpp \
     ../../src/GAutoreleasePool.cpp \
-    ../../src/GBuffer.cpp \
+    #../../src/GBuffer.cpp \
     ../../src/GClass.cpp \
     ../../src/GColor.cpp \
     ../../src/GCondition.cpp \
@@ -70,25 +74,23 @@ win32 {
 }
 
 HEADERS += \
-    ../../src/GClass.h \
-    ../../src/GObject.h \
-    ../../src/GOWHash.h \
-    ../../src/GX.h \
-    ../../src/GXOSs.h \
-    ../../src/GXPrefix.h \
-    ../../src/GXTypes.h \
-    ../../src/com_gxengine_GX.h \
     ../../src/com_gxengine_gx_GJavaJAPI.h \
+    ../../src/com_gxengine_GX.h \
     ../../src/GAction.h \
     ../../src/GApplication.h \
     ../../src/GArray.h \
     ../../src/GAutoreleasePool.h \
+    ../../src/GBuffer.h \
+    ../../src/GClass.h \
+    ../../src/GColor.h \
     ../../src/GCondition.h \
     ../../src/GContext.h \
     ../../src/GD3DContext.h \
     ../../src/GData.h \
     ../../src/GDataArray.h \
+    ../../src/GDataBuffer.h \
     ../../src/GDataString.h \
+    ../../src/GDShader.h \
     ../../src/GJavaAPI.h \
     ../../src/GJavaCAPI.h \
     ../../src/GJavaClass.h \
@@ -100,11 +102,16 @@ HEADERS += \
     ../../src/GNotice.h \
     ../../src/GNoticeCenter.h \
     ../../src/GNumber.h \
+    ../../src/GObject.h \
     ../../src/GOGLContext.h \
+    ../../src/GOShader.h \
+    ../../src/GOWHash.h \
+    ../../src/GPainter.h \
     ../../src/GPieceData.h \
     ../../src/GPtr.h \
     ../../src/GRunLoop.h \
     ../../src/GShader.h \
+    ../../src/GSRGraphics.h \
     ../../src/GString.h \
     ../../src/GSystem.h \
     ../../src/GThread.h \
@@ -113,16 +120,17 @@ HEADERS += \
     ../../src/GVector.h \
     ../../src/GWindow.h \
     ../../src/GWString.h \
+    ../../src/GX.h \
     ../../src/GXCWnd.h \
     ../../src/GXDirectX.h \
     ../../src/GXEncoding.h \
     ../../src/GXMath.h \
     ../../src/GXOpenGL.h \
+    ../../src/GXOSs.h \
+    ../../src/GXPrefix.h \
     ../../src/GXPthread.h \
-    ../../src/GColor.h \
-    ../../src/GSRGraphics.h \
-    ../../src/GDShader.h \
-    ../../src/GOShader.h
+    ../../src/GXTypes.h
+
 unix {
     target.path = /usr/lib
     INSTALLS += target

@@ -14,12 +14,7 @@
 #include "GPainter.h"
 #include "GSRGraphics.h"
 
-class GContext : public
-#if defined(GX_OPENGL)
-                 GOGLContext
-#elif defined(GX_DIRECTX)
-                 GD3DContext
-#endif
+class GContext : public GContextBase
 {
 	friend class GWindow;
 private:
@@ -34,6 +29,9 @@ private:
     GContext();
     ~GContext();
 public:
+    virtual bool create(GWindow* win);
+    virtual void destroy();
+
 	GSRGraphics* getSRGraphics(GSRGraphics::ID srID);
 public:
 	GPainter& getPainter() {

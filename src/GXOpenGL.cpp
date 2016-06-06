@@ -73,17 +73,11 @@ namespace GX
 
 #if defined(GX_OS_QT)
 
-static QOpenGLFunctions* g_OGLFuns=NULL;
-
 namespace GX {
 
 QOpenGLFunctions *openGLFuns()
 {
-    return g_OGLFuns;
-}
-void openGLFunsSet(QOpenGLFunctions *v)
-{
-    g_OGLFuns=v;
+    return QOpenGLContext::currentContext()->functions();
 }
 
 }

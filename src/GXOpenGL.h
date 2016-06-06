@@ -49,7 +49,6 @@ namespace GX
 #include <QtOpenGL>
 namespace GX {
     QOpenGLFunctions* openGLFuns();
-    void openGLFunsSet(QOpenGLFunctions* v);
 }
 #endif
 

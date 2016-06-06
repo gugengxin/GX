@@ -88,6 +88,15 @@ public:
 		}
 		return false;
 	}
+    bool remove(T* v) {
+        for(gint i=0;i<getCount();i++) {
+            if(v==GX_CAST_R(T**, m_Data.getPtr())[i]) {
+                return remove(i);
+            }
+        }
+        return false;
+    }
+
 	bool remove(gint indexFrom, gint indexCount) {
 		if (indexFrom<0 || indexCount <= 0) {
 			return false;

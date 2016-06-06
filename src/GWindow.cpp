@@ -323,6 +323,25 @@ void GWindow::androidRecreate(ANativeWindow* nw)
 
 #elif defined(GX_OS_QT)
 
+_GQWindow::_GQWindow()
+{
+    m_Delegate=NULL;
+}
+
+_GQWindow::~_GQWindow()
+{
+    m_Delegate->qtWindowDestoryed();
+}
+
+
+
+
+void GWindow::qtWindowDestoryed()
+{
+    GApplication::shared()->eventWindowDestroyed(this);
+}
+
+
 #endif
 
 
@@ -333,6 +352,9 @@ GX_OBJECT_IMPLEMENT(GWindow, GObject);
 
 
 GWindow::GWindow()
+#if defined(GX_OS_QT)
+
+#endif
 {
 	m_RenderStepTime=1000/30;
 	m_RenderLastTime=0;
@@ -435,7 +457,8 @@ bool GWindow::create(void* osWinP)
 	m_OSWinScale=GJavaCAPI::shared()->appGetDefaultWindowScale(jniEnv.get());
 	GX_LOG_P1(PrioDEBUG,"GWindow","create scale=%f", m_OSWinScale);
 #elif defined(GX_OS_QT)
-    m_OSWin=new QWindow();
+    m_OSWin=new _GQWindow();
+    m_OSWin->setDelegate(this);
     m_OSWin->setSurfaceType(QWindow::OpenGLSurface);
     GApplication::Delegate* dge = GApplication::sharedDelegate();
     int depth = (int)dge->windowsSuggestedDepth();
@@ -463,6 +486,7 @@ bool GWindow::create(void* osWinP)
             lt->addWidget(m_Container);
         }
     }
+
 #endif
     return m_Context.create(this);
 }
@@ -480,7 +504,7 @@ float GWindow::getWidth()
 #elif defined(GX_OS_ANDROID)
     return ANativeWindow_getWidth(GX_CAST_R(ANativeWindow*, m_OSWin))/m_OSWinScale;
 #elif defined(GX_OS_QT)
-    return m_OSWin->geometry().width();
+    return m_OSWin->width();
 #endif
 }
 float GWindow::getHeight()
@@ -496,7 +520,7 @@ float GWindow::getHeight()
 #elif defined(GX_OS_ANDROID)
 	return ANativeWindow_getHeight(GX_CAST_R(ANativeWindow*, m_OSWin))/m_OSWinScale;
 #elif defined(GX_OS_QT)
-    return m_OSWin->geometry().width();
+    return m_OSWin->height();
 #endif
 }
 float GWindow::getScale()

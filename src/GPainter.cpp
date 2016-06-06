@@ -3,7 +3,7 @@
 
 GPainter::GPainter()
 {
-	m_ColorMul.set(1.0f, 1.0f, 1.0f, 1.0f);
+    m_ColorMul.set(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 

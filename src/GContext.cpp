@@ -11,19 +11,29 @@ GContext::GContext()
 
 GContext::~GContext()
 {
-	readyShader();
-	for (gint i = 0; i < SRIDCount; i++) {
-		delete m_Shaders[i];
-	}
-	doneShader();
+    for (gint i = 0; i < SRIDCount; i++) {
+        delete m_Shaders[i];
+    }
+}
+
+bool GContext::create(GWindow *win)
+{
+    return GContextBase::create(win);
+}
+
+void GContext::destroy()
+{
+    for (gint i = 0; i < SRIDCount; i++) {
+        delete m_Shaders[i];
+        m_Shaders[i]=NULL;
+    }
+    GContextBase::destroy();
 }
 
 GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)
 {
 	if (!m_Shaders[SRID_Graphics + srID]) {
-		readyShader();
-		m_Shaders[SRID_Graphics + srID] = new GSRGraphics(srID);
-		doneShader();
+        m_Shaders[SRID_Graphics + srID] = new GSRGraphics(srID);
 	}
 	return (GSRGraphics*)m_Shaders[SRID_Graphics + srID];
 }

@@ -27,8 +27,8 @@ protected:
     GOGLContext();
     ~GOGLContext();
 public:
-	bool create(GWindow* win);
-    void destroy();
+    virtual bool create(GWindow* win);
+    virtual void destroy();
     bool resize(gfloat32 width,gfloat32 height);
 
 	void renderBegin();
@@ -39,8 +39,6 @@ public:
 	void makeCurrent();
 	void makeClear();
 protected:
-	void readyShader();
-	void doneShader();
 	void readyTexture();
 	void doneTexture();
 
@@ -81,6 +79,8 @@ private:
     gint m_ContextMakeCount;
 #endif
 };
+
+    typedef GOGLContext GContextBase;
 
 #endif
 #endif //AS_GOGLCONTEXT_H

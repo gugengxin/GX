@@ -571,7 +571,6 @@ void GOGLContext::makeCurrent()
         [GX_CAST_R(NSOpenGLContext*,m_Context) makeCurrentContext];
 #elif defined(GX_OS_QT)
         m_Context->makeCurrent(m_Window->m_OSWin);
-        GX::openGLFunsSet(this);
 #endif
     }
     m_ContextMakeCount++;
@@ -591,27 +590,9 @@ void GOGLContext::makeClear()
 #elif defined(GX_OS_MACOSX)
         [NSOpenGLContext clearCurrentContext];
 #elif defined(GX_OS_QT)
-        GX::openGLFunsSet(NULL);
         m_Context->doneCurrent();
 #endif
     }
-#endif
-}
-
-void GOGLContext::readyShader()
-{
-#if defined(GX_OS_ANDROID)
-    pushOSHandle(g_Surface,g_Context);
-#else
-	makeCurrent();
-#endif
-}
-void GOGLContext::doneShader()
-{
-#if defined(GX_OS_ANDROID)
-    popOSHandle();
-#else
-    makeClear();
 #endif
 }
 

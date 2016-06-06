@@ -49,5 +49,7 @@ private:
 	ID3D10DepthStencilState* m_DepthStencilState;
 };
 
+typedef GD3DContext GContextBase;
+
 #endif
 #endif //AS_GD3DCONTEXT_H

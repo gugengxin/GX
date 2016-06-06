@@ -155,7 +155,7 @@ void GSRGraphics::bindAttribLocations()
 void GSRGraphics::bindUniformLocations()
 {
 	setUniformLocation(U_mvp_mat, "mvp_mat");
-	if (getIndex0() == ID_Color || getIndex0() == ID_CAndCM) {
+    if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
 		setUniformLocation(U_color_mul, "color_mul");
 	}
 }

@@ -30,6 +30,7 @@ class GApplication
 #if defined(GX_OS_QT)
         Q_OBJECT
 #endif
+    friend class GWindow;
 public:
 	class InitData {
 	public:
@@ -116,7 +117,8 @@ public:
 	}
 
 	void addWindow(GWindow* win);
-
+private:
+    void eventWindowDestroyed(GWindow* win);
 
 private:
     Delegate* m_Delegate;
