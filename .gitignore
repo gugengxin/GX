@@ -21,6 +21,8 @@ tool/cmd/text_editor/project/build-*
 tool/cmd/sl/project/build-*
 project/qt/debug/
 project/qt/release/
+project/qt/obj/
+project/qt/moc/
 project/qt/Makefile*
 .qmake.stash
 *.o
