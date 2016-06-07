@@ -1,0 +1,127 @@
+#if defined(GX_OPENGL) && !defined(GX_OPENGL_ES)
+const gchar* g_SrcVS=\
+"attribute vec4 position; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+attribute vec4 color; \n\
+#endif \n\
+uniform mat4 mvp_mat; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+varying vec4 b_color; \n\
+#endif \n\
+void main() \n\
+{ \n\
+	gl_Position=mvp_mat*position; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+	b_color=color; \n\
+#endif \n\
+} \n\
+";
+const gchar* g_SrcFP=\
+"#if defined(MI_COLORMUL)||defined(MI_CANDCM) \n\
+uniform vec4 color_mul; \n\
+#endif \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+varying vec4 b_color; \n\
+#endif \n\
+void main() \n\
+{ \n\
+#if defined(MI_COLORMUL) \n\
+	gl_FragColor=color_mul; \n\
+#elif defined(MI_COLOR) \n\
+	gl_FragColor=b_color; \n\
+#elif defined(MI_CANDCM) \n\
+	gl_FragColor=b_color*color_mul; \n\
+#endif \n\
+} \n\
+";
+#endif
+#if defined(GX_OPENGL) && defined(GX_OPENGL_ES)
+const gchar* g_SrcVS=\
+"attribute highp vec4 position; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+attribute lowp vec4 color; \n\
+#endif \n\
+uniform highp mat4 mvp_mat; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+varying lowp vec4 b_color; \n\
+#endif \n\
+void main() \n\
+{ \n\
+	gl_Position=mvp_mat*position; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+	b_color=color; \n\
+#endif \n\
+} \n\
+";
+const gchar* g_SrcFP=\
+"#if defined(MI_COLORMUL)||defined(MI_CANDCM) \n\
+uniform lowp vec4 color_mul; \n\
+#endif \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+varying lowp vec4 b_color; \n\
+#endif \n\
+void main() \n\
+{ \n\
+#if defined(MI_COLORMUL) \n\
+	gl_FragColor=color_mul; \n\
+#elif defined(MI_COLOR) \n\
+	gl_FragColor=b_color; \n\
+#elif defined(MI_CANDCM) \n\
+	gl_FragColor=b_color*color_mul; \n\
+#endif \n\
+} \n\
+";
+#endif
+#if defined(GX_DIRECTX)
+const gchar* g_SrcVS=\
+"struct VertexInputType { \n\
+	float4 position:POSITION0; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+	float4 color:COLOR0; \n\
+#endif \n\
+}; \n\
+cbuffer UniformBuffer : register(b0) { \n\
+	matrix mvp_mat; \n\
+}; \n\
+struct PixelInputType { \n\
+	float4 gx_Position:SV_POSITION; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+	float4 b_color:COLOR0; \n\
+#endif \n\
+}; \n\
+PixelInputType main(VertexInputType layout) \n\
+{ \n\
+	PixelInputType bridge; \n\
+	bridge.gx_Position=mul(layout.position,mvp_mat); \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+	bridge.b_color=layout.color; \n\
+#endif \n\
+	return bridge; \n\
+} \n\
+";
+const gchar* g_SrcFP=\
+"cbuffer UniformBuffer : register(b0) { \n\
+#if defined(MI_COLORMUL)||defined(MI_CANDCM) \n\
+	float4 color_mul; \n\
+#endif \n\
+}; \n\
+struct PixelInputType { \n\
+	float4 gx_Position:SV_POSITION; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+	float4 b_color:COLOR0; \n\
+#endif \n\
+}; \n\
+float4 main(PixelInputType bridge):SV_TARGET \n\
+{ \n\
+	float4 gx_FragColor; \n\
+#if defined(MI_COLORMUL) \n\
+	gx_FragColor=color_mul; \n\
+#elif defined(MI_COLOR) \n\
+	gx_FragColor=bridge.b_color; \n\
+#elif defined(MI_CANDCM) \n\
+	gx_FragColor=bridge.b_color*color_mul; \n\
+#endif \n\
+	return gx_FragColor; \n\
+} \n\
+";
+#endif

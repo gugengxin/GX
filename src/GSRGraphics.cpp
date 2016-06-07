@@ -206,6 +206,7 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
 	UINT stride = (UINT)buffer->getStride();
 	device->IASetVertexBuffers(0, 1, buffer->getBufferPtr(), &stride, &offset);
 	device->IASetPrimitiveTopology((D3D10_PRIMITIVE_TOPOLOGY)mode);
+	device->IASetInputLayout(m_Layouts[inputType]);
 
 	ID3D10Buffer* cbToMapped;
 	void* pMap;
@@ -213,7 +214,7 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
 	cbToMapped = m_ConstBuffers[CB_mvp_mat];
 	cbToMapped->Map(D3D10_MAP_WRITE_DISCARD, 0, &pMap);
 	const float* mvp = painter.updateMVPMatrix();
-	//mvp->Transpose();
+	((GMatrix4*)mvp)->transpose();
 	memcpy(pMap, mvp, GX_MATRIX_SIZE);
 	cbToMapped->Unmap();
 	device->VSSetConstantBuffers(0, 1, &cbToMapped);
@@ -223,8 +224,6 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
 	memcpy(pMap, painter.updateColorMul(), sizeof(GColor4F));
 	cbToMapped->Unmap();
 	device->PSSetConstantBuffers(0, 1, &cbToMapped);
-
-	device->IASetInputLayout(m_Layouts[inputType]);
 
 	device->VSSetShader(getVertexShader());
 	device->PSSetShader(getPixelShader());

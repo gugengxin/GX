@@ -27,4 +27,3 @@ project/qt/Makefile*
 .qmake.stash
 *.o
 moc_*.cpp
-src/*.gxsl

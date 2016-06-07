@@ -326,7 +326,7 @@ bool GCSLWMainLine::make(GCSLWriter::MakeParam &param,GCSLTokenReader& reader,QS
                 break;
             case SLT_HLSL:
             {
-                strOut.append(QString("mul(%1,%2)").arg(str0).arg(str1));
+                strOut.append(QString("mul(%1,%2)").arg(str1).arg(str0));
             }
                 break;
             default:

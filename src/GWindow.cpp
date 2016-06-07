@@ -60,6 +60,8 @@ LRESULT CALLBACK GWindow::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 		{
 		case WM_DESTROY: {
 			win->m_OSWin.releaseHWND();
+			//GApplication::shared()->eventWindowDestroyed(win);
+			
 		}
 						 break;
 		case WM_SIZE:
@@ -574,6 +576,8 @@ void GWindow::render()
 		void* p = data->map();
 		memcpy(p, pos, sizeof(pos));
 		data->unmap();
+		data->setOffset(0);
+		data->setStride(sizeof(GVector3));
 	}
 
 	graph->draw(painter, data, GSRGraphics::ITFloat, GX_TRIANGLES, 0, 3);
