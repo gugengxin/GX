@@ -18,7 +18,6 @@
 class GUUID : public GObject {
 #if defined(GX_OS_WINDOWS)
 	friend class GX::CWnd;
-	friend class GX::CChildWnd;
 #endif
 	GX_OBJECT(GUUID);
 public:

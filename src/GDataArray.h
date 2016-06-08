@@ -211,6 +211,7 @@ GPieceDataArray<T,N>::~GPieceDataArray()
 
 template <typename T>
 class GPDArray : public GPieceDataArray<T, GX_PDARRAY_N> {
+	friend class GApplication;
     friend class GAutoreleasePool;
     friend class GThread;
 	friend class GPainter;

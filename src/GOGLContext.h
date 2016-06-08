@@ -39,6 +39,8 @@ public:
 	void makeCurrent();
 	void makeClear();
 protected:
+    void readyShader();
+    void doneShader();
 	void readyTexture();
 	void doneTexture();
 

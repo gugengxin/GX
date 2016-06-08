@@ -18,7 +18,7 @@ static void SetWindowToHWND(HWND hWnd, GWindow* win)
 #if GX_PTR_64BIT
 	::SetWindowLongPtr(hWnd, GWLP_USERDATA, (LONG_PTR)win);
 #else
-	::SetWindowLong(hWnd, GWL_USERDATA, (LONG)win);
+	::SetWindowLongPtr(hWnd, GWL_USERDATA, (LONG_PTR)win);
 #endif
 }
 static GWindow* GetWindowFromHWND(HWND hWnd)
@@ -26,7 +26,15 @@ static GWindow* GetWindowFromHWND(HWND hWnd)
 #if GX_PTR_64BIT
 	return (GWindow*)::GetWindowLongPtr(hWnd, GWLP_USERDATA);
 #else
-	return (GWindow*)::GetWindowLong(hWnd, GWL_USERDATA);
+	return (GWindow*)::GetWindowLongPtr(hWnd, GWL_USERDATA);
+#endif
+}
+static WNDPROC SetWindowProc(HWND hWnd, WNDPROC proc)
+{
+#if GX_PTR_64BIT
+	return (WNDPROC)SetWindowLongPtr(hWnd, GWLP_WNDPROC, (LONG_PTR)proc);
+#else
+	return (WNDPROC)SetWindowLongPtr(hWnd, GWL_WNDPROC, (LONG_PTR)proc);
 #endif
 }
 
@@ -34,8 +42,13 @@ LRESULT CALLBACK GWindow::wndProcP(HWND hWnd, UINT message, WPARAM wParam, LPARA
 {
 	GWindow* win = GetWindowFromHWND(hWnd);
 	if (win) {
-		switch (message)
+		WNDPROC preProc=win->m_WndProcP;
+		switch (message) {
+		case WM_DESTROY:
 		{
+			GApplication::shared()->eventWindowDestroyed(win);
+		}
+		break;
 		case WM_SIZE:
 		case WM_SIZING:
 		{
@@ -48,30 +61,26 @@ LRESULT CALLBACK GWindow::wndProcP(HWND hWnd, UINT message, WPARAM wParam, LPARA
 		default:
 			break;
 		}
+		return CallWindowProc(preProc, hWnd, message, wParam, lParam);
 	}
-	return CallWindowProc(win->m_WndProcP, hWnd, message, wParam, lParam);
+	return 0;
 }
 
 LRESULT CALLBACK GWindow::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	GWindow* win = GetWindowFromHWND(hWnd);
 	if (win) {
-		switch (message)
-		{
-		case WM_DESTROY: {
-			win->m_OSWin.releaseHWND();
-			//GApplication::shared()->eventWindowDestroyed(win);
-			
-		}
-						 break;
+		switch (message) {
 		case WM_SIZE:
-		case WM_SIZING: {
+		case WM_SIZING:
+		{
 			//GX_LOG_W(PrioDEBUG, "GWindow", "wndProc WM_SIZE");
 			win->eventResize();
 		}
-						break;
-		case WM_PAINT: {
-			
+		break;
+		case WM_PAINT:
+		{
+
 		}
 		default:
 			break;
@@ -320,7 +329,11 @@ void GWindow::androidDestory()
 }
 void GWindow::androidRecreate(ANativeWindow* nw)
 {
-	create(nw);
+	ANativeWindow_acquire(nw);
+	m_OSWin = nw;
+	GJavaJNIEnvAutoPtr jniEnv;
+	m_OSWinScale = GJavaCAPI::shared()->appGetDefaultWindowScale(jniEnv.get());
+	m_Context.create(this);
 }
 
 #elif defined(GX_OS_QT)
@@ -335,9 +348,6 @@ _GQWindow::~_GQWindow()
     m_Delegate->qtWindowDestoryed();
 }
 
-
-
-
 void GWindow::qtWindowDestoryed()
 {
     GApplication::shared()->eventWindowDestroyed(this);
@@ -347,63 +357,11 @@ void GWindow::qtWindowDestoryed()
 #endif
 
 
-
-
-
-GX_OBJECT_IMPLEMENT(GWindow, GObject);
-
-
-GWindow::GWindow()
-#if defined(GX_OS_QT)
-
-#endif
+GWindow::GWindow(void* osWinP)
 {
 	m_RenderStepTime=1000/30;
 	m_RenderLastTime=0;
-	m_OSWinP = NULL;
-#if defined(GX_OS_WINDOWS)
-	m_WndProcP=NULL;
-#elif defined(GX_OS_APPLE)
-	m_OSWin=NULL;
-	m_OSWinCtrler=NULL;
-#elif defined(GX_OS_ANDROID)
-	m_OSWin = NULL;
-	m_OSWinScale=0.0f;
-#elif defined(GX_OS_QT)
-    m_OSWin=NULL;
-    m_Container=NULL;
-#endif
-}	
-
-GWindow::~GWindow()
-{
-	m_Context.destroy();
-#if defined(GX_OS_APPLE)
-    [GX_CAST_R(id, m_OSWin) release];
-    [GX_CAST_R(id, m_OSWinCtrler) release];
-#elif defined(GX_OS_ANDROID)
-    if(m_OSWin) {
-    	ANativeWindow_release(GX_CAST_R(ANativeWindow*,m_OSWin));
-    }
-#elif defined(GX_OS_QT)
-    //delete m_OSWin;
-    //delete m_Container;
-#endif
-}
-
-bool GWindow::create(void* osWinP)
-{
-#if defined(GX_OS_WINDOWS)
-	if (m_OSWin.getHWND() || !osWinP) {
-		return false;
-	}
-#else
-	if (m_OSWin || !osWinP) {
-		return false;
-	}
-#endif
 	m_OSWinP = osWinP;
-
 #if defined(GX_OS_WINDOWS)
 	WNDCLASS	wc;						// 窗口类结构
 	DWORD		dwExStyle;				// 扩展窗口风格
@@ -421,76 +379,88 @@ bool GWindow::create(void* osWinP)
 	dwStyle = WS_CHILDWINDOW;
 
 	m_OSWin.create(wc, dwStyle, dwExStyle, rc, GX_CAST_R(HWND, m_OSWinP));
-	SetWindowToHWND(m_OSWin.getHWND(),this);
-#if GX_PTR_64BIT
-	m_WndProcP = (WNDPROC)SetWindowLongPtr(GX_CAST_R(HWND, m_OSWinP), GWLP_WNDPROC, (LONG_PTR)wndProcP);
-#else
-	m_WndProcP = (WNDPROC)SetWindowLong(GX_CAST_R(HWND, m_OSWinP), GWL_WNDPROC, (LONG)wndProcP);
-#endif
+	SetWindowToHWND(m_OSWin.getHWND(), this);
+
+	m_WndProcP = SetWindowProc(GX_CAST_R(HWND, m_OSWinP), wndProcP);
 	GX_ASSERT(!GetWindowFromHWND(GX_CAST_R(HWND, m_OSWinP)));
 	SetWindowToHWND(GX_CAST_R(HWND, m_OSWinP), this);
 
 	::ShowWindow(m_OSWin.getHWND(), SW_SHOW);
 	UpdateWindow(m_OSWin.getHWND());
-    
 #elif defined(GX_OS_IPHONE)
-    m_OSWin=[[_OGLView alloc] initWithDelegate:this frame:GX_CAST_R(UIView*, osWinP).bounds];
-    m_OSWinCtrler=[[_OGLViewController alloc] initWithDelegate:this view:GX_CAST_R(_OGLView*, m_OSWin)];
-    if ([GX_CAST_R(UIView*, osWinP) isKindOfClass:[UIWindow class]]) {
-        GX_CAST_R(UIWindow*, osWinP).rootViewController=GX_CAST_R(UIViewController*, m_OSWinCtrler);
-    }
-    else {
-        [GX_CAST_R(UIView*, osWinP) addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
-    }
+	m_OSWin = [[_OGLView alloc] initWithDelegate:this frame : GX_CAST_R(UIView*, osWinP).bounds];
+	m_OSWinCtrler = [[_OGLViewController alloc] initWithDelegate:this view : GX_CAST_R(_OGLView*, m_OSWin)];
+	if ([GX_CAST_R(UIView*, osWinP) isKindOfClass:[UIWindow class]]) {
+		GX_CAST_R(UIWindow*, osWinP).rootViewController = GX_CAST_R(UIViewController*, m_OSWinCtrler);
+	}
+	else {
+		[GX_CAST_R(UIView*, osWinP) addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
+	}
 #elif defined(GX_OS_MACOSX)
-    if ([GX_CAST_R(id, osWinP) isKindOfClass:[NSWindow class]]) {
-        m_OSWin=[[_OGLView alloc] initWithDelegate:this frame:GX_CAST_R(NSWindow*, osWinP).contentView.bounds];
-        [GX_CAST_R(NSWindow*, osWinP).contentView addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
-    }
-    else {
-        m_OSWin=[[_OGLView alloc] initWithDelegate:this frame:GX_CAST_R(NSView*, osWinP).bounds];
-        [GX_CAST_R(NSView*, osWinP) addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
-    }
-    m_OSWinCtrler=[[_OGLViewController alloc] initWithDelegate:this view:GX_CAST_R(_OGLView*, m_OSWin)];
+	if ([GX_CAST_R(id, osWinP) isKindOfClass:[NSWindow class]]) {
+		m_OSWin = [[_OGLView alloc] initWithDelegate:this frame : GX_CAST_R(NSWindow*, osWinP).contentView.bounds];
+		[GX_CAST_R(NSWindow*, osWinP).contentView addSubview : GX_CAST_R(_OGLView*, m_OSWin)];
+	}
+	else {
+		m_OSWin = [[_OGLView alloc] initWithDelegate:this frame : GX_CAST_R(NSView*, osWinP).bounds];
+		[GX_CAST_R(NSView*, osWinP) addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
+	}
+	m_OSWinCtrler = [[_OGLViewController alloc] initWithDelegate:this view : GX_CAST_R(_OGLView*, m_OSWin)];
 #elif defined(GX_OS_ANDROID)
 	ANativeWindow_acquire(GX_CAST_R(ANativeWindow*, osWinP));
-	m_OSWin=GX_CAST_R(ANativeWindow*, osWinP);
+	m_OSWin = GX_CAST_R(ANativeWindow*, osWinP);
 	GJavaJNIEnvAutoPtr jniEnv;
-	m_OSWinScale=GJavaCAPI::shared()->appGetDefaultWindowScale(jniEnv.get());
-	GX_LOG_P1(PrioDEBUG,"GWindow","create scale=%f", m_OSWinScale);
+	m_OSWinScale = GJavaCAPI::shared()->appGetDefaultWindowScale(jniEnv.get());
 #elif defined(GX_OS_QT)
-    m_OSWin=new _GQWindow();
-    m_OSWin->setDelegate(this);
-    m_OSWin->setSurfaceType(QWindow::OpenGLSurface);
-    GApplication::Delegate* dge = GApplication::sharedDelegate();
-    int depth = (int)dge->windowsSuggestedDepth();
-    int stencil = (int)dge->windowsSuggestedStencil();
-    int samples = (int)dge->windowsSuggestedSamples();
-    QSurfaceFormat sf;
-    sf.setDepthBufferSize(depth);
-    sf.setStencilBufferSize(stencil);
-    sf.setSamples(samples);
-    m_OSWin->setFormat(sf);
-    m_OSWin->create();
-    m_Container=QWidget::createWindowContainer(m_OSWin,NULL);
+	m_OSWin = new _GQWindow();
+	m_OSWin->setDelegate(this);
+	m_OSWin->setSurfaceType(QWindow::OpenGLSurface);
+	GApplication::Delegate* dge = GApplication::sharedDelegate();
+	int depth = (int)dge->windowsSuggestedDepth();
+	int stencil = (int)dge->windowsSuggestedStencil();
+	int samples = (int)dge->windowsSuggestedSamples();
+	QSurfaceFormat sf;
+	sf.setDepthBufferSize(depth);
+	sf.setStencilBufferSize(stencil);
+	sf.setSamples(samples);
+	m_OSWin->setFormat(sf);
+	m_OSWin->create();
+	m_Container = QWidget::createWindowContainer(m_OSWin, NULL);
 
-    if(GX_CAST_R(QObject*,m_OSWinP)->inherits("QMainWindow")) {
-        GX_CAST_R(QMainWindow*,m_OSWinP)->setCentralWidget(m_Container);
+	if (GX_CAST_R(QObject*, m_OSWinP)->inherits("QMainWindow")) {
+		GX_CAST_R(QMainWindow*, m_OSWinP)->setCentralWidget(m_Container);
+	}
+	else {
+		QLayout* lt = GX_CAST_R(QWidget*, m_OSWinP)->layout();
+		if (!lt) {
+			lt = new QHBoxLayout();
+			lt->addWidget(m_Container);
+			GX_CAST_R(QWidget*, m_OSWinP)->setLayout(lt);
+		}
+		else {
+			lt->addWidget(m_Container);
+		}
     }
-    else {
-        QLayout* lt=GX_CAST_R(QWidget*,m_OSWinP)->layout();
-        if(!lt) {
-            lt=new QHBoxLayout();
-            lt->addWidget(m_Container);
-            GX_CAST_R(QWidget*,m_OSWinP)->setLayout(lt);
-        }
-        else {
-            lt->addWidget(m_Container);
-        }
-    }
-
 #endif
-    return m_Context.create(this);
+	m_Context.create(this);
+}	
+
+GWindow::~GWindow()
+{
+    m_Context.destroy();
+#if defined(GX_OS_WINDOWS)
+	SetWindowToHWND(m_OSWin.getHWND(),NULL);
+	SetWindowProc(GX_CAST_R(HWND, m_OSWinP), m_WndProcP);
+	SetWindowToHWND(GX_CAST_R(HWND, m_OSWinP), NULL);
+#elif defined(GX_OS_APPLE)
+    [GX_CAST_R(id, m_OSWin) release];
+    [GX_CAST_R(id, m_OSWinCtrler) release];
+#elif defined(GX_OS_ANDROID)
+	ANativeWindow_release(GX_CAST_R(ANativeWindow*,m_OSWin));
+#elif defined(GX_OS_QT)
+    //delete m_OSWin;
+    //delete m_Container;
+#endif
 }
 
 float GWindow::getWidth()

@@ -14,9 +14,9 @@ GShader(idxA,idxB,idxC,idxD)
 GOShader::~GOShader()
 {
     //Not need release
-//    if (m_Program) {
-//        GX_glDeleteProgram(m_Program);
-//    }
+    if (m_Program) {
+        GX_glDeleteProgram(m_Program);
+    }
 }
 
 bool GOShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)

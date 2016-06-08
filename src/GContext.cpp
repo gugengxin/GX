@@ -4,28 +4,29 @@
 
 #include "GContext.h"
 
+//不用在这里初始化
 GContext::GContext()
 {
-	memset(m_Shaders, 0, sizeof(m_Shaders));
 }
-
+//不用在这里反初始化
 GContext::~GContext()
 {
-    for (gint i = 0; i < SRIDCount; i++) {
-        delete m_Shaders[i];
-    }
 }
 
+//在这里初始化
 bool GContext::create(GWindow *win)
 {
+    memset(m_Shaders, 0, sizeof(m_Shaders));
     return GContextBase::create(win);
 }
-
+//在这里反初始化
 void GContext::destroy()
 {
     for (gint i = 0; i < SRIDCount; i++) {
+        readyShader();
         delete m_Shaders[i];
         m_Shaders[i]=NULL;
+        doneShader();
     }
     GContextBase::destroy();
 }
@@ -33,7 +34,9 @@ void GContext::destroy()
 GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)
 {
 	if (!m_Shaders[SRID_Graphics + srID]) {
+        readyShader();
         m_Shaders[SRID_Graphics + srID] = new GSRGraphics(srID);
+        doneShader();
 	}
 	return (GSRGraphics*)m_Shaders[SRID_Graphics + srID];
 }

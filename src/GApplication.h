@@ -10,7 +10,7 @@
 #define GApplication_h
 
 #include "GXPrefix.h"
-#include "GArray.h"
+#include "GDataArray.h"
 #include "GWindow.h"
 #include "GXCWnd.h"
 #if defined(GX_OS_ANDROID)
@@ -61,10 +61,9 @@ public:
         virtual void appStop(GApplication* application) {GX_UNUSED(application)}
         virtual void appDestroy(GApplication* application) {GX_UNUSED(application)}
 
-		virtual GWindow* appCanCreateWindow(GApplication* application,void* osWindow) {
+		virtual void appCanCreateWindow(GApplication* application,void* osWindow) {
             GX_UNUSED(application)
             GX_UNUSED(osWindow)
-			return NULL;
 		}
         virtual void appReceivedMemoryWarning(GApplication* application){GX_UNUSED(application)}
 
@@ -105,24 +104,16 @@ private:
 	void setCanCreateWindow(void* osWindow);
 
 public:
-    GWindow* firstWindow() {
-        return m_Windows.first();
-    }
-	gint getWindowCount() {
-		return m_Windows.getCount();
-	}
-
-	GWindow* getWindow(gint idx) {
-		return m_Windows.get(idx);
-	}
-
-	void addWindow(GWindow* win);
+    void addWindow(void* osWin);
+    GWindow* firstWindow();
+    gint getWindowCount();
+    GWindow* getWindow(gint idx);
 private:
     void eventWindowDestroyed(GWindow* win);
 
 private:
     Delegate* m_Delegate;
-    GArray<GWindow> m_Windows;
+    GPDArray<GWindow*> m_Windows;
 	InitData m_InitData;
     
 #if defined(GX_OS_APPLE)

@@ -314,6 +314,10 @@ GApplication::GApplication()
 
 GApplication::~GApplication()
 {
+	for (gint i = 0; i < m_Windows.getCount(); i++) {
+		delete m_Windows.get(i);
+	}
+	m_Windows.removeAll();
 #if defined(GX_OS_APPLE)
     [GX_CAST_R(_AppHelper*, m_Helper) release];
 #elif defined(GX_OS_WINDOWS)
@@ -389,18 +393,39 @@ void GApplication::eventDestroy()
 
 void GApplication::setCanCreateWindow(void* osWindow)
 {
-	GWindow* win=m_Delegate->appCanCreateWindow(this,osWindow);
-	if(win) {
-		addWindow(win);
-	}
+    m_Delegate->appCanCreateWindow(this, osWindow);
 }
 
-void GApplication::addWindow(GWindow* win)
+void GApplication::addWindow(void* osWin)
 {
-    m_Windows.add(win);
+    m_Windows.add(new GWindow(osWin));
+}
+
+GWindow *GApplication::firstWindow()
+{
+    if(m_Windows.getCount()>0) {
+        return m_Windows.first();
+    }
+    return NULL;
+}
+
+gint GApplication::getWindowCount()
+{
+    return m_Windows.getCount();
+}
+
+GWindow *GApplication::getWindow(gint idx)
+{
+    return m_Windows.get(idx);
 }
 
 void GApplication::eventWindowDestroyed(GWindow *win)
 {
-    m_Windows.remove(win);
+	for (gint i = 0; i < m_Windows.getCount(); i++) {
+        if (win == m_Windows.get(i)) {
+			delete win;
+			m_Windows.remove(i);
+			break;
+		}
+	}
 }

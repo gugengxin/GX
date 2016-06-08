@@ -39,11 +39,14 @@ private:
 
 #endif
 
-class GWindow : public GObject {
+class GWindow {
+	friend class GApplication;
 #if defined(GX_OPENGL)
 	friend class GOGLContext;
 #endif
-    GX_OBJECT(GWindow);
+private:
+	GWindow(void* osWinP);
+	~GWindow();
 public:
 	inline void* getOSWindow() {
 #if defined(GX_OS_WINDOWS)
@@ -52,7 +55,6 @@ public:
 		return m_OSWin;
 #endif
 	}
-	bool create(void* osWinP);
     float getWidth();
     float getHeight();
     float getScale();
@@ -76,7 +78,7 @@ private:
 	static LRESULT CALLBACK wndProcP(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-	GX::CChildWnd m_OSWin;
+	GX::CWnd m_OSWin;
 	WNDPROC m_WndProcP;
 #elif defined(GX_OS_APPLE)
     friend class _WindowBridge;

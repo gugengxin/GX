@@ -262,7 +262,8 @@ GOGLContext::~GOGLContext()
 #endif
 }
 
-bool GOGLContext::create(GWindow* win) {
+bool GOGLContext::create(GWindow* win)
+{
 	m_Window = win;
 
 #if defined(GX_OS_WINDOWS)
@@ -593,6 +594,24 @@ void GOGLContext::makeClear()
         m_Context->doneCurrent();
 #endif
     }
+#endif
+}
+
+void GOGLContext::readyShader()
+{
+#if defined(GX_OS_ANDROID)
+    pushOSHandle(g_Surface,g_Context);
+#else
+    makeCurrent();
+#endif
+}
+
+void GOGLContext::doneShader()
+{
+#if defined(GX_OS_ANDROID)
+    popOSHandle();
+#else
+    makeClear();
 #endif
 }
 

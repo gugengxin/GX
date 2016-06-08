@@ -60,7 +60,7 @@ SET Obj_Index=0
 GOTO LoopStart
 :LoopNext
 
-
+pause
 goto :EOF
 
 :CMD_EXIST

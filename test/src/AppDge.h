@@ -9,7 +9,7 @@ private:
 	AppDge();
 	~AppDge();
 public:
-    virtual GWindow* appCanCreateWindow(GApplication* application,void* osWindow);
+    virtual void appCanCreateWindow(GApplication* application,void* osWindow);
 
 
 };

@@ -16,11 +16,7 @@ AppDge::~AppDge()
 {
 }
 
-GWindow* AppDge::appCanCreateWindow(GApplication* application,void* osWindow)
+void AppDge::appCanCreateWindow(GApplication* application,void* osWindow)
 {
-    GX_UNUSED(application);
-
-	GWindow* win = GWindow::autoAlloc();
-	win->create(osWindow);
-    return win;
+	application->addWindow(osWindow);
 }
