@@ -180,9 +180,9 @@ GThread::Holder* GThread::create(GX::Callback cbk, GObject* obj, bool waitRun)
 
 void GThread::keyCreate()
 {
-    pthread_key_create(&tsd_key,keyDestory);
+    pthread_key_create(&tsd_key,keyDestroy);
 }
-void GThread::keyDestory(void* p)
+void GThread::keyDestroy(void* p)
 {
     delete GX_CAST_R(GThread*, p);
 }

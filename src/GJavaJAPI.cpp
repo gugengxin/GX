@@ -84,7 +84,7 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GJavaJAPI_mainWindowHasDestroyed
         (JNIEnv *, jclass, jobject) {
     GWindow* aw=GApplication::shared()->firstWindow();
     if(aw) {
-        aw->androidDestory();
+        aw->androidDestroy();
     }
 }
 

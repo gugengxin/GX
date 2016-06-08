@@ -58,7 +58,7 @@ public:
 	GNoticeCenter* getNoticeCenter();
 private:
     static void keyCreate();
-    static void keyDestory(void* p);
+    static void keyDestroy(void* p);
 	static void* detchHelper(void*);
 	static void* createHelper(void*);
 	static void* detchHelperObj(void*);

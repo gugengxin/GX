@@ -419,7 +419,7 @@ GWindow *GApplication::getWindow(gint idx)
     return m_Windows.get(idx);
 }
 
-void GApplication::eventWindowDestroyed(GWindow *win)
+void GApplication::removeWindow(GWindow *win)
 {
 	for (gint i = 0; i < m_Windows.getCount(); i++) {
         if (win == m_Windows.get(i)) {

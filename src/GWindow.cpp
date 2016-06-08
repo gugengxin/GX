@@ -108,6 +108,9 @@ public:
     inline void eventResize() {
         m_Target->eventResize();
     }
+    inline void eventDestroy() {
+        m_Target->eventDestroy();
+    }
     
     
 private:
@@ -269,7 +272,7 @@ NSView
         win=[(NSView*)_window window];
     }
     if (note.object==win) {
-        
+        _bridge.eventDestroy();
     }
 }
 
@@ -319,7 +322,7 @@ NSViewController
 
 #include "GJavaCAPI.h"
 
-void GWindow::androidDestory()
+void GWindow::androidDestroy()
 {
 	m_Context.destroy();
 	if(m_OSWin) {
@@ -345,10 +348,10 @@ _GQWindow::_GQWindow()
 
 _GQWindow::~_GQWindow()
 {
-    m_Delegate->qtWindowDestoryed();
+    m_Delegate->qtWindowDestroyed();
 }
 
-void GWindow::qtWindowDestoryed()
+void GWindow::qtWindowDestroyed()
 {
     GApplication::shared()->eventWindowDestroyed(this);
 }
@@ -578,5 +581,10 @@ void GWindow::eventResize()
     float s=getScale();
     
     m_Context.resize(nw*s, nh*s);
+}
+
+void GWindow::eventDestroy()
+{
+    GApplication::shared()->removeWindow(this);
 }
 

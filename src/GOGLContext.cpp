@@ -72,7 +72,7 @@ static NSOpenGLPixelFormat* CreatePF()
         {
             NSOpenGLPFAAccelerated,
             NSOpenGLPFAClosestPolicy,
-            NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core,
+            //NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core,
             NSOpenGLPFADoubleBuffer,
             NSOpenGLPFAColorSize, 24,
             NSOpenGLPFAAlphaSize, 8,
@@ -91,7 +91,7 @@ static NSOpenGLPixelFormat* CreatePF()
         {
             NSOpenGLPFAAccelerated,
             NSOpenGLPFAClosestPolicy,
-            NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core,
+            //NSOpenGLPFAOpenGLProfile, NSOpenGLProfileVersion3_2Core,
             NSOpenGLPFADoubleBuffer,
             NSOpenGLPFAColorSize, 24,
             NSOpenGLPFAAlphaSize, 8,

@@ -67,6 +67,7 @@ protected:
 	virtual void render();
 protected:
     void eventResize();
+    void eventDestroy();
 
 private:
 	GContext m_Context;
@@ -89,14 +90,14 @@ private:
 	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasCreated(JNIEnv *env, jclass, jobject surface);
 	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasChanged(JNIEnv *, jclass, jobject, jint, jint);
 	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasDestroyed(JNIEnv *, jclass, jobject);
-	void androidDestory();
+	void androidDestroy();
 	void androidRecreate(ANativeWindow* nw);
 
     float m_OSWinScale;
 	ANativeWindow* m_OSWin;
 #elif defined(GX_OS_QT)
     friend class _GQWindow;
-    void qtWindowDestoryed();
+    void qtWindowDestroyed();
     _GQWindow* m_OSWin;
     QWidget* m_Container;
 #endif
