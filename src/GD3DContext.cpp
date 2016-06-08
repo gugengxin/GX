@@ -8,41 +8,16 @@
 #include "GApplication.h"
 
 
-
+//不用在这里初始化
 GD3DContext::GD3DContext()
 {
-	m_Window = NULL;
-
-	m_Samples = 0;
-	m_SampleQuality = 0;
-
-	m_SwapChain = NULL;
-	m_RenderTargetView = NULL;
-	m_DepthStencilView = NULL;
-	m_RasterState = NULL;
-	m_DepthStencilState = NULL;
 }
-
+//不用在这里反初始化
 GD3DContext::~GD3DContext()
 {
-	if (m_DepthStencilState) {
-		m_DepthStencilState->Release();
-	}
-	if (m_RasterState) {
-		m_RasterState->Release();
-	}
-	if (m_DepthStencilView) {
-		m_DepthStencilView->Release();
-	}
-	if (m_RenderTargetView) {
-		m_RenderTargetView->Release();
-	}
-	if (m_SwapChain) {
-		m_SwapChain->Release();
-	}
 }
 
-
+//在这里初始化
 bool GD3DContext::create(GWindow* win)
 {
 	m_Window = win;
@@ -218,7 +193,7 @@ bool GD3DContext::create(GWindow* win)
 
 	return true;
 }
-
+//在这里反初始化
 void GD3DContext::destroy()
 {
 	if (m_DepthStencilState) {
@@ -311,6 +286,10 @@ bool GD3DContext::resize(gfloat32 width, gfloat32 height)
 	return createView((UINT)width, (UINT)height);
 }
 
+bool GD3DContext::renderCheck()
+{
+	return true;
+}
 
 void GD3DContext::renderBegin()
 {

@@ -15,12 +15,13 @@ class GD3DContext {
 
 protected:
     GD3DContext();
-    ~GD3DContext();
+    virtual ~GD3DContext();
 public:
-	bool create(GWindow* win);
-	void destroy();
+	virtual bool create(GWindow* win);
+	virtual void destroy();
 	bool resize(gfloat32 width, gfloat32 height);
 
+	bool renderCheck();
 	void renderBegin();
 	void setViewport(float x, float y, float w, float h, float scale);
 	void renderEnd();

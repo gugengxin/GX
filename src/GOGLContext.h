@@ -25,12 +25,19 @@ class GOGLContext
 {
 protected:
     GOGLContext();
-    ~GOGLContext();
+    virtual ~GOGLContext();
 public:
     virtual bool create(GWindow* win);
     virtual void destroy();
+#if defined(GX_OS_ANDROID)
+protected:
+	virtual void androidDestroy();
+	virtual void androidRecreate(GWindow* win);
+#endif
+public:
     bool resize(gfloat32 width,gfloat32 height);
 
+	bool renderCheck();
 	void renderBegin();
 	void setViewport(float x, float y, float w, float h, float scale);
 	void renderEnd();

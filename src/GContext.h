@@ -27,11 +27,17 @@ private:
 	};
 private:
     GContext();
-    ~GContext();
+	virtual ~GContext();
 public:
     virtual bool create(GWindow* win);
     virtual void destroy();
 
+#if defined(GX_OS_ANDROID)
+private:
+	virtual void androidDestroy();
+	virtual void androidRecreate(GWindow* win);
+#endif
+public:
 	GSRGraphics* getSRGraphics(GSRGraphics::ID srID);
 public:
 	GPainter& getPainter() {

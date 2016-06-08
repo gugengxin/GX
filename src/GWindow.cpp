@@ -46,7 +46,7 @@ LRESULT CALLBACK GWindow::wndProcP(HWND hWnd, UINT message, WPARAM wParam, LPARA
 		switch (message) {
 		case WM_DESTROY:
 		{
-			GApplication::shared()->eventWindowDestroyed(win);
+			win->eventDestroy();
 		}
 		break;
 		case WM_SIZE:
@@ -324,7 +324,8 @@ NSViewController
 
 void GWindow::androidDestroy()
 {
-	m_Context.destroy();
+	GX_LOG_W(PrioDEBUG,"GWindow","androidDestroy");
+	m_Context.androidDestroy();
 	if(m_OSWin) {
 		ANativeWindow_release(GX_CAST_R(ANativeWindow*,m_OSWin));
 		m_OSWin=NULL;
@@ -332,11 +333,12 @@ void GWindow::androidDestroy()
 }
 void GWindow::androidRecreate(ANativeWindow* nw)
 {
+	GX_LOG_W(PrioDEBUG,"GWindow","androidRecreate");
 	ANativeWindow_acquire(nw);
 	m_OSWin = nw;
 	GJavaJNIEnvAutoPtr jniEnv;
 	m_OSWinScale = GJavaCAPI::shared()->appGetDefaultWindowScale(jniEnv.get());
-	m_Context.create(this);
+	m_Context.androidRecreate(this);
 }
 
 #elif defined(GX_OS_QT)
@@ -348,12 +350,7 @@ _GQWindow::_GQWindow()
 
 _GQWindow::~_GQWindow()
 {
-    m_Delegate->qtWindowDestroyed();
-}
-
-void GWindow::qtWindowDestroyed()
-{
-    GApplication::shared()->eventWindowDestroyed(this);
+    m_Delegate->eventDestroy();
 }
 
 
@@ -561,9 +558,11 @@ void GWindow::render()
 void GWindow::renderForce()
 {
 	m_RenderLastTime = GSystem::currentTimeMS();
-	m_Context.renderBegin();
-	this->render();
-	m_Context.renderEnd();
+	if(m_Context.renderCheck()) {
+		m_Context.renderBegin();
+		this->render();
+		m_Context.renderEnd();
+	}
 }
 
 void GWindow::renderIfNeed()

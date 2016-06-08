@@ -97,7 +97,6 @@ private:
 	ANativeWindow* m_OSWin;
 #elif defined(GX_OS_QT)
     friend class _GQWindow;
-    void qtWindowDestroyed();
     _GQWindow* m_OSWin;
     QWidget* m_Container;
 #endif

@@ -170,10 +170,13 @@ void GOGLContext::pushOSHandle(EGLSurface surface,EGLContext context)
     m_OSHandles.add(handle);
 
     eglMakeCurrent(g_Display, surface, surface, context);
+
+	GX_LOG_P2(PrioINFO,"GOGLContext","pushOSHandle %p %p",surface,context);
 }
 
 void GOGLContext::popOSHandle()
 {
+	GX_LOG_W(PrioINFO,"GOGLContext","popOSHandle");
     if(m_OSHandles.getCount()>0) {
         OSHandle& handle=m_OSHandles.last();
         eglMakeCurrent(g_Display, handle.surface, handle.surface, handle.context);
@@ -185,85 +188,23 @@ void GOGLContext::popOSHandle()
 }
 
 #endif
-
+//不用在这里初始化
 GOGLContext::GOGLContext()
+{
+}
+//不用在这里反初始化
+GOGLContext::~GOGLContext()
+{
+}
+//在这里初始化
+bool GOGLContext::create(GWindow* win)
 {
 #if defined(GX_OS_WINDOWS)
 	static bool g_GLEWInit = GX::GLEWInit();
-#endif
-	m_Window = NULL;
-#if defined(GX_OS_WINDOWS)
-    m_DC=NULL;
-    m_Context=NULL;
-#elif defined(GX_OS_APPLE)
-    m_Context=NULL;
-#if defined(GX_OS_IPHONE)
-    m_BackingWidth=0;
-    m_BackingHeight=0;
-    m_Samples=0;
-    m_DefaultFramebuffer=0;
-    m_ColorRenderbuffer=0;
-    m_DepthRenderbuffer=0;
-    m_SaaFramebuffer=0;
-    m_SaaRenderbuffer=0;
-#endif
-#elif defined(GX_OS_ANDROID)
-	m_Surface=EGL_NO_SURFACE;
-	m_Context=EGL_NO_CONTEXT;
-#elif defined(GX_OS_QT)
-    m_Context=NULL;
-#endif
-#if defined(GX_OS_ANDROID)
-
-#else
-    m_ContextMakeCount=0;
-#endif
-}
-
-GOGLContext::~GOGLContext()
-{
-#if defined(GX_OS_WINDOWS)
-	if (m_Context) {
-		wglDeleteContext(m_Context);
+	if(!g_GLEWInit) {
+		return false;
 	}
-	if (m_DC) {
-		::ReleaseDC(M_OS_WND(m_Window->getOSWindow()), m_DC);
-	}
-#elif defined(GX_OS_APPLE)
-#if defined(GX_OS_IPHONE)
-    [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*, m_Context)];
-    if (m_DefaultFramebuffer) {
-        glDeleteFramebuffers(1, &m_DefaultFramebuffer);
-    }
-    if (m_ColorRenderbuffer) {
-        glDeleteRenderbuffers(1, &m_ColorRenderbuffer);
-    }
-    if (m_DepthRenderbuffer) {
-        glDeleteRenderbuffers(1, &m_DepthRenderbuffer);
-    }
-    if (m_SaaFramebuffer) {
-        glDeleteFramebuffers(1, &m_SaaFramebuffer);
-    }
-    if (m_SaaRenderbuffer) {
-        glDeleteRenderbuffers(1, &m_SaaRenderbuffer);
-    }
-    [EAGLContext setCurrentContext:nil];
 #endif
-    [GX_CAST_R(id, m_Context) release];
-#elif defined(GX_OS_ANDROID)
-    if(m_Context!=EGL_NO_CONTEXT && m_Context!=g_Context) {
-		eglDestroyContext(g_Display, m_Context);
-	}
-	if(m_Surface!=EGL_NO_SURFACE && m_Surface!=g_Surface) {
-		eglDestroySurface(g_Display,m_Surface);
-	}
-#elif defined(GX_OS_QT)
-    //delete m_Context;
-#endif
-}
-
-bool GOGLContext::create(GWindow* win)
-{
 	m_Window = win;
 
 #if defined(GX_OS_WINDOWS)
@@ -365,7 +306,6 @@ bool GOGLContext::create(GWindow* win)
 		g_Surface = m_Surface;
 		g_Context = m_Context;
 	}
-
 #elif defined(GX_OS_QT)
     m_Context=new QOpenGLContext();
     m_Context->setFormat(m_Window->m_OSWin->format());
@@ -386,7 +326,7 @@ bool GOGLContext::create(GWindow* win)
 #endif
 	return true;
 }
-
+//在这里反初始化
 void GOGLContext::destroy()
 {
 #if defined(GX_OS_ANDROID)
@@ -451,8 +391,19 @@ void GOGLContext::destroy()
 #endif
 }
 
+#if defined(GX_OS_ANDROID)
+void GOGLContext::androidDestroy()
+{
+	GOGLContext::destroy();
+}
+void GOGLContext::androidRecreate(GWindow* win)
+{
+	GOGLContext::create(win);
+}
+#endif
 
-bool GOGLContext::resize(gfloat32 width,gfloat32 height) {
+bool GOGLContext::resize(gfloat32 width,gfloat32 height)
+{
 #if defined(GX_OS_WINDOWS)
 	return true;
 #elif defined(GX_OS_IPHONE)
@@ -492,14 +443,30 @@ bool GOGLContext::resize(gfloat32 width,gfloat32 height) {
     return true;
 #elif defined(GX_OS_ANDROID)
 	if (m_Surface != EGL_NO_SURFACE) {
-		eglDestroySurface(g_Display, m_Surface);
-		m_Surface = eglCreateWindowSurface(g_Display, g_Config, m_Window->m_OSWin, NULL);
+		if(m_Surface==g_Surface) {
+			eglDestroySurface(g_Display, m_Surface);
+			m_Surface = eglCreateWindowSurface(g_Display, g_Config, m_Window->m_OSWin, NULL);
+			g_Surface=m_Surface;
+		}
+		else {
+			eglDestroySurface(g_Display, m_Surface);
+			m_Surface = eglCreateWindowSurface(g_Display, g_Config, m_Window->m_OSWin, NULL);
+		}
 	}
 	return true;
 #elif defined(GX_OS_QT)
     GX_UNUSED(width)
     GX_UNUSED(height)
     return true;
+#endif
+}
+
+bool GOGLContext::renderCheck()
+{
+#if defined(GX_OS_ANDROID)
+    return m_Surface != EGL_NO_SURFACE;
+#else
+	return true;
 #endif
 }
 
@@ -515,8 +482,6 @@ void GOGLContext::renderBegin()
 		glBindFramebuffer(GL_FRAMEBUFFER, m_DefaultFramebuffer);
 	}
 #endif
-
-	
 
 	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -600,7 +565,7 @@ void GOGLContext::makeClear()
 void GOGLContext::readyShader()
 {
 #if defined(GX_OS_ANDROID)
-    pushOSHandle(g_Surface,g_Context);
+	pushOSHandle(g_Surface,g_Context);
 #else
     makeCurrent();
 #endif
@@ -618,7 +583,7 @@ void GOGLContext::doneShader()
 void GOGLContext::readyTexture()
 {
 #if defined(GX_OS_ANDROID)
-    pushOSHandle(g_Surface,g_Context);
+	pushOSHandle(g_Surface,g_Context);
 #else
     makeCurrent();
 #endif
