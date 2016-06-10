@@ -10,7 +10,7 @@ pushd %LIBRARY_ROOT%\..\..
 set GX_ROOT=%cd%
 popd
 
-set OUTPUT_DIR=%LIBRARY_ROOT%\lib\android
+set OUTPUT_DIR=%LIBRARY_ROOT%\lib\ard
 
 if exist %OUTPUT_DIR% (
 	rd /s/q %OUTPUT_DIR%

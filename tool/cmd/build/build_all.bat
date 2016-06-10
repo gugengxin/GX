@@ -1,22 +1,15 @@
 @echo off
 
-call :CMD_EXIST qmake.exe || ( 
-	set /p QT_SDK=Please input QT SDK path: 
-)
-if "%QT_SDK%" == "" (
-	set QT_QMAKE=qmake.exe
-	set QT_DEPLOY=windeployqt.exe
-) else (
-	set QT_QMAKE=%QT_SDK%\bin\qmake.exe
-	set QT_DEPLOY=%QT_SDK%\bin\windeployqt.exe
-)
-
 pushd %~dp0
 cd ..\..\..
 set GX_ROOT=%cd%
 popd
 set GX_BIN=%GX_ROOT%\bin
-call %GX_BIN%\vc12_amd64_vcvars64.bat
+call %GX_BIN%\qt.bat
+call %GX_BIN%\vc120.bat
+
+set QT_QMAKE=qmake.exe
+set QT_DEPLOY=windeployqt.exe
 
 SET PROJECTS_LEN=0
 
@@ -61,9 +54,3 @@ GOTO LoopStart
 :LoopNext
 
 pause
-goto :EOF
-
-:CMD_EXIST
-setlocal&PATH %PATH%;%~dp0;%cd%
-if "%~$PATH:1"=="" exit /b 1
-exit /b 0
