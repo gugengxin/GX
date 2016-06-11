@@ -10,7 +10,7 @@ cd $PROJECT_ROOT
 
 source $GX_ROOT/bin/xcode.sh
 
-TARGET_NAME=zlib
+TARGET_NAME=libpng
 
 xcodebuild -project ${TARGET_NAME}.xcodeproj -target ${TARGET_NAME}_ios -configuration Release -sdk iphoneos build
 xcodebuild -project ${TARGET_NAME}.xcodeproj -target ${TARGET_NAME}_ios -configuration Release -sdk iphonesimulator build

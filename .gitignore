@@ -30,3 +30,4 @@ moc_*.cpp
 external/zlib/lib/
 external/zlib/project/vs/x64/
 external/zlib/project/vs/x86/
+external/libpng/lib
