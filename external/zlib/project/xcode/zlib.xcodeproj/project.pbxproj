@@ -409,7 +409,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -420,7 +420,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -429,7 +429,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				EXECUTABLE_PREFIX = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -439,7 +439,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				EXECUTABLE_PREFIX = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -554,6 +554,7 @@
 				CA253ADD1D09B1200095BE90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CA253AE31D09B1690095BE90 /* Build configuration list for PBXNativeTarget "zlib_mac" */ = {
 			isa = XCConfigurationList;
@@ -562,6 +563,7 @@
 				CA253AE51D09B1690095BE90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CA648AA51D09AC410036D581 /* Build configuration list for PBXProject "zlib" */ = {
 			isa = XCConfigurationList;

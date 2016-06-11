@@ -465,7 +465,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
@@ -476,7 +476,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
 		};
@@ -485,7 +485,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				EXECUTABLE_PREFIX = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -495,7 +495,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				EXECUTABLE_PREFIX = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -528,6 +528,7 @@
 				CA00851F1D0B9C1100B27AF4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CA0085251D0B9E3100B27AF4 /* Build configuration list for PBXNativeTarget "libpng_mac" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +537,7 @@
 				CA0085271D0B9E3100B27AF4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
