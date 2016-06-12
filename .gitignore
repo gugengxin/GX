@@ -33,3 +33,7 @@ external/zlib/project/vs/x86/
 external/libpng/lib
 external/libjpeg/lib
 external/freetype/lib
+external/libpng/project/vs/x64/
+external/libpng/project/vs/x86/
+external/libjpeg/project/vs/x64/
+external/libjpeg/project/vs/x86/
