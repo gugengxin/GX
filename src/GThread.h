@@ -1,5 +1,5 @@
 ﻿//
-//  GThread.hpp
+//  GThread.h
 //  GX
 //
 //  Created by Gengxin Gu on 16/4/27.

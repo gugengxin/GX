@@ -1,13 +1,13 @@
 ﻿//
-//  GObject.hpp
+//  GObject.h
 //  GX
 //
 //  Created by Gengxin Gu on 16/4/19.
 //  Copyright © 2016年 Gengxin Gu. All rights reserved.
 //
 
-#ifndef GObject_hpp
-#define GObject_hpp
+#ifndef GObject_h
+#define GObject_h
 
 #include "GXPrefix.h"
 #include "GClass.h"
@@ -50,4 +50,4 @@ typedef GObject GO;
 
 
 
-#endif /* GObject_hpp */
+#endif /* GObject_h */

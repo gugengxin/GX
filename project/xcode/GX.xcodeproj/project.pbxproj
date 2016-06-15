@@ -120,6 +120,12 @@
 		CAC2D1321CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */; };
 		CAC2D1331CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */; };
 		CAC2D1341CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */; };
+		CAD624AD1D1186CB005E77EB /* GList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD624AB1D1186CB005E77EB /* GList.cpp */; };
+		CAD624AE1D1186CB005E77EB /* GList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD624AB1D1186CB005E77EB /* GList.cpp */; };
+		CAD624AF1D1186CB005E77EB /* GList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD624AB1D1186CB005E77EB /* GList.cpp */; };
+		CAD624B21D11872E005E77EB /* GDataList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD624B01D11872E005E77EB /* GDataList.cpp */; };
+		CAD624B31D11872E005E77EB /* GDataList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD624B01D11872E005E77EB /* GDataList.cpp */; };
+		CAD624B41D11872E005E77EB /* GDataList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD624B01D11872E005E77EB /* GDataList.cpp */; };
 		CADB5DBA1CF9E6300092C472 /* GDShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DAA1CF9E6300092C472 /* GDShader.cpp */; };
 		CADB5DBB1CF9E6300092C472 /* GMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB01CF9E6300092C472 /* GMatrix.cpp */; };
 		CADB5DBC1CF9E6300092C472 /* GOShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB21CF9E6300092C472 /* GOShader.cpp */; };
@@ -289,6 +295,10 @@
 		CAC2D12B1CD0C1EC00A0EBE5 /* GData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GData.h; sourceTree = "<group>"; };
 		CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GPieceData.cpp; sourceTree = "<group>"; };
 		CAC2D1311CD0D43E00A0EBE5 /* GPieceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPieceData.h; sourceTree = "<group>"; };
+		CAD624AB1D1186CB005E77EB /* GList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GList.cpp; sourceTree = "<group>"; };
+		CAD624AC1D1186CB005E77EB /* GList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GList.h; sourceTree = "<group>"; };
+		CAD624B01D11872E005E77EB /* GDataList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDataList.cpp; sourceTree = "<group>"; };
+		CAD624B11D11872E005E77EB /* GDataList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataList.h; sourceTree = "<group>"; };
 		CADB5DAA1CF9E6300092C472 /* GDShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDShader.cpp; sourceTree = "<group>"; };
 		CADB5DAB1CF9E6300092C472 /* GDShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDShader.h; sourceTree = "<group>"; };
 		CADB5DB01CF9E6300092C472 /* GMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GMatrix.cpp; sourceTree = "<group>"; };
@@ -525,8 +535,12 @@
 				CAC2D1301CD0D43E00A0EBE5 /* GPieceData.cpp */,
 				CA1C71B71CD2068100BEEA5B /* GDataArray.h */,
 				CA1C71B61CD2068100BEEA5B /* GDataArray.cpp */,
+				CAD624B11D11872E005E77EB /* GDataList.h */,
+				CAD624B01D11872E005E77EB /* GDataList.cpp */,
 				CAE706CE1CD2F6EA0090F4DD /* GArray.h */,
 				CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */,
+				CAD624AC1D1186CB005E77EB /* GList.h */,
+				CAD624AB1D1186CB005E77EB /* GList.cpp */,
 				CAE706D81CD2FA850090F4DD /* GMap.h */,
 				CAE706D71CD2FA850090F4DD /* GMap.cpp */,
 				CA3090901CFD1C46000B8DF2 /* GColor.h */,
@@ -667,6 +681,7 @@
 				CA1F60A71CD9834000C6307B /* GXCWnd.cpp in Sources */,
 				CA04FDE71CE4557E00C9B596 /* glew.c in Sources */,
 				CA3090941CFD1C46000B8DF2 /* GColor.cpp in Sources */,
+				CAD624AD1D1186CB005E77EB /* GList.cpp in Sources */,
 				CABB5CCA1CE0E40500D5B648 /* GContext.cpp in Sources */,
 				CA04FDFA1CE4557E00C9B596 /* GPtr.cpp in Sources */,
 				CABB5CCC1CE0E40500D5B648 /* GJavaAPI.cpp in Sources */,
@@ -690,6 +705,7 @@
 				CABB3FB51CFE133000A7367C /* GDataBuffer.cpp in Sources */,
 				CA1AD27F1CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,
 				CABB3FB01CFE12D000A7367C /* GBuffer.cpp in Sources */,
+				CAD624B21D11872E005E77EB /* GDataList.cpp in Sources */,
 				CA7B4DE81CD594FF00F3D826 /* GApplication.cpp in Sources */,
 				CA1F60D11CD9ED6A00C6307B /* GTString.cpp in Sources */,
 				CADB5DBA1CF9E6300092C472 /* GDShader.cpp in Sources */,
@@ -724,6 +740,7 @@
 				CA04FDF31CE4557E00C9B596 /* GNumber.cpp in Sources */,
 				CAE303C11CE563CB00F15C74 /* GXOpenGL.cpp in Sources */,
 				CAE303BB1CE563CB00F15C74 /* GJavaJAPI.cpp in Sources */,
+				CAD624AE1D1186CB005E77EB /* GList.cpp in Sources */,
 				CA7B4DE11CD5906F00F3D826 /* GUUID.cpp in Sources */,
 				CABB3F9C1CFE06EC00A7367C /* GDShader.cpp in Sources */,
 				CAE303BD1CE563CB00F15C74 /* GContext.cpp in Sources */,
@@ -747,6 +764,7 @@
 				CABB3FB61CFE133000A7367C /* GDataBuffer.cpp in Sources */,
 				CAC2D12D1CD0C1EC00A0EBE5 /* GData.cpp in Sources */,
 				CABB3FB11CFE12D000A7367C /* GBuffer.cpp in Sources */,
+				CAD624B31D11872E005E77EB /* GDataList.cpp in Sources */,
 				CAE303BA1CE563CB00F15C74 /* GJavaClass.cpp in Sources */,
 				CA0B15F91CD07CD000C33BB5 /* GMutex.cpp in Sources */,
 				CA1AD2801CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,
@@ -781,6 +799,7 @@
 				CA04FDF41CE4557E00C9B596 /* GNumber.cpp in Sources */,
 				CAE303CB1CE563CB00F15C74 /* GXOpenGL.cpp in Sources */,
 				CAE303C51CE563CB00F15C74 /* GJavaJAPI.cpp in Sources */,
+				CAD624AF1D1186CB005E77EB /* GList.cpp in Sources */,
 				CA7B4DE21CD5906F00F3D826 /* GUUID.cpp in Sources */,
 				CABB3F951CFE06EB00A7367C /* GDShader.cpp in Sources */,
 				CAE303C71CE563CB00F15C74 /* GContext.cpp in Sources */,
@@ -804,6 +823,7 @@
 				CABB3FB71CFE133000A7367C /* GDataBuffer.cpp in Sources */,
 				CAC2D12E1CD0C1EC00A0EBE5 /* GData.cpp in Sources */,
 				CABB3FB21CFE12D000A7367C /* GBuffer.cpp in Sources */,
+				CAD624B41D11872E005E77EB /* GDataList.cpp in Sources */,
 				CAE303C41CE563CB00F15C74 /* GJavaClass.cpp in Sources */,
 				CA0B15FA1CD07CD000C33BB5 /* GMutex.cpp in Sources */,
 				CA1AD2811CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,

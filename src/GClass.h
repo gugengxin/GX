@@ -1,13 +1,13 @@
 ﻿//
-//  GClass.hpp
+//  GClass.h
 //  GX
 //
 //  Created by Gengxin Gu on 16/4/19.
 //  Copyright © 2016年 Gengxin Gu. All rights reserved.
 //
 
-#ifndef GClass_hpp
-#define GClass_hpp
+#ifndef GClass_h
+#define GClass_h
 
 #include "GXPrefix.h"
 
@@ -75,4 +75,4 @@ GClass cls::gclass(sizeof(cls),GX_CAST_R(GClass::Alloc,cls::alloc),&(pc::gclass)
 template <T> \
 GClass cls::gclass(sizeof(cls),reinterpret_cast<GClass::Alloc>(cls::alloc),&(pc::gclass))
 
-#endif /* GClass_hpp */
+#endif /* GClass_h */

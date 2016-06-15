@@ -1,13 +1,13 @@
 ﻿//
-//  GOWHash.hpp
+//  GOWHash.h
 //  GX
 //
 //  Created by Gengxin Gu on 16/4/19.
 //  Copyright © 2016年 Gengxin Gu. All rights reserved.
 //
 
-#ifndef GOWHash_hpp
-#define GOWHash_hpp
+#ifndef GOWHash_h
+#define GOWHash_h
 
 #include "GXPrefix.h"
 
@@ -31,4 +31,4 @@ public:
     static bool compare(Code& code0,Code& code1);
 };
 
-#endif /* GOWHash_hpp */
+#endif /* GOWHash_h */
