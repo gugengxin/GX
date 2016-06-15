@@ -39,3 +39,5 @@ external/libjpeg/project/vs/x64/
 external/libjpeg/project/vs/x86/
 external/freetype/project/vs/x64/
 external/freetype/project/vs/x86/
+external/openal/include
+external/openal/lib
