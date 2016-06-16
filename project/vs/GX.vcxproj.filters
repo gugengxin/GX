@@ -183,6 +183,12 @@
     <ClCompile Include="..\..\src\GVector.cpp">
       <Filter>src\Struct</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GDataList.cpp">
+      <Filter>src\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GList.cpp">
+      <Filter>src\Struct</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -360,6 +366,12 @@
       <Filter>src\Struct</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GVector.h">
+      <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDataList.h">
+      <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GList.h">
       <Filter>src\Struct</Filter>
     </ClInclude>
   </ItemGroup>

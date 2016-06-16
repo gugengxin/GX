@@ -32,6 +32,7 @@
     <ClCompile Include="..\..\src\GData.cpp" />
     <ClCompile Include="..\..\src\GDataArray.cpp" />
     <ClCompile Include="..\..\src\GDataBuffer.cpp" />
+    <ClCompile Include="..\..\src\GDataList.cpp" />
     <ClCompile Include="..\..\src\GDataString.cpp" />
     <ClCompile Include="..\..\src\GDShader.cpp" />
     <ClCompile Include="..\..\src\GJavaAPI.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="..\..\src\GJavaClass.cpp" />
     <ClCompile Include="..\..\src\GJavaJAPI.cpp" />
     <ClCompile Include="..\..\src\glew.c" />
+    <ClCompile Include="..\..\src\GList.cpp" />
     <ClCompile Include="..\..\src\GLog.cpp" />
     <ClCompile Include="..\..\src\GMap.cpp" />
     <ClCompile Include="..\..\src\GMatrix.cpp" />
@@ -86,12 +88,14 @@
     <ClInclude Include="..\..\src\GData.h" />
     <ClInclude Include="..\..\src\GDataArray.h" />
     <ClInclude Include="..\..\src\GDataBuffer.h" />
+    <ClInclude Include="..\..\src\GDataList.h" />
     <ClInclude Include="..\..\src\GDataString.h" />
     <ClInclude Include="..\..\src\GDShader.h" />
     <ClInclude Include="..\..\src\GJavaAPI.h" />
     <ClInclude Include="..\..\src\GJavaCAPI.h" />
     <ClInclude Include="..\..\src\GJavaClass.h" />
     <ClInclude Include="..\..\src\GJavaJAPI.h" />
+    <ClInclude Include="..\..\src\GList.h" />
     <ClInclude Include="..\..\src\GLog.h" />
     <ClInclude Include="..\..\src\GL\glew.h" />
     <ClInclude Include="..\..\src\GL\glxew.h" />
@@ -206,7 +210,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ProgramDataBaseFileName>$(OutDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -221,7 +225,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN64;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ProgramDataBaseFileName>$(OutDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
