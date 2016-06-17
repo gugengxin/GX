@@ -13,6 +13,7 @@
 #endif
 #include "GPainter.h"
 #include "GSRGraphics.h"
+#include "GTexture2D.h"
 
 class GContext : public GContextBase
 {
@@ -43,9 +44,12 @@ public:
 	GPainter& getPainter() {
 		return m_Painter;
 	}
+public:
+    
 private:
 	GPainter m_Painter;
 	GShader* m_Shaders[SRIDCount];
+    GDataList<GTexture*> m_Textures;
 };
 
 

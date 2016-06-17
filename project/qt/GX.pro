@@ -30,6 +30,7 @@ SOURCES += \
     ../../src/GData.cpp \
     ../../src/GDataArray.cpp \
     ../../src/GDataBuffer.cpp \
+    ../../src/GDataList.cpp \
     ../../src/GDataString.cpp \
     #../../src/GDShader.cpp \
     #../../src/GJavaAPI.cpp \
@@ -37,6 +38,7 @@ SOURCES += \
     #../../src/GJavaClass.cpp \
     #../../src/GJavaJAPI.cpp \
     #../../src/glew.c \
+    ../../src/GList.cpp \
     ../../src/GLog.cpp \
     ../../src/GMap.cpp \
     ../../src/GMatrix.cpp \
@@ -56,6 +58,8 @@ SOURCES += \
     ../../src/GSRGraphics.cpp \
     ../../src/GString.cpp \
     ../../src/GSystem.cpp \
+    ../../src/GTexture.cpp \
+    ../../src/GTexture2D.cpp \
     ../../src/GThread.cpp \
     ../../src/GTString.cpp \
     ../../src/GUUID.cpp \

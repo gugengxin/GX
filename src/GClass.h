@@ -39,7 +39,7 @@ private:
 };
 
 
-#define GX_OBJECT_DECLARE(cls,vis,avis) \
+#define GX_OBJECT_DECLARE_BASE(cls,vis) \
 vis:\
     cls();\
     virtual ~cls();\
@@ -48,6 +48,15 @@ public:\
     virtual GClass* getClass() {\
 		return &gclass;\
 	}\
+public:\
+	void* operator new(size_t size) {\
+		return GObject::gnew(size);\
+	}\
+	void operator delete(void* p) {\
+		GObject::gdel(p);\
+	}
+#define GX_OBJECT_DECLARE(cls,vis,avis) \
+GX_OBJECT_DECLARE_BASE(cls,vis)\
 avis:\
     static cls* alloc() {\
 		return new cls();\
@@ -56,17 +65,21 @@ avis:\
         cls* res=new cls();\
         GObject::autorelease(res);\
         return res;\
-    }\
-public:\
-	void* operator new(size_t size) {\
-		return GObject::gnew(size);\
+    }
+#define GX_VIRTUAL_OBJECT_DECLARE(cls,vis,avis) \
+GX_OBJECT_DECLARE_BASE(cls,vis)\
+avis:\
+    static cls* alloc() {\
+		return NULL;\
 	}\
-	void operator delete(void* p) {\
-		GObject::gdel(p);\
-	}
+    static cls* autoAlloc() {\
+        return NULL;\
+    }
 
-#define GX_OBJECT(cls)        GX_OBJECT_DECLARE(cls,protected,public)
-#define GX_OBJECT_FINAL(cls)  GX_OBJECT_DECLARE(cls,private,public)
+
+#define GX_OBJECT(cls)          GX_OBJECT_DECLARE(cls,protected,public)
+#define GX_OBJECT_FINAL(cls)    GX_OBJECT_DECLARE(cls,private,public)
+#define GX_VIRTUAL_OBJECT(cls)  GX_VIRTUAL_OBJECT_DECLARE(cls,protected,public)
 
 #define GX_OBJECT_IMPLEMENT(cls,pc) \
 GClass cls::gclass(sizeof(cls),GX_CAST_R(GClass::Alloc,cls::alloc),&(pc::gclass))

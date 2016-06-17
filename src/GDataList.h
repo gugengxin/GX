@@ -19,6 +19,7 @@ class GDataListBase : public GObject {
 
 template <typename T>
 class GDataList : public GDataListBase {
+    friend class GContext;
     GX_OBJECT(GDataList);
 public:
     class Node {
