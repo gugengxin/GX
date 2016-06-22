@@ -37,10 +37,12 @@ typedef wchar_t gwchar;
 #if defined(GX_OS_WINDOWS) && (defined(UNICODE) || defined(_UNICODE))
 #define _GX_T(x) L##x
 #define GX_T(x) _GX_T(x)
-#define GX_PATH_IS_CHAR
+#define GX_PATH_IS_WCHAR
+typedef gwchar gtchar;
 #else
 #define GX_T(x) x
-#define GX_PATH_IS_WCHAR
+#define GX_PATH_IS_CHAR
+typedef gchar gtchar;
 #endif
 
 #if defined (__LP64__) || defined (__64BIT__) || defined (_LP64) || (__WORDSIZE == 64) || defined(WIN64)

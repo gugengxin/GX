@@ -31,8 +31,10 @@ SOURCES += \
     ../../src/GDataArray.cpp \
     ../../src/GDataBuffer.cpp \
     ../../src/GDataList.cpp \
+    ../../src/GDataReader.cpp \
     ../../src/GDataString.cpp \
     #../../src/GDShader.cpp \
+    ../../src/GFileReader.cpp \
     #../../src/GJavaAPI.cpp \
     #../../src/GJavaCAPI.cpp \
     #../../src/GJavaClass.cpp \
@@ -53,6 +55,7 @@ SOURCES += \
     ../../src/GPainter.cpp \
     ../../src/GPieceData.cpp \
     ../../src/GPtr.cpp \
+    ../../src/GReader.cpp \
     ../../src/GRunLoop.cpp \
     ../../src/GShader.cpp \
     ../../src/GSRGraphics.cpp \
@@ -65,12 +68,14 @@ SOURCES += \
     ../../src/GUUID.cpp \
     ../../src/GVector.cpp \
     ../../src/GWindow.cpp \
+    ../../src/GWriter.cpp \
     ../../src/GWString.cpp \
     #../../src/GXCWnd.cpp \
     #../../src/GXDirectX.cpp \
     ../../src/GXMath.cpp \
     ../../src/GXOpenGL.cpp \
     #../../src/GXPthread.cpp \
+    ../../src/GXZipReader.cpp \
 
 
 win32 {
