@@ -1,4 +1,4 @@
-﻿//
+//
 //  GXPrefix.h
 //  GX
 //
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <memory.h>
+#include <stdio.h>
 #include <string.h>
 #include <assert.h>
 #if defined(GX_OS_ANDROID)
@@ -27,7 +28,7 @@
 #ifdef __va_copy
 #define va_copy(DEST,SRC) __va_copy((DEST),(SRC))
 #else
-#define va_copy(DEST, SRC) memcpy((&DEST), (&SRC), sizeof(va_list))
+#define va_copy(DEST,SRC) memcpy((&DEST), (&SRC), sizeof(va_list))
 #endif
 #endif
 
@@ -55,6 +56,23 @@
 #define GX_UNUSED(x) Q_UNUSED(x)
 #else
 #define GX_UNUSED(x)
+#endif
+
+#if defined(GX_PATH_IS_CHAR)
+#define _tfopen fopen
+#endif
+
+#ifdef GX_OS_WINDOWS
+#if GX_PTR_32BIT
+#define GX_ftell ftell
+#define GX_fseek fseek
+#elif GX_PTR_64BIT
+#define GX_ftell _ftelli64
+#define GX_fseek _fseeki64
+#endif
+#else
+#define GX_ftell ftell
+#define GX_fseek fseek
 #endif
 
 

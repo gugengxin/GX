@@ -20,3 +20,12 @@ GReader::~GReader()
 {
 
 }
+
+bool GReader::rollbackAll()
+{
+    gint pos=getBytes();
+    if (pos<0) {
+        return false;
+    }
+    return rollback(GX_CAST_S(guint, pos));
+}

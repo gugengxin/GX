@@ -26,6 +26,7 @@ public:
     virtual bool rollback(guint len) {
         return false;
     }
+    virtual bool rollbackAll();
 public:
     virtual bool canGetLength()=0;
     virtual gint getLength() {
