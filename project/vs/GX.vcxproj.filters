@@ -31,6 +31,9 @@
     <Filter Include="src\Window\shader">
       <UniqueIdentifier>{7515a65e-5c60-4d83-8d87-cc7d9697a4e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\IO">
+      <UniqueIdentifier>{4b88ab81-8c74-4c62-8402-191b5f68c340}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GClass.cpp">
@@ -188,6 +191,27 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GList.cpp">
       <Filter>src\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GReader.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFileReader.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDataReader.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GWriter.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GZipReader.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GTexture.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GTexture2D.cpp">
+      <Filter>src\Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -373,6 +397,39 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GList.h">
       <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXGObject.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXGObjectUD.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXObject.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GReader.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFileReader.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDataReader.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GWriter.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GZipReader.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GTexture.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GTexture2D.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXFILE.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

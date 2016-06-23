@@ -33,8 +33,10 @@
     <ClCompile Include="..\..\src\GDataArray.cpp" />
     <ClCompile Include="..\..\src\GDataBuffer.cpp" />
     <ClCompile Include="..\..\src\GDataList.cpp" />
+    <ClCompile Include="..\..\src\GDataReader.cpp" />
     <ClCompile Include="..\..\src\GDataString.cpp" />
     <ClCompile Include="..\..\src\GDShader.cpp" />
+    <ClCompile Include="..\..\src\GFileReader.cpp" />
     <ClCompile Include="..\..\src\GJavaAPI.cpp" />
     <ClCompile Include="..\..\src\GJavaCAPI.cpp" />
     <ClCompile Include="..\..\src\GJavaClass.cpp" />
@@ -55,22 +57,27 @@
     <ClCompile Include="..\..\src\GPainter.cpp" />
     <ClCompile Include="..\..\src\GPieceData.cpp" />
     <ClCompile Include="..\..\src\GPtr.cpp" />
+    <ClCompile Include="..\..\src\GReader.cpp" />
     <ClCompile Include="..\..\src\GRunLoop.cpp" />
     <ClCompile Include="..\..\src\GShader.cpp" />
     <ClCompile Include="..\..\src\GSRGraphics.cpp" />
     <ClCompile Include="..\..\src\GString.cpp" />
     <ClCompile Include="..\..\src\GSystem.cpp" />
+    <ClCompile Include="..\..\src\GTexture.cpp" />
+    <ClCompile Include="..\..\src\GTexture2D.cpp" />
     <ClCompile Include="..\..\src\GThread.cpp" />
     <ClCompile Include="..\..\src\GTString.cpp" />
     <ClCompile Include="..\..\src\GUUID.cpp" />
     <ClCompile Include="..\..\src\GVector.cpp" />
     <ClCompile Include="..\..\src\GWindow.cpp" />
+    <ClCompile Include="..\..\src\GWriter.cpp" />
     <ClCompile Include="..\..\src\GWString.cpp" />
     <ClCompile Include="..\..\src\GXCWnd.cpp" />
     <ClCompile Include="..\..\src\GXDirectX.cpp" />
     <ClCompile Include="..\..\src\GXMath.cpp" />
     <ClCompile Include="..\..\src\GXOpenGL.cpp" />
     <ClCompile Include="..\..\src\GXPthread.cpp" />
+    <ClCompile Include="..\..\src\GZipReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\com_gxengine_GX.h" />
@@ -89,8 +96,10 @@
     <ClInclude Include="..\..\src\GDataArray.h" />
     <ClInclude Include="..\..\src\GDataBuffer.h" />
     <ClInclude Include="..\..\src\GDataList.h" />
+    <ClInclude Include="..\..\src\GDataReader.h" />
     <ClInclude Include="..\..\src\GDataString.h" />
     <ClInclude Include="..\..\src\GDShader.h" />
+    <ClInclude Include="..\..\src\GFileReader.h" />
     <ClInclude Include="..\..\src\GJavaAPI.h" />
     <ClInclude Include="..\..\src\GJavaCAPI.h" />
     <ClInclude Include="..\..\src\GJavaClass.h" />
@@ -113,27 +122,36 @@
     <ClInclude Include="..\..\src\GPainter.h" />
     <ClInclude Include="..\..\src\GPieceData.h" />
     <ClInclude Include="..\..\src\GPtr.h" />
+    <ClInclude Include="..\..\src\GReader.h" />
     <ClInclude Include="..\..\src\GRunLoop.h" />
     <ClInclude Include="..\..\src\GShader.h" />
     <ClInclude Include="..\..\src\GSRGraphics.h" />
     <ClInclude Include="..\..\src\GString.h" />
     <ClInclude Include="..\..\src\GSystem.h" />
+    <ClInclude Include="..\..\src\GTexture.h" />
+    <ClInclude Include="..\..\src\GTexture2D.h" />
     <ClInclude Include="..\..\src\GThread.h" />
     <ClInclude Include="..\..\src\GTString.h" />
     <ClInclude Include="..\..\src\GUUID.h" />
     <ClInclude Include="..\..\src\GVector.h" />
     <ClInclude Include="..\..\src\GWindow.h" />
+    <ClInclude Include="..\..\src\GWriter.h" />
     <ClInclude Include="..\..\src\GWString.h" />
     <ClInclude Include="..\..\src\GX.h" />
     <ClInclude Include="..\..\src\GXCWnd.h" />
     <ClInclude Include="..\..\src\GXDirectX.h" />
     <ClInclude Include="..\..\src\GXEncoding.h" />
+    <ClInclude Include="..\..\src\GXFILE.h" />
+    <ClInclude Include="..\..\src\GXGObject.h" />
+    <ClInclude Include="..\..\src\GXGObjectUD.h" />
     <ClInclude Include="..\..\src\GXMath.h" />
+    <ClInclude Include="..\..\src\GXObject.h" />
     <ClInclude Include="..\..\src\GXOpenGL.h" />
     <ClInclude Include="..\..\src\GXOSs.h" />
     <ClInclude Include="..\..\src\GXPrefix.h" />
     <ClInclude Include="..\..\src\GXPthread.h" />
     <ClInclude Include="..\..\src\GXTypes.h" />
+    <ClInclude Include="..\..\src\GZipReader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\GSRGraphics.gxsl" />

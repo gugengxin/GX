@@ -1,4 +1,4 @@
-//
+﻿//
 //  GXGObjectUD.h
 //  GX
 //

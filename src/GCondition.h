@@ -1,4 +1,4 @@
-//
+﻿//
 //  GCondition.h
 //  GX
 //

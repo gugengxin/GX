@@ -58,22 +58,5 @@
 #define GX_UNUSED(x)
 #endif
 
-#if defined(GX_PATH_IS_CHAR)
-#define _tfopen fopen
-#endif
-
-#ifdef GX_OS_WINDOWS
-#if GX_PTR_32BIT
-#define GX_ftell ftell
-#define GX_fseek fseek
-#elif GX_PTR_64BIT
-#define GX_ftell _ftelli64
-#define GX_fseek _fseeki64
-#endif
-#else
-#define GX_ftell ftell
-#define GX_fseek fseek
-#endif
-
 
 #endif /* GXPrefix_h */
