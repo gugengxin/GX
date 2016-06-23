@@ -255,6 +255,9 @@
 		CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GSRGraphics.cpp; sourceTree = "<group>"; };
 		CA3090921CFD1C46000B8DF2 /* GSRGraphics.gxsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GSRGraphics.gxsl; sourceTree = "<group>"; };
 		CA3090931CFD1C46000B8DF2 /* GSRGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSRGraphics.h; sourceTree = "<group>"; };
+		CA5B6E651D1B8234002598FB /* GXObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXObject.h; sourceTree = "<group>"; };
+		CA5B6E671D1B8534002598FB /* GXGObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXGObject.h; sourceTree = "<group>"; };
+		CA5B6E691D1B87A8002598FB /* GXGObjectUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXGObjectUD.h; sourceTree = "<group>"; };
 		CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUUID.cpp; sourceTree = "<group>"; };
 		CA7B4DDF1CD5906F00F3D826 /* GUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUUID.h; sourceTree = "<group>"; };
 		CA7B4DE61CD594FF00F3D826 /* GApplication.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GApplication.cpp; sourceTree = "<group>"; };
@@ -500,6 +503,9 @@
 				CABB5CC21CE0E40500D5B648 /* GLog.cpp */,
 				CA9C16D11CC6132400204303 /* GClass.h */,
 				CA9C16D01CC6132400204303 /* GClass.cpp */,
+				CA5B6E651D1B8234002598FB /* GXObject.h */,
+				CA5B6E671D1B8534002598FB /* GXGObject.h */,
+				CA5B6E691D1B87A8002598FB /* GXGObjectUD.h */,
 				CA9C16CB1CC6102E00204303 /* GObject.h */,
 				CA9C16CA1CC6102E00204303 /* GObject.cpp */,
 				CA1AD27E1CD89DFB00CEA1DC /* GAutoreleasePool.h */,

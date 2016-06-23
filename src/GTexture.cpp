@@ -7,9 +7,9 @@
 //
 
 #include "GTexture.h"
+#include "GXGObject.h"
 
-
-GX_OBJECT_IMPLEMENT(GTexture, GObject);
+GX_GOBJECT_IMPLEMENT(GTexture, GObject);
 
 
 GTexture::Node::Node(GContext* cnt,GTexture* tex) :

@@ -4,16 +4,18 @@
 #include "GPieceData.h"
 #include <string.h>
 
+#include "GXGObject.h"
+
 class GArrayBase : public GObject
 {
-	GX_OBJECT(GArrayBase);
+	GX_GOBJECT(GArrayBase);
 };
 
 template <typename T>
 class GArray : public GArrayBase {
 	friend class GRunLoop;
 	friend class GNCObserver;
-	GX_OBJECT(GArray);
+	GX_GOBJECT(GArray);
 public:
 	inline gint getCount() {
 		return (gint)(m_Data.getBytes() / sizeof(T*));
@@ -138,7 +140,7 @@ private:
 	GPieceData m_Data;
 };
 
-GX_OBJECT_TEMPLATE_IMPLEMENT(typename T, GArray<T>, GArrayBase);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T, GArray<T>, GArrayBase);
 
 template <typename T>
 GArray<T>::GArray():
@@ -157,3 +159,5 @@ GArray<T>::~GArray()
 		GO::release(GX_CAST_R(T**, m_Data.getPtr())[i]);
 	}
 }
+
+#include "GXGObjectUD.h"

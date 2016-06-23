@@ -18,6 +18,8 @@
 #include "GNoticeCenter.h"
 #include "GAction.h"
 
+#include "GXGObject.h"
+
 class GThread {
     friend class GApplication;
     friend class GAutoreleasePool;
@@ -29,7 +31,7 @@ public:
 	{
 		friend class GThread;
 		friend class _HelperCreateData;
-		GX_OBJECT(Holder);
+		GX_GOBJECT(Holder);
 	public:
 		inline GThread* getThread() {
 			return m_Thread;
@@ -80,7 +82,7 @@ private:
 	GNoticeCenter* m_NoteCenter;
 };
 
-
+#include "GXGObjectUD.h"
 
 
 

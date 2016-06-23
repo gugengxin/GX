@@ -1,6 +1,7 @@
 ﻿#include "GArray.h"
+#include "GXGObject.h"
 
-GX_OBJECT_IMPLEMENT(GArrayBase, GObject);
+GX_GOBJECT_IMPLEMENT(GArrayBase, GObject);
 
 GArrayBase::GArrayBase()
 {

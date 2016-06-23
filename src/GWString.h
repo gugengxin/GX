@@ -13,8 +13,10 @@
 #include "GDataString.h"
 
 
+#include "GXGObject.h"
+
 class GWString : public GDataString<gwchar> {
-    GX_OBJECT(GWString);
+    GX_GOBJECT(GWString);
 public:
 	virtual bool isEqual(GObject* obj);
 
@@ -25,5 +27,7 @@ public:
 
 
 };
+
+#include "GXGObjectUD.h"
 
 #endif /* GWString_h */

@@ -61,6 +61,7 @@ void GObject::release(GObject* obj)
         pthread_mutex_unlock(&g_Mutex);
         
         if (p->refCount <= 0) {
+            obj->uninit();
 			delete obj;
 		}
 	}
@@ -102,11 +103,16 @@ GClass* GObject::getClass()
 }
 GObject* GObject::alloc()
 {
-    return new GObject();
+    GObject* res=new GObject();
+    if(!res->init()) {
+        delete res;
+        res=NULL;
+    }
+    return res;
 }
 GObject* GObject::autoAlloc()
 {
-    GObject* res=new GObject();
+    GObject* res=alloc();
     autorelease(res);
     return res;
 }
@@ -126,6 +132,14 @@ GObject::GObject()
 GObject::~GObject()
 {
     
+}
+
+bool GObject::init()
+{
+    return true;
+}
+void GObject::uninit()
+{
 }
 
 bool  GObject::isMemberOfClass(GClass* pClass)

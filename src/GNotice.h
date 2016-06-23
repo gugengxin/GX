@@ -3,10 +3,11 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 
+#include "GXGObject.h"
 
 class GNotice : public GObject {
 	friend class GNoticeCenter;
-	GX_OBJECT(GNotice);
+	GX_GOBJECT(GNotice);
 public:
 	inline GObject* getKey() {
 		return m_Key;
@@ -27,3 +28,4 @@ private:
 	GObject* m_ObsObj;
 };
 
+#include "GXGObjectUD.h"

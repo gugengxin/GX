@@ -7,9 +7,9 @@
 //
 
 #include "GTString.h"
+#include "GXGObject.h"
 
-
-GX_OBJECT_IMPLEMENT(GTString, GX_TSTRING_BASE_CLASS);
+GX_GOBJECT_IMPLEMENT(GTString, GX_TSTRING_BASE_CLASS);
 
 GTString::GTString()
 {

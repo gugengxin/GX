@@ -6,10 +6,11 @@
 #include "GNotice.h"
 #include "GAction.h"
 
+#include "GXGObject.h"
 
 class GNCObserver : public GObject {
 	friend class GNoticeCenter;
-	GX_OBJECT_DECLARE(GNCObserver,private,private);
+	GX_GOBJECT_DECLARE(GNCObserver,private,private);
 public:
 	inline GObject* getKey() {
 		return m_Key;
@@ -58,3 +59,4 @@ private:
 	GMap<GObject, GNCObserver> m_Observers;
 };
 
+#include "GXGObjectUD.h"

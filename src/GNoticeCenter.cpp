@@ -1,7 +1,8 @@
 ﻿#include "GNoticeCenter.h"
 #include "GThread.h"
+#include "GXGObject.h"
 
-GX_OBJECT_IMPLEMENT(GNCObserver, GObject);
+GX_GOBJECT_IMPLEMENT(GNCObserver, GObject);
 
 GNCObserver::GNCObserver()
 {

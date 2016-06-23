@@ -9,7 +9,7 @@
 #include "GData.h"
 #include <stdlib.h>
 #include <memory.h>
-
+#include "GXGObject.h"
 
 bool GData::galloc(void*& buf,guint size,guint toSize)
 {
@@ -38,7 +38,7 @@ bool GData::galloc(void*& buf,guint size,guint toSize)
 }
 
 
-GX_OBJECT_IMPLEMENT(GData, GObject);
+GX_GOBJECT_IMPLEMENT(GData, GObject);
 
 GData::GData()
 {

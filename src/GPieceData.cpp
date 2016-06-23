@@ -7,11 +7,11 @@
 //
 
 #include "GPieceData.h"
-
+#include "GXGObject.h"
 
 #define M_PIECE_SIZE_DEFAULT 256
 
-GX_OBJECT_IMPLEMENT(GPieceData, GData);
+GX_GOBJECT_IMPLEMENT(GPieceData, GData);
 
 GPieceData::GPieceData()
 {

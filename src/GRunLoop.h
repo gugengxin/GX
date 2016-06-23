@@ -1,4 +1,4 @@
-﻿//
+//
 //  GRunLoop.h
 //  GX
 //
@@ -16,13 +16,15 @@
 #include "GArray.h"
 #include "GAction.h"
 
+#include "GXGObject.h"
+
 class GThread;
 
 class GRunLoop {
     friend class GThread;
 private:
 	class Action : public GObject {
-		GX_OBJECT(Action);
+		GX_GOBJECT(Action);
 	public:
 		inline GAction* getAction() {
 			return m_Action;
@@ -82,7 +84,7 @@ private:
 	GArray<Action> m_ActsRunning;
 };
 
-
+#include "GXGObjectUD.h"
 
 
 

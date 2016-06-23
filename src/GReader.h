@@ -12,8 +12,11 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 
+
+#include "GXGObject.h"
+
 class GReader : public GObject {
-    GX_VIRTUAL_OBJECT(GReader);
+    GX_VIRTUAL_GOBJECT(GReader);
 public:
     virtual void close()=0;
 public:
@@ -35,6 +38,6 @@ public:
 };
 
 
-
+#include "GXGObjectUD.h"
 
 #endif /* GReader_h */

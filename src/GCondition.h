@@ -1,4 +1,4 @@
-﻿//
+//
 //  GCondition.h
 //  GX
 //
@@ -12,15 +12,19 @@
 #include "GXPrefix.h"
 #include "GMutex.h"
 
+#include "GXGObject.h"
+
 class GCondition : public GMutex {
 	friend class GThread;
 	friend class GRunLoop;
-    GX_OBJECT(GCondition);
+    GX_GOBJECT(GCondition);
 public:
     void wait();
     void signal();
 private:
     GX::pthread_cond_t m_PData;
 };
+
+#include "GXGObjectUD.h"
 
 #endif /* GCondition_h */

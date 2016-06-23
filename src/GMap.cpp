@@ -7,9 +7,9 @@
 //
 
 #include "GMap.h"
+#include "GXGObject.h"
 
-
-GX_OBJECT_IMPLEMENT(GMapBase, GObject);
+GX_GOBJECT_IMPLEMENT(GMapBase, GObject);
 
 GMapBase::GMapBase()
 {

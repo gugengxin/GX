@@ -12,13 +12,14 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 
+#include "GXGObject.h"
 
 class GData : public GObject {
 	friend class GPieceData;
 	template <typename, typename> friend class GDataArray;
 	template <typename> friend class GDataString;
 	friend class GDataBufferBase;
-    GX_OBJECT(GData);
+    GX_GOBJECT(GData);
 public:
     static bool galloc(GX_IN_OUT void*& buf,GX_IN guint size,GX_IN guint toSize);
 public:
@@ -49,7 +50,6 @@ private:
     guint m_IsStatic:1;
 };
 
-
-
+#include "GXGObjectUD.h"
 
 #endif /* GData_h */

@@ -7,9 +7,9 @@
 //
 
 #include "GDataList.h"
+#include "GXGObject.h"
 
-
-GX_OBJECT_IMPLEMENT(GDataListBase, GObject);
+GX_GOBJECT_IMPLEMENT(GDataListBase, GObject);
 
 GDataListBase::GDataListBase()
 {

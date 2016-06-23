@@ -4,13 +4,15 @@
 #include "GPieceData.h"
 #include <string.h>
 
+#include "GXGObject.h"
+
 class GDataArrayBase : public GObject {
-	GX_OBJECT(GDataArrayBase);
+	GX_GOBJECT(GDataArrayBase);
 };
 
 template <typename T,typename DT>
 class GDataArray : public GDataArrayBase {
-    GX_OBJECT(GDataArray);
+    GX_GOBJECT(GDataArray);
 public:
 	inline gint getCount() {
 		return (gint)(m_Data.getBytes() / sizeof(T));
@@ -150,7 +152,7 @@ private:
     DT m_Data;
 };
 
-GX_OBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA typename DT, GDataArray<T GX_COMMA DT>, GDataArrayBase);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA typename DT, GDataArray<T GX_COMMA DT>, GDataArrayBase);
 
 template <typename T,typename DT>
 GDataArray<T,DT>::GDataArray()
@@ -166,11 +168,11 @@ GDataArray<T,DT>::~GDataArray()
 
 template <typename T>
 class GDArray : public GDataArray<T, GData> {
-	GX_OBJECT(GDArray);
+	GX_GOBJECT(GDArray);
     template <typename,typename> friend class GMap;
 };
 
-GX_OBJECT_TEMPLATE_IMPLEMENT(typename T, GDArray<T>, GDataArray<T GX_COMMA GData>);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T, GDArray<T>, GDataArray<T GX_COMMA GData>);
 
 template <typename T>
 GDArray<T>::GDArray()
@@ -186,10 +188,10 @@ GDArray<T>::~GDArray()
 
 template <typename T,guint32 N>
 class GPieceDataArray : public GDataArray<T, GPieceData> {
-    GX_OBJECT(GPieceDataArray);
+    GX_GOBJECT(GPieceDataArray);
 };
 
-GX_OBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA guint32 N, GPieceDataArray<T GX_COMMA N>, GDataArray<T GX_COMMA GPieceData>);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA guint32 N, GPieceDataArray<T GX_COMMA N>, GDataArray<T GX_COMMA GPieceData>);
 
 template <typename T,guint32 N>
 GPieceDataArray<T,N>::GPieceDataArray()
@@ -216,10 +218,10 @@ class GPDArray : public GPieceDataArray<T, GX_PDARRAY_N> {
     friend class GThread;
 	friend class GPainter;
 	friend class GOGLContext;
-    GX_OBJECT(GPDArray);
+    GX_GOBJECT(GPDArray);
 };
 
-GX_OBJECT_TEMPLATE_IMPLEMENT(typename T, GPDArray<T>, GPieceDataArray<T GX_COMMA GX_PDARRAY_N>);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T, GPDArray<T>, GPieceDataArray<T GX_COMMA GX_PDARRAY_N>);
 
 template <typename T>
 GPDArray<T>::GPDArray()
@@ -232,3 +234,4 @@ GPDArray<T>::~GPDArray()
     
 }
 
+#include "GXGObjectUD.h"

@@ -15,10 +15,11 @@
 #include "GXOpenGL.h"
 #include "GXDirectX.h"
 
+#include "GXGObject.h"
 class GContext;
 
 class GTexture : public GObject {
-    GX_OBJECT(GTexture);
+    GX_GOBJECT(GTexture);
 private:
     class Node : public GDataList<GTexture*>::Node {
     public:
@@ -40,7 +41,7 @@ private:
 #endif
 };
 
-
+#include "GXGObjectUD.h"
 
 
 #endif /* GTexture_h */

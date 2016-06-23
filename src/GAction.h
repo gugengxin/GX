@@ -3,9 +3,10 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 
+#include "GXGObject.h"
 
 class GAction : public GObject {
-    GX_OBJECT(GAction);
+    GX_GOBJECT(GAction);
 public:
 	inline GObject* getTarget() {
 		return m_Target;
@@ -33,3 +34,4 @@ private:
 	GObject* m_Obj;
 };
 
+#include "GXGObjectUD.h"

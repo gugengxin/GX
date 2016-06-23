@@ -1,4 +1,4 @@
-﻿//
+//
 //  GMutex.h
 //  GX
 //
@@ -13,9 +13,11 @@
 #include "GObject.h"
 #include "GXPthread.h"
 
+#include "GXGObject.h"
+
 class GMutex : public GObject {
 	friend class GRunLoop;
-    GX_OBJECT(GMutex);
+    GX_GOBJECT(GMutex);
 public:
     void lock();
     void unlock();
@@ -29,5 +31,6 @@ private:
 };
 
 
+#include "GXGObjectUD.h"
 
 #endif /* GMutex_h */

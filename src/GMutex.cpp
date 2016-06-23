@@ -8,9 +8,9 @@
 
 #include "GMutex.h"
 #include <pthread.h>
+#include "GXGObject.h"
 
-
-GX_OBJECT_IMPLEMENT(GMutex, GObject);
+GX_GOBJECT_IMPLEMENT(GMutex, GObject);
 
 GMutex::GMutex()
 {

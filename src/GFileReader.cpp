@@ -7,9 +7,9 @@
 //
 
 #include "GFileReader.h"
+#include "GXGObject.h"
 
-
-GX_OBJECT_IMPLEMENT(GFileReader, GReader);
+GX_GOBJECT_IMPLEMENT(GFileReader, GReader);
 
 
 GFileReader::GFileReader()

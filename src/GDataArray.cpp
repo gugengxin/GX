@@ -1,6 +1,7 @@
 ﻿#include "GDataArray.h"
+#include "GXGObject.h"
 
-GX_OBJECT_IMPLEMENT(GDataArrayBase, GObject);
+GX_GOBJECT_IMPLEMENT(GDataArrayBase, GObject);
 
 GDataArrayBase::GDataArrayBase()
 {

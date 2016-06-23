@@ -1,6 +1,7 @@
 ﻿#include "GNumber.h"
+#include "GXGObject.h"
 
-GX_OBJECT_IMPLEMENT(GNumber, GObject);
+GX_GOBJECT_IMPLEMENT(GNumber, GObject);
 
 GNumber::GNumber()
 {

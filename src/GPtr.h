@@ -3,9 +3,12 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 
+
+#include "GXGObject.h"
+
 class GPtr : public GObject
 {
-	GX_OBJECT(GPtr);
+	GX_GOBJECT(GPtr);
 public:
 	inline void* get() {
 		return m_Value;
@@ -18,3 +21,4 @@ private:
 	void* m_Value;
 };
 
+#include "GXGObjectUD.h"

@@ -9,9 +9,9 @@
 #include "GString.h"
 #include <memory.h>
 #include "GWString.h"
+#include "GXGObject.h"
 
-
-GX_OBJECT_IMPLEMENT(GString, GDataString<gchar>);
+GX_GOBJECT_IMPLEMENT(GString, GDataString<gchar>);
 
 
 GString::GString()

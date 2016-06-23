@@ -8,9 +8,9 @@
 
 #include "GCondition.h"
 #include <pthread.h>
+#include "GXGObject.h"
 
-
-GX_OBJECT_IMPLEMENT(GCondition, GMutex);
+GX_GOBJECT_IMPLEMENT(GCondition, GMutex);
 
 GCondition::GCondition()
 {

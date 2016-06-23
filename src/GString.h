@@ -12,10 +12,11 @@
 #include "GXPrefix.h"
 #include "GDataString.h"
 
+#include "GXGObject.h"
 
 class GString : public GDataString<gchar> {
 	friend class GOShader;
-    GX_OBJECT(GString);
+    GX_GOBJECT(GString);
 public:
 	virtual bool isEqual(GObject* obj);
 
@@ -44,5 +45,7 @@ public:
     void appendFormat(const gchar* fmt,...);
     //*/
 };
+
+#include "GXGObjectUD.h"
 
 #endif /* GString_h */

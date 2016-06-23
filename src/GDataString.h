@@ -148,11 +148,13 @@ namespace GX {
 	gint strUTF16OneChartoUTF8(const gwchar utf16Char, gchar* utf8Out);
 }
 
+#include "GXGObject.h"
+
 template <typename T>
 class GDataString : public GObject {
 	friend class GString;
 	friend class GWString;
-    GX_OBJECT(GDataString);
+    GX_GOBJECT(GDataString);
 public:
     inline gint getLength() {
         return m_Length;
@@ -526,7 +528,7 @@ private:
 };
 
 
-GX_OBJECT_TEMPLATE_IMPLEMENT(typename T, GDataString<T>, GObject);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T, GDataString<T>, GObject);
 
 template <typename T>
 GDataString<T>::GDataString()
@@ -543,5 +545,6 @@ GDataString<T>::~GDataString()
     
 }
 
+#include "GXGObjectUD.h"
 
 #endif /* GDataString_h */

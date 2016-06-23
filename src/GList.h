@@ -12,14 +12,15 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 
-class GListBase : public GObject {
-    GX_OBJECT(GListBase);
-};
+#include "GXGObject.h"
 
+class GListBase : public GObject {
+    GX_GOBJECT(GListBase);
+};
 
 template <class T>
 class GList : public GListBase {
-    GX_OBJECT(GList);
+    GX_GOBJECT(GList);
 public:
     class Node {
         friend class GList;
@@ -76,7 +77,7 @@ private:
     Node* m_NodeLast;
 };
 
-GX_OBJECT_TEMPLATE_IMPLEMENT(typename T, GList<T>, GListBase);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T, GList<T>, GListBase);
 
 template <typename T>
 GList<T>::GList()
@@ -94,5 +95,7 @@ GList<T>::~GList()
         p=next;
     }
 }
+
+#include "GXGObjectUD.h"
 
 #endif /* GList_h */

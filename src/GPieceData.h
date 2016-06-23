@@ -12,11 +12,14 @@
 #include "GXPrefix.h"
 #include "GData.h"
 
+
+#include "GXGObject.h"
+
 class GPieceData : public GData {
     template <typename,typename> friend class GDataArray;
 	template<typename> friend class GArray;
     friend class GString;
-    GX_OBJECT(GPieceData);
+    GX_GOBJECT(GPieceData);
 protected:
 	GPieceData(guint32 pieceSize);
 public:
@@ -31,5 +34,6 @@ private:
 	guint32 m_PieceCount;
 };
 
+#include "GXGObjectUD.h"
 
 #endif /* GPieceData_h */

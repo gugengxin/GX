@@ -3,10 +3,11 @@
 #include "GObject.h"
 
 
+#include "GXGObject.h"
 
 class GNumber : public GObject
 {
-	GX_OBJECT(GNumber);
+	GX_GOBJECT(GNumber);
 public:
 	typedef enum _Type {
 		Bool,
@@ -40,3 +41,5 @@ private:
 	} m_Value;
 };
 
+
+#include "GXGObjectUD.h"

@@ -13,9 +13,10 @@
 #include "GDataArray.h"
 #include "GArray.h"
 
+#include "GXGObject.h"
 
 class GMapBase : public GObject {
-    GX_OBJECT(GMapBase);
+    GX_GOBJECT(GMapBase);
 public:
     static const gint capabilitys[];
 };
@@ -24,7 +25,7 @@ public:
 template <typename K,typename O>
 class GMap : public GMapBase {
 	friend class GNoticeCenter;
-    GX_OBJECT(GMap);
+    GX_GOBJECT(GMap);
 private:
     class Node {
     public:
@@ -331,7 +332,7 @@ private:
 };
 
 
-GX_OBJECT_TEMPLATE_IMPLEMENT(typename K GX_COMMA typename O, GMap<K GX_COMMA O>, GMapBase);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename K GX_COMMA typename O, GMap<K GX_COMMA O>, GMapBase);
 
 template <typename K,typename O>
 GMap<K,O>::GMap()
@@ -353,5 +354,6 @@ GMap<K,O>::~GMap()
     }
 }
 
+#include "GXGObjectUD.h"
 
 #endif /* GMap_h */

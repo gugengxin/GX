@@ -1,6 +1,7 @@
 ﻿#include "GPtr.h"
+#include "GXGObject.h"
 
-GX_OBJECT_IMPLEMENT(GPtr, GObject);
+GX_GOBJECT_IMPLEMENT(GPtr, GObject);
 
 GPtr::GPtr()
 {

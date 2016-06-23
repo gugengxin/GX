@@ -7,9 +7,9 @@
 //
 
 #include "GReader.h"
+#include "GXGObject.h"
 
-
-GX_OBJECT_IMPLEMENT(GReader, GObject);
+GX_GOBJECT_IMPLEMENT(GReader, GObject);
 
 GReader::GReader()
 {

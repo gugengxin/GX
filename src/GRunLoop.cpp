@@ -9,8 +9,9 @@
 #include "GRunLoop.h"
 #include "GThread.h"
 #include "GSystem.h"
+#include "GXGObject.h"
 
-GX_OBJECT_IMPLEMENT(GRunLoop::Action, GObject);
+GX_GOBJECT_IMPLEMENT(GRunLoop::Action, GObject);
 
 GRunLoop::Action::Action()
 {

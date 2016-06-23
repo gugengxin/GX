@@ -13,8 +13,10 @@
 #include "GObject.h"
 
 
+#include "GXGObject.h"
+
 class GWriter : public GObject {
-    GX_VIRTUAL_OBJECT(GWriter);
+    GX_VIRTUAL_GOBJECT(GWriter);
 public:
     virtual void close()=0;
 public:
@@ -29,7 +31,6 @@ public:
     }
 };
 
-
-
+#include "GXGObjectUD.h"
 
 #endif /* GWriter_h */

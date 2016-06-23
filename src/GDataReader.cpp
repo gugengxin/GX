@@ -7,8 +7,9 @@
 //
 
 #include "GDataReader.h"
+#include "GXGObject.h"
 
-GX_OBJECT_IMPLEMENT(GDataReader, GReader);
+GX_GOBJECT_IMPLEMENT(GDataReader, GReader);
 
 GDataReader::GDataReader()
 {

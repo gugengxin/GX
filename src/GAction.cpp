@@ -1,8 +1,8 @@
 ﻿#include "GAction.h"
+#include "GXGObject.h"
 
 
-
-GX_OBJECT_IMPLEMENT(GAction, GObject);
+GX_GOBJECT_IMPLEMENT(GAction, GObject);
 
 GAction::GAction()
 {

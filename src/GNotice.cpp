@@ -1,6 +1,7 @@
 ﻿#include "GNotice.h"
+#include "GXGObject.h"
 
-GX_OBJECT_IMPLEMENT(GNotice, GObject);
+GX_GOBJECT_IMPLEMENT(GNotice, GObject);
 
 GNotice::GNotice()
 {

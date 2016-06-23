@@ -12,8 +12,10 @@
 #include "GXPrefix.h"
 #include "GReader.h"
 
+#include "GXGObject.h"
+
 class GDataReader : public GReader {
-    GX_OBJECT(GDataReader);
+    GX_GOBJECT(GDataReader);
 public:
     virtual void close();
     virtual gint read(void* buf,guint len);
@@ -27,6 +29,7 @@ public:
     
 };
 
+#include "GXGObjectUD.h"
 
 
 #endif /* GDataReader_h */

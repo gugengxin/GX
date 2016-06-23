@@ -7,9 +7,9 @@
 //
 
 #include "GList.h"
+#include "GXGObject.h"
 
-
-GX_OBJECT_IMPLEMENT(GListBase, GObject);
+GX_GOBJECT_IMPLEMENT(GListBase, GObject);
 
 GListBase::GListBase()
 {

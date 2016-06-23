@@ -11,6 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GClass.h"
+#include "GXObject.h"
 
 namespace GX {
 	typedef void(GObject::*Selector)(GObject*);
@@ -29,6 +30,9 @@ protected:
 
     GObject();
     virtual ~GObject();
+    
+    virtual bool init();
+    virtual void uninit();
 public:
     static GClass   gclass;
     virtual GClass* getClass();

@@ -7,6 +7,7 @@
 //
 
 #include "GDataBuffer.h"
+#include "GXGObject.h"
 
 GDataBufferBase::GDataBufferBase()
 {
@@ -108,7 +109,7 @@ void GDataBufferBase::unmap()
 
 
 
-GX_OBJECT_IMPLEMENT(GDataBuffer, GObject);
+GX_GOBJECT_IMPLEMENT(GDataBuffer, GObject);
 
 
 GDataBuffer::GDataBuffer()
@@ -125,7 +126,7 @@ GDataBuffer::~GDataBuffer()
 
 
 
-GX_OBJECT_IMPLEMENT(GDataIndexBuffer, GObject);
+GX_GOBJECT_IMPLEMENT(GDataIndexBuffer, GObject);
 
 GDataIndexBuffer::GDataIndexBuffer()
 {

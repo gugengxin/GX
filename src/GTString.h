@@ -13,6 +13,8 @@
 #include "GString.h"
 #include "GWString.h"
 
+#include "GXGObject.h"
+
 #ifdef GX_PATH_IS_CHAR
 #define GX_TSTRING_BASE_CLASS GString
 #elif defined(GX_PATH_IS_WCHAR)
@@ -20,7 +22,7 @@
 #endif
 
 class GTString : public GX_TSTRING_BASE_CLASS {
-    GX_OBJECT(GTString);
+    GX_GOBJECT(GTString);
     
 public:
     
@@ -28,6 +30,7 @@ public:
 
 typedef GTString GPath;
 
+#include "GXGObjectUD.h"
 
 
 #endif /* GTString_h */

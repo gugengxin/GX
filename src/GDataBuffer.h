@@ -13,6 +13,7 @@
 #include "GBuffer.h"
 #include "GData.h"
 
+#include "GXGObject.h"
 
 class GDataBufferBase
 {
@@ -44,7 +45,7 @@ private:
 
 class GDataBuffer : public GObject, public GDataBufferBase, public GIBuffer
 {
-	GX_OBJECT(GDataBuffer);
+	GX_GOBJECT(GDataBuffer);
 public:
 	inline void setOffset(guint16 v) {
 		m_Offset = v;
@@ -90,7 +91,7 @@ private:
 
 class GDataIndexBuffer : public GObject, public GDataBufferBase, public GIIndexBuffer
 {
-	GX_OBJECT(GDataIndexBuffer);
+	GX_GOBJECT(GDataIndexBuffer);
 public:
 	inline void setFormat(guint v) {
 		m_Format = v;
@@ -126,7 +127,7 @@ private:
 	guint m_Format;
 };
 
-
+#include "GXGObjectUD.h"
 
 
 #endif /* GDataBuffer_h */

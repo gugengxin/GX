@@ -9,6 +9,7 @@
 #include "GThread.h"
 #include <pthread.h>
 #include "GCondition.h"
+#include "GXGObject.h"
 
 #if defined(GX_OS_WINDOWS) || defined(Q_OS_WIN)
 #include <Windows.h>
@@ -24,7 +25,7 @@ static GThread* g_MT=NULL;
 static pthread_key_t tsd_key=0;
 
 
-GX_OBJECT_IMPLEMENT(GThread::Holder, GObject);
+GX_GOBJECT_IMPLEMENT(GThread::Holder, GObject);
 
 GThread::Holder::Holder()
 {

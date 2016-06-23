@@ -8,8 +8,9 @@
 
 #include "GWString.h"
 #include "GString.h"
+#include "GXGObject.h"
 
-GX_OBJECT_IMPLEMENT(GWString, GDataString<gwchar>);
+GX_GOBJECT_IMPLEMENT(GWString, GDataString<gwchar>);
 
 GWString::GWString()
 {

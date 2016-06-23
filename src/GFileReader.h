@@ -12,8 +12,10 @@
 #include "GXPrefix.h"
 #include "GReader.h"
 
+#include "GXGObject.h"
+
 class GFileReader : public GReader {
-    GX_OBJECT(GFileReader);
+    GX_GOBJECT(GFileReader);
 public:
     bool open(const gtchar* path);
     virtual void close();
@@ -30,6 +32,6 @@ private:
     gint  m_Length;
 };
 
-
+#include "GXGObjectUD.h"
 
 #endif /* GFileReader_h */

@@ -15,8 +15,9 @@
 #elif defined(GX_OS_WINDOWS)
 #include <objbase.h>
 #endif
+#include "GXGObject.h"
 
-GX_OBJECT_IMPLEMENT(GUUID, GObject);
+GX_GOBJECT_IMPLEMENT(GUUID, GObject);
 
 GUUID::GUUID()
 {
