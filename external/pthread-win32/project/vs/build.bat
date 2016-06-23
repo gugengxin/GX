@@ -1,9 +1,9 @@
 @echo off
 
-pushd %~dp0\..\..
+pushd %~dp0\..\..\..\..
 set GX_ROOT=%cd%
 popd
-pushd %~dp0
+pushd %~dp0\..\..
 set PROJECT_ROOT=%cd%
 popd
 

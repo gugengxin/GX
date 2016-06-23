@@ -52,5 +52,3 @@ SET Obj_Index=0
 	SET /A Obj_Index=%Obj_Index% + 1
 GOTO LoopStart
 :LoopNext
-
-pause
