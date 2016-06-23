@@ -8,7 +8,7 @@ apply from: GX_ROOT+"/product/as/config.gradle"
 model {
     android {
         compileSdkVersion 23
-        buildToolsVersion "24.0.0 rc3"
+        buildToolsVersion "24.0.0"
 
         defaultConfig {
             applicationId "com.gxengine.gxtest"
