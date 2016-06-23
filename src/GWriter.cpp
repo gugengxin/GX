@@ -7,3 +7,16 @@
 //
 
 #include "GWriter.h"
+#include "GXGObject.h"
+
+GX_GOBJECT_IMPLEMENT(GWriter, GObject);
+
+GWriter::GWriter()
+{
+
+}
+
+GWriter::~GWriter()
+{
+
+}

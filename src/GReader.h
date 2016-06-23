@@ -20,6 +20,7 @@ class GReader : public GObject {
 public:
     virtual void close()=0;
 public:
+	virtual bool hasData()=0;
     //<0:Error 0<=res<len:End >=len:Not end
     virtual gint read(void* buf,guint len)=0;
     virtual bool skip(guint len)=0;

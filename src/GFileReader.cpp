@@ -39,6 +39,16 @@ void GFileReader::close()
         m_FILE=NULL;
     }
 }
+bool GFileReader::hasData()
+{
+	guint8 eofData;
+	size_t bytes = fread(&eofData, 1, 1, m_FILE);
+	if (bytes >= 1) {
+		fseek(m_FILE, -1, SEEK_CUR);
+		return true;
+	}
+	return false;
+}
 gint GFileReader::read(void* buf,guint len)
 {
     size_t res=fread(buf, 1, len, m_FILE);

@@ -19,6 +19,7 @@ class GFileReader : public GReader {
 public:
     bool open(const gtchar* path);
     virtual void close();
+	virtual bool hasData();
     virtual gint read(void* buf,guint len);
     virtual bool skip(guint len);
     virtual gint getBytes();

@@ -26,6 +26,9 @@ public:
     inline void* getPtr() {
         return m_Buffer;
     }
+	inline void* getPtr(guint offset) {
+		return GX_CAST_R(guint8*, m_Buffer) + offset;
+	}
     inline guint getBytes() {
         return m_Bytes;
     }

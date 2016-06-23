@@ -11,13 +11,16 @@
 
 #include "GXPrefix.h"
 #include "GReader.h"
+#include "GData.h"
 
 #include "GXGObject.h"
 
 class GDataReader : public GReader {
     GX_GOBJECT(GDataReader);
 public:
+	bool open(GData* data);
     virtual void close();
+	virtual bool hasData();
     virtual gint read(void* buf,guint len);
     virtual bool skip(guint len);
     virtual gint getBytes();
@@ -26,7 +29,9 @@ public:
     virtual bool canGetLength();
     virtual gint getLength();
     
-    
+private:
+	GData*	m_Data;
+	guint	m_Cursor;
 };
 
 #include "GXGObjectUD.h"
