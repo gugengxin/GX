@@ -34,6 +34,9 @@
     <Filter Include="src\IO">
       <UniqueIdentifier>{4b88ab81-8c74-4c62-8402-191b5f68c340}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Bundle">
+      <UniqueIdentifier>{32a088ae-c778-4cf6-be86-99374505a4f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GClass.cpp">
@@ -212,6 +215,30 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GTexture2D.cpp">
       <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDataWriter.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFileWriter.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GZipWriter.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GBundle.cpp">
+      <Filter>src\Bundle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GAppBundle.cpp">
+      <Filter>src\Bundle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFileManager.cpp">
+      <Filter>src\App</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFileBundle.cpp">
+      <Filter>src\Bundle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GZipBundle.cpp">
+      <Filter>src\Bundle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -430,6 +457,30 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GXFILE.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDataWriter.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFileWriter.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GZipWriter.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GBundle.h">
+      <Filter>src\Bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GAppBundle.h">
+      <Filter>src\Bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFileManager.h">
+      <Filter>src\App</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFileBundle.h">
+      <Filter>src\Bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GZipBundle.h">
+      <Filter>src\Bundle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

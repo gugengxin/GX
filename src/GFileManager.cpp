@@ -9,7 +9,11 @@
 #include "GFileManager.h"
 #include "GXGObject.h"
 
-GX_GOBJECT_IMPLEMENT(GFileManager, GObject);
+GFileManager* GFileManager::shared()
+{
+	static GFileManager g_Obj;
+	return &g_Obj;
+}
 
 GFileManager::GFileManager()
 {
@@ -18,6 +22,11 @@ GFileManager::GFileManager()
 
 GFileManager::~GFileManager()
 {
+}
+
+bool GFileManager::fileExists(const gtchar* path, bool* isDirectory)
+{
+	return false;
 }
 
 

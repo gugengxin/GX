@@ -11,7 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GObject.h"
-
+#include "GReader.h"
 
 
 #include "GXGObject.h"
@@ -19,11 +19,10 @@
 
 class GBundle : public GObject
 {
-	GX_GOBJECT(GBundle);
+	GX_VIRTUAL_GOBJECT(GBundle);
 public:
-
-private:
-
+	virtual GReader* openReader(const gtchar* fileName)=0;
+	virtual void closeReader(GReader* reader)=0;
 };
 
 // Up can't include other h file

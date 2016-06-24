@@ -10,23 +10,18 @@
 #define GFileManager_h
 
 #include "GXPrefix.h"
-#include "GObject.h"
 
-
-
-#include "GXGObject.h"
-// Down can't include other h file
-
-class GFileManager : public GObject
-{
-	GX_GOBJECT(GFileManager);
+class GFileManager {
 public:
+	static GFileManager* shared();
+private:
+	GFileManager();
+	~GFileManager();
+public:
+	bool fileExists(const gtchar* path, bool* isDirectory);
 
 private:
 
 };
-
-// Up can't include other h file
-#include "GXGObjectUD.h"
 
 #endif /* GFileManager_h */

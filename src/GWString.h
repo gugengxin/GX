@@ -21,11 +21,20 @@ public:
 	virtual bool isEqual(GObject* obj);
 
 	const gwchar* c_str();
+
 	void set(const gchar* v, gint len = -1, gint count=1);
 	void append(const gchar* v, gint len = -1, gint count = 1);
 	void insert(gint idx, const gchar* v, gint len = -1, gint count = 1);
+	void set(const gwchar* v, gint len = -1, gint count = 1);
+	void append(const gwchar* v, gint len = -1, gint count = 1);
+	void insert(gint idx, const gwchar* v, gint len = -1, gint count = 1);
 
-
+	void set(gchar v, gint count);
+	void append(gchar v, gint count);
+	void insert(gint idx, gchar v, gint count);
+	void set(gwchar v, gint count);
+	void append(gwchar v, gint count);
+	void insert(gint idx, gwchar v, gint count);
 };
 
 #include "GXGObjectUD.h"

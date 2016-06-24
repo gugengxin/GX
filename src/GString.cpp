@@ -48,6 +48,60 @@ const gchar* GString::c_str()
 	return GX_CAST_R(const gchar*, getDataPtr());
 }
 
+void GString::set(const gchar* v, gint len, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	if (len<0) {
+		len = GX::strlen(v);
+	}
+	if (changeCapability(len*count + 1)) {
+		for (gint i = 0; i < count; i++) {
+			memcpy(getDataPtr(i*len), v, len*sizeof(gchar));
+		}
+		setLength(len*count);
+	}
+}
+void GString::append(const gchar* v, gint len, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	if (len<0) {
+		len = GX::strlen(v);
+	}
+	gint lenCur = getLength();
+	if (changeCapability(lenCur + len*count + 1)) {
+		for (gint i = 0; i < count; i++) {
+			memcpy(getDataPtr(lenCur + i*len), v, len*sizeof(gchar));
+		}
+		setLength(lenCur + len*count);
+	}
+}
+void GString::insert(gint idx, const gchar* v, gint len, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	if (idx < 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (idx > lenCur) {
+		return;
+	}
+	if (len<0) {
+		len = GX::strlen(v);
+	}
+	if (changeCapability(lenCur + len*count + 1)) {
+		memmove(getDataPtr(idx) + len*count, getDataPtr(idx), (lenCur - idx)*sizeof(gchar));
+		for (gint i = 0; i < count; i++) {
+			memcpy(getDataPtr(idx + i*len), v, len*sizeof(gchar));
+		}
+		setLength(lenCur + len*count);
+	}
+}
 void GString::set(const gwchar* v, gint len, gint count)
 {
 	if (count <= 0) {
@@ -107,6 +161,64 @@ void GString::insert(gint idx, const gwchar* v, gint len, gint count)
 		}
 		setLength(lenCur + lenTo*count);
 	}
+}
+
+void GString::set(gchar v, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	if (changeCapability(count + 1)) {
+		for (gint i = 0; i < count; i++) {
+			getDataPtr()[i] = v;
+		}
+		setLength(count);
+	}
+}
+void GString::append(gchar v, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (changeCapability(lenCur + count + 1)) {
+		for (gint i = 0; i < count; i++) {
+			getDataPtr(lenCur)[i] = v;
+		}
+		setLength(lenCur + count);
+	}
+}
+void GString::insert(gint idx, gchar v, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	if (idx < 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (idx > lenCur) {
+		return;
+	}
+	if (changeCapability(lenCur + count + 1)) {
+		memmove(getDataPtr(idx) + count, getDataPtr(idx), (lenCur - idx)*sizeof(gchar));
+		for (gint i = 0; i < count; i++) {
+			getDataPtr(idx)[i] = v;
+		}
+		setLength(lenCur + count);
+	}
+}
+void GString::set(gwchar v, gint count)
+{
+
+}
+void GString::append(gwchar v, gint count)
+{
+
+}
+void GString::insert(gint idx, gwchar v, gint count)
+{
+
 }
 
 /*

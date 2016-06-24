@@ -10,14 +10,20 @@
 #define GAppBundle_h
 
 #include "GXPrefix.h"
-#include "GBundle.h"
+#include "GFileBundle.h"
+#include "GZipBundle.h"
 
 
 
 #include "GXGObject.h"
 // Down can't include other h file
 
-class GAppBundle : public GBundle
+class GAppBundle : public 
+#if defined(GX_OS_WINDOWS)
+	GFileBundle
+#elif defined(GX_OS_ANDROID)
+	GZipBundle
+#endif
 {
 	GX_GOBJECT(GAppBundle);
 public:

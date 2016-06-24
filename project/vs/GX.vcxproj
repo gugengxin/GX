@@ -20,10 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GAction.cpp" />
+    <ClCompile Include="..\..\src\GAppBundle.cpp" />
     <ClCompile Include="..\..\src\GApplication.cpp" />
     <ClCompile Include="..\..\src\GArray.cpp" />
     <ClCompile Include="..\..\src\GAutoreleasePool.cpp" />
     <ClCompile Include="..\..\src\GBuffer.cpp" />
+    <ClCompile Include="..\..\src\GBundle.cpp" />
     <ClCompile Include="..\..\src\GClass.cpp" />
     <ClCompile Include="..\..\src\GColor.cpp" />
     <ClCompile Include="..\..\src\GCondition.cpp" />
@@ -35,8 +37,12 @@
     <ClCompile Include="..\..\src\GDataList.cpp" />
     <ClCompile Include="..\..\src\GDataReader.cpp" />
     <ClCompile Include="..\..\src\GDataString.cpp" />
+    <ClCompile Include="..\..\src\GDataWriter.cpp" />
     <ClCompile Include="..\..\src\GDShader.cpp" />
+    <ClCompile Include="..\..\src\GFileBundle.cpp" />
+    <ClCompile Include="..\..\src\GFileManager.cpp" />
     <ClCompile Include="..\..\src\GFileReader.cpp" />
+    <ClCompile Include="..\..\src\GFileWriter.cpp" />
     <ClCompile Include="..\..\src\GJavaAPI.cpp" />
     <ClCompile Include="..\..\src\GJavaCAPI.cpp" />
     <ClCompile Include="..\..\src\GJavaClass.cpp" />
@@ -77,16 +83,20 @@
     <ClCompile Include="..\..\src\GXMath.cpp" />
     <ClCompile Include="..\..\src\GXOpenGL.cpp" />
     <ClCompile Include="..\..\src\GXPthread.cpp" />
+    <ClCompile Include="..\..\src\GZipBundle.cpp" />
     <ClCompile Include="..\..\src\GZipReader.cpp" />
+    <ClCompile Include="..\..\src\GZipWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\com_gxengine_GX.h" />
     <ClInclude Include="..\..\src\com_gxengine_gx_GJavaJAPI.h" />
     <ClInclude Include="..\..\src\GAction.h" />
+    <ClInclude Include="..\..\src\GAppBundle.h" />
     <ClInclude Include="..\..\src\GApplication.h" />
     <ClInclude Include="..\..\src\GArray.h" />
     <ClInclude Include="..\..\src\GAutoreleasePool.h" />
     <ClInclude Include="..\..\src\GBuffer.h" />
+    <ClInclude Include="..\..\src\GBundle.h" />
     <ClInclude Include="..\..\src\GClass.h" />
     <ClInclude Include="..\..\src\GColor.h" />
     <ClInclude Include="..\..\src\GCondition.h" />
@@ -98,8 +108,12 @@
     <ClInclude Include="..\..\src\GDataList.h" />
     <ClInclude Include="..\..\src\GDataReader.h" />
     <ClInclude Include="..\..\src\GDataString.h" />
+    <ClInclude Include="..\..\src\GDataWriter.h" />
     <ClInclude Include="..\..\src\GDShader.h" />
+    <ClInclude Include="..\..\src\GFileBundle.h" />
+    <ClInclude Include="..\..\src\GFileManager.h" />
     <ClInclude Include="..\..\src\GFileReader.h" />
+    <ClInclude Include="..\..\src\GFileWriter.h" />
     <ClInclude Include="..\..\src\GJavaAPI.h" />
     <ClInclude Include="..\..\src\GJavaCAPI.h" />
     <ClInclude Include="..\..\src\GJavaClass.h" />
@@ -151,7 +165,9 @@
     <ClInclude Include="..\..\src\GXPrefix.h" />
     <ClInclude Include="..\..\src\GXPthread.h" />
     <ClInclude Include="..\..\src\GXTypes.h" />
+    <ClInclude Include="..\..\src\GZipBundle.h" />
     <ClInclude Include="..\..\src\GZipReader.h" />
+    <ClInclude Include="..\..\src\GZipWriter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\GSRGraphics.gxsl" />
