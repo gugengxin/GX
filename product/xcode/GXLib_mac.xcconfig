@@ -6,7 +6,7 @@ GX_ROOT = ../..
 #include "GXExt"
 
 
-GXLIB_HEADER_SEARCH_PATHS =
+GXLIB_HEADER_SEARCH_PATHS = $(SRCROOT)/../../external/zlib/include
 
 HEADER_SEARCH_PATHS = $(inherited) $(GXLIB_HEADER_SEARCH_PATHS)
 OTHER_LDFLAGS = $(inherited)

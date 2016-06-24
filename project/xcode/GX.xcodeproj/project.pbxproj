@@ -37,6 +37,9 @@
 		CA0B16021CD086F500C33BB5 /* GCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B16011CD086F500C33BB5 /* GCondition.cpp */; };
 		CA0B16031CD086F500C33BB5 /* GCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B16011CD086F500C33BB5 /* GCondition.cpp */; };
 		CA0B16041CD086F500C33BB5 /* GCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA0B16011CD086F500C33BB5 /* GCondition.cpp */; };
+		CA112EB11D1C56CF001DA6CE /* GDataWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA112EAA1D1C56CF001DA6CE /* GDataWriter.cpp */; };
+		CA112EB21D1C56CF001DA6CE /* GFileWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA112EAC1D1C56CF001DA6CE /* GFileWriter.cpp */; };
+		CA112EB31D1C56CF001DA6CE /* GZipWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA112EAF1D1C56CF001DA6CE /* GZipWriter.cpp */; };
 		CA1AD2771CD87CA900CEA1DC /* GWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */; };
 		CA1AD2781CD87CA900CEA1DC /* GWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */; };
 		CA1AD2791CD87CA900CEA1DC /* GWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */; };
@@ -65,6 +68,9 @@
 		CA3090971CFD1C54000B8DF2 /* GSRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */; };
 		CA3090981CFD1C57000B8DF2 /* GColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA30908F1CFD1C46000B8DF2 /* GColor.cpp */; };
 		CA3090991CFD1C58000B8DF2 /* GColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA30908F1CFD1C46000B8DF2 /* GColor.cpp */; };
+		CA636DD31D1CDE5F0021D32F /* GBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA636DD11D1CDE5F0021D32F /* GBundle.cpp */; };
+		CA636DD81D1CDF870021D32F /* GAppBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA636DD41D1CDF870021D32F /* GAppBundle.cpp */; };
+		CA636DD91D1CDF870021D32F /* GFileManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA636DD61D1CDF870021D32F /* GFileManager.cpp */; };
 		CA7B4DE01CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
 		CA7B4DE11CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
 		CA7B4DE21CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
@@ -233,6 +239,13 @@
 		CA0B15FD1CD0851E00C33BB5 /* GXPthread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXPthread.cpp; sourceTree = "<group>"; };
 		CA0B16011CD086F500C33BB5 /* GCondition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GCondition.cpp; sourceTree = "<group>"; };
 		CA0B16051CD086FD00C33BB5 /* GCondition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCondition.h; sourceTree = "<group>"; };
+		CA112EAA1D1C56CF001DA6CE /* GDataWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDataWriter.cpp; sourceTree = "<group>"; };
+		CA112EAB1D1C56CF001DA6CE /* GDataWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataWriter.h; sourceTree = "<group>"; };
+		CA112EAC1D1C56CF001DA6CE /* GFileWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFileWriter.cpp; sourceTree = "<group>"; };
+		CA112EAD1D1C56CF001DA6CE /* GFileWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFileWriter.h; sourceTree = "<group>"; };
+		CA112EAE1D1C56CF001DA6CE /* GXFILE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXFILE.h; sourceTree = "<group>"; };
+		CA112EAF1D1C56CF001DA6CE /* GZipWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GZipWriter.cpp; sourceTree = "<group>"; };
+		CA112EB01D1C56CF001DA6CE /* GZipWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZipWriter.h; sourceTree = "<group>"; };
 		CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GWindow.cpp; sourceTree = "<group>"; };
 		CA1AD2761CD87CA900CEA1DC /* GWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWindow.h; sourceTree = "<group>"; };
 		CA1AD27D1CD89DFB00CEA1DC /* GAutoreleasePool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAutoreleasePool.cpp; sourceTree = "<group>"; };
@@ -258,6 +271,12 @@
 		CA5B6E651D1B8234002598FB /* GXObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXObject.h; sourceTree = "<group>"; };
 		CA5B6E671D1B8534002598FB /* GXGObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXGObject.h; sourceTree = "<group>"; };
 		CA5B6E691D1B87A8002598FB /* GXGObjectUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXGObjectUD.h; sourceTree = "<group>"; };
+		CA636DD11D1CDE5F0021D32F /* GBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GBundle.cpp; sourceTree = "<group>"; };
+		CA636DD21D1CDE5F0021D32F /* GBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBundle.h; sourceTree = "<group>"; };
+		CA636DD41D1CDF870021D32F /* GAppBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAppBundle.cpp; sourceTree = "<group>"; };
+		CA636DD51D1CDF870021D32F /* GAppBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAppBundle.h; sourceTree = "<group>"; };
+		CA636DD61D1CDF870021D32F /* GFileManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFileManager.cpp; sourceTree = "<group>"; };
+		CA636DD71D1CDF870021D32F /* GFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFileManager.h; sourceTree = "<group>"; };
 		CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUUID.cpp; sourceTree = "<group>"; };
 		CA7B4DDF1CD5906F00F3D826 /* GUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUUID.h; sourceTree = "<group>"; };
 		CA7B4DE61CD594FF00F3D826 /* GApplication.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GApplication.cpp; sourceTree = "<group>"; };
@@ -414,6 +433,7 @@
 		CA0586731D13DE7C0096E73F /* IO */ = {
 			isa = PBXGroup;
 			children = (
+				CA112EAE1D1C56CF001DA6CE /* GXFILE.h */,
 				CAC7E44D1D1A63FE00719367 /* GReader.h */,
 				CAC7E44C1D1A63FE00719367 /* GReader.cpp */,
 				CAC7E4571D1A6A7300719367 /* GFileReader.h */,
@@ -424,6 +444,12 @@
 				CAC7E4601D1A6AB900719367 /* GZipReader.cpp */,
 				CAC7E4521D1A641700719367 /* GWriter.h */,
 				CAC7E4511D1A641700719367 /* GWriter.cpp */,
+				CA112EAD1D1C56CF001DA6CE /* GFileWriter.h */,
+				CA112EAC1D1C56CF001DA6CE /* GFileWriter.cpp */,
+				CA112EAB1D1C56CF001DA6CE /* GDataWriter.h */,
+				CA112EAA1D1C56CF001DA6CE /* GDataWriter.cpp */,
+				CA112EB01D1C56CF001DA6CE /* GZipWriter.h */,
+				CA112EAF1D1C56CF001DA6CE /* GZipWriter.cpp */,
 			);
 			name = IO;
 			sourceTree = "<group>";
@@ -463,6 +489,19 @@
 				CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */,
 			);
 			name = String;
+			sourceTree = "<group>";
+		};
+		CA636DD01D1CDD030021D32F /* Bundle */ = {
+			isa = PBXGroup;
+			children = (
+				CA636DD71D1CDF870021D32F /* GFileManager.h */,
+				CA636DD61D1CDF870021D32F /* GFileManager.cpp */,
+				CA636DD21D1CDE5F0021D32F /* GBundle.h */,
+				CA636DD11D1CDE5F0021D32F /* GBundle.cpp */,
+				CA636DD51D1CDF870021D32F /* GAppBundle.h */,
+				CA636DD41D1CDF870021D32F /* GAppBundle.cpp */,
+			);
+			name = Bundle;
 			sourceTree = "<group>";
 		};
 		CA9C16B01CC5EDAC00204303 /* config */ = {
@@ -510,6 +549,7 @@
 				CA9C16CA1CC6102E00204303 /* GObject.cpp */,
 				CA1AD27E1CD89DFB00CEA1DC /* GAutoreleasePool.h */,
 				CA1AD27D1CD89DFB00CEA1DC /* GAutoreleasePool.cpp */,
+				CA636DD01D1CDD030021D32F /* Bundle */,
 				CA0586731D13DE7C0096E73F /* IO */,
 				CAC2D1231CD0C13800A0EBE5 /* Struct */,
 				CA1F60D61CD9F85E00C6307B /* String */,
@@ -730,6 +770,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA1F60C11CD996F700C6307B /* GDataString.cpp in Sources */,
+				CA636DD81D1CDF870021D32F /* GAppBundle.cpp in Sources */,
 				CA04FDEE1CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */,
 				CADB5DBC1CF9E6300092C472 /* GOShader.cpp in Sources */,
 				CA9C16D81CC615FF00204303 /* GOWHash.cpp in Sources */,
@@ -747,6 +788,7 @@
 				CA3090941CFD1C46000B8DF2 /* GColor.cpp in Sources */,
 				CAD624AD1D1186CB005E77EB /* GList.cpp in Sources */,
 				CABB5CCA1CE0E40500D5B648 /* GContext.cpp in Sources */,
+				CA112EB21D1C56CF001DA6CE /* GFileWriter.cpp in Sources */,
 				CA04FDFA1CE4557E00C9B596 /* GPtr.cpp in Sources */,
 				CABB5CCC1CE0E40500D5B648 /* GJavaAPI.cpp in Sources */,
 				CAC708AC1D13CDE900B98028 /* GTexture.cpp in Sources */,
@@ -758,6 +800,7 @@
 				CAE706D91CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CABB5CD31CE0E40500D5B648 /* GXOpenGL.cpp in Sources */,
 				CABB5CCB1CE0E40500D5B648 /* GD3DContext.cpp in Sources */,
+				CA636DD31D1CDE5F0021D32F /* GBundle.cpp in Sources */,
 				CA04FDF21CE4557E00C9B596 /* GNumber.cpp in Sources */,
 				CABB5CCE1CE0E40500D5B648 /* GJavaClass.cpp in Sources */,
 				CABB5CCF1CE0E40500D5B648 /* GJavaJAPI.cpp in Sources */,
@@ -771,6 +814,8 @@
 				CAE706CF1CD2F6EA0090F4DD /* GArray.cpp in Sources */,
 				CABB3FB51CFE133000A7367C /* GDataBuffer.cpp in Sources */,
 				CAC7E4621D1A6AB900719367 /* GZipReader.cpp in Sources */,
+				CA112EB11D1C56CF001DA6CE /* GDataWriter.cpp in Sources */,
+				CA636DD91D1CDF870021D32F /* GFileManager.cpp in Sources */,
 				CA1AD27F1CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,
 				CABB3FB01CFE12D000A7367C /* GBuffer.cpp in Sources */,
 				CAD624B21D11872E005E77EB /* GDataList.cpp in Sources */,
@@ -779,6 +824,7 @@
 				CA1F60D11CD9ED6A00C6307B /* GTString.cpp in Sources */,
 				CADB5DBA1CF9E6300092C472 /* GDShader.cpp in Sources */,
 				CABB5CD01CE0E40500D5B648 /* GLog.cpp in Sources */,
+				CA112EB31D1C56CF001DA6CE /* GZipWriter.cpp in Sources */,
 				CAC708B11D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CA1F60A61CD9834000C6307B /* GSystem.cpp in Sources */,
 				CA0B15F81CD07CD000C33BB5 /* GMutex.cpp in Sources */,
