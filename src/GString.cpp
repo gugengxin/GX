@@ -210,10 +210,54 @@ void GString::insert(gint idx, gchar v, gint count)
 }
 void GString::set(gwchar v, gint count)
 {
+    if (count<1) {
+        return;
+    }
+    gchar buf[3];
+    gint len=GX::strUTF16OneChartoUTF8(v, buf);
+    if (len<=0) {
+        return;
+    }
+    if (changeCapability(count*len+1)) {
+        for (gint i=0; i<count; i++) {
+            char* p=getDataPtr(i*len);
+            p[0]=buf[0];
+            if (len>=2) {
+                p[1]=buf[1];
+                if (len>=3) {
+                    p[2]=buf[2];
+                }
+            }
+        }
+        setLength(count*len);
+    }
 
 }
 void GString::append(gwchar v, gint count)
 {
+    if (count <= 0) {
+        return;
+    }
+    gchar buf[3];
+    gint len=GX::strUTF16OneChartoUTF8(v, buf);
+    if (len<=0) {
+        return;
+    }
+    gint lenCur = getLength();
+    if (changeCapability(lenCur+count*len+1)) {
+        gchar* p=getDataPtr(lenCur);
+        for (int i=0; i<count; i++) {
+            p[0]=buf[0];
+            if (len>=2) {
+                p[1]=buf[1];
+                if (len>=3) {
+                    p[2]=buf[2];
+                }
+            }
+            p+=len;
+        }
+        setLength(lenCur+count*len);
+    }
 
 }
 void GString::insert(gint idx, gwchar v, gint count)
