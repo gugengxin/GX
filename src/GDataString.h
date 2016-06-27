@@ -90,7 +90,6 @@ namespace GX {
 		}
 		return res;
 	}
-
 	template <typename T> gint gf64toa(gfloat64 v, T* strOut, gint precision)
 	{
 		gfloat64 vTemp;
@@ -139,6 +138,42 @@ namespace GX {
 		}
 		return res;
 	}
+
+	template <typename T> gint gatoi(const T* buf, gint len=-1)
+	{
+		if (len < 0) {
+			len = GX::strlen(buf);
+		}
+		gint res = 0;
+		for (int i = 0; i < len; i++) {
+			res = res*10+(buf[i]-'0');
+		}
+		return res;
+	}
+	template <typename T> gfloat gatof(const T* buf, gint len)
+	{
+		if (len < 0) {
+			len = GX::strlen(buf);
+		}
+		gfloat res = 0.0f;
+		gfloat frac = 0.0f;
+		for (int i = 0; i < len; i++) {
+			if (frac <= 0.0f) {
+				if (buf[i] != '.') {
+					res = res * 10.0f + (buf[i] - '0');
+				}
+				else {
+					frac = 10.0f;
+				}
+			}
+			else {
+				res += (buf[i] - '0')/frac;
+				frac *= 10.0f;
+			}
+		}
+		return res;
+	}
+
 
 	void strUTF8toUTF16(const gchar* utf8Text, gint cbUtf8Text, gwchar* utf16Text, gint& ccUtf16Text);
 	gint strUTF8toUTF16Count(const gchar* utf8Text, gint cbUtf8Text);
@@ -404,8 +439,13 @@ protected:
         return &GX_CAST_R(T*, m_Data.getPtr())[idx];
     }
     bool changeCapability(gint count) {
-        count=(count+32-1)/32*32;
-        return m_Data.changeBytes(GX_CAST_S(guint, count)*sizeof(T));
+		const gint STEP = 32;
+		gint nTemp = (m_Length + STEP - 1) / STEP * STEP;
+		if (count>nTemp || count <nTemp - STEP*2) {
+			nTemp = (count + STEP - 1) / STEP * STEP;
+			return m_Data.changeBytes(GX_CAST_S(guint, nTemp)*sizeof(T));
+		}
+		return true;
     }
     void setLength(gint v) {
         if (getDataPtr()) {

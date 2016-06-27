@@ -164,15 +164,48 @@ void GWString::insert(gint idx, const gwchar* v, gint len, gint count)
 
 void GWString::set(gchar v, gint count)
 {
-
+	if (count <= 0) {
+		return;
+	}
+	if (changeCapability(count + 1)) {
+		for (gint i = 0; i < count; i++) {
+			getDataPtr()[i] = v;
+		}
+		setLength(count);
+	}
 }
 void GWString::append(gchar v, gint count)
 {
-
+	if (count <= 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (changeCapability(lenCur + count + 1)) {
+		for (gint i = 0; i < count; i++) {
+			getDataPtr(lenCur)[i] = v;
+		}
+		setLength(lenCur + count);
+	}
 }
 void GWString::insert(gint idx, gchar v, gint count)
 {
-
+	if (count <= 0) {
+		return;
+	}
+	if (idx < 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (idx > lenCur) {
+		return;
+	}
+	if (changeCapability(lenCur + count + 1)) {
+		memmove(getDataPtr(idx) + count, getDataPtr(idx), (lenCur - idx)*sizeof(gwchar));
+		for (gint i = 0; i < count; i++) {
+			getDataPtr(idx)[i] = v;
+		}
+		setLength(lenCur + count);
+	}
 }
 void GWString::set(gwchar v, gint count)
 {

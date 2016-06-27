@@ -36,14 +36,10 @@ public:
 	void append(gwchar v, gint count);
 	void insert(gint idx, gwchar v, gint count);
 
-
-
-    /*
-    void format(const gchar* fmt,va_list va);
-    void format(const gchar* fmt,...);
-    void appendFormat(const gchar* fmt,va_list va);
-    void appendFormat(const gchar* fmt,...);
-    //*/
+	void format(const gchar* fmt, va_list va);
+	void format(const gchar* fmt, ...);
+	void appendFormat(const gchar* fmt, va_list va);
+	void appendFormat(const gchar* fmt, ...);
 };
 
 #include "GXGObjectUD.h"

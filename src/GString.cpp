@@ -219,16 +219,28 @@ void GString::set(gwchar v, gint count)
         return;
     }
     if (changeCapability(count*len+1)) {
-        for (gint i=0; i<count; i++) {
-            char* p=getDataPtr(i*len);
-            p[0]=buf[0];
-            if (len>=2) {
-                p[1]=buf[1];
-                if (len>=3) {
-                    p[2]=buf[2];
-                }
-            }
-        }
+		char* p = getDataPtr();
+		if (len <= 1) {
+			for (gint i = 0; i<count; i++) {
+				p[0]=buf[0];
+				p++;
+			}
+		}
+		else if (len == 2) {
+			for (gint i = 0; i<count; i++) {
+				p[0] = buf[0];
+				p[1] = buf[1];
+				p += 2;
+			}
+		}
+		else if (len >= 3) {
+			for (gint i = 0; i<count; i++) {
+				p[0] = buf[0];
+				p[1] = buf[1];
+				p[2] = buf[2];
+				p += 3;
+			}
+		}
         setLength(count*len);
     }
 
@@ -246,26 +258,76 @@ void GString::append(gwchar v, gint count)
     gint lenCur = getLength();
     if (changeCapability(lenCur+count*len+1)) {
         gchar* p=getDataPtr(lenCur);
-        for (int i=0; i<count; i++) {
-            p[0]=buf[0];
-            if (len>=2) {
-                p[1]=buf[1];
-                if (len>=3) {
-                    p[2]=buf[2];
-                }
-            }
-            p+=len;
-        }
+		if (len <= 1) {
+			for (gint i = 0; i<count; i++) {
+				p[0] = buf[0];
+				p++;
+			}
+		}
+		else if (len == 2) {
+			for (gint i = 0; i<count; i++) {
+				p[0] = buf[0];
+				p[1] = buf[1];
+				p += 2;
+			}
+		}
+		else if (len >= 3) {
+			for (gint i = 0; i<count; i++) {
+				p[0] = buf[0];
+				p[1] = buf[1];
+				p[2] = buf[2];
+				p += 3;
+			}
+		}
         setLength(lenCur+count*len);
     }
-
 }
 void GString::insert(gint idx, gwchar v, gint count)
 {
+	if (count <= 0) {
+		return;
+	}
+	if (idx < 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (idx > lenCur) {
+		return;
+	}
+	gchar buf[3];
+	gint len = GX::strUTF16OneChartoUTF8(v, buf);
+	if (len <= 0) {
+		return;
+	}
 
+	if (changeCapability(lenCur + count*len + 1)) {
+		memmove(getDataPtr(idx) + count*len, getDataPtr(idx), (lenCur - idx)*sizeof(gchar));
+		gchar* p = getDataPtr(idx);
+		if (len <= 1) {
+			for (gint i = 0; i<count; i++) {
+				p[0] = buf[0];
+				p++;
+			}
+		}
+		else if (len == 2) {
+			for (gint i = 0; i<count; i++) {
+				p[0] = buf[0];
+				p[1] = buf[1];
+				p += 2;
+			}
+		}
+		else if (len >= 3) {
+			for (gint i = 0; i<count; i++) {
+				p[0] = buf[0];
+				p[1] = buf[1];
+				p[2] = buf[2];
+				p += 3;
+			}
+		}
+		setLength(lenCur + count*len);
+	}
 }
 
-/*
 void GString::format(const gchar* fmt,va_list va)
 {
     if (getLength()>0) {
@@ -285,7 +347,8 @@ void GString::appendFormat(const gchar* fmt,va_list va)
 {
     gint iLast=0;
     gint i=0;
-    while (true) {
+	bool err = false;
+    while (!err) {
         if (fmt[i]=='\0') {
             if (iLast<i-1) {
                 append(&fmt[iLast],i-iLast);
@@ -305,30 +368,64 @@ void GString::appendFormat(const gchar* fmt,va_list va)
             else {
                 gint j=i+1;
                 
-                while (true) {
-                    if (fmt[j]=='d') {
-                        
-                    }
-                    else if(fmt[j]=='u') {
-                        
-                    }
-                    else if(fmt[j]=='x') {
-                        
-                    }
-                    else if(fmt[j]=='X') {
-                        
-                    }
-                    else if(fmt[j]=='f') {
-                        
-                    }
-                    else if(fmt[j]=='s') {
-                        
-                    }
-                    else {
-                        j++;
-                    }
-                }
-                
+				bool inPT = false;
+				while (!err) {
+					if (fmt[j] == 'c') {
+
+					}
+					else if (fmt[j] == 'C') {
+
+					}
+					else if (fmt[j] == 'd') {
+
+					}
+					else if (fmt[j] == 'u') {
+
+					}
+					else if (fmt[j] == 'x') {
+
+					}
+					else if (fmt[j] == 'X') {
+
+					}
+					else if (fmt[j] == 'f') {
+
+					}
+					else if (fmt[j] == 's') {
+
+					}
+					else if (fmt[j] == '\0') {
+						err = true;
+						break;
+					}
+					else if (fmt[j] >= '0' && fmt[j] <= '9') {
+						j++;
+					}
+					else if (fmt[j] == '.') {
+						if (!inPT) {
+							inPT = true;
+							j++;
+						}
+						else {
+							err = true;
+							break;
+						}
+					}
+					else if (fmt[j] == '-')
+					{
+						if (j == i + 1) {
+							j++;
+						}
+						else {
+							err = true;
+							break;
+						}
+					}
+					else {
+						err = true;
+						break;
+					}
+				}
             }
         }
         else {
@@ -343,7 +440,6 @@ void GString::appendFormat(const gchar* fmt,...)
     appendFormat(fmt, va);
     va_end(va);
 }
-//*/
 
 
 

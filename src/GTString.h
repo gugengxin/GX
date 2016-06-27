@@ -23,9 +23,11 @@
 
 class GTString : public GX_TSTRING_BASE_CLASS {
     GX_GOBJECT(GTString);
-    
 public:
     
+
+private:
+	
 };
 
 typedef GTString GPath;
