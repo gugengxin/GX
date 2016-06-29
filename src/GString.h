@@ -18,6 +18,20 @@ class GString : public GDataString<gchar> {
 	friend class GOShader;
     GX_GOBJECT(GString);
 public:
+	class Formater {
+		friend class GString;
+	private:
+		Formater(GString* str, gint cursor) {
+			m_String = str;
+			m_Cursor = cursor;
+		}
+	public:
+		Formater& arg(gchar v,gint count);
+	private:
+		GString* m_String;
+		gint m_Cursor;
+	};
+public:
 	virtual bool isEqual(GObject* obj);
 
 	const gchar* c_str();
@@ -36,10 +50,13 @@ public:
 	void append(gwchar v, gint count);
 	void insert(gint idx, gwchar v, gint count);
 
+	/*
 	void format(const gchar* fmt, va_list va);
 	void format(const gchar* fmt, ...);
 	void appendFormat(const gchar* fmt, va_list va);
 	void appendFormat(const gchar* fmt, ...);
+	//*/
+	Formater format(const gchar* fmt, gint len = -1);
 };
 
 #include "GXGObjectUD.h"

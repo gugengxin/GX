@@ -11,8 +11,23 @@
 #include "GWString.h"
 #include "GXGObject.h"
 
-GX_GOBJECT_IMPLEMENT(GString, GDataString<gchar>);
 
+
+GString::Formater& GString::Formater::arg(gchar v, gint count)
+{
+	
+	
+
+	return *this;
+}
+
+
+
+
+
+
+
+GX_GOBJECT_IMPLEMENT(GString, GDataString<gchar>);
 
 GString::GString()
 {
@@ -328,6 +343,7 @@ void GString::insert(gint idx, gwchar v, gint count)
 	}
 }
 
+/*
 void GString::format(const gchar* fmt,va_list va)
 {
     if (getLength()>0) {
@@ -369,12 +385,24 @@ void GString::appendFormat(const gchar* fmt,va_list va)
                 gint j=i+1;
                 
 				bool inPT = false;
+				bool hasNum = false;
 				while (!err) {
-					if (fmt[j] == 'c') {
-
-					}
-					else if (fmt[j] == 'C') {
-
+					if (fmt[j] == 'c' || fmt[j] == 'C') {
+						gint count = 1;
+						if (hasNum) {
+							if (inPT) {
+								count = (gint)GX::gatof(&fmt[i + 1], j - i);
+							}
+							else {
+								count = GX::gatoi(&fmt[i + 1], j - i);
+							}
+						}
+						if (fmt[j] == 'c') {
+							append(va_arg(va, gchar), count);
+						}
+						else {
+							append(va_arg(va, gwchar), count);
+						}
 					}
 					else if (fmt[j] == 'd') {
 
@@ -399,6 +427,7 @@ void GString::appendFormat(const gchar* fmt,va_list va)
 						break;
 					}
 					else if (fmt[j] >= '0' && fmt[j] <= '9') {
+						hasNum = true;
 						j++;
 					}
 					else if (fmt[j] == '.') {
@@ -439,6 +468,14 @@ void GString::appendFormat(const gchar* fmt,...)
     va_start(va, fmt);
     appendFormat(fmt, va);
     va_end(va);
+}
+//*/
+
+
+GString::Formater GString::format(const gchar* fmt, gint len)
+{
+	set(fmt, len);
+	return Formater(this, 0);
 }
 
 

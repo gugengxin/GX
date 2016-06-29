@@ -145,10 +145,16 @@ namespace GX {
 			len = GX::strlen(buf);
 		}
 		gint res = 0;
-		for (int i = 0; i < len; i++) {
+		gint m = 1;
+		gint i = 0;
+		if (buf[i] == '-') {
+			m = -1;
+			i++;
+		}
+		for (; i < len; i++) {
 			res = res*10+(buf[i]-'0');
 		}
-		return res;
+		return res*m;
 	}
 	template <typename T> gfloat gatof(const T* buf, gint len)
 	{
@@ -157,7 +163,13 @@ namespace GX {
 		}
 		gfloat res = 0.0f;
 		gfloat frac = 0.0f;
-		for (int i = 0; i < len; i++) {
+		gfloat m = 1.0f;
+		gint i = 0;
+		if (buf[i] == '-') {
+			m = -1.0f;
+			i++;
+		}
+		for (; i < len; i++) {
 			if (frac <= 0.0f) {
 				if (buf[i] != '.') {
 					res = res * 10.0f + (buf[i] - '0');
@@ -171,7 +183,7 @@ namespace GX {
 				frac *= 10.0f;
 			}
 		}
-		return res;
+		return res*m;
 	}
 
 
@@ -201,6 +213,25 @@ public:
         return m_OWHash.codeA;
     }
     
+	void remove(gint idx, gint len) {
+		if (len <= 0) {
+			return;
+		}
+		if (idx < 0) {
+			len += -idx;
+			idx = 0;
+		}
+		else if (idx >= m_Length) {
+			return;
+		}
+		if (idx + len>m_Length) {
+			len = m_Length - idx;
+		}
+		move(idx, idx + len, (guint)(m_Length - idx - len));
+		if (changeCapability(m_Length - len + 1)) {
+			setLength(m_Length - len);
+		}
+	}
 	void clear() {
         if(changeCapability(0)) {
             setLength(0);
@@ -438,6 +469,16 @@ protected:
     inline T* getDataPtr(gint idx) {
         return &GX_CAST_R(T*, m_Data.getPtr())[idx];
     }
+	inline void move(gint idxTo, gint idx, guint len) {
+		memmove(getDataPtr(idxTo), getDataPtr(idx), sizeof(T)*len);
+	}
+	inline bool resize(gint idx, guint len, guint lenTo)
+	{
+		//TODO
+		if (len > lenTo) {
+			move(idx + lenTo, idx + len, m_Length - idx - len);
+		}
+	}
     bool changeCapability(gint count) {
 		const gint STEP = 32;
 		gint nTemp = (m_Length + STEP - 1) / STEP * STEP;
