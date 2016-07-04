@@ -25,9 +25,19 @@ public:
 	void set(const gchar* v, gint len = -1, gint count=1);
 	void append(const gchar* v, gint len = -1, gint count = 1);
 	void insert(gint idx, const gchar* v, gint len = -1, gint count = 1);
+	void replace(gint idx, gint lenR, const gchar* v, gint len = -1, gint count = 1); \
+		void replace(gint idx, gint lenR,
+		gchar preChar, gint preCount,
+		gchar sufChar, gint sufCount,
+		const gchar* v, gint len = -1, gint count = 1);
 	void set(const gwchar* v, gint len = -1, gint count = 1);
 	void append(const gwchar* v, gint len = -1, gint count = 1);
 	void insert(gint idx, const gwchar* v, gint len = -1, gint count = 1);
+	void replace(gint idx, gint lenR, const gwchar* v, gint len = -1, gint count = 1);
+	void replace(gint idx, gint lenR,
+		gwchar preChar, gint preCount,
+		gwchar sufChar, gint sufCount,
+		const gwchar* v, gint len = -1, gint count = 1);
 
 	void set(gchar v, gint count);
 	void append(gchar v, gint count);

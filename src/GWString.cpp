@@ -107,6 +107,67 @@ void GWString::insert(gint idx, const gchar* v, gint len, gint count)
 		setLength(lenCur + lenTo*count);
 	}
 }
+void GWString::replace(gint idx, gint lenR, const gchar* v, gint len, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	if (idx < 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (idx > lenCur) {
+		return;
+	}
+	if (len<0) {
+		len = GX::strlen(v);
+	}
+	gint lenTo = GX::strUTF8toUTF16Count(v, len);
+	if (changeSize(idx, lenR, lenTo*count)) {
+		GX::strUTF8toUTF16(v, len, getDataPtr(idx), lenTo);
+		for (gint i = 1; i < count; i++) {
+			memcpy(getDataPtr(idx + i*lenTo), getDataPtr(idx), lenTo*sizeof(gwchar));
+		}
+		setLength(lenCur + lenTo*count - lenR);
+	}
+}
+void GWString::replace(gint idx, gint lenR,
+	gchar preChar, gint preCount,
+	gchar sufChar, gint sufCount,
+	const gchar* v, gint len, gint count)
+{
+	if (preCount <0 || count < 0 || sufCount<0 || preCount + count + sufCount <= 0) {
+		return;
+	}
+	if (idx < 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (idx > lenCur) {
+		return;
+	}
+	if (len<0) {
+		len = GX::strlen(v);
+	}
+	gint lenTo = GX::strUTF8toUTF16Count(v, len);
+	if (changeSize(idx, lenR, preCount + lenTo*count + sufCount)) {
+		gint start = idx;
+		for (gint i = 0; i < preCount; i++) {
+			getDataPtr(start)[i] = preChar;
+		}
+		start += preCount;
+		GX::strUTF8toUTF16(v, len, getDataPtr(start), lenTo);
+		for (gint i = 1; i < count; i++) {
+			memcpy(getDataPtr(start + i*lenTo), getDataPtr(start), lenTo*sizeof(gwchar));
+		}
+		start += lenTo*count;
+		for (gint i = 0; i < sufCount; i++) {
+			getDataPtr(start)[i] = sufChar;
+		}
+		start += sufCount;
+		setLength(lenCur + start - lenR);
+	}
+}
 void GWString::set(const gwchar* v, gint len, gint count)
 {
 	if (count <= 0) {
@@ -161,6 +222,65 @@ void GWString::insert(gint idx, const gwchar* v, gint len, gint count)
 		setLength(lenCur + len*count);
 	}
 }
+
+void GWString::replace(gint idx, gint lenR, const gwchar* v, gint len, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	if (idx < 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (idx > lenCur) {
+		return;
+	}
+	if (len<0) {
+		len = GX::strlen(v);
+	}
+	if (changeSize(idx, lenR, len*count)) {
+		for (gint i = 0; i < count; i++) {
+			memcpy(getDataPtr(idx + i*len), v, len*sizeof(gwchar));
+		}
+		setLength(lenCur + len*count - lenR);
+	}
+}
+void GWString::replace(gint idx, gint lenR,
+	gwchar preChar, gint preCount,
+	gwchar sufChar, gint sufCount,
+	const gwchar* v, gint len, gint count)
+{
+	if (preCount <0 || count < 0 || sufCount<0 || preCount + count + sufCount <= 0) {
+		return;
+	}
+	if (idx < 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (idx > lenCur) {
+		return;
+	}
+	if (len<0) {
+		len = GX::strlen(v);
+	}
+	if (changeSize(idx, lenR, preCount + len*count + sufCount)) {
+		gint start = idx;
+		for (gint i = 0; i < preCount; i++) {
+			getDataPtr(start)[i] = preChar;
+		}
+		start += preCount;
+		for (gint i = 0; i < count; i++) {
+			memcpy(getDataPtr(start + i*len), v, len*sizeof(gwchar));
+		}
+		start += len*count;
+		for (gint i = 0; i < sufCount; i++) {
+			getDataPtr(start)[i] = sufChar;
+		}
+		start += sufCount;
+		setLength(lenCur + start - lenR);
+	}
+}
+
 
 void GWString::set(gchar v, gint count)
 {

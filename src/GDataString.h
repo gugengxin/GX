@@ -237,226 +237,6 @@ public:
             setLength(0);
         }
     }
-    
-#define M_SET \
-	if (vsLen < 0 && tempLen < -vsLen) {\
-		set(fillChar, -vsLen - tempLen);\
-		append(temp, tempLen);\
-	}\
-	else if (vsLen > 0 && tempLen < vsLen) {\
-		set(temp, tempLen);\
-		append(fillChar, vsLen - tempLen);\
-	}\
-	else {\
-		set(temp, tempLen);\
-	}
-#define M_APPEND \
-	if (vsLen < 0 && tempLen < -vsLen) {\
-		append(fillChar, -vsLen - tempLen);\
-		append(temp, tempLen);\
-	}\
-	else if (vsLen > 0 && tempLen < vsLen) {\
-		append(temp, tempLen);\
-		append(fillChar, vsLen - tempLen);\
-	}\
-	else {\
-		append(temp, tempLen);\
-	}
-#define M_INSERT \
-	if (vsLen < 0 && tempLen < -vsLen) {\
-		insert(idx, fillChar, -vsLen - tempLen);\
-		insert(idx - vsLen - tempLen, temp, tempLen);\
-	}\
-	else if (vsLen > 0 && tempLen < vsLen) {\
-		insert(idx, temp, tempLen);\
-		insert(idx + tempLen, fillChar, vsLen - tempLen);\
-	}\
-	else {\
-		insert(idx, temp, tempLen);\
-	}
-
-	void setInt16(gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T,' ')) {
-		T temp[16];
-		gint tempLen = GX::gi16toa(v, temp, radix);
-		M_SET
-	}
-	void appendInt16(gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[16];
-		gint tempLen = GX::gi16toa(v, temp, radix);
-		M_APPEND
-	}
-	void insertInt16(gint idx, gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[16];
-		gint tempLen = GX::gi16toa(v, temp, radix);
-		M_INSERT
-	}
-	void setUint16(guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[16];
-		gint tempLen = GX::gu16toa(v, temp, radix);
-		M_SET
-	}
-	void appendUint16(guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[16];
-		gint tempLen = GX::gu16toa(v, temp, radix);
-		M_APPEND
-	}
-	void insertUint16(gint idx, guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[16];
-		gint tempLen = GX::gu16toa(v, temp, radix);
-		M_INSERT
-	}
-
-	void setInt32(gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[32];
-		gint tempLen = GX::gi32toa(v, temp, radix);
-		M_SET
-	}
-	void appendInt32(gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[32];
-		gint tempLen = GX::gi32toa(v, temp, radix);
-		M_APPEND
-	}
-	void insertInt32(gint idx, gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[32];
-		gint tempLen = GX::gi32toa(v, temp, radix);
-		M_INSERT
-	}
-	void setUint32(guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[32];
-		gint tempLen = GX::gu32toa(v, temp, radix);
-		M_SET
-	}
-	void appendUint32(guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[32];
-		gint tempLen = GX::gu32toa(v, temp, radix);
-		M_APPEND
-	}
-	void insertUint32(gint idx, guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[32];
-		gint tempLen = GX::gu32toa(v, temp, radix);
-		M_INSERT
-	}
-
-	void setInt64(gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[64];
-		gint tempLen = GX::gi64toa(v, temp, radix);
-		M_SET
-	}
-	void appendInt64(gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[64];
-		gint tempLen = GX::gi64toa(v, temp, radix);
-		M_APPEND
-	}
-	void insertInt64(gint idx, gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[64];
-		gint tempLen = GX::gi64toa(v, temp, radix);
-		M_INSERT
-	}
-	void setUint64(guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[64];
-		gint tempLen = GX::gu64toa(v, temp, radix);
-		M_SET
-	}
-	void appendUint64(guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[64];
-		gint tempLen = GX::gu64toa(v, temp, radix);
-		M_APPEND
-	}
-	void insertUint64(gint idx, guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[64];
-		gint tempLen = GX::gu64toa(v, temp, radix);
-		M_INSERT
-	}
-
-	void setFloat32(gfloat32 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[8 + precision];
-		gint tempLen = GX::gf32toa(v, temp, precision);
-		M_SET
-	}
-	void appendFloat32(gfloat32 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[8 + precision];
-		gint tempLen = GX::gf32toa(v, temp, precision);
-		M_APPEND
-	}
-	void insertFloat32(gint idx, gfloat32 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[8 + precision];
-		gint tempLen = GX::gf32toa(v, temp, precision);
-		M_INSERT
-	}
-
-	void setFloat64(gfloat64 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[17 + precision];
-		gint tempLen = GX::gf64toa(v, temp, precision);
-		M_SET
-	}
-	void appendFloat64(gfloat64 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[17 + precision];
-		gint tempLen = GX::gf64toa(v, temp, precision);
-		M_APPEND
-	}
-	void insertFloat64(gint idx, gfloat64 v, gint precision = 6, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		T temp[17 + precision];
-		gint tempLen = GX::gf64toa(v, temp, precision);
-		M_INSERT
-	}
-
-#undef M_SET
-#undef M_APPEND
-#undef M_INSERT
-
-	void setInt(gint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-#if GX_PTR_32BIT
-		setInt32(v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-		setInt64(v, radix, vsLen, fillChar);
-#endif
-	}
-	void appendInt(gint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-#if GX_PTR_32BIT
-		appendInt32(v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-		appendInt64(v, radix, vsLen, fillChar);
-#endif
-	}
-	void insertInt(gint idx, gint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-#if GX_PTR_32BIT
-        insertInt32(idx, v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-        insertInt64(idx, v, radix, vsLen, fillChar);
-#endif
-	}
-	void setUint(guint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-#if GX_PTR_32BIT
-		setUint32(v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-		setUint64(v, radix, vsLen, fillChar);
-#endif
-	}
-	void appendUint(guint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-#if GX_PTR_32BIT
-		appendUint32(v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-		appendUint64(v, radix, vsLen, fillChar);
-#endif
-	}
-	void insertUint(gint idx, guint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-#if GX_PTR_32BIT
-        insertUint32(idx, v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-        insertUint64(idx, v, radix, vsLen, fillChar);
-#endif
-	}
-
-	void setPtr(void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		setUint(GX_CAST_R(guint, v), radix, vsLen, fillChar);
-	}
-	void appendPtr(void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		appendUint(GX_CAST_R(guint, v), radix, vsLen, fillChar);
-	}
-	void insertPtr(gint idx, void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, T fillChar = GX_CAST_S(T, ' ')) {
-		insertUint(idx, GX_CAST_R(guint, v), radix, vsLen, fillChar);
-	}
-
 	void cutOff(gint len) {
 		changeCapability(len + 1);
 		setLength(len);
@@ -469,15 +249,22 @@ protected:
     inline T* getDataPtr(gint idx) {
         return &GX_CAST_R(T*, m_Data.getPtr())[idx];
     }
-	inline void move(gint idxTo, gint idx, guint len) {
+	inline void move(gint idxTo, gint idx, gint len) {
 		memmove(getDataPtr(idxTo), getDataPtr(idx), sizeof(T)*len);
 	}
-	inline bool resize(gint idx, guint len, guint lenTo)
+	bool changeSize(gint idx, gint len, gint lenTo)
 	{
-		//TODO
 		if (len > lenTo) {
 			move(idx + lenTo, idx + len, m_Length - idx - len);
+			return changeCapability(m_Length - (len-lenTo)+1);
 		}
+		else if (len < lenTo) {
+			if (!changeCapability(m_Length + (lenTo-len)+1)) {
+				return false;
+			}
+			move(idx + lenTo, idx + len, m_Length - idx - len);
+		}
+		return true;
 	}
     bool changeCapability(gint count) {
 		const gint STEP = 32;
