@@ -202,6 +202,17 @@ class GDataString : public GObject {
 	friend class GString;
 	friend class GWString;
     GX_GOBJECT(GDataString);
+protected:
+	class Formater {
+	protected:
+		Formater(GDataString* str, gint cursor) {
+			m_String = str;
+			m_Cursor = cursor;
+		}
+	private:
+		GDataString* m_String;
+		gint m_Cursor;
+	};
 public:
     inline gint getLength() {
         return m_Length;
