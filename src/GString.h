@@ -23,22 +23,23 @@ public:
 	private:
 		Formater(GString* str, gint cursor);
 	public:
-		Formater& arg(gchar v,gint count);
+		Formater& arg(gchar v,gint count=1);
+        Formater& arg(gwchar v,gint count=1);
 	};
 public:
 	virtual bool isEqual(GObject* obj);
 
 	const gchar* c_str();
 
-	void set(gchar v, gint count);
-	void append(gchar v, gint count);
-	void insert(gint idx, gchar v, gint count);
-	void replace(gint idx, gint lenR, gchar v, gint count);
+	void set(gchar v, gint count=1);
+	void append(gchar v, gint count=1);
+	void insert(gint idx, gchar v, gint count=1);
+	void replace(gint idx, gint lenR, gchar v, gint count=1);
 
-	void set(gwchar v, gint count);
-	void append(gwchar v, gint count);
-	void insert(gint idx, gwchar v, gint count);
-	void replace(gint idx, gint lenR, gwchar v, gint count);
+	void set(gwchar v, gint count=1);
+	void append(gwchar v, gint count=1);
+	void insert(gint idx, gwchar v, gint count=1);
+	void replace(gint idx, gint lenR, gwchar v, gint count=1);
 
 	void set(const gchar* v, gint len = -1, gint count = 1);
 	void append(const gchar* v, gint len = -1, gint count = 1);

@@ -209,6 +209,34 @@ protected:
 			m_String = str;
 			m_Cursor = cursor;
 		}
+        inline GDataString* getString() {
+            return m_String;
+        }
+        inline gint getCursor() {
+            return m_Cursor;
+        }
+        bool moveCursor() {
+            while (m_Cursor<m_String->getLength()) {
+                if (m_String->at(m_Cursor)=='%') {
+                    if(m_Cursor<m_String->getLength()-1 && m_String->at(m_Cursor+1)=='%') {
+                        m_Cursor+=2;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+                else {
+                    m_Cursor++;
+                }
+            }
+            return false;
+        }
+        gint replaceStart() {
+            return m_String->getLength();
+        }
+        void replaceEnd(gint lastLen) {
+            m_Cursor=m_Cursor+1+(m_String->getLength()-lastLen);
+        }
 	private:
 		GDataString* m_String;
 		gint m_Cursor;
@@ -223,7 +251,9 @@ public:
         }
         return m_OWHash.codeA;
     }
-    
+    T at(gint idx) {
+        return *getDataPtr(idx);
+    }
 	void remove(gint idx, gint len) {
 		if (len <= 0) {
 			return;

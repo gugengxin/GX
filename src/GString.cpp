@@ -12,6 +12,9 @@
 #include "GXGObject.h"
 
 
+#define M_FMT_STRING() GX_CAST_R(GString*, getString())
+
+
 GString::Formater::Formater(GString* str, gint cursor) : GDataString<gchar>::Formater(str, cursor)
 {
 
@@ -19,13 +22,23 @@ GString::Formater::Formater(GString* str, gint cursor) : GDataString<gchar>::For
 
 GString::Formater& GString::Formater::arg(gchar v, gint count)
 {
-	
-	
-
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        M_FMT_STRING()->replace(getCursor(), 1, v, count);
+        replaceEnd(lastLen);
+    }
 	return *this;
 }
 
-
+GString::Formater& GString::Formater::arg(gwchar v,gint count)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        M_FMT_STRING()->replace(getCursor(), 1, v, count);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
 
 
 

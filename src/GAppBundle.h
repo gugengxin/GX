@@ -19,7 +19,7 @@
 // Down can't include other h file
 
 class GAppBundle : public 
-#if defined(GX_OS_WINDOWS)
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_APPLE)
 	GFileBundle
 #elif defined(GX_OS_ANDROID)
 	GZipBundle
