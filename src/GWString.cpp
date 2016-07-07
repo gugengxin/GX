@@ -11,7 +11,8 @@
 #include "GXGObject.h"
 
 
-GWString::Formater::Formater(GWString* str, gint cursor) : GDataString<gwchar>::Formater(str, cursor)
+GWString::Formater::Formater(GWString* str, gint cursor, gint cursorEnd) :
+    GDataString<gwchar>::Formater(str, cursor, cursorEnd)
 {
 
 }

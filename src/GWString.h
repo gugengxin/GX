@@ -21,7 +21,7 @@ public:
 	class Formater : public GDataString<gwchar>::Formater {
 		friend class GWString;
 	private:
-		Formater(GWString* str, gint cursor);
+		Formater(GWString* str, gint cursor, gint cursorEnd);
 	public:
 	};
 public:
