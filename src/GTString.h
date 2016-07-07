@@ -23,6 +23,7 @@
 
 class GTString : public GX_TSTRING_BASE_CLASS {
 	friend class GFileBundle;
+    friend class GZipBundle;
     GX_GOBJECT(GTString);
 public:
 	

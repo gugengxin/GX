@@ -88,6 +88,14 @@ public:
 	bool open(const gtchar* path, bool createMap = true);
 	virtual void close();
 public:
+    inline Map* getMap() {
+        return m_Map;
+    }
+    inline void setMap(Map* v) {
+        GO::retain(v);
+        GO::release(m_Map);
+        m_Map=v;
+    }
 	guint getOffset();
 	bool setOffset(guint v);
 	bool gotoFirstFile();
@@ -95,6 +103,7 @@ public:
 	bool gotoFile(const gchar* fileName);
 	FileInfo* currentFileInfo();
 	GString* currentFileName();
+    
 
 	bool openCurrentFile();
 	inline bool isCurrentFileOpened() {

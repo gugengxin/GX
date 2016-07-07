@@ -502,8 +502,8 @@
 			children = (
 				CA60FB5C1D1EC93C0091A665 /* GFileBundle.cpp */,
 				CA60FB5D1D1EC93C0091A665 /* GFileBundle.h */,
-				CA60FB5E1D1EC93C0091A665 /* GZipBundle.cpp */,
 				CA60FB5F1D1EC93C0091A665 /* GZipBundle.h */,
+				CA60FB5E1D1EC93C0091A665 /* GZipBundle.cpp */,
 				CA636DD71D1CDF870021D32F /* GFileManager.h */,
 				CA636DD61D1CDF870021D32F /* GFileManager.cpp */,
 				CA636DD21D1CDE5F0021D32F /* GBundle.h */,

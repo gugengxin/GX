@@ -17,6 +17,7 @@
 
 class GMutex : public GObject {
 	friend class GRunLoop;
+    friend class GZipBundle;
     GX_GOBJECT(GMutex);
 public:
     void lock();

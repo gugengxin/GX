@@ -11,23 +11,26 @@
 
 #include "GXPrefix.h"
 #include "GBundle.h"
-#include "GZipReader.h"
-
+#include "GTString.h"
+#include "GMutex.h"
 
 #include "GXGObject.h"
 // Down can't include other h file
+class GZipReader;
 
 class GZipBundle : public GBundle
 {
 	GX_GOBJECT(GZipBundle);
 public:
-	bool open(const gtchar* path);
+	bool open(const gtchar* path,bool createMap=true);
 	virtual void close();
 
 	virtual GReader* openReader(const gchar* fileName);
 	virtual void closeReader(GReader* reader);
 private:
-	GZipReader m_Reader;
+    GPath m_RootPath;
+	GZipReader* m_Reader;
+    GMutex m_Mutex;
 };
 
 // Up can't include other h file
