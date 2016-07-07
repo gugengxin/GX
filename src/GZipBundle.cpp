@@ -7,7 +7,11 @@
 //
 
 #include "GZipBundle.h"
+
 #include "GXGObject.h"
+
+
+
 
 GX_GOBJECT_IMPLEMENT(GZipBundle, GBundle);
 
@@ -21,7 +25,20 @@ GZipBundle::~GZipBundle()
 
 }
 
-GReader* GZipBundle::openReader(const gtchar* fileName)
+
+bool GZipBundle::open(const gtchar* path)
+{
+
+
+	//TODO
+}
+
+void GZipBundle::close()
+{
+
+}
+
+GReader* GZipBundle::openReader(const gchar* fileName)
 {
 	return NULL;
 }

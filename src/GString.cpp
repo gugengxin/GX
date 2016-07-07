@@ -840,3 +840,51 @@ GString::Formater GString::replaceFormat(gint idx, gint lenR, const gchar* fmt, 
 }
 
 
+
+void GString::appendPathComponent(const gchar* component, gint len)
+{
+	if (lastIsSeparator()) {
+		if (component[0] == '/' || component[0] == '\\') {
+			if (len < 0) {
+				len = GX::strlen(component);
+			}
+			append(component + 1, len - 1);
+		}
+		else {
+			append(component, len);
+		}
+	}
+	else {
+		if (component[0] == '/' || component[0] == '\\') {
+			append(component, len);
+		}
+		else {
+			append('/');
+			append(component, len);
+		}
+	}
+}
+
+void GString::appendPathComponent(const gwchar* component, gint len)
+{
+	if (lastIsSeparator()) {
+		if (component[0] == L'/' || component[0] == L'\\') {
+			if (len < 0) {
+				len = GX::strlen(component);
+			}
+			append(component + 1, len - 1);
+		}
+		else {
+			append(component, len);
+		}
+	}
+	else {
+		if (component[0] == L'/' || component[0] == L'\\') {
+			append(component, len);
+		}
+		else {
+			append(L'/');
+			append(component, len);
+		}
+	}
+}

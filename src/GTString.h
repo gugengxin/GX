@@ -22,11 +22,9 @@
 #endif
 
 class GTString : public GX_TSTRING_BASE_CLASS {
+	friend class GFileBundle;
     GX_GOBJECT(GTString);
 public:
-    
-
-private:
 	
 };
 

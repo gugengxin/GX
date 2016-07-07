@@ -662,3 +662,54 @@ void GWString::replacePtr(gint idx, gint lenR, void* v, GX::StringRadix radix, g
 {
 	replaceUint(idx, lenR, GX_CAST_R(guint, v), radix, vsLen, fillChar);
 }
+
+
+
+
+void GWString::appendPathComponent(const gchar* component, gint len)
+{
+	if (lastIsSeparator()) {
+		if (component[0] == '/' || component[0] == '\\') {
+			if (len < 0) {
+				len = GX::strlen(component);
+			}
+			append(component + 1, len - 1);
+		}
+		else {
+			append(component, len);
+		}
+	}
+	else {
+		if (component[0] == '/' || component[0] == '\\') {
+			append(component, len);
+		}
+		else {
+			append('/');
+			append(component, len);
+		}
+	}
+}
+
+void GWString::appendPathComponent(const gwchar* component, gint len)
+{
+	if (lastIsSeparator()) {
+		if (component[0] == L'/' || component[0] == L'\\') {
+			if (len < 0) {
+				len = GX::strlen(component);
+			}
+			append(component + 1, len - 1);
+		}
+		else {
+			append(component, len);
+		}
+	}
+	else {
+		if (component[0] == L'/' || component[0] == L'\\') {
+			append(component, len);
+		}
+		else {
+			append(L'/');
+			append(component, len);
+		}
+	}
+}

@@ -16,6 +16,7 @@
 
 class GString : public GDataString<gchar> {
 	friend class GOShader;
+	friend class GZipReader;
     GX_GOBJECT(GString);
 public:
 	class Formater : public GDataString<gchar>::Formater {
@@ -124,6 +125,10 @@ public:
 	Formater appendFormat(const gchar* fmt, gint len = -1);
 	Formater insertFormat(gint idx, const gchar* fmt, gint len = -1);
 	Formater replaceFormat(gint idx, gint lenR, const gchar* fmt, gint len = -1);
+
+public:
+	void appendPathComponent(const gchar* component, gint len = -1);
+	void appendPathComponent(const gwchar* component, gint len = -1);
 };
 
 #include "GXGObjectUD.h"

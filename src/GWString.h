@@ -16,7 +16,7 @@
 #include "GXGObject.h"
 
 class GWString : public GDataString<gwchar> {
-    GX_GOBJECT(GWString);
+	GX_GOBJECT(GWString);
 public:
 	class Formater : public GDataString<gwchar>::Formater {
 		friend class GWString;
@@ -29,17 +29,17 @@ public:
 
 	const gwchar* c_str();
 
-	void set(gchar v, gint count=1);
-	void append(gchar v, gint count=1);
-	void insert(gint idx, gchar v, gint count=1);
-	void replace(gint idx, gint lenR, gchar v, gint count=1);
+	void set(gchar v, gint count = 1);
+	void append(gchar v, gint count = 1);
+	void insert(gint idx, gchar v, gint count = 1);
+	void replace(gint idx, gint lenR, gchar v, gint count = 1);
 
-	void set(gwchar v, gint count=1);
-	void append(gwchar v, gint count=1);
-	void insert(gint idx, gwchar v, gint count=1);
-	void replace(gint idx, gint lenR, gwchar v, gint count=1);
+	void set(gwchar v, gint count = 1);
+	void append(gwchar v, gint count = 1);
+	void insert(gint idx, gwchar v, gint count = 1);
+	void replace(gint idx, gint lenR, gwchar v, gint count = 1);
 
-	void set(const gchar* v, gint len = -1, gint count=1);
+	void set(const gchar* v, gint len = -1, gint count = 1);
 	void append(const gchar* v, gint len = -1, gint count = 1);
 	void insert(gint idx, const gchar* v, gint len = -1, gint count = 1);
 	void replace(gint idx, gint lenR, const gchar* v, gint len = -1, gint count = 1); \
@@ -116,6 +116,11 @@ public:
 	void appendPtr(void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, gwchar fillChar = L' ');
 	void insertPtr(gint idx, void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, gwchar fillChar = L' ');
 	void replacePtr(gint idx, gint lenR, void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, gwchar fillChar = L' ');
+
+
+public:
+	void appendPathComponent(const gchar* component, gint len = -1);
+	void appendPathComponent(const gwchar* component, gint len = -1);
 };
 
 #include "GXGObjectUD.h"

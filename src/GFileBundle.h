@@ -11,6 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GBundle.h"
+#include "GTString.h"
 
 
 
@@ -21,8 +22,13 @@ class GFileBundle : public GBundle
 {
 	GX_GOBJECT(GFileBundle);
 public:
-	virtual GReader* openReader(const gtchar* fileName);
+	bool open(const gtchar* path);
+	virtual void close();
+
+	virtual GReader* openReader(const gchar* fileName);
 	virtual void closeReader(GReader* reader);
+private:
+	GPath m_RootPath;
 };
 
 // Up can't include other h file

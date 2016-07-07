@@ -45,23 +45,64 @@
 #define M_ZIPFILE() ((unzFile)m_ZipFile)
 
 
+
+GX_GOBJECT_IMPLEMENT(GZipReader::FileInfo, GObject);
+
+GZipReader::FileInfo::FileInfo()
+{
+#if defined(GX_DEBUG)
+	GX_ASSERT(sizeof(m_Data) == sizeof(M_FILE_INFO));
+#endif
+	memset(&m_Data, 0, sizeof(m_Data));
+}
+
+GZipReader::FileInfo::~FileInfo()
+{
+
+}
+
+
+
+GX_GOBJECT_IMPLEMENT(GZipReader::Node, GObject);
+
+GZipReader::Node::Node()
+{
+
+}
+
+GZipReader::Node::~Node()
+{
+
+}
+
+
+
+
+
+
+
+
+
+
 GX_GOBJECT_IMPLEMENT(GZipReader, GReader);
 
 GZipReader::GZipReader()
 {
 	m_ZipFile = NULL;
 	m_IsCFOpened = false;
+	m_Map = NULL;
 }
 
 GZipReader::~GZipReader()
 {
+	GO::release(m_Map);
 	if (m_ZipFile) {
 		unzCloseCurrentFile(M_ZIPFILE());
 		unzClose(M_ZIPFILE());
 	}
 }
 
-bool GZipReader::open(const gtchar* path)
+bool GZipReader::open(const gtchar* path, bool createMap)
 {
 	M_FILEFUNC_DEF funDef;
 #ifdef GX_OS_MICROSOFT
@@ -70,11 +111,38 @@ bool GZipReader::open(const gtchar* path)
 	M_FILL_FILEFUNC(&funDef);
 #endif
 	m_ZipFile = M_OPENZIP(path, &funDef);
-	return m_ZipFile!=NULL;
+	if (m_ZipFile != NULL) {
+		if (createMap) {
+			m_Map = Map::alloc();
+
+			bool bTF = gotoFirstFile();
+			while (bTF) {
+				M_FILE_INFO info;
+				bTF = (M_GETCURRENTFILEINFO(M_ZIPFILE(), &info, NULL, 0, NULL, 0, NULL, 0) == UNZ_OK);
+				if (bTF) {
+					GString* name = GString::alloc();
+					bTF = (M_GETCURRENTFILEINFO(M_ZIPFILE(), NULL, name->prepareBuffer(info.size_filename), info.size_filename, NULL, 0, NULL, 0) == UNZ_OK);
+					if (bTF) {
+						Node* node = Node::alloc();
+						node->setOffset(getOffset());
+						m_Map->set(name, node);
+						GO::release(node);
+
+						bTF = gotoNextFile();
+					}
+					GO::release(name);
+				}
+			}
+		}
+		return true;
+	}
+	return false;
 }
 
 void GZipReader::close()
 {
+	GO::release(m_Map);
+	m_Map = NULL;
 	if (m_ZipFile) {
 		if (m_IsCFOpened) {
 			closeCurrentFile();
@@ -104,11 +172,42 @@ bool GZipReader::gotoNextFile()
 }
 bool GZipReader::gotoFile(const gchar* fileName)
 {
+	if (m_Map) {
+		GString name;
+		name.set(fileName);
+		Node* node = m_Map->get(&name);
+		if (node) {
+			return setOffset(node->getOffset());
+		}
+	}
 	return unzLocateFile(M_ZIPFILE(), fileName, 0) == UNZ_OK;
 }
-bool GZipReader::getCurrentFileName(gchar* buf, guint bufLen)
+GZipReader::FileInfo* GZipReader::currentFileInfo()
 {
-	return M_GETCURRENTFILEINFO(M_ZIPFILE(), NULL, buf, (uLong)bufLen, NULL, 0, NULL, 0) == UNZ_OK;
+	FileInfo* res = FileInfo::alloc();
+	if (M_GETCURRENTFILEINFO(M_ZIPFILE(), (M_FILE_INFO*)&res->m_Data, NULL, 0, NULL, 0, NULL, 0) == UNZ_OK) {
+		GO::autorelease(res);
+	}
+	else {
+		GO::release(res);
+		res = NULL;
+	}
+	return res;
+
+}
+GString* GZipReader::currentFileName()
+{
+	M_FILE_INFO info;
+	GString* res = GString::alloc();
+	if ((M_GETCURRENTFILEINFO(M_ZIPFILE(), &info, NULL, 0, NULL, 0, NULL, 0) == UNZ_OK) &&
+		(M_GETCURRENTFILEINFO(M_ZIPFILE(), NULL, res->prepareBuffer(info.size_filename), info.size_filename, NULL, 0, NULL, 0) == UNZ_OK)) {
+		GO::autorelease(res);
+	}
+	else {
+		GO::release(res);
+		res = NULL;
+	}
+	return res;
 }
 
 bool GZipReader::openCurrentFile()

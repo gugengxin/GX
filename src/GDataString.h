@@ -281,9 +281,23 @@ public:
             setLength(0);
         }
     }
+	
+	T* prepareBuffer(gint len) {
+		changeCapability(len + 1);
+		setLength(len);
+		return getDataPtr();
+	}
 	void cutOff(gint len) {
 		changeCapability(len + 1);
 		setLength(len);
+	}
+public:
+	bool lastIsSeparator() {
+		if (m_Length > 0) {
+			gtchar c = at(m_Length - 1);
+			return (c == (gtchar)'/' || c == (gtchar)'\\');
+		}
+		return false;
 	}
 
 protected:

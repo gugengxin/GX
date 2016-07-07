@@ -21,7 +21,9 @@ class GBundle : public GObject
 {
 	GX_VIRTUAL_GOBJECT(GBundle);
 public:
-	virtual GReader* openReader(const gtchar* fileName)=0;
+	virtual void close()=0;
+
+	virtual GReader* openReader(const gchar* fileName)=0;
 	virtual void closeReader(GReader* reader)=0;
 };
 
