@@ -12,8 +12,10 @@
 
 #include "GXPrefix.h"
 
-#include "GLog.h"
+#include "GString.h"
+#include "GWString.h"
 
+#include "GLog.h"
 #include "GApplication.h"
 
 

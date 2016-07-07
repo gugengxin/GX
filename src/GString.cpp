@@ -15,7 +15,8 @@
 #define M_FMT_STRING() GX_CAST_R(GString*, getString())
 
 
-GString::Formater::Formater(GString* str, gint cursor) : GDataString<gchar>::Formater(str, cursor)
+GString::Formater::Formater(GString* str, gint cursor, gint cursorEnd) :
+	GDataString<gchar>::Formater(str, cursor, cursorEnd)
 {
 
 }
@@ -39,8 +40,6 @@ GString::Formater& GString::Formater::arg(gwchar v,gint count)
     }
     return *this;
 }
-
-
 
 
 
@@ -117,7 +116,7 @@ void GString::replace(gint idx, gint lenR, gchar v, gint count)
 	if (idx > lenCur) {
 		return;
 	}
-	if (changeSize(idx, lenR, lenCur + count)) {
+	if (changeSize(idx, lenR, count)) {
 		memset(getDataPtr(idx), v, count);
 		setLength(lenCur + count - lenR);
 	}
@@ -818,9 +817,26 @@ void GString::replacePtr(gint idx, gint lenR, void* v, GX::StringRadix radix, gi
 GString::Formater GString::format(const gchar* fmt, gint len)
 {
 	set(fmt, len);
-	return Formater(this, 0);
+	return Formater(this, 0, 0);
 }
 
-
+GString::Formater GString::appendFormat(const gchar* fmt, gint len)
+{
+	gint lenCur = getLength();
+	append(fmt);
+	return Formater(this, lenCur, 0);
+}
+GString::Formater GString::insertFormat(gint idx, const gchar* fmt, gint len)
+{
+	gint lenTemp = getLength() - idx;
+	insert(idx, fmt, len);
+	return Formater(this, idx, lenTemp);
+}
+GString::Formater GString::replaceFormat(gint idx, gint lenR, const gchar* fmt, gint len)
+{
+	gint lenTemp = getLength() - idx - lenR;
+	replace(idx, lenR, fmt, len);
+	return Formater(this, idx, lenTemp);
+}
 
 

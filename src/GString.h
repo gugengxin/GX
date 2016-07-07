@@ -21,7 +21,7 @@ public:
 	class Formater : public GDataString<gchar>::Formater {
 		friend class GString;
 	private:
-		Formater(GString* str, gint cursor);
+		Formater(GString* str, gint cursor, gint cursorEnd);
 	public:
 		Formater& arg(gchar v,gint count=1);
         Formater& arg(gwchar v,gint count=1);
@@ -121,6 +121,9 @@ public:
 	void replacePtr(gint idx, gint lenR, void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, gchar fillChar = ' ');
 
 	Formater format(const gchar* fmt, gint len = -1);
+	Formater appendFormat(const gchar* fmt, gint len = -1);
+	Formater insertFormat(gint idx, const gchar* fmt, gint len = -1);
+	Formater replaceFormat(gint idx, gint lenR, const gchar* fmt, gint len = -1);
 };
 
 #include "GXGObjectUD.h"

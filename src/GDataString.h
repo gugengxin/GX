@@ -205,9 +205,10 @@ class GDataString : public GObject {
 protected:
 	class Formater {
 	protected:
-		Formater(GDataString* str, gint cursor) {
+		Formater(GDataString* str, gint cursor, gint cursorEnd) {
 			m_String = str;
 			m_Cursor = cursor;
+			m_CursorEnd = cursorEnd;
 		}
         inline GDataString* getString() {
             return m_String;
@@ -216,9 +217,10 @@ protected:
             return m_Cursor;
         }
         bool moveCursor() {
-            while (m_Cursor<m_String->getLength()) {
-                if (m_String->at(m_Cursor)=='%') {
-                    if(m_Cursor<m_String->getLength()-1 && m_String->at(m_Cursor+1)=='%') {
+			gint curEnd = m_String->getLength() - m_CursorEnd;
+			while (m_Cursor<curEnd) {
+                if (m_String->at(m_Cursor)==(T)'%') {
+					if (m_Cursor < (curEnd - 1) && m_String->at(m_Cursor + 1) == '%') {
                         m_Cursor+=2;
                     }
                     else {
@@ -240,6 +242,7 @@ protected:
 	private:
 		GDataString* m_String;
 		gint m_Cursor;
+		gint m_CursorEnd;
 	};
 public:
     inline gint getLength() {
