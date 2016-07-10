@@ -6,6 +6,18 @@ ext {
 apply from: GX_ROOT+"/product/as/config.gradle"
 
 model {
+    repositories {
+        libs(PrebuiltLibraries) {
+            zlib {
+                headers.srcDir GX_ROOT+"/external/zlib/include"
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file(GX_ROOT+"/external/zlib/lib/ard/${targetPlatform.getName()}/libzlib.a")
+                }
+            }
+        }
+    }
+
+
     android {
         compileSdkVersion 23
         buildToolsVersion "24.0.0"
@@ -37,6 +49,11 @@ model {
                     source {
                         srcDir "src/main/jni"
                         srcDir "../../../src"
+                    }
+                }
+                jniLibs {
+                    dependencies {
+                        library "zlib"
                     }
                 }
             }

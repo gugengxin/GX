@@ -17,6 +17,7 @@
 class GString : public GDataString<gchar> {
 	friend class GOShader;
 	friend class GZipReader;
+    friend class GAppBundle;
     GX_GOBJECT(GString);
 public:
 	class Formater : public GDataString<gchar>::Formater {

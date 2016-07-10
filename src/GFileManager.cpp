@@ -7,7 +7,6 @@
 //
 
 #include "GFileManager.h"
-#include "GXGObject.h"
 #if defined(GX_OS_APPLE)
 #import <Foundation/Foundation.h>
 #elif defined(GX_OS_MICROSOFT)
@@ -17,14 +16,14 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <dirent.h>
-
 #include <unistd.h>
 #include <string.h>
 #include <utime.h>
 #include <fcntl.h>
-
 #endif
+#include "GDataString.h"
 
+#include "GXGObject.h"
 
 GFileManager* GFileManager::shared()
 {
@@ -44,11 +43,13 @@ GFileManager::~GFileManager()
 bool GFileManager::fileExists(const gtchar* path, bool* isDirectory)
 {
 #if defined(GX_OS_APPLE)
-	gxInt len = (gxInt)_tcslen(path);
+    gint len = GX::strlen(path);
 
-	NSString* strPath = M_NSPATH(path, len);
+    NSString* strPath = [[NSString alloc] initWithBytesNoCopy:(void*)path length:(NSUInteger)len encoding:NSUTF8StringEncoding freeWhenDone:NO];
 	BOOL isDir = NO;
-	if ([M_OSFM() fileExistsAtPath:strPath isDirectory : &isDir]) {
+    BOOL exist=[[NSFileManager defaultManager] fileExistsAtPath:strPath isDirectory:&isDir];
+    [strPath release];
+	if (exist) {
 		if (isDirectory) {
 			(*isDirectory) = isDir;
 		}

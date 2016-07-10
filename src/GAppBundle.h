@@ -25,11 +25,12 @@ class GAppBundle : public
 	GZipBundle
 #endif
 {
-	GX_GOBJECT(GAppBundle);
+	GX_GOBJECT_FINAL(GAppBundle);
 public:
-
-private:
-
+    static GAppBundle* main();
+public:
+    virtual GReader* openReader(const gchar* fileName);
+    virtual void closeReader(GReader* reader);
 };
 
 // Up can't include other h file

@@ -38,7 +38,7 @@ bool GZipBundle::open(const gtchar* path,bool createMap)
 
 void GZipBundle::close()
 {
-    m_Reader.close();
+    m_Reader->close();
     m_RootPath.clear();
 }
 
@@ -47,7 +47,7 @@ GReader* GZipBundle::openReader(const gchar* fileName)
     GZipReader* res=NULL;
     
     m_Mutex.lock();
-    if (!m_Reader->IsCurrentFileOpened()) {
+    if (!m_Reader->isCurrentFileOpened()) {
         if (m_Reader->gotoFile(fileName) && m_Reader->openCurrentFile()) {
             res=m_Reader;
         }
@@ -61,7 +61,7 @@ GReader* GZipBundle::openReader(const gchar* fileName)
             if (m_Reader->getMap()) {
                 res->setMap(m_Reader->getMap());
             }
-            if (!res->gotoFile(sPath) || !res->openCurrentFile()) {
+            if (!res->gotoFile(fileName) || !res->openCurrentFile()) {
                 GO::release(res);
                 res=NULL;
             }
