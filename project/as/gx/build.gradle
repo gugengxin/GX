@@ -1,9 +1,9 @@
 apply plugin: 'com.android.library'
 
-//ext {
-//    GX_ROOT="../../.."
-//}
-//apply from: GX_ROOT + "/product/as/config.gradle"
+ext {
+    GX_ROOT="../../.."
+}
+apply from: this.GX_ROOT + "/product/as/config.gradle"
 
 android {
     compileSdkVersion 23

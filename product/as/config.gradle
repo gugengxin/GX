@@ -10,41 +10,28 @@ println "Initialize GX build"
 //}
 //GXInit()
 
-model {
-    android {
-        ndk {
-            CFlags.addAll(["-DGX_OS_ANDROID", "-Wno-multichar"])    //, "-fvisibility=hidden"
-            cppFlags.addAll(["-DGX_OS_ANDROID", "-fno-rtti"]) //, "-fvisibility=hidden", "-std=c++11"
-            ldLibs.addAll(["log", "EGL", "GLESv2", "android", "OpenSLES"])
-            platformVersion 9
-        }
-        buildTypes {
-            debug {
-                ndk {
-                    CFlags.add("-DGX_DEBUG")
-                    cppFlags.add("-DGX_DEBUG")
-                    debuggable true
-                }
-            }
-        }
-        sources {
-            main {
-                java {
-                    source {
-                        srcDir this.GX_ROOT+"/project/as/gx/src/main/java"
-                    }
-                }
-                jni {
-                    exportedHeaders {
-                        srcDir this.GX_ROOT+"/src"
-                    }
-                    source {
-                        srcDir this.GX_ROOT+"/src"
-                    }
-                }
-            }
+android {
+    buildTypes {
+        debug {
+			externalNativeBuild {
+				ndkBuild {
+					cFlags.add("-DGX_DEBUG")
+				}
+			}
         }
     }
+    externalNativeBuild {
+        ndkBuild {
+            
+        }
+    }
+	defaultConfig {
+		externalNativeBuild {
+			ndkBuild {
+				cFlags.add("-DGX_OS_ANDROID")
+			} 
+		}
+	}
 }
 
 

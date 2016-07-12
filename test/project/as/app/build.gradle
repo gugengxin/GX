@@ -1,10 +1,5 @@
 apply plugin: 'com.android.application'
 
-ext {
-    GX_ROOT="../../../.."
-}
-apply from: GX_ROOT+"/product/as/config.gradle"
-
 android {
     compileSdkVersion 23
     buildToolsVersion "24.0.0"
@@ -28,26 +23,12 @@ android {
             path 'src/main/cpp/Android.mk'
         }
     }
-
-    sources {
-        main {
-            cpp {
-                exportedHeaders {
-                    srcDir "src/main/jni"
-                    srcDir "../../../src"
-                }
-                source {
-                    srcDir "src/main/jni"
-                    srcDir "../../../src"
-                }
-            }
-        }
-    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile project(':gx')
 }
 
 
