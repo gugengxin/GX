@@ -3,27 +3,29 @@ LOCAL_PATH := $(call my-dir)
 ENGINE_PATH := $(LOCAL_PATH)/../../../../../..
 ENGINE_PATH_FROM_SRC := ../../../../../..
 
-$(call import-add-path,$(LOCAL_PATH))
 $(call import-add-path,$(ENGINE_PATH))
+
+#Android与系统交互部分
+include $(CLEAR_VARS)
+LOCAL_MODULE    := GXAndroid
+LOCAL_C_INCLUDES:= $(ENGINE_PATH)/src
+LOCAL_CFLAGS 	+= -Wno-multichar -D GX_OS_ANDROID
+LOCAL_CPPFLAGS	+= -fno-rtti -fvisibility=hidden -std=c++11
+LOCAL_SRC_FILES := \
+ $(ENGINE_PATH_FROM_SRC)/src/GJavaAPI.cpp \
+ $(ENGINE_PATH_FROM_SRC)/src/GJavaCAPI.cpp \
+ $(ENGINE_PATH_FROM_SRC)/src/GJavaClass.cpp \
+ $(ENGINE_PATH_FROM_SRC)/src/GJavaJAPI.cpp \
+
+include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := GX
 LOCAL_C_INCLUDES:= $(ENGINE_PATH)/src
 LOCAL_EXPORT_C_INCLUDES:= $(ENGINE_PATH)/src
-LOCAL_CFLAGS 	+= -Wno-multichar -D GX_OS_ANDROID #-fvisibility=hidden
-LOCAL_CPPFLAGS	+= -fno-rtti #-std=c++11 -fvisibility=hidden
-ifdef NDK_DEBUG
-   ifeq ($(NDK_DEBUG),1)
-      CFLAGS		+= -O0 -g
-      LOCAL_CFLAGS	+=-D DEBUG
-      APP_OPTIM 	:= debug
-   else
-      CFLAGS		+= -O2 -g
-      LOCAL_CFLAGS	+=-D NDEBUG
-      APP_OPTIM 	:= release
-  endif
-endif
+LOCAL_CFLAGS 	+= -Wno-multichar -D GX_OS_ANDROID -fvisibility=hidden
+LOCAL_CPPFLAGS	+= -fno-rtti -std=c++11 -fvisibility=hidden
 LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
 LOCAL_EXPORT_CPPFLAGS := $(LOCAL_CPPFLAGS)
 LOCAL_WHOLE_STATIC_LIBRARIES := GXAndroid 
@@ -96,7 +98,6 @@ LOCAL_SRC_FILES := \
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,android)
 $(call import-module,external/zlib/lib/ard)
 
 
