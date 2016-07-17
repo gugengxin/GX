@@ -9,8 +9,8 @@ $(call import-add-path,$(ENGINE_PATH))
 include $(CLEAR_VARS)
 LOCAL_MODULE    := GXAndroid
 LOCAL_C_INCLUDES:= $(ENGINE_PATH)/src
-LOCAL_CFLAGS 	+= -Wno-multichar -D GX_OS_ANDROID
-LOCAL_CPPFLAGS	+= -fno-rtti -fvisibility=hidden -std=c++11
+LOCAL_CFLAGS 	+= -DGX_OS_ANDROID -Wno-multichar 
+LOCAL_CPPFLAGS	+= -DGX_OS_ANDROID -fno-rtti
 LOCAL_SRC_FILES := \
  $(ENGINE_PATH_FROM_SRC)/src/GJavaAPI.cpp \
  $(ENGINE_PATH_FROM_SRC)/src/GJavaCAPI.cpp \
@@ -24,8 +24,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE    := GX
 LOCAL_C_INCLUDES:= $(ENGINE_PATH)/src
 LOCAL_EXPORT_C_INCLUDES:= $(ENGINE_PATH)/src
-LOCAL_CFLAGS 	+= -Wno-multichar -D GX_OS_ANDROID -fvisibility=hidden
-LOCAL_CPPFLAGS	+= -fno-rtti -std=c++11 -fvisibility=hidden
+LOCAL_CFLAGS 	+= -DGX_OS_ANDROID -Wno-multichar 
+LOCAL_CPPFLAGS	+= -DGX_OS_ANDROID -fno-rtti
 LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
 LOCAL_EXPORT_CPPFLAGS := $(LOCAL_CPPFLAGS)
 LOCAL_WHOLE_STATIC_LIBRARIES := GXAndroid 
