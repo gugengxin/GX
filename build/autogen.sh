@@ -7,7 +7,7 @@ GX_ROOT=$(pwd)
 cd ${GX_CURRENT}
 
 function XBuild {
-	if [ -x $1 ]; then
+	if [ ! -x $1 ]; then
   		chmod u+x $1
 	fi
 
