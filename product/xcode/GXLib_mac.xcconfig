@@ -1,12 +1,10 @@
 
-
 GX_ROOT = ../..
 #include "GXOS_mac"
 #include "GXExt_mac"
 #include "GXExt"
 
+GX_HEADER_SEARCH_PATHS = $(GX_EXTERNAL_INCS)
 
-GXLIB_HEADER_SEARCH_PATHS = $(SRCROOT)/../../external/zlib/include
-
-HEADER_SEARCH_PATHS = $(inherited) $(GXLIB_HEADER_SEARCH_PATHS)
+HEADER_SEARCH_PATHS = $(inherited) $(GX_HEADER_SEARCH_PATHS)
 OTHER_LDFLAGS = $(inherited)

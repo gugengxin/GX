@@ -510,8 +510,8 @@
 		CA636DD01D1CDD030021D32F /* Bundle */ = {
 			isa = PBXGroup;
 			children = (
-				CA60FB5C1D1EC93C0091A665 /* GFileBundle.cpp */,
 				CA60FB5D1D1EC93C0091A665 /* GFileBundle.h */,
+				CA60FB5C1D1EC93C0091A665 /* GFileBundle.cpp */,
 				CA60FB5F1D1EC93C0091A665 /* GZipBundle.h */,
 				CA60FB5E1D1EC93C0091A665 /* GZipBundle.cpp */,
 				CA636DD71D1CDF870021D32F /* GFileManager.h */,
@@ -528,18 +528,18 @@
 			isa = PBXGroup;
 			children = (
 				CA9C16BB1CC5EDFF00204303 /* GXOS_ios.xcconfig */,
-				CA9C16BC1CC5EDFF00204303 /* GXOS_mac.xcconfig */,
 				CA9C16BD1CC5EDFF00204303 /* GXOS_atv.xcconfig */,
+				CA9C16BC1CC5EDFF00204303 /* GXOS_mac.xcconfig */,
 				CA9C16B81CC5EDFF00204303 /* GXExt_ios.xcconfig */,
-				CA9C16B91CC5EDFF00204303 /* GXExt_mac.xcconfig */,
 				CA9C16BA1CC5EDFF00204303 /* GXExt_atv.xcconfig */,
+				CA9C16B91CC5EDFF00204303 /* GXExt_mac.xcconfig */,
 				CA9C16B71CC5EDFF00204303 /* GXExt.xcconfig */,
 				CA9C16B11CC5EDFF00204303 /* GXLib_ios.xcconfig */,
-				CA9C16B21CC5EDFF00204303 /* GXLib_mac.xcconfig */,
 				CA9C16B31CC5EDFF00204303 /* GXLib_atv.xcconfig */,
+				CA9C16B21CC5EDFF00204303 /* GXLib_mac.xcconfig */,
 				CA9C16B41CC5EDFF00204303 /* GX_ios.xcconfig */,
-				CA9C16B51CC5EDFF00204303 /* GX_mac.xcconfig */,
 				CA9C16B61CC5EDFF00204303 /* GX_atv.xcconfig */,
+				CA9C16B51CC5EDFF00204303 /* GX_mac.xcconfig */,
 			);
 			name = config;
 			sourceTree = "<group>";
