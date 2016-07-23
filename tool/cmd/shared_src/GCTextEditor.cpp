@@ -1,5 +1,7 @@
 ﻿#include "GCTextEditor.h"
 #include <QFile>
+#include <QFileInfoList>
+#include <QDir>
 
 
 const char GCTextEditor::BOM8[]={(const char)0xEF,(const char)0xBB,(const char)0xBF};
@@ -110,6 +112,30 @@ static int _FindPathString(const QString& str,const QString& strPath,int from)
     return res;
 }
 
+static QFileInfoList _GetFileList(QString path)
+{
+    QFileInfoList res;
+
+    QDir dir(path);
+    QFileInfoList file_list = dir.entryInfoList(QDir::Files | QDir::NoSymLinks | QDir::Dirs | QDir::NoDotAndDotDot,QDir::Name);
+
+    for(int i = 0; i < file_list.size(); i++)
+    {
+        QFileInfo fi = file_list.at(i);
+        if(fi.isDir()) {
+            QFileInfoList child_file_list = _GetFileList(fi.absoluteFilePath());
+            res.append(child_file_list);
+        }
+        else {
+            res.append(fi);
+        }
+    }
+
+    return res;
+}
+
+
+
 int GCTextEditor::replace(const QString &fromStr, const QString &toStr, Qt::CaseSensitivity fromCs, const QString &fromStrSuf, Qt::CaseSensitivity fromCsSuf, const QString &toStrPS, int idxStart, int idxCount)
 {
     if(fromStr.size()>0 && toStr.size()>0) {
@@ -186,6 +212,55 @@ int GCTextEditor::replace(const QString &fromStr, const QString &toStr, Qt::Case
     return 0;
 }
 
+int GCTextEditor::fileList(const QString& signPre,const QString& signSuf,
+                           const QString& dir,const QList<QString>& extensions,
+                           const QString& strPre,const QString& strSuf,
+                           const QList<QString>& filters,const QString &strFPre, const QString &strFSuf,
+                           const QList<QString>& ignores)
+{
+    QString fileListString;
+    QFileInfoList fileList=_GetFileList(dir);
+    for(int i=0;i<fileList.size();i++) {
+        QString path=fileList[i].absoluteFilePath();
 
+        bool bAdd=false;
+        for(int j=0;j<extensions.size();j++) {
+            if(path.endsWith(extensions[j],Qt::CaseInsensitive)) {
+                bAdd=true;
+                break;
+            }
+        }
+        if(bAdd) {
+            for(int j=0;j<ignores.size();j++) {
+                if(path.endsWith(ignores[j],Qt::CaseInsensitive)) {
+                    bAdd=false;
+                    break;
+                }
+            }
+        }
+        if(bAdd) {
+            bool bFiltered=false;
+            for(int j=0;j<filters.size();j++) {
+                if(path.endsWith(filters[j],Qt::CaseInsensitive)) {
+                    bFiltered=true;
+                    break;
+                }
+            }
+
+            if(bFiltered) {
+                fileListString.append(strFPre);
+                fileListString.append(path.right(path.length()-dir.length()));
+                fileListString.append(strFSuf);
+            }
+            else {
+                fileListString.append(strPre);
+                fileListString.append(path.right(path.length()-dir.length()));
+                fileListString.append(strSuf);
+            }
+        }
+    }
+
+    return replace(signPre,fileListString,Qt::CaseSensitive,signSuf,Qt::CaseSensitive);
+}
 
 

@@ -15,6 +15,14 @@ public:
     ~GCTextEditor();
 
 
+    void setText(const QString& v) {
+        m_Text=v;
+    }
+
+    const QString& getText() {
+        return m_Text;
+    }
+
     bool readFile(const QString& filePath,const QString& guessEncode);
     bool writeFile(const QString& filePath,const QString& encode="",bool hasBOM8=false);
 
@@ -25,9 +33,11 @@ public:
                  const QString& fromStrSuf="",Qt::CaseSensitivity fromCsSuf=Qt::CaseSensitive,
                  const QString& toStrPS="",
                  int idxStart=0,int idxCount=0);
-    const QString& getText() {
-        return m_Text;
-    }
+    int fileList(const QString& signPre, const QString& signSuf,
+                 const QString& dir, const QList<QString>& extensions,
+                 const QString &strPre, const QString &strSuf,
+                 const QList<QString>& filters,const QString &strFPre, const QString &strFSuf,
+                 const QList<QString>& ignores);
 
 
 signals:
