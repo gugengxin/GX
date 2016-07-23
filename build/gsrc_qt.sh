@@ -10,7 +10,7 @@ GX_BIN=${GX_ROOT}/bin
 GX_TE=${GX_BIN}/gx_te
 
 ${GX_TE} -i ${GX_ROOT}/project/qt/GX.pro -o ${GX_ROOT}/project/qt/GX.pro \
--fp "#__SOURCES_START__\n" -fs "#__SOURCES_END__" \
+-fp "#__SOURCES_START__" -fs "#__SOURCES_END__" \
 -fd ${GX_ROOT}/src \
 -fe .cpp -fe .c \
 -fsp "\t../../src" -fss "\\\n" \
@@ -19,7 +19,7 @@ ${GX_TE} -i ${GX_ROOT}/project/qt/GX.pro -o ${GX_ROOT}/project/qt/GX.pro \
 -fi GXPthread.cpp
 
 ${GX_TE} -i ${GX_ROOT}/project/qt/GX.pro -o ${GX_ROOT}/project/qt/GX.pro \
--fp "#__HEADERS_START__\n" -fs "#__HEADERS_END__" \
+-fp "#__HEADERS_START__" -fs "#__HEADERS_END__" \
 -fd ${GX_ROOT}/src \
 -fe .h \
 -fsp "\t../../src" -fss "\\\n"

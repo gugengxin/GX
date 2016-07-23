@@ -218,7 +218,7 @@ int GCTextEditor::fileList(const QString& signPre,const QString& signSuf,
                            const QList<QString>& filters,const QString &strFPre, const QString &strFSuf,
                            const QList<QString>& ignores)
 {
-    QString fileListString;
+    QString fileListString("\n");
     QFileInfoList fileList=_GetFileList(dir);
     for(int i=0;i<fileList.size();i++) {
         QString path=fileList[i].absoluteFilePath();

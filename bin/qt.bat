@@ -2,7 +2,7 @@
 
 echo Setup Qt environment
 
-call :CMD_EXIST qmake || ( 
+call :CMD_EXIST qmake.exe || ( 
 	set /p GX_QT_ROOT=Please input Qt path: 
 )
 set PATH=%GX_QT_ROOT%\bin;%PATH%
