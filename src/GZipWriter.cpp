@@ -9,7 +9,8 @@
 #include "GZipWriter.h"
 #include "GXGObject.h"
 #include "zlib.h"
-#if defined(GX_OS_WINDOWS)
+#include "zip.h"
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 #include "iowin32.h"
 #endif
 
@@ -95,8 +96,8 @@ bool GZipWriter::hasSpace()
 gint GZipWriter::write(void* buf,guint len)
 {
     if(zipWriteInFileInZip(M_ZIPFILE(), buf, (unsigned)len)==ZIP_OK) {
-        m_BytesWrite+=(gint)length;
-        return (gint)length;
+        m_BytesWrite+=(gint)len;
+        return (gint)len;
     }
     return -1;
 }
@@ -145,6 +146,7 @@ bool GZipWriter::canRollback()
 
 bool GZipWriter::rollback(guint len)
 {
+    GX_UNUSED(len);
     return false;
 }
 

@@ -8,8 +8,9 @@
 
 #include "GZipReader.h"
 #include "GXGObject.h"
+#include "zlib.h"
 #include "unzip.h"
-#if defined(GX_OS_WINDOWS)
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 #include "iowin32.h"
 #endif
 
