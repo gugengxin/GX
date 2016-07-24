@@ -206,9 +206,9 @@ GPieceDataArray<T,N>::~GPieceDataArray()
 
 
 #if defined(GX_OS_MOBILE)
-#define GX_PDARRAY_N 8
+#define GX_PDARRAY_N 128
 #else
-#define GX_PDARRAY_N 16
+#define GX_PDARRAY_N 256
 #endif
 
 template <typename T>

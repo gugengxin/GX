@@ -7,7 +7,6 @@
 //
 
 #include "GFileBundle.h"
-#include "GFileManager.h"
 #include "GFileReader.h"
 
 
@@ -25,12 +24,8 @@ GFileBundle::~GFileBundle()
 
 bool GFileBundle::open(const gtchar* path)
 {
-	bool isDir = false;
-	if (GFileManager::shared()->fileExists(path, &isDir) && isDir) {
-		m_RootPath.set(path);
-		return true;
-	}
-	return false;
+    m_RootPath.set(path);
+    return true;
 }
 
 void GFileBundle::close()
