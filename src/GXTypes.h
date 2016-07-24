@@ -26,7 +26,7 @@ typedef double gfloat64;
 typedef char gchar;
 typedef wchar_t gwchar;
 
-#if defined(GX_OS_WINDOWS)
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 #define GX_WCHAR_16BIT 1
 #define GX_WCHAR_32BIT 0
 #else
@@ -34,7 +34,7 @@ typedef wchar_t gwchar;
 #define GX_WCHAR_32BIT 1
 #endif
 
-#if defined(GX_OS_WINDOWS) && (defined(UNICODE) || defined(_UNICODE))
+#if (defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)) && (defined(UNICODE) || defined(_UNICODE))
 #define _GX_T(x) L##x
 #define GX_T(x) _GX_T(x)
 #define GX_PATH_IS_WCHAR

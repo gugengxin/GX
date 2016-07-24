@@ -21,14 +21,6 @@
 #if defined(GX_OS_ANDROID)
 #include <jni.h>
 #elif defined(GX_OS_QT)
-#include <QtCore>
-#if defined(Q_OS_WIN)
-#define GX_OS_QT_WINDOWS
-#elif defined(Q_OS_OSX)
-#define GX_OS_QT_MACOSX
-#else
-#error
-#endif
 
 #endif
 

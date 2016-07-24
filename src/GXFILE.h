@@ -4,7 +4,7 @@
 
 #include "GXPrefix.h"
 
-#if defined(GX_OS_WINDOWS)
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 #include <tchar.h>
 #include <wchar.h>
 #endif
@@ -13,7 +13,7 @@ namespace GX {
 
 	inline FILE* fopen(const gtchar* path, const gtchar* mode) 
 	{
-#if defined(GX_OS_WINDOWS)
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 		FILE* res = NULL;
 		if (_tfopen_s(&res, path, mode) == 0) {
 			return res;
@@ -26,7 +26,7 @@ namespace GX {
 
 	inline gint ftell(FILE* fp)
 	{
-#if defined(GX_OS_WINDOWS) && GX_PTR_64BIT
+#if (defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)) && GX_PTR_64BIT
 		return (gint)_ftelli64(fp);
 #else
 		return (gint)::ftell(fp);
@@ -35,7 +35,7 @@ namespace GX {
 
 	inline bool fseek(FILE* fp, gint offset, int origin)
 	{
-#if defined(GX_OS_WINDOWS) && GX_PTR_64BIT
+#if (defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)) && GX_PTR_64BIT
 		return _fseeki64(fp,offset,origin)==0;
 #else
 		return ::fseek(fp,offset,origin)==0;

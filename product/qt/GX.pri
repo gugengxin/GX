@@ -2,24 +2,34 @@
 QT       += opengl
 
 DEFINES += GX_OS_QT
+win32:DEFINES += _UNICODE
 
 INCLUDEPATH += $$GX_ROOT/src
 DEPENDPATH += $$GX_ROOT/src
 
 LIBS += -L$$GX_ROOT/product/qt -lGX
-
-#pthread
+#libs
 win32 {
     debug {
         LIBS += -L$$GX_ROOT/external/pthread-win32/lib/win/vc120/x64/debug/ -lpthread_dll
+        LIBS += -L$$GX_ROOT/external/zlib/lib/win/vc120/x64/debug/ -lzlib
     }
     release {
         LIBS += -L$$GX_ROOT/external/pthread-win32/lib/win/vc120/x64/release/ -lpthread_dll
+        LIBS += -L$$GX_ROOT/external/zlib/lib/win/vc120/x64/release/ -lzlib
     }
 }
-
-#zlib
-macx {
+else:macx {
     LIBS += -L$$GX_ROOT/external/zlib/lib/mac/ -lzlib
 }
-
+#dlls
+win32{
+    WIN_GX_ROOT = $$GX_ROOT
+    WIN_GX_ROOT ~= s,/,\\,g
+    debug {
+        QMAKE_POST_LINK = copy /y $$WIN_GX_ROOT\\external\\pthread-win32\\lib\\win\\vc120\\x64\\debug\\*.dll Debug
+    }
+    else {
+        QMAKE_POST_LINK = copy /y $$WIN_GX_ROOT\\external\\pthread-win32\\lib\\win\\vc120\\x64\\release\\*.dll Release
+    }
+}

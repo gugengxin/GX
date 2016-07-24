@@ -13,8 +13,8 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(GXRoot)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(GXRoot)\product\vs\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GX.lib;pthread_dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(GXRoot)\product\vs\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\zlib\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GX.lib;pthread_dll.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>

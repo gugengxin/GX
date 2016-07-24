@@ -14,7 +14,14 @@
 #define GX_BIG_ENDIAN 4321
 
 #if defined(GX_OS_QT)
-
+#include <QtCore>
+#if defined(Q_OS_WIN)
+#define GX_OS_QT_WINDOWS
+#elif defined(Q_OS_OSX)
+#define GX_OS_QT_MACOSX
+#else
+#error
+#endif
 #elif defined(GX_OS_IOS)
 
 #define GX_OS_APPLE

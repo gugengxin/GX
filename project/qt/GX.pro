@@ -10,6 +10,7 @@ TARGET = GX
 TEMPLATE = lib
 CONFIG += staticlib
 DEFINES += GX_OS_QT
+win32:DEFINES += _UNICODE
 DESTDIR = ../../product/qt
 OBJECTS_DIR = obj
 UI_DIR = ui

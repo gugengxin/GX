@@ -77,10 +77,10 @@ bool GFileManager::fileExists(const gtchar* path, bool* isDirectory)
 	}
 	return false;
 #elif defined(GX_OS_QT)
-    QFileInfo fi(path);
-    if(fi.exists()) {
+    QFileInfo fileInfo(QString::fromUtf16((const ushort*)path));
+    if(fileInfo.exists()) {
         if(isDirectory) {
-            (*isDirectory)=fi.isDir();
+            (*isDirectory)=fileInfo.isDir();
         }
         return true;
     }

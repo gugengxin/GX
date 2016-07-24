@@ -19,6 +19,7 @@
 #include "GJavaCAPI.h"
 #define M_RESOURCE_DIR_NAME "assets"
 #elif defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
+#include <Windows.h>
 #define M_RESOURCE_DIR_NAME "assets"
 #endif
 
@@ -60,6 +61,10 @@ GAppBundle::GAppBundle()
     if(path) {
         open(path->c_str(),true);
     }
+#elif defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
+	TCHAR buf[1024];
+	::GetCurrentDirectory(1024,buf);
+	open(buf);
 #else
 #error
 #endif

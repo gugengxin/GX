@@ -11,7 +11,7 @@
 
 #include "GXPrefix.h"
 
-#if defined(GX_OS_WINDOWS)
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 #define GX_NO_PTHREAD_H
 #else
 #include <pthread.h>
@@ -26,7 +26,7 @@ namespace GX {
     extern int pthread_test;
 #endif
 
-#if defined(GX_OS_WINDOWS)
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
     typedef struct _pthread_t {
         void * p;
         unsigned int x;
