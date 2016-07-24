@@ -249,9 +249,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CA24AB1C1BD8B98A008C4644 /* freetype.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = freetype.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAA373F81B01D58900468057 /* freetype.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = freetype.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAA374161B01D62B00468057 /* freetype.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = freetype.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA24AB1C1BD8B98A008C4644 /* libfreetype.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfreetype.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAA373F81B01D58900468057 /* libfreetype.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfreetype.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAA374161B01D62B00468057 /* libfreetype.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfreetype.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAA377D11B01D70100468057 /* ftconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftconfig.h; sourceTree = "<group>"; };
 		CAA377D21B01D70100468057 /* ftheader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftheader.h; sourceTree = "<group>"; };
 		CAA377D31B01D70100468057 /* ftmodule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftmodule.h; sourceTree = "<group>"; };
@@ -423,9 +423,9 @@
 		CAA373F91B01D58900468057 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CAA373F81B01D58900468057 /* freetype.a */,
-				CAA374161B01D62B00468057 /* freetype.a */,
-				CA24AB1C1BD8B98A008C4644 /* freetype.a */,
+				CAA373F81B01D58900468057 /* libfreetype.a */,
+				CAA374161B01D62B00468057 /* libfreetype.a */,
+				CA24AB1C1BD8B98A008C4644 /* libfreetype.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -726,7 +726,7 @@
 			);
 			name = freetype_atv;
 			productName = GXFreeTypetvOS;
-			productReference = CA24AB1C1BD8B98A008C4644 /* freetype.a */;
+			productReference = CA24AB1C1BD8B98A008C4644 /* libfreetype.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CAA373F71B01D58900468057 /* freetype_ios */ = {
@@ -743,7 +743,7 @@
 			);
 			name = freetype_ios;
 			productName = TGFreeType;
-			productReference = CAA373F81B01D58900468057 /* freetype.a */;
+			productReference = CAA373F81B01D58900468057 /* libfreetype.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CAA374151B01D62B00468057 /* freetype_mac */ = {
@@ -760,7 +760,7 @@
 			);
 			name = freetype_mac;
 			productName = TGFreeType;
-			productReference = CAA374161B01D62B00468057 /* freetype.a */;
+			productReference = CAA374161B01D62B00468057 /* libfreetype.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -961,7 +961,6 @@
 			buildSettings = {
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
-				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = FT2_BUILD_LIBRARY;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../include\"/**",
@@ -977,7 +976,6 @@
 		CA24AB231BD8B98A008C4644 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = FT2_BUILD_LIBRARY;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../include\"/**",
@@ -1072,7 +1070,6 @@
 		CAA3740D1B01D58900468057 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = FT2_BUILD_LIBRARY;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1090,7 +1087,6 @@
 		CAA3740E1B01D58900468057 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = FT2_BUILD_LIBRARY;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1110,7 +1106,6 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1132,7 +1127,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				EXECUTABLE_PREFIX = "";
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = FT2_BUILD_LIBRARY;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

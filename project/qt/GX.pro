@@ -44,7 +44,7 @@ SOURCES += \
 	../../src/GFileWriter.cpp\
 	#../../src/GJavaAPI.cpp\
 	#../../src/GJavaCAPI.cpp\
-	../../src/GJavaClass.cpp\
+	#../../src/GJavaClass.cpp\
 	#../../src/GJavaJAPI.cpp\
 	../../src/GList.cpp\
 	../../src/GLog.cpp\
@@ -179,16 +179,12 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
+#pthread
 win32-msvc2013 {
     QMAKE_LIBFLAGS += /ignore:4221
     INCLUDEPATH += $$PWD/../../external/pthread-win32/include
-    DEPENDPATH += $$PWD/../../external/pthread-win32/include
-    debug {
-        LIBS += -L$$PWD/../../external/pthread-win32/lib/win/vc120/x64/debug/ -lpthread_dll
-    }
-    release {
-        LIBS += -L$$PWD/../../external/pthread-win32/lib/win/vc120/x64/release/ -lpthread_dll
-    }
 }
+#zlib
+INCLUDEPATH += $$PWD/../../external/zlib/include
 
 

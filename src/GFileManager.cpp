@@ -20,6 +20,8 @@
 #include <string.h>
 #include <utime.h>
 #include <fcntl.h>
+#elif defined(GX_OS_QT)
+#include <QFileInfo>
 #endif
 #include "GDataString.h"
 
@@ -74,6 +76,17 @@ bool GFileManager::fileExists(const gtchar* path, bool* isDirectory)
 		return true;
 	}
 	return false;
+#elif defined(GX_OS_QT)
+    QFileInfo fi(path);
+    if(fi.exists()) {
+        if(isDirectory) {
+            (*isDirectory)=fi.isDir();
+        }
+        return true;
+    }
+    return false;
+#else
+#error
 #endif
 }
 

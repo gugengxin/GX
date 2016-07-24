@@ -15,6 +15,14 @@
 #include "GString.h"
 #include "GWString.h"
 
+#include "GZipReader.h"
+#include "GZipWriter.h"
+
+#include "GBundle.h"
+#include "GFileBundle.h"
+#include "GZipBundle.h"
+#include "GAppBundle.h"
+
 #include "GLog.h"
 #include "GApplication.h"
 

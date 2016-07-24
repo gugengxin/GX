@@ -11,7 +11,7 @@
 #include "GCondition.h"
 #include "GXGObject.h"
 
-#if defined(GX_OS_WINDOWS) || defined(Q_OS_WIN)
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 #include <Windows.h>
 #define M_PID_SELF() (*GX_CAST_R(GX::pthread_t*, &pthread_self()))
 #define M_TO_PID(pid) (*GX_CAST_R(::pthread_t*, &(pid)))
@@ -97,7 +97,7 @@ GThread* GThread::current()
 
 void GThread::sleep(gint ms)
 {
-#if defined(GX_OS_WINDOWS) || defined(Q_OS_WIN)
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 	::Sleep((DWORD)ms);
 #else
 	usleep((useconds_t)ms * 1000L);

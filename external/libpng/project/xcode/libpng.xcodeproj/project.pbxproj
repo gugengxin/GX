@@ -76,9 +76,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CA0085071D0B9AFC00B27AF4 /* libpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA0085171D0B9C1100B27AF4 /* libpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA0085241D0B9E3000B27AF4 /* libpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA0085071D0B9AFC00B27AF4 /* liblibpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA0085171D0B9C1100B27AF4 /* liblibpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA0085241D0B9E3000B27AF4 /* liblibpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA0085501D0B9F8800B27AF4 /* png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = png.h; sourceTree = "<group>"; };
 		CA0085511D0B9F8800B27AF4 /* pngconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngconf.h; sourceTree = "<group>"; };
 		CA0085521D0B9F8800B27AF4 /* pngdebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngdebug.h; sourceTree = "<group>"; };
@@ -140,9 +140,9 @@
 		CA0085081D0B9AFC00B27AF4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CA0085071D0B9AFC00B27AF4 /* libpng.a */,
-				CA0085171D0B9C1100B27AF4 /* libpng.a */,
-				CA0085241D0B9E3000B27AF4 /* libpng.a */,
+				CA0085071D0B9AFC00B27AF4 /* liblibpng.a */,
+				CA0085171D0B9C1100B27AF4 /* liblibpng.a */,
+				CA0085241D0B9E3000B27AF4 /* liblibpng.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -212,7 +212,7 @@
 			);
 			name = libpng_ios;
 			productName = libpng;
-			productReference = CA0085071D0B9AFC00B27AF4 /* libpng.a */;
+			productReference = CA0085071D0B9AFC00B27AF4 /* liblibpng.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CA0085161D0B9C1100B27AF4 /* libpng_atv */ = {
@@ -229,7 +229,7 @@
 			);
 			name = libpng_atv;
 			productName = libpng;
-			productReference = CA0085171D0B9C1100B27AF4 /* libpng.a */;
+			productReference = CA0085171D0B9C1100B27AF4 /* liblibpng.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CA0085231D0B9E3000B27AF4 /* libpng_mac */ = {
@@ -246,7 +246,7 @@
 			);
 			name = libpng_mac;
 			productName = libpng;
-			productReference = CA0085241D0B9E3000B27AF4 /* libpng.a */;
+			productReference = CA0085241D0B9E3000B27AF4 /* liblibpng.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -443,7 +443,6 @@
 		CA0085111D0B9AFC00B27AF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
 				SKIP_INSTALL = YES;
 			};
@@ -452,7 +451,6 @@
 		CA0085121D0B9AFC00B27AF4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
 				SKIP_INSTALL = YES;
 			};
@@ -461,7 +459,6 @@
 		CA00851E1D0B9C1100B27AF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -472,7 +469,6 @@
 		CA00851F1D0B9C1100B27AF4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -484,7 +480,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
-				EXECUTABLE_PREFIX = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
 			};
@@ -494,7 +489,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
-				EXECUTABLE_PREFIX = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
 			};

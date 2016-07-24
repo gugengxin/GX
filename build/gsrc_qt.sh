@@ -14,7 +14,7 @@ ${GX_TE} -i ${GX_ROOT}/project/qt/GX.pro -o ${GX_ROOT}/project/qt/GX.pro \
 -fd ${GX_ROOT}/src \
 -fe .cpp -fe .c \
 -fsp "\t../../src" -fss "\\\n" \
--ff GBuffer.cpp -ff GD3DContext.cpp -ff GDShader.cpp -ff GJavaAPI.cpp -ff GJavaCAPI.cpp -ff GJavaJAPI.cpp -ff glew.c -ff GXCWnd.cpp -ff GXDirectX.cpp \
+-ff GBuffer.cpp -ff GD3DContext.cpp -ff GDShader.cpp -ff GJavaAPI.cpp -ff GJavaCAPI.cpp -ff GJavaClass.cpp -ff GJavaJAPI.cpp -ff glew.c -ff GXCWnd.cpp -ff GXDirectX.cpp \
 -fsfp "\t#../../src" -fsfs "\\\n" \
 -fi GXPthread.cpp
 

@@ -823,7 +823,7 @@ GString::Formater GString::format(const gchar* fmt, gint len)
 GString::Formater GString::appendFormat(const gchar* fmt, gint len)
 {
 	gint lenCur = getLength();
-	append(fmt);
+	append(fmt,len);
 	return Formater(this, lenCur, 0);
 }
 GString::Formater GString::insertFormat(gint idx, const gchar* fmt, gint len)

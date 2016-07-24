@@ -180,9 +180,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CA0085A41D0BA95300B27AF4 /* libjpeg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjpeg.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA96317F1D0BAA8D00BAEC04 /* libjpeg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjpeg.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA96318C1D0BAABF00BAEC04 /* libjpeg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjpeg.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA0085A41D0BA95300B27AF4 /* liblibjpeg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibjpeg.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA96317F1D0BAA8D00BAEC04 /* liblibjpeg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibjpeg.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA96318C1D0BAABF00BAEC04 /* liblibjpeg.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibjpeg.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA9631971D0BAB8200BAEC04 /* jerror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jerror.h; sourceTree = "<group>"; };
 		CA9631981D0BAB8200BAEC04 /* jmorecfg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jmorecfg.h; sourceTree = "<group>"; };
 		CA9631991D0BAB8200BAEC04 /* jpeglib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jpeglib.h; sourceTree = "<group>"; };
@@ -279,9 +279,9 @@
 		CA0085A51D0BA95300B27AF4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CA0085A41D0BA95300B27AF4 /* libjpeg.a */,
-				CA96317F1D0BAA8D00BAEC04 /* libjpeg.a */,
-				CA96318C1D0BAABF00BAEC04 /* libjpeg.a */,
+				CA0085A41D0BA95300B27AF4 /* liblibjpeg.a */,
+				CA96317F1D0BAA8D00BAEC04 /* liblibjpeg.a */,
+				CA96318C1D0BAABF00BAEC04 /* liblibjpeg.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -397,7 +397,7 @@
 			);
 			name = libjpeg_ios;
 			productName = libjpeg;
-			productReference = CA0085A41D0BA95300B27AF4 /* libjpeg.a */;
+			productReference = CA0085A41D0BA95300B27AF4 /* liblibjpeg.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CA96317E1D0BAA8D00BAEC04 /* libjpeg_atv */ = {
@@ -414,7 +414,7 @@
 			);
 			name = libjpeg_atv;
 			productName = libjpeg;
-			productReference = CA96317F1D0BAA8D00BAEC04 /* libjpeg.a */;
+			productReference = CA96317F1D0BAA8D00BAEC04 /* liblibjpeg.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CA96318B1D0BAABF00BAEC04 /* libjpeg_mac */ = {
@@ -431,7 +431,7 @@
 			);
 			name = libjpeg_mac;
 			productName = libjpeg;
-			productReference = CA96318C1D0BAABF00BAEC04 /* libjpeg.a */;
+			productReference = CA96318C1D0BAABF00BAEC04 /* liblibjpeg.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -721,7 +721,6 @@
 		CA0085AE1D0BA95300B27AF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../include/ios\"";
 				OTHER_LDFLAGS = "-ObjC";
 				SKIP_INSTALL = YES;
@@ -731,7 +730,6 @@
 		CA0085AF1D0BA95300B27AF4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../include/ios\"";
 				OTHER_LDFLAGS = "-ObjC";
 				SKIP_INSTALL = YES;
@@ -741,7 +739,6 @@
 		CA9631861D0BAA8D00BAEC04 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../include/atv\"";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = appletvos;
@@ -753,7 +750,6 @@
 		CA9631871D0BAA8D00BAEC04 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../include/atv\"";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = appletvos;
@@ -766,7 +762,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
-				EXECUTABLE_PREFIX = "";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../include/mac\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
@@ -778,7 +773,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
-				EXECUTABLE_PREFIX = "";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../include/mac\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
@@ -814,6 +808,7 @@
 				CA9631871D0BAA8D00BAEC04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CA96318D1D0BAAC000BAEC04 /* Build configuration list for PBXNativeTarget "libjpeg_mac" */ = {
 			isa = XCConfigurationList;
@@ -822,6 +817,7 @@
 				CA96318F1D0BAAC000BAEC04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

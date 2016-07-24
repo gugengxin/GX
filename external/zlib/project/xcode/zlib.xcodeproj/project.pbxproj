@@ -85,8 +85,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CA253AD51D09B1200095BE90 /* zlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = zlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA253AE21D09B1690095BE90 /* zlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = zlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA253AD51D09B1200095BE90 /* libzlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libzlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA253AE21D09B1690095BE90 /* libzlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libzlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA253AE71D09B2170095BE90 /* crc32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc32.h; sourceTree = "<group>"; };
 		CA253AE81D09B2170095BE90 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		CA253AE91D09B2170095BE90 /* deflate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deflate.h; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 		CA253B081D09B2170095BE90 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
 		CA253B091D09B2170095BE90 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
 		CA253B0A1D09B2170095BE90 /* zutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zutil.c; sourceTree = "<group>"; };
-		CA648AAA1D09AC410036D581 /* zlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = zlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA648AAA1D09AC410036D581 /* libzlib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libzlib.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,9 +213,9 @@
 		CA648AAB1D09AC410036D581 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CA648AAA1D09AC410036D581 /* zlib.a */,
-				CA253AD51D09B1200095BE90 /* zlib.a */,
-				CA253AE21D09B1690095BE90 /* zlib.a */,
+				CA648AAA1D09AC410036D581 /* libzlib.a */,
+				CA253AD51D09B1200095BE90 /* libzlib.a */,
+				CA253AE21D09B1690095BE90 /* libzlib.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -247,7 +247,7 @@
 			);
 			name = zlib_atv;
 			productName = zlib;
-			productReference = CA253AD51D09B1200095BE90 /* zlib.a */;
+			productReference = CA253AD51D09B1200095BE90 /* libzlib.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CA253AE11D09B1690095BE90 /* zlib_mac */ = {
@@ -264,7 +264,7 @@
 			);
 			name = zlib_mac;
 			productName = zlib;
-			productReference = CA253AE21D09B1690095BE90 /* zlib.a */;
+			productReference = CA253AE21D09B1690095BE90 /* libzlib.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CA648AA91D09AC410036D581 /* zlib_ios */ = {
@@ -281,7 +281,7 @@
 			);
 			name = zlib_ios;
 			productName = zlib;
-			productReference = CA648AAA1D09AC410036D581 /* zlib.a */;
+			productReference = CA648AAA1D09AC410036D581 /* libzlib.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -405,7 +405,6 @@
 		CA253ADC1D09B1200095BE90 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -416,7 +415,6 @@
 		CA253ADD1D09B1200095BE90 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -428,7 +426,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
-				EXECUTABLE_PREFIX = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
 			};
@@ -438,7 +435,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
-				EXECUTABLE_PREFIX = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = macosx;
 			};
@@ -529,7 +525,6 @@
 		CA648AB41D09AC410036D581 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
 				SKIP_INSTALL = YES;
 			};
@@ -538,7 +533,6 @@
 		CA648AB51D09AC410036D581 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
 				SKIP_INSTALL = YES;
 			};

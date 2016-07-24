@@ -27,9 +27,9 @@ mkdir -p $OUTPUT_DIR/ios
 mkdir -p $OUTPUT_DIR/atv
 mkdir -p $OUTPUT_DIR/mac
 
-lipo -create build/Release-iphoneos/${TARGET_NAME}.a build/Release-iphonesimulator/${TARGET_NAME}.a -output $OUTPUT_DIR/ios/${TARGET_NAME}.a
-lipo -create build/Release-appletvos/${TARGET_NAME}.a build/Release-appletvsimulator/${TARGET_NAME}.a -output $OUTPUT_DIR/atv/${TARGET_NAME}.a
-lipo -create build/Release/${TARGET_NAME}.a -output $OUTPUT_DIR/mac/${TARGET_NAME}.a
+lipo -create build/Release-iphoneos/lib${TARGET_NAME}.a build/Release-iphonesimulator/lib${TARGET_NAME}.a -output $OUTPUT_DIR/ios/lib${TARGET_NAME}.a
+lipo -create build/Release-appletvos/lib${TARGET_NAME}.a build/Release-appletvsimulator/lib${TARGET_NAME}.a -output $OUTPUT_DIR/atv/lib${TARGET_NAME}.a
+lipo -create build/Release/lib${TARGET_NAME}.a -output $OUTPUT_DIR/mac/lib${TARGET_NAME}.a
                        
 rm -rf build
 

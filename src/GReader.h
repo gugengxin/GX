@@ -28,6 +28,7 @@ public:
 public:
     virtual bool canRollback()=0;
     virtual bool rollback(guint len) {
+        GX_UNUSED(len);
         return false;
     }
     virtual bool rollbackAll();

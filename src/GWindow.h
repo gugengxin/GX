@@ -60,11 +60,11 @@ public:
     float getScale();
     
 public:
-	virtual void idle();
+	void idle();
 	void renderIfNeed();
 protected:
 	void renderForce();
-	virtual void render();
+	void render();
 protected:
     void eventResize();
     void eventDestroy();

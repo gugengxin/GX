@@ -12,19 +12,19 @@
 
 #if defined(GX_OS_IPHONE)
 #include <CoreFoundation/CoreFoundation.h>
-#elif defined(GX_OS_MACOSX)
+#elif defined(GX_OS_MACOSX) || defined(GX_OS_QT_MACOSX)
 #include <CoreFoundation/CoreFoundation.h>
 #define M_RESOURCE_DIR_NAME "Contents/Resources"
 #elif defined(GX_OS_ANDROID)
 #include "GJavaCAPI.h"
 #define M_RESOURCE_DIR_NAME "assets"
-#elif defined(GX_OS_WINDOWS)
+#elif defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 #define M_RESOURCE_DIR_NAME "assets"
 #endif
 
 
 
-#if defined(GX_OS_APPLE) || defined(GX_OS_WINDOWS)
+#if defined(GX_OS_APPLE) || defined(GX_OS_WINDOWS) || defined(GX_OS_QT)
 #define M_BASE_CLASS GFileBundle
 #elif defined(GX_OS_ANDROID)
 #define M_BASE_CLASS GZipBundle
@@ -40,7 +40,7 @@ GAppBundle* GAppBundle::main()
 
 GAppBundle::GAppBundle()
 {
-#if defined(GX_OS_APPLE)
+#if defined(GX_OS_APPLE) || defined(GX_OS_QT_MACOSX)
     CFBundleRef pBE=CFBundleGetMainBundle();
     CFURLRef url=CFBundleCopyBundleURL(pBE);
     CFStringRef str=CFURLCopyFileSystemPath(url, kCFURLPOSIXPathStyle);
@@ -73,7 +73,7 @@ GReader* GAppBundle::openReader(const gchar* fileName)
 {
 #if defined(GX_OS_IPHONE)
     return M_BASE_CLASS::openReader(fileName);
-#elif defined(GX_OS_MACOSX) || defined(GX_OS_WINDOWS) || defined(GX_OS_ANDROID)
+#elif defined(GX_OS_MACOSX) || defined(GX_OS_WINDOWS) || defined(GX_OS_ANDROID) || defined(GX_OS_QT)
     GString path;
     path.append(M_RESOURCE_DIR_NAME);
     path.appendPathComponent(fileName);
