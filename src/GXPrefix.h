@@ -58,5 +58,9 @@
 #define GX_UNUSED(x)
 #endif
 
+#ifdef _WIN32
+#define ZLIB_WINAPI
+#endif
+
 
 #endif /* GXPrefix_h */

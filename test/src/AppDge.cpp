@@ -22,11 +22,20 @@ void AppDge::appCanCreateWindow(GApplication* application,void* osWindow)
 	str->format("%Hello!1234%").arg('A', 10).arg(L'新',3);
 	GX_LOG_P1(PrioDEBUG, "AppDge", "%s", str->c_str());
 
-    GZipReader* reader=GZipReader::alloc();
-    if(reader->open(GX_T("/ABC"))) {
+    //GZipReader* reader=GZipReader::alloc();
+    //if(reader->open(GX_T("/ABC"))) {
 
-    }
-    GO::release(reader);
+    //}
+    //GO::release(reader);
+
+	GZipWriter* writer = GZipWriter::alloc();
+
+	if (writer->open(GX_T(""), GZipWriter::ModeCreate)) {
+
+
+	}
+
+	GO::release(writer);
 
 
 	application->addWindow(osWindow);
