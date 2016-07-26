@@ -240,6 +240,9 @@
     <ClCompile Include="..\..\src\GZipBundle.cpp">
       <Filter>src\Bundle</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GRBReader.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -481,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GZipBundle.h">
       <Filter>src\Bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GRBReader.h">
+      <Filter>src\IO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

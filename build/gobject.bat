@@ -9,7 +9,7 @@ pushd %~dp0\..
 set GX_ROOT=%cd%
 popd
 pushd %~dp0
-set TEMPLATES_PATH=%cd%\templates
+set TEMPLATES_PATH=%cd%/templates
 popd
 
 

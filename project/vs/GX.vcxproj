@@ -63,6 +63,7 @@
     <ClCompile Include="..\..\src\GPainter.cpp" />
     <ClCompile Include="..\..\src\GPieceData.cpp" />
     <ClCompile Include="..\..\src\GPtr.cpp" />
+    <ClCompile Include="..\..\src\GRBReader.cpp" />
     <ClCompile Include="..\..\src\GReader.cpp" />
     <ClCompile Include="..\..\src\GRunLoop.cpp" />
     <ClCompile Include="..\..\src\GShader.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="..\..\src\GPainter.h" />
     <ClInclude Include="..\..\src\GPieceData.h" />
     <ClInclude Include="..\..\src\GPtr.h" />
+    <ClInclude Include="..\..\src\GRBReader.h" />
     <ClInclude Include="..\..\src\GReader.h" />
     <ClInclude Include="..\..\src\GRunLoop.h" />
     <ClInclude Include="..\..\src\GShader.h" />
