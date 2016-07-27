@@ -31,7 +31,7 @@ namespace GX {
         PixelFormatPVRTC2RGBA   =0x10084,
     };
     
-    typedef guint PixelFormat;
+    typedef guint32 PixelFormat;
     
 #define GX_PIXEL_FORMAT_SIZE(x) (((x)>>8)&0xFF)
 #define GX_PIXEL_FORMAT_HAVEALPHA(x) ((x)&0x80)
@@ -44,7 +44,7 @@ namespace GX {
         PixelChannelAlpha,
     };
     
-    typedef guint PixelChannel;
+    typedef guint32 PixelChannel;
 }
 
 

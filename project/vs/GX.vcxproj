@@ -38,6 +38,7 @@
     <ClCompile Include="..\..\src\GDataReader.cpp" />
     <ClCompile Include="..\..\src\GDataString.cpp" />
     <ClCompile Include="..\..\src\GDataWriter.cpp" />
+    <ClCompile Include="..\..\src\GDib.cpp" />
     <ClCompile Include="..\..\src\GDShader.cpp" />
     <ClCompile Include="..\..\src\GFileBundle.cpp" />
     <ClCompile Include="..\..\src\GFileManager.cpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="..\..\src\GJavaCAPI.cpp" />
     <ClCompile Include="..\..\src\GJavaClass.cpp" />
     <ClCompile Include="..\..\src\GJavaJAPI.cpp" />
+    <ClCompile Include="..\..\src\GJpeg.cpp" />
     <ClCompile Include="..\..\src\glew.c" />
     <ClCompile Include="..\..\src\GList.cpp" />
     <ClCompile Include="..\..\src\GLog.cpp" />
@@ -62,6 +64,7 @@
     <ClCompile Include="..\..\src\GOWHash.cpp" />
     <ClCompile Include="..\..\src\GPainter.cpp" />
     <ClCompile Include="..\..\src\GPieceData.cpp" />
+    <ClCompile Include="..\..\src\GPng.cpp" />
     <ClCompile Include="..\..\src\GPtr.cpp" />
     <ClCompile Include="..\..\src\GRBReader.cpp" />
     <ClCompile Include="..\..\src\GReader.cpp" />
@@ -110,6 +113,7 @@
     <ClInclude Include="..\..\src\GDataReader.h" />
     <ClInclude Include="..\..\src\GDataString.h" />
     <ClInclude Include="..\..\src\GDataWriter.h" />
+    <ClInclude Include="..\..\src\GDib.h" />
     <ClInclude Include="..\..\src\GDShader.h" />
     <ClInclude Include="..\..\src\GFileBundle.h" />
     <ClInclude Include="..\..\src\GFileManager.h" />
@@ -119,6 +123,7 @@
     <ClInclude Include="..\..\src\GJavaCAPI.h" />
     <ClInclude Include="..\..\src\GJavaClass.h" />
     <ClInclude Include="..\..\src\GJavaJAPI.h" />
+    <ClInclude Include="..\..\src\GJpeg.h" />
     <ClInclude Include="..\..\src\GList.h" />
     <ClInclude Include="..\..\src\GLog.h" />
     <ClInclude Include="..\..\src\GL\glew.h" />
@@ -136,6 +141,7 @@
     <ClInclude Include="..\..\src\GOWHash.h" />
     <ClInclude Include="..\..\src\GPainter.h" />
     <ClInclude Include="..\..\src\GPieceData.h" />
+    <ClInclude Include="..\..\src\GPng.h" />
     <ClInclude Include="..\..\src\GPtr.h" />
     <ClInclude Include="..\..\src\GRBReader.h" />
     <ClInclude Include="..\..\src\GReader.h" />
@@ -164,6 +170,7 @@
     <ClInclude Include="..\..\src\GXObject.h" />
     <ClInclude Include="..\..\src\GXOpenGL.h" />
     <ClInclude Include="..\..\src\GXOSs.h" />
+    <ClInclude Include="..\..\src\GXPixel.h" />
     <ClInclude Include="..\..\src\GXPrefix.h" />
     <ClInclude Include="..\..\src\GXPthread.h" />
     <ClInclude Include="..\..\src\GXTypes.h" />
@@ -245,7 +252,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;$(ProjectDir)..\..\external\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;$(ProjectDir)..\..\external\zlib\include;$(ProjectDir)..\..\external\libpng\include;$(ProjectDir)..\..\external\libjpeg\include;$(ProjectDir)..\..\external\libjpeg\include\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -260,7 +267,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN64;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;$(ProjectDir)..\..\external\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;$(ProjectDir)..\..\external\zlib\include;$(ProjectDir)..\..\external\libpng\include;$(ProjectDir)..\..\external\libjpeg\include;$(ProjectDir)..\..\external\libjpeg\include\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
@@ -277,7 +284,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;$(ProjectDir)..\..\external\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;$(ProjectDir)..\..\external\zlib\include;$(ProjectDir)..\..\external\libpng\include;$(ProjectDir)..\..\external\libjpeg\include;$(ProjectDir)..\..\external\libjpeg\include\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -295,7 +302,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;$(ProjectDir)..\..\external\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\external\pthread-win32\include;$(ProjectDir)..\..\external\zlib\include;$(ProjectDir)..\..\external\libpng\include;$(ProjectDir)..\..\external\libjpeg\include;$(ProjectDir)..\..\external\libjpeg\include\win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

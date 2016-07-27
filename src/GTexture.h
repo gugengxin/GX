@@ -37,7 +37,8 @@ private:
 #ifdef GX_OPENGL
     GLuint  m_Name;
 #elif defined(GX_DIRECTX)
-    
+	ID3D10ShaderResourceView*	m_Name;
+	ID3D10SamplerState*			m_SamplerState;
 #endif
 };
 

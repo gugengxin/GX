@@ -31,7 +31,8 @@ GTexture::GTexture()
 #ifdef GX_OPENGL
     m_Name=0;
 #elif defined(GX_DIRECTX)
-    
+	m_Name=NULL;
+	m_SamplerState=NULL;
 #endif
 }
 

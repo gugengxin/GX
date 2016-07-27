@@ -243,6 +243,15 @@
     <ClCompile Include="..\..\src\GRBReader.cpp">
       <Filter>src\IO</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GDib.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GJpeg.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GPng.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -487,6 +496,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GRBReader.h">
       <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDib.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GJpeg.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GPng.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXPixel.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
