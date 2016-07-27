@@ -73,6 +73,15 @@
 		CA636DD31D1CDE5F0021D32F /* GBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA636DD11D1CDE5F0021D32F /* GBundle.cpp */; };
 		CA636DD81D1CDF870021D32F /* GAppBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA636DD41D1CDF870021D32F /* GAppBundle.cpp */; };
 		CA636DD91D1CDF870021D32F /* GFileManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA636DD61D1CDF870021D32F /* GFileManager.cpp */; };
+		CA63876D1D489DD500232BBB /* GRBReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA63876B1D489DD500232BBB /* GRBReader.cpp */; };
+		CA63876F1D48CFD300232BBB /* GZipWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA112EAF1D1C56CF001DA6CE /* GZipWriter.cpp */; };
+		CA6387701D48CFD300232BBB /* GZipWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA112EAF1D1C56CF001DA6CE /* GZipWriter.cpp */; };
+		CA6387711D48CFD600232BBB /* GDataWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA112EAA1D1C56CF001DA6CE /* GDataWriter.cpp */; };
+		CA6387721D48CFD600232BBB /* GDataWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA112EAA1D1C56CF001DA6CE /* GDataWriter.cpp */; };
+		CA6387731D48CFDA00232BBB /* GFileWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA112EAC1D1C56CF001DA6CE /* GFileWriter.cpp */; };
+		CA6387741D48CFDA00232BBB /* GFileWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA112EAC1D1C56CF001DA6CE /* GFileWriter.cpp */; };
+		CA6387751D48CFE500232BBB /* GRBReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA63876B1D489DD500232BBB /* GRBReader.cpp */; };
+		CA6387761D48CFE600232BBB /* GRBReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA63876B1D489DD500232BBB /* GRBReader.cpp */; };
 		CA7B4DE01CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
 		CA7B4DE11CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
 		CA7B4DE21CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
@@ -293,6 +302,8 @@
 		CA636DD51D1CDF870021D32F /* GAppBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAppBundle.h; sourceTree = "<group>"; };
 		CA636DD61D1CDF870021D32F /* GFileManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GFileManager.cpp; sourceTree = "<group>"; };
 		CA636DD71D1CDF870021D32F /* GFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFileManager.h; sourceTree = "<group>"; };
+		CA63876B1D489DD500232BBB /* GRBReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GRBReader.cpp; sourceTree = "<group>"; };
+		CA63876C1D489DD500232BBB /* GRBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRBReader.h; sourceTree = "<group>"; };
 		CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUUID.cpp; sourceTree = "<group>"; };
 		CA7B4DDF1CD5906F00F3D826 /* GUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUUID.h; sourceTree = "<group>"; };
 		CA7B4DE61CD594FF00F3D826 /* GApplication.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GApplication.cpp; sourceTree = "<group>"; };
@@ -449,6 +460,8 @@
 		CA0586731D13DE7C0096E73F /* IO */ = {
 			isa = PBXGroup;
 			children = (
+				CA63876C1D489DD500232BBB /* GRBReader.h */,
+				CA63876B1D489DD500232BBB /* GRBReader.cpp */,
 				CA112EAE1D1C56CF001DA6CE /* GXFILE.h */,
 				CAC7E44D1D1A63FE00719367 /* GReader.h */,
 				CAC7E44C1D1A63FE00719367 /* GReader.cpp */,
@@ -813,6 +826,7 @@
 				CA04FDFA1CE4557E00C9B596 /* GPtr.cpp in Sources */,
 				CABB5CCC1CE0E40500D5B648 /* GJavaAPI.cpp in Sources */,
 				CAC708AC1D13CDE900B98028 /* GTexture.cpp in Sources */,
+				CA63876D1D489DD500232BBB /* GRBReader.cpp in Sources */,
 				CA04FDEA1CE4557E00C9B596 /* GNotice.cpp in Sources */,
 				CADB5DBB1CF9E6300092C472 /* GMatrix.cpp in Sources */,
 				CA3090951CFD1C46000B8DF2 /* GSRGraphics.cpp in Sources */,
@@ -887,13 +901,17 @@
 				CAC708AD1D13CDE900B98028 /* GTexture.cpp in Sources */,
 				CAC2D1331CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CAE706D11CD2F8950090F4DD /* GDataArray.cpp in Sources */,
+				CA6387751D48CFE500232BBB /* GRBReader.cpp in Sources */,
 				CABB3F9A1CFE06EC00A7367C /* GVector.cpp in Sources */,
+				CA6387731D48CFDA00232BBB /* GFileWriter.cpp in Sources */,
 				CAC7E4591D1A6A7300719367 /* GFileReader.cpp in Sources */,
 				CA0B16031CD086F500C33BB5 /* GCondition.cpp in Sources */,
 				CA1F60B21CD984C100C6307B /* GXCWnd.cpp in Sources */,
 				CA04FDEF1CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */,
 				CA9F8E861D30758F00A5EBCA /* GBundle.cpp in Sources */,
+				CA6387711D48CFD600232BBB /* GDataWriter.cpp in Sources */,
 				CA04FDEB1CE4557E00C9B596 /* GNotice.cpp in Sources */,
+				CA63876F1D48CFD300232BBB /* GZipWriter.cpp in Sources */,
 				CAE303BE1CE563CB00F15C74 /* GD3DContext.cpp in Sources */,
 				CA04FDE11CE4557E00C9B596 /* GAction.cpp in Sources */,
 				CABB3F9D1CFE06EC00A7367C /* GShader.cpp in Sources */,
@@ -958,13 +976,17 @@
 				CAC708AE1D13CDE900B98028 /* GTexture.cpp in Sources */,
 				CAC2D1341CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CAE706D31CD2F8960090F4DD /* GDataArray.cpp in Sources */,
+				CA6387761D48CFE600232BBB /* GRBReader.cpp in Sources */,
 				CABB3F931CFE06EB00A7367C /* GVector.cpp in Sources */,
+				CA6387741D48CFDA00232BBB /* GFileWriter.cpp in Sources */,
 				CAC7E45A1D1A6A7300719367 /* GFileReader.cpp in Sources */,
 				CA0B16041CD086F500C33BB5 /* GCondition.cpp in Sources */,
 				CA1F60B41CD984C100C6307B /* GXCWnd.cpp in Sources */,
 				CA04FDF01CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */,
 				CA9F8E8A1D30758F00A5EBCA /* GBundle.cpp in Sources */,
+				CA6387721D48CFD600232BBB /* GDataWriter.cpp in Sources */,
 				CA04FDEC1CE4557E00C9B596 /* GNotice.cpp in Sources */,
+				CA6387701D48CFD300232BBB /* GZipWriter.cpp in Sources */,
 				CAE303C81CE563CB00F15C74 /* GD3DContext.cpp in Sources */,
 				CA04FDE21CE4557E00C9B596 /* GAction.cpp in Sources */,
 				CABB3F961CFE06EB00A7367C /* GShader.cpp in Sources */,

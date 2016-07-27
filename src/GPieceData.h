@@ -19,6 +19,7 @@ class GPieceData : public GData {
     template <typename,typename> friend class GDataArray;
 	template<typename> friend class GArray;
     friend class GString;
+    friend class GRBReader;
     GX_GOBJECT(GPieceData);
 protected:
 	GPieceData(guint32 pieceSize);

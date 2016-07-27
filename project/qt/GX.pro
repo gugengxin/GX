@@ -62,6 +62,7 @@ SOURCES += \
 	../../src/GPainter.cpp\
 	../../src/GPieceData.cpp\
 	../../src/GPtr.cpp\
+	../../src/GRBReader.cpp\
 	../../src/GReader.cpp\
 	../../src/GRunLoop.cpp\
 	../../src/GSRGraphics.cpp\
@@ -139,6 +140,7 @@ HEADERS += \
 	../../src/GPainter.h\
 	../../src/GPieceData.h\
 	../../src/GPtr.h\
+	../../src/GRBReader.h\
 	../../src/GReader.h\
 	../../src/GRunLoop.h\
 	../../src/GSRGraphics.h\
