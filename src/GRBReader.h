@@ -19,6 +19,7 @@
 
 class GRBReader : public GReader
 {
+    friend class GDib;
 	GX_GOBJECT(GRBReader);
 public:
     bool open(GReader* reader);

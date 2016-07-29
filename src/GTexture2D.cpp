@@ -7,3 +7,19 @@
 //
 
 #include "GTexture2D.h"
+
+
+#include "GXGObject.h"
+
+GX_GOBJECT_IMPLEMENT(GTexture2D, GTexture);
+
+
+GTexture2D::GTexture2D()
+{
+
+}
+
+GTexture2D::~GTexture2D()
+{
+
+}

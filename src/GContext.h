@@ -14,6 +14,7 @@
 #include "GPainter.h"
 #include "GSRGraphics.h"
 #include "GTexture2D.h"
+#include "GReader.h"
 
 class GContext : public GContextBase
 {
@@ -45,6 +46,10 @@ public:
 		return m_Painter;
 	}
 public:
+    GTexture2D* loadTexture2D(const gchar* fileName);
+    
+private:
+    GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT);
     
 private:
 	GPainter m_Painter;

@@ -74,8 +74,10 @@ static size_t my_jpeg_fun_src_fun(void* fundata, void* buffer, size_t bufsize)
 	return res > 0 ? res : 0;
 }
 
-bool GJpeg::read(GReader* reader, GDib::Info* infoOut, GData* dataOut)
+GDib* GJpeg::read(GReader* reader)
 {
+    GDib* res=NULL;
+    
 	/* This struct contains the JPEG decompression parameters and pointers to
 	* working space (which is allocated as needed by the JPEG library).
 	*/
@@ -105,7 +107,8 @@ bool GJpeg::read(GReader* reader, GDib::Info* infoOut, GData* dataOut)
 		* We need to clean up the JPEG object, close the input file, and return.
 		*/
 		jpeg_destroy_decompress(&cinfo);
-		return false;
+        GO::release(res);
+		return NULL;
 	}
 	/* Now we can initialize the JPEG decompression object. */
 	jpeg_create_decompress(&cinfo);
@@ -146,59 +149,77 @@ bool GJpeg::read(GReader* reader, GDib::Info* infoOut, GData* dataOut)
 	/* JSAMPLEs per row in output buffer */
 	row_stride = cinfo.output_width * cinfo.output_components;
 	/* Make a one-row-high sample array that will go away when done with image */
+    
+    
 
-	bool res = true;
 	if (cinfo.output_components == 3) {
-
-		dataOut->changeBytesIfNeed(cinfo.output_height*row_stride);
-
-		//    JSAMPARRAY buffer = (*cinfo.mem->alloc_sarray)
-		//    ((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
-
-		JSAMPROW buffer;		/* Output row buffer */
-		buffer = ((JSAMPROW)(dataOut->getPtr()));
-
-		/* Step 6: while (scan lines remain to be read) */
-		/*           jpeg_read_scanlines(...); */
-
-		/* Here we use the library's state variable cinfo.output_scanline as the
-		* loop counter, so that we don't have to keep track ourselves.
-		*/
-		//JSAMPROW rowPtr=(JSAMPROW)(dataOut->GetDataPtr());
-		while (cinfo.output_scanline < cinfo.output_height) {
-			/* jpeg_read_scanlines expects an array of pointers to scanlines.
-			* Here the array is only one element long, but you could ask for
-			* more than one scanline at a time if that's more convenient.
-			*/
-			(void)jpeg_read_scanlines(&cinfo, &buffer, 1);
-			buffer += row_stride;
-		}
+        res=GDib::alloc();
+        
+        if(res->changeDataBytes(cinfo.output_height*row_stride)) {
+            
+            res->setPixelFormat(GX::PixelFormatRGB888);
+            res->setWidth(cinfo.output_width);
+            res->setHeight(cinfo.output_height);
+            res->setStride(cinfo.output_width * 3);
+            
+            //    JSAMPARRAY buffer = (*cinfo.mem->alloc_sarray)
+            //    ((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
+            
+            JSAMPROW buffer;		/* Output row buffer */
+            buffer = ((JSAMPROW)(res->getDataPtr()));
+            
+            /* Step 6: while (scan lines remain to be read) */
+            /*           jpeg_read_scanlines(...); */
+            
+            /* Here we use the library's state variable cinfo.output_scanline as the
+             * loop counter, so that we don't have to keep track ourselves.
+             */
+            //JSAMPROW rowPtr=(JSAMPROW)(dataOut->GetDataPtr());
+            while (cinfo.output_scanline < cinfo.output_height) {
+                /* jpeg_read_scanlines expects an array of pointers to scanlines.
+                 * Here the array is only one element long, but you could ask for
+                 * more than one scanline at a time if that's more convenient.
+                 */
+                (void)jpeg_read_scanlines(&cinfo, &buffer, 1);
+                buffer += row_stride;
+            }
+        }
+        else {
+            GO::release(res);
+            res=NULL;
+        }
 	}
 	else if (cinfo.output_components == 1) {
-
-		dataOut->changeBytesIfNeed(cinfo.output_height*row_stride * 3);
-
-		unsigned char* bufRow = (unsigned char*)malloc(row_stride);
-		unsigned char* pData = (unsigned char*)dataOut->getPtr();
-
-		JSAMPROW buffer = ((JSAMPROW)bufRow);
-
-		while (cinfo.output_scanline < cinfo.output_height) {
-
-			jpeg_read_scanlines(&cinfo, &buffer, 1);
-
-			for (int i = 0; i<row_stride; i++) {
-				pData[0] = bufRow[i];
-				pData[1] = bufRow[i];
-				pData[2] = bufRow[i];
-				pData += 3;
-			}
-		}
-
-		free(bufRow);
-	}
-	else {
-		res = false;
+        res=GDib::alloc();
+        
+        if(res->changeDataBytes(cinfo.output_height*row_stride * 3)) {
+            
+            res->setPixelFormat(GX::PixelFormatRGB888);
+            res->setWidth(cinfo.output_width);
+            res->setHeight(cinfo.output_height);
+            res->setStride(cinfo.output_width * 3);
+            
+            unsigned char* bufRow = (unsigned char*)malloc(row_stride);
+            unsigned char* pData = (unsigned char*)res->getDataPtr();
+            
+            JSAMPROW buffer = ((JSAMPROW)bufRow);
+            
+            while (cinfo.output_scanline < cinfo.output_height) {
+                jpeg_read_scanlines(&cinfo, &buffer, 1);
+                for (int i = 0; i<row_stride; i++) {
+                    pData[0] = bufRow[i];
+                    pData[1] = bufRow[i];
+                    pData[2] = bufRow[i];
+                    pData += 3;
+                }
+            }
+            
+            free(bufRow);
+        }
+        else {
+            GO::release(res);
+            res=NULL;
+        }
 	}
 
 
@@ -213,14 +234,7 @@ bool GJpeg::read(GReader* reader, GDib::Info* infoOut, GData* dataOut)
 
 	/* This is an important step since it will release a good deal of memory. */
 	jpeg_destroy_decompress(&cinfo);
-
-	if (res) {
-		if (infoOut) {
-			infoOut->pixelFormat = GX::PixelFormatRGB888;
-			infoOut->width = cinfo.output_width;
-			infoOut->height = cinfo.output_height;
-			infoOut->stride = cinfo.output_width * 3;
-		}
-	}
+    
+    GO::autorelease(res);
 	return res;
 }

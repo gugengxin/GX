@@ -57,79 +57,73 @@ bool GRBReader::hasData()
 }
 gint GRBReader::read(void* buf, guint len)
 {
-    if (!m_RBClosed) {
-        gint lenRes=0;
-        if (len>0 && m_Cursor<m_Data.getBytes()) {
-            guint lenTemp=m_Data.getBytes()-m_Cursor;
-            if (lenTemp>len) {
-                lenTemp=len;
-            }
-            memcpy(buf, m_Data.getPtr(m_Cursor), lenTemp);
-            m_Cursor+=lenTemp;
-            lenRes+=(gint)lenTemp;
-            len-=lenTemp;
+    gint lenRes=0;
+    if (len>0 && m_Cursor<m_Data.getBytes()) {
+        guint lenTemp=m_Data.getBytes()-m_Cursor;
+        if (lenTemp>len) {
+            lenTemp=len;
         }
-        if (len>0) {
-            if (!m_Data.changeBytes(m_Data.getBytes()+len)) {
-                return -1;
-            }
-            gint nTemp=m_Reader->read(m_Data.getPtr(m_Cursor), len);
-            if (nTemp<0) {
-                return nTemp;
-            }
-            else if(nTemp>0) {
-                memcpy(((guint8*)buf)+lenRes, m_Data.getPtr(m_Cursor), (size_t)nTemp);
-                m_Cursor+=nTemp;
-                lenRes+=nTemp;
-            }
-            
-            if (m_Cursor<m_Data.getBytes()) {
-                if (!m_Data.changeBytes(m_Cursor)) {
+        memcpy(((guint8*)buf)+lenRes, m_Data.getPtr(m_Cursor), lenTemp);
+        m_Cursor+=lenTemp;
+        lenRes+=(gint)lenTemp;
+        len-=lenTemp;
+    }
+    
+    if (len>0) {
+        gint nTemp=m_Reader->read(((guint8*)buf)+lenRes, len);
+        if (nTemp<0) {
+            return nTemp;
+        }
+        else if(nTemp>0) {
+            if (!m_RBClosed) {
+                if (!m_Data.changeBytes(m_Cursor+nTemp)) {
                     return -1;
                 }
+                memcpy(m_Data.getPtr(m_Cursor), ((guint8*)buf)+lenRes, nTemp);
             }
+            
+            lenRes+=nTemp;
         }
-        
-        return lenRes;
     }
-	return m_Reader->read(buf, len);
+    
+    return lenRes;
 }
 bool GRBReader::skip(guint len)
 {
-    if (!m_RBClosed) {
-        if (len>0 && m_Cursor<m_Data.getBytes()) {
-            guint lenTemp=m_Data.getBytes()-m_Cursor;
-            if (lenTemp>len) {
-                lenTemp=len;
-            }
-            m_Cursor+=lenTemp;
-            len-=lenTemp;
+    if (len>0 && m_Cursor<m_Data.getBytes()) {
+        guint lenTemp=m_Data.getBytes()-m_Cursor;
+        if (lenTemp>len) {
+            lenTemp=len;
         }
-        if (len>0) {
-            if (!m_Data.changeBytes(m_Data.getBytes()+len)) {
+        m_Cursor+=lenTemp;
+        len-=lenTemp;
+    }
+    
+    if (len>0) {
+        if (!m_RBClosed) {
+            if (!m_Data.changeBytes(m_Cursor+len)) {
                 return false;
             }
-            if (m_Reader->read(m_Data.getPtr(m_Cursor), len)!=(gint)len) {
+            if (m_Reader->read(m_Data.getPtr(m_Cursor), len)!=len) {
                 return false;
             }
             m_Cursor+=len;
         }
-        return true;
+        else {
+            return m_Reader->skip(len);
+        }
     }
-	return m_Reader->skip(len);
+    
+    return true;
 }
 gint GRBReader::getBytes()
 {
-	return (gint)m_Cursor;
+	return m_Reader->getBytes();
 }
 
 void GRBReader::closeRollback()
 {
-    if (!m_RBClosed) {
-        m_RBClosed=1;
-        m_Cursor=m_Data.getBytes();
-        m_Data.freeSelf();
-    }
+    m_RBClosed=1;
 }
 
 bool GRBReader::canRollback()

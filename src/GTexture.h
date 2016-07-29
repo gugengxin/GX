@@ -14,12 +14,13 @@
 #include "GDataList.h"
 #include "GXOpenGL.h"
 #include "GXDirectX.h"
+#include "GDib.h"
 
 #include "GXGObject.h"
 class GContext;
 
 class GTexture : public GObject {
-    GX_GOBJECT(GTexture);
+    GX_GOBJECT(GTexture);    
 private:
     class Node : public GDataList<GTexture*>::Node {
     public:
@@ -27,19 +28,19 @@ private:
         virtual ~Node();
         
     private:
-        GContext* m_Context;
+#ifdef GX_OPENGL
+        GLuint  m_Name;
+#elif defined(GX_DIRECTX)
+        ID3D10ShaderResourceView*	m_Name;
+        ID3D10SamplerState*			m_SamplerState;
+#endif
     };
     
 public:
     
 private:
+    GContext* m_Context;
     Node* m_Node;
-#ifdef GX_OPENGL
-    GLuint  m_Name;
-#elif defined(GX_DIRECTX)
-	ID3D10ShaderResourceView*	m_Name;
-	ID3D10SamplerState*			m_SamplerState;
-#endif
 };
 
 #include "GXGObjectUD.h"

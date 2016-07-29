@@ -62,3 +62,15 @@ GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)
 	}
 	return (GSRGraphics*)m_Shaders[SRID_Graphics + srID];
 }
+
+
+GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT)
+{
+    
+    
+    return NULL;
+}
+
+
+
+

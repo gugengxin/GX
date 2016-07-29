@@ -11,10 +11,21 @@
 
 #include "GXPrefix.h"
 #include "GTexture.h"
+#include "GDib.h"
 
+#include "GXGObject.h"
 
+class GTexture2D : public GTexture {
+    GX_GOBJECT(GTexture2D);
+public:
+    
+public:
+    
+    
+private:
+    
+};
 
-
-
+#include "GXGObjectUD.h"
 
 #endif /* GTexture2D_h */

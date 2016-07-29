@@ -10,16 +10,13 @@
 #define GPng_h
 
 #include "GXPrefix.h"
-#include "GXPixel.h"
 #include "GDib.h"
-
-class GReader;
 
 class GPng
 {
 public:
 	static bool check(GReader* reader);
-	static bool read(GReader* reader, GDib::Info* infoOut, GData* dataOut);
+	static GDib* read(GReader* reader);
 };
 
 #endif /* GPng_h */

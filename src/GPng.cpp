@@ -33,15 +33,15 @@ bool GPng::check(GReader* reader)
 	return false;
 }
 
-bool GPng::read(GReader* reader, GDib::Info* infoOut, GData* dataOut)
+GDib* GPng::read(GReader* reader)
 {
 	unsigned char header[PNG_SIG_BYTES];
 	if (reader->read(&header, PNG_SIG_BYTES) != sizeof(header)) {
-		return false;
+		return NULL;
 	}
 
 	if (png_sig_cmp(header, 0, PNG_SIG_BYTES)) {
-		return false;
+		return NULL;
 	}
 
 	png_uint_32 pngWidth, pngHeight;
@@ -54,12 +54,12 @@ bool GPng::read(GReader* reader, GDib::Info* infoOut, GData* dataOut)
 	if (png_ptr == NULL || info_ptr == NULL || end_info == NULL)
 	{
 		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-		return false;
+		return NULL;
 	}
 
 	if (setjmp(png_jmpbuf(png_ptr))) {
 		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-		return false;
+		return NULL;
 	}
 
 	//png_init_io(png_ptr, png_file);
@@ -126,31 +126,38 @@ bool GPng::read(GReader* reader, GDib::Info* infoOut, GData* dataOut)
 	}
 	break;
 	}
-	bool res = (pf != GX::PixelFormatUnknown);
-	if (res) {
-		dataOut->changeBytesIfNeed(pngWidth*pngHeight*bits);
-
-		png_byte* pixels = (png_byte*)dataOut->getPtr();
-		png_byte** row_ptrs = (png_byte**)malloc(pngHeight * sizeof(png_bytep));
-
-		for (int i = 0; i<(int)pngHeight; i++)
-			row_ptrs[i] = pixels + i*pngWidth*bits;
-
-		png_read_image(png_ptr, row_ptrs);
-
-		free(row_ptrs);
-
-		if (infoOut) {
-			infoOut->pixelFormat = pf;
-			infoOut->width = pngWidth;
-			infoOut->height = pngHeight;
-			infoOut->stride = pngWidth*bits;
-		}
+    
+    GDib* res=NULL;
+	if (pf != GX::PixelFormatUnknown) {
+        res=GDib::alloc();
+        
+        if(res->changeDataBytes(pngWidth*pngHeight*bits)) {
+            
+            png_byte* pixels = (png_byte*)res->getDataPtr();
+            png_byte** row_ptrs = (png_byte**)malloc(pngHeight * sizeof(png_bytep));
+            
+            for (int i = 0; i<(int)pngHeight; i++)
+                row_ptrs[i] = pixels + i*pngWidth*bits;
+            
+            png_read_image(png_ptr, row_ptrs);
+            
+            free(row_ptrs);
+            
+            res->setPixelFormat(pf);
+            res->setWidth(pngWidth);
+            res->setHeight(pngHeight);
+            res->setStride(pngWidth*bits);
+        }
+        else {
+            GO::release(res);
+            res=NULL;
+        }
 
 	}
 	png_read_end(png_ptr, end_info);
 	png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-
+    
+    GO::autorelease(res);
 	return res;
 }
 
