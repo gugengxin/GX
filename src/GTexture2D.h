@@ -18,7 +18,14 @@
 class GTexture2D : public GTexture {
     GX_GOBJECT(GTexture2D);
 public:
-    
+	class Parameter {
+	public:
+		guint filter;
+		guint wrapU;
+		guint wrapV;
+	};
+
+
 public:
     
     

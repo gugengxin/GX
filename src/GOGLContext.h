@@ -15,6 +15,7 @@
 #include <QOpenGLFunctions>
 #endif
 #include "GDataArray.h"
+#include "GTexture2D.h"
 
 class GWindow;
 
@@ -50,6 +51,8 @@ protected:
     void doneShader();
 	void readyTexture();
 	void doneTexture();
+
+	GTexture* createTexture2D(GDib* dib, GTexture2D::Parameter* param);
 
 private:
 	GWindow* m_Window;

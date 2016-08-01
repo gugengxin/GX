@@ -597,4 +597,9 @@ void GOGLContext::doneTexture()
 #endif
 }
 
+GTexture* GOGLContext::createTexture2D(GDib* dib, GTexture2D::Parameter* param)
+{
+
+}
+
 #endif

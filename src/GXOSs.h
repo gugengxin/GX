@@ -68,7 +68,7 @@
 
 
 #ifndef GX_OPENGL
-#if defined(GX_OS_APPLE) || defined(GX_OS_ANDROID) || defined(GX_OS_QT) //|| defined(GX_OS_WINDOWS)
+#if defined(GX_OS_APPLE) || defined(GX_OS_ANDROID) || defined(GX_OS_QT) || defined(GX_OS_WINDOWS)
 #define GX_OPENGL
 #if defined(GX_OS_MOBILE)
 #define GX_OPENGL_ES
