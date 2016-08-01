@@ -40,6 +40,7 @@
     <ClCompile Include="..\..\src\GDataWriter.cpp" />
     <ClCompile Include="..\..\src\GDib.cpp" />
     <ClCompile Include="..\..\src\GDShader.cpp" />
+    <ClCompile Include="..\..\src\GError.cpp" />
     <ClCompile Include="..\..\src\GFileBundle.cpp" />
     <ClCompile Include="..\..\src\GFileManager.cpp" />
     <ClCompile Include="..\..\src\GFileReader.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="..\..\src\GDataWriter.h" />
     <ClInclude Include="..\..\src\GDib.h" />
     <ClInclude Include="..\..\src\GDShader.h" />
+    <ClInclude Include="..\..\src\GError.h" />
     <ClInclude Include="..\..\src\GFileBundle.h" />
     <ClInclude Include="..\..\src\GFileManager.h" />
     <ClInclude Include="..\..\src\GFileReader.h" />
