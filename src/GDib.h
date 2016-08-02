@@ -35,15 +35,26 @@ public:
     static GDib* load(GReader* reader,FileType suggestFT);
     
 public:
-    
+    inline GX::PixelFormat getPixelFormat() {
+        return m_PixelFormat;
+    }
     void setPixelFormat(GX::PixelFormat v) {
         m_PixelFormat=v;
+    }
+    inline gint32 getWidth() {
+        return m_Width;
     }
     void setWidth(gint32 v) {
         m_Width=v;
     }
+    inline gint32 getHeight() {
+        return m_Height;
+    }
     void setHeight(gint32 v) {
         m_Height=v;
+    }
+    inline gint32 getStride() {
+        return m_Stride;
     }
     void setStride(gint32 v) {
         m_Stride=v;

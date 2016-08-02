@@ -20,9 +20,9 @@ class GTexture2D : public GTexture {
 public:
 	class Parameter {
 	public:
-		guint filter;
-		guint wrapU;
-		guint wrapV;
+		gint32 filter;
+		gint32 wrapU;
+		gint32 wrapV;
 	};
 
 

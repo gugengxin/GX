@@ -13,10 +13,9 @@
 
 GX_GOBJECT_IMPLEMENT(GTexture, GObject);
 
-GTexture::Node::Node(GContext* cnt,GTexture* tex) :
-GDataList<GTexture*>::Node()
+GTexture::Node::Node(GContext* cnt) : GDataList<GTexture*>::Node()
 {
-    setData(tex);
+    m_Context=cnt;
 #ifdef GX_OPENGL
     m_Name=0;
 #elif defined(GX_DIRECTX)

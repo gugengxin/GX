@@ -215,6 +215,14 @@ void GThread::setMain()
 #endif
 }
 
+bool GThread::isMain()
+{
+    if (!g_MT) {
+        return false;
+    }
+    return m_ID==g_MT->getID();
+}
+
 void GThread::pushARObj(GObject* v)
 {
     m_ARObjs.add(v);

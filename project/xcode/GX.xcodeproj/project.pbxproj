@@ -68,6 +68,9 @@
 		CA3090971CFD1C54000B8DF2 /* GSRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */; };
 		CA3090981CFD1C57000B8DF2 /* GColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA30908F1CFD1C46000B8DF2 /* GColor.cpp */; };
 		CA3090991CFD1C58000B8DF2 /* GColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA30908F1CFD1C46000B8DF2 /* GColor.cpp */; };
+		CA4CD5431D508D2C008005CF /* GError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA4CD5411D508D2C008005CF /* GError.cpp */; };
+		CA4CD5451D508EE8008005CF /* GError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA4CD5411D508D2C008005CF /* GError.cpp */; };
+		CA4CD5461D508EE8008005CF /* GError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA4CD5411D508D2C008005CF /* GError.cpp */; };
 		CA60FB601D1EC93C0091A665 /* GFileBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA60FB5C1D1EC93C0091A665 /* GFileBundle.cpp */; };
 		CA60FB611D1EC93C0091A665 /* GZipBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA60FB5E1D1EC93C0091A665 /* GZipBundle.cpp */; };
 		CA636DD31D1CDE5F0021D32F /* GBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA636DD11D1CDE5F0021D32F /* GBundle.cpp */; };
@@ -298,6 +301,8 @@
 		CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GSRGraphics.cpp; sourceTree = "<group>"; };
 		CA3090921CFD1C46000B8DF2 /* GSRGraphics.gxsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GSRGraphics.gxsl; sourceTree = "<group>"; };
 		CA3090931CFD1C46000B8DF2 /* GSRGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSRGraphics.h; sourceTree = "<group>"; };
+		CA4CD5411D508D2C008005CF /* GError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GError.cpp; sourceTree = "<group>"; };
+		CA4CD5421D508D2C008005CF /* GError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GError.h; sourceTree = "<group>"; };
 		CA5B6E651D1B8234002598FB /* GXObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXObject.h; sourceTree = "<group>"; };
 		CA5B6E671D1B8534002598FB /* GXGObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXGObject.h; sourceTree = "<group>"; };
 		CA5B6E691D1B87A8002598FB /* GXGObjectUD.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXGObjectUD.h; sourceTree = "<group>"; };
@@ -536,6 +541,23 @@
 			name = String;
 			sourceTree = "<group>";
 		};
+		CA4CD5441D508D3F008005CF /* Texture */ = {
+			isa = PBXGroup;
+			children = (
+				CA6387831D48DCD600232BBB /* GDib.h */,
+				CA6387821D48DCD600232BBB /* GDib.cpp */,
+				CA63877D1D48D99700232BBB /* GJpeg.h */,
+				CA63877C1D48D99700232BBB /* GJpeg.cpp */,
+				CA63877F1D48D99700232BBB /* GPng.h */,
+				CA63877E1D48D99700232BBB /* GPng.cpp */,
+				CAC708AB1D13CDE900B98028 /* GTexture.h */,
+				CAC708AA1D13CDE900B98028 /* GTexture.cpp */,
+				CAC708B01D13CDFE00B98028 /* GTexture2D.h */,
+				CAC708AF1D13CDFE00B98028 /* GTexture2D.cpp */,
+			);
+			name = Texture;
+			sourceTree = "<group>";
+		};
 		CA636DD01D1CDD030021D32F /* Bundle */ = {
 			isa = PBXGroup;
 			children = (
@@ -599,12 +621,8 @@
 				CA9C16CA1CC6102E00204303 /* GObject.cpp */,
 				CA1AD27E1CD89DFB00CEA1DC /* GAutoreleasePool.h */,
 				CA1AD27D1CD89DFB00CEA1DC /* GAutoreleasePool.cpp */,
-				CA6387831D48DCD600232BBB /* GDib.h */,
-				CA6387821D48DCD600232BBB /* GDib.cpp */,
-				CA63877D1D48D99700232BBB /* GJpeg.h */,
-				CA63877C1D48D99700232BBB /* GJpeg.cpp */,
-				CA63877F1D48D99700232BBB /* GPng.h */,
-				CA63877E1D48D99700232BBB /* GPng.cpp */,
+				CA4CD5421D508D2C008005CF /* GError.h */,
+				CA4CD5411D508D2C008005CF /* GError.cpp */,
 				CA636DD01D1CDD030021D32F /* Bundle */,
 				CA0586731D13DE7C0096E73F /* IO */,
 				CAC2D1231CD0C13800A0EBE5 /* Struct */,
@@ -621,6 +639,7 @@
 			isa = PBXGroup;
 			children = (
 				CADB5DC01CF9E6A30092C472 /* shader */,
+				CA4CD5441D508D3F008005CF /* Texture */,
 				CABB5CC71CE0E40500D5B648 /* GXDirectX.h */,
 				CABB5CC61CE0E40500D5B648 /* GXDirectX.cpp */,
 				CABB5CC91CE0E40500D5B648 /* GXOpenGL.h */,
@@ -639,10 +658,6 @@
 				CABB3FAE1CFE12D000A7367C /* GBuffer.cpp */,
 				CABB3FB41CFE133000A7367C /* GDataBuffer.h */,
 				CABB3FB31CFE133000A7367C /* GDataBuffer.cpp */,
-				CAC708AB1D13CDE900B98028 /* GTexture.h */,
-				CAC708AA1D13CDE900B98028 /* GTexture.cpp */,
-				CAC708B01D13CDFE00B98028 /* GTexture2D.h */,
-				CAC708AF1D13CDFE00B98028 /* GTexture2D.cpp */,
 			);
 			name = Window;
 			sourceTree = "<group>";
@@ -877,6 +892,7 @@
 				CA6387811D48D99700232BBB /* GPng.cpp in Sources */,
 				CA636DD91D1CDF870021D32F /* GFileManager.cpp in Sources */,
 				CA1AD27F1CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,
+				CA4CD5431D508D2C008005CF /* GError.cpp in Sources */,
 				CABB3FB01CFE12D000A7367C /* GBuffer.cpp in Sources */,
 				CA60FB601D1EC93C0091A665 /* GFileBundle.cpp in Sources */,
 				CAD624B21D11872E005E77EB /* GDataList.cpp in Sources */,
@@ -955,6 +971,7 @@
 				CAC2D12D1CD0C1EC00A0EBE5 /* GData.cpp in Sources */,
 				CABB3FB11CFE12D000A7367C /* GBuffer.cpp in Sources */,
 				CA6387871D48DD0200232BBB /* GPng.cpp in Sources */,
+				CA4CD5451D508EE8008005CF /* GError.cpp in Sources */,
 				CA6387851D48DD0200232BBB /* GDib.cpp in Sources */,
 				CAD624B31D11872E005E77EB /* GDataList.cpp in Sources */,
 				CA6387861D48DD0200232BBB /* GJpeg.cpp in Sources */,
@@ -1033,6 +1050,7 @@
 				CAC2D12E1CD0C1EC00A0EBE5 /* GData.cpp in Sources */,
 				CABB3FB21CFE12D000A7367C /* GBuffer.cpp in Sources */,
 				CA63878A1D48DD0200232BBB /* GPng.cpp in Sources */,
+				CA4CD5461D508EE8008005CF /* GError.cpp in Sources */,
 				CA6387881D48DD0200232BBB /* GDib.cpp in Sources */,
 				CAD624B41D11872E005E77EB /* GDataList.cpp in Sources */,
 				CA6387891D48DD0200232BBB /* GJpeg.cpp in Sources */,

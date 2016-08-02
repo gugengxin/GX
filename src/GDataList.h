@@ -79,7 +79,6 @@ public:
             m_Node=p;
             m_NodeLast=p;
         }
-        return p;
     }
     
     

@@ -71,6 +71,9 @@ GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT)
     return NULL;
 }
 
-
+void GContext::addTextureNodeInMT(GTexture::Node* node)
+{
+    m_Textures.add(node);
+}
 
 

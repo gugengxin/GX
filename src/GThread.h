@@ -56,6 +56,11 @@ public:
 	static Holder* create(GObject* target, GX::Selector selector, GObject* obj,bool waitRun);
 	static Holder* create(GX::Callback cbk, GObject* obj, bool waitRun);
 
+    bool isMain();
+    inline GX::pthread_t getID() {
+        return m_ID;
+    }
+    
     GRunLoop* getRunLoop();
 	GNoticeCenter* getNoticeCenter();
 private:

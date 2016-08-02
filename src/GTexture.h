@@ -20,14 +20,30 @@
 class GContext;
 
 class GTexture : public GObject {
-    GX_GOBJECT(GTexture);    
-private:
+#if defined(GX_OPENGL)
+    friend class GOGLContext;
+#elif defined(GX_DIRECTX)
+    friend class GD3DContext;
+#endif
+    GX_GOBJECT(GTexture);
+public:
     class Node : public GDataList<GTexture*>::Node {
-    public:
-        Node(GContext* cnt,GTexture* tex);
+#if defined(GX_OPENGL)
+        friend class GOGLContext;
+#elif defined(GX_DIRECTX)
+        friend class GD3DContext;
+#endif
+        friend class GContext;
+    private:
+        Node(GContext* cnt);
         virtual ~Node();
+    public:
+        inline GContext* getContext() {
+            return m_Context;
+        }
         
     private:
+        GContext* m_Context;
 #ifdef GX_OPENGL
         GLuint  m_Name;
 #elif defined(GX_DIRECTX)
@@ -38,6 +54,13 @@ private:
     
 public:
     
+private:
+    inline void setContext(GContext* v) {
+        m_Context=v;
+    }
+    inline void setNode(Node* v) {
+        m_Node=v;
+    }
 private:
     GContext* m_Context;
     Node* m_Node;

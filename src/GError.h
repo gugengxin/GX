@@ -11,7 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GObject.h"
-
+#include "GString.h"
 
 
 #include "GXGObject.h"
@@ -23,7 +23,8 @@ class GError : public GObject
 public:
 
 private:
-
+    GString* m_Domain;
+    gint     m_Code;
 };
 
 // Up can't include other h file

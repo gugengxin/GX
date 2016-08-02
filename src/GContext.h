@@ -18,7 +18,12 @@
 
 class GContext : public GContextBase
 {
-	friend class GWindow;
+    friend class GWindow;
+#if defined(GX_OPENGL)
+    friend class GOGLContext;
+#elif defined(GX_DIRECTX)
+    friend class GD3DContext;
+#endif
 private:
 	enum ShaderID {
 		SRID_Graphics = 0,
@@ -50,6 +55,8 @@ public:
     
 private:
     GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT);
+
+    void addTextureNodeInMT(GTexture::Node* node);
     
 private:
 	GPainter m_Painter;

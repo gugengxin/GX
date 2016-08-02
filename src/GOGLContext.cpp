@@ -6,6 +6,8 @@
 #if defined(GX_OPENGL)
 #include "GApplication.h"
 #include "GLog.h"
+#include "GThread.h"
+#include "GContext.h"
 
 #if defined(GX_OS_WINDOWS)
 #include <Windows.h>
@@ -188,6 +190,9 @@ void GOGLContext::popOSHandle()
 }
 
 #endif
+
+#include "GXGObject.h"
+
 //不用在这里初始化
 GOGLContext::GOGLContext()
 {
@@ -597,9 +602,168 @@ void GOGLContext::doneTexture()
 #endif
 }
 
-GTexture* GOGLContext::createTexture2D(GDib* dib, GTexture2D::Parameter* param)
-{
+class _OGLCreateTex2DObj : public GObject {
+    GX_GOBJECT(_OGLCreateTex2DObj);
+public:
+    GOGLContext* context;
+    GDib* dib;
+    GTexture2D::Parameter* param;
+    GTexture2D::Node* nodeOut;
+};
 
+GX_GOBJECT_IMPLEMENT(_OGLCreateTex2DObj,GObject);
+
+_OGLCreateTex2DObj::_OGLCreateTex2DObj()
+{
+}
+
+_OGLCreateTex2DObj::~_OGLCreateTex2DObj()
+{
+    
+}
+
+
+void GOGLContext::createTexture2DReal(GObject* obj)
+{
+    _OGLCreateTex2DObj& ctObj=*GX_CAST_R(_OGLCreateTex2DObj*, obj);
+    
+    ctObj.context->readyTexture();
+    
+    GX_glGenTextures(1,&ctObj.nodeOut->m_Name);
+    
+    if(ctObj.nodeOut->m_Name!=0) {
+        
+        GX_glBindTexture(GL_TEXTURE_2D, ctObj.nodeOut->m_Name);
+        
+        if (ctObj.param) {
+            switch (ctObj.param->filter) {
+                case GX_FILTER_MIN_MAG_POINT:
+                {
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+                }
+                    break;
+                case GX_FILTER_MIN_POINT_MAG_LINEAR:
+                {
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+                }
+                    break;
+                case GX_FILTER_MIN_LINEAR_MAG_POINT:
+                {
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+                }
+                    break;
+                default:
+                case GX_FILTER_MIN_MAG_LINEAR:
+                {
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+                }
+                    break;
+            }
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ctObj.param->wrapU );
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ctObj.param->wrapV );
+        }
+        else {
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+        }
+        
+        if (ctObj.dib->getWidth()%4==0) {
+            GX_glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+        }
+        else {
+            GX_glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        }
+        
+        bool bTF=true;
+        
+        switch(ctObj.dib->getPixelFormat()) {
+            case GX::PixelFormatRGBA8888:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, ctObj.dib->getDataPtr());
+            }
+                break;
+            case GX::PixelFormatRGB888:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, ctObj.dib->getDataPtr());
+            }
+                break;
+            case GX::PixelFormatRGB565:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, ctObj.dib->getDataPtr());
+            }
+                break;
+            case GX::PixelFormatRGBA4444:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, ctObj.dib->getDataPtr());
+            }
+                break;
+            case GX::PixelFormatRGBA5551:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, ctObj.dib->getDataPtr());
+            }
+                break;
+            case GX::PixelFormatA8:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_ALPHA, GL_UNSIGNED_BYTE, ctObj.dib->getDataPtr());
+            }
+                break;
+            default:
+            {
+                bTF=false;
+            }
+                break;
+        }
+        
+        GX_glBindTexture(GL_TEXTURE_2D, 0);
+        
+        if (bTF) {
+            GTexture2D* tex=GTexture2D::alloc();
+            tex->setContext(ctObj.nodeOut->getContext());
+            tex->setNode(ctObj.nodeOut);
+            
+            ctObj.nodeOut->setData(tex);
+            
+            ctObj.nodeOut->getContext()->addTextureNodeInMT(ctObj.nodeOut);
+        }
+        else {
+            GX_glDeleteTextures(1,&ctObj.nodeOut->m_Name);
+            ctObj.nodeOut->m_Name=0;
+        }
+    }
+    
+    ctObj.context->doneTexture();
+}
+
+GTexture2D* GOGLContext::createTexture2D(GDib* dib, GTexture2D::Parameter* param)
+{
+    GTexture::Node* node=new GTexture::Node(GX_CAST_R(GContext*, this));
+    
+    _OGLCreateTex2DObj* obj=_OGLCreateTex2DObj::alloc();
+    obj->context=this;
+    obj->dib=dib;
+    obj->param=param;
+    obj->nodeOut=node;
+    if (GThread::current()->isMain()) {
+        createTexture2DReal(obj);
+    }
+    else {
+        GThread::current()->getRunLoop()->perform(createTexture2DReal, obj, 0, true);
+    }
+    GO::release(obj);
+    
+    if (node->getData()) {
+        return GX_CAST_R(GTexture2D*, node->getData());
+    }
+    else {
+        delete node;
+    }
+    return NULL;
 }
 
 #endif

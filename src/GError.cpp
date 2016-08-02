@@ -16,11 +16,13 @@ GX_GOBJECT_IMPLEMENT(GError, GObject);
 
 GError::GError()
 {
-	
+    m_Domain=NULL;
+    m_Code=0;
 }
 
 GError::~GError()
 {
+    GO::release(m_Domain);
 }
 
 
