@@ -61,7 +61,7 @@ private:
 private:
 	GPainter m_Painter;
 	GShader* m_Shaders[SRIDCount];
-    GDataList<GTexture*> m_Textures;
+	GDataList<GTexture::Handle> m_Textures;
 };
 
 

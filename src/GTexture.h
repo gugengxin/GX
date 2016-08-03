@@ -27,29 +27,52 @@ class GTexture : public GObject {
 #endif
     GX_GOBJECT(GTexture);
 public:
-    class Node : public GDataList<GTexture*>::Node {
+	class Handle {
 #if defined(GX_OPENGL)
-        friend class GOGLContext;
+		friend class GOGLContext;
 #elif defined(GX_DIRECTX)
-        friend class GD3DContext;
+		friend class GD3DContext;
+#endif
+	public:
+		Handle() {
+#ifdef GX_OPENGL
+			m_Name = 0;
+#elif defined(GX_DIRECTX)
+			m_Name = NULL;
+			m_SamplerState = NULL;
+#endif
+		}
+
+		inline bool isValid() {
+#ifdef GX_OPENGL
+			return m_Name != 0;
+#elif defined(GX_DIRECTX)
+			return m_Name != NULL;
+#endif
+		}
+	private:
+#ifdef GX_OPENGL
+		GLuint  m_Name;
+#elif defined(GX_DIRECTX)
+		ID3D10ShaderResourceView*	m_Name;
+		ID3D10SamplerState*			m_SamplerState;
+#endif
+	};
+	
+	class Node : public GDataList<Handle>::Node {
+#if defined(GX_OPENGL)
+		friend class GOGLContext;
+#elif defined(GX_DIRECTX)
+		friend class GD3DContext;
 #endif
         friend class GContext;
     private:
-        Node(GContext* cnt);
-        virtual ~Node();
+		Node() {}
+		virtual ~Node() {}
     public:
-        inline GContext* getContext() {
-            return m_Context;
-        }
-        
-    private:
-        GContext* m_Context;
-#ifdef GX_OPENGL
-        GLuint  m_Name;
-#elif defined(GX_DIRECTX)
-        ID3D10ShaderResourceView*	m_Name;
-        ID3D10SamplerState*			m_SamplerState;
-#endif
+		inline bool isValid() {
+			return getData().isValid();
+		}
     };
     
 public:

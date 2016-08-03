@@ -602,8 +602,8 @@ void GOGLContext::doneTexture()
 #endif
 }
 
-class _OGLCreateTex2DObj : public GObject {
-    GX_GOBJECT(_OGLCreateTex2DObj);
+class _OGLCreateTex2DNodeObj : public GObject {
+    GX_GOBJECT(_OGLCreateTex2DNodeObj);
 public:
     GOGLContext* context;
     GDib* dib;
@@ -611,29 +611,31 @@ public:
     GTexture2D::Node* nodeOut;
 };
 
-GX_GOBJECT_IMPLEMENT(_OGLCreateTex2DObj,GObject);
+GX_GOBJECT_IMPLEMENT(_OGLCreateTex2DNodeObj,GObject);
 
-_OGLCreateTex2DObj::_OGLCreateTex2DObj()
+_OGLCreateTex2DNodeObj::_OGLCreateTex2DNodeObj()
 {
 }
 
-_OGLCreateTex2DObj::~_OGLCreateTex2DObj()
+_OGLCreateTex2DNodeObj::~_OGLCreateTex2DNodeObj()
 {
     
 }
 
 
-void GOGLContext::createTexture2DReal(GObject* obj)
+void GOGLContext::createTexture2DNodeInMT(GObject* obj)
 {
-    _OGLCreateTex2DObj& ctObj=*GX_CAST_R(_OGLCreateTex2DObj*, obj);
+    _OGLCreateTex2DNodeObj& ctObj=*GX_CAST_R(_OGLCreateTex2DNodeObj*, obj);
     
     ctObj.context->readyTexture();
+
+	GTexture::Handle& handle = ctObj.nodeOut->getData();
     
-    GX_glGenTextures(1,&ctObj.nodeOut->m_Name);
+	GX_glGenTextures(1, &handle.m_Name);
     
-    if(ctObj.nodeOut->m_Name!=0) {
+	if (handle.m_Name != 0) {
         
-        GX_glBindTexture(GL_TEXTURE_2D, ctObj.nodeOut->m_Name);
+		GX_glBindTexture(GL_TEXTURE_2D, handle.m_Name);
         
         if (ctObj.param) {
             switch (ctObj.param->filter) {
@@ -723,47 +725,48 @@ void GOGLContext::createTexture2DReal(GObject* obj)
         GX_glBindTexture(GL_TEXTURE_2D, 0);
         
         if (bTF) {
-            GTexture2D* tex=GTexture2D::alloc();
-            tex->setContext(ctObj.nodeOut->getContext());
-            tex->setNode(ctObj.nodeOut);
-            
-            ctObj.nodeOut->setData(tex);
-            
-            ctObj.nodeOut->getContext()->addTextureNodeInMT(ctObj.nodeOut);
+			GX_CAST_R(GContext*, ctObj.context)->addTextureNodeInMT(ctObj.nodeOut);
         }
         else {
-            GX_glDeleteTextures(1,&ctObj.nodeOut->m_Name);
-            ctObj.nodeOut->m_Name=0;
+			GX_glDeleteTextures(1, &handle.m_Name);
+			handle.m_Name = 0;
         }
     }
     
     ctObj.context->doneTexture();
 }
 
-GTexture2D* GOGLContext::createTexture2D(GDib* dib, GTexture2D::Parameter* param)
+GTexture::Node* GOGLContext::createTexture2DNode(GDib* dib, GTexture2D::Parameter* param)
 {
-    GTexture::Node* node=new GTexture::Node(GX_CAST_R(GContext*, this));
+    GTexture::Node* node=new GTexture::Node();
     
-    _OGLCreateTex2DObj* obj=_OGLCreateTex2DObj::alloc();
+    _OGLCreateTex2DNodeObj* obj=_OGLCreateTex2DNodeObj::alloc();
     obj->context=this;
     obj->dib=dib;
     obj->param=param;
     obj->nodeOut=node;
     if (GThread::current()->isMain()) {
-        createTexture2DReal(obj);
+		createTexture2DNodeInMT(obj);
     }
     else {
-        GThread::current()->getRunLoop()->perform(createTexture2DReal, obj, 0, true);
+		GThread::current()->getRunLoop()->perform(createTexture2DNodeInMT, obj, 0, true);
     }
     GO::release(obj);
     
-    if (node->getData()) {
-        return GX_CAST_R(GTexture2D*, node->getData());
+    if (node->isValid()) {
+		return node;
     }
     else {
         delete node;
     }
     return NULL;
+}
+
+
+
+void GOGLContext::destroyTextureNode(GTexture::Node* node)
+{
+
 }
 
 #endif
