@@ -41,5 +41,5 @@ external/freetype/project/vs/x64/
 external/freetype/project/vs/x86/
 external/openal/include
 external/openal/lib
-project/as/gx/externalNativeBuild/
-test/project/as/app/externalNativeBuild/
+project/as/gx/.externalNativeBuild/
+test/project/as/app/.externalNativeBuild/
