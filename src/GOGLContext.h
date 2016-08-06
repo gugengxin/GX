@@ -52,10 +52,11 @@ protected:
 	void readyTexture();
 	void doneTexture();
 private:
-	static void createTexture2DNodeInMT(GObject* obj);
+	static void loadTexture2DNodeInMT(GObject* obj);
+    static void unloadTextureNodeInMT(GObject* obj);
 protected:
-	GTexture::Node* createTexture2DNode(GDib* dib, GTexture2D::Parameter* param);
-	void destroyTextureNode(GTexture::Node* node);
+	bool loadTexture2DNode(GTexture::Node* node,GDib* dib, GTexture2D::Parameter* param);
+    void unloadTextureNode(GTexture::Node* node);
 
 private:
 	GWindow* m_Window;

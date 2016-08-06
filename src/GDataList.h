@@ -80,6 +80,24 @@ public:
             m_NodeLast=p;
         }
     }
+    void remove(Node* p,bool bDel=true) {
+        Node* pNext=p->getNext();
+        Node* pPrev=p->getPrev();
+        if (pNext) {
+            pNext->setPrev(pPrev);
+        }
+        if (pPrev) {
+            pPrev->setNext(pNext);
+        }
+
+        if (bDel) {
+            delete p;
+        }
+        else {
+            p->setNext(NULL);
+            p->setPrev(NULL);
+        }
+    }
     
     
 private:

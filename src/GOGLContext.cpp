@@ -602,8 +602,10 @@ void GOGLContext::doneTexture()
 #endif
 }
 
-class _OGLCreateTex2DNodeObj : public GObject {
-    GX_GOBJECT(_OGLCreateTex2DNodeObj);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class _OGLLoadTex2DNodeObj : public GObject {
+    GX_GOBJECT(_OGLLoadTex2DNodeObj);
 public:
     GOGLContext* context;
     GDib* dib;
@@ -611,21 +613,20 @@ public:
     GTexture2D::Node* nodeOut;
 };
 
-GX_GOBJECT_IMPLEMENT(_OGLCreateTex2DNodeObj,GObject);
+GX_GOBJECT_IMPLEMENT(_OGLLoadTex2DNodeObj,GObject);
 
-_OGLCreateTex2DNodeObj::_OGLCreateTex2DNodeObj()
+_OGLLoadTex2DNodeObj::_OGLLoadTex2DNodeObj()
 {
 }
 
-_OGLCreateTex2DNodeObj::~_OGLCreateTex2DNodeObj()
+_OGLLoadTex2DNodeObj::~_OGLLoadTex2DNodeObj()
 {
     
 }
 
-
-void GOGLContext::createTexture2DNodeInMT(GObject* obj)
+void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
 {
-    _OGLCreateTex2DNodeObj& ctObj=*GX_CAST_R(_OGLCreateTex2DNodeObj*, obj);
+    _OGLLoadTex2DNodeObj& ctObj=*GX_CAST_R(_OGLLoadTex2DNodeObj*, obj);
     
     ctObj.context->readyTexture();
 
@@ -736,37 +737,66 @@ void GOGLContext::createTexture2DNodeInMT(GObject* obj)
     ctObj.context->doneTexture();
 }
 
-GTexture::Node* GOGLContext::createTexture2DNode(GDib* dib, GTexture2D::Parameter* param)
+bool GOGLContext::loadTexture2DNode(GTexture::Node* node,GDib* dib, GTexture2D::Parameter* param)
 {
-    GTexture::Node* node=new GTexture::Node();
-    
-    _OGLCreateTex2DNodeObj* obj=_OGLCreateTex2DNodeObj::alloc();
+    _OGLLoadTex2DNodeObj* obj=_OGLLoadTex2DNodeObj::alloc();
     obj->context=this;
     obj->dib=dib;
     obj->param=param;
     obj->nodeOut=node;
     if (GThread::current()->isMain()) {
-		createTexture2DNodeInMT(obj);
+		loadTexture2DNodeInMT(obj);
     }
     else {
-		GThread::current()->getRunLoop()->perform(createTexture2DNodeInMT, obj, 0, true);
+		GThread::current()->getRunLoop()->perform(loadTexture2DNodeInMT, obj, 0, true);
     }
     GO::release(obj);
     
-    if (node->isValid()) {
-		return node;
-    }
-    else {
-        delete node;
-    }
-    return NULL;
+    return node->isValid();
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+class _OGLUnloadTex2DNodeObj : public GObject {
+    GX_GOBJECT(_OGLUnloadTex2DNodeObj);
+public:
+    GOGLContext* context;
+    GTexture2D::Node* nodeOut;
+};
 
-void GOGLContext::destroyTextureNode(GTexture::Node* node)
+GX_GOBJECT_IMPLEMENT(_OGLUnloadTex2DNodeObj,GObject);
+
+_OGLUnloadTex2DNodeObj::_OGLUnloadTex2DNodeObj()
+{
+}
+
+_OGLUnloadTex2DNodeObj::~_OGLUnloadTex2DNodeObj()
 {
 
 }
+
+void GOGLContext::unloadTextureNodeInMT(GObject* obj)
+{
+    
+}
+
+void GOGLContext::unloadTextureNode(GTexture::Node* node)
+{
+    _OGLUnloadTex2DNodeObj* obj=_OGLUnloadTex2DNodeObj::alloc();
+    obj->context=this;
+    obj->nodeOut=node;
+
+    if (GThread::current()->isMain()) {
+        unloadTextureNodeInMT(obj);
+    }
+    else {
+        GThread::current()->getRunLoop()->perform(unloadTextureNodeInMT, obj, 0, true);
+    }
+
+    GO::release(obj);
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #endif
