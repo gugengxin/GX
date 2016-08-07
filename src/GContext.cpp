@@ -28,6 +28,20 @@ bool GContext::create(GWindow *win)
 void GContext::destroy()
 {
     //GX_LOG_W(PrioINFO,"GContext","destroy");
+    {
+        GTexture::Node* p=GX_CAST_R(GTexture::Node*, m_Textures.last());
+        while (p) {
+            GTexture::Node* pTemp=GX_CAST_R(GTexture::Node*, p->getPrev());
+            if (p->isValid()) {
+                readyTexture();
+                unloadTextureNodeForContext(p);
+                doneTexture();
+            }
+            m_Textures.remove(p,false);
+            p->m_Context=NULL;
+            p=pTemp;
+        }
+    }
     for (gint i = 0; i < SRIDCount; i++) {
         readyShader();
         delete m_Shaders[i];
@@ -41,7 +55,7 @@ void GContext::destroy()
 void GContext::androidDestroy()
 {
     //TODO
-    //GX_LOG_W(PrioINFO,"GContext","androidDestroy");
+    //GX_LOG_W(PrioINFO,"GContext","androidDestroy");iqi
     GContextBase::androidDestroy();
 }
 void GContext::androidRecreate(GWindow* win)
@@ -74,6 +88,11 @@ GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT)
 void GContext::addTextureNodeInMT(GTexture::Node* node)
 {
     m_Textures.add(node);
+}
+
+void GContext::removeTextureNodeInMT(GTexture::Node* node)
+{
+    m_Textures.remove(node,false);
 }
 
 

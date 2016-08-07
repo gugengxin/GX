@@ -57,6 +57,7 @@ private:
     GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT);
 
     void addTextureNodeInMT(GTexture::Node* node);
+    void removeTextureNodeInMT(GTexture::Node* node);
     
 private:
 	GPainter m_Painter;

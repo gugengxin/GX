@@ -56,6 +56,7 @@ private:
     static void unloadTextureNodeInMT(GObject* obj);
 protected:
 	bool loadTexture2DNode(GTexture::Node* node,GDib* dib, GTexture2D::Parameter* param);
+    void unloadTextureNodeForContext(GTexture::Node* node);
     void unloadTextureNode(GTexture::Node* node);
 
 private:

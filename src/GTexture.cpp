@@ -13,10 +13,18 @@
 
 GX_GOBJECT_IMPLEMENT(GTexture, GObject);
 
+GTexture::Node::Node()
+{
+    m_Context=NULL;
+}
+
+GTexture::Node::~Node()
+{
+
+}
 
 GTexture::GTexture()
 {
-    m_Context=NULL;
     m_Node=NULL;
 }
 

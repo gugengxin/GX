@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Gengxin Gu on 16/5/9.
 //
 
@@ -626,11 +626,11 @@ _OGLLoadTex2DNodeObj::~_OGLLoadTex2DNodeObj()
 
 void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
 {
-    _OGLLoadTex2DNodeObj& ctObj=*GX_CAST_R(_OGLLoadTex2DNodeObj*, obj);
+    _OGLLoadTex2DNodeObj& nodeObj=*GX_CAST_R(_OGLLoadTex2DNodeObj*, obj);
     
-    ctObj.context->readyTexture();
+    nodeObj.context->readyTexture();
 
-	GTexture::Handle& handle = ctObj.nodeOut->getData();
+	GTexture::Handle& handle = nodeObj.nodeOut->getData();
     
 	GX_glGenTextures(1, &handle.m_Name);
     
@@ -638,8 +638,8 @@ void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
         
 		GX_glBindTexture(GL_TEXTURE_2D, handle.m_Name);
         
-        if (ctObj.param) {
-            switch (ctObj.param->filter) {
+        if (nodeObj.param) {
+            switch (nodeObj.param->filter) {
                 case GX_FILTER_MIN_MAG_POINT:
                 {
                     GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
@@ -666,8 +666,8 @@ void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
                 }
                     break;
             }
-            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, ctObj.param->wrapU );
-            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, ctObj.param->wrapV );
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, nodeObj.param->wrapU );
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, nodeObj.param->wrapV );
         }
         else {
             GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
@@ -676,7 +676,7 @@ void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
             GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
         }
         
-        if (ctObj.dib->getWidth()%4==0) {
+        if (nodeObj.dib->getWidth()%4==0) {
             GX_glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
         }
         else {
@@ -685,35 +685,35 @@ void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
         
         bool bTF=true;
         
-        switch(ctObj.dib->getPixelFormat()) {
+        switch(nodeObj.dib->getPixelFormat()) {
             case GX::PixelFormatRGBA8888:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, ctObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, nodeObj.dib->getDataPtr());
             }
                 break;
             case GX::PixelFormatRGB888:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, ctObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, nodeObj.dib->getDataPtr());
             }
                 break;
             case GX::PixelFormatRGB565:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, ctObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, nodeObj.dib->getDataPtr());
             }
                 break;
             case GX::PixelFormatRGBA4444:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, ctObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, nodeObj.dib->getDataPtr());
             }
                 break;
             case GX::PixelFormatRGBA5551:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, ctObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, nodeObj.dib->getDataPtr());
             }
                 break;
             case GX::PixelFormatA8:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, ctObj.dib->getWidth(),ctObj.dib->getHeight(), 0, GL_ALPHA, GL_UNSIGNED_BYTE, ctObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_ALPHA, GL_UNSIGNED_BYTE, nodeObj.dib->getDataPtr());
             }
                 break;
             default:
@@ -725,16 +725,18 @@ void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
         
         GX_glBindTexture(GL_TEXTURE_2D, 0);
         
-        if (bTF) {
-			GX_CAST_R(GContext*, ctObj.context)->addTextureNodeInMT(ctObj.nodeOut);
-        }
-        else {
+        if (!bTF) {
 			GX_glDeleteTextures(1, &handle.m_Name);
 			handle.m_Name = 0;
         }
     }
     
-    ctObj.context->doneTexture();
+    nodeObj.context->doneTexture();
+
+    if (handle.isValid()) {
+        nodeObj.nodeOut->m_Context=GX_CAST_R(GContext*, nodeObj.context);
+        nodeObj.nodeOut->m_Context->addTextureNodeInMT(nodeObj.nodeOut);
+    }
 }
 
 bool GOGLContext::loadTexture2DNode(GTexture::Node* node,GDib* dib, GTexture2D::Parameter* param)
@@ -777,7 +779,25 @@ _OGLUnloadTex2DNodeObj::~_OGLUnloadTex2DNodeObj()
 
 void GOGLContext::unloadTextureNodeInMT(GObject* obj)
 {
-    
+    _OGLUnloadTex2DNodeObj& nodeObj=*GX_CAST_R(_OGLUnloadTex2DNodeObj*, obj);
+    GTexture::Handle& handle = nodeObj.nodeOut->getData();
+
+    nodeObj.context->readyTexture();
+
+    GX_glDeleteTextures(1, &handle.m_Name);
+    handle.m_Name = 0;
+
+    nodeObj.context->doneTexture();
+
+    nodeObj.nodeOut->m_Context->removeTextureNodeInMT(nodeObj.nodeOut);
+    nodeObj.nodeOut->m_Context=NULL;
+}
+
+void GOGLContext::unloadTextureNodeForContext(GTexture::Node* node)
+{
+    GTexture::Handle& handle = node->getData();
+    GX_glDeleteTextures(1, &handle.m_Name);
+    handle.m_Name = 0;
 }
 
 void GOGLContext::unloadTextureNode(GTexture::Node* node)
@@ -794,7 +814,6 @@ void GOGLContext::unloadTextureNode(GTexture::Node* node)
     }
 
     GO::release(obj);
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

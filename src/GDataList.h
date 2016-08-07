@@ -83,6 +83,7 @@ public:
     void remove(Node* p,bool bDel=true) {
         Node* pNext=p->getNext();
         Node* pPrev=p->getPrev();
+
         if (pNext) {
             pNext->setPrev(pPrev);
         }
@@ -97,6 +98,30 @@ public:
             p->setNext(NULL);
             p->setPrev(NULL);
         }
+
+        if (m_NodeLast==p) {
+            if (pNext) {
+                m_NodeLast=pNext;
+            }
+            else {
+                m_NodeLast=pPrev;
+            }
+        }
+        if (m_Node==p) {
+            if (pPrev) {
+                m_Node=pPrev;
+            }
+            else {
+                m_Node=pNext;
+            }
+        }
+    }
+
+    Node* first() {
+        return m_Node;
+    }
+    Node* last() {
+        return m_NodeLast;
     }
     
     

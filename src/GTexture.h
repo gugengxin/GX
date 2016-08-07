@@ -67,25 +67,23 @@ public:
 #endif
         friend class GContext;
     private:
-		Node() {}
-		virtual ~Node() {}
+        Node();
+        virtual ~Node();
     public:
 		inline bool isValid() {
 			return getData().isValid();
 		}
+    private:
+        GContext* m_Context;
     };
     
 public:
     
 private:
-    inline void setContext(GContext* v) {
-        m_Context=v;
-    }
     inline void setNode(Node* v) {
         m_Node=v;
     }
 private:
-    GContext* m_Context;
     Node* m_Node;
 };
 
