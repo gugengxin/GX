@@ -53,7 +53,7 @@ fp {
 *///GX_SL
 
 
-GSRGraphics::GSRGraphics(ID srID) :GShaderBase((guint8)srID, 0, 0, 0)
+GSRGraphics::GSRGraphics(ID srID) : GShaderBase((guint8)srID, 0, 0, 0)
 {
 	GX_SHADER_INPUT_INIT();
 

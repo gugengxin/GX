@@ -25,6 +25,7 @@ class GTexture : public GObject {
 #elif defined(GX_DIRECTX)
     friend class GD3DContext;
 #endif
+    friend class GContext;
     GX_GOBJECT(GTexture);
 public:
 	class Handle {

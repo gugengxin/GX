@@ -180,6 +180,9 @@
 		CAC7E4621D1A6AB900719367 /* GZipReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC7E4601D1A6AB900719367 /* GZipReader.cpp */; };
 		CAC7E4631D1A6AB900719367 /* GZipReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC7E4601D1A6AB900719367 /* GZipReader.cpp */; };
 		CAC7E4641D1A6AB900719367 /* GZipReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC7E4601D1A6AB900719367 /* GZipReader.cpp */; };
+		CAD4C7831D577E9300F01C06 /* GSRTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */; };
+		CAD4C7841D577E9300F01C06 /* GSRTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */; };
+		CAD4C7851D577E9300F01C06 /* GSRTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */; };
 		CAD624AD1D1186CB005E77EB /* GList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD624AB1D1186CB005E77EB /* GList.cpp */; };
 		CAD624AE1D1186CB005E77EB /* GList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD624AB1D1186CB005E77EB /* GList.cpp */; };
 		CAD624AF1D1186CB005E77EB /* GList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD624AB1D1186CB005E77EB /* GList.cpp */; };
@@ -400,6 +403,8 @@
 		CAC7E45C1D1A6AA100719367 /* GDataReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataReader.h; sourceTree = "<group>"; };
 		CAC7E4601D1A6AB900719367 /* GZipReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GZipReader.cpp; sourceTree = "<group>"; };
 		CAC7E4611D1A6AB900719367 /* GZipReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZipReader.h; sourceTree = "<group>"; };
+		CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GSRTexture2D.cpp; sourceTree = "<group>"; };
+		CAD4C7821D577E9300F01C06 /* GSRTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSRTexture2D.h; sourceTree = "<group>"; };
 		CAD624AB1D1186CB005E77EB /* GList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GList.cpp; sourceTree = "<group>"; };
 		CAD624AC1D1186CB005E77EB /* GList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GList.h; sourceTree = "<group>"; };
 		CAD624B01D11872E005E77EB /* GDataList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDataList.cpp; sourceTree = "<group>"; };
@@ -739,6 +744,8 @@
 				CA3090931CFD1C46000B8DF2 /* GSRGraphics.h */,
 				CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */,
 				CA3090921CFD1C46000B8DF2 /* GSRGraphics.gxsl */,
+				CAD4C7821D577E9300F01C06 /* GSRTexture2D.h */,
+				CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */,
 			);
 			name = shader;
 			sourceTree = "<group>";
@@ -866,6 +873,7 @@
 				CAC708AC1D13CDE900B98028 /* GTexture.cpp in Sources */,
 				CA63876D1D489DD500232BBB /* GRBReader.cpp in Sources */,
 				CA04FDEA1CE4557E00C9B596 /* GNotice.cpp in Sources */,
+				CAD4C7831D577E9300F01C06 /* GSRTexture2D.cpp in Sources */,
 				CADB5DBB1CF9E6300092C472 /* GMatrix.cpp in Sources */,
 				CA3090951CFD1C46000B8DF2 /* GSRGraphics.cpp in Sources */,
 				CAC7E4581D1A6A7300719367 /* GFileReader.cpp in Sources */,
@@ -945,6 +953,7 @@
 				CAE706D11CD2F8950090F4DD /* GDataArray.cpp in Sources */,
 				CA6387751D48CFE500232BBB /* GRBReader.cpp in Sources */,
 				CABB3F9A1CFE06EC00A7367C /* GVector.cpp in Sources */,
+				CAD4C7841D577E9300F01C06 /* GSRTexture2D.cpp in Sources */,
 				CA6387731D48CFDA00232BBB /* GFileWriter.cpp in Sources */,
 				CAC7E4591D1A6A7300719367 /* GFileReader.cpp in Sources */,
 				CA0B16031CD086F500C33BB5 /* GCondition.cpp in Sources */,
@@ -1024,6 +1033,7 @@
 				CAE706D31CD2F8960090F4DD /* GDataArray.cpp in Sources */,
 				CA6387761D48CFE600232BBB /* GRBReader.cpp in Sources */,
 				CABB3F931CFE06EB00A7367C /* GVector.cpp in Sources */,
+				CAD4C7851D577E9300F01C06 /* GSRTexture2D.cpp in Sources */,
 				CA6387741D48CFDA00232BBB /* GFileWriter.cpp in Sources */,
 				CAC7E45A1D1A6A7300719367 /* GFileReader.cpp in Sources */,
 				CA0B16041CD086F500C33BB5 /* GCondition.cpp in Sources */,

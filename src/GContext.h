@@ -13,6 +13,7 @@
 #endif
 #include "GPainter.h"
 #include "GSRGraphics.h"
+#include "GSRTexture2D.h"
 #include "GTexture2D.h"
 #include "GReader.h"
 
@@ -29,6 +30,8 @@ private:
 		SRID_Graphics = 0,
 		SRID_GraphicsEnd = SRID_Graphics + GSRGraphics::IDCount - 1,
 
+        SRID_Texture2D,
+        SRID_Texture2DEnd= SRID_Texture2D+ GSRTexture2D::MMCount - 1,
 
 		SRIDCount,
 	};
@@ -53,9 +56,8 @@ public:
 public:
     GTexture2D* loadTexture2D(const gchar* fileName);
     
+    GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param);
 private:
-    GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT);
-
     void addTextureNodeInMT(GTexture::Node* node);
     void removeTextureNodeInMT(GTexture::Node* node);
     

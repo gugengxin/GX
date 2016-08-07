@@ -17,7 +17,7 @@ public:
 		IDCount,
 	} ID;
 	typedef enum _InputType {
-		ITFloat,
+		IT_Float,
 	} InputType;
 public:
 	void draw(GPainter& painter, GIBuffer* buffer, InputType inputType, gint mode, gint first, gint count);

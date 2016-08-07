@@ -78,10 +78,21 @@ GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)
 }
 
 
-GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT)
+GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param)
 {
-    
-    
+    GDib* dib=GDib::load(reader, suggestFT);
+    if (dib) {
+        GTexture::Node* node=new GTexture::Node();
+        if(loadTexture2DNode(node, dib, param)) {
+            GTexture2D* tex2d=GTexture2D::alloc();
+            tex2d->setNode(node);
+            GO::autorelease(tex2d);
+            return tex2d;
+        }
+        else {
+            delete node;
+        }
+    }
     return NULL;
 }
 
