@@ -88,7 +88,7 @@ bool GSRGraphics::createInputLayout(ID3D10Device* device, const void *pShaderByt
 		D3D10_INPUT_ELEMENT_DESC layouts[] = {
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0 },
 		};
-		setInputLayout(ITFloat, device, pShaderBytecodeWithInputSignature, BytecodeLength, layouts, sizeof(layouts) / sizeof(layouts[0]));
+		setInputLayout(IT_Float, device, pShaderBytecodeWithInputSignature, BytecodeLength, layouts, sizeof(layouts) / sizeof(layouts[0]));
 	}
 	break;
 	case ID_Color:
@@ -98,7 +98,7 @@ bool GSRGraphics::createInputLayout(ID3D10Device* device, const void *pShaderByt
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0 },
 			{ "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
 		};
-		setInputLayout(ITFloat, device, pShaderBytecodeWithInputSignature, BytecodeLength, layouts, sizeof(layouts) / sizeof(layouts[0]));
+		setInputLayout(IT_Float, device, pShaderBytecodeWithInputSignature, BytecodeLength, layouts, sizeof(layouts) / sizeof(layouts[0]));
 	}
 	break;
 	default:

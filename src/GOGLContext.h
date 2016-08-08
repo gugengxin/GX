@@ -51,13 +51,10 @@ protected:
     void doneShader();
 	void readyTexture();
 	void doneTexture();
-private:
+protected:
 	static void loadTexture2DNodeInMT(GObject* obj);
     static void unloadTextureNodeInMT(GObject* obj);
-protected:
-	bool loadTexture2DNode(GTexture::Node* node,GDib* dib, GTexture2D::Parameter* param);
-    void unloadTextureNodeForContext(GTexture::Node* node);
-    void unloadTextureNode(GTexture::Node* node);
+	void unloadTextureNodeForContext(GTexture::Node* node);
 
 private:
 	GWindow* m_Window;

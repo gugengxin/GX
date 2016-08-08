@@ -550,7 +550,7 @@ void GWindow::render()
 		data->setStride(sizeof(GVector3));
 	}
 
-	graph->draw(painter, data, GSRGraphics::ITFloat, GX_TRIANGLES, 0, 3);
+	graph->draw(painter, data, GSRGraphics::IT_Float, GX_TRIANGLES, 0, 3);
 
 
 }

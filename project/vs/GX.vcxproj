@@ -72,6 +72,7 @@
     <ClCompile Include="..\..\src\GRunLoop.cpp" />
     <ClCompile Include="..\..\src\GShader.cpp" />
     <ClCompile Include="..\..\src\GSRGraphics.cpp" />
+    <ClCompile Include="..\..\src\GSRTexture2D.cpp" />
     <ClCompile Include="..\..\src\GString.cpp" />
     <ClCompile Include="..\..\src\GSystem.cpp" />
     <ClCompile Include="..\..\src\GTexture.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="..\..\src\GRunLoop.h" />
     <ClInclude Include="..\..\src\GShader.h" />
     <ClInclude Include="..\..\src\GSRGraphics.h" />
+    <ClInclude Include="..\..\src\GSRTexture2D.h" />
     <ClInclude Include="..\..\src\GString.h" />
     <ClInclude Include="..\..\src\GSystem.h" />
     <ClInclude Include="..\..\src\GTexture.h" />

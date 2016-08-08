@@ -17,6 +17,8 @@
 #include "GTexture2D.h"
 #include "GReader.h"
 
+#include "GXGObject.h"
+
 class GContext : public GContextBase
 {
     friend class GWindow;
@@ -58,8 +60,29 @@ public:
     
     GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param);
 private:
-    void addTextureNodeInMT(GTexture::Node* node);
-    void removeTextureNodeInMT(GTexture::Node* node);
+	void addTextureNodeInMT(GTexture::Node* node);
+	void removeTextureNodeInMT(GTexture::Node* node);
+
+	class T2DNodeLoadObj : public GObject {
+		friend class GObject;
+		GX_GOBJECT(T2DNodeLoadObj);
+	public:
+		GContext* context;
+		GDib* dib;
+		GTexture2D::Parameter* param;
+		GTexture2D::Node* nodeOut;
+	};
+	class T2DNodeUnloadObj : public GObject {
+		friend class GObject;
+		GX_GOBJECT(T2DNodeUnloadObj);
+	public:
+		GOGLContext* context;
+		GTexture2D::Node* nodeOut;
+	};
+
+	
+	bool loadTexture2DNode(GTexture::Node* node, GDib* dib, GTexture2D::Parameter* param);
+	void unloadTextureNode(GTexture::Node* node);
     
 private:
 	GPainter m_Painter;
@@ -67,5 +90,6 @@ private:
 	GDataList<GTexture::Handle> m_Textures;
 };
 
+#include "GXGObjectUD.h"
 
 #endif //AS_GCONTEXT_H

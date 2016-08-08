@@ -255,6 +255,9 @@
     <ClCompile Include="..\..\src\GError.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GSRTexture2D.cpp">
+      <Filter>src\Window\shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -514,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GError.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GSRTexture2D.h">
+      <Filter>src\Window\shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

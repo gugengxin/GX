@@ -4,6 +4,32 @@
 
 #include "GContext.h"
 #include "GLog.h"
+#include "GThread.h"
+
+
+#include "GXGObject.h"
+
+GX_GOBJECT_IMPLEMENT(GContext::T2DNodeLoadObj, GObject);
+
+GContext::T2DNodeLoadObj::T2DNodeLoadObj()
+{
+}
+
+GContext::T2DNodeLoadObj::~T2DNodeLoadObj()
+{
+
+}
+
+GX_GOBJECT_IMPLEMENT(GContext::T2DNodeUnloadObj, GObject);
+
+GContext::T2DNodeUnloadObj::T2DNodeUnloadObj()
+{
+}
+
+GContext::T2DNodeUnloadObj::~T2DNodeUnloadObj()
+{
+
+}
 
 //不用在这里初始化
 GContext::GContext()
@@ -98,12 +124,45 @@ GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTe
 
 void GContext::addTextureNodeInMT(GTexture::Node* node)
 {
-    m_Textures.add(node);
+	m_Textures.add(node);
 }
 
 void GContext::removeTextureNodeInMT(GTexture::Node* node)
 {
-    m_Textures.remove(node,false);
+	m_Textures.remove(node, false);
 }
 
+bool GContext::loadTexture2DNode(GTexture::Node* node, GDib* dib, GTexture2D::Parameter* param)
+{
+	T2DNodeLoadObj* obj = T2DNodeLoadObj::alloc();
+	obj->context = this;
+	obj->dib = dib;
+	obj->param = param;
+	obj->nodeOut = node;
+	if (GThread::current()->isMain()) {
+		loadTexture2DNodeInMT(obj);
+	}
+	else {
+		GThread::current()->getRunLoop()->perform(loadTexture2DNodeInMT, obj, 0, true);
+	}
+	GO::release(obj);
+
+	return node->isValid();
+}
+
+void GContext::unloadTextureNode(GTexture::Node* node)
+{
+	T2DNodeUnloadObj* obj = T2DNodeUnloadObj::alloc();
+	obj->context = this;
+	obj->nodeOut = node;
+
+	if (GThread::current()->isMain()) {
+		unloadTextureNodeInMT(obj);
+	}
+	else {
+		GThread::current()->getRunLoop()->perform(unloadTextureNodeInMT, obj, 0, true);
+	}
+
+	GO::release(obj);
+}
 
