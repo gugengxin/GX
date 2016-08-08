@@ -52,6 +52,7 @@ protected:
 	void readyTexture();
 	void doneTexture();
 protected:
+	GDib* loadTexture2DNodeReadyDib(GDib* dib);
 	static void loadTexture2DNodeInMT(GObject* obj);
     static void unloadTextureNodeInMT(GObject* obj);
 	void unloadTextureNodeForContext(GTexture::Node* node);

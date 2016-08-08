@@ -604,6 +604,10 @@ void GOGLContext::doneTexture()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+GDib* GOGLContext::loadTexture2DNodeReadyDib(GDib* dib)
+{
+	return dib;
+}
 
 void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
 {

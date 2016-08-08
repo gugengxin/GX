@@ -134,6 +134,10 @@ void GContext::removeTextureNodeInMT(GTexture::Node* node)
 
 bool GContext::loadTexture2DNode(GTexture::Node* node, GDib* dib, GTexture2D::Parameter* param)
 {
+	dib = loadTexture2DNodeReadyDib(dib);
+	if (!dib) {
+		return false;
+	}
 	T2DNodeLoadObj* obj = T2DNodeLoadObj::alloc();
 	obj->context = this;
 	obj->dib = dib;

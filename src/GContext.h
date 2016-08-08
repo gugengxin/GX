@@ -76,11 +76,9 @@ private:
 		friend class GObject;
 		GX_GOBJECT(T2DNodeUnloadObj);
 	public:
-		GOGLContext* context;
+		GContext* context;
 		GTexture2D::Node* nodeOut;
 	};
-
-	
 	bool loadTexture2DNode(GTexture::Node* node, GDib* dib, GTexture2D::Parameter* param);
 	void unloadTextureNode(GTexture::Node* node);
     

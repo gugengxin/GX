@@ -12,7 +12,6 @@
 class GWindow;
 
 class GD3DContext {
-
 protected:
     GD3DContext();
     virtual ~GD3DContext();
@@ -25,6 +24,8 @@ public:
 	void renderBegin();
 	void setViewport(float x, float y, float w, float h, float scale);
 	void renderEnd();
+private:
+	bool createView(UINT width, UINT height);
 public:
 	void makeCurrent();
 	void makeClear();
@@ -33,10 +34,11 @@ protected:
 	void doneShader();
 	void readyTexture();
 	void doneTexture();
-
-private:
-	bool createView(UINT width, UINT height);
-
+protected:
+	GDib* loadTexture2DNodeReadyDib(GDib* dib);
+	static void loadTexture2DNodeInMT(GObject* obj);
+	static void unloadTextureNodeInMT(GObject* obj);
+	void unloadTextureNodeForContext(GTexture::Node* node);
 private:
 	GWindow* m_Window;
 

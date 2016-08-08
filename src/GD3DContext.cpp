@@ -351,4 +351,53 @@ void GD3DContext::doneTexture()
 {
 }
 
+GDib* GD3DContext::loadTexture2DNodeReadyDib(GDib* dib)
+{
+	return dib;
+}
+
+void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
+{
+	GContext::T2DNodeLoadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObj*, obj);
+
+	nodeObj.context->readyTexture();
+
+	GTexture::Handle& handle = nodeObj.nodeOut->getData();
+
+	D3D10_TEXTURE2D_DESC desc = { 0 };
+	desc.Width = nodeObj.dib->getWidth();
+	desc.Height = nodeObj.dib->getHeight();
+	desc.MipLevels = 1;
+	desc.ArraySize = 1;
+	desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
+	desc.SampleDesc.Count = 1;
+	desc.SampleDesc.Quality = 0;
+	desc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
+	desc.Usage = D3D10_USAGE_DYNAMIC;
+
+	D3D10_SUBRESOURCE_DATA data = { 0 };
+
+	ID3D10Texture2D* pTex2D;
+
+	ID3D10Device* device=GX::D3DDevice();
+
+	HRESULT hr = device->CreateTexture2D(&desc, NULL, &pTex2D);
+	if (SUCCEEDED(hr)) {
+		
+	}
+
+
+
+	nodeObj.context->doneTexture();
+}
+void GD3DContext::unloadTextureNodeInMT(GObject* obj)
+{
+
+}
+void GD3DContext::unloadTextureNodeForContext(GTexture::Node* node)
+{
+
+}
+
+
 #endif
