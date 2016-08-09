@@ -31,9 +31,9 @@ public:
         
         
     } FileType;
-    
     static GDib* load(GReader* reader,FileType suggestFT);
     
+	static GDib* convert(GDib* dib, GX::PixelFormat pfTo);
 public:
     inline GX::PixelFormat getPixelFormat() {
         return m_PixelFormat;

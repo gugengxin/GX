@@ -45,7 +45,6 @@ static GDib::FileType _CheckFileType(GReader* reader,GDib::FileType suggestFT)
     return GDib::Unsupport;
 }
 
-
 GX_GOBJECT_IMPLEMENT(GDib, GObject);
 
 GDib* GDib::load(GReader* reader,FileType suggestFT)
@@ -70,6 +69,358 @@ GDib* GDib::load(GReader* reader,FileType suggestFT)
     
     return NULL;
 }
+
+#define M_CONVERT_START(PFFrom,PF) \
+case PF:\
+{\
+	GDib* res = GDib::alloc();\
+	if (res->changeDataBytes(dib->getWidth()*dib->getHeight()*GX_PIXEL_FORMAT_SIZE(PF))) {\
+		res->setPixelFormat(PF);\
+		res->setWidth(dib->getWidth());\
+		res->setHeight(dib->getHeight());\
+		res->setStride(res->getWidth()*GX_PIXEL_FORMAT_SIZE(PF));\
+		for (gint32 i = 0; i<dib->getHeight(); i++) {\
+			guint8* pS = ((guint8*)dib->getDataPtr()) + i*dib->getStride();\
+			guint8* pD = ((guint8*)res->getDataPtr()) + i*res->getStride();\
+			for (gint32 j = 0; j < dib->getWidth(); j++) {
+
+#define M_CONVERT_END__(PFFrom,PF) \
+				pS+=GX_PIXEL_FORMAT_SIZE(PFFrom);\
+				pD+=GX_PIXEL_FORMAT_SIZE(PF);\
+			}\
+		}\
+		GO::autorelease(res);\
+		return res;\
+	}\
+	else {\
+		GO::release(res);\
+	}\
+}\
+break
+
+
+GDib* GDib::convert(GDib* dib, GX::PixelFormat pfTo)
+{
+	if (dib->getPixelFormat() == pfTo) {
+		return dib;
+	}
+	switch (dib->getPixelFormat()) {
+	case GX::PixelFormatA8:
+	{
+		switch (pfTo)
+		{
+			M_CONVERT_START(GX::PixelFormatA8,GX::PixelFormatRGB565);
+			(*(guint16*)pD) = (((*pS) & 0xF8) << 8) | (((*pS) & 0xFC) << 3) | ((*pS) >> 3);
+			M_CONVERT_END__(GX::PixelFormatA8, GX::PixelFormatRGB565);
+
+			M_CONVERT_START(GX::PixelFormatA8, GX::PixelFormatBGR565);
+			(*(guint16*)pD) = (((*pS) & 0xF8) << 8) | (((*pS) & 0xFC) << 3) | ((*pS) >> 3);
+			M_CONVERT_END__(GX::PixelFormatA8, GX::PixelFormatBGR565);
+
+			M_CONVERT_START(GX::PixelFormatA8, GX::PixelFormatRGBA4444);
+			(*(guint16*)pD) = (0xFFF0 | ((*pS) >> 4));
+			M_CONVERT_END__(GX::PixelFormatA8, GX::PixelFormatRGBA4444);
+
+			M_CONVERT_START(GX::PixelFormatA8, GX::PixelFormatBGRA4444);
+			(*(guint16*)pD) = (0xFFF0 | ((*pS) >> 4));
+			M_CONVERT_END__(GX::PixelFormatA8, GX::PixelFormatBGRA4444);
+
+			M_CONVERT_START(GX::PixelFormatA8, GX::PixelFormatRGBA5551);
+			(*(guint16*)pD) = (0xFFFE | ((*pS) >> 7));
+			M_CONVERT_END__(GX::PixelFormatA8, GX::PixelFormatRGBA5551);
+
+			M_CONVERT_START(GX::PixelFormatA8, GX::PixelFormatBGRA5551);
+			(*(guint16*)pD) = (0xFFFE | ((*pS) >> 7));
+			M_CONVERT_END__(GX::PixelFormatA8, GX::PixelFormatBGRA5551);
+
+			M_CONVERT_START(GX::PixelFormatA8, GX::PixelFormatRGB888);
+			pD[0] = (*pS);
+			pD[1] = (*pS);
+			pD[2] = (*pS);
+			M_CONVERT_END__(GX::PixelFormatA8, GX::PixelFormatRGB888);
+
+			M_CONVERT_START(GX::PixelFormatA8, GX::PixelFormatRGBA8888);
+			(*(guint32*)pD) = 0xFFFFFF | ((*pS) << 24);
+			M_CONVERT_END__(GX::PixelFormatA8, GX::PixelFormatRGBA8888);
+
+			M_CONVERT_START(GX::PixelFormatA8, GX::PixelFormatBGRA8888);
+			(*(guint32*)pD) = 0xFFFFFF | ((*pS) << 24);
+			M_CONVERT_END__(GX::PixelFormatA8, GX::PixelFormatBGRA8888);
+		default:
+			break;
+		}
+	}
+	break;
+	case GX::PixelFormatRGB565:
+	{
+		switch (pfTo)
+		{
+			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatA8);
+			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatA8);
+			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatRGB565);
+			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatRGB565);
+			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatBGR565);
+			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatBGR565);
+			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatRGBA4444);
+			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatRGBA4444);
+			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatBGRA4444);
+			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatBGRA4444);
+			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatRGBA5551);
+			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatRGBA5551);
+			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatBGRA5551);
+			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatBGRA5551);
+			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatRGB888);
+			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatRGB888);
+			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatRGBA8888);
+			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatRGBA8888);
+			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatBGRA8888);
+			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatBGRA8888);
+		default:
+			break;
+		}
+	}
+	break;
+	case GX::PixelFormatBGR565:
+	{
+		switch (pfTo)
+		{
+			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatA8);
+			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatA8);
+			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatRGB565);
+			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatRGB565);
+			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatBGR565);
+			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatBGR565);
+			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatRGBA4444);
+			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatRGBA4444);
+			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatBGRA4444);
+			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatBGRA4444);
+			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatRGBA5551);
+			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatRGBA5551);
+			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatBGRA5551);
+			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatBGRA5551);
+			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatRGB888);
+			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatRGB888);
+			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatRGBA8888);
+			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatRGBA8888);
+			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatBGRA8888);
+			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatBGRA8888);
+		default:
+			break;
+		}
+	}
+	break;
+	case GX::PixelFormatRGBA4444:
+	{
+		switch (pfTo)
+		{
+			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatA8);
+			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatA8);
+			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatRGB565);
+			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatRGB565);
+			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatBGR565);
+			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatBGR565);
+			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatRGBA4444);
+			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatRGBA4444);
+			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatBGRA4444);
+			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatBGRA4444);
+			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatRGBA5551);
+			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatRGBA5551);
+			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatBGRA5551);
+			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatBGRA5551);
+			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatRGB888);
+			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatRGB888);
+			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatRGBA8888);
+			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatRGBA8888);
+			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatBGRA8888);
+			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatBGRA8888);
+		default:
+			break;
+		}
+	}
+	break;
+	case GX::PixelFormatBGRA4444:
+	{
+		switch (pfTo)
+		{
+			M_CONVERT_START(GX::PixelFormatBGRA4444, GX::PixelFormatA8);
+			M_CONVERT_END__(GX::PixelFormatBGRA4444, GX::PixelFormatA8);
+			M_CONVERT_START(GX::PixelFormatBGRA4444, GX::PixelFormatRGB565);
+			M_CONVERT_END__(GX::PixelFormatBGRA4444, GX::PixelFormatRGB565);
+			M_CONVERT_START(GX::PixelFormatBGRA4444, GX::PixelFormatBGR565);
+			M_CONVERT_END__(GX::PixelFormatBGRA4444, GX::PixelFormatBGR565);
+			M_CONVERT_START(GX::PixelFormatBGRA4444, GX::PixelFormatRGBA4444);
+			M_CONVERT_END__(GX::PixelFormatBGRA4444, GX::PixelFormatRGBA4444);
+			M_CONVERT_START(GX::PixelFormatBGRA4444, GX::PixelFormatBGRA4444);
+			M_CONVERT_END__(GX::PixelFormatBGRA4444, GX::PixelFormatBGRA4444);
+			M_CONVERT_START(GX::PixelFormatBGRA4444, GX::PixelFormatRGBA5551);
+			M_CONVERT_END__(GX::PixelFormatBGRA4444, GX::PixelFormatRGBA5551);
+			M_CONVERT_START(GX::PixelFormatBGRA4444, GX::PixelFormatBGRA5551);
+			M_CONVERT_END__(GX::PixelFormatBGRA4444, GX::PixelFormatBGRA5551);
+			M_CONVERT_START(GX::PixelFormatBGRA4444, GX::PixelFormatRGB888);
+			M_CONVERT_END__(GX::PixelFormatBGRA4444, GX::PixelFormatRGB888);
+			M_CONVERT_START(GX::PixelFormatBGRA4444, GX::PixelFormatRGBA8888);
+			M_CONVERT_END__(GX::PixelFormatBGRA4444, GX::PixelFormatRGBA8888);
+			M_CONVERT_START(GX::PixelFormatBGRA4444, GX::PixelFormatBGRA8888);
+			M_CONVERT_END__(GX::PixelFormatBGRA4444, GX::PixelFormatBGRA8888);
+		default:
+			break;
+		}
+	}
+	break;
+	case GX::PixelFormatRGBA5551:
+	{
+		switch (pfTo)
+		{
+			M_CONVERT_START(GX::PixelFormatRGBA5551, GX::PixelFormatA8);
+			M_CONVERT_END__(GX::PixelFormatRGBA5551, GX::PixelFormatA8);
+			M_CONVERT_START(GX::PixelFormatRGBA5551, GX::PixelFormatRGB565);
+			M_CONVERT_END__(GX::PixelFormatRGBA5551, GX::PixelFormatRGB565);
+			M_CONVERT_START(GX::PixelFormatRGBA5551, GX::PixelFormatBGR565);
+			M_CONVERT_END__(GX::PixelFormatRGBA5551, GX::PixelFormatBGR565);
+			M_CONVERT_START(GX::PixelFormatRGBA5551, GX::PixelFormatRGBA4444);
+			M_CONVERT_END__(GX::PixelFormatRGBA5551, GX::PixelFormatRGBA4444);
+			M_CONVERT_START(GX::PixelFormatRGBA5551, GX::PixelFormatBGRA4444);
+			M_CONVERT_END__(GX::PixelFormatRGBA5551, GX::PixelFormatBGRA4444);
+			M_CONVERT_START(GX::PixelFormatRGBA5551, GX::PixelFormatRGBA5551);
+			M_CONVERT_END__(GX::PixelFormatRGBA5551, GX::PixelFormatRGBA5551);
+			M_CONVERT_START(GX::PixelFormatRGBA5551, GX::PixelFormatBGRA5551);
+			M_CONVERT_END__(GX::PixelFormatRGBA5551, GX::PixelFormatBGRA5551);
+			M_CONVERT_START(GX::PixelFormatRGBA5551, GX::PixelFormatRGB888);
+			M_CONVERT_END__(GX::PixelFormatRGBA5551, GX::PixelFormatRGB888);
+			M_CONVERT_START(GX::PixelFormatRGBA5551, GX::PixelFormatRGBA8888);
+			M_CONVERT_END__(GX::PixelFormatRGBA5551, GX::PixelFormatRGBA8888);
+			M_CONVERT_START(GX::PixelFormatRGBA5551, GX::PixelFormatBGRA8888);
+			M_CONVERT_END__(GX::PixelFormatRGBA5551, GX::PixelFormatBGRA8888);
+		default:
+			break;
+		}
+	}
+	break;
+	case GX::PixelFormatBGRA5551:
+	{
+		switch (pfTo)
+		{
+			M_CONVERT_START(GX::PixelFormatBGRA5551, GX::PixelFormatA8);
+			M_CONVERT_END__(GX::PixelFormatBGRA5551, GX::PixelFormatA8);
+			M_CONVERT_START(GX::PixelFormatBGRA5551, GX::PixelFormatRGB565);
+			M_CONVERT_END__(GX::PixelFormatBGRA5551, GX::PixelFormatRGB565);
+			M_CONVERT_START(GX::PixelFormatBGRA5551, GX::PixelFormatBGR565);
+			M_CONVERT_END__(GX::PixelFormatBGRA5551, GX::PixelFormatBGR565);
+			M_CONVERT_START(GX::PixelFormatBGRA5551, GX::PixelFormatRGBA4444);
+			M_CONVERT_END__(GX::PixelFormatBGRA5551, GX::PixelFormatRGBA4444);
+			M_CONVERT_START(GX::PixelFormatBGRA5551, GX::PixelFormatBGRA4444);
+			M_CONVERT_END__(GX::PixelFormatBGRA5551, GX::PixelFormatBGRA4444);
+			M_CONVERT_START(GX::PixelFormatBGRA5551, GX::PixelFormatRGBA5551);
+			M_CONVERT_END__(GX::PixelFormatBGRA5551, GX::PixelFormatRGBA5551);
+			M_CONVERT_START(GX::PixelFormatBGRA5551, GX::PixelFormatBGRA5551);
+			M_CONVERT_END__(GX::PixelFormatBGRA5551, GX::PixelFormatBGRA5551);
+			M_CONVERT_START(GX::PixelFormatBGRA5551, GX::PixelFormatRGB888);
+			M_CONVERT_END__(GX::PixelFormatBGRA5551, GX::PixelFormatRGB888);
+			M_CONVERT_START(GX::PixelFormatBGRA5551, GX::PixelFormatRGBA8888);
+			M_CONVERT_END__(GX::PixelFormatBGRA5551, GX::PixelFormatRGBA8888);
+			M_CONVERT_START(GX::PixelFormatBGRA5551, GX::PixelFormatBGRA8888);
+			M_CONVERT_END__(GX::PixelFormatBGRA5551, GX::PixelFormatBGRA8888);
+		default:
+			break;
+		}
+	}
+	break;
+	case GX::PixelFormatRGB888:
+	{
+		switch (pfTo)
+		{
+			M_CONVERT_START(GX::PixelFormatRGB888, GX::PixelFormatA8);
+			M_CONVERT_END__(GX::PixelFormatRGB888, GX::PixelFormatA8);
+			M_CONVERT_START(GX::PixelFormatRGB888, GX::PixelFormatRGB565);
+			M_CONVERT_END__(GX::PixelFormatRGB888, GX::PixelFormatRGB565);
+			M_CONVERT_START(GX::PixelFormatRGB888, GX::PixelFormatBGR565);
+			M_CONVERT_END__(GX::PixelFormatRGB888, GX::PixelFormatBGR565);
+			M_CONVERT_START(GX::PixelFormatRGB888, GX::PixelFormatRGBA4444);
+			M_CONVERT_END__(GX::PixelFormatRGB888, GX::PixelFormatRGBA4444);
+			M_CONVERT_START(GX::PixelFormatRGB888, GX::PixelFormatBGRA4444);
+			M_CONVERT_END__(GX::PixelFormatRGB888, GX::PixelFormatBGRA4444);
+			M_CONVERT_START(GX::PixelFormatRGB888, GX::PixelFormatRGBA5551);
+			M_CONVERT_END__(GX::PixelFormatRGB888, GX::PixelFormatRGBA5551);
+			M_CONVERT_START(GX::PixelFormatRGB888, GX::PixelFormatBGRA5551);
+			M_CONVERT_END__(GX::PixelFormatRGB888, GX::PixelFormatBGRA5551);
+			M_CONVERT_START(GX::PixelFormatRGB888, GX::PixelFormatRGB888);
+			M_CONVERT_END__(GX::PixelFormatRGB888, GX::PixelFormatRGB888);
+			M_CONVERT_START(GX::PixelFormatRGB888, GX::PixelFormatRGBA8888);
+			M_CONVERT_END__(GX::PixelFormatRGB888, GX::PixelFormatRGBA8888);
+			M_CONVERT_START(GX::PixelFormatRGB888, GX::PixelFormatBGRA8888);
+			M_CONVERT_END__(GX::PixelFormatRGB888, GX::PixelFormatBGRA8888);
+		default:
+			break;
+		}
+	}
+	break;
+	case GX::PixelFormatRGBA8888:
+	{
+		switch (pfTo)
+		{
+			M_CONVERT_START(GX::PixelFormatRGBA8888, GX::PixelFormatA8);
+			M_CONVERT_END__(GX::PixelFormatRGBA8888, GX::PixelFormatA8);
+			M_CONVERT_START(GX::PixelFormatRGBA8888, GX::PixelFormatRGB565);
+			M_CONVERT_END__(GX::PixelFormatRGBA8888, GX::PixelFormatRGB565);
+			M_CONVERT_START(GX::PixelFormatRGBA8888, GX::PixelFormatBGR565);
+			M_CONVERT_END__(GX::PixelFormatRGBA8888, GX::PixelFormatBGR565);
+			M_CONVERT_START(GX::PixelFormatRGBA8888, GX::PixelFormatRGBA4444);
+			M_CONVERT_END__(GX::PixelFormatRGBA8888, GX::PixelFormatRGBA4444);
+			M_CONVERT_START(GX::PixelFormatRGBA8888, GX::PixelFormatBGRA4444);
+			M_CONVERT_END__(GX::PixelFormatRGBA8888, GX::PixelFormatBGRA4444);
+			M_CONVERT_START(GX::PixelFormatRGBA8888, GX::PixelFormatRGBA5551);
+			M_CONVERT_END__(GX::PixelFormatRGBA8888, GX::PixelFormatRGBA5551);
+			M_CONVERT_START(GX::PixelFormatRGBA8888, GX::PixelFormatBGRA5551);
+			M_CONVERT_END__(GX::PixelFormatRGBA8888, GX::PixelFormatBGRA5551);
+			M_CONVERT_START(GX::PixelFormatRGBA8888, GX::PixelFormatRGB888);
+			M_CONVERT_END__(GX::PixelFormatRGBA8888, GX::PixelFormatRGB888);
+			M_CONVERT_START(GX::PixelFormatRGBA8888, GX::PixelFormatRGBA8888);
+			M_CONVERT_END__(GX::PixelFormatRGBA8888, GX::PixelFormatRGBA8888);
+			M_CONVERT_START(GX::PixelFormatRGBA8888, GX::PixelFormatBGRA8888);
+			M_CONVERT_END__(GX::PixelFormatRGBA8888, GX::PixelFormatBGRA8888);
+		default:
+			break;
+		}
+	}
+	break;
+	case GX::PixelFormatBGRA8888:
+	{
+		switch (pfTo)
+		{
+			M_CONVERT_START(GX::PixelFormatBGRA8888, GX::PixelFormatA8);
+			M_CONVERT_END__(GX::PixelFormatBGRA8888, GX::PixelFormatA8);
+			M_CONVERT_START(GX::PixelFormatBGRA8888, GX::PixelFormatRGB565);
+			M_CONVERT_END__(GX::PixelFormatBGRA8888, GX::PixelFormatRGB565);
+			M_CONVERT_START(GX::PixelFormatBGRA8888, GX::PixelFormatBGR565);
+			M_CONVERT_END__(GX::PixelFormatBGRA8888, GX::PixelFormatBGR565);
+			M_CONVERT_START(GX::PixelFormatBGRA8888, GX::PixelFormatRGBA4444);
+			M_CONVERT_END__(GX::PixelFormatBGRA8888, GX::PixelFormatRGBA4444);
+			M_CONVERT_START(GX::PixelFormatBGRA8888, GX::PixelFormatBGRA4444);
+			M_CONVERT_END__(GX::PixelFormatBGRA8888, GX::PixelFormatBGRA4444);
+			M_CONVERT_START(GX::PixelFormatBGRA8888, GX::PixelFormatRGBA5551);
+			M_CONVERT_END__(GX::PixelFormatBGRA8888, GX::PixelFormatRGBA5551);
+			M_CONVERT_START(GX::PixelFormatBGRA8888, GX::PixelFormatBGRA5551);
+			M_CONVERT_END__(GX::PixelFormatBGRA8888, GX::PixelFormatBGRA5551);
+			M_CONVERT_START(GX::PixelFormatBGRA8888, GX::PixelFormatRGB888);
+			M_CONVERT_END__(GX::PixelFormatBGRA8888, GX::PixelFormatRGB888);
+			M_CONVERT_START(GX::PixelFormatBGRA8888, GX::PixelFormatRGBA8888);
+			M_CONVERT_END__(GX::PixelFormatBGRA8888, GX::PixelFormatRGBA8888);
+			M_CONVERT_START(GX::PixelFormatBGRA8888, GX::PixelFormatBGRA8888);
+			M_CONVERT_END__(GX::PixelFormatBGRA8888, GX::PixelFormatBGRA8888);
+		default:
+			break;
+		}
+	}
+	break;
+	default:
+		break;
+	}
+	return NULL;
+}
+
+#undef M_CONVERT_START
+#undef M_CONVERT_END__
+
 
 GDib::GDib()
 {

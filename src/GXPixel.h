@@ -14,28 +14,23 @@
 namespace GX {
     
     enum {
-        PixelFormatUnknown      =0,
-        PixelFormatA8           =0x180,
-        PixelFormatRGB565       =0x200,
-        PixelFormatRGBA4444     =0x281,
-        PixelFormatRGBA5551     =0x282,
-        PixelFormatRGB888       =0x300,
-        PixelFormatRGBA8888     =0x480,
-        
-        //以下暂不支持
-        PixelFormatOther        =0x10000,
-        
-        PixelFormatPVRTC4RGB    =0x10001,
-        PixelFormatPVRTC4RGBA   =0x10082,
-        PixelFormatPVRTC2RGB    =0x10003,
-        PixelFormatPVRTC2RGBA   =0x10084,
+        PixelFormatUnknown      = 0,
+        PixelFormatA8           = ((1 << 9) | (1 << 8) | 1),//O&D
+        PixelFormatRGB565       = ((2 << 9) | (0 << 8) | 2),//O
+		PixelFormatBGR565		= ((2 << 9) | (0 << 8) | 3),//D
+		PixelFormatRGBA4444		= ((2 << 9) | (1 << 8) | 4),//O
+		PixelFormatBGRA4444		= ((2 << 9) | (1 << 8) | 5),//D
+		PixelFormatRGBA5551		= ((2 << 9) | (1 << 8) | 6),//O
+		PixelFormatBGRA5551		= ((2 << 9) | (1 << 8) | 7),//D
+		PixelFormatRGB888		= ((3 << 9) | (0 << 8) | 8),//O
+		PixelFormatRGBA8888		= ((4 << 9) | (1 << 8) | 9),//O&D
+		PixelFormatBGRA8888		= ((4 << 9) | (1 << 8) | 10),//D
     };
-    
     typedef guint32 PixelFormat;
     
-#define GX_PIXEL_FORMAT_SIZE(x) (((x)>>8)&0xFF)
-#define GX_PIXEL_FORMAT_HAVEALPHA(x) ((x)&0x80)
-#define GX_PIXEL_FORMAT_ISOTHER(x) ((x)>>16)
+#define GX_PIXEL_FORMAT_SIZE(x)			(((x)>>9)&0x7F)
+#define GX_PIXEL_FORMAT_HAVEALPHA(x)	(((x)>>8)&0x1)
+#define GX_PIXEL_FORMAT_ID(x)			((x)&0xFF)
     
     enum {
         PixelChannelRed=0,
@@ -43,7 +38,6 @@ namespace GX {
         PixelChannelBlue,
         PixelChannelAlpha,
     };
-    
     typedef guint32 PixelChannel;
 }
 
