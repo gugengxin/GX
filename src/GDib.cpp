@@ -156,24 +156,41 @@ GDib* GDib::convert(GDib* dib, GX::PixelFormat pfTo)
 		switch (pfTo)
 		{
 			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatA8);
+                (*pD)=0xFF;
 			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatA8);
-			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatRGB565);
-			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatRGB565);
+                
 			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatBGR565);
+                (*(guint16*)pD)=(((*(guint16*)pS)&0xF800)>>11) | ((*(guint16*)pS)&0x7E0) | (((*(guint16*)pS)&0x1F)<<11);
 			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatBGR565);
+                
 			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatRGBA4444);
+                (*(guint16*)pD)=(((*(guint16*)pS)&0xF000) | (((*(guint16*)pS)&0x780)<<1) | (((*(guint16*)pS)&0x1E)<<3) | 0xF);
 			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatRGBA4444);
+                
 			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatBGRA4444);
+                (*(guint16*)pD)=((((*(guint16*)pS)&0xF000)>>8) | (((*(guint16*)pS)&0x780)<<1) | (((*(guint16*)pS)&0x1E)<<11) | 0xF);
 			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatBGRA4444);
+                
 			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatRGBA5551);
+                (*(guint16*)pD)=(((*(guint16*)pS)&0xFFC0) | (((*(guint16*)pS)&0x1F)<<1) | 0x1);
 			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatRGBA5551);
+                
 			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatBGRA5551);
+                (*(guint16*)pD)=(((*(guint16*)pS)&0xF800)>>10) | ((*(guint16*)pS)&0x7C0) | (((*(guint16*)pS)&0x1F)<<11) | 0x1;
 			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatBGRA5551);
+                
 			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatRGB888);
+                pD[0]=(((*(guint16*)pS)&0xF800)>>8);
+                pD[1]=(((*(guint16*)pS)&0x7E0)>>3);
+                pD[2]=(((*(guint16*)pS)&0x1F)<<3);
 			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatRGB888);
+                
 			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatRGBA8888);
+                (*(guint32*)pD)=0xFF000000 | (((*(guint16*)pS)&0xF800)>>8) | (((*(guint16*)pS)&0x7E0)<<5)| (((*(guint16*)pS)&0x1F)<<19);
 			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatRGBA8888);
+                
 			M_CONVERT_START(GX::PixelFormatRGB565, GX::PixelFormatBGRA8888);
+                (*(guint32*)pD)=0xFF000000 | (((*(guint16*)pS)&0xF800)<<8) | (((*(guint16*)pS)&0x7E0)<<5)| (((*(guint16*)pS)&0x1F)<<3);
 			M_CONVERT_END__(GX::PixelFormatRGB565, GX::PixelFormatBGRA8888);
 		default:
 			break;
@@ -185,24 +202,40 @@ GDib* GDib::convert(GDib* dib, GX::PixelFormat pfTo)
 		switch (pfTo)
 		{
 			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatA8);
+                (*pD)=0xFF;
 			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatA8);
+                
 			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatRGB565);
+                (*(guint16*)pD)=(((*(guint16*)pS)&0xF800)>>11) | ((*(guint16*)pS)&0x7E0) | (((*(guint16*)pS)&0x1F)<<11);
 			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatRGB565);
-			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatBGR565);
-			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatBGR565);
+                
 			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatRGBA4444);
+                (*(guint16*)pD)=((((*(guint16*)pS)&0xF000)>>8) | (((*(guint16*)pS)&0x780)<<1) | (((*(guint16*)pS)&0x1E)<<11) | 0xF);
 			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatRGBA4444);
-			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatBGRA4444);
+                
+            M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatBGRA4444);
+                (*(guint16*)pD)=(((*(guint16*)pS)&0xF000) | (((*(guint16*)pS)&0x780)<<1) | (((*(guint16*)pS)&0x1E)<<3) | 0xF);
 			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatBGRA4444);
-			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatRGBA5551);
+                
+            M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatRGBA5551);
+                (*(guint16*)pD)=(((*(guint16*)pS)&0xF800)>>10) | ((*(guint16*)pS)&0x7C0) | (((*(guint16*)pS)&0x1F)<<11) | 0x1;
 			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatRGBA5551);
+                
 			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatBGRA5551);
+                (*(guint16*)pD)=(((*(guint16*)pS)&0xFFC0) | (((*(guint16*)pS)&0x1F)<<1) | 0x1);
 			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatBGRA5551);
+                
 			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatRGB888);
+                pD[0]=(((*(guint16*)pS)&0x1F)<<3);
+                pD[1]=(((*(guint16*)pS)&0x7E0)>>3);
+                pD[2]=(((*(guint16*)pS)&0xF800)>>8);
 			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatRGB888);
+                
 			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatRGBA8888);
+                (*(guint32*)pD)=0xFF000000 | (((*(guint16*)pS)&0xF800)>>8) | (((*(guint16*)pS)&0x7E0)<<5)| (((*(guint16*)pS)&0x1F)<<19);
 			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatRGBA8888);
 			M_CONVERT_START(GX::PixelFormatBGR565, GX::PixelFormatBGRA8888);
+                (*(guint32*)pD)=0xFF000000 | (((*(guint16*)pS)&0xF800)<<8) | (((*(guint16*)pS)&0x7E0)<<5)| (((*(guint16*)pS)&0x1F)<<3);
 			M_CONVERT_END__(GX::PixelFormatBGR565, GX::PixelFormatBGRA8888);
 		default:
 			break;
@@ -214,15 +247,27 @@ GDib* GDib::convert(GDib* dib, GX::PixelFormat pfTo)
 		switch (pfTo)
 		{
 			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatA8);
+                (*pD)=(((*(guint16*)pS)&0xF)<<4);
 			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatA8);
+                
 			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatRGB565);
+                guint32 a=((*(guint16*)pS)&0xF);
+                (*(guint16*)pD)=((((*(guint16*)pS)&0xF000)*a/0xF)&0xF000) |
+                (((((*(guint16*)pS)&0xF00)*a/0xF)&0xF00)>>1) |
+                (((((*(guint16*)pS)&0xF0)*a/0xF)&0xF0)>>3);
 			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatRGB565);
+                
 			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatBGR565);
+                guint32 a=((*(guint16*)pS)&0xF);
+                (*(guint16*)pD)=(((((*(guint16*)pS)&0xF000)*a/0xF)&0xF000)>>11) |
+                (((((*(guint16*)pS)&0xF00)*a/0xF)&0xF00)>>1) |
+                (((((*(guint16*)pS)&0xF0)*a/0xF)&0xF0)<<8);
 			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatBGR565);
-			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatRGBA4444);
-			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatRGBA4444);
+                
 			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatBGRA4444);
+                (*(guint16*)pD)=(((*(guint16*)pS)&0xF000)>>8) | ((*(guint16*)pS)&0xF0F) | (((*(guint16*)pS)&0xF0)<<8);
 			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatBGRA4444);
+                
 			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatRGBA5551);
 			M_CONVERT_END__(GX::PixelFormatRGBA4444, GX::PixelFormatRGBA5551);
 			M_CONVERT_START(GX::PixelFormatRGBA4444, GX::PixelFormatBGRA5551);

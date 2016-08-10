@@ -220,7 +220,8 @@ bool GThread::isMain()
     if (!g_MT) {
         return false;
     }
-    return memcmp(&m_ID,&g_MT->getID(),sizeof(m_ID))==0;
+    GX::pthread_t mID=g_MT->getID();
+    return memcmp(&m_ID,&mID,sizeof(m_ID))==0;
 }
 
 void GThread::pushARObj(GObject* v)
