@@ -42,13 +42,6 @@
 #define GX_OS_DESKTOP
 #define GX_IDE_XCODE
 
-#elif defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
-
-#define GX_OS_MICROSOFT
-#define GX_OS_MOBILE
-#define GX_OS_WINPHONE
-#define GX_IDE_VS
-
 #elif defined(WIN32) || defined(WIN64)
 
 #define GX_OS_MICROSOFT
@@ -66,21 +59,36 @@
 
 #define GX_BYTE_ORDER GX_LITTLE_ENDIAN
 
-
 #ifndef GX_OPENGL
-#if defined(GX_OS_APPLE) || defined(GX_OS_ANDROID) || defined(GX_OS_QT) //|| defined(GX_OS_WINDOWS)
+#if defined(GX_OS_QT) \
+    || defined(GX_OS_ANDROID) \
+    //|| defined(GX_OS_APPLE) \
+    //|| defined(GX_OS_WINDOWS) \
+
 #define GX_OPENGL
+
+#endif
+
+#endif
+
+#if defined(GX_OPENGL)
+
 #if defined(GX_OS_MOBILE)
 #define GX_OPENGL_ES
 #endif
-#endif
+
+#else
+
+#if !defined(GX_METAL) && defined(GX_OS_APPLE)
+#define GX_METAL
 #endif
 
-#if !defined(GX_OPENGL) && !defined(GX_DIRECTX)
-#if defined(GX_OS_WINDOWS)
+#if !defined(GX_DIRECTX) && defined(GX_OS_WINDOWS)
 #define GX_DIRECTX
 #endif
+
 #endif
+
 
 
 
