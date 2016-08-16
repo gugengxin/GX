@@ -8,6 +8,7 @@
 #include "GXPrefix.h"
 #if defined(GX_DIRECTX)
 #include "GXDirectX.h"
+#include "GTexture2D.h"
 
 class GWindow;
 

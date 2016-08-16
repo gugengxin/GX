@@ -756,7 +756,7 @@ void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
     nodeObj.context->doneTexture();
 
     if (handle.isValid()) {
-        nodeObj.nodeOut->m_Context=GX_CAST_R(GContext*, nodeObj.context);
+        nodeObj.nodeOut->m_Context=nodeObj.context;
         nodeObj.nodeOut->m_Context->addTextureNodeInMT(nodeObj.nodeOut);
     }
 }
