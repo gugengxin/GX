@@ -606,7 +606,44 @@ void GOGLContext::doneTexture()
 
 GDib* GOGLContext::loadTexture2DNodeReadyDib(GDib* dib)
 {
-	return dib;
+    if (dib) {
+        switch (dib->getPixelFormat()) {
+            case GX::PixelFormatA8:
+            case GX::PixelFormatRGB565:
+            case GX::PixelFormatRGBA4444:
+            case GX::PixelFormatRGBA5551:
+            case GX::PixelFormatRGB888:
+            case GX::PixelFormatRGBA8888:
+            {
+                return dib;
+            }
+                break;
+            case GX::PixelFormatBGR565:
+            {
+                return GDib::convert(dib, GX::PixelFormatRGB565);
+            }
+                break;
+            case GX::PixelFormatBGRA4444:
+            {
+                return GDib::convert(dib, GX::PixelFormatRGBA4444);
+            }
+                break;
+            case GX::PixelFormatBGRA5551:
+            {
+                return GDib::convert(dib, GX::PixelFormatRGBA5551);
+            }
+                break;
+                break;
+            case GX::PixelFormatBGRA8888:
+            {
+                return GDib::convert(dib, GX::PixelFormatRGBA8888);
+            }
+                break;
+            default:
+                break;
+        }
+    }
+	return NULL;
 }
 
 void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
