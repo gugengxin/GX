@@ -117,7 +117,7 @@ private:
     GWindow* m_Target;
 };
 
-@interface _OGLView :
+@interface _ContextView :
 #if defined(GX_OS_IPHONE)
 UIView
 #elif defined(GX_OS_MACOSX)
@@ -125,11 +125,14 @@ NSView
 #endif
 {
     _WindowBridge _bridge;
+#if defined(GX_METAL)
+    CAMetalLayer* _metalLayer;
+#endif
 }
 
 @end
 
-@implementation _OGLView
+@implementation _ContextView
 
 - (id)initWithDelegate:(GWindow*)dge frame:(CGRect)rc
 {
@@ -137,13 +140,18 @@ NSView
     if (self) {
         _bridge.setTarget(dge);
 #if defined(GX_OS_IPHONE)
+        self.opaque          = YES;
+        self.backgroundColor = nil;
+#if defined(GX_METAL)
+        _metalLayer=(CAMetalLayer*)self.layer;
+#elif defined(GX_OPENGL)
         CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
-        self.contentScaleFactor=[UIScreen mainScreen].scale;
         eaglLayer.opaque = YES;
         eaglLayer.drawableProperties = @{
-        kEAGLDrawablePropertyRetainedBacking: [NSNumber numberWithBool:NO],
-        kEAGLDrawablePropertyColorFormat: kEAGLColorFormatRGBA8
-        };
+                                         kEAGLDrawablePropertyRetainedBacking: [NSNumber numberWithBool:NO],
+                                         kEAGLDrawablePropertyColorFormat: kEAGLColorFormatRGBA8
+                                         };
+#endif
 #if defined(GX_OS_IOS)
         self.multipleTouchEnabled=YES;
 #endif
@@ -151,10 +159,23 @@ NSView
 #elif defined(GX_OS_MACOSX)
         self.autoresizingMask=NSViewWidthSizable|NSViewHeightSizable;
         
+#if defined(GX_METAL)
+        self.wantsLayer = YES;
+        self.layer = [CAMetalLayer layer];
+        _metalLayer=(CAMetalLayer*)self.layer;
+#elif defined(GX_OPENGL)
         [self setWantsBestResolutionOpenGLSurface:YES];
+#endif
         
         NSNotificationCenter* nc=[NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(noteWindowWillClose:) name:NSWindowWillCloseNotification object:nil];
+#endif
+        
+#if defined(GX_METAL)
+        _metalLayer.device          = MTLCreateSystemDefaultDevice();
+        _metalLayer.pixelFormat     = MTLPixelFormatRGBA8Unorm;
+        // this is the default but if we wanted to perform compute on the final rendering layer we could set this to no
+        _metalLayer.framebufferOnly = YES;
 #endif
     }
     return self;
@@ -168,10 +189,27 @@ NSView
     [super dealloc];
 }
 
-#if defined(GX_OS_IPHONE)
 + (Class)layerClass
 {
+#if defined(GX_METAL)
+    return [CAMetalLayer class];
+#elif defined(GX_OPENGL) && defined(GX_OS_IPHONE)
     return [CAEAGLLayer class];
+#endif
+}
+
+#if defined(GX_METAL)
+- (CAMetalLayer*)metalLayer
+{
+    return _metalLayer;
+}
+#endif
+
+#if defined(GX_OS_IPHONE)
+
+- (void)didMoveToWindow
+{
+    self.contentScaleFactor = self.window.screen.nativeScale;
 }
 
 - (void)layoutSubviews
@@ -281,7 +319,7 @@ NSView
 @end
 
 
-@interface _OGLViewController :
+@interface _ContextViewController :
 #if defined(GX_OS_IPHONE)
 UIViewController
 #elif defined(GX_OS_MACOSX)
@@ -294,9 +332,9 @@ NSViewController
 
 @end
 
-@implementation _OGLViewController
+@implementation _ContextViewController
 
-- (id)initWithDelegate:(GWindow*)dge view:(_OGLView*)vw
+- (id)initWithDelegate:(GWindow*)dge view:(_ContextView*)vw
 {
     self=[super initWithNibName:nil bundle:nil];
     if (self) {
@@ -317,6 +355,13 @@ NSViewController
 }
 
 @end
+
+#if defined(GX_METAL)
+void* GWindow::getMetalLayer()
+{
+    return [GX_CAST_R(_ContextView*, m_OSWin) metalLayer];
+}
+#endif
 
 #elif defined(GX_OS_ANDROID)
 
@@ -361,6 +406,7 @@ GWindow::GWindow(void* osWinP)
 {
 	m_RenderStepTime=1000/30;
 	m_RenderLastTime=0;
+    m_BgdColor.set(0, 0, 0, 1);
 	m_OSWinP = osWinP;
 #if defined(GX_OS_WINDOWS)
 	WNDCLASS	wc;						// 窗口类结构
@@ -388,24 +434,24 @@ GWindow::GWindow(void* osWinP)
 	::ShowWindow(m_OSWin.getHWND(), SW_SHOW);
 	UpdateWindow(m_OSWin.getHWND());
 #elif defined(GX_OS_IPHONE)
-	m_OSWin = [[_OGLView alloc] initWithDelegate:this frame : GX_CAST_R(UIView*, osWinP).bounds];
-	m_OSWinCtrler = [[_OGLViewController alloc] initWithDelegate:this view : GX_CAST_R(_OGLView*, m_OSWin)];
+	m_OSWin = [[_ContextView alloc] initWithDelegate:this frame : GX_CAST_R(UIView*, osWinP).bounds];
+	m_OSWinCtrler = [[_ContextViewController alloc] initWithDelegate:this view : GX_CAST_R(_ContextView*, m_OSWin)];
 	if ([GX_CAST_R(UIView*, osWinP) isKindOfClass:[UIWindow class]]) {
 		GX_CAST_R(UIWindow*, osWinP).rootViewController = GX_CAST_R(UIViewController*, m_OSWinCtrler);
 	}
 	else {
-		[GX_CAST_R(UIView*, osWinP) addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
+		[GX_CAST_R(UIView*, osWinP) addSubview:GX_CAST_R(_ContextView*, m_OSWin)];
 	}
 #elif defined(GX_OS_MACOSX)
 	if ([GX_CAST_R(id, osWinP) isKindOfClass:[NSWindow class]]) {
-		m_OSWin = [[_OGLView alloc] initWithDelegate:this frame : GX_CAST_R(NSWindow*, osWinP).contentView.bounds];
-		[GX_CAST_R(NSWindow*, osWinP).contentView addSubview : GX_CAST_R(_OGLView*, m_OSWin)];
+		m_OSWin = [[_ContextView alloc] initWithDelegate:this frame : GX_CAST_R(NSWindow*, osWinP).contentView.bounds];
+		[GX_CAST_R(NSWindow*, osWinP).contentView addSubview : GX_CAST_R(_ContextView*, m_OSWin)];
 	}
 	else {
-		m_OSWin = [[_OGLView alloc] initWithDelegate:this frame : GX_CAST_R(NSView*, osWinP).bounds];
-		[GX_CAST_R(NSView*, osWinP) addSubview:GX_CAST_R(_OGLView*, m_OSWin)];
+		m_OSWin = [[_ContextView alloc] initWithDelegate:this frame : GX_CAST_R(NSView*, osWinP).bounds];
+		[GX_CAST_R(NSView*, osWinP) addSubview:GX_CAST_R(_ContextView*, m_OSWin)];
 	}
-	m_OSWinCtrler = [[_OGLViewController alloc] initWithDelegate:this view : GX_CAST_R(_OGLView*, m_OSWin)];
+	m_OSWinCtrler = [[_ContextViewController alloc] initWithDelegate:this view : GX_CAST_R(_ContextView*, m_OSWin)];
 #elif defined(GX_OS_ANDROID)
 	ANativeWindow_acquire(GX_CAST_R(ANativeWindow*, osWinP));
 	m_OSWin = GX_CAST_R(ANativeWindow*, osWinP);

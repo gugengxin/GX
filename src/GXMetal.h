@@ -12,7 +12,10 @@
 #include "GXPrefix.h"
 #if defined(GX_METAL)
 
-
+#ifdef __OBJC__
+#import <QuartzCore/CAMetalLayer.h>
+#import <Metal/Metal.h>
+#endif
 
 #endif
 

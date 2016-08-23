@@ -13,6 +13,7 @@
 #include "GObject.h"
 #include "GContext.h"
 #include "GXCWnd.h"
+#include "GColor.h"
 #if defined(GX_OS_ANDROID)
 #include <android/native_window.h>
 #include <android/native_window_jni.h>
@@ -43,6 +44,8 @@ class GWindow {
 	friend class GApplication;
 #if defined(GX_OPENGL)
 	friend class GOGLContext;
+#elif defined(GX_METAL)
+    friend class GMTLContext;
 #endif
 private:
 	GWindow(void* osWinP);
@@ -73,6 +76,7 @@ private:
 	GContext m_Context;
 	gint	m_RenderStepTime;
 	gint64	m_RenderLastTime;
+    GColor4F m_BgdColor;
 
 	void* m_OSWinP;
 #if defined(GX_OS_WINDOWS)
@@ -83,6 +87,9 @@ private:
 	WNDPROC m_WndProcP;
 #elif defined(GX_OS_APPLE)
     friend class _WindowBridge;
+#if defined(GX_METAL)
+    void* getMetalLayer();
+#endif
 
 	void* m_OSWin;
 	void* m_OSWinCtrler;
