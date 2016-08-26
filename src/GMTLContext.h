@@ -52,6 +52,9 @@ private:
     void* m_MsaaTex;
     void* m_RenderPassDescriptor;
     void* m_CurrentDrawable;
+    
+    void* m_CommandQueue;
+    void* m_DepthStencilState;
 };
 
 

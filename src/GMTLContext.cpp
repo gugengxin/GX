@@ -16,6 +16,8 @@
 #include "GApplication.h"
 #include "GWindow.h"
 
+#define M_METALLAYER() GX_CAST_R(CAMetalLayer*,m_Window->getMetalLayer())
+
 //不用在这里初始化
 GMTLContext::GMTLContext()
 {
@@ -29,9 +31,12 @@ bool GMTLContext::create(GWindow* win)
 {
     m_Window=win;
     
-    m_DepthPixelFormat=MTLPixelFormatInvalid;
-    m_StencilPixelFormat=MTLPixelFormatInvalid;
-    m_SampleCount=GApplication::sharedDelegate()->windowsSuggestedSamples();
+    id <MTLDevice> device=M_METALLAYER().device;
+    
+    GApplication::Delegate* appDge=GApplication::sharedDelegate();
+    m_DepthPixelFormat=appDge->windowsSuggestedDepth()>0?MTLPixelFormatDepth32Float:MTLPixelFormatInvalid;
+    m_StencilPixelFormat=appDge->windowsSuggestedStencil()>0?MTLPixelFormatStencil8:MTLPixelFormatInvalid;
+    m_SampleCount=appDge->windowsSuggestedSamples()>1?appDge->windowsSuggestedSamples():1;
     
     m_DepthTex=NULL;
     m_StencilTex=NULL;
@@ -39,11 +44,21 @@ bool GMTLContext::create(GWindow* win)
     m_RenderPassDescriptor=NULL;
     m_CurrentDrawable=NULL;
     
+    m_CommandQueue=[[device newCommandQueue] retain];
+    MTLDepthStencilDescriptor *dsStateDesc = [[MTLDepthStencilDescriptor alloc] init] ;
+    dsStateDesc.depthCompareFunction = MTLCompareFunctionLess;
+    dsStateDesc.depthWriteEnabled = YES;
+    m_DepthStencilState = [[device newDepthStencilStateWithDescriptor:dsStateDesc] retain];
+    [dsStateDesc release];
+    
     return true;
 }
 
 void GMTLContext::destroy()
 {
+    [GX_CAST_R(id, m_CommandQueue) release];
+    [GX_CAST_R(id, m_DepthStencilState) release];
+    
     [GX_CAST_R(id, m_DepthTex) release];
     [GX_CAST_R(id, m_StencilTex) release];
     [GX_CAST_R(id, m_MsaaTex) release];
@@ -60,7 +75,7 @@ bool GMTLContext::resize(gfloat32 width,gfloat32 height)
 
 bool GMTLContext::renderCheck()
 {
-    
+    return true;
 }
 void GMTLContext::renderBegin()
 {
@@ -79,7 +94,7 @@ void GMTLContext::renderEnd()
 void* GMTLContext::currentDrawable()
 {
     if (!m_CurrentDrawable) {
-        m_CurrentDrawable=[[GX_CAST_R(CAMetalLayer*,m_Window->getMetalLayer()) nextDrawable] retain];
+        m_CurrentDrawable=[[M_METALLAYER() nextDrawable] retain];
     }
     return m_CurrentDrawable;
 }
@@ -91,12 +106,12 @@ void GMTLContext::clearDrawable()
 
 void GMTLContext::setupRenderPassDescriptor(void* texture)
 {
-#define _texture ((id<MTLTexture>)texture)
-#define _msaaTex ((id<MTLTexture>)m_MsaaTex)
-#define _depthTex ((id<MTLTexture>)m_DepthTex)
-#define _stencilTex ((id<MTLTexture>)m_StencilTex)
+#define M_TEXTURE() ((id<MTLTexture>)texture)
+#define M_MSAATEX() ((id<MTLTexture>)m_MsaaTex)
+#define M_DEPTHTEX() ((id<MTLTexture>)m_DepthTex)
+#define M_STENCILTEX() ((id<MTLTexture>)m_StencilTex)
     
-    id<MTLDevice> device=GX_CAST_R(CAMetalLayer*,m_Window->getMetalLayer()).device;
+    id<MTLDevice> device=M_METALLAYER().device;
     
     if (!m_RenderPassDescriptor) {
         m_RenderPassDescriptor=[[MTLRenderPassDescriptor renderPassDescriptor] retain];
@@ -114,17 +129,17 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
     // if sample count is greater than 1, render into using MSAA, then resolve into our color texture
     if(m_SampleCount > 1)
     {
-        BOOL doUpdate =( _msaaTex.width       != _texture.width  )
-                   ||  ( _msaaTex.height      != _texture.height )
-                   ||  ( _msaaTex.sampleCount != m_SampleCount   );
+        BOOL doUpdate =( M_MSAATEX().width       != M_TEXTURE().width  )
+                   ||  ( M_MSAATEX().height      != M_TEXTURE().height )
+                   ||  ( M_MSAATEX().sampleCount != m_SampleCount   );
         
-        if(!_msaaTex || (_msaaTex && doUpdate))
+        if(!M_MSAATEX() || (M_MSAATEX() && doUpdate))
         {
-            [_msaaTex release];
+            [M_MSAATEX() release];
             
             MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat: MTLPixelFormatRGBA8Unorm
-                                                                                            width: _texture.width
-                                                                                           height: _texture.height
+                                                                                            width: M_TEXTURE().width
+                                                                                           height: M_TEXTURE().height
                                                                                         mipmapped: NO];
             desc.textureType = MTLTextureType2DMultisample;
             
@@ -134,10 +149,10 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
             m_MsaaTex = [[device newTextureWithDescriptor: desc] retain];
         }
         
-        // When multisampling, perform rendering to _msaaTex, then resolve
+        // When multisampling, perform rendering to M_MSAATEX(), then resolve
         // to 'texture' at the end of the scene
-        colorAttachment.texture = _msaaTex;
-        colorAttachment.resolveTexture = _texture;
+        colorAttachment.texture = M_MSAATEX();
+        colorAttachment.resolveTexture = M_TEXTURE();
         
         // set store action to resolve in this case
         colorAttachment.storeAction = MTLStoreActionMultisampleResolve;
@@ -152,18 +167,18 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
     
     if(m_DepthPixelFormat != MTLPixelFormatInvalid)
     {
-        BOOL doUpdate = ( _depthTex.width       != _texture.width  )
-                    ||  ( _depthTex.height      != _texture.height )
-                    ||  ( _depthTex.sampleCount != m_SampleCount   );
+        BOOL doUpdate = ( M_DEPTHTEX().width       != M_TEXTURE().width  )
+                    ||  ( M_DEPTHTEX().height      != M_TEXTURE().height )
+                    ||  ( M_DEPTHTEX().sampleCount != m_SampleCount   );
         
-        if(!_depthTex || doUpdate)
+        if(!M_DEPTHTEX() || doUpdate)
         {
-            [_depthTex release];
+            [M_DEPTHTEX() release];
             //  If we need a depth texture and don't have one, or if the depth texture we have is the wrong size
             //  Then allocate one of the proper size
             MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat: (MTLPixelFormat)m_DepthPixelFormat
-                                                                                            width: _texture.width
-                                                                                           height: _texture.height
+                                                                                            width: M_TEXTURE().width
+                                                                                           height: M_TEXTURE().height
                                                                                         mipmapped: NO];
             
             desc.textureType = (m_SampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
@@ -174,7 +189,7 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
             m_DepthTex = [[device newTextureWithDescriptor: desc] retain];
             
             MTLRenderPassDepthAttachmentDescriptor *depthAttachment = GX_CAST_R(MTLRenderPassDescriptor*, m_RenderPassDescriptor).depthAttachment;
-            depthAttachment.texture = _depthTex;
+            depthAttachment.texture = M_DEPTHTEX();
             depthAttachment.loadAction = MTLLoadActionClear;
             depthAttachment.storeAction = MTLStoreActionDontCare;
             depthAttachment.clearDepth = 1.0;
@@ -183,18 +198,18 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
     
     if(m_StencilPixelFormat != MTLPixelFormatInvalid)
     {
-        BOOL doUpdate = ( _stencilTex.width       != _texture.width  )
-                    ||  ( _stencilTex.height      != _texture.height )
-                    ||  ( _stencilTex.sampleCount != m_SampleCount   );
+        BOOL doUpdate = ( M_STENCILTEX().width       != M_TEXTURE().width  )
+                    ||  ( M_STENCILTEX().height      != M_TEXTURE().height )
+                    ||  ( M_STENCILTEX().sampleCount != m_SampleCount   );
         
-        if(!_stencilTex || doUpdate)
+        if(!M_STENCILTEX() || doUpdate)
         {
-            [_stencilTex release];
+            [M_STENCILTEX() release];
             //  If we need a stencil texture and don't have one, or if the depth texture we have is the wrong size
             //  Then allocate one of the proper size
             MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat: (MTLPixelFormat)m_StencilPixelFormat
-                                                                                            width: _texture.width
-                                                                                           height: _texture.height
+                                                                                            width: M_TEXTURE().width
+                                                                                           height: M_TEXTURE().height
                                                                                         mipmapped: NO];
             
             desc.textureType = (m_SampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
@@ -203,17 +218,17 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
             m_StencilTex = [[device newTextureWithDescriptor: desc] retain];
             
             MTLRenderPassStencilAttachmentDescriptor* stencilAttachment = GX_CAST_R(MTLRenderPassDescriptor*, m_RenderPassDescriptor).stencilAttachment;
-            stencilAttachment.texture = _stencilTex;
+            stencilAttachment.texture = M_STENCILTEX();
             stencilAttachment.loadAction = MTLLoadActionClear;
             stencilAttachment.storeAction = MTLStoreActionDontCare;
             stencilAttachment.clearStencil = 0;
         }
     } //stencil
     
-#undef _texture
-#undef _msaaTex
-#undef _depthTex
-#undef _stencilTex
+#undef M_TEXTURE
+#undef M_MSAATEX
+#undef M_DEPTHTEX
+#undef M_STENCILTEX
 }
 
 void* GMTLContext::renderPassDescriptor()
