@@ -55,6 +55,9 @@ private:
     
     void* m_CommandQueue;
     void* m_DepthStencilState;
+    /////
+    void* m_CommandBuffer;
+    void* m_RenderEncoder;
 };
 
 

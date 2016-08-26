@@ -2,6 +2,7 @@
 #include "GXPrefix.h"
 #include "GOShader.h"
 #include "GDShader.h"
+#include "GMShader.h"
 #include "GBuffer.h"
 #include "GPainter.h"
 

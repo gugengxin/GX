@@ -16,7 +16,10 @@
 #include "GApplication.h"
 #include "GWindow.h"
 
-#define M_METALLAYER() GX_CAST_R(CAMetalLayer*,m_Window->getMetalLayer())
+#define M_METAL_LAYER()     GX_CAST_R(CAMetalLayer*,m_Window->getMetalLayer())
+#define M_COMMAND_QUEUE()   GX_CAST_R(id<MTLCommandQueue>, m_CommandQueue)
+#define M_COMMAND_BUFFER()  GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer)
+#define M_RENDER_ENCODER()  GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder)
 
 //不用在这里初始化
 GMTLContext::GMTLContext()
@@ -31,7 +34,7 @@ bool GMTLContext::create(GWindow* win)
 {
     m_Window=win;
     
-    id <MTLDevice> device=M_METALLAYER().device;
+    id <MTLDevice> device=M_METAL_LAYER().device;
     
     GApplication::Delegate* appDge=GApplication::sharedDelegate();
     m_DepthPixelFormat=appDge->windowsSuggestedDepth()>0?MTLPixelFormatDepth32Float:MTLPixelFormatInvalid;
@@ -50,12 +53,18 @@ bool GMTLContext::create(GWindow* win)
     dsStateDesc.depthWriteEnabled = YES;
     m_DepthStencilState = [[device newDepthStencilStateWithDescriptor:dsStateDesc] retain];
     [dsStateDesc release];
+
+    m_CommandBuffer=NULL;
+    m_RenderEncoder=NULL;
     
     return true;
 }
 
 void GMTLContext::destroy()
 {
+    [GX_CAST_R(id, m_RenderEncoder) release];
+    [GX_CAST_R(id, m_CommandBuffer) release];
+
     [GX_CAST_R(id, m_CommandQueue) release];
     [GX_CAST_R(id, m_DepthStencilState) release];
     
@@ -79,7 +88,11 @@ bool GMTLContext::renderCheck()
 }
 void GMTLContext::renderBegin()
 {
-    
+    m_CommandBuffer = [[M_COMMAND_QUEUE() commandBuffer] retain];
+    m_RenderEncoder = [[M_COMMAND_BUFFER() renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, renderPassDescriptor())] retain];
+#if defined(GX_DEBUG)
+    [M_RENDER_ENCODER() pushDebugGroup:@"GMTLContext"];
+#endif
 }
 void GMTLContext::setViewport(float x, float y, float w, float h, float scale)
 {
@@ -87,14 +100,16 @@ void GMTLContext::setViewport(float x, float y, float w, float h, float scale)
 }
 void GMTLContext::renderEnd()
 {
-    
+#if defined(GX_DEBUG)
+    [M_RENDER_ENCODER() popDebugGroup];
+#endif
 }
 
 
 void* GMTLContext::currentDrawable()
 {
     if (!m_CurrentDrawable) {
-        m_CurrentDrawable=[[M_METALLAYER() nextDrawable] retain];
+        m_CurrentDrawable=[[M_METAL_LAYER() nextDrawable] retain];
     }
     return m_CurrentDrawable;
 }
@@ -111,7 +126,7 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
 #define M_DEPTHTEX() ((id<MTLTexture>)m_DepthTex)
 #define M_STENCILTEX() ((id<MTLTexture>)m_StencilTex)
     
-    id<MTLDevice> device=M_METALLAYER().device;
+    id<MTLDevice> device=M_METAL_LAYER().device;
     
     if (!m_RenderPassDescriptor) {
         m_RenderPassDescriptor=[[MTLRenderPassDescriptor renderPassDescriptor] retain];

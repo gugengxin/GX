@@ -186,6 +186,9 @@
 		CAC7E4621D1A6AB900719367 /* GZipReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC7E4601D1A6AB900719367 /* GZipReader.cpp */; };
 		CAC7E4631D1A6AB900719367 /* GZipReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC7E4601D1A6AB900719367 /* GZipReader.cpp */; };
 		CAC7E4641D1A6AB900719367 /* GZipReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC7E4601D1A6AB900719367 /* GZipReader.cpp */; };
+		CACC51221D70A364007D6B79 /* GMShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CACC51201D70A364007D6B79 /* GMShader.cpp */; };
+		CACC51231D70A364007D6B79 /* GMShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CACC51201D70A364007D6B79 /* GMShader.cpp */; };
+		CACC51241D70A364007D6B79 /* GMShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CACC51201D70A364007D6B79 /* GMShader.cpp */; };
 		CAD4C7831D577E9300F01C06 /* GSRTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */; };
 		CAD4C7841D577E9300F01C06 /* GSRTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */; };
 		CAD4C7851D577E9300F01C06 /* GSRTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */; };
@@ -413,6 +416,8 @@
 		CAC7E45C1D1A6AA100719367 /* GDataReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataReader.h; sourceTree = "<group>"; };
 		CAC7E4601D1A6AB900719367 /* GZipReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GZipReader.cpp; sourceTree = "<group>"; };
 		CAC7E4611D1A6AB900719367 /* GZipReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZipReader.h; sourceTree = "<group>"; };
+		CACC51201D70A364007D6B79 /* GMShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GMShader.cpp; sourceTree = "<group>"; };
+		CACC51211D70A364007D6B79 /* GMShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMShader.h; sourceTree = "<group>"; };
 		CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GSRTexture2D.cpp; sourceTree = "<group>"; };
 		CAD4C7821D577E9300F01C06 /* GSRTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSRTexture2D.h; sourceTree = "<group>"; };
 		CAD624AB1D1186CB005E77EB /* GList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GList.cpp; sourceTree = "<group>"; };
@@ -749,12 +754,14 @@
 		CADB5DC01CF9E6A30092C472 /* shader */ = {
 			isa = PBXGroup;
 			children = (
+				CADB5DB51CF9E6300092C472 /* GShader.h */,
+				CADB5DB41CF9E6300092C472 /* GShader.cpp */,
 				CADB5DB31CF9E6300092C472 /* GOShader.h */,
 				CADB5DB21CF9E6300092C472 /* GOShader.cpp */,
 				CADB5DAB1CF9E6300092C472 /* GDShader.h */,
 				CADB5DAA1CF9E6300092C472 /* GDShader.cpp */,
-				CADB5DB51CF9E6300092C472 /* GShader.h */,
-				CADB5DB41CF9E6300092C472 /* GShader.cpp */,
+				CACC51211D70A364007D6B79 /* GMShader.h */,
+				CACC51201D70A364007D6B79 /* GMShader.cpp */,
 				CA3090931CFD1C46000B8DF2 /* GSRGraphics.h */,
 				CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */,
 				CA3090921CFD1C46000B8DF2 /* GSRGraphics.gxsl */,
@@ -925,6 +932,7 @@
 				CA1F60D11CD9ED6A00C6307B /* GTString.cpp in Sources */,
 				CADB5DBA1CF9E6300092C472 /* GDShader.cpp in Sources */,
 				CABB5CD01CE0E40500D5B648 /* GLog.cpp in Sources */,
+				CACC51221D70A364007D6B79 /* GMShader.cpp in Sources */,
 				CA112EB31D1C56CF001DA6CE /* GZipWriter.cpp in Sources */,
 				CAC708B11D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CA1F60A61CD9834000C6307B /* GSystem.cpp in Sources */,
@@ -1007,6 +1015,7 @@
 				CA0B15F91CD07CD000C33BB5 /* GMutex.cpp in Sources */,
 				CA1AD2801CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,
 				CA7B4DE91CD594FF00F3D826 /* GApplication.cpp in Sources */,
+				CACC51231D70A364007D6B79 /* GMShader.cpp in Sources */,
 				CAC708B21D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CABB3F981CFE06EC00A7367C /* GXMath.cpp in Sources */,
 				CA1F60D21CD9ED6A00C6307B /* GTString.cpp in Sources */,
@@ -1089,6 +1098,7 @@
 				CA0B15FA1CD07CD000C33BB5 /* GMutex.cpp in Sources */,
 				CA1AD2811CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,
 				CA7B4DEA1CD594FF00F3D826 /* GApplication.cpp in Sources */,
+				CACC51241D70A364007D6B79 /* GMShader.cpp in Sources */,
 				CAC708B31D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CABB3F911CFE06EB00A7367C /* GXMath.cpp in Sources */,
 				CA1F60D31CD9ED6A00C6307B /* GTString.cpp in Sources */,
