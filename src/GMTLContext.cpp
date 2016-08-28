@@ -1,4 +1,4 @@
-﻿//
+//
 //  GMTLContext.cpp
 //  GX
 //
@@ -16,10 +16,11 @@
 #include "GApplication.h"
 #include "GWindow.h"
 
-#define M_METAL_LAYER()     GX_CAST_R(CAMetalLayer*,m_Window->getMetalLayer())
-#define M_COMMAND_QUEUE()   GX_CAST_R(id<MTLCommandQueue>, m_CommandQueue)
-#define M_COMMAND_BUFFER()  GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer)
-#define M_RENDER_ENCODER()  GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder)
+#define M_METAL_LAYER()         GX_CAST_R(CAMetalLayer*,m_Window->getMetalLayer())
+#define M_COMMAND_QUEUE()       GX_CAST_R(id<MTLCommandQueue>, m_CommandQueue)
+#define M_COMMAND_BUFFER()      GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer)
+#define M_RENDER_ENCODER()      GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder)
+#define M_DEPTH_STENCIL_STATE() GX_CAST_R(id<MTLDepthStencilState>, m_DepthStencilState)
 
 //不用在这里初始化
 GMTLContext::GMTLContext()
@@ -49,7 +50,7 @@ bool GMTLContext::create(GWindow* win)
     
     m_CommandQueue=[[device newCommandQueue] retain];
     MTLDepthStencilDescriptor *dsStateDesc = [[MTLDepthStencilDescriptor alloc] init] ;
-    dsStateDesc.depthCompareFunction = MTLCompareFunctionLess;
+    dsStateDesc.depthCompareFunction = MTLCompareFunctionAlways;
     dsStateDesc.depthWriteEnabled = YES;
     m_DepthStencilState = [[device newDepthStencilStateWithDescriptor:dsStateDesc] retain];
     [dsStateDesc release];
@@ -90,19 +91,71 @@ void GMTLContext::renderBegin()
 {
     m_CommandBuffer = [[M_COMMAND_QUEUE() commandBuffer] retain];
     m_RenderEncoder = [[M_COMMAND_BUFFER() renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, renderPassDescriptor())] retain];
+    [M_RENDER_ENCODER() setDepthStencilState:M_DEPTH_STENCIL_STATE()];
 #if defined(GX_DEBUG)
     [M_RENDER_ENCODER() pushDebugGroup:@"GMTLContext"];
 #endif
 }
 void GMTLContext::setViewport(float x, float y, float w, float h, float scale)
 {
-    
+    MTLViewport vt;
+    vt.originX=x;
+    vt.originY=y;
+    vt.width=w;
+    vt.height=h;
+    vt.znear=0;
+    vt.zfar=1;
+    [M_RENDER_ENCODER() setViewport:vt];
 }
 void GMTLContext::renderEnd()
 {
 #if defined(GX_DEBUG)
     [M_RENDER_ENCODER() popDebugGroup];
 #endif
+    [M_RENDER_ENCODER() endEncoding];
+    [M_COMMAND_BUFFER() presentDrawable:(id<CAMetalDrawable>)currentDrawable()];
+    [M_COMMAND_BUFFER() commit];
+
+    [M_RENDER_ENCODER() release];
+    [M_COMMAND_BUFFER() release];
+}
+
+void GMTLContext::makeCurrent()
+{
+}
+void GMTLContext::makeClear()
+{
+}
+
+void GMTLContext::readyShader()
+{
+}
+void GMTLContext::doneShader()
+{
+}
+void GMTLContext::readyTexture()
+{
+}
+void GMTLContext::doneTexture()
+{
+}
+
+GDib* GMTLContext::loadTexture2DNodeReadyDib(GDib* dib)
+{
+    return NULL;
+}
+
+void GMTLContext::loadTexture2DNodeInMT(GObject* obj)
+{
+}
+
+void GMTLContext::unloadTextureNodeInMT(GObject* obj)
+{
+}
+
+void GMTLContext::unloadTextureNodeForContext(GTexture::Node* node)
+{
+
 }
 
 

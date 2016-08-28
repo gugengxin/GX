@@ -13,6 +13,7 @@
 
 #if defined(GX_METAL)
 #include "GXMetal.h"
+#include "GTexture2D.h"
 
 class GWindow;
 
@@ -32,7 +33,19 @@ public:
     void renderBegin();
     void setViewport(float x, float y, float w, float h, float scale);
     void renderEnd();
-    
+public:
+    void makeCurrent();
+    void makeClear();
+protected:
+    void readyShader();
+    void doneShader();
+    void readyTexture();
+    void doneTexture();
+protected:
+    GDib* loadTexture2DNodeReadyDib(GDib* dib);
+    static void loadTexture2DNodeInMT(GObject* obj);
+    static void unloadTextureNodeInMT(GObject* obj);
+    void unloadTextureNodeForContext(GTexture::Node* node);
 private:
     void* currentDrawable();
     void clearDrawable();

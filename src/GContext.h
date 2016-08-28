@@ -6,11 +6,9 @@
 #define AS_GCONTEXT_H
 
 #include "GXPrefix.h"
-#if defined(GX_OPENGL)
 #include "GOGLContext.h"
-#elif defined(GX_DIRECTX)
 #include "GD3DContext.h"
-#endif
+#include "GMTLContext.h"
 #include "GPainter.h"
 #include "GSRGraphics.h"
 #include "GSRTexture2D.h"
