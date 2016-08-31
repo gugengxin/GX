@@ -10,7 +10,7 @@ class GDShader : public GShader
 protected:
 	
 protected:
-	GDShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
+	GDShader(GContext* ctx,guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
 	virtual ~GDShader();
 
 	bool load(const gchar* srcVS, const gchar* srcFP, const Macro* macro);
@@ -37,10 +37,10 @@ private:
 
 typedef GDShader GShaderBase;
 
-#define GX_SHADER_INPUT(OU,DIL,DCB) \
+#define GX_SHADER_INPUT(OU,DIL,DCB,MPS,MUB) \
 private:\
-	virtual ID3D10InputLayout** getILs() { return (ID3D10InputLayout**)&m_Layouts; }\
-	virtual ID3D10Buffer** getCBs() { return (ID3D10Buffer**)&m_ConstBuffers; }\
+	virtual ID3D10InputLayout** getILs() { return m_Layouts; }\
+	virtual ID3D10Buffer** getCBs() { return m_ConstBuffers; }\
 	ID3D10InputLayout*	m_Layouts[DIL];\
 	ID3D10Buffer*		m_ConstBuffers[DCB]
 	

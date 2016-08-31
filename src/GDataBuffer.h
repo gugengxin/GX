@@ -40,6 +40,8 @@ private:
 #elif defined(GX_DIRECTX)
 	ID3D10Buffer* m_Buffer;
 	guint		  m_DataBytes;
+#elif defined(GX_METAL)
+    void* m_Buffer;
 #endif
 };
 
@@ -75,6 +77,10 @@ public:
 	virtual ID3D10Buffer*  getBuffer() {
 		return m_Buffer;
 	}
+#elif defined(GX_METAL)
+    virtual void* getBuffer() {
+        return m_Buffer;
+    }
 #endif
 private:
 #ifdef GX_OPENGL
@@ -113,7 +119,11 @@ public:
 	}
 	virtual ID3D10Buffer*  getBuffer() {
 		return m_Buffer;
-	}
+    }
+#elif defined(GX_METAL)
+    virtual void* getBuffer() {
+        return m_Buffer;
+    }
 #endif
 private:
 #ifdef GX_OPENGL

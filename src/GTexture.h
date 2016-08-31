@@ -28,7 +28,7 @@ class GTexture : public GObject {
     friend class GContext;
     GX_GOBJECT(GTexture);
 public:
-	class Handle {
+	class Handle {//仅保存，生成和销毁都在Context完成
 #if defined(GX_OPENGL)
 		friend class GOGLContext;
 #elif defined(GX_DIRECTX)
@@ -41,13 +41,15 @@ public:
 #elif defined(GX_DIRECTX)
 			m_Name = NULL;
 			m_SamplerState = NULL;
+#elif defined(GX_METAL)
+            m_Name=NULL;
 #endif
 		}
 
 		inline bool isValid() {
 #ifdef GX_OPENGL
 			return m_Name != 0;
-#elif defined(GX_DIRECTX)
+#elif defined(GX_DIRECTX) || defined(GX_METAL)
 			return m_Name != NULL;
 #endif
 		}
@@ -57,6 +59,8 @@ public:
 #elif defined(GX_DIRECTX)
 		ID3D10ShaderResourceView*	m_Name;
 		ID3D10SamplerState*			m_SamplerState;
+#elif defined(GX_METAL)
+        void*   m_Name;
 #endif
 	};
 	

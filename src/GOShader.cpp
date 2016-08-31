@@ -4,8 +4,8 @@
 #include "GString.h"
 
 
-GOShader::GOShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
-GShader(idxA,idxB,idxC,idxD)
+GOShader::GOShader(GContext* ctx,guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
+GShader(ctx,idxA,idxB,idxC,idxD)
 {
     m_Program=0;
 }

@@ -11,7 +11,7 @@
 
 
 
-GSRTexture2D::GSRTexture2D(MaskMode mm) : GShaderBase((guint8)mm, 0, 0, 0)
+GSRTexture2D::GSRTexture2D(GContext* ctx,MaskMode mm) : GShaderBase(ctx,(guint8)mm, 0, 0, 0)
 {
 
 }

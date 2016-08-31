@@ -310,12 +310,12 @@
 		CA1F60D01CD9ED6A00C6307B /* GTString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTString.h; sourceTree = "<group>"; };
 		CA30908F1CFD1C46000B8DF2 /* GColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GColor.cpp; sourceTree = "<group>"; };
 		CA3090901CFD1C46000B8DF2 /* GColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GColor.h; sourceTree = "<group>"; };
-		CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GSRGraphics.cpp; sourceTree = "<group>"; };
+		CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GSRGraphics.cpp; sourceTree = "<group>"; };
 		CA3090921CFD1C46000B8DF2 /* GSRGraphics.gxsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GSRGraphics.gxsl; sourceTree = "<group>"; };
 		CA3090931CFD1C46000B8DF2 /* GSRGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSRGraphics.h; sourceTree = "<group>"; };
 		CA446E381D67DFD5002E77DF /* GMTLContext.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GMTLContext.cpp; sourceTree = "<group>"; };
 		CA446E391D67DFD5002E77DF /* GMTLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMTLContext.h; sourceTree = "<group>"; };
-		CA446E3D1D67E36F002E77DF /* GXMetal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXMetal.cpp; sourceTree = "<group>"; };
+		CA446E3D1D67E36F002E77DF /* GXMetal.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GXMetal.cpp; sourceTree = "<group>"; };
 		CA446E3E1D67E36F002E77DF /* GXMetal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXMetal.h; sourceTree = "<group>"; };
 		CA4CD5411D508D2C008005CF /* GError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GError.cpp; sourceTree = "<group>"; };
 		CA4CD5421D508D2C008005CF /* GError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GError.h; sourceTree = "<group>"; };
@@ -372,7 +372,7 @@
 		CAA7AFE81CFDF19E002D724E /* GPainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPainter.h; sourceTree = "<group>"; };
 		CABB3FAE1CFE12D000A7367C /* GBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GBuffer.cpp; sourceTree = "<group>"; };
 		CABB3FAF1CFE12D000A7367C /* GBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBuffer.h; sourceTree = "<group>"; };
-		CABB3FB31CFE133000A7367C /* GDataBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDataBuffer.cpp; sourceTree = "<group>"; };
+		CABB3FB31CFE133000A7367C /* GDataBuffer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GDataBuffer.cpp; sourceTree = "<group>"; };
 		CABB3FB41CFE133000A7367C /* GDataBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataBuffer.h; sourceTree = "<group>"; };
 		CABB5CB41CE0E40500D5B648 /* com_gxengine_gx_GJavaJAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_gx_GJavaJAPI.h; sourceTree = "<group>"; };
 		CABB5CB51CE0E40500D5B648 /* com_gxengine_GX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_GX.h; sourceTree = "<group>"; };
@@ -416,9 +416,9 @@
 		CAC7E45C1D1A6AA100719367 /* GDataReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataReader.h; sourceTree = "<group>"; };
 		CAC7E4601D1A6AB900719367 /* GZipReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GZipReader.cpp; sourceTree = "<group>"; };
 		CAC7E4611D1A6AB900719367 /* GZipReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZipReader.h; sourceTree = "<group>"; };
-		CACC51201D70A364007D6B79 /* GMShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GMShader.cpp; sourceTree = "<group>"; };
+		CACC51201D70A364007D6B79 /* GMShader.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GMShader.cpp; sourceTree = "<group>"; };
 		CACC51211D70A364007D6B79 /* GMShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMShader.h; sourceTree = "<group>"; };
-		CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GSRTexture2D.cpp; sourceTree = "<group>"; };
+		CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GSRTexture2D.cpp; sourceTree = "<group>"; };
 		CAD4C7821D577E9300F01C06 /* GSRTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSRTexture2D.h; sourceTree = "<group>"; };
 		CAD624AB1D1186CB005E77EB /* GList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GList.cpp; sourceTree = "<group>"; };
 		CAD624AC1D1186CB005E77EB /* GList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GList.h; sourceTree = "<group>"; };

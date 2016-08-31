@@ -9,7 +9,7 @@
 class GOShader : public GShader
 {
 protected:
-	GOShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
+	GOShader(GContext* ctx,guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
 	virtual ~GOShader();
 
 	bool load(const gchar* srcVS, const gchar* srcFP, const Macro* macro);
@@ -96,7 +96,7 @@ private:
 
 typedef GOShader GShaderBase;
 
-#define GX_SHADER_INPUT(OU,DIL,DCB) \
+#define GX_SHADER_INPUT(OU,DIL,DCB,MPS,MUB) \
 private:\
 	virtual GLint* getUs() { return (GLint*)&m_Uniforms; }\
 	GLint m_Uniforms[OU]

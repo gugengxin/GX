@@ -18,6 +18,7 @@
 class GWindow;
 
 class GMTLContext {
+    friend class GMShader;
 protected:
     GMTLContext();
     virtual ~GMTLContext();
@@ -47,6 +48,17 @@ protected:
     static void unloadTextureNodeInMT(GObject* obj);
     void unloadTextureNodeForContext(GTexture::Node* node);
 private:
+    inline guint getDepthPixelFormat() {
+        return m_DepthPixelFormat;
+    }
+    inline guint getStencilPixelFormat() {
+        return m_StencilPixelFormat;
+    }
+    inline guint getSampleCount() {
+        return m_SampleCount;
+    }
+    
+    void* getDevice();
     void* currentDrawable();
     void clearDrawable();
     void setupRenderPassDescriptor(void* texture);

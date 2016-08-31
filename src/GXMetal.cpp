@@ -7,3 +7,21 @@
 //
 
 #include "GXMetal.h"
+#if defined(GX_METAL)
+
+
+namespace GX {
+    
+    static id<MTLDevice> g_Device = NULL;
+    
+    id<MTLDevice> MetalDevice()
+    {
+        if (!g_Device) {
+            g_Device=[MTLCreateSystemDefaultDevice() retain];
+        }
+        return g_Device;
+    }
+}
+
+
+#endif

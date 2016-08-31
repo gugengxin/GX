@@ -95,6 +95,9 @@ LRESULT CALLBACK GWindow::wndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 #elif defined(GX_OS_MACOSX)
 #import <Cocoa/Cocoa.h>
 #endif
+#if defined(GX_METAL)
+#import <QuartzCore/QuartzCore.h>
+#endif
 
 class _WindowBridge {
 public:
@@ -172,8 +175,8 @@ NSView
 #endif
         
 #if defined(GX_METAL)
-        _metalLayer.device          = MTLCreateSystemDefaultDevice();
-        _metalLayer.pixelFormat     = MTLPixelFormatRGBA8Unorm;
+        _metalLayer.device          = GX::MetalDevice();
+        _metalLayer.pixelFormat     = MTLPixelFormatBGRA8Unorm;
         // this is the default but if we wanted to perform compute on the final rendering layer we could set this to no
         _metalLayer.framebufferOnly = YES;
 #endif
@@ -406,7 +409,7 @@ GWindow::GWindow(void* osWinP)
 {
 	m_RenderStepTime=1000/30;
 	m_RenderLastTime=0;
-    m_BgdColor.set(0, 0, 0, 1);
+    m_BgdColor.set(0, 0, 0, 1.0f);
 	m_OSWinP = osWinP;
 #if defined(GX_OS_WINDOWS)
 	WNDCLASS	wc;						// 窗口类结构

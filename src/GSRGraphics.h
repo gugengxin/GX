@@ -24,7 +24,7 @@ public:
 	void draw(GPainter& painter, GIBuffer* buffer, InputType inputType, gint mode, gint first, gint count);
 
 private:
-	GSRGraphics(ID srID);
+	GSRGraphics(GContext* ctx,ID srID);
 	virtual ~GSRGraphics();
 
 #if defined(GX_DIRECTX)
@@ -33,8 +33,11 @@ private:
 #elif defined(GX_OPENGL)
 	virtual void bindAttribLocations();
 	virtual void bindUniformLocations();
+#elif defined(GX_METAL)
+    virtual void deployPLState(gint inputType,void* plStateDescriptor);
+    virtual void createUniformBuffer(void* device);
 #endif
 
-	GX_SHADER_INPUT(2, 1, 2);
+	GX_SHADER_INPUT(2, 1, 2, 1, 2);
 };
 

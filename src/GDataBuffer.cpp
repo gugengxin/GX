@@ -16,6 +16,8 @@ GDataBufferBase::GDataBufferBase()
 #elif defined(GX_DIRECTX)
 	m_Buffer = NULL;
 	m_DataBytes = 0;
+#elif defined(GX_METAL)
+    m_Buffer=NULL;
 #endif
 }
 
@@ -27,6 +29,8 @@ GDataBufferBase::~GDataBufferBase()
 	if (m_Buffer) {
 		m_Buffer->Release();
 	}
+#elif defined(GX_METAL)
+    [GX_CAST_R(id, m_Buffer) release];
 #endif
 }
 
@@ -56,6 +60,14 @@ bool GDataBufferBase::changeBytes(guint toSize)
 	m_Buffer = bufNew;
 	m_DataBytes = toSize;
 	return true;
+#elif defined(GX_METAL)
+    id<MTLBuffer> bufNew=[GX::MetalDevice() newBufferWithLength:toSize options:0];
+    if (!bufNew) {
+        return false;
+    }
+    [GX_CAST_R(id<MTLBuffer>, m_Buffer) release];
+    m_Buffer=[bufNew retain];
+    return true;
 #endif
 }
 bool GDataBufferBase::changeBytesIfNeed(guint toSize)
@@ -67,6 +79,11 @@ bool GDataBufferBase::changeBytesIfNeed(guint toSize)
 		return changeBytes(toSize);
 	}
 	return true;
+#elif defined(GX_METAL)
+    if (toSize>[GX_CAST_R(id<MTLBuffer>, m_Buffer) length]) {
+        return changeBytes(toSize);
+    }
+    return true;
 #endif
 }
 void GDataBufferBase::freeSelf()
@@ -79,6 +96,9 @@ void GDataBufferBase::freeSelf()
 		m_Buffer = NULL;
 	}
 	m_DataBytes = 0;
+#elif defined(GX_METAL)
+    [GX_CAST_R(id<MTLBuffer>, m_Buffer) release];
+    m_Buffer=NULL;
 #endif
 }
 void* GDataBufferBase::map()
@@ -93,6 +113,8 @@ void* GDataBufferBase::map()
 		}
 	}
 	return NULL;
+#elif defined(GX_METAL)
+    return [GX_CAST_R(id<MTLBuffer>, m_Buffer) contents];
 #endif
 }
 void GDataBufferBase::unmap()
@@ -103,6 +125,8 @@ void GDataBufferBase::unmap()
 	if (m_Buffer) {
 		m_Buffer->Unmap();
 	}
+#elif defined(GX_METAL)
+
 #endif
 }
 

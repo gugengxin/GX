@@ -97,7 +97,7 @@ GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)
     //GX_LOG_W(PrioINFO,"GContext","getSRGraphics");
 	if (!m_Shaders[SRID_Graphics + srID]) {
         readyShader();
-        m_Shaders[SRID_Graphics + srID] = new GSRGraphics(srID);
+        m_Shaders[SRID_Graphics + srID] = new GSRGraphics(this,srID);
         doneShader();
 	}
 	return (GSRGraphics*)m_Shaders[SRID_Graphics + srID];

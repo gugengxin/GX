@@ -3,8 +3,8 @@
 #include <D3Dcompiler.h>
 #include "GLog.h"
 
-GDShader::GDShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
-GShader(idxA,idxB,idxC,idxD)
+GDShader::GDShader(GContext* ctx,guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
+GShader(ctx,idxA,idxB,idxC,idxD)
 {
 	m_PixelShader = NULL;
 	m_VertexShader = NULL;

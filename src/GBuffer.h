@@ -12,6 +12,7 @@
 #include "GXPrefix.h"
 #include "GXOpenGL.h"
 #include "GXDirectX.h"
+#include "GXMetal.h"
 
 class GIBuffer
 {
@@ -29,6 +30,8 @@ public:
 #elif defined(GX_DIRECTX)
 	virtual ID3D10Buffer** getBufferPtr() = 0;
 	virtual ID3D10Buffer*  getBuffer() = 0;
+#elif defined(GX_METAL)
+    virtual void* getBuffer() = 0;
 #endif
 };
 
@@ -43,6 +46,8 @@ public:
 #elif defined(GX_DIRECTX)
 	virtual ID3D10Buffer** getBufferPtr() = 0;
 	virtual ID3D10Buffer*  getBuffer() = 0;
+#elif defined(GX_DIRECTX)
+    virtual void* getBuffer() = 0;
 #endif
 };
 

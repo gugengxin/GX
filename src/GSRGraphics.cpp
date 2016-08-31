@@ -52,8 +52,58 @@ fp {
 }
 *///GX_SL
 
+#if defined(GX_METAL)
+const gchar* g_SrcVS=\
+"#include <metal_stdlib> \n\
+using namespace metal; \n\
+struct VertexInputType { \n\
+    float4 position; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+    float4 color; \n\
+#endif \n\
+}; \n\
+struct UniformBufferVS { \n\
+	float4x4 mvp_mat; \n\
+}; \n\
+struct PixelInputType { \n\
+	float4 gx_Position [[position]]; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+	float4 b_color; \n\
+#endif \n\
+}; \n\
+vertex PixelInputType mainVS(device VertexInputType* layout [[ buffer(0) ]],constant UniformBufferVS& uniformBuf[[ buffer(1) ]],unsigned int vid [[ vertex_id ]]) \n\
+{ \n\
+	PixelInputType bridge; \n\
+	bridge.gx_Position=uniformBuf.mvp_mat*layout[vid].position; \n\
+#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
+	bridge.b_color=layout[vid].color; \n\
+#endif \n\
+	return bridge; \n\
+} \n\
+struct UniformBufferFP { \n\
+#if defined(MI_COLORMUL)||defined(MI_CANDCM) \n\
+    float4 color_mul; \n\
+#endif \n\
+}; \n\
+fragment half4 mainFP(PixelInputType bridge [[stage_in]],constant UniformBufferFP& uniformBuf[[ buffer(0) ]]) \n\
+{ \n\
+	float4 gx_FragColor; \n\
+#if defined(MI_COLORMUL) \n\
+	gx_FragColor=uniformBuf.color_mul; \n\
+#elif defined(MI_COLOR) \n\
+	gx_FragColor=bridge.b_color; \n\
+#elif defined(MI_CANDCM) \n\
+	gx_FragColor=bridge.b_color*uniformBuf.color_mul; \n\
+#endif \n\
+	return half4(gx_FragColor); \n\
+} \n\
+\n\
+";
+const gchar* g_SrcFP=NULL;
+#endif
 
-GSRGraphics::GSRGraphics(ID srID) : GShaderBase((guint8)srID, 0, 0, 0)
+
+GSRGraphics::GSRGraphics(GContext* ctx,ID srID) : GShaderBase(ctx,(guint8)srID, 0, 0, 0)
 {
 	GX_SHADER_INPUT_INIT();
 
@@ -193,6 +243,59 @@ static InputEndFunction g_InputEFuns[] = {
 	_InputEFunFloat,
 };
 
+#elif defined(GX_METAL)
+
+enum {
+    UB_mvp_mat,
+    UB_color_mul,
+};
+
+void GSRGraphics::deployPLState(gint inputType,void* plStateDescriptor)
+{
+#define M_PSD() GX_CAST_R(MTLRenderPipelineDescriptor*, plStateDescriptor)
+    switch (inputType) {
+        case IT_Float:
+        {
+            MTLVertexDescriptor* vd=[[MTLVertexDescriptor alloc] init];
+            
+            // 设置attributes
+            // pos
+            vd.attributes[0].format = MTLVertexFormatFloat3;
+            vd.attributes[0].bufferIndex = 0;
+            vd.attributes[0].offset = 0;
+            // color
+            if (getIndex0() == ID_Color || getIndex0() == ID_CAndCM) {
+                vd.attributes[1].format = MTLVertexFormatUChar4;
+                vd.attributes[1].bufferIndex = 0;
+                vd.attributes[1].offset = 3 * sizeof(float);
+                
+                // 设置layouts
+                vd.layouts[0].stride = 3*sizeof(float) + 4*sizeof(unsigned char);
+            }
+            else {
+                // 设置layouts
+                vd.layouts[0].stride = 3*sizeof(float);
+            }
+            vd.layouts[0].stepFunction = MTLVertexStepFunctionPerVertex;
+            
+            M_PSD().vertexDescriptor=vd;
+            [vd release];
+        }
+            break;
+        default:
+            break;
+    }
+#undef M_PSD
+}
+
+void GSRGraphics::createUniformBuffer(void* device)
+{
+    setUniformBuffer(UB_mvp_mat, device, GX_MATRIX_SIZE);
+    if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
+        setUniformBuffer(UB_color_mul, device, sizeof(GColor4F));
+    }
+}
+
 #endif
 
 
@@ -242,5 +345,30 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
     GX_glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
 
 	g_InputEFuns[inputType](getIndex0());
+    
+#elif defined(GX_METAL)
+    
+    id<MTLRenderCommandEncoder>rce=GX_CAST_R(id<MTLRenderCommandEncoder>, currentRenderEncoder());
+    
+    [rce setRenderPipelineState:GX_CAST_R(id<MTLRenderPipelineState>,getPLStates()[inputType])];
+    
+    [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, buffer->getBuffer()) offset:buffer->getOffset() atIndex:0];
+    
+    void* pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) contents];
+    const float* mvp = painter.updateMVPMatrix();
+    memcpy(pMap, mvp, GX_MATRIX_SIZE);
+    [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) offset:0 atIndex:1];
+    
+    pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) contents];
+    const float* clrMul = painter.updateColorMul();
+    memcpy(pMap, clrMul, sizeof(GColor4F));
+    [rce setFragmentBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) offset:0 atIndex:0];
+    
+    [rce drawPrimitives:(MTLPrimitiveType)mode vertexStart:(NSUInteger)first vertexCount:(NSUInteger)count];
+    
+    [rce setVertexBuffer:nil offset:0 atIndex:0];
+    [rce setVertexBuffer:nil offset:0 atIndex:1];
+    [rce setFragmentBuffer:nil offset:0 atIndex:0];
+    
 #endif
 }

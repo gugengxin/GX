@@ -32,7 +32,7 @@ public:
     } InputType;
 
 private:
-    GSRTexture2D(MaskMode mm);
+    GSRTexture2D(GContext* ctx,MaskMode mm);
     virtual ~GSRTexture2D();
 
 #if defined(GX_DIRECTX)
@@ -41,9 +41,12 @@ private:
 #elif defined(GX_OPENGL)
     virtual void bindAttribLocations();
     virtual void bindUniformLocations();
+#elif defined(GX_METAL)
+    virtual void deployPLState(gint inputType,void* plState);
+    virtual void createUniformBuffer();
 #endif
 
-    GX_SHADER_INPUT(4, 1, 2);
+    GX_SHADER_INPUT(4, 1, 2, 2, 2);
 };
 
 #endif /* GSRTexture2D_hpp */

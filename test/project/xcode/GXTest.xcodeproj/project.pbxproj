@@ -24,6 +24,7 @@
 		CA9C16DC1CC618CB00204303 /* GX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9C164F1CC5E01B00204303 /* GX.a */; };
 		CA9C16DD1CC618D000204303 /* GX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9C16511CC5E01B00204303 /* GX.a */; };
 		CA9C16DE1CC618D600204303 /* GX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9C16531CC5E01B00204303 /* GX.a */; };
+		CAD5A68A1D76BE1F0072CA3E /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAD5A6891D76BE1F0072CA3E /* Metal.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		CA9C16BF1CC5FDCB00204303 /* Config_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_ios.xcconfig; sourceTree = "<group>"; };
 		CA9C16C31CC5FDD600204303 /* Config_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_mac.xcconfig; sourceTree = "<group>"; };
 		CA9C16C41CC5FDE200204303 /* Config_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_atv.xcconfig; sourceTree = "<group>"; };
+		CAD5A6891D76BE1F0072CA3E /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAD5A68A1D76BE1F0072CA3E /* Metal.framework in Frameworks */,
 				CA9C16DE1CC618D600204303 /* GX.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -166,6 +169,7 @@
 		CA9C16471CC5E00100204303 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CAD5A68E1D76BE2C0072CA3E /* mac */,
 				CA9C16481CC5E01B00204303 /* GX.xcodeproj */,
 			);
 			name = Frameworks;
@@ -220,6 +224,14 @@
 				CA9C16A31CC5E94D00204303 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CAD5A68E1D76BE2C0072CA3E /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				CAD5A6891D76BE1F0072CA3E /* Metal.framework */,
+			);
+			name = mac;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
