@@ -487,8 +487,8 @@ void GOGLContext::renderBegin()
 		glBindFramebuffer(GL_FRAMEBUFFER, m_DefaultFramebuffer);
 	}
 #endif
-
-	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
+    
+	glClearColor(m_Window->m_BgdColor.r, m_Window->m_BgdColor.g, m_Window->m_BgdColor.b, m_Window->m_BgdColor.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 

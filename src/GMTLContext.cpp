@@ -95,6 +95,7 @@ bool GMTLContext::renderCheck()
 }
 void GMTLContext::renderBegin()
 {
+    M_METAL_LAYER().drawableSize=CGSizeMake(m_Window->getWidth()*m_Window->getScale(), m_Window->getHeight()*m_Window->getScale());
     m_CommandBuffer = [[M_COMMAND_QUEUE() commandBuffer] retain];
     m_RenderEncoder = [[M_COMMAND_BUFFER() renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, renderPassDescriptor())] retain];
     [M_RENDER_ENCODER() setDepthStencilState:M_DEPTH_STENCIL_STATE()];
@@ -105,10 +106,10 @@ void GMTLContext::renderBegin()
 void GMTLContext::setViewport(float x, float y, float w, float h, float scale)
 {
     MTLViewport vt;
-    vt.originX=x;
-    vt.originY=y;
-    vt.width=w;
-    vt.height=h;
+    vt.originX=x*scale;
+    vt.originY=y*scale;
+    vt.width=w*scale;
+    vt.height=h*scale;
     vt.znear=0;
     vt.zfar=1;
     [M_RENDER_ENCODER() setViewport:vt];
@@ -123,7 +124,9 @@ void GMTLContext::renderEnd()
     [M_COMMAND_BUFFER() commit];
 
     [M_RENDER_ENCODER() release];
+    m_RenderEncoder=NULL;
     [M_COMMAND_BUFFER() release];
+    m_CommandBuffer=NULL;
 }
 
 void GMTLContext::makeCurrent()

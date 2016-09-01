@@ -47,7 +47,7 @@ public:
 		}
 
 		inline bool isValid() {
-#ifdef GX_OPENGL
+#if defined(GX_OPENGL)
 			return m_Name != 0;
 #elif defined(GX_DIRECTX) || defined(GX_METAL)
 			return m_Name != NULL;

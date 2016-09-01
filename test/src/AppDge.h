@@ -11,6 +11,14 @@ private:
 public:
     virtual void appCanCreateWindow(GApplication* application,void* osWindow);
 
-
+    virtual gint windowsSuggestedSamples() {
+        return 0;
+    }
+    virtual gint windowsSuggestedDepth() {
+        return 24;
+    }
+    virtual gint windowsSuggestedStencil() {
+        return 8;
+    }
 };
 

@@ -192,15 +192,6 @@ NSView
     [super dealloc];
 }
 
-+ (Class)layerClass
-{
-#if defined(GX_METAL)
-    return [CAMetalLayer class];
-#elif defined(GX_OPENGL) && defined(GX_OS_IPHONE)
-    return [CAEAGLLayer class];
-#endif
-}
-
 #if defined(GX_METAL)
 - (CAMetalLayer*)metalLayer
 {
@@ -209,6 +200,15 @@ NSView
 #endif
 
 #if defined(GX_OS_IPHONE)
+
++ (Class)layerClass
+{
+#if defined(GX_METAL)
+    return [CAMetalLayer class];
+#elif defined(GX_OPENGL)
+    return [CAEAGLLayer class];
+#endif
+}
 
 - (void)didMoveToWindow
 {
@@ -244,6 +244,13 @@ NSView
 }
 
 #elif defined(GX_OS_MACOSX)
+
+#if defined(GX_METAL)
++ (Class)layerClass
+{
+    return [CAMetalLayer class];
+}
+#endif
 
 - (void)resizeWithOldSuperviewSize:(NSSize)oldSize
 {
@@ -578,6 +585,7 @@ void GWindow::render()
 
 	painter.enable3D(getWidth(), getHeight(), GX_PI / 3, 0.1f, 1000.0f);
 	painter.lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    //painter.enable2D(getWidth(), getHeight());
 
 	GSRGraphics* graph = m_Context.getSRGraphics(GSRGraphics::ID_ColorMul);
 
@@ -590,7 +598,7 @@ void GWindow::render()
 		pos[0].set(-100.0f, -100.0f, 0.0f);
 		pos[1].set(100.0f, -100.0f, 0.0f);
 		pos[2].set(0.0f, 100.0f, 0.0f);
-		
+        
 		data->changeBytes(sizeof(pos));
 		void* p = data->map();
 		memcpy(p, pos, sizeof(pos));

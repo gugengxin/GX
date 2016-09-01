@@ -57,9 +57,9 @@ const gchar* g_SrcVS=\
 "#include <metal_stdlib> \n\
 using namespace metal; \n\
 struct VertexInputType { \n\
-    float4 position; \n\
+    float4 position [[attribute(0)]]; \n\
 #if defined(MI_COLOR)||defined(MI_CANDCM) \n\
-    float4 color; \n\
+    float4 color [[attribute(1)]]; \n\
 #endif \n\
 }; \n\
 struct UniformBufferVS { \n\
@@ -71,12 +71,12 @@ struct PixelInputType { \n\
 	float4 b_color; \n\
 #endif \n\
 }; \n\
-vertex PixelInputType mainVS(device VertexInputType* layout [[ buffer(0) ]],constant UniformBufferVS& uniformBuf[[ buffer(1) ]],unsigned int vid [[ vertex_id ]]) \n\
+vertex PixelInputType mainVS(VertexInputType layout [[stage_in]],constant UniformBufferVS& uniformBuf[[ buffer(1) ]]) \n\
 { \n\
 	PixelInputType bridge; \n\
-	bridge.gx_Position=uniformBuf.mvp_mat*layout[vid].position; \n\
+	bridge.gx_Position=layout.position*uniformBuf.mvp_mat; \n\
 #if defined(MI_COLOR)||defined(MI_CANDCM) \n\
-	bridge.b_color=layout[vid].color; \n\
+	bridge.b_color=layout.color; \n\
 #endif \n\
 	return bridge; \n\
 } \n\
@@ -256,6 +256,7 @@ void GSRGraphics::deployPLState(gint inputType,void* plStateDescriptor)
     switch (inputType) {
         case IT_Float:
         {
+            //*
             MTLVertexDescriptor* vd=[[MTLVertexDescriptor alloc] init];
             
             // 设置attributes
@@ -277,9 +278,11 @@ void GSRGraphics::deployPLState(gint inputType,void* plStateDescriptor)
                 vd.layouts[0].stride = 3*sizeof(float);
             }
             vd.layouts[0].stepFunction = MTLVertexStepFunctionPerVertex;
+            vd.layouts[0].stepRate=1;
             
             M_PSD().vertexDescriptor=vd;
             [vd release];
+            //*/
         }
             break;
         default:
@@ -356,6 +359,7 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
     
     void* pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) contents];
     const float* mvp = painter.updateMVPMatrix();
+    ((GMatrix4*)mvp)->transpose();
     memcpy(pMap, mvp, GX_MATRIX_SIZE);
     [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) offset:0 atIndex:1];
     
