@@ -19,6 +19,7 @@
 #include "GXGObject.h"
 class GContext;
 
+//仅保存，生成和销毁都在Context完成
 class GTexture : public GObject {
 #if defined(GX_OPENGL)
     friend class GOGLContext;
@@ -28,15 +29,17 @@ class GTexture : public GObject {
     friend class GContext;
     GX_GOBJECT(GTexture);
 public:
-	class Handle {//仅保存，生成和销毁都在Context完成
+	class Handle {
 #if defined(GX_OPENGL)
 		friend class GOGLContext;
 #elif defined(GX_DIRECTX)
 		friend class GD3DContext;
+#elif defined(GX_METAL)
+        friend class GMTLContext;
 #endif
 	public:
 		Handle() {
-#ifdef GX_OPENGL
+#if defined(GX_OPENGL)
 			m_Name = 0;
 #elif defined(GX_DIRECTX)
 			m_Name = NULL;
@@ -54,7 +57,7 @@ public:
 #endif
 		}
 	private:
-#ifdef GX_OPENGL
+#if defined(GX_OPENGL)
 		GLuint  m_Name;
 #elif defined(GX_DIRECTX)
 		ID3D10ShaderResourceView*	m_Name;

@@ -27,12 +27,12 @@ private:
 	GSRGraphics(GContext* ctx,ID srID);
 	virtual ~GSRGraphics();
 
-#if defined(GX_DIRECTX)
-	virtual bool createInputLayout(ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength);
-	virtual bool createConstantBuffer(ID3D10Device* device);
-#elif defined(GX_OPENGL)
+#if defined(GX_OPENGL)
 	virtual void bindAttribLocations();
 	virtual void bindUniformLocations();
+#elif defined(GX_DIRECTX)
+    virtual bool createInputLayout(ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength);
+    virtual bool createConstantBuffer(ID3D10Device* device);
 #elif defined(GX_METAL)
     virtual void deployPLState(gint inputType,void* plStateDescriptor);
     virtual void createUniformBuffer(void* device);

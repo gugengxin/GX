@@ -123,64 +123,7 @@ GSRGraphics::~GSRGraphics()
 }
 
 
-#if defined(GX_DIRECTX)
-
-enum {
-	CB_mvp_mat,
-	CB_color_mul,
-};
-
-bool GSRGraphics::createInputLayout(ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength)
-{
-	switch (getIndex0()) {
-	case ID_ColorMul:
-	{
-		D3D10_INPUT_ELEMENT_DESC layouts[] = {
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0 },
-		};
-		setInputLayout(IT_Float, device, pShaderBytecodeWithInputSignature, BytecodeLength, layouts, sizeof(layouts) / sizeof(layouts[0]));
-	}
-	break;
-	case ID_Color:
-	case ID_CAndCM:
-	{
-		D3D10_INPUT_ELEMENT_DESC layouts[] = {
-			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0 },
-			{ "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
-		};
-		setInputLayout(IT_Float, device, pShaderBytecodeWithInputSignature, BytecodeLength, layouts, sizeof(layouts) / sizeof(layouts[0]));
-	}
-	break;
-	default:
-		return false;
-	}
-	return true;
-}
-bool GSRGraphics::createConstantBuffer(ID3D10Device* device)
-{
-	D3D10_BUFFER_DESC cbDesc;
-	cbDesc.Usage = D3D10_USAGE_DYNAMIC;
-	cbDesc.ByteWidth = sizeof(GMatrix4);
-	cbDesc.BindFlags = D3D10_BIND_CONSTANT_BUFFER;
-	cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
-	cbDesc.MiscFlags = 0;
-
-	setConstantBuffer(CB_mvp_mat, device, &cbDesc, NULL);
-
-	if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
-		cbDesc.Usage = D3D10_USAGE_DYNAMIC;
-		cbDesc.ByteWidth = sizeof(GColor4F);
-		cbDesc.BindFlags = D3D10_BIND_CONSTANT_BUFFER;
-		cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
-		cbDesc.MiscFlags = 0;
-
-		setConstantBuffer(CB_color_mul, device, &cbDesc, NULL);
-	}
-
-	return true;
-}
-
-#elif defined(GX_OPENGL)
+#if defined(GX_OPENGL)
 
 enum {
 	A_position,
@@ -243,6 +186,63 @@ static InputEndFunction g_InputEFuns[] = {
 	_InputEFunFloat,
 };
 
+#elif defined(GX_DIRECTX)
+
+enum {
+	CB_mvp_mat,
+	CB_color_mul,
+};
+
+bool GSRGraphics::createInputLayout(ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength)
+{
+	switch (getIndex0()) {
+	case ID_ColorMul:
+	{
+		D3D10_INPUT_ELEMENT_DESC layouts[] = {
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+		};
+		setInputLayout(IT_Float, device, pShaderBytecodeWithInputSignature, BytecodeLength, layouts, sizeof(layouts) / sizeof(layouts[0]));
+	}
+	break;
+	case ID_Color:
+	case ID_CAndCM:
+	{
+		D3D10_INPUT_ELEMENT_DESC layouts[] = {
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+			{ "COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+		};
+		setInputLayout(IT_Float, device, pShaderBytecodeWithInputSignature, BytecodeLength, layouts, sizeof(layouts) / sizeof(layouts[0]));
+	}
+	break;
+	default:
+		return false;
+	}
+	return true;
+}
+bool GSRGraphics::createConstantBuffer(ID3D10Device* device)
+{
+	D3D10_BUFFER_DESC cbDesc;
+	cbDesc.Usage = D3D10_USAGE_DYNAMIC;
+	cbDesc.ByteWidth = sizeof(GMatrix4);
+	cbDesc.BindFlags = D3D10_BIND_CONSTANT_BUFFER;
+	cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
+	cbDesc.MiscFlags = 0;
+
+	setConstantBuffer(CB_mvp_mat, device, &cbDesc, NULL);
+
+	if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
+		cbDesc.Usage = D3D10_USAGE_DYNAMIC;
+		cbDesc.ByteWidth = sizeof(GColor4F);
+		cbDesc.BindFlags = D3D10_BIND_CONSTANT_BUFFER;
+		cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
+		cbDesc.MiscFlags = 0;
+
+		setConstantBuffer(CB_color_mul, device, &cbDesc, NULL);
+	}
+
+	return true;
+}
+
 #elif defined(GX_METAL)
 
 enum {
@@ -304,7 +304,21 @@ void GSRGraphics::createUniformBuffer(void* device)
 
 void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType, gint mode, gint first, gint count)
 {
-#if defined(GX_DIRECTX)
+#if defined(GX_OPENGL)
+    
+    useProgram();
+    
+    g_InputBFuns[inputType](getIndex0(), buffer);
+    
+    setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)painter.updateMVPMatrix());
+    
+    setUniform4fv(U_color_mul, 1, (const GLfloat*)painter.updateColorMul());
+    
+    GX_glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
+    
+    g_InputEFuns[inputType](getIndex0());
+    
+#elif defined(GX_DIRECTX)
 
 	ID3D10Device* device = GX::D3DDevice();
 
@@ -335,19 +349,6 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
 	device->PSSetShader(getPixelShader());
 
 	device->Draw((UINT)count, (UINT)first);
-
-#elif defined(GX_OPENGL)
-	useProgram();
-
-	g_InputBFuns[inputType](getIndex0(), buffer);
-
-	setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)painter.updateMVPMatrix());
-
-	setUniform4fv(U_color_mul, 1, (const GLfloat*)painter.updateColorMul());
-
-    GX_glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
-
-	g_InputEFuns[inputType](getIndex0());
     
 #elif defined(GX_METAL)
     
