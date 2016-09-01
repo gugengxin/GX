@@ -227,9 +227,14 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
             // sample count was specified to the view by the renderer.
             // this must match the sample count given to any pipeline state using this render pass descriptor
             desc.sampleCount = m_SampleCount;
-#warning iPhoneOS >= 9.0
-            desc.usage=MTLTextureUsageRenderTarget;
-            desc.storageMode = MTLStorageModePrivate;
+#if defined(GX_OS_IPHONE)
+            if ([[[UIDevice currentDevice] systemVersion] floatValue]>=9.0) {
+#endif
+                desc.usage=MTLTextureUsageRenderTarget;
+                desc.storageMode = MTLStorageModePrivate;
+#if defined(GX_OS_IPHONE)
+            }
+#endif
             
             m_MsaaTex = [[device newTextureWithDescriptor: desc] retain];
         }
@@ -268,10 +273,14 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
             
             desc.textureType = (m_SampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
             desc.sampleCount = m_SampleCount;
-#warning iPhoneOS >= 9.0
-            desc.usage = MTLTextureUsageUnknown;
-            desc.storageMode = MTLStorageModePrivate;
-            
+#if defined(GX_OS_IPHONE)
+            if ([[[UIDevice currentDevice] systemVersion] floatValue]>=9.0) {
+#endif
+                desc.usage = MTLTextureUsageUnknown;
+                desc.storageMode = MTLStorageModePrivate;
+#if defined(GX_OS_IPHONE)
+            }
+#endif
             m_DepthTex = [[device newTextureWithDescriptor:desc] retain];
             m_StencilTex = [M_DEPTHTEX() retain];
             
@@ -305,10 +314,14 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
             
             desc.textureType = (m_SampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
             desc.sampleCount = m_SampleCount;
-#warning iPhoneOS >= 9.0
-            desc.usage = MTLTextureUsageUnknown;
-            desc.storageMode = MTLStorageModePrivate;
-            
+#if defined(GX_OS_IPHONE)
+            if ([[[UIDevice currentDevice] systemVersion] floatValue]>=9.0) {
+#endif
+                desc.usage = MTLTextureUsageUnknown;
+                desc.storageMode = MTLStorageModePrivate;
+#if defined(GX_OS_IPHONE)
+            }
+#endif
             m_DepthTex = [[device newTextureWithDescriptor: desc] retain];
             
             MTLRenderPassDepthAttachmentDescriptor *depthAttachment = GX_CAST_R(MTLRenderPassDescriptor*, m_RenderPassDescriptor).depthAttachment;
@@ -335,10 +348,14 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
             
             desc.textureType = (m_SampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
             desc.sampleCount = m_SampleCount;
-#warning iPhoneOS >= 9.0
-            desc.usage = MTLTextureUsageUnknown;
-            desc.storageMode = MTLStorageModePrivate;
-            
+#if defined(GX_OS_IPHONE)
+            if ([[[UIDevice currentDevice] systemVersion] floatValue]>=9.0) {
+#endif
+                desc.usage = MTLTextureUsageUnknown;
+                desc.storageMode = MTLStorageModePrivate;
+#if defined(GX_OS_IPHONE)
+            }
+#endif
             m_StencilTex = [[device newTextureWithDescriptor: desc] retain];
             
             MTLRenderPassStencilAttachmentDescriptor* stencilAttachment = GX_CAST_R(MTLRenderPassDescriptor*, m_RenderPassDescriptor).stencilAttachment;
