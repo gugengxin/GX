@@ -95,6 +95,8 @@ bool GMTLContext::renderCheck()
 }
 void GMTLContext::renderBegin()
 {
+    currentDrawable();
+    
     M_METAL_LAYER().drawableSize=CGSizeMake(m_Window->getWidth()*m_Window->getScale(), m_Window->getHeight()*m_Window->getScale());
     m_CommandBuffer = [[M_COMMAND_QUEUE() commandBuffer] retain];
     m_RenderEncoder = [[M_COMMAND_BUFFER() renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, renderPassDescriptor())] retain];
@@ -127,6 +129,8 @@ void GMTLContext::renderEnd()
     m_RenderEncoder=NULL;
     [M_COMMAND_BUFFER() release];
     m_CommandBuffer=NULL;
+    
+    clearDrawable();
 }
 
 void GMTLContext::makeCurrent()
