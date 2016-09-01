@@ -261,6 +261,15 @@
     <ClCompile Include="..\..\src\GJpeg.cpp">
       <Filter>src\Window\texture</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GXMetal.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GMTLContext.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GMShader.cpp">
+      <Filter>src\Window\shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -523,6 +532,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GJpeg.h">
       <Filter>src\Window\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXMetal.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GMTLContext.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GMShader.h">
+      <Filter>src\Window\shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

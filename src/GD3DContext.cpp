@@ -301,7 +301,7 @@ void GD3DContext::renderBegin()
     //设置光栅化状态，使其生效
     device->RSSetState(m_RasterState);
 
-	const FLOAT color[] = {1.0f,0.0f,1.0f,1.0f};
+	const FLOAT color[] = { m_Window->m_BgdColor.r, m_Window->m_BgdColor.g, m_Window->m_BgdColor.b, m_Window->m_BgdColor.a };
 	device->ClearRenderTargetView(m_RenderTargetView, color);
 	device->ClearDepthStencilView(m_DepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 }

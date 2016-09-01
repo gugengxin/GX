@@ -44,6 +44,8 @@ class GWindow {
 	friend class GApplication;
 #if defined(GX_OPENGL)
 	friend class GOGLContext;
+#elif defined(GX_DIRECTX)
+	friend class GD3DContext;
 #elif defined(GX_METAL)
     friend class GMTLContext;
 #endif
