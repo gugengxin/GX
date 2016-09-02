@@ -46,14 +46,17 @@ public:
 			m_SamplerState = NULL;
 #elif defined(GX_METAL)
             m_Name=NULL;
+            m_SamplerState=NULL;
 #endif
 		}
 
 		inline bool isValid() {
 #if defined(GX_OPENGL)
 			return m_Name != 0;
-#elif defined(GX_DIRECTX) || defined(GX_METAL)
+#elif defined(GX_DIRECTX)
 			return m_Name != NULL;
+#elif defined(GX_METAL)
+            return m_Name != NULL;
 #endif
 		}
 	private:
@@ -64,6 +67,7 @@ public:
 		ID3D10SamplerState*			m_SamplerState;
 #elif defined(GX_METAL)
         void*   m_Name;
+        void*   m_SamplerState;
 #endif
 	};
 	
@@ -72,6 +76,8 @@ public:
 		friend class GOGLContext;
 #elif defined(GX_DIRECTX)
 		friend class GD3DContext;
+#elif defined(GX_METAL)
+        friend class GMTLContext;
 #endif
         friend class GContext;
     private:

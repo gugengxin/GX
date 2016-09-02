@@ -24,6 +24,8 @@ class GContext : public GContextBase
     friend class GOGLContext;
 #elif defined(GX_DIRECTX)
     friend class GD3DContext;
+#elif defined(GX_METAL)
+    friend class GMTLContext;
 #endif
 private:
 	enum ShaderID {

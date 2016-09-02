@@ -18,7 +18,7 @@ public:
         return 24;
     }
     virtual gint windowsSuggestedStencil() {
-        return 8;
+        return 0;
     }
 };
 

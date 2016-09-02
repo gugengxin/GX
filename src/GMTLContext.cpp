@@ -153,24 +153,6 @@ void GMTLContext::doneTexture()
 {
 }
 
-GDib* GMTLContext::loadTexture2DNodeReadyDib(GDib* dib)
-{
-    return NULL;
-}
-
-void GMTLContext::loadTexture2DNodeInMT(GObject* obj)
-{
-}
-
-void GMTLContext::unloadTextureNodeInMT(GObject* obj)
-{
-}
-
-void GMTLContext::unloadTextureNodeForContext(GTexture::Node* node)
-{
-
-}
-
 void* GMTLContext::getDevice()
 {
     return M_METAL_LAYER().device;
@@ -215,8 +197,8 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
     if(m_SampleCount > 1)
     {
         BOOL doUpdate =( M_MSAATEX().width       != M_TEXTURE().width  )
-                   ||  ( M_MSAATEX().height      != M_TEXTURE().height )
-                   ||  ( M_MSAATEX().sampleCount != m_SampleCount   );
+        ||  ( M_MSAATEX().height      != M_TEXTURE().height )
+        ||  ( M_MSAATEX().sampleCount != m_SampleCount   );
         
         if(!M_MSAATEX() || (M_MSAATEX() && doUpdate))
         {
@@ -303,8 +285,8 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
     }
     else  if(m_DepthPixelFormat != MTLPixelFormatInvalid) {
         BOOL doUpdate = ( M_DEPTHTEX().width       != M_TEXTURE().width  )
-                    ||  ( M_DEPTHTEX().height      != M_TEXTURE().height )
-                    ||  ( M_DEPTHTEX().sampleCount != m_SampleCount   );
+        ||  ( M_DEPTHTEX().height      != M_TEXTURE().height )
+        ||  ( M_DEPTHTEX().sampleCount != m_SampleCount   );
         
         if(!M_DEPTHTEX() || doUpdate)
         {
@@ -337,8 +319,8 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
     } // depth
     else if(m_StencilPixelFormat != MTLPixelFormatInvalid) {
         BOOL doUpdate = ( M_STENCILTEX().width       != M_TEXTURE().width  )
-                    ||  ( M_STENCILTEX().height      != M_TEXTURE().height )
-                    ||  ( M_STENCILTEX().sampleCount != m_SampleCount   );
+        ||  ( M_STENCILTEX().height      != M_TEXTURE().height )
+        ||  ( M_STENCILTEX().sampleCount != m_SampleCount   );
         
         if(!M_STENCILTEX() || doUpdate)
         {
@@ -384,6 +366,186 @@ void* GMTLContext::renderPassDescriptor()
     }
     
     return m_RenderPassDescriptor;
+}
+
+GDib* GMTLContext::loadTexture2DNodeReadyDib(GDib* dib)
+{
+    if (dib) {
+#if defined(GX_OS_IPHONE)
+        switch (dib->getPixelFormat()) {
+            case GX::PixelFormatA8:
+            case GX::PixelFormatRGB565:
+            case GX::PixelFormatRGBA4444:
+            case GX::PixelFormatRGBA5551:
+            case GX::PixelFormatRGBA8888:
+            case GX::PixelFormatBGRA8888:
+                return dib;
+            case GX::PixelFormatBGR565:
+                return GDib::convert(dib, GX::PixelFormatRGB565);
+            case GX::PixelFormatBGRA4444:
+                return GDib::convert(dib, GX::PixelFormatRGBA4444);
+            case GX::PixelFormatBGRA5551:
+                return GDib::convert(dib, GX::PixelFormatRGBA5551);
+            case GX::PixelFormatRGB888:
+                return GDib::convert(dib, GX::PixelFormatRGBA8888);
+            default:
+                break;
+        }
+#elif defined(GX_OS_MACOSX)
+        switch (dib->getPixelFormat()) {
+            case GX::PixelFormatA8:
+            case GX::PixelFormatRGBA8888:
+            case GX::PixelFormatBGRA8888:
+                return dib;
+            case GX::PixelFormatRGB565:
+            case GX::PixelFormatBGR565:
+            case GX::PixelFormatRGBA4444:
+            case GX::PixelFormatBGRA4444:
+            case GX::PixelFormatRGBA5551:
+            case GX::PixelFormatBGRA5551:
+            case GX::PixelFormatRGB888:
+                return GDib::convert(dib, GX::PixelFormatRGBA8888);
+            default:
+                break;
+        }
+#endif
+    }
+    return NULL;
+}
+
+void GMTLContext::loadTexture2DNodeInMT(GObject* obj)
+{
+    GContext::T2DNodeLoadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObj*, obj);
+    
+    nodeObj.context->readyTexture();
+    
+    GTexture::Handle& handle = nodeObj.nodeOut->getData();
+    
+    
+    
+    MTLPixelFormat pf=MTLPixelFormatInvalid;
+    
+    switch (nodeObj.dib->getPixelFormat())
+    {
+        case GX::PixelFormatA8:
+            pf=MTLPixelFormatA8Unorm;
+            break;
+#if defined(GX_OS_IPHONE)
+        case GX::PixelFormatRGB565:
+            pf=MTLPixelFormatB5G6R5Unorm;
+            break;
+        case GX::PixelFormatRGBA4444:
+            pf=MTLPixelFormatABGR4Unorm;
+            break;
+        case GX::PixelFormatRGBA5551:
+            pf=MTLPixelFormatA1BGR5Unorm;
+            break;
+#endif
+        case GX::PixelFormatRGBA8888:
+            pf=MTLPixelFormatRGBA8Unorm;
+            break;
+        case GX::PixelFormatBGRA8888:
+            pf=MTLPixelFormatBGRA8Unorm;
+            break;
+        default:
+            break;
+    }
+    
+    if (pf!=MTLPixelFormatInvalid) {
+        id <MTLDevice> device=GX_CAST_R(id <MTLDevice>,nodeObj.context->getDevice());
+        
+        MTLTextureDescriptor* texDesc=[MTLTextureDescriptor texture2DDescriptorWithPixelFormat:pf
+                                                                                         width:nodeObj.dib->getWidth()
+                                                                                        height:nodeObj.dib->getHeight()
+                                                                                     mipmapped:NO];
+        id<MTLTexture> tex=[device newTextureWithDescriptor:texDesc];
+        if (tex) {
+            MTLRegion region = MTLRegionMake2D(0, 0, nodeObj.dib->getWidth(), nodeObj.dib->getHeight());
+            [tex replaceRegion:region mipmapLevel:0 withBytes:nodeObj.dib->getDataPtr() bytesPerRow:nodeObj.dib->getStride()];
+            
+            MTLSamplerDescriptor* sprDesc=[[MTLSamplerDescriptor alloc] init];
+            if (nodeObj.param) {
+                switch (nodeObj.param->filter) {
+                    case GX_FILTER_MIN_MAG_POINT:
+                    {
+                        sprDesc.minFilter=MTLSamplerMinMagFilterNearest;
+                        sprDesc.magFilter=MTLSamplerMinMagFilterNearest;
+                    }
+                        break;
+                    case GX_FILTER_MIN_POINT_MAG_LINEAR:
+                    {
+                        sprDesc.minFilter=MTLSamplerMinMagFilterNearest;
+                        sprDesc.magFilter=MTLSamplerMinMagFilterLinear;
+                    }
+                        break;
+                    case GX_FILTER_MIN_LINEAR_MAG_POINT:
+                    {
+                        sprDesc.minFilter=MTLSamplerMinMagFilterLinear;
+                        sprDesc.magFilter=MTLSamplerMinMagFilterNearest;
+                    }
+                        break;
+                    default:
+                    case GX_FILTER_MIN_MAG_LINEAR:
+                    {
+                        sprDesc.minFilter=MTLSamplerMinMagFilterLinear;
+                        sprDesc.magFilter=MTLSamplerMinMagFilterLinear;
+                    }
+                        break;
+                }
+                sprDesc.sAddressMode=(MTLSamplerAddressMode)nodeObj.param->wrapU;
+                sprDesc.tAddressMode=(MTLSamplerAddressMode)nodeObj.param->wrapV;
+            }
+            else {
+                sprDesc.minFilter=MTLSamplerMinMagFilterLinear;
+                sprDesc.magFilter=MTLSamplerMinMagFilterLinear;
+                sprDesc.sAddressMode=MTLSamplerAddressModeClampToEdge;
+                sprDesc.tAddressMode=MTLSamplerAddressModeClampToEdge;
+            }
+            id <MTLSamplerState> spr=[device newSamplerStateWithDescriptor:sprDesc];
+            [sprDesc release];
+            
+            if (spr) {
+                handle.m_Name=[tex retain];
+                handle.m_SamplerState=[spr retain];
+            }
+        }
+    }
+    
+    
+    
+    nodeObj.context->doneTexture();
+    
+    if (handle.isValid()) {
+        nodeObj.nodeOut->m_Context = nodeObj.context;
+        nodeObj.nodeOut->m_Context->addTextureNodeInMT(nodeObj.nodeOut);
+    }
+}
+
+void GMTLContext::unloadTextureNodeInMT(GObject* obj)
+{
+    GContext::T2DNodeUnloadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeUnloadObj*, obj);
+    GTexture::Handle& handle = nodeObj.nodeOut->getData();
+    
+    nodeObj.context->readyTexture();
+    
+    [GX_CAST_R(id, handle.m_Name) release];
+    handle.m_Name = NULL;
+    [GX_CAST_R(id, handle.m_SamplerState) release];
+    handle.m_SamplerState = NULL;
+    
+    nodeObj.context->doneTexture();
+    
+    nodeObj.nodeOut->m_Context->removeTextureNodeInMT(nodeObj.nodeOut);
+    nodeObj.nodeOut->m_Context = NULL;
+}
+
+void GMTLContext::unloadTextureNodeForContext(GTexture::Node* node)
+{
+    GTexture::Handle& handle = node->getData();
+    [GX_CAST_R(id, handle.m_Name) release];
+    handle.m_Name = NULL;
+    [GX_CAST_R(id, handle.m_SamplerState) release];
+    handle.m_SamplerState = NULL;
 }
 
 #endif

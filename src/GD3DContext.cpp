@@ -415,10 +415,6 @@ void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 		desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 	}
 	break;
-	case GX::PixelFormatRGB565:
-	case GX::PixelFormatRGBA4444:
-	case GX::PixelFormatRGBA5551:
-	case GX::PixelFormatRGB888:
 	default:
 		break;
 	}
