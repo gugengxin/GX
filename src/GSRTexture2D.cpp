@@ -13,10 +13,12 @@
 
 GSRTexture2D::GSRTexture2D(GContext* ctx,MaskMode mm) : GShaderBase(ctx,(guint8)mm, 0, 0, 0)
 {
+    GX_SHADER_INPUT_INIT();
 
 }
 
 GSRTexture2D::~GSRTexture2D()
 {
 
+    GX_SHADER_INPUT_FINA();
 }

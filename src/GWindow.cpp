@@ -587,24 +587,34 @@ void GWindow::render()
 	painter.lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
     //painter.enable2D(getWidth(), getHeight());
 
-	GSRGraphics* graph = m_Context.getSRGraphics(GSRGraphics::ID_ColorMul);
+	GSRGraphics* graph = m_Context.getSRGraphics(GSRGraphics::ID_CAndCM);
 
+    painter.setColorMul(0, 1, 1, 1.0f);
 	static GDataBuffer* data = NULL;
 	if (!data) {
 		data = GDataBuffer::alloc();
 
-		GVector3 pos[3];
+        typedef struct {
+            GVector3 pos;
+            GColor4 clr;
+        } MD;
 
-		pos[0].set(-100.0f, -100.0f, 0.0f);
-		pos[1].set(100.0f, -100.0f, 0.0f);
-		pos[2].set(0.0f, 100.0f, 0.0f);
+        MD md[3];
+
+		md[0].pos.set(-100.0f, -100.0f, 0.0f);
+		md[1].pos.set(100.0f, -100.0f, 0.0f);
+		md[2].pos.set(0.0f, 100.0f, 0.0f);
+
+        md[0].clr.set(1.0f, 0, 0, 1.0f);
+        md[1].clr.set(0.0f, 1, 0, 1.0f);
+        md[2].clr.set(0.0f, 0, 1, 1.0f);
         
-		data->changeBytes(sizeof(pos));
+		data->changeBytes(sizeof(md));
 		void* p = data->map();
-		memcpy(p, pos, sizeof(pos));
+		memcpy(p, &md[0], sizeof(md));
 		data->unmap();
 		data->setOffset(0);
-		data->setStride(sizeof(GVector3));
+		data->setStride(sizeof(md[0]));
 	}
 
 	graph->draw(painter, data, GSRGraphics::IT_Float, GX_TRIANGLES, 0, 3);

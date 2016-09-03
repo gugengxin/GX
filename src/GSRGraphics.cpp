@@ -256,7 +256,6 @@ void GSRGraphics::deployPLState(gint inputType,void* plStateDescriptor)
     switch (inputType) {
         case IT_Float:
         {
-            //*
             MTLVertexDescriptor* vd=[[MTLVertexDescriptor alloc] init];
             
             // 设置attributes
@@ -266,7 +265,7 @@ void GSRGraphics::deployPLState(gint inputType,void* plStateDescriptor)
             vd.attributes[0].offset = 0;
             // color
             if (getIndex0() == ID_Color || getIndex0() == ID_CAndCM) {
-                vd.attributes[1].format = MTLVertexFormatUChar4;
+                vd.attributes[1].format = MTLVertexFormatUChar4Normalized;
                 vd.attributes[1].bufferIndex = 0;
                 vd.attributes[1].offset = 3 * sizeof(float);
                 
@@ -282,7 +281,6 @@ void GSRGraphics::deployPLState(gint inputType,void* plStateDescriptor)
             
             M_PSD().vertexDescriptor=vd;
             [vd release];
-            //*/
         }
             break;
         default:
@@ -311,9 +309,10 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
     g_InputBFuns[inputType](getIndex0(), buffer);
     
     setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)painter.updateMVPMatrix());
-    
-    setUniform4fv(U_color_mul, 1, (const GLfloat*)painter.updateColorMul());
-    
+
+    if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
+        setUniform4fv(U_color_mul, 1, (const GLfloat*)painter.updateColorMul());
+    }
     GX_glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
     
     g_InputEFuns[inputType](getIndex0());
@@ -339,11 +338,13 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
 	cbToMapped->Unmap();
 	device->VSSetConstantBuffers(0, 1, &cbToMapped);
 
-	cbToMapped = m_ConstBuffers[CB_color_mul];
-	cbToMapped->Map(D3D10_MAP_WRITE_DISCARD, 0, &pMap);
-	memcpy(pMap, painter.updateColorMul(), sizeof(GColor4F));
-	cbToMapped->Unmap();
-	device->PSSetConstantBuffers(0, 1, &cbToMapped);
+    if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
+        cbToMapped = m_ConstBuffers[CB_color_mul];
+        cbToMapped->Map(D3D10_MAP_WRITE_DISCARD, 0, &pMap);
+        memcpy(pMap, painter.updateColorMul(), sizeof(GColor4F));
+        cbToMapped->Unmap();
+        device->PSSetConstantBuffers(0, 1, &cbToMapped);
+    }
 
 	device->VSSetShader(getVertexShader());
 	device->PSSetShader(getPixelShader());
@@ -363,17 +364,21 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
     ((GMatrix4*)mvp)->transpose();
     memcpy(pMap, mvp, GX_MATRIX_SIZE);
     [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) offset:0 atIndex:1];
-    
-    pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) contents];
-    const float* clrMul = painter.updateColorMul();
-    memcpy(pMap, clrMul, sizeof(GColor4F));
-    [rce setFragmentBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) offset:0 atIndex:0];
+
+    if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
+        pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) contents];
+        const float* clrMul = painter.updateColorMul();
+        memcpy(pMap, clrMul, sizeof(GColor4F));
+        [rce setFragmentBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) offset:0 atIndex:0];
+    }
     
     [rce drawPrimitives:(MTLPrimitiveType)mode vertexStart:(NSUInteger)first vertexCount:(NSUInteger)count];
     
     [rce setVertexBuffer:nil offset:0 atIndex:0];
     [rce setVertexBuffer:nil offset:0 atIndex:1];
-    [rce setFragmentBuffer:nil offset:0 atIndex:0];
+    if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
+        [rce setFragmentBuffer:nil offset:0 atIndex:0];
+    }
     
 #endif
 }

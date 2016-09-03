@@ -9,9 +9,17 @@ GColor4::GColor4()
 	a = 0;
 }
 
+GColor4::GColor4(guint8 red, guint8 green, guint8 blue, guint8 alpha)
+{
+    r = red;
+    g = green;
+    b = blue;
+    a = alpha;
+}
+
 void GColor4::set(float red, float green, float blue, float alpha)
 {
-	r = GX_CAST_S(guint8,red*255.0f);
+	r = GX_CAST_S(guint8, red*255.0f);
 	g = GX_CAST_S(guint8, green*255.0f);
 	b = GX_CAST_S(guint8, blue*255.0f);
 	a = GX_CAST_S(guint8, alpha*255.0f);

@@ -81,7 +81,7 @@ void GContext::destroy()
 void GContext::androidDestroy()
 {
     //TODO
-    //GX_LOG_W(PrioINFO,"GContext","androidDestroy");iqi
+    //GX_LOG_W(PrioINFO,"GContext","androidDestroy");
     GContextBase::androidDestroy();
 }
 void GContext::androidRecreate(GWindow* win)

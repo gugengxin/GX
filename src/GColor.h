@@ -5,6 +5,7 @@ class GColor4
 {
 public:
 	GColor4();
+    GColor4(guint8 red, guint8 green, guint8 blue, guint8 alpha);
 
 	inline void set(guint8 red, guint8 green, guint8 blue, guint8 alpha) {
 		r = red;

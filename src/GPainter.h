@@ -53,6 +53,10 @@ public:
 	const float* updateMVPMatrix();
 
 public:
+    void setColorMul(float r,float g,float b,float a) {
+        m_ColorMul.set(r, g, b, a);
+    }
+
 	const float* updateColorMul() {
 		return &m_ColorMul.r;
 	}
