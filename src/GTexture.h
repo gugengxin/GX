@@ -21,12 +21,6 @@ class GContext;
 
 //仅保存，生成和销毁都在Context完成
 class GTexture : public GObject {
-#if defined(GX_OPENGL)
-    friend class GOGLContext;
-#elif defined(GX_DIRECTX)
-    friend class GD3DContext;
-#endif
-    friend class GContext;
     GX_GOBJECT(GTexture);
 public:
 	class Handle {
@@ -92,8 +86,10 @@ public:
     };
     
 public:
-    
-private:
+    inline Node* getNode() {
+        return m_Node;
+    }
+protected:
     inline void setNode(Node* v) {
         m_Node=v;
     }

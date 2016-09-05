@@ -111,7 +111,7 @@ GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTe
         GTexture::Node* node=new GTexture::Node();
         if(loadTexture2DNode(node, dib, param)) {
             GTexture2D* tex2d=GTexture2D::alloc();
-            tex2d->setNode(node);
+            tex2d->config(node, dib, param);
             GO::autorelease(tex2d);
             return tex2d;
         }
