@@ -1,6 +1,7 @@
 ﻿#include "GCSLWFPMain.h"
 #include "GCSLWHT.h"
 #include "GCSLWMainLine.h"
+#include "GCSLWTexture.h"
 
 GCSLWFPMain::GCSLWFPMain(QObject *parent) : GCSLWriter(parent)
 {
@@ -97,6 +98,57 @@ bool GCSLWFPMain::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLErro
 
         strAppendTab(strOut,param.lineLevel);
         strOut.append("return gx_FragColor;");
+        strOut.append(param.strWarp);
+
+        param.lineLevel--;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("}");
+        strOut.append(param.strWarp);
+    }
+        break;
+    case SLT_MSL:
+    {
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("fragment half4 mainFP(PixelInputType bridge [[stage_in]],constant UniformBufferFP& uniformBuf[[ buffer(0) ]]");
+
+        GCSLWriter* fp=(GCSLWriter*)parent();
+        for(int i=0;i<fp->getSubWriteCount();i++) {
+            GCSLWriter* tex=fp->getSubWrites(i);
+            if(tex->inherits("GCSLWTexture")) {
+                int idx=0;
+                for(int j=0;j<tex->getSubWriteCount();j++) {
+                    GCSLWTextureVar*texVar=(GCSLWTextureVar*)tex->getSubWrites(j);
+                    if(texVar->inherits("GCSLWTextureVar")) {
+                        strOut.append(param.strWarp);
+                        strOut.append(QString(",%1 %2 [[texture(%3)]],sampler %2_s [[sampler(%3)]]")
+                                      .arg(getWordSLID(texVar->getType(),param.slType))
+                                      .arg(texVar->getName())
+                                      .arg(idx));
+                        idx++;
+                    }
+                }
+                break;
+            }
+        }
+
+
+        strOut.append(")");
+        strOut.append(param.strWarp);
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("{");
+        strOut.append(param.strWarp);
+        param.lineLevel++;
+
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("float4 gx_FragColor;");
+        strOut.append(param.strWarp);
+
+        if(!GCSLWriter::makeVS(param,strOut,errOut)) {
+            return false;
+        }
+
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("return half4(gx_FragColor);");
         strOut.append(param.strWarp);
 
         param.lineLevel--;

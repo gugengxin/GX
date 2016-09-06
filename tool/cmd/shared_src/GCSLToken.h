@@ -60,9 +60,12 @@ public:
         T_Buffer        , // "buffer"
         T_Bridge        , // "bridge"
         T_Texture       , // "texture"
-        T_POSITION      , // "POSITION"
-        T_TEXCOORD      , // "TEXCOORD"
-        T_COLOR         , // "COLOR"
+
+        T_HL_POSITION      , // "hl_POSITION"
+        T_HL_TEXCOORD      , // "hl_TEXCOORD"
+        T_HL_COLOR         , // "hl_COLOR"
+        T_M_ATTRIBUTE      , // "m_attribute",
+
         T_gx_Position   , // "gx_Position"
         T_gx_FragColor  , // "gx_FragColor"
 
@@ -121,10 +124,14 @@ public:
                m_Type==T_High;
     }
     bool isSemantic() {
-        return m_Type==T_POSITION     ||
-               m_Type==T_TEXCOORD      ||
-               m_Type==T_COLOR;
+        return m_Type==T_HL_POSITION     ||
+               m_Type==T_HL_TEXCOORD      ||
+               m_Type==T_HL_COLOR;
     }
+    bool isAttribute() {
+        return m_Type==T_M_ATTRIBUTE;
+    }
+
     bool isSemicolon() {
         return m_Type==T_Semicolon;
     }

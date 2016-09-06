@@ -18,6 +18,7 @@ public:
         SLT_GLSL=0,
         SLT_GLSL_ES,
         SLT_HLSL,
+        SLT_MSL,
     } SLType;
 
     class MakeParam {
@@ -54,6 +55,9 @@ public:
     }
 
     QString &getWordSLID(GCSLToken* token,SLType slt);
+
+    bool isBelongToVS();
+    bool isBelongToFP();
 
 
     virtual bool compile(GCSLTokenReader& reader,GCSLError* errOut)=0;

@@ -14,9 +14,9 @@
 
 vs {
 	layout {
-		high vec4 position:POSITION;
+		high vec4 position:hl_POSITION,m_attribute0;
 #if MI_COLOR || MI_CANDCM
-		lowp vec4 color:COLOR;
+		lowp vec4 color:hl_COLOR,m_attribute1;
 #end
 	}
 	buffer {
@@ -24,11 +24,11 @@ vs {
 	}
 	bridge {
 #if MI_COLOR || MI_CANDCM
-		lowp vec4 b_color:COLOR;
+		lowp vec4 b_color:hl_COLOR;
 #end
 	}
 	main {
-		gx_Position = mul(mvp_mat,layout.position);
+		gx_Position = mul(buffer.mvp_mat,layout.position);
 #if MI_COLOR || MI_CANDCM
 		bridge.b_color=layout.color;
 #end
@@ -42,65 +42,15 @@ fp {
 	}
 	main {
 #if MI_COLORMUL
-		gx_FragColor=color_mul;
+		gx_FragColor=buffer.color_mul;
 #elif MI_COLOR
 		gx_FragColor=bridge.b_color;
 #elif MI_CANDCM
-		gx_FragColor=bridge.b_color*color_mul;
+		gx_FragColor=bridge.b_color*buffer.color_mul;
 #end
 	}
 }
 *///GX_SL
-
-#if defined(GX_METAL)
-const gchar* g_SrcVS=\
-"#include <metal_stdlib> \n\
-using namespace metal; \n\
-struct VertexInputType { \n\
-    float4 position [[attribute(0)]]; \n\
-#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
-    float4 color [[attribute(1)]]; \n\
-#endif \n\
-}; \n\
-struct UniformBufferVS { \n\
-	float4x4 mvp_mat; \n\
-}; \n\
-struct PixelInputType { \n\
-	float4 gx_Position [[position]]; \n\
-#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
-	float4 b_color; \n\
-#endif \n\
-}; \n\
-vertex PixelInputType mainVS(VertexInputType layout [[stage_in]],constant UniformBufferVS& uniformBuf[[ buffer(1) ]]) \n\
-{ \n\
-	PixelInputType bridge; \n\
-	bridge.gx_Position=layout.position*uniformBuf.mvp_mat; \n\
-#if defined(MI_COLOR)||defined(MI_CANDCM) \n\
-	bridge.b_color=layout.color; \n\
-#endif \n\
-	return bridge; \n\
-} \n\
-struct UniformBufferFP { \n\
-#if defined(MI_COLORMUL)||defined(MI_CANDCM) \n\
-    float4 color_mul; \n\
-#endif \n\
-}; \n\
-fragment half4 mainFP(PixelInputType bridge [[stage_in]],constant UniformBufferFP& uniformBuf[[ buffer(0) ]]) \n\
-{ \n\
-	float4 gx_FragColor; \n\
-#if defined(MI_COLORMUL) \n\
-	gx_FragColor=uniformBuf.color_mul; \n\
-#elif defined(MI_COLOR) \n\
-	gx_FragColor=bridge.b_color; \n\
-#elif defined(MI_CANDCM) \n\
-	gx_FragColor=bridge.b_color*uniformBuf.color_mul; \n\
-#endif \n\
-	return half4(gx_FragColor); \n\
-} \n\
-\n\
-";
-const gchar* g_SrcFP=NULL;
-#endif
 
 
 GSRGraphics::GSRGraphics(GContext* ctx,ID srID) : GShaderBase(ctx,(guint8)srID, 0, 0, 0)

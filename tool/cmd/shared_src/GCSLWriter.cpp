@@ -28,6 +28,30 @@ QString &GCSLWriter::getWordSLID(GCSLToken *token, GCSLWriter::SLType slt)
     return m_SL->getWord(token->getID())->getSLID(slt);
 }
 
+bool GCSLWriter::isBelongToVS()
+{
+    QObject* obj=this;
+    while (obj) {
+        if(obj->inherits("GCSLWVS")) {
+            return true;
+        }
+        obj=obj->parent();
+    }
+    return false;
+}
+
+bool GCSLWriter::isBelongToFP()
+{
+    QObject* obj=this;
+    while (obj) {
+        if(obj->inherits("GCSLWFP")) {
+            return true;
+        }
+        obj=obj->parent();
+    }
+    return false;
+}
+
 
 bool GCSLWriter::makeVS(MakeParam& param, QString &strOut, GCSLError *errOut)
 {

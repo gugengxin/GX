@@ -11,33 +11,33 @@ gxsl(GX Shading Language) 将被翻译成 glsl或hlsl
 #def TEX_MASK
 vs {
     layout {
-        high vec4 pos:POSITION;
+        high vec4 pos:hl_POSITION,m_attribute0;
         #if TEX
-        medi vec2 texCoord:TEXCOORD0;
+        medi vec2 texCoord:hl_TEXCOORD0,m_attribute1;
         #end
         #if TEX_MASK
-        medi vec2 texCoordMask:TEXCOORD1;
+        medi vec2 texCoordMask:hl_TEXCOORD1,m_attribute2;
         #end
-        lowp vec4 color:COLOR0;
-        lowp vec4 colorMask:COLOR1;
+        lowp vec4 color:hl_COLOR0,m_attribute3;
+        lowp vec4 colorMask:hl_COLOR1,m_attribute4;
     }
     buffer {
         high mat4 mvpMatrix;
     }
     bridge {
-        medi vec2 v_texCoord:TEXCOORD0;
+        medi vec2 v_texCoord:hl_TEXCOORD0;
         #if MASK
-        medi vec2 v_texCoord_mask:TEXCOORD1;
+        medi vec2 v_texCoord_mask:hl_TEXCOORD1;
         #end
-        lowp vec4 v_color:COLOR0;
+        lowp vec4 v_color:hl_COLOR0;
         #if COLOR_MASK
-        lowp vec4 v_color_mask:COLOR1;
+        lowp vec4 v_color_mask:hl_COLOR1;
         #end
     }
 
     main {
         vec4 abc(1.0,2.0,3.0,1.0);
-        gx_Position=mul(mvpMatrix,layout.pos);
+        gx_Position=mul(buffer.mvpMatrix,layout.pos);
         gx_Position*=abc;
         bridge.v_texCoord=layout.texCoord;
         #if MASK
@@ -67,7 +67,7 @@ fp {
         #if COLOR_MASK
         gx_FragColor+=bridge.v_color_mask;
         #end
-        gx_FragColor*=colorMul;
+        gx_FragColor*=buffer.colorMul;
     }
 }
 
@@ -147,6 +147,14 @@ bool GCSL::make(GCSLWriter::SLType slType, const char *strWarp, QString &vsOut, 
         return false;
     }
 
+    //合并
+    if(slType==GCSLWriter::SLT_MSL) {
+        vsOut.append(param.strWarp);
+        vsOut.append(fpOut);
+
+        fpOut.clear();
+    }
+
     return true;
 }
 
@@ -170,8 +178,8 @@ void GCSL::initWords()
 {
 #define M_WORD_MAP_ADD(t,s) \
     {GCSLWord* word=new GCSLWord(GCSLToken::t,s,this);m_WordList.append(word);m_WordMap.insert(QString(s),word);}
-#define M_WORD_MAP_ADD_OID(t,s,gl,gles,hl) \
-    {GCSLWord* word=new GCSLWord(GCSLToken::t,s,gl,gles,hl,this);m_WordList.append(word);m_WordMap.insert(QString(s),word);}
+#define M_WORD_MAP_ADD_OID(t,s,gl,gles,hl,m) \
+    {GCSLWord* word=new GCSLWord(GCSLToken::t,s,gl,gles,hl,m,this);m_WordList.append(word);m_WordMap.insert(QString(s),word);}
 
     M_WORD_MAP_ADD(T_Semicolon     , ";"           );
     M_WORD_MAP_ADD(T_S_Brackets_L  , "("           );
@@ -198,35 +206,36 @@ void GCSL::initWords()
     M_WORD_MAP_ADD(T_Or            , "||"          );
     M_WORD_MAP_ADD(T_Not           , "!"           );
     M_WORD_MAP_ADD(T_Colon         , ":"           );
-    M_WORD_MAP_ADD_OID(T_HT_Def    , "#def"        ,"#define"   ,"#define"  ,"#define"  );
-    M_WORD_MAP_ADD_OID(T_HT_If     , "#if"         ,"#if"       ,"#if"      ,"#if"      );
-    M_WORD_MAP_ADD_OID(T_HT_Else   , "#else"       ,"#else"     ,"#else"    ,"#else"    );
-    M_WORD_MAP_ADD_OID(T_HT_Elif   , "#elif"       ,"#elif"     ,"#elif"    ,"#elif"    );
-    M_WORD_MAP_ADD_OID(T_HT_End    , "#end"        ,"#endif"    ,"#endif"   ,"#endif"   );
+    M_WORD_MAP_ADD_OID(T_HT_Def    , "#def"        ,"#define"   ,"#define"  ,"#define"  ,"#define");
+    M_WORD_MAP_ADD_OID(T_HT_If     , "#if"         ,"#if"       ,"#if"      ,"#if"      ,"#if"    );
+    M_WORD_MAP_ADD_OID(T_HT_Else   , "#else"       ,"#else"     ,"#else"    ,"#else"    ,"#else"  );
+    M_WORD_MAP_ADD_OID(T_HT_Elif   , "#elif"       ,"#elif"     ,"#elif"    ,"#elif"    ,"#elif"  );
+    M_WORD_MAP_ADD_OID(T_HT_End    , "#end"        ,"#endif"    ,"#endif"   ,"#endif"   ,"#endif" );
     M_WORD_MAP_ADD(T_Vs            , "vs"          );
     M_WORD_MAP_ADD(T_Fp            , "fp"          );
     M_WORD_MAP_ADD(T_Main          , "main"        );
-    M_WORD_MAP_ADD_OID(T_Lowp      , "lowp"    ,""  ,"lowp"     ,""    );
-    M_WORD_MAP_ADD_OID(T_Medi      , "medi"    ,""  ,"mediump"  ,""    );
-    M_WORD_MAP_ADD_OID(T_High      , "high"    ,""  ,"highp"    ,""    );
-    M_WORD_MAP_ADD_OID(T_Float     , "float"   ,"float" ,"float","float"    );
-    M_WORD_MAP_ADD_OID(T_Vec2      , "vec2"    ,"vec2"  ,"vec2" ,"float2"   );
-    M_WORD_MAP_ADD_OID(T_Vec3      , "vec3"    ,"vec3"  ,"vec3" ,"float3"   );
-    M_WORD_MAP_ADD_OID(T_Vec4      , "vec4"    ,"vec4"  ,"vec4" ,"float4"   );
-    M_WORD_MAP_ADD_OID(T_Mat2      , "mat2"    ,"mat2"  ,"mat2" ,"float2x2" );
-    M_WORD_MAP_ADD_OID(T_Mat3      , "mat3"    ,"mat3"  ,"mat3" ,"float3x3" );
-    M_WORD_MAP_ADD_OID(T_Mat4      , "mat4"    ,"mat4"  ,"mat4" ,"matrix" );
-    M_WORD_MAP_ADD_OID(T_Tex1d     ,"tex1d","sampler1D","sampler1D","Texture1D");
-    M_WORD_MAP_ADD_OID(T_Tex2d     ,"tex2d","sampler2D","sampler2D","Texture2D");
+    M_WORD_MAP_ADD_OID(T_Lowp      , "lowp"    ,""  ,"lowp"     ,""    ,"");
+    M_WORD_MAP_ADD_OID(T_Medi      , "medi"    ,""  ,"mediump"  ,""    ,"");
+    M_WORD_MAP_ADD_OID(T_High      , "high"    ,""  ,"highp"    ,""    ,"");
+    M_WORD_MAP_ADD_OID(T_Float     , "float"   ,"float" ,"float","float"    ,"float"   );
+    M_WORD_MAP_ADD_OID(T_Vec2      , "vec2"    ,"vec2"  ,"vec2" ,"float2"   ,"float2"  );
+    M_WORD_MAP_ADD_OID(T_Vec3      , "vec3"    ,"vec3"  ,"vec3" ,"float3"   ,"float3"  );
+    M_WORD_MAP_ADD_OID(T_Vec4      , "vec4"    ,"vec4"  ,"vec4" ,"float4"   ,"float4"  );
+    M_WORD_MAP_ADD_OID(T_Mat2      , "mat2"    ,"mat2"  ,"mat2" ,"float2x2" ,"float2x2");
+    M_WORD_MAP_ADD_OID(T_Mat3      , "mat3"    ,"mat3"  ,"mat3" ,"float3x3" ,"float3x3");
+    M_WORD_MAP_ADD_OID(T_Mat4      , "mat4"    ,"mat4"  ,"mat4" ,"matrix"   ,"float4x4"  );
+    M_WORD_MAP_ADD_OID(T_Tex1d     ,"tex1d","sampler1D","sampler1D","Texture1D","texture1d<float>");
+    M_WORD_MAP_ADD_OID(T_Tex2d     ,"tex2d","sampler2D","sampler2D","Texture2D","texture2d<float>");
     M_WORD_MAP_ADD(T_Layout        , "layout"      );
     M_WORD_MAP_ADD(T_Buffer        , "buffer"      );
     M_WORD_MAP_ADD(T_Bridge        , "bridge"      );
     M_WORD_MAP_ADD(T_Texture       , "texture"     );
-    M_WORD_MAP_ADD_OID(T_POSITION  , "POSITION" ,"","", "POSITION"  );
-    M_WORD_MAP_ADD_OID(T_TEXCOORD  , "TEXCOORD" ,"","", "TEXCOORD"  );
-    M_WORD_MAP_ADD_OID(T_COLOR     , "COLOR"    ,"","", "COLOR"     );
-    M_WORD_MAP_ADD_OID(T_gx_Position   , "gx_Position" ,"gl_Position" ,"gl_Position" ,"gx_Position");
-    M_WORD_MAP_ADD_OID(T_gx_FragColor  , "gx_FragColor","gl_FragColor","gl_FragColor","gx_FragColor");
+    M_WORD_MAP_ADD_OID(T_HL_POSITION  , "hl_POSITION" ,"","", "POSITION"  ,"");
+    M_WORD_MAP_ADD_OID(T_HL_TEXCOORD  , "hl_TEXCOORD" ,"","", "TEXCOORD"  ,"");
+    M_WORD_MAP_ADD_OID(T_HL_COLOR     , "hl_COLOR"    ,"","", "COLOR"     ,"");
+    M_WORD_MAP_ADD_OID(T_M_ATTRIBUTE  , "m_attribute" ,"","", ""  ,"attribute");
+    M_WORD_MAP_ADD_OID(T_gx_Position   , "gx_Position" ,"gl_Position" ,"gl_Position" ,"gx_Position","gx_Position");
+    M_WORD_MAP_ADD_OID(T_gx_FragColor  , "gx_FragColor","gl_FragColor","gl_FragColor","gx_FragColor","gx_FragColor");
     M_WORD_MAP_ADD(T_Mul           , "mul"         );
 
 #undef M_WORD_MAP_ADD
@@ -387,7 +396,7 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         parse_ID(ch,reader,str);
 
         bool notFound=true;
-        for(int i=(int)GCSLToken::T_POSITION;i<=(int)GCSLToken::T_COLOR;i++) {
+        for(int i=(int)GCSLToken::T_HL_POSITION;i<=(int)GCSLToken::T_M_ATTRIBUTE;i++) {
             QString& wid=m_WordList[i]->getID();
             if(str.startsWith(wid) && (str.length()<=wid.length() || str[wid.length()].isNumber())) {
                 tokenOut->setType((GCSLToken::Type)i,wid);

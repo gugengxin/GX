@@ -101,6 +101,36 @@ bool GCSLWVSMain::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLErro
         strOut.append(param.strWarp);
     }
         break;
+    case SLT_MSL:
+    {
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("vertex PixelInputType mainVS(VertexInputType layout [[stage_in]],constant UniformBufferVS& uniformBuf[[ buffer(1) ]])");
+        strOut.append(param.strWarp);
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("{");
+        strOut.append(param.strWarp);
+
+        param.lineLevel++;
+
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("PixelInputType bridge;");
+        strOut.append(param.strWarp);
+
+
+        if(!GCSLWriter::makeVS(param,strOut,errOut)) {
+            return false;
+        }
+
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("return bridge;");
+        strOut.append(param.strWarp);
+
+        param.lineLevel--;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("}");
+        strOut.append(param.strWarp);
+    }
+        break;
     default:
         return false;
     }

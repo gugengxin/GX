@@ -56,7 +56,18 @@ bool GCSLWTexture::compile(GCSLTokenReader &reader, GCSLError *errOut)
     return true;
 }
 
+bool GCSLWTexture::makeVS(GCSLWriter::MakeParam &, QString &, GCSLError *)
+{
+    return true;
+}
 
+bool GCSLWTexture::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
+{
+    if(param.slType==GCSLWriter::SLT_MSL) {
+        return true;
+    }
+    return GCSLWriter::makeFP(param,strOut,errOut);
+}
 
 
 

@@ -83,6 +83,13 @@ bool GCSLWRoot::compile(GCSLTokenReader& reader,GCSLError* errOut)
 
 bool GCSLWRoot::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLError *errOut)
 {
+    if(param.slType==GCSLWriter::SLT_MSL) {
+        strOut.append("#include <metal_stdlib>");
+        strOut.append(param.strWarp);
+        strOut.append("using namespace metal;");
+        strOut.append(param.strWarp);
+    }
+
     for(int i=0;i<getSubWriteCount();i++) {
         if(!getSubWrites(i)->makeVS(param,strOut,errOut)) {
             return false;

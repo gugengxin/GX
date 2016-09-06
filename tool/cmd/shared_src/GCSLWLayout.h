@@ -28,8 +28,11 @@ private:
     GCSLToken*  m_LMH;
     GCSLToken*  m_Type;
     QString     m_Name;
-    GCSLToken*  m_SemanticName;
+    GCSLToken*  m_SemanticName; //for hlsl
     int         m_SemanticIndex;
+
+    GCSLToken*  m_AttributeName; //for msl
+    int         m_AttributeIndex;
 };
 
 

@@ -79,6 +79,21 @@ bool GCSLWLayout::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLErro
         strOut.append(param.strWarp);
     }
         break;
+    case SLT_MSL:
+    {
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("struct VertexInputType {");
+        strOut.append(param.strWarp);
+        param.lineLevel++;
+        if(!GCSLWriter::makeVS(param,strOut,errOut)) {
+            return false;
+        }
+        param.lineLevel--;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("};");
+        strOut.append(param.strWarp);
+    }
+        break;
     default:
         return false;
     }
@@ -102,6 +117,8 @@ GCSLWLayoutVar::GCSLWLayoutVar(QObject *parent) : GCSLWriter(parent)
     m_Type=NULL;
     m_SemanticName=NULL;
     m_SemanticIndex=0;
+    m_AttributeName=NULL;
+    m_AttributeIndex=0;
 }
 
 bool GCSLWLayoutVar::compile(GCSLTokenReader &reader, GCSLError *errOut)
@@ -133,6 +150,7 @@ bool GCSLWLayoutVar::compile(GCSLTokenReader &reader, GCSLError *errOut)
         return false;
     }
 
+    //hlsl
     token=reader.getToken();
     if(token->getType()!=GCSLToken::T_Colon) {
         if(errOut) {
@@ -156,6 +174,32 @@ bool GCSLWLayoutVar::compile(GCSLTokenReader &reader, GCSLError *errOut)
         m_SemanticIndex=token->getID().toInt();
         token=reader.getToken();
     }
+
+
+    //msl
+    if(token->getType()!=GCSLToken::T_Comma) {
+        if(errOut) {
+            errOut->setCode(GCSLError::C_UnexceptToken);
+            errOut->setRC(token);
+        }
+        return false;
+    }
+
+    m_AttributeName=reader.getToken();
+    if(!m_AttributeName->isAttribute()) {
+        if(errOut) {
+            errOut->setCode(GCSLError::C_UnexceptToken);
+            errOut->setRC(m_AttributeName);
+        }
+        return false;
+    }
+
+    token=reader.getToken();
+    if(token->getType()==GCSLToken::T_Integer) {
+        m_AttributeIndex=token->getID().toInt();
+        token=reader.getToken();
+    }
+
 
     if(!token->isSemicolon()) {
         if(errOut) {
@@ -186,6 +230,13 @@ bool GCSLWLayoutVar::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLE
         strOut.append(":");
         strOut.append(getWordSLID(m_SemanticName,param.slType));
         strOut.append(QString::number(m_SemanticIndex));
+    }
+    else if(param.slType==SLT_MSL) {
+        strOut.append(" [[");
+        strOut.append(getWordSLID(m_AttributeName,param.slType));
+        strOut.append("(");
+        strOut.append(QString::number(m_AttributeIndex));
+        strOut.append(")]]");
     }
     strOut.append(";");
     strOut.append(param.strWarp);

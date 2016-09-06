@@ -15,6 +15,7 @@ public:
              const char* glID,
              const char* glesID,
              const char* hlID,
+             const char* mID,
              QObject* parent);
 
     GCSLToken::Type getTokenType() {
@@ -31,7 +32,7 @@ private:
     GCSLToken::Type m_TkType;
     QString m_ID;
 
-    QString m_SLID[3];
+    QString m_SLID[4];
 };
 
 #endif // GCSLWORD_H

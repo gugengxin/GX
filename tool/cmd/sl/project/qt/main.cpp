@@ -13,11 +13,11 @@ int main(int argc, char *argv[])
     }
     /*
     argList.append("-i");
-    argList.append("E:\\gxsl_test.txt");
+    argList.append("/Users/GuGengxin/Desktop/gxsl_test.txt");
     argList.append("-ie");
     argList.append("UTF-8");
     argList.append("-o");
-    argList.append("E:\\gxsl_test.gxsl");
+    argList.append("/Users/GuGengxin/Desktop/gxsl_test.gxsl");
     //*/
 
     //QTextStream cin(stdin, QIODevice::ReadOnly);
@@ -123,7 +123,7 @@ int main(int argc, char *argv[])
 
                     QString outStr;
 
-                    for(int i=0;i<3;i++) {
+                    for(int i=0;i<4;i++) {
                         if(i==0) {
                             outStr.append("#if defined(GX_OPENGL) && !defined(GX_OPENGL_ES)\n");
                         }
@@ -133,16 +133,18 @@ int main(int argc, char *argv[])
                         else if(i==2) {
                             outStr.append("#if defined(GX_DIRECTX)\n");
                         }
+                        else if(i==3) {
+                            outStr.append("#if defined(GX_METAL)\n");
+                        }
 
                         QString vsStr,fpStr;
-                        vsStr.append("const gchar* g_SrcVS=\\\n\"");
-                        fpStr.append("const gchar* g_SrcFP=\\\n\"");
                         if(worker.make((GCSLWriter::SLType)i," \\n\\\n",vsStr,fpStr,&error)) {
+                            outStr.append("const gchar* g_SrcVS=\\\n\"");
                             outStr.append(vsStr);
                             outStr.append("\";\n");
                             //outStr.append(QString("const gint g_SrcVSLen=%1;\n").arg(vsStr.toUtf8().length()));
 
-
+                            outStr.append("const gchar* g_SrcFP=\\\n\"");
                             outStr.append(fpStr);
                             outStr.append("\";\n");
                             //outStr.append(QString("const gint g_SrcFPLen=%1;\n").arg(fpStr.toUtf8().length()));

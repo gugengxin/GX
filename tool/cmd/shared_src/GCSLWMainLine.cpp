@@ -41,6 +41,7 @@ bool GCSLWMainLine::compile(GCSLTokenReader &reader, GCSLError *errOut)
         GCSLToken::T_Tex1d         , // "tex1d"
         GCSLToken::T_Tex2d         , // "tex2d"
         GCSLToken::T_Layout        , // "layout"
+        GCSLToken::T_Buffer        , // "buffer"
         GCSLToken::T_Bridge        , // "bridge"
         GCSLToken::T_gx_Position   , // "gx_Position"
         GCSLToken::T_gx_FragColor  , // "gx_FragColor"
@@ -178,6 +179,11 @@ bool GCSLWMainLine::make(GCSLWriter::MakeParam &param,GCSLTokenReader& reader,QS
                 strOut.append(QString("%1.Sample(%2_s,").arg(getWordSLID(tTex,param.slType)).arg(getWordSLID(tTex,param.slType)));
             }
                 break;
+            case SLT_MSL:
+            {
+                strOut.append(QString("%1.sample(%2_s,").arg(getWordSLID(tTex,param.slType)).arg(getWordSLID(tTex,param.slType)));
+            }
+                break;
             default:
                 return false;
             }
@@ -215,11 +221,49 @@ bool GCSLWMainLine::make(GCSLWriter::MakeParam &param,GCSLTokenReader& reader,QS
             }
                 break;
             case SLT_HLSL:
+            case SLT_MSL:
             {
                 if(tokenLast && !tokenLast->isSymbol()) {
                     strOut.append(" ");
                 }
                 strOut.append(getWordSLID(token,param.slType));
+            }
+                break;
+            default:
+                return false;
+            }
+        }
+        else if(token->getType()==GCSLToken::T_Buffer) {
+            switch (param.slType) {
+            case SLT_GLSL:
+            case SLT_GLSL_ES:
+            case SLT_HLSL:
+            {
+                tokenLast=token;
+                token=reader.getToken();
+
+                if(!token) {
+                    if(errOut) {
+                        errOut->setCode(GCSLError::C_UnexceptEOF);
+                        errOut->setRC(tokenLast);
+                    }
+                    return false;
+                }
+                else if(token->getType()!=GCSLToken::T_Period) {
+                    if(errOut) {
+                        errOut->setCode(GCSLError::C_UnsupportToken);
+                        errOut->setRC(token);
+                    }
+                    return false;
+                }
+            }
+                break;
+            case SLT_MSL:
+            {
+                if(tokenLast && !tokenLast->isSymbol()) {
+                    strOut.append(" ");
+                }
+                strOut.append("uniformBuf");
             }
                 break;
             default:
@@ -238,6 +282,7 @@ bool GCSLWMainLine::make(GCSLWriter::MakeParam &param,GCSLTokenReader& reader,QS
             }
                 break;
             case SLT_HLSL:
+            case SLT_MSL:
             {
                 strOut.append("bridge.gx_Position");
             }
@@ -258,6 +303,7 @@ bool GCSLWMainLine::make(GCSLWriter::MakeParam &param,GCSLTokenReader& reader,QS
             }
                 break;
             case SLT_HLSL:
+            case SLT_MSL:
             {
                 strOut.append("gx_FragColor");
             }
@@ -327,6 +373,13 @@ bool GCSLWMainLine::make(GCSLWriter::MakeParam &param,GCSLTokenReader& reader,QS
             case SLT_HLSL:
             {
                 strOut.append(QString("mul(%1,%2)").arg(str1).arg(str0));
+            }
+                break;
+            case SLT_MSL:
+            {
+                strOut.append(str1);
+                strOut.append("*");
+                strOut.append(str0);
             }
                 break;
             default:

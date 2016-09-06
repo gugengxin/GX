@@ -78,6 +78,21 @@ bool GCSLWBuffer::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLErro
         strOut.append(param.strWarp);
     }
         break;
+    case SLT_MSL:
+    {
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("struct UniformBufferVS {");
+        strOut.append(param.strWarp);
+        param.lineLevel++;
+        if(!GCSLWriter::makeVS(param,strOut,errOut)) {
+            return false;
+        }
+        param.lineLevel--;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("};");
+        strOut.append(param.strWarp);
+    }
+        break;
     default:
         return false;
     }
@@ -100,6 +115,21 @@ bool GCSLWBuffer::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLErro
         strOut.append(param.strWarp);
         param.lineLevel++;
         if(!GCSLWriter::makeFP(param,strOut,errOut)) {
+            return false;
+        }
+        param.lineLevel--;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("};");
+        strOut.append(param.strWarp);
+    }
+        break;
+    case SLT_MSL:
+    {
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("struct UniformBufferFP {");
+        strOut.append(param.strWarp);
+        param.lineLevel++;
+        if(!GCSLWriter::makeVS(param,strOut,errOut)) {
             return false;
         }
         param.lineLevel--;

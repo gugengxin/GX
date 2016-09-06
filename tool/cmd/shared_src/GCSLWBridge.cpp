@@ -83,6 +83,24 @@ bool GCSLWBridge::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLErro
         strOut.append(param.strWarp);
     }
         break;
+    case SLT_MSL:
+    {
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("struct PixelInputType {");
+        strOut.append(param.strWarp);
+        param.lineLevel++;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("float4 gx_Position [[position]];");
+        strOut.append(param.strWarp);
+        if(!GCSLWriter::makeVS(param,strOut,errOut)) {
+            return false;
+        }
+        param.lineLevel--;
+        strAppendTab(strOut,param.lineLevel);
+        strOut.append("};");
+        strOut.append(param.strWarp);
+    }
+        break;
     default:
         return false;
     }
@@ -114,6 +132,12 @@ bool GCSLWBridge::makeFP(GCSLWriter::MakeParam &param, QString &strOut, GCSLErro
         strAppendTab(strOut,param.lineLevel);
         strOut.append("};");
         strOut.append(param.strWarp);
+    }
+        break;
+    case SLT_MSL:
+    {
+        //不用输出
+        return true;
     }
         break;
     default:
@@ -221,6 +245,9 @@ bool GCSLWBridgeVar::makeVS(GCSLWriter::MakeParam &param, QString &strOut, GCSLE
         strOut.append(":");
         strOut.append(getWordSLID(m_SemanticName,param.slType));
         strOut.append(QString::number(m_SemanticIndex));
+    }
+    else if(param.slType==SLT_MSL) {
+        //不用处理
     }
     strOut.append(";");
     strOut.append(param.strWarp);
