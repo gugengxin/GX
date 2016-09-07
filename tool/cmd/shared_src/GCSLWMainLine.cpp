@@ -43,6 +43,7 @@ bool GCSLWMainLine::compile(GCSLTokenReader &reader, GCSLError *errOut)
         GCSLToken::T_Layout        , // "layout"
         GCSLToken::T_Buffer        , // "buffer"
         GCSLToken::T_Bridge        , // "bridge"
+        GCSLToken::T_Texture       , // "texture"
         GCSLToken::T_gx_Position   , // "gx_Position"
         GCSLToken::T_gx_FragColor  , // "gx_FragColor"
         GCSLToken::T_Mul           , // "mul"
@@ -103,6 +104,8 @@ bool GCSLWMainLine::make(GCSLWriter::MakeParam &param,GCSLTokenReader& reader,QS
                 strOut.append(" ");
             }
 
+            GCSLToken::Type rootType=token->getType();
+
             tokenLast=token;
             token=reader.getToken();
 
@@ -121,45 +124,16 @@ bool GCSLWMainLine::make(GCSLWriter::MakeParam &param,GCSLTokenReader& reader,QS
                 return false;
             }
 
-            tokenLast=token;
-            token=reader.getToken();
-
-            if(!token) {
+            GCSLTokenReader myReader0;
+            if(!myReader0.addTokensToComma(reader)) {
                 if(errOut) {
                     errOut->setCode(GCSLError::C_UnexceptEOF);
-                    errOut->setRC(tokenLast);
+                    errOut->setRC(reader);
                 }
                 return false;
             }
-            else if(token->getType()!=GCSLToken::T_Variable) {
-                if(errOut) {
-                    errOut->setCode(GCSLError::C_UnsupportToken);
-                    errOut->setRC(token);
-                }
-                return false;
-            }
-            GCSLToken* tTex=token;
-
-            tokenLast=token;
-            token=reader.getToken();
-
-            if(!token) {
-                if(errOut) {
-                    errOut->setCode(GCSLError::C_UnexceptEOF);
-                    errOut->setRC(tokenLast);
-                }
-                return false;
-            }
-            else if(token->getType()!=GCSLToken::T_Comma) {
-                if(errOut) {
-                    errOut->setCode(GCSLError::C_UnsupportToken);
-                    errOut->setRC(token);
-                }
-                return false;
-            }
-
-            GCSLTokenReader myReader;
-            if(!myReader.addTokensToSBR(reader)) {
+            GCSLTokenReader myReader1;
+            if(!myReader1.addTokensToSBR(reader)) {
                 if(errOut) {
                     errOut->setCode(GCSLError::C_UnexceptEOF);
                     errOut->setRC(reader);
@@ -167,32 +141,40 @@ bool GCSLWMainLine::make(GCSLWriter::MakeParam &param,GCSLTokenReader& reader,QS
                 return false;
             }
 
+            QString str0,str1;
+
+            if(!make(param,myReader0,str0,errOut)) {
+                return false;
+            }
+            if(!make(param,myReader1,str1,errOut)) {
+                return false;
+            }
+
             switch (param.slType) {
             case SLT_GLSL:
             case SLT_GLSL_ES:
             {
-                strOut.append(QString("texture2D(%1,").arg(getWordSLID(tTex,param.slType)));
+                if(rootType==GCSLToken::T_Tex1d) {
+                    strOut.append(QString("texture1D(%1,%2)").arg(str0).arg(str1));
+                }
+                else {
+                    strOut.append(QString("texture2D(%1,%2)").arg(str0).arg(str1));
+                }
             }
                 break;
             case SLT_HLSL:
             {
-                strOut.append(QString("%1.Sample(%2_s,").arg(getWordSLID(tTex,param.slType)).arg(getWordSLID(tTex,param.slType)));
+                strOut.append(QString("%1.Sample(%2_s,%2)").arg(str0).arg(str1));
             }
                 break;
             case SLT_MSL:
             {
-                strOut.append(QString("%1.sample(%2_s,").arg(getWordSLID(tTex,param.slType)).arg(getWordSLID(tTex,param.slType)));
+                strOut.append(QString("%1.sample(%2_s,%2)").arg(str0).arg(str1));
             }
                 break;
             default:
                 return false;
             }
-
-            if(!make(param,myReader,strOut,errOut)) {
-                return false;
-            }
-
-            strOut.append(")");
         }
         else if(token->getType()==GCSLToken::T_Bridge || token->getType()==GCSLToken::T_Layout) {
 
@@ -264,6 +246,36 @@ bool GCSLWMainLine::make(GCSLWriter::MakeParam &param,GCSLTokenReader& reader,QS
                     strOut.append(" ");
                 }
                 strOut.append("uniformBuf");
+            }
+                break;
+            default:
+                return false;
+            }
+        }
+        else if(token->getType()==GCSLToken::T_Texture) {
+            switch (param.slType) {
+            case SLT_GLSL:
+            case SLT_GLSL_ES:
+            case SLT_HLSL:
+            case SLT_MSL:
+            {
+                tokenLast=token;
+                token=reader.getToken();
+
+                if(!token) {
+                    if(errOut) {
+                        errOut->setCode(GCSLError::C_UnexceptEOF);
+                        errOut->setRC(tokenLast);
+                    }
+                    return false;
+                }
+                else if(token->getType()!=GCSLToken::T_Period) {
+                    if(errOut) {
+                        errOut->setCode(GCSLError::C_UnsupportToken);
+                        errOut->setRC(token);
+                    }
+                    return false;
+                }
             }
                 break;
             default:

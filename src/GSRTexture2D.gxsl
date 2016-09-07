@@ -1,0 +1,120 @@
+#if defined(GX_OPENGL) && !defined(GX_OPENGL_ES)
+const gchar* g_SrcVS=\
+"attribute vec4 position; \n\
+attribute vec2 texCoord; \n\
+uniform mat4 mvp_mat; \n\
+varying vec2 b_texCoord; \n\
+void main() \n\
+{ \n\
+	gl_Position=mvp_mat*position; \n\
+	b_texCoord=texCoord; \n\
+} \n\
+";
+const gchar* g_SrcFP=\
+"uniform vec4 color_mul; \n\
+uniform sampler2D texBase; \n\
+varying vec2 b_texCoord; \n\
+void main() \n\
+{ \n\
+	gl_FragColor=texture2D(texBase,b_texCoord)*color_mul; \n\
+} \n\
+";
+#endif
+#if defined(GX_OPENGL) && defined(GX_OPENGL_ES)
+const gchar* g_SrcVS=\
+"attribute highp vec4 position; \n\
+attribute mediump vec2 texCoord; \n\
+uniform highp mat4 mvp_mat; \n\
+varying mediump vec2 b_texCoord; \n\
+void main() \n\
+{ \n\
+	gl_Position=mvp_mat*position; \n\
+	b_texCoord=texCoord; \n\
+} \n\
+";
+const gchar* g_SrcFP=\
+"uniform lowp vec4 color_mul; \n\
+uniform lowp sampler2D texBase; \n\
+varying mediump vec2 b_texCoord; \n\
+void main() \n\
+{ \n\
+	gl_FragColor=texture2D(texBase,b_texCoord)*color_mul; \n\
+} \n\
+";
+#endif
+#if defined(GX_DIRECTX)
+const gchar* g_SrcVS=\
+"struct VertexInputType { \n\
+	float4 position:POSITION0; \n\
+	float2 texCoord:TEXCOORD0; \n\
+}; \n\
+cbuffer UniformBuffer : register(b0) { \n\
+	matrix mvp_mat; \n\
+}; \n\
+struct PixelInputType { \n\
+	float4 gx_Position:SV_POSITION; \n\
+	float2 b_texCoord:TEXCOORD0; \n\
+}; \n\
+PixelInputType main(VertexInputType layout) \n\
+{ \n\
+	PixelInputType bridge; \n\
+	bridge.gx_Position=mul(layout.position,mvp_mat); \n\
+	bridge.b_texCoord=layout.texCoord; \n\
+	return bridge; \n\
+} \n\
+";
+const gchar* g_SrcFP=\
+"cbuffer UniformBuffer : register(b0) { \n\
+	float4 color_mul; \n\
+}; \n\
+Texture2D texBase:register(t0); \n\
+SamplerState texBase_s:register(s0); \n\
+struct PixelInputType { \n\
+	float4 gx_Position:SV_POSITION; \n\
+	float2 b_texCoord:TEXCOORD0; \n\
+}; \n\
+float4 main(PixelInputType bridge):SV_TARGET \n\
+{ \n\
+	float4 gx_FragColor; \n\
+	gx_FragColor=texBase.Sample(bridge.b_texCoord_s,bridge.b_texCoord)*color_mul; \n\
+	return gx_FragColor; \n\
+} \n\
+";
+#endif
+#if defined(GX_METAL)
+const gchar* g_SrcVS=\
+"#include <metal_stdlib> \n\
+using namespace metal; \n\
+struct VertexInputType { \n\
+	float4 position [[attribute(0)]]; \n\
+	float2 texCoord [[attribute(1)]]; \n\
+}; \n\
+struct UniformBufferVS { \n\
+	float4x4 mvp_mat; \n\
+}; \n\
+struct PixelInputType { \n\
+	float4 gx_Position [[position]]; \n\
+	float2 b_texCoord; \n\
+}; \n\
+vertex PixelInputType mainVS(VertexInputType layout [[stage_in]],constant UniformBufferVS& uniformBuf[[ buffer(1) ]]) \n\
+{ \n\
+	PixelInputType bridge; \n\
+	bridge.gx_Position=layout.position*uniformBuf.mvp_mat; \n\
+	bridge.b_texCoord=layout.texCoord; \n\
+	return bridge; \n\
+} \n\
+ \n\
+struct UniformBufferFP { \n\
+	float4 color_mul; \n\
+}; \n\
+fragment half4 mainFP(PixelInputType bridge [[stage_in]],constant UniformBufferFP& uniformBuf[[ buffer(0) ]] \n\
+,texture2d<float> texBase [[texture(0)]],sampler texBase_s [[sampler(0)]]) \n\
+{ \n\
+	float4 gx_FragColor; \n\
+	gx_FragColor=texBase.sample(bridge.b_texCoord_s,bridge.b_texCoord)*uniformBuf.color_mul; \n\
+	return half4(gx_FragColor); \n\
+} \n\
+";
+const gchar* g_SrcFP=\
+"";
+#endif

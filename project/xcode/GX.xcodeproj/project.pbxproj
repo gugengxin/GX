@@ -436,6 +436,7 @@
 		CADB5DB71CF9E6300092C472 /* GVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GVector.h; sourceTree = "<group>"; };
 		CADB5DB81CF9E6300092C472 /* GXMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXMath.cpp; sourceTree = "<group>"; };
 		CADB5DB91CF9E6300092C472 /* GXMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXMath.h; sourceTree = "<group>"; };
+		CAE301541D7FB8BE00DBD69F /* GSRTexture2D.gxsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = GSRTexture2D.gxsl; sourceTree = "<group>"; };
 		CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GArray.cpp; sourceTree = "<group>"; };
 		CAE706CE1CD2F6EA0090F4DD /* GArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GArray.h; sourceTree = "<group>"; };
 		CAE706D71CD2FA850090F4DD /* GMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GMap.cpp; sourceTree = "<group>"; };
@@ -767,6 +768,7 @@
 				CA3090921CFD1C46000B8DF2 /* GSRGraphics.gxsl */,
 				CAD4C7821D577E9300F01C06 /* GSRTexture2D.h */,
 				CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */,
+				CAE301541D7FB8BE00DBD69F /* GSRTexture2D.gxsl */,
 			);
 			name = shader;
 			sourceTree = "<group>";

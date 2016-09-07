@@ -59,7 +59,7 @@ fp {
         lowp tex2d[1] texMask;
     }
     main {
-        gx_FragColor=tex2d(tex,bridge.v_texCoord);
+        gx_FragColor=tex2d(texture.tex,bridge.v_texCoord);
         #if MASK
         gx_FragColor+=tex2d(texMask,bridge.v_texCoord_mask);
         #end
