@@ -53,6 +53,32 @@ public:
             return m_Name != NULL;
 #endif
 		}
+        
+#if defined(GX_OPENGL)
+        inline GLuint getName() {
+            return m_Name;
+        }
+#elif defined(GX_DIRECTX)
+        inline ID3D10ShaderResourceView* getName() {
+            return m_Name;
+        }
+#elif defined(GX_METAL)
+        inline void* getName() {
+            return m_Name;
+        }
+#endif
+        
+#if defined(GX_OPENGL)
+#elif defined(GX_DIRECTX)
+        inline ID3D10SamplerState* getSamplerState() {
+            return m_SamplerState;
+        }
+#elif defined(GX_METAL)
+        inline void* getSamplerState() {
+            return m_SamplerState;
+        }
+#endif
+        
 	private:
 #if defined(GX_OPENGL)
 		GLuint  m_Name;
@@ -89,6 +115,7 @@ public:
     inline Node* getNode() {
         return m_Node;
     }
+    
 protected:
     inline void setNode(Node* v) {
         m_Node=v;

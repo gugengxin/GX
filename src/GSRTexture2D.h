@@ -15,6 +15,7 @@
 #include "GMShader.h"
 #include "GBuffer.h"
 #include "GPainter.h"
+#include "GTexture2D.h"
 
 
 class GSRTexture2D : public GShaderBase {
@@ -30,9 +31,27 @@ public:
         IT_Float_UShort,
         IT_Float_Float,
     } InputType;
+    
+    inline bool isAlphaOnly() {
+        return getIndex0()!=0;
+    }
+    
+    inline bool isColorMul() {
+        return getIndex1()!=0;
+    }
+    
+    inline MaskMode getMaskMode() {
+        return (MaskMode)getIndex2();
+    }
+    
+    void draw(GPainter& painter,
+              GIBuffer* buffer,InputType inputType,
+              GTexture2D* texBase,
+              gint mode,gint first,gint count,
+              GTexture2D* texMask);
 
 private:
-    GSRTexture2D(GContext* ctx,MaskMode mm);
+    GSRTexture2D(GContext* ctx,bool alphaOnly,bool colorMul,MaskMode mm);
     virtual ~GSRTexture2D();
 
 #if defined(GX_OPENGL)
@@ -42,8 +61,8 @@ private:
     virtual bool createInputLayout(ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength);
     virtual bool createConstantBuffer(ID3D10Device* device);
 #elif defined(GX_METAL)
-    virtual void deployPLState(gint inputType,void* plState);
-    virtual void createUniformBuffer();
+    virtual void deployPLState(gint inputType,void* plStateDescriptor);
+    virtual void createUniformBuffer(void* device);
 #endif
 
     GX_SHADER_INPUT(4, 1, 2, 2, 2);

@@ -14,6 +14,7 @@
 #include "GSRTexture2D.h"
 #include "GTexture2D.h"
 #include "GReader.h"
+#include "GSRTexture2D.h"
 
 #include "GXGObject.h"
 
@@ -33,7 +34,7 @@ private:
 		SRID_GraphicsEnd = SRID_Graphics + GSRGraphics::IDCount - 1,
 
         SRID_Texture2D,
-        SRID_Texture2DEnd= SRID_Texture2D+ GSRTexture2D::MMCount - 1,
+        SRID_Texture2DEnd= SRID_Texture2D+ GSRTexture2D::MMCount*2*2 - 1,
 
 		SRIDCount,
 	};
@@ -51,6 +52,7 @@ private:
 #endif
 public:
 	GSRGraphics* getSRGraphics(GSRGraphics::ID srID);
+    GSRTexture2D* getSRTexture2D(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm);
 public:
 	GPainter& getPainter() {
 		return m_Painter;

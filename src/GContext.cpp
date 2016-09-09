@@ -103,6 +103,17 @@ GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)
 	return (GSRGraphics*)m_Shaders[SRID_Graphics + srID];
 }
 
+GSRTexture2D* GContext::getSRTexture2D(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm)
+{
+    gint idx=(alphaOnly*2+colorMul)*GSRTexture2D::MMCount+mm;
+    if (!m_Shaders[SRID_Texture2D+idx]) {
+        readyShader();
+        
+        doneShader();
+    }
+    return (GSRTexture2D*)m_Shaders[SRID_Texture2D + idx];
+}
+
 
 GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param)
 {

@@ -2,21 +2,59 @@
 const gchar* g_SrcVS=\
 "attribute vec4 position; \n\
 attribute vec2 texCoord; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+attribute vec2 texCoordMask; \n\
+#endif \n\
 uniform mat4 mvp_mat; \n\
 varying vec2 b_texCoord; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+varying vec2 b_texCoordMask; \n\
+#endif \n\
 void main() \n\
 { \n\
 	gl_Position=mvp_mat*position; \n\
 	b_texCoord=texCoord; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+	b_texCoordMask=texCoordMask; \n\
+#endif \n\
 } \n\
 ";
 const gchar* g_SrcFP=\
-"uniform vec4 color_mul; \n\
+"#if defined(MI_COLORMUL) \n\
+uniform vec4 color_mul; \n\
+#endif \n\
 uniform sampler2D texBase; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+uniform sampler2D texMask; \n\
+#endif \n\
 varying vec2 b_texCoord; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+varying vec2 b_texCoordMask; \n\
+#endif \n\
 void main() \n\
 { \n\
-	gl_FragColor=texture2D(texBase,b_texCoord)*color_mul; \n\
+#if defined(MI_ALPHA) \n\
+#if defined(MI_COLORMUL) \n\
+	float4 fragColor=float4(colorMul.rgb,texture2D(texBase,b_texCoord).a*colorMul.a); \n\
+#else \n\
+	float texA=texture2D(texBase,b_texCoord).a; \n\
+	float4 fragColor=float4(texA,texA,texA,1.0); \n\
+#endif \n\
+#else \n\
+#if defined(MI_COLORMUL) \n\
+	float4 fragColor=texture2D(texBase,b_texCoord)*colorMul; \n\
+#else \n\
+	float4 fragColor=texture2D(texBase,b_texCoord); \n\
+#endif \n\
+#endif \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#endif \n\
+	gl_FragColor=fragColor; \n\
 } \n\
 ";
 #endif
@@ -24,21 +62,59 @@ void main() \n\
 const gchar* g_SrcVS=\
 "attribute highp vec4 position; \n\
 attribute mediump vec2 texCoord; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+attribute mediump vec2 texCoordMask; \n\
+#endif \n\
 uniform highp mat4 mvp_mat; \n\
 varying mediump vec2 b_texCoord; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+varying mediump vec2 b_texCoordMask; \n\
+#endif \n\
 void main() \n\
 { \n\
 	gl_Position=mvp_mat*position; \n\
 	b_texCoord=texCoord; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+	b_texCoordMask=texCoordMask; \n\
+#endif \n\
 } \n\
 ";
 const gchar* g_SrcFP=\
-"uniform lowp vec4 color_mul; \n\
+"#if defined(MI_COLORMUL) \n\
+uniform lowp vec4 color_mul; \n\
+#endif \n\
 uniform lowp sampler2D texBase; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+uniform lowp sampler2D texMask; \n\
+#endif \n\
 varying mediump vec2 b_texCoord; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+varying mediump vec2 b_texCoordMask; \n\
+#endif \n\
 void main() \n\
 { \n\
-	gl_FragColor=texture2D(texBase,b_texCoord)*color_mul; \n\
+#if defined(MI_ALPHA) \n\
+#if defined(MI_COLORMUL) \n\
+	float4 fragColor=float4(colorMul.rgb,texture2D(texBase,b_texCoord).a*colorMul.a); \n\
+#else \n\
+	float texA=texture2D(texBase,b_texCoord).a; \n\
+	float4 fragColor=float4(texA,texA,texA,1.0); \n\
+#endif \n\
+#else \n\
+#if defined(MI_COLORMUL) \n\
+	float4 fragColor=texture2D(texBase,b_texCoord)*colorMul; \n\
+#else \n\
+	float4 fragColor=texture2D(texBase,b_texCoord); \n\
+#endif \n\
+#endif \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#endif \n\
+	gl_FragColor=fragColor; \n\
 } \n\
 ";
 #endif
@@ -47,6 +123,10 @@ const gchar* g_SrcVS=\
 "struct VertexInputType { \n\
 	float4 position:POSITION0; \n\
 	float2 texCoord:TEXCOORD0; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+	float2 texCoordMask:TEXCOORD1; \n\
+#endif \n\
 }; \n\
 cbuffer UniformBuffer : register(b0) { \n\
 	matrix mvp_mat; \n\
@@ -54,29 +134,64 @@ cbuffer UniformBuffer : register(b0) { \n\
 struct PixelInputType { \n\
 	float4 gx_Position:SV_POSITION; \n\
 	float2 b_texCoord:TEXCOORD0; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+	float2 b_texCoordMask:TEXCOORD1; \n\
+#endif \n\
 }; \n\
 PixelInputType main(VertexInputType layout) \n\
 { \n\
 	PixelInputType bridge; \n\
 	bridge.gx_Position=mul(layout.position,mvp_mat); \n\
 	bridge.b_texCoord=layout.texCoord; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+	bridge.b_texCoordMask=layout.texCoordMask; \n\
+#endif \n\
 	return bridge; \n\
 } \n\
 ";
 const gchar* g_SrcFP=\
 "cbuffer UniformBuffer : register(b0) { \n\
+#if defined(MI_COLORMUL) \n\
 	float4 color_mul; \n\
+#endif \n\
 }; \n\
 Texture2D texBase:register(t0); \n\
 SamplerState texBase_s:register(s0); \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+Texture2D texMask:register(t1); \n\
+SamplerState texMask_s:register(s1); \n\
+#endif \n\
 struct PixelInputType { \n\
 	float4 gx_Position:SV_POSITION; \n\
 	float2 b_texCoord:TEXCOORD0; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+	float2 b_texCoordMask:TEXCOORD1; \n\
+#endif \n\
 }; \n\
 float4 main(PixelInputType bridge):SV_TARGET \n\
 { \n\
 	float4 gx_FragColor; \n\
-	gx_FragColor=texBase.Sample(bridge.b_texCoord_s,bridge.b_texCoord)*color_mul; \n\
+#if defined(MI_ALPHA) \n\
+#if defined(MI_COLORMUL) \n\
+	float4 fragColor=float4(colorMul.rgb,texBase.Sample(bridge.b_texCoord_s,bridge.b_texCoord).a*colorMul.a); \n\
+#else \n\
+	float texA=texBase.Sample(bridge.b_texCoord_s,bridge.b_texCoord).a; \n\
+	float4 fragColor=float4(texA,texA,texA,1.0); \n\
+#endif \n\
+#else \n\
+#if defined(MI_COLORMUL) \n\
+	float4 fragColor=texBase.Sample(bridge.b_texCoord_s,bridge.b_texCoord)*colorMul; \n\
+#else \n\
+	float4 fragColor=texBase.Sample(bridge.b_texCoord_s,bridge.b_texCoord); \n\
+#endif \n\
+#endif \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#endif \n\
+	gx_FragColor=fragColor; \n\
 	return gx_FragColor; \n\
 } \n\
 ";
@@ -88,6 +203,10 @@ using namespace metal; \n\
 struct VertexInputType { \n\
 	float4 position [[attribute(0)]]; \n\
 	float2 texCoord [[attribute(1)]]; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+	float2 texCoordMask [[attribute(2)]]; \n\
+#endif \n\
 }; \n\
 struct UniformBufferVS { \n\
 	float4x4 mvp_mat; \n\
@@ -95,23 +214,50 @@ struct UniformBufferVS { \n\
 struct PixelInputType { \n\
 	float4 gx_Position [[position]]; \n\
 	float2 b_texCoord; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+	float2 b_texCoordMask; \n\
+#endif \n\
 }; \n\
 vertex PixelInputType mainVS(VertexInputType layout [[stage_in]],constant UniformBufferVS& uniformBuf[[ buffer(1) ]]) \n\
 { \n\
 	PixelInputType bridge; \n\
 	bridge.gx_Position=layout.position*uniformBuf.mvp_mat; \n\
 	bridge.b_texCoord=layout.texCoord; \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#else \n\
+	bridge.b_texCoordMask=layout.texCoordMask; \n\
+#endif \n\
 	return bridge; \n\
 } \n\
  \n\
 struct UniformBufferFP { \n\
+#if defined(MI_COLORMUL) \n\
 	float4 color_mul; \n\
+#endif \n\
 }; \n\
 fragment half4 mainFP(PixelInputType bridge [[stage_in]],constant UniformBufferFP& uniformBuf[[ buffer(0) ]] \n\
-,texture2d<float> texBase [[texture(0)]],sampler texBase_s [[sampler(0)]]) \n\
+,texture2d<float> texBase [[texture(0)]],sampler texBase_s [[sampler(0)]] \n\
+,texture2d<float> texMask [[texture(1)]],sampler texMask_s [[sampler(1)]]) \n\
 { \n\
 	float4 gx_FragColor; \n\
-	gx_FragColor=texBase.sample(bridge.b_texCoord_s,bridge.b_texCoord)*uniformBuf.color_mul; \n\
+#if defined(MI_ALPHA) \n\
+#if defined(MI_COLORMUL) \n\
+	float4 fragColor=float4(uniformBuf.colorMul.rgb,texBase.sample(bridge.b_texCoord_s,bridge.b_texCoord).a*uniformBuf.colorMul.a); \n\
+#else \n\
+	float texA=texBase.sample(bridge.b_texCoord_s,bridge.b_texCoord).a; \n\
+	float4 fragColor=float4(texA,texA,texA,1.0); \n\
+#endif \n\
+#else \n\
+#if defined(MI_COLORMUL) \n\
+	float4 fragColor=texBase.sample(bridge.b_texCoord_s,bridge.b_texCoord)*uniformBuf.colorMul; \n\
+#else \n\
+	float4 fragColor=texBase.sample(bridge.b_texCoord_s,bridge.b_texCoord); \n\
+#endif \n\
+#endif \n\
+#if defined(MI_MASKMODE_NONE) \n\
+#endif \n\
+	gx_FragColor=fragColor; \n\
 	return half4(gx_FragColor); \n\
 } \n\
 ";

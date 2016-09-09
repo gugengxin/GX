@@ -103,6 +103,14 @@ void* GMShader::currentRenderEncoder()
     return getContext()->m_RenderEncoder;
 }
 
+void GMShader::setFragmentTexture(void* rce,GTexture* tex,guint idx)
+{
+    GTexture::Handle& handle=tex->getNode()->getData();
+    [GX_CAST_R(id<MTLRenderCommandEncoder>, rce) setFragmentTexture:GX_CAST_R(id<MTLTexture>,handle.getName())
+                                                            atIndex:idx];
+    [GX_CAST_R(id<MTLRenderCommandEncoder>, rce) setFragmentSamplerState:GX_CAST_R(id<MTLSamplerState>,handle.getSamplerState())
+                                                                 atIndex:idx];
+}
 
 
 #endif

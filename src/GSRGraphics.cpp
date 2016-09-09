@@ -324,11 +324,12 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
     
     [rce drawPrimitives:(MTLPrimitiveType)mode vertexStart:(NSUInteger)first vertexCount:(NSUInteger)count];
     
+    /*
     [rce setVertexBuffer:nil offset:0 atIndex:0];
     [rce setVertexBuffer:nil offset:0 atIndex:1];
     if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
         [rce setFragmentBuffer:nil offset:0 atIndex:0];
     }
-    
+    //*/
 #endif
 }

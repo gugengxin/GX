@@ -14,6 +14,8 @@
 #include "GXMetal.h"
 #include "GShader.h"
 
+class GTexture;
+
 class GMShader : public GShader {
 
 protected:
@@ -25,6 +27,7 @@ public:
 protected:
     bool setUniformBuffer(gint idx,void* device,guint bufLen);
     void* currentRenderEncoder();
+    void setFragmentTexture(void* rce,GTexture* tex,guint idx);
 private:
     virtual gint getPLStateCount() = 0;
     virtual void** getPLStates() = 0;
