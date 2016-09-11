@@ -20,7 +20,10 @@ win32 {
     }
 }
 else:macx {
+    LIBS += -framework CoreFoundation
     LIBS += -L$$GX_ROOT/external/zlib/lib/mac/ -lzlib
+    LIBS += -L$$GX_ROOT/external/libpng/lib/mac/ -llibpng
+    LIBS += -L$$GX_ROOT/external/libjpeg/lib/mac/ -llibjpeg
 }
 #dlls
 win32{

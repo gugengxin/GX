@@ -104,7 +104,7 @@ bool GRBReader::skip(guint len)
             if (!m_Data.changeBytes(m_Cursor+len)) {
                 return false;
             }
-            if (m_Reader->read(m_Data.getPtr(m_Cursor), len)!=len) {
+            if (m_Reader->read(m_Data.getPtr(m_Cursor), len)!=(gint)len) {
                 return false;
             }
             m_Cursor+=len;

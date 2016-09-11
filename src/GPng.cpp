@@ -20,7 +20,7 @@ static void _reader_png_read_data(png_structp pPng, png_bytep data, png_size_t l
 
 	gint check = static_cast<GReader*>(pPng->io_ptr)->read(data, length);
 
-	if (check != length)
+    if ((png_size_t)check != length)
 		png_error(pPng, "Read Error");
 }
 

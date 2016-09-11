@@ -622,7 +622,9 @@ void GWindow::render()
 	graph->draw(painter, data, GSRGraphics::IT_Float, GX_TRIANGLES, 0, 3);
     //*/
 
-    GSRTexture2D* shader=m_Context.getSRTexture2D(false, false, GSRTexture2D::MM_None);
+    GSRTexture2D* shader=m_Context.getSRTexture2D(false, true, GSRTexture2D::MM_None);
+    painter.setColorMul(0, 1, 0, 1.0f);
+
     static GDataBuffer* data = NULL;
     static GTexture2D* tex=NULL;
     if (!data) {

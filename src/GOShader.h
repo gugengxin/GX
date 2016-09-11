@@ -24,6 +24,9 @@ protected:
     inline void useProgram() {
         GX_glUseProgram(m_Program);
     }
+    inline void unuseProgram() {
+        GX_glUseProgram(0);
+    }
 	inline void setUniform1f(int index, GLfloat x) {
         GX_glUniform1f(getUs()[index], x);
 	}

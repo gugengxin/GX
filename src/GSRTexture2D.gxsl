@@ -40,16 +40,16 @@ void main() \n\
 { \n\
 #if defined(MI_ALPHA) \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=float4(colorMul.rgb,texture2D(texBase,b_texCoord).a*colorMul.a); \n\
+	 vec4 fragColor= vec4(color_mul.rgb,texture2D(texBase,b_texCoord).a*color_mul.a); \n\
 #else \n\
-	float texA=texture2D(texBase,b_texCoord).a; \n\
-	float4 fragColor=float4(texA,texA,texA,1.0); \n\
+	 float texA=texture2D(texBase,b_texCoord).a; \n\
+	 vec4 fragColor= vec4(texA,texA,texA,1.0); \n\
 #endif \n\
 #else \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=texture2D(texBase,b_texCoord)*colorMul; \n\
+	 vec4 fragColor=texture2D(texBase,b_texCoord)*color_mul; \n\
 #else \n\
-	float4 fragColor=texture2D(texBase,b_texCoord); \n\
+	 vec4 fragColor=texture2D(texBase,b_texCoord); \n\
 #endif \n\
 #endif \n\
 #if defined(MI_MASKMODE_NONE) \n\
@@ -100,16 +100,16 @@ void main() \n\
 { \n\
 #if defined(MI_ALPHA) \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=float4(colorMul.rgb,texture2D(texBase,b_texCoord).a*colorMul.a); \n\
+	lowp vec4 fragColor=lowp vec4(color_mul.rgb,texture2D(texBase,b_texCoord).a*color_mul.a); \n\
 #else \n\
-	float texA=texture2D(texBase,b_texCoord).a; \n\
-	float4 fragColor=float4(texA,texA,texA,1.0); \n\
+	lowp float texA=texture2D(texBase,b_texCoord).a; \n\
+	lowp vec4 fragColor=lowp vec4(texA,texA,texA,1.0); \n\
 #endif \n\
 #else \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=texture2D(texBase,b_texCoord)*colorMul; \n\
+	lowp vec4 fragColor=texture2D(texBase,b_texCoord)*color_mul; \n\
 #else \n\
-	float4 fragColor=texture2D(texBase,b_texCoord); \n\
+	lowp vec4 fragColor=texture2D(texBase,b_texCoord); \n\
 #endif \n\
 #endif \n\
 #if defined(MI_MASKMODE_NONE) \n\
@@ -177,16 +177,16 @@ float4 main(PixelInputType bridge):SV_TARGET \n\
 	float4 gx_FragColor; \n\
 #if defined(MI_ALPHA) \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=float4(colorMul.rgb,texBase.Sample(texBase_s,bridge.b_texCoord).a*colorMul.a); \n\
+	 float4 fragColor= float4(color_mul.rgb,texBase.Sample(texBase_s,bridge.b_texCoord).a*color_mul.a); \n\
 #else \n\
-	float texA=texBase.Sample(texBase_s,bridge.b_texCoord).a; \n\
-	float4 fragColor=float4(texA,texA,texA,1.0); \n\
+	 float texA=texBase.Sample(texBase_s,bridge.b_texCoord).a; \n\
+	 float4 fragColor= float4(texA,texA,texA,1.0); \n\
 #endif \n\
 #else \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=texBase.Sample(texBase_s,bridge.b_texCoord)*colorMul; \n\
+	 float4 fragColor=texBase.Sample(texBase_s,bridge.b_texCoord)*color_mul; \n\
 #else \n\
-	float4 fragColor=texBase.Sample(texBase_s,bridge.b_texCoord); \n\
+	 float4 fragColor=texBase.Sample(texBase_s,bridge.b_texCoord); \n\
 #endif \n\
 #endif \n\
 #if defined(MI_MASKMODE_NONE) \n\
@@ -243,16 +243,16 @@ fragment half4 mainFP(PixelInputType bridge [[stage_in]],constant UniformBufferF
 	float4 gx_FragColor; \n\
 #if defined(MI_ALPHA) \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=float4(uniformBuf.colorMul.rgb,texBase.sample(texBase_s,bridge.b_texCoord).a*uniformBuf.colorMul.a); \n\
+	 float4 fragColor= float4(uniformBuf.color_mul.rgb,texBase.sample(texBase_s,bridge.b_texCoord).a*uniformBuf.color_mul.a); \n\
 #else \n\
-	float texA=texBase.sample(texBase_s,bridge.b_texCoord).a; \n\
-	float4 fragColor=float4(texA,texA,texA,1.0); \n\
+	 float texA=texBase.sample(texBase_s,bridge.b_texCoord).a; \n\
+	 float4 fragColor= float4(texA,texA,texA,1.0); \n\
 #endif \n\
 #else \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=texBase.sample(texBase_s,bridge.b_texCoord)*uniformBuf.colorMul; \n\
+	 float4 fragColor=texBase.sample(texBase_s,bridge.b_texCoord)*uniformBuf.color_mul; \n\
 #else \n\
-	float4 fragColor=texBase.sample(texBase_s,bridge.b_texCoord); \n\
+	 float4 fragColor=texBase.sample(texBase_s,bridge.b_texCoord); \n\
 #endif \n\
 #endif \n\
 #if defined(MI_MASKMODE_NONE) \n\

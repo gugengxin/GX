@@ -33,7 +33,7 @@ static GDib::FileType _CheckFileType(GReader* reader,GDib::FileType suggestFT)
         return suggestFT;
     }
     
-    for (gint i=0; i<sizeof(g_CheckFuns)/sizeof(g_CheckFuns[0]); i++) {
+    for (gint i=0; i<(gint)(sizeof(g_CheckFuns)/sizeof(g_CheckFuns[0])); i++) {
         if (i!=suggestFT) {
             bTF=g_CheckFuns[i](reader);
             reader->rollback(reader->getBytes()-bytesStart);

@@ -266,6 +266,8 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
     GX_glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
     
     g_InputEFuns[inputType](getIndex0());
+
+    unuseProgram();
     
 #elif defined(GX_DIRECTX)
 

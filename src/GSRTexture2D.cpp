@@ -57,16 +57,16 @@ fp {
 	main {
 #if MI_ALPHA
 #if MI_COLORMUL
-        float4 fragColor=float4(buffer.colorMul.rgb,tex2d(texture.texBase,bridge.b_texCoord).a*buffer.colorMul.a);
+        lowp vec4 fragColor=lowp vec4(buffer.color_mul.rgb,tex2d(texture.texBase,bridge.b_texCoord).a*buffer.color_mul.a);
 #else
-        float  texA=tex2d(texture.texBase,bridge.b_texCoord).a;
-        float4 fragColor=float4(texA,texA,texA,1.0);
+        lowp float texA=tex2d(texture.texBase,bridge.b_texCoord).a;
+        lowp vec4 fragColor=lowp vec4(texA,texA,texA,1.0);
 #end
 #else
 #if MI_COLORMUL
-        float4 fragColor=tex2d(texture.texBase,bridge.b_texCoord)*buffer.colorMul;
+        lowp vec4 fragColor=tex2d(texture.texBase,bridge.b_texCoord)*buffer.color_mul;
 #else
-        float4 fragColor=tex2d(texture.texBase,bridge.b_texCoord);
+        lowp vec4 fragColor=tex2d(texture.texBase,bridge.b_texCoord);
 #end
 #end
  
@@ -113,12 +113,118 @@ GSRTexture2D::~GSRTexture2D()
 
 
 #if defined(GX_OPENGL)
+
+enum {
+    A_position,
+    A_texCoord,
+    A_texCoordMask,
+};
+
+enum GXShaderU {
+    U_mvp_mat,
+    U_color_mul,
+    U_texBase,
+    U_texMask,
+
+    UCount,
+};
+
 void GSRTexture2D::bindAttribLocations()
 {
+    setAttribLocation(A_position, "position");
+    setAttribLocation(A_texCoord, "texCoord");
+    if (getMaskMode()!=GSRTexture2D::MM_None) {
+        setAttribLocation(A_texCoordMask, "texCoordMask");
+    }
 }
+
 void GSRTexture2D::bindUniformLocations()
 {
+    setUniformLocation(U_mvp_mat, "mvp_mat");
+    if (isColorMul()) {
+        setUniformLocation(U_color_mul, "color_mul");
+    }
+    setUniformLocation(U_texBase, "texBase");
+    if (getMaskMode()!=GSRTexture2D::MM_None) {
+        setUniformLocation(U_texMask, "texMask");
+    }
 }
+
+
+typedef void(*InputBeginFunction)(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm, GIBuffer* buffer);
+typedef void(*InputEndFunction)(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm);
+
+static void _InputBFunFloat_UShort(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm, GIBuffer* buffer)
+{
+    GX_UNUSED(alphaOnly);
+    GX_UNUSED(colorMul);
+
+    buffer->readyUse();
+
+    GX_glEnableVertexAttribArray(A_position);
+    GX_glVertexAttribPointer(A_position, 3, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(0));
+    GX_glEnableVertexAttribArray(A_texCoord);
+    GX_glVertexAttribPointer(A_texCoord, 2, GL_UNSIGNED_SHORT, GL_TRUE, (GLsizei)buffer->getStride(), buffer->getData(3*sizeof(float)));
+
+    if (mm!=GSRTexture2D::MM_None) {
+        GX_glEnableVertexAttribArray(A_texCoordMask);
+        GX_glVertexAttribPointer(A_texCoordMask, 2, GL_UNSIGNED_SHORT, GL_TRUE, (GLsizei)buffer->getStride(), buffer->getData(3*sizeof(float)+2*sizeof(unsigned short)));
+    }
+
+    buffer->doneUse();
+}
+static void _InputEFunFloat_UShort(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm)
+{
+    GX_UNUSED(alphaOnly);
+    GX_UNUSED(colorMul);
+
+    GX_glDisableVertexAttribArray(A_position);
+    GX_glDisableVertexAttribArray(A_texCoord);
+    if (mm!=GSRTexture2D::MM_None) {
+        GX_glDisableVertexAttribArray(A_texCoordMask);
+    }
+}
+
+static void _InputBFunFloat_Float(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm, GIBuffer* buffer)
+{
+    GX_UNUSED(alphaOnly);
+    GX_UNUSED(colorMul);
+
+    buffer->readyUse();
+
+    GX_glEnableVertexAttribArray(A_position);
+    GX_glVertexAttribPointer(A_position, 3, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(0));
+    GX_glEnableVertexAttribArray(A_texCoord);
+    GX_glVertexAttribPointer(A_texCoord, 2, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(3*sizeof(float)));
+
+    if (mm!=GSRTexture2D::MM_None) {
+        GX_glEnableVertexAttribArray(A_texCoordMask);
+        GX_glVertexAttribPointer(A_texCoordMask, 2, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(3*sizeof(float)+2*sizeof(float)));
+    }
+
+    buffer->doneUse();
+}
+static void _InputEFunFloat_Float(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm)
+{
+    GX_UNUSED(alphaOnly);
+    GX_UNUSED(colorMul);
+
+    GX_glDisableVertexAttribArray(A_position);
+    GX_glDisableVertexAttribArray(A_texCoord);
+    if (mm!=GSRTexture2D::MM_None) {
+        GX_glDisableVertexAttribArray(A_texCoordMask);
+    }
+}
+
+static InputBeginFunction g_InputBFuns[] = {
+    _InputBFunFloat_UShort,
+    _InputBFunFloat_Float,
+};
+static InputEndFunction g_InputEFuns[] = {
+    _InputEFunFloat_UShort,
+    _InputEFunFloat_Float,
+};
+
 #elif defined(GX_DIRECTX)
 bool GSRTexture2D::createInputLayout(ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength)
 {
@@ -230,6 +336,40 @@ void GSRTexture2D::draw(GPainter& painter,
                         GTexture2D* texMask)
 {
 #if defined(GX_OPENGL)
+
+    useProgram();
+
+    g_InputBFuns[inputType](isAlphaOnly(),isColorMul(),getMaskMode(), buffer);
+
+    setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)painter.updateMVPMatrix());
+    if (isColorMul()) {
+        setUniform4fv(U_color_mul, 1, (const GLfloat*)painter.updateColorMul());
+    }
+
+    glActiveTexture ( GL_TEXTURE0 );
+    glBindTexture ( GL_TEXTURE_2D, texBase->getNode()->getData().getName() );
+    setUniform1i ( U_texBase , 0 );
+
+    if (getMaskMode()!=MM_None) {
+        glActiveTexture ( GL_TEXTURE1 );
+        glBindTexture ( GL_TEXTURE_2D, texMask->getNode()->getData().getName() );
+        setUniform1i ( U_texMask , 1 );
+    }
+
+
+    GX_glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
+
+    if (getMaskMode()!=MM_None) {
+        glActiveTexture ( GL_TEXTURE1 );
+        glBindTexture ( GL_TEXTURE_2D, 0 );
+    }
+
+    glActiveTexture ( GL_TEXTURE0 );
+    glBindTexture ( GL_TEXTURE_2D, 0 );
+
+    g_InputEFuns[inputType](isAlphaOnly(),isColorMul(),getMaskMode());
+
+    unuseProgram();
     
 #elif defined(GX_DIRECTX)
     

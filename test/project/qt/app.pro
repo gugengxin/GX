@@ -32,3 +32,8 @@ FORMS    += MainWindow.ui
 
 INCLUDEPATH += $$PWD/../../src
 DEPENDPATH += $$PWD/../../src
+
+APP_RES_FILES.files = $$PWD/../../assets/lena_rgb.jpg
+APP_RES_FILES.path = Contents/Resources
+
+QMAKE_BUNDLE_DATA += APP_RES_FILES

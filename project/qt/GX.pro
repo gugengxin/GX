@@ -39,6 +39,8 @@ SOURCES += \
 	../../src/GDataReader.cpp\
 	../../src/GDataString.cpp\
 	../../src/GDataWriter.cpp\
+	../../src/GDib.cpp\
+	../../src/GError.cpp\
 	../../src/GFileBundle.cpp\
 	../../src/GFileManager.cpp\
 	../../src/GFileReader.cpp\
@@ -47,8 +49,11 @@ SOURCES += \
 	#../../src/GJavaCAPI.cpp\
 	#../../src/GJavaClass.cpp\
 	#../../src/GJavaJAPI.cpp\
+	../../src/GJpeg.cpp\
 	../../src/GList.cpp\
 	../../src/GLog.cpp\
+	#../../src/GMShader.cpp\
+	#../../src/GMTLContext.cpp\
 	../../src/GMap.cpp\
 	../../src/GMatrix.cpp\
 	../../src/GMutex.cpp\
@@ -61,11 +66,13 @@ SOURCES += \
 	../../src/GObject.cpp\
 	../../src/GPainter.cpp\
 	../../src/GPieceData.cpp\
+	../../src/GPng.cpp\
 	../../src/GPtr.cpp\
 	../../src/GRBReader.cpp\
 	../../src/GReader.cpp\
 	../../src/GRunLoop.cpp\
 	../../src/GSRGraphics.cpp\
+	../../src/GSRTexture2D.cpp\
 	../../src/GShader.cpp\
 	../../src/GString.cpp\
 	../../src/GSystem.cpp\
@@ -81,6 +88,7 @@ SOURCES += \
 	#../../src/GXCWnd.cpp\
 	#../../src/GXDirectX.cpp\
 	../../src/GXMath.cpp\
+	#../../src/GXMetal.cpp\
 	../../src/GXOpenGL.cpp\
 	../../src/GZipBundle.cpp\
 	../../src/GZipReader.cpp\
@@ -114,6 +122,8 @@ HEADERS += \
 	../../src/GDataReader.h\
 	../../src/GDataString.h\
 	../../src/GDataWriter.h\
+	../../src/GDib.h\
+	../../src/GError.h\
 	../../src/GFileBundle.h\
 	../../src/GFileManager.h\
 	../../src/GFileReader.h\
@@ -122,11 +132,14 @@ HEADERS += \
 	../../src/GJavaCAPI.h\
 	../../src/GJavaClass.h\
 	../../src/GJavaJAPI.h\
+	../../src/GJpeg.h\
 	../../src/GL/glew.h\
 	../../src/GL/glxew.h\
 	../../src/GL/wglew.h\
 	../../src/GList.h\
 	../../src/GLog.h\
+	../../src/GMShader.h\
+	../../src/GMTLContext.h\
 	../../src/GMap.h\
 	../../src/GMatrix.h\
 	../../src/GMutex.h\
@@ -139,11 +152,13 @@ HEADERS += \
 	../../src/GObject.h\
 	../../src/GPainter.h\
 	../../src/GPieceData.h\
+	../../src/GPng.h\
 	../../src/GPtr.h\
 	../../src/GRBReader.h\
 	../../src/GReader.h\
 	../../src/GRunLoop.h\
 	../../src/GSRGraphics.h\
+	../../src/GSRTexture2D.h\
 	../../src/GShader.h\
 	../../src/GString.h\
 	../../src/GSystem.h\
@@ -164,9 +179,11 @@ HEADERS += \
 	../../src/GXGObject.h\
 	../../src/GXGObjectUD.h\
 	../../src/GXMath.h\
+	../../src/GXMetal.h\
 	../../src/GXOSs.h\
 	../../src/GXObject.h\
 	../../src/GXOpenGL.h\
+	../../src/GXPixel.h\
 	../../src/GXPrefix.h\
 	../../src/GXPthread.h\
 	../../src/GXTypes.h\
@@ -189,5 +206,10 @@ win32-msvc2013 {
 }
 #zlib
 INCLUDEPATH += $$PWD/../../external/zlib/include
+#libpng
+INCLUDEPATH += $$PWD/../../external/libpng/include
+#libjpeg
+INCLUDEPATH += $$PWD/../../external/libjpeg/include
+INCLUDEPATH += $$PWD/../../external/libjpeg/include/mac
 
 
