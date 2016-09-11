@@ -108,7 +108,7 @@ GSRTexture2D* GContext::getSRTexture2D(bool alphaOnly,bool colorMul,GSRTexture2D
     gint idx=(alphaOnly*2+colorMul)*GSRTexture2D::MMCount+mm;
     if (!m_Shaders[SRID_Texture2D+idx]) {
         readyShader();
-        
+        m_Shaders[SRID_Texture2D + idx] = new GSRTexture2D(this,alphaOnly,colorMul,mm);
         doneShader();
     }
     return (GSRTexture2D*)m_Shaders[SRID_Texture2D + idx];

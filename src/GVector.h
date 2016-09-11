@@ -7,7 +7,12 @@ class GVector2
 {
 public:
 	GVector2() : x(0.0f),y(0.0f) {}
-	
+
+    inline void set(float vx, float vy) {
+        x = vx;
+        y = vy;
+    }
+
 public:
 	float x;
 	float y;

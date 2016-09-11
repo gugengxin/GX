@@ -12,6 +12,9 @@
 		CA1F60AD1CD984BB00C6307B /* AppDge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A91CD984BB00C6307B /* AppDge.cpp */; };
 		CA1F60B81CD9894600C6307B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA1F60B51CD9894600C6307B /* MainMenu.xib */; };
 		CA1F60CA1CD99A6500C6307B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA1F60C91CD99A6500C6307B /* LaunchScreen.storyboard */; };
+		CA75BAD31D830D4400236109 /* lena_rgb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA75BAD21D830D4400236109 /* lena_rgb.jpg */; };
+		CA75BAD41D830D4400236109 /* lena_rgb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA75BAD21D830D4400236109 /* lena_rgb.jpg */; };
+		CA75BAD51D830D4400236109 /* lena_rgb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA75BAD21D830D4400236109 /* lena_rgb.jpg */; };
 		CA9C16321CC5DFE200204303 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16311CC5DFE200204303 /* main.m */; };
 		CA9C16351CC5DFE200204303 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16341CC5DFE200204303 /* AppDelegate.mm */; };
 		CA9C163D1CC5DFE200204303 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA9C163C1CC5DFE200204303 /* Assets.xcassets */; };
@@ -56,6 +59,7 @@
 		CA1F60AA1CD984BB00C6307B /* AppDge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDge.h; sourceTree = "<group>"; };
 		CA1F60B51CD9894600C6307B /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		CA1F60C91CD99A6500C6307B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CA75BAD21D830D4400236109 /* lena_rgb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lena_rgb.jpg; sourceTree = "<group>"; };
 		CA9C162D1CC5DFE200204303 /* GXTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA9C16311CC5DFE200204303 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CA9C16331CC5DFE200204303 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -120,12 +124,22 @@
 			path = ../../src;
 			sourceTree = "<group>";
 		};
+		CA75BAD11D830D4400236109 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				CA75BAD21D830D4400236109 /* lena_rgb.jpg */,
+			);
+			name = assets;
+			path = ../../assets;
+			sourceTree = "<group>";
+		};
 		CA9C16241CC5DFE200204303 = {
 			isa = PBXGroup;
 			children = (
 				CA9C16BF1CC5FDCB00204303 /* Config_ios.xcconfig */,
 				CA9C16C41CC5FDE200204303 /* Config_atv.xcconfig */,
 				CA9C16C31CC5FDD600204303 /* Config_mac.xcconfig */,
+				CA75BAD11D830D4400236109 /* assets */,
 				CA1F60A81CD984BB00C6307B /* src */,
 				CA9C162F1CC5DFE200204303 /* ios */,
 				CA9C16861CC5E7D800204303 /* atv */,
@@ -363,6 +377,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA9C163D1CC5DFE200204303 /* Assets.xcassets in Resources */,
+				CA75BAD31D830D4400236109 /* lena_rgb.jpg in Resources */,
 				CA1F60CA1CD99A6500C6307B /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -372,6 +387,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA9C16941CC5E7D800204303 /* Assets.xcassets in Resources */,
+				CA75BAD41D830D4400236109 /* lena_rgb.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA9C16A61CC5E94D00204303 /* Assets.xcassets in Resources */,
+				CA75BAD51D830D4400236109 /* lena_rgb.jpg in Resources */,
 				CA1F60B81CD9894600C6307B /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

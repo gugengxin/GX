@@ -1,5 +1,5 @@
 #if defined(GX_OPENGL) && !defined(GX_OPENGL_ES)
-const gchar* g_SrcVS=\
+static const gchar* g_SrcVS=\
 "attribute vec4 position; \n\
 #if defined(MI_COLOR)||defined(MI_CANDCM) \n\
 attribute vec4 color; \n\
@@ -16,7 +16,7 @@ void main() \n\
 #endif \n\
 } \n\
 ";
-const gchar* g_SrcFP=\
+static const gchar* g_SrcFP=\
 "#if defined(MI_COLORMUL)||defined(MI_CANDCM) \n\
 uniform vec4 color_mul; \n\
 #endif \n\
@@ -36,7 +36,7 @@ void main() \n\
 ";
 #endif
 #if defined(GX_OPENGL) && defined(GX_OPENGL_ES)
-const gchar* g_SrcVS=\
+static const gchar* g_SrcVS=\
 "attribute highp vec4 position; \n\
 #if defined(MI_COLOR)||defined(MI_CANDCM) \n\
 attribute lowp vec4 color; \n\
@@ -53,7 +53,7 @@ void main() \n\
 #endif \n\
 } \n\
 ";
-const gchar* g_SrcFP=\
+static const gchar* g_SrcFP=\
 "#if defined(MI_COLORMUL)||defined(MI_CANDCM) \n\
 uniform lowp vec4 color_mul; \n\
 #endif \n\
@@ -73,7 +73,7 @@ void main() \n\
 ";
 #endif
 #if defined(GX_DIRECTX)
-const gchar* g_SrcVS=\
+static const gchar* g_SrcVS=\
 "struct VertexInputType { \n\
 	float4 position:POSITION0; \n\
 #if defined(MI_COLOR)||defined(MI_CANDCM) \n\
@@ -99,7 +99,7 @@ PixelInputType main(VertexInputType layout) \n\
 	return bridge; \n\
 } \n\
 ";
-const gchar* g_SrcFP=\
+static const gchar* g_SrcFP=\
 "cbuffer UniformBuffer : register(b0) { \n\
 #if defined(MI_COLORMUL)||defined(MI_CANDCM) \n\
 	float4 color_mul; \n\
@@ -126,7 +126,7 @@ float4 main(PixelInputType bridge):SV_TARGET \n\
 ";
 #endif
 #if defined(GX_METAL)
-const gchar* g_SrcVS=\
+static const gchar* g_SrcVS=\
 "#include <metal_stdlib> \n\
 using namespace metal; \n\
 struct VertexInputType { \n\
@@ -172,6 +172,6 @@ fragment half4 mainFP(PixelInputType bridge [[stage_in]],constant UniformBufferF
 	return half4(gx_FragColor); \n\
 } \n\
 ";
-const gchar* g_SrcFP=\
+static const gchar* g_SrcFP=\
 "";
 #endif

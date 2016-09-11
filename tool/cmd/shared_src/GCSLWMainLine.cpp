@@ -164,12 +164,12 @@ bool GCSLWMainLine::make(GCSLWriter::MakeParam &param,GCSLTokenReader& reader,QS
                 break;
             case SLT_HLSL:
             {
-                strOut.append(QString("%1.Sample(%2_s,%2)").arg(str0).arg(str1));
+                strOut.append(QString("%1.Sample(%1_s,%2)").arg(str0).arg(str1));
             }
                 break;
             case SLT_MSL:
             {
-                strOut.append(QString("%1.sample(%2_s,%2)").arg(str0).arg(str1));
+                strOut.append(QString("%1.sample(%1_s,%2)").arg(str0).arg(str1));
             }
                 break;
             default:

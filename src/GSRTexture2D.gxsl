@@ -1,5 +1,5 @@
 #if defined(GX_OPENGL) && !defined(GX_OPENGL_ES)
-const gchar* g_SrcVS=\
+static const gchar* g_SrcVS=\
 "attribute vec4 position; \n\
 attribute vec2 texCoord; \n\
 #if defined(MI_MASKMODE_NONE) \n\
@@ -22,7 +22,7 @@ void main() \n\
 #endif \n\
 } \n\
 ";
-const gchar* g_SrcFP=\
+static const gchar* g_SrcFP=\
 "#if defined(MI_COLORMUL) \n\
 uniform vec4 color_mul; \n\
 #endif \n\
@@ -59,7 +59,7 @@ void main() \n\
 ";
 #endif
 #if defined(GX_OPENGL) && defined(GX_OPENGL_ES)
-const gchar* g_SrcVS=\
+static const gchar* g_SrcVS=\
 "attribute highp vec4 position; \n\
 attribute mediump vec2 texCoord; \n\
 #if defined(MI_MASKMODE_NONE) \n\
@@ -82,7 +82,7 @@ void main() \n\
 #endif \n\
 } \n\
 ";
-const gchar* g_SrcFP=\
+static const gchar* g_SrcFP=\
 "#if defined(MI_COLORMUL) \n\
 uniform lowp vec4 color_mul; \n\
 #endif \n\
@@ -119,7 +119,7 @@ void main() \n\
 ";
 #endif
 #if defined(GX_DIRECTX)
-const gchar* g_SrcVS=\
+static const gchar* g_SrcVS=\
 "struct VertexInputType { \n\
 	float4 position:POSITION0; \n\
 	float2 texCoord:TEXCOORD0; \n\
@@ -151,7 +151,7 @@ PixelInputType main(VertexInputType layout) \n\
 	return bridge; \n\
 } \n\
 ";
-const gchar* g_SrcFP=\
+static const gchar* g_SrcFP=\
 "cbuffer UniformBuffer : register(b0) { \n\
 #if defined(MI_COLORMUL) \n\
 	float4 color_mul; \n\
@@ -177,16 +177,16 @@ float4 main(PixelInputType bridge):SV_TARGET \n\
 	float4 gx_FragColor; \n\
 #if defined(MI_ALPHA) \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=float4(colorMul.rgb,texBase.Sample(bridge.b_texCoord_s,bridge.b_texCoord).a*colorMul.a); \n\
+	float4 fragColor=float4(colorMul.rgb,texBase.Sample(texBase_s,bridge.b_texCoord).a*colorMul.a); \n\
 #else \n\
-	float texA=texBase.Sample(bridge.b_texCoord_s,bridge.b_texCoord).a; \n\
+	float texA=texBase.Sample(texBase_s,bridge.b_texCoord).a; \n\
 	float4 fragColor=float4(texA,texA,texA,1.0); \n\
 #endif \n\
 #else \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=texBase.Sample(bridge.b_texCoord_s,bridge.b_texCoord)*colorMul; \n\
+	float4 fragColor=texBase.Sample(texBase_s,bridge.b_texCoord)*colorMul; \n\
 #else \n\
-	float4 fragColor=texBase.Sample(bridge.b_texCoord_s,bridge.b_texCoord); \n\
+	float4 fragColor=texBase.Sample(texBase_s,bridge.b_texCoord); \n\
 #endif \n\
 #endif \n\
 #if defined(MI_MASKMODE_NONE) \n\
@@ -197,7 +197,7 @@ float4 main(PixelInputType bridge):SV_TARGET \n\
 ";
 #endif
 #if defined(GX_METAL)
-const gchar* g_SrcVS=\
+static const gchar* g_SrcVS=\
 "#include <metal_stdlib> \n\
 using namespace metal; \n\
 struct VertexInputType { \n\
@@ -243,16 +243,16 @@ fragment half4 mainFP(PixelInputType bridge [[stage_in]],constant UniformBufferF
 	float4 gx_FragColor; \n\
 #if defined(MI_ALPHA) \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=float4(uniformBuf.colorMul.rgb,texBase.sample(bridge.b_texCoord_s,bridge.b_texCoord).a*uniformBuf.colorMul.a); \n\
+	float4 fragColor=float4(uniformBuf.colorMul.rgb,texBase.sample(texBase_s,bridge.b_texCoord).a*uniformBuf.colorMul.a); \n\
 #else \n\
-	float texA=texBase.sample(bridge.b_texCoord_s,bridge.b_texCoord).a; \n\
+	float texA=texBase.sample(texBase_s,bridge.b_texCoord).a; \n\
 	float4 fragColor=float4(texA,texA,texA,1.0); \n\
 #endif \n\
 #else \n\
 #if defined(MI_COLORMUL) \n\
-	float4 fragColor=texBase.sample(bridge.b_texCoord_s,bridge.b_texCoord)*uniformBuf.colorMul; \n\
+	float4 fragColor=texBase.sample(texBase_s,bridge.b_texCoord)*uniformBuf.colorMul; \n\
 #else \n\
-	float4 fragColor=texBase.sample(bridge.b_texCoord_s,bridge.b_texCoord); \n\
+	float4 fragColor=texBase.sample(texBase_s,bridge.b_texCoord); \n\
 #endif \n\
 #endif \n\
 #if defined(MI_MASKMODE_NONE) \n\
@@ -261,6 +261,6 @@ fragment half4 mainFP(PixelInputType bridge [[stage_in]],constant UniformBufferF
 	return half4(gx_FragColor); \n\
 } \n\
 ";
-const gchar* g_SrcFP=\
+static const gchar* g_SrcFP=\
 "";
 #endif
