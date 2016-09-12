@@ -43,3 +43,4 @@ external/openal/include
 external/openal/lib
 project/as/gx/.externalNativeBuild/
 test/project/as/app/.externalNativeBuild/
+test/project/vs/assets/

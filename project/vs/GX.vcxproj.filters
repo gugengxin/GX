@@ -547,5 +547,8 @@
     <None Include="..\..\src\GSRGraphics.gxsl">
       <Filter>src\Window\shader</Filter>
     </None>
+    <None Include="..\..\src\GSRTexture2D.gxsl">
+      <Filter>src\Window\shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

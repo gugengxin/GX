@@ -105,6 +105,14 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
+set ASSETS_DIR=$(ProjectDir)assets
+if NOT EXIST %ASSETS_DIR% (
+	md %ASSETS_DIR%
+)
+copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -121,6 +129,14 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
+set ASSETS_DIR=$(ProjectDir)assets
+if NOT EXIST %ASSETS_DIR% (
+	md %ASSETS_DIR%
+)
+copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -141,6 +157,14 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
+set ASSETS_DIR=$(ProjectDir)assets
+if NOT EXIST %ASSETS_DIR% (
+	md %ASSETS_DIR%
+)
+copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -161,6 +185,14 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
+set ASSETS_DIR=$(ProjectDir)assets
+if NOT EXIST %ASSETS_DIR% (
+	md %ASSETS_DIR%
+)
+copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

@@ -190,6 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\GSRGraphics.gxsl" />
+    <None Include="..\..\src\GSRTexture2D.gxsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7B7EE51F-2F1C-4297-BACD-F07985A067FC}</ProjectGuid>
