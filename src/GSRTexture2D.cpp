@@ -226,12 +226,55 @@ static InputEndFunction g_InputEFuns[] = {
 };
 
 #elif defined(GX_DIRECTX)
+
+enum {
+	CB_mvp_mat,
+	CB_color_mul,
+};
+
 bool GSRTexture2D::createInputLayout(ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength)
 {
+	{
+		D3D10_INPUT_ELEMENT_DESC layouts[] = {
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 0, DXGI_FORMAT_R16G16_UNORM, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 1, DXGI_FORMAT_R16G16_UNORM, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+		};
+		setInputLayout(IT_Float_UShort, device, pShaderBytecodeWithInputSignature, BytecodeLength, layouts, sizeof(layouts) / sizeof(layouts[0])-(getMaskMode()==MM_None));
+	}
+	{
+		D3D10_INPUT_ELEMENT_DESC layouts[] = {
+			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+			{ "TEXCOORD", 1, DXGI_FORMAT_R32G32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+		};
+		setInputLayout(IT_Float_Float, device, pShaderBytecodeWithInputSignature, BytecodeLength, layouts, sizeof(layouts) / sizeof(layouts[0])-(getMaskMode()==MM_None));
+	}
+	return true;
 }
 bool GSRTexture2D::createConstantBuffer(ID3D10Device* device)
 {
-}
+	D3D10_BUFFER_DESC cbDesc;
+	cbDesc.Usage = D3D10_USAGE_DYNAMIC;
+	cbDesc.ByteWidth = sizeof(GMatrix4);
+	cbDesc.BindFlags = D3D10_BIND_CONSTANT_BUFFER;
+	cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
+	cbDesc.MiscFlags = 0;
+
+	setConstantBuffer(CB_mvp_mat, device, &cbDesc, NULL);
+
+	if (isColorMul()) {
+		cbDesc.Usage = D3D10_USAGE_DYNAMIC;
+		cbDesc.ByteWidth = sizeof(GColor4F);
+		cbDesc.BindFlags = D3D10_BIND_CONSTANT_BUFFER;
+		cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
+		cbDesc.MiscFlags = 0;
+
+		setConstantBuffer(CB_color_mul, device, &cbDesc, NULL);
+	}
+	return true;
+} 
+
 #elif defined(GX_METAL)
 
 enum {
@@ -372,6 +415,46 @@ void GSRTexture2D::draw(GPainter& painter,
     unuseProgram();
     
 #elif defined(GX_DIRECTX)
+
+	ID3D10Device* device = GX::D3DDevice();
+
+	UINT offset = (UINT)buffer->getOffset();
+	UINT stride = (UINT)buffer->getStride();
+	device->IASetVertexBuffers(0, 1, buffer->getBufferPtr(), &stride, &offset);
+	device->IASetPrimitiveTopology((D3D10_PRIMITIVE_TOPOLOGY)mode);
+	device->IASetInputLayout(m_Layouts[inputType]);
+
+	ID3D10Buffer* cbToMapped;
+	void* pMap;
+
+	cbToMapped = m_ConstBuffers[CB_mvp_mat];
+	cbToMapped->Map(D3D10_MAP_WRITE_DISCARD, 0, &pMap);
+	const float* mvp = painter.updateMVPMatrix();
+	((GMatrix4*)mvp)->transpose();
+	memcpy(pMap, mvp, GX_MATRIX_SIZE);
+	cbToMapped->Unmap();
+	device->VSSetConstantBuffers(0, 1, &cbToMapped);
+
+	if (isColorMul()) {
+		cbToMapped = m_ConstBuffers[CB_color_mul];
+		cbToMapped->Map(D3D10_MAP_WRITE_DISCARD, 0, &pMap);
+		memcpy(pMap, painter.updateColorMul(), sizeof(GColor4F));
+		cbToMapped->Unmap();
+		device->PSSetConstantBuffers(0, 1, &cbToMapped);
+	}
+
+	device->PSSetShaderResources(0, 1, texBase->getNode()->getData().getNamePtr());
+	device->PSSetSamplers(0, 1, texBase->getNode()->getData().getSamplerStatePtr());
+
+	if (getMaskMode()!=MM_None) {
+		device->PSSetShaderResources(1, 1, texMask->getNode()->getData().getNamePtr());
+		device->PSSetSamplers(1, 1, texMask->getNode()->getData().getSamplerStatePtr());
+	}
+
+	device->VSSetShader(getVertexShader());
+	device->PSSetShader(getPixelShader());
+
+	device->Draw((UINT)count, (UINT)first);
     
 #elif defined(GX_METAL)
     

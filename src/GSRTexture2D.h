@@ -65,7 +65,7 @@ private:
     virtual void createUniformBuffer(void* device);
 #endif
 
-    GX_SHADER_INPUT(4, 1, 2, 2, 2);
+    GX_SHADER_INPUT(4, 2, 2, 2, 2);
 };
 
 #endif /* GSRTexture2D_hpp */

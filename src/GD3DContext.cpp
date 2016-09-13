@@ -426,8 +426,9 @@ void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 		desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
 		desc.SampleDesc.Count = 1;
 		desc.SampleDesc.Quality = 0;
-		desc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
+		desc.CPUAccessFlags = 0;
 		desc.Usage = D3D10_USAGE_IMMUTABLE;
+		desc.MiscFlags = 0;
 
 		D3D10_SUBRESOURCE_DATA data = { 0 };
 

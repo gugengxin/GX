@@ -62,6 +62,9 @@ public:
         inline ID3D10ShaderResourceView* getName() {
             return m_Name;
         }
+		inline ID3D10ShaderResourceView** getNamePtr() {
+			return &m_Name;
+		}
 #elif defined(GX_METAL)
         inline void* getName() {
             return m_Name;
@@ -73,6 +76,9 @@ public:
         inline ID3D10SamplerState* getSamplerState() {
             return m_SamplerState;
         }
+		inline ID3D10SamplerState** getSamplerStatePtr() {
+			return &m_SamplerState;
+		}
 #elif defined(GX_METAL)
         inline void* getSamplerState() {
             return m_SamplerState;
