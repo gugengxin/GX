@@ -29,7 +29,7 @@ LOCAL_CPPFLAGS	+= -DGX_OS_ANDROID -fno-rtti
 LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
 LOCAL_EXPORT_CPPFLAGS := $(LOCAL_CPPFLAGS)
 LOCAL_WHOLE_STATIC_LIBRARIES := GXAndroid 
-LOCAL_STATIC_LIBRARIES	:= zlib
+LOCAL_STATIC_LIBRARIES	:= zlib libpng libjpeg
 #LOCAL_LDLIBS 	:=
 LOCAL_EXPORT_LDLIBS := -lEGL -lGLESv2 -llog -landroid -lOpenSLES
 #__LOCAL_SRC_FILES_START__
@@ -110,5 +110,7 @@ LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/src/glew.c
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,external/zlib/lib/ard)
+$(call import-module,external/libpng/lib/ard)
+$(call import-module,external/libjpeg/lib/ard)
 
 

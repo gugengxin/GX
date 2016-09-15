@@ -30,7 +30,9 @@ private:
     class Node {
     public:
         Node(K* key,O* obj) {
+			GO::retain(key);
             m_Key=key;
+			GO::retain(obj);
             m_Obj=obj;
             m_Next=NULL;
         }

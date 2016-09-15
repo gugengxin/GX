@@ -62,7 +62,7 @@ GDib* GDib::load(GReader* reader,FileType suggestFT)
             ft=_CheckFileType(&rb, suggestFT);
             if (ft!=Unsupport) {
                 rb.closeRollback();
-                return g_ReadFuns[ft](reader);
+                return g_ReadFuns[ft](&rb);
             }
         }
     }
