@@ -389,13 +389,13 @@ void GSRTexture2D::draw(GPainter& painter,
         setUniform4fv(U_color_mul, 1, (const GLfloat*)painter.updateColorMul());
     }
 
-    glActiveTexture ( GL_TEXTURE0 );
-    glBindTexture ( GL_TEXTURE_2D, texBase->getNode()->getData().getName() );
+    GX_glActiveTexture ( GL_TEXTURE0 );
+    GX_glBindTexture ( GL_TEXTURE_2D, texBase->getNode()->getData().getName() );
     setUniform1i ( U_texBase , 0 );
 
     if (getMaskMode()!=MM_None) {
-        glActiveTexture ( GL_TEXTURE1 );
-        glBindTexture ( GL_TEXTURE_2D, texMask->getNode()->getData().getName() );
+        GX_glActiveTexture ( GL_TEXTURE1 );
+        GX_glBindTexture ( GL_TEXTURE_2D, texMask->getNode()->getData().getName() );
         setUniform1i ( U_texMask , 1 );
     }
 
@@ -403,12 +403,12 @@ void GSRTexture2D::draw(GPainter& painter,
     GX_glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
 
     if (getMaskMode()!=MM_None) {
-        glActiveTexture ( GL_TEXTURE1 );
-        glBindTexture ( GL_TEXTURE_2D, 0 );
+        GX_glActiveTexture ( GL_TEXTURE1 );
+        GX_glBindTexture ( GL_TEXTURE_2D, 0 );
     }
 
-    glActiveTexture ( GL_TEXTURE0 );
-    glBindTexture ( GL_TEXTURE_2D, 0 );
+    GX_glActiveTexture ( GL_TEXTURE0 );
+    GX_glBindTexture ( GL_TEXTURE_2D, 0 );
 
     g_InputEFuns[inputType](isAlphaOnly(),isColorMul(),getMaskMode());
 

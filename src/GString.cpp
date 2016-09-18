@@ -859,7 +859,11 @@ void GString::appendPathComponent(const gchar* component, gint len)
 			append(component, len);
 		}
 		else {
-			append('/');
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
+            append('\\');
+#else
+            append('/');
+#endif
 			append(component, len);
 		}
 	}
@@ -883,7 +887,11 @@ void GString::appendPathComponent(const gwchar* component, gint len)
 			append(component, len);
 		}
 		else {
-			append(L'/');
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
+            append(L'\\');
+#else
+            append(L'/');
+#endif
 			append(component, len);
 		}
 	}

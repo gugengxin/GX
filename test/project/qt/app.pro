@@ -37,3 +37,10 @@ APP_RES_FILES.files = $$PWD/../../assets/lena_rgb.jpg
 APP_RES_FILES.path = Contents/Resources
 
 QMAKE_BUNDLE_DATA += APP_RES_FILES
+
+#assets
+win32{
+    WIN_ASSETS_SRC = $$PWD/../../assets
+    WIN_ASSETS_SRC ~= s,/,\\,g
+    QMAKE_POST_LINK = xcopy /i /e /y $$WIN_ASSETS_SRC assets
+}

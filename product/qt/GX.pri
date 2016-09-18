@@ -13,10 +13,14 @@ win32 {
     debug {
         LIBS += -L$$GX_ROOT/external/pthread-win32/lib/win/vc120/x64/debug/ -lpthread_dll
         LIBS += -L$$GX_ROOT/external/zlib/lib/win/vc120/x64/debug/ -lzlib
+        LIBS += -L$$GX_ROOT/external/libpng/lib/win/vc120/x64/debug/ -llibpng
+        LIBS += -L$$GX_ROOT/external/libjpeg/lib/win/vc120/x64/debug/ -llibjpeg
     }
     release {
         LIBS += -L$$GX_ROOT/external/pthread-win32/lib/win/vc120/x64/release/ -lpthread_dll
         LIBS += -L$$GX_ROOT/external/zlib/lib/win/vc120/x64/release/ -lzlib
+        LIBS += -L$$GX_ROOT/external/libpng/lib/win/vc120/x64/release/ -llibpng
+        LIBS += -L$$GX_ROOT/external/libjpeg/lib/win/vc120/x64/release/ -llibjpeg
     }
 }
 else:macx {
