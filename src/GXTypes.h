@@ -70,6 +70,9 @@ typedef double gfloat;
 #define GX_CAST_D(t,o)       GX_CAST_R(t,o)//dynamic_cast<t>(o)
 #define GX_CAST_PO(t,p,ot)   GX_CAST_R(t*, GX_CAST_R(unsigned char*,p)+ot)
 
+#define GX_OFFSET(type, structure, member)   GX_CAST_S(type, GX_CAST_R(guint, &(GX_CAST_R(structure*,0)->member)))
+#define GX_OFFSET_CLASS(type, cls, baseCls)  GX_CAST_S(type, GX_CAST_R(guint, GX_CAST_S(baseCls*, GX_CAST_R(cls*,0x10000000)))-0x10000000)
+
 #define GX_COMMA ,
 
 #define GX_IN

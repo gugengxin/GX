@@ -100,6 +100,8 @@
 		CA6387881D48DD0200232BBB /* GDib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6387821D48DCD600232BBB /* GDib.cpp */; };
 		CA6387891D48DD0200232BBB /* GJpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA63877C1D48D99700232BBB /* GJpeg.cpp */; };
 		CA63878A1D48DD0200232BBB /* GPng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA63877E1D48D99700232BBB /* GPng.cpp */; };
+		CA731B8F1D9FEF9E00007EC4 /* GSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA731B8B1D9FEF9D00007EC4 /* GSerialize.cpp */; };
+		CA731B901D9FEF9E00007EC4 /* GXSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA731B8D1D9FEF9E00007EC4 /* GXSerialize.cpp */; };
 		CA7B4DE01CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
 		CA7B4DE11CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
 		CA7B4DE21CD5906F00F3D826 /* GUUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */; };
@@ -341,6 +343,10 @@
 		CA63877F1D48D99700232BBB /* GPng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPng.h; sourceTree = "<group>"; };
 		CA6387821D48DCD600232BBB /* GDib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDib.cpp; sourceTree = "<group>"; };
 		CA6387831D48DCD600232BBB /* GDib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDib.h; sourceTree = "<group>"; };
+		CA731B8B1D9FEF9D00007EC4 /* GSerialize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GSerialize.cpp; sourceTree = "<group>"; };
+		CA731B8C1D9FEF9E00007EC4 /* GSerialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSerialize.h; sourceTree = "<group>"; };
+		CA731B8D1D9FEF9E00007EC4 /* GXSerialize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXSerialize.cpp; sourceTree = "<group>"; };
+		CA731B8E1D9FEF9E00007EC4 /* GXSerialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXSerialize.h; sourceTree = "<group>"; };
 		CA7B4DDE1CD5906F00F3D826 /* GUUID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUUID.cpp; sourceTree = "<group>"; };
 		CA7B4DDF1CD5906F00F3D826 /* GUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUUID.h; sourceTree = "<group>"; };
 		CA7B4DE61CD594FF00F3D826 /* GApplication.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GApplication.cpp; sourceTree = "<group>"; };
@@ -521,6 +527,10 @@
 				CA112EAA1D1C56CF001DA6CE /* GDataWriter.cpp */,
 				CA112EB01D1C56CF001DA6CE /* GZipWriter.h */,
 				CA112EAF1D1C56CF001DA6CE /* GZipWriter.cpp */,
+				CA731B8C1D9FEF9E00007EC4 /* GSerialize.h */,
+				CA731B8B1D9FEF9D00007EC4 /* GSerialize.cpp */,
+				CA731B8E1D9FEF9E00007EC4 /* GXSerialize.h */,
+				CA731B8D1D9FEF9E00007EC4 /* GXSerialize.cpp */,
 			);
 			name = IO;
 			sourceTree = "<group>";
@@ -907,6 +917,7 @@
 				CABB5CCB1CE0E40500D5B648 /* GD3DContext.cpp in Sources */,
 				CA6387801D48D99700232BBB /* GJpeg.cpp in Sources */,
 				CA636DD31D1CDE5F0021D32F /* GBundle.cpp in Sources */,
+				CA731B901D9FEF9E00007EC4 /* GXSerialize.cpp in Sources */,
 				CA04FDF21CE4557E00C9B596 /* GNumber.cpp in Sources */,
 				CABB5CCE1CE0E40500D5B648 /* GJavaClass.cpp in Sources */,
 				CABB5CCF1CE0E40500D5B648 /* GJavaJAPI.cpp in Sources */,
@@ -935,6 +946,7 @@
 				CADB5DBA1CF9E6300092C472 /* GDShader.cpp in Sources */,
 				CABB5CD01CE0E40500D5B648 /* GLog.cpp in Sources */,
 				CACC51221D70A364007D6B79 /* GMShader.cpp in Sources */,
+				CA731B8F1D9FEF9E00007EC4 /* GSerialize.cpp in Sources */,
 				CA112EB31D1C56CF001DA6CE /* GZipWriter.cpp in Sources */,
 				CAC708B11D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CA1F60A61CD9834000C6307B /* GSystem.cpp in Sources */,
