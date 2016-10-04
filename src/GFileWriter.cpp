@@ -48,7 +48,7 @@ bool GFileWriter::hasSpace()
     return true;
 }
 
-gint GFileWriter::write(void* buf,guint len)
+gint GFileWriter::write(const void* buf,guint len)
 {
     return (gint)fwrite(buf, 1, len, m_FILE);
 }

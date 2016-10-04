@@ -52,7 +52,7 @@ public:
 public:
     virtual bool hasSpace();
     //<0:Error 0<=res<len:End >=len:Not end
-    virtual gint write(void* buf,guint len);
+    virtual gint write(const void* buf,guint len);
     virtual bool skip(guint len);
     virtual gint getBytes();
 public:

@@ -72,7 +72,7 @@ bool GDataWriter::hasSpace()
     return !m_Data->isStatic() || m_Bytes<m_Data->getBytes();
 }
 
-gint GDataWriter::write(void* buf,guint len)
+gint GDataWriter::write(const void* buf,guint len)
 {
     if (m_Data->isStatic()) {
         if (m_Bytes>=m_Data->getBytes()) {

@@ -22,7 +22,7 @@ public:
 public:
 	virtual bool hasSpace()=0;
     //<0:Error 0<=res<len:End >=len:Not end
-    virtual gint write(void* buf,guint len)=0;
+    virtual gint write(const void* buf,guint len)=0;
     virtual bool skip(guint len)=0;
     virtual gint getBytes()=0;
 public:

@@ -45,12 +45,14 @@ typedef gwchar gtchar;
 typedef gchar gtchar;
 #endif
 
+#if !defined(GX_PTR_32BIT) && !defined(GX_PTR_64BIT)
 #if defined (__LP64__) || defined (__64BIT__) || defined (_LP64) || (__WORDSIZE == 64) || defined(WIN64)
 #define GX_PTR_32BIT  0
 #define GX_PTR_64BIT  1
 #else
 #define GX_PTR_32BIT  1
 #define GX_PTR_64BIT  0
+#endif
 #endif
 
 #if GX_PTR_32BIT

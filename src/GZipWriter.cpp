@@ -93,7 +93,7 @@ bool GZipWriter::hasSpace()
     return true;
 }
 
-gint GZipWriter::write(void* buf,guint len)
+gint GZipWriter::write(const void* buf,guint len)
 {
     if(zipWriteInFileInZip(M_ZIPFILE(), buf, (unsigned)len)==ZIP_OK) {
         m_BytesWrite+=(gint)len;
