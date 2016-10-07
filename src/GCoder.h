@@ -13,9 +13,10 @@
 #include "GXCoder.h"
 #include "GReader.h"
 #include "GWriter.h"
-
+#include "GArray.h"
 
 class GEncoder : public GX::Encoder {
+
 public:
     GEncoder(GWriter* writer);
     ~GEncoder();
@@ -39,8 +40,6 @@ private:
         return GX_CAST_R(GReader*, getTagPtr());
     }
 };
-
-
 
 
 

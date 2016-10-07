@@ -48,10 +48,10 @@ namespace GX {
     typedef U64 UNT;
 #endif
 
-    INT bytesOfVI32(VI32 value);
-    INT bytesOfVU32(VU32 value);
-    INT bytesOfVI64(VI64 value);
-    INT bytesOfVU64(VU64 value);
+    INT bytesOfVI32(VI32 value);//不会返回-1，即不会出错
+    INT bytesOfVU32(VU32 value);//不会返回-1，即不会出错
+    INT bytesOfVI64(VI64 value);//不会返回-1，即不会出错
+    INT bytesOfVU64(VU64 value);//不会返回-1，即不会出错
 
 
     class Coder {
@@ -96,14 +96,14 @@ namespace GX {
         INT encodeF64(F64 value);
         INT encodeF64s(const F64* values,UNT count);
 
-        INT encodeVI32(VI32 value);
-        INT encodeVI32s(const VI32* values,UNT count);
-        INT encodeVU32(VU32 value);
-        INT encodeVU32s(const VU32* values,UNT count);
-        INT encodeVI64(VI64 value);
-        INT encodeVI64s(const VI64* values,UNT count);
-        INT encodeVU64(VU64 value);
-        INT encodeVU64s(const VU64* values,UNT count);
+        INT encodeVI32(VI32 value);//不会出错
+        INT encodeVI32s(const VI32* values,UNT count);//不会出错
+        INT encodeVU32(VU32 value);//不会出错
+        INT encodeVU32s(const VU32* values,UNT count);//不会出错
+        INT encodeVI64(VI64 value);//不会出错
+        INT encodeVI64s(const VI64* values,UNT count);//不会出错
+        INT encodeVU64(VU64 value);//不会出错
+        INT encodeVU64s(const VU64* values,UNT count);//不会出错
     };
 
     class Decoder : public Coder {

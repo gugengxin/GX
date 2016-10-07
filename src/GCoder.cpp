@@ -26,6 +26,12 @@ GX::INT GEncoder::encode(const void* buf,GX::UNT len)
 }
 
 
+
+
+
+
+
+
 GDecoder::GDecoder(GReader* reader) : GX::Decoder(reader)
 {
     GX_ASSERT(reader);
