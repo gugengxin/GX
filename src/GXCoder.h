@@ -35,11 +35,6 @@ namespace GX {
     typedef float               F32;
     typedef double              F64;
 
-    typedef I32 VI32;
-    typedef U32 VU32;
-    typedef I64 VI64;
-    typedef U64 VU64;
-
 #if GX_PTR_32BIT
     typedef I32 INT;
     typedef U32 UNT;
@@ -48,10 +43,30 @@ namespace GX {
     typedef U64 UNT;
 #endif
 
+    typedef I32 VI32;
+    typedef U32 VU32;
+    typedef I64 VI64;
+    typedef U64 VU64;
+
     INT bytesOfVI32(VI32 value);//不会返回-1，即不会出错
     INT bytesOfVU32(VU32 value);//不会返回-1，即不会出错
     INT bytesOfVI64(VI64 value);//不会返回-1，即不会出错
     INT bytesOfVU64(VU64 value);//不会返回-1，即不会出错
+
+
+    class UUID {
+    public:
+        UUID();
+        ~UUID();
+
+    private:
+        union {
+            U8  u8[16];
+            U16 u16[8];
+            U32 u32[4];
+            U64 u64[2];
+        } m_Bytes;
+    };
 
 
     class Coder {

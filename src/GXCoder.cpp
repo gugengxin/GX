@@ -124,6 +124,15 @@ namespace GX {
     }
 
 
+    UUID::UUID()
+    {
+
+    }
+
+    UUID::~UUID()
+    {
+
+    }
 
 
 
