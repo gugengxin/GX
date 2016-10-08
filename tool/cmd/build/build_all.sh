@@ -10,8 +10,8 @@ source $GX_BIN/qt.sh
 source $GX_BIN/xcode.sh
 
 
-PROJECT_DIRS=("text_editor" "sl") 
-PROJECT_NAMES=("gx_te" "gx_sl")
+PROJECT_DIRS=("text_editor" "sl" "uuid") 
+PROJECT_NAMES=("gx_te" "gx_sl" "gx_uuid")
 
 for ((i=0;i<${#PROJECT_DIRS[@]};i++))
 do
