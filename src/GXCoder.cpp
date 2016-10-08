@@ -123,11 +123,39 @@ namespace GX {
         return -1;
     }
 
+	UUID::UUID()
+	{
+#if GX_PTR_32BIT
+		m_Bytes.u32[0] = 0;
+		m_Bytes.u32[1] = 0;
+		m_Bytes.u32[2] = 0;
+		m_Bytes.u32[3] = 0;
+#elif GX_PTR_64BIT
+		m_Bytes.u64[0] = 0ULL;
+		m_Bytes.u64[1] = 0ULL;
+#endif
+		
+	}
 
-    UUID::UUID()
+	UUID::UUID(const UUID& other)
+	{
+		m_Bytes.u64[0] = other.m_Bytes.u64[0];
+		m_Bytes.u64[1] = other.m_Bytes.u64[1];
+	}
+
+	UUID::UUID(U32 u0, U32 u1, U32 u2, U32 u3)
     {
-
+		m_Bytes.u32[0] = u0;
+		m_Bytes.u32[1] = u1;
+		m_Bytes.u32[2] = u2;
+		m_Bytes.u32[3] = u3;
     }
+
+	UUID::UUID(U64 u0, U64 u1)
+	{
+		m_Bytes.u64[0] = u0;
+		m_Bytes.u64[1] = u1;
+	}
 
     UUID::~UUID()
     {
@@ -317,7 +345,10 @@ namespace GX {
         return res;
     }
 
-
+	INT Encoder::encodeUUID(UUID& value)
+	{
+		return encode(value.getPtr(), value.getBytes());
+	}
 
 
 
@@ -478,7 +509,10 @@ namespace GX {
         return res;
     }
 
-
+	INT Decoder::decodeUUID(UUID& valueOut)
+	{
+		return decode(valueOut.getPtr(), valueOut.getBytes());
+	}
 
 }
 

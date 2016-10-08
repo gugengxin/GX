@@ -34,6 +34,7 @@ public:
     template <typename T> gint seEncodeKeyAndObjects(GEncoder& coder,guint32 key,GArray<T>* objs);
     
 protected:
+	virtual const GX::UUID& seGetUUID()=0;
     virtual gint seGetBytes()=0;
     virtual gint seEncodeFields(GEncoder& coder)=0;
 };
@@ -52,6 +53,7 @@ public:
     template <typename T> gint ueDecodeObjects(GDecoder& coder,GArray<T>* objsOut,guint32 len);
     template <typename T> gint ueDecodeObjects(GDecoder& coder,GArray<T>** objsOut,guint32 len);
 protected:
+	virtual const GX::UUID& ueGetUUID() = 0;
     virtual gint ueDecodeField(GX::Decoder& coder,guint32 key,guint32 len)=0;///返回<0失败 0没有此Key >0成功
 };
 

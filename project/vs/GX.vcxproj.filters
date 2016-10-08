@@ -261,14 +261,23 @@
     <ClCompile Include="..\..\src\GJpeg.cpp">
       <Filter>src\Window\texture</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GXMetal.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GMTLContext.cpp">
       <Filter>src\Window</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GMShader.cpp">
       <Filter>src\Window\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GCoder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GXMetal.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GSerialize.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GXCoder.cpp">
+      <Filter>src\IO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -533,14 +542,23 @@
     <ClInclude Include="..\..\src\GJpeg.h">
       <Filter>src\Window\texture</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GXMetal.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GMTLContext.h">
       <Filter>src\Window</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GMShader.h">
       <Filter>src\Window\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GCoder.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXMetal.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GSerialize.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXCoder.h">
+      <Filter>src\IO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

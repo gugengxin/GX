@@ -56,8 +56,26 @@ namespace GX {
 
     class UUID {
     public:
-        UUID();
+		UUID();
+		UUID(const UUID& other);
+        UUID(U32 u0, U32 u1, U32 u2, U32 u3);
+		UUID(U64 u0, U64 u1);
         ~UUID();
+
+		inline U8* getPtr() {
+			return m_Bytes.u8;
+		}
+		inline UNT getBytes() {
+			return sizeof(U64) * 2;
+		}
+
+		inline bool operator == (const UUID& other) const {
+			return m_Bytes.u64[0] == other.m_Bytes.u64[0] && m_Bytes.u64[1] == other.m_Bytes.u64[1];
+		}
+
+		inline bool operator != (const UUID& other) const {
+			return m_Bytes.u64[0] != other.m_Bytes.u64[0] || m_Bytes.u64[1] != other.m_Bytes.u64[1];
+		}
 
     private:
         union {
@@ -119,6 +137,8 @@ namespace GX {
         INT encodeVI64s(const VI64* values,UNT count);//不会出错
         INT encodeVU64(VU64 value);//不会出错
         INT encodeVU64s(const VU64* values,UNT count);//不会出错
+
+		INT encodeUUID(UUID& value);
     };
 
     class Decoder : public Coder {
@@ -159,6 +179,8 @@ namespace GX {
         INT decodeVI64s(VI64* valuesOut,UNT count);
         INT decodeVU64(VU64& valueOut);
         INT decodeVU64s(VU64* valuesOut,UNT count);
+
+		INT decodeUUID(UUID& valueOut);
     };
 
 }

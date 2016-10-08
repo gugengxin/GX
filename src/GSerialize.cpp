@@ -38,13 +38,23 @@ GSerialize::~GSerialize()
 gint GSerialize::seEncode(GWriter* writer)
 {
     GEncoder coder(writer);
+
+	GX::UUID& uuid = (GX::UUID)seGetUUID();
+
     gint len=seGetBytes();
     if (len<0) {
         return -1;
     }
 
     gint res=0;
-    gint nTemp=coder.encodeVU32((guint32)len);
+
+	gint nTemp = coder.encodeUUID(uuid);
+	if (nTemp!=(gint)uuid.getBytes()) {
+		return -1;
+	}
+	res += nTemp;
+
+    nTemp=coder.encodeVU32((guint32)len);
     if (nTemp<0) {
         return -1;
     }
@@ -109,8 +119,18 @@ gint GUnserialize::ueDecode(GReader* reader)
 
     gint res=0;
 
+	GX::UUID uuid;
+	gint nTemp = coder.decodeUUID(uuid);
+	if (nTemp != (gint)uuid.getBytes()) {
+		return -1;
+	}
+	if (uuid != ueGetUUID()) {
+		return -1;
+	}
+	res += nTemp;
+
     guint32 len=0;
-    gint nTemp=coder.decodeVU32(len);
+    nTemp = coder.decodeVU32(len);
     if (nTemp<0) {
         return -1;
     }

@@ -27,6 +27,7 @@
     <ClCompile Include="..\..\src\GBuffer.cpp" />
     <ClCompile Include="..\..\src\GBundle.cpp" />
     <ClCompile Include="..\..\src\GClass.cpp" />
+    <ClCompile Include="..\..\src\GCoder.cpp" />
     <ClCompile Include="..\..\src\GColor.cpp" />
     <ClCompile Include="..\..\src\GCondition.cpp" />
     <ClCompile Include="..\..\src\GContext.cpp" />
@@ -72,6 +73,7 @@
     <ClCompile Include="..\..\src\GRBReader.cpp" />
     <ClCompile Include="..\..\src\GReader.cpp" />
     <ClCompile Include="..\..\src\GRunLoop.cpp" />
+    <ClCompile Include="..\..\src\GSerialize.cpp" />
     <ClCompile Include="..\..\src\GShader.cpp" />
     <ClCompile Include="..\..\src\GSRGraphics.cpp" />
     <ClCompile Include="..\..\src\GSRTexture2D.cpp" />
@@ -86,6 +88,7 @@
     <ClCompile Include="..\..\src\GWindow.cpp" />
     <ClCompile Include="..\..\src\GWriter.cpp" />
     <ClCompile Include="..\..\src\GWString.cpp" />
+    <ClCompile Include="..\..\src\GXCoder.cpp" />
     <ClCompile Include="..\..\src\GXCWnd.cpp" />
     <ClCompile Include="..\..\src\GXDirectX.cpp" />
     <ClCompile Include="..\..\src\GXMath.cpp" />
@@ -107,6 +110,7 @@
     <ClInclude Include="..\..\src\GBuffer.h" />
     <ClInclude Include="..\..\src\GBundle.h" />
     <ClInclude Include="..\..\src\GClass.h" />
+    <ClInclude Include="..\..\src\GCoder.h" />
     <ClInclude Include="..\..\src\GColor.h" />
     <ClInclude Include="..\..\src\GCondition.h" />
     <ClInclude Include="..\..\src\GContext.h" />
@@ -154,6 +158,7 @@
     <ClInclude Include="..\..\src\GRBReader.h" />
     <ClInclude Include="..\..\src\GReader.h" />
     <ClInclude Include="..\..\src\GRunLoop.h" />
+    <ClInclude Include="..\..\src\GSerialize.h" />
     <ClInclude Include="..\..\src\GShader.h" />
     <ClInclude Include="..\..\src\GSRGraphics.h" />
     <ClInclude Include="..\..\src\GSRTexture2D.h" />
@@ -169,6 +174,7 @@
     <ClInclude Include="..\..\src\GWriter.h" />
     <ClInclude Include="..\..\src\GWString.h" />
     <ClInclude Include="..\..\src\GX.h" />
+    <ClInclude Include="..\..\src\GXCoder.h" />
     <ClInclude Include="..\..\src\GXCWnd.h" />
     <ClInclude Include="..\..\src\GXDirectX.h" />
     <ClInclude Include="..\..\src\GXEncoding.h" />
