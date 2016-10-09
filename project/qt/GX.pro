@@ -27,6 +27,7 @@ SOURCES += \
 	#../../src/GBuffer.cpp\
 	../../src/GBundle.cpp\
 	../../src/GClass.cpp\
+	../../src/GCoder.cpp\
 	../../src/GColor.cpp\
 	../../src/GCondition.cpp\
 	../../src/GContext.cpp\
@@ -73,6 +74,7 @@ SOURCES += \
 	../../src/GRunLoop.cpp\
 	../../src/GSRGraphics.cpp\
 	../../src/GSRTexture2D.cpp\
+	../../src/GSerialize.cpp\
 	../../src/GShader.cpp\
 	../../src/GString.cpp\
 	../../src/GSystem.cpp\
@@ -86,6 +88,8 @@ SOURCES += \
 	../../src/GWindow.cpp\
 	../../src/GWriter.cpp\
 	#../../src/GXCWnd.cpp\
+	../../src/GXCoder.cpp\
+	../../src/GXData.cpp\
 	#../../src/GXDirectX.cpp\
 	../../src/GXMath.cpp\
 	#../../src/GXMetal.cpp\
@@ -110,6 +114,7 @@ HEADERS += \
 	../../src/GBuffer.h\
 	../../src/GBundle.h\
 	../../src/GClass.h\
+	../../src/GCoder.h\
 	../../src/GColor.h\
 	../../src/GCondition.h\
 	../../src/GContext.h\
@@ -159,6 +164,7 @@ HEADERS += \
 	../../src/GRunLoop.h\
 	../../src/GSRGraphics.h\
 	../../src/GSRTexture2D.h\
+	../../src/GSerialize.h\
 	../../src/GShader.h\
 	../../src/GString.h\
 	../../src/GSystem.h\
@@ -173,6 +179,8 @@ HEADERS += \
 	../../src/GWriter.h\
 	../../src/GX.h\
 	../../src/GXCWnd.h\
+	../../src/GXCoder.h\
+	../../src/GXData.h\
 	../../src/GXDirectX.h\
 	../../src/GXEncoding.h\
 	../../src/GXFILE.h\
