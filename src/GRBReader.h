@@ -11,7 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GReader.h"
-#include "GPieceData.h"
+#include "GXData.h"
 
 
 #include "GXGObject.h"
@@ -37,14 +37,14 @@ public:
 	virtual bool canGetLength();
 	virtual gint getLength();
 private:
-    GReader*    m_Reader;
-    GPieceData  m_Data;
+    GReader*		m_Reader;
+	GX::PieceData<GX_PIECE_DATA_PS_DEFAULT>	m_Data;
 #if GX_PTR_32BIT
-    guint       m_Cursor:31;
+    guint			m_Cursor:31;
 #elif GX_PTR_64BIT
-    guint       m_Cursor:63;
+    guint			m_Cursor:63;
 #endif
-    guint       m_RBClosed:1;
+    guint			m_RBClosed:1;
 };
 
 // Up can't include other h file

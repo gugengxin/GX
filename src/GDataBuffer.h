@@ -10,8 +10,9 @@
 #define GDataBuffer_h
 
 #include "GXPrefix.h"
+#include "GObject.h"
 #include "GBuffer.h"
-#include "GData.h"
+#include "GXData.h"
 
 #include "GXGObject.h"
 
@@ -36,7 +37,7 @@ private:
 #endif
 private:
 #if defined(GX_OPENGL)
-	GData m_Data;
+	GX::Data m_Data;
 #elif defined(GX_DIRECTX)
 	ID3D10Buffer* m_Buffer;
 	guint		  m_DataBytes;

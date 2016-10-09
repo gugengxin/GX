@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 #include "GXPrefix.h"
-#include "GPieceData.h"
 #include <string.h>
+#include "GXData.h"
+#include "GObject.h"
 
 #include "GXGObject.h"
 
@@ -137,18 +138,18 @@ protected:
 		return m_Data.changeBytes(GX_CAST_S(guint, toCount)*sizeof(T*));
 	}
 private:
-	GPieceData m_Data;
+#if defined(GX_OS_MOBILE)
+	GX::PieceData<sizeof(void*) * 8> m_Data;
+#else
+	GX::PieceData<sizeof(void*) * 16> m_Data;
+#endif
+	
 };
 
 GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T, GArray<T>, GArrayBase);
 
 template <typename T>
-GArray<T>::GArray():
-#if defined(GX_OS_MOBILE)
-m_Data(sizeof(T*)*8)
-#else
-m_Data(sizeof(T*)*16)
-#endif
+GArray<T>::GArray()
 {
 
 }

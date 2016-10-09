@@ -12,7 +12,7 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 #include "GOWHash.h"
-#include "GData.h"
+#include "GXData.h"
 #include "GXEncoding.h"
 
 
@@ -350,7 +350,7 @@ protected:
 		return m_OWHash.codeC;
 	}
 private:
-    GData           m_Data;
+    GX::Data		m_Data;
     gint            m_Length;
     GOWHash::Code   m_OWHash;
 };

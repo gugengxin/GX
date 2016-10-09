@@ -11,18 +11,14 @@
 
 #include "GXPrefix.h"
 #include "GObject.h"
+#include "GXData.h"
+#include "GSerialize.h"
 
 #include "GXGObject.h"
 
-class GData : public GObject {
+class GData : public GObject, public GSerialize, public GUnserialize {
 	friend class GPieceData;
-	template <typename, typename> friend class GDataArray;
-	template <typename> friend class GDataString;
-	friend class GDataBufferBase;
-    friend class GDib;
     GX_GOBJECT(GData);
-public:
-    static bool galloc(GX_IN_OUT void*& buf,GX_IN guint size,GX_IN guint toSize);
 public:
     inline void* getPtr() {
         return m_Buffer;
@@ -43,6 +39,19 @@ public:
 	virtual void freeSelf();
 	virtual bool robOther(GX_NONNULL GData* other);
     void zeroSelf();
+
+protected:
+	typedef enum _SKey {
+		SKBuf =1,
+	} SKey;
+protected:
+	virtual const GX::UUID& seGetUUID();
+	virtual gint seGetBytes();
+	virtual gint seEncodeFields(GEncoder& coder);
+
+protected:
+	virtual const GX::UUID& ueGetUUID();
+	virtual gint ueDecodeField(GDecoder& coder, guint32 key, guint32 len);///返回<0失败 0没有此Key >0成功
     
 private:
     void* m_Buffer;

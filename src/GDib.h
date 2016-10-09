@@ -12,7 +12,7 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 #include "GXPixel.h"
-#include "GData.h"
+#include "GXData.h"
 
 
 #include "GXGObject.h"
@@ -70,7 +70,7 @@ private:
     gint32          m_Width;
     gint32          m_Height;
     gint32          m_Stride;
-    GData           m_Data;
+    GX::Data        m_Data;
 };
 
 // Up can't include other h file

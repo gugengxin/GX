@@ -12,7 +12,6 @@
 #include "GXPrefix.h"
 #include "GCoder.h"
 #include "GArray.h"
-#include "GData.h"
 
 
 
@@ -23,7 +22,7 @@ public:
     template <typename T> static gint seBytesOfKeyAndObjects(guint32 key,GArray<T>* objs);
 public:
     GSerialize();
-    ~GSerialize();
+    virtual ~GSerialize();
 
 public:
     gint seEncode(GWriter* writer);
@@ -43,7 +42,7 @@ protected:
 class GUnserialize {
 public:
     GUnserialize();
-    ~GUnserialize();
+	virtual ~GUnserialize();
 public:
     gint ueDecode(GReader* reader);
     gint ueDecode(GDecoder& coder,guint32 len);
@@ -54,8 +53,8 @@ public:
     template <typename T> gint ueDecodeObjects(GDecoder& coder,GArray<T>** objsOut,guint32 len);
 protected:
 	virtual const GX::UUID& ueGetUUID() = 0;
-    virtual gint ueDecodeField(GX::Decoder& coder,guint32 key,guint32 len)=0;///返回<0失败 0没有此Key >0成功
-};
+    virtual gint ueDecodeField(GDecoder& coder,guint32 key,guint32 len)=0;///返回<0失败 0没有此Key >0成功
+}; 
 
 
 

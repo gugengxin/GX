@@ -1,8 +1,9 @@
 ﻿#pragma once
 
 #include "GXPrefix.h"
-#include "GPieceData.h"
 #include <string.h>
+#include "GXData.h"
+#include "GObject.h"
 
 #include "GXGObject.h"
 
@@ -167,12 +168,12 @@ GDataArray<T,DT>::~GDataArray()
 
 
 template <typename T>
-class GDArray : public GDataArray<T, GData> {
+class GDArray : public GDataArray<T, GX::Data> {
 	GX_GOBJECT(GDArray);
     template <typename,typename> friend class GMap;
 };
 
-GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T, GDArray<T>, GDataArray<T GX_COMMA GData>);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T, GDArray<T>, GDataArray<T GX_COMMA GX::Data>);
 
 template <typename T>
 GDArray<T>::GDArray()
@@ -187,16 +188,15 @@ GDArray<T>::~GDArray()
 
 
 template <typename T,guint32 N>
-class GPieceDataArray : public GDataArray<T, GPieceData> {
+class GPieceDataArray : public GDataArray<T, GX::PieceData< (guint32)sizeof(T)*N >> {
     GX_GOBJECT(GPieceDataArray);
 };
 
-GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA guint32 N, GPieceDataArray<T GX_COMMA N>, GDataArray<T GX_COMMA GPieceData>);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA guint32 N, GPieceDataArray<T GX_COMMA N>, GDataArray<T GX_COMMA GX::PieceData< (guint32)sizeof(T)*N >>);
 
 template <typename T,guint32 N>
 GPieceDataArray<T,N>::GPieceDataArray()
 {
-    GDataArray<T, GPieceData>::getData().setPieceSize(N);
 }
 template <typename T,guint32 N>
 GPieceDataArray<T,N>::~GPieceDataArray()
@@ -206,9 +206,9 @@ GPieceDataArray<T,N>::~GPieceDataArray()
 
 
 #if defined(GX_OS_MOBILE)
-#define GX_PDARRAY_N 128
+#define GX_PDARRAY_N 8
 #else
-#define GX_PDARRAY_N 256
+#define GX_PDARRAY_N 16
 #endif
 
 template <typename T>
