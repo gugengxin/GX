@@ -104,6 +104,8 @@ void GData::zeroSelf()
     memset(m_Buffer, 0, m_Bytes);
 }
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 static const GX::UUID g_UUID(0x6364327B, 0x65633536, 0x34622D32, 0x342D6435);
 
 const GX::UUID& GData::seGetUUID()

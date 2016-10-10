@@ -721,3 +721,94 @@ void GWString::appendPathComponent(const gwchar* component, gint len)
 		}
 	}
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+static const GX::UUID g_UUID(0x6536347B, 0x64326561, 0x65352D33, 0x342D3439);
+
+const GX::UUID& GWString::seGetUUID()
+{
+	return g_UUID;
+}
+gint GWString::seGetBytes()
+{
+	gint res = seBytesOfKeyAndData(SKBuf, (guint)getLength()*2);
+	return res;
+}
+gint GWString::seEncodeFields(GEncoder& coder)
+{
+#if GX_WCHAR_16BIT
+	gint res = seEncodeKeyAndData(coder, SKBuf, getDataPtr(), (guint)getLength()*2);
+#elif GX_WCHAR_32BIT
+	gint res = 0;
+
+	gint nTemp = coder.encodeVU32(SKBuf);
+	if (nTemp < 0) {
+		return -1;
+	}
+	res += nTemp;
+
+	nTemp = coder.encodeVU32((guint32)getLength() * 2);
+	if (nTemp < 0) {
+		return -1;
+	}
+	res += nTemp;
+
+
+	for (gint i = 0; i < getLength(); i++) {
+		nTemp = coder.encodeU16((guint16)at(i));
+		if (nTemp != 2) {
+			return -1;
+		}
+		res += nTemp;
+	}
+
+	return res;
+#endif
+	
+}
+
+
+const GX::UUID& GWString::ueGetUUID()
+{
+	return g_UUID;
+}
+
+gint GWString::ueDecodeField(GDecoder& coder, guint32 key, guint32 len)
+{
+	switch (key)
+	{
+	case SKBuf:
+	{
+		if (len % 2) {
+			return -1;
+		}
+		gint count = (gint)len / 2;
+		if (changeCapability(count)) {
+#if GX_WCHAR_16BIT
+			gint res = ueDecodeData(coder, getDataPtr(), (guint)len);
+			if (res < 0) {
+				return -1;
+			}
+#elif GX_WCHAR_32BIT
+			gint res = 0;
+			guint16 cv;
+			for (gint i = 0; i<count; i++) {
+				gint nTemp = coder.decodeU16(cv);
+				if (nTemp != 2) {
+					return -1;
+				}
+				getDataPtr()[i] = (gwchar)cv;
+				res += nTemp;
+			}
+#endif
+			setLength(count);
+			return res;
+		}
+		return -1;
+	}
+	break;
+	default:
+		return 0;
+	}
+}

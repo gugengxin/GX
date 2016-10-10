@@ -11,10 +11,11 @@
 
 #include "GXPrefix.h"
 #include "GDataString.h"
+#include "GSerialize.h"
 
 #include "GXGObject.h"
 
-class GString : public GDataString<gchar> {
+class GString : public GDataString<gchar>, public GSerialize, public GUnserialize {
 	friend class GOShader;
 	friend class GZipReader;
     friend class GAppBundle;
@@ -130,6 +131,20 @@ public:
 public:
 	void appendPathComponent(const gchar* component, gint len = -1);
 	void appendPathComponent(const gwchar* component, gint len = -1);
+
+
+protected:
+		typedef enum _SKey {
+			SKBuf = 1,
+		} SKey;
+protected:
+	virtual const GX::UUID& seGetUUID();
+	virtual gint seGetBytes();
+	virtual gint seEncodeFields(GEncoder& coder);
+
+protected:
+	virtual const GX::UUID& ueGetUUID();
+	virtual gint ueDecodeField(GDecoder& coder, guint32 key, guint32 len);///返回<0失败 0没有此Key >0成功
 };
 
 #include "GXGObjectUD.h"

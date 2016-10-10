@@ -896,3 +896,52 @@ void GString::appendPathComponent(const gwchar* component, gint len)
 		}
 	}
 }
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+static const GX::UUID g_UUID(0x3932637B, 0x36333461, 0x32652D33, 0x342D6134);
+
+const GX::UUID& GString::seGetUUID()
+{
+	return g_UUID;
+}
+gint GString::seGetBytes()
+{
+	gint res = seBytesOfKeyAndData(SKBuf, (guint)getLength());
+	return res;
+}
+gint GString::seEncodeFields(GEncoder& coder)
+{
+	gint res = seEncodeKeyAndData(coder, SKBuf, getDataPtr(), (guint)getLength()*sizeof(gchar));
+	return res;
+}
+
+
+const GX::UUID& GString::ueGetUUID()
+{
+	return g_UUID;
+}
+
+gint GString::ueDecodeField(GDecoder& coder, guint32 key, guint32 len)
+{
+	switch (key)
+	{
+	case SKBuf:
+	{
+		gint count = (gint)len;
+		if (changeCapability(count)) {
+			gint res=ueDecodeData(coder, getDataPtr(), (guint)len);
+			if (res < 0) {
+				return -1;
+			}
+			setLength(count);
+			return res;
+		}
+		return -1;
+	}
+	break;
+	default:
+		return 0;
+	}
+}
