@@ -25,7 +25,7 @@ GString::Formater& GString::Formater::arg(gchar v, gint count)
 {
     if (moveCursor()) {
         gint lastLen=replaceStart();
-        M_FMT_STRING()->replace(getCursor(), 1, v, count);
+        M_FMT_STRING()->replace(getCursor(), 2, v, count);
         replaceEnd(lastLen);
     }
 	return *this;
@@ -35,7 +35,7 @@ GString::Formater& GString::Formater::arg(gwchar v,gint count)
 {
     if (moveCursor()) {
         gint lastLen=replaceStart();
-        M_FMT_STRING()->replace(getCursor(), 1, v, count);
+        M_FMT_STRING()->replace(getCursor(), 2, v, count);
         replaceEnd(lastLen);
     }
     return *this;

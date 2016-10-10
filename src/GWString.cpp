@@ -763,9 +763,8 @@ gint GWString::seEncodeFields(GEncoder& coder)
 		res += nTemp;
 	}
 
-	return res;
 #endif
-	
+	return res;
 }
 
 

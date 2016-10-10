@@ -218,17 +218,13 @@ protected:
         }
         bool moveCursor() {
 			gint curEnd = m_String->getLength() - m_CursorEnd;
-			while (m_Cursor<curEnd) {
-                if (m_String->at(m_Cursor)==(T)'%') {
-					if (m_Cursor < (curEnd - 1) && m_String->at(m_Cursor + 1) == '%') {
-                        m_Cursor+=2;
-                    }
-                    else {
-                        return true;
-                    }
+			while (m_Cursor<curEnd-1) {
+                if (m_String->at(m_Cursor)==(T)'%' &&
+					m_String->at(m_Cursor + 1) == (T)'@') {
+					return true;
                 }
                 else {
-                    m_Cursor++;
+					m_Cursor ++;
                 }
             }
             return false;
@@ -237,7 +233,7 @@ protected:
             return m_String->getLength();
         }
         void replaceEnd(gint lastLen) {
-            m_Cursor=m_Cursor+1+(m_String->getLength()-lastLen);
+            m_Cursor=m_Cursor+2+(m_String->getLength()-lastLen);
         }
 	private:
 		GDataString* m_String;
