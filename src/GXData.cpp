@@ -7,10 +7,12 @@
 //
 
 #include "GXData.h"
+#include <stdlib.h>
+#include <string.h>
 
 namespace GX {
 
-	bool galloc(void*& buf, guint size, guint toSize)
+	bool galloc(void*& buf, UNT size, UNT toSize)
 	{
 		if (toSize <= 0) {
 			if (buf) {
@@ -55,7 +57,7 @@ namespace GX {
 		}
 	}
 
-	bool Data::changeBytes(guint toSize)
+	bool Data::changeBytes(UNT toSize)
 	{
 		if (m_IsStatic) {
 			return (toSize == m_Bytes);
@@ -82,7 +84,7 @@ namespace GX {
 		return false;
 	}
 
-	bool Data::changeBytesIfNeed(guint toSize)
+	bool Data::changeBytesIfNeed(UNT toSize)
 	{
 		if (toSize <= m_Bytes) {
 			return true;
@@ -90,7 +92,7 @@ namespace GX {
 		return changeBytes(toSize);
 	}
 
-	void Data::setStatic(const void* data, guint bytes)
+	void Data::setStatic(const void* data, UNT bytes)
 	{
 		freeSelf();
 		m_Buffer = (void*)data;

@@ -9,14 +9,14 @@
 #ifndef GXData_h
 #define GXData_h
 
-#include "GXPrefix.h"
+#include "GXCoder.h"
 
 namespace GX {
 
-	bool galloc(void*& buf, guint size, guint toSize);
+	bool galloc(void*& buf, UNT size, UNT toSize);
 
 	class Data {
-		template <guint32> friend class PieceData;
+		template <U32> friend class PieceData;
 	public:
 		Data();
 		virtual ~Data();
@@ -24,33 +24,33 @@ namespace GX {
 		inline void* getPtr() {
 			return m_Buffer;
 		}
-		inline void* getPtr(guint offset) {
-			return GX_CAST_R(guint8*, m_Buffer) + offset;
+		inline void* getPtr(UNT offset) {
+			return GX_CAST_R(U8*, m_Buffer) + offset;
 		}
-		inline guint getBytes() {
+		inline UNT getBytes() {
 			return m_Bytes;
 		}
 		inline bool isStatic() {
 			return m_IsStatic;
 		}
 
-		virtual bool changeBytes(GX_IN guint toSize);
-		bool changeBytesIfNeed(GX_IN guint toSize);
-		void setStatic(const void* data, guint bytes);
+		virtual bool changeBytes(UNT toSize);
+		bool changeBytesIfNeed(UNT toSize);
+		void setStatic(const void* data, UNT bytes);
 		virtual void freeSelf();
 		void zeroSelf();
 
 	private:
 		void* m_Buffer;
 #if GX_PTR_32BIT
-		guint m_Bytes : 31;
+		UNT m_Bytes : 31;
 #elif GX_PTR_64BIT
-		guint m_Bytes : 63;
+		UNT m_Bytes : 63;
 #endif
-		guint m_IsStatic : 1;
+		UNT m_IsStatic : 1;
 	};
 
-	template <guint32 PS>
+	template <U32 PS>
 	class PieceData : public Data {
 	public:
 		PieceData() 
@@ -62,7 +62,7 @@ namespace GX {
 
 		}
 
-		virtual bool changeBytes(guint toSize) 
+		virtual bool changeBytes(UNT toSize) 
 		{
 			if (m_IsStatic) {
 				return (toSize == m_Bytes);
@@ -73,8 +73,8 @@ namespace GX {
 				}
 			}
 
-			guint32 toBCount = GX_CAST_S(guint32, (toSize + PS - 1) / PS);
-			guint toSizeReal = toBCount*(guint)PS;
+			U32 toBCount = GX_CAST_S(U32, (toSize + PS - 1) / PS);
+			UNT toSizeReal = toBCount*(UNT)PS;
 #if GX_PTR_32BIT
 			if (toSizeReal & 0x80000000) {
 				return false;
@@ -85,7 +85,7 @@ namespace GX {
 			}
 #endif
 			if (toBCount > m_PieceCount || toBCount + 1<m_PieceCount) {
-				if (!GX::galloc(m_Buffer, PS*(guint)m_PieceCount, toSizeReal)) {
+				if (!GX::galloc(m_Buffer, PS*(UNT)m_PieceCount, toSizeReal)) {
 					return false;
 				}
 			}
@@ -100,7 +100,7 @@ namespace GX {
 		}
 
 	private:
-		guint32 m_PieceCount;
+		U32 m_PieceCount;
 	};
 #if defined(GX_OS_MOBILE)
 #define GX_PIECE_DATA_PS_DEFAULT 128

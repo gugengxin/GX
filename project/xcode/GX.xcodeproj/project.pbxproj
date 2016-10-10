@@ -233,6 +233,9 @@
 		CAE303C91CE563CB00F15C74 /* GOGLContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CC41CE0E40500D5B648 /* GOGLContext.cpp */; };
 		CAE303CA1CE563CB00F15C74 /* GXDirectX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CC61CE0E40500D5B648 /* GXDirectX.cpp */; };
 		CAE303CB1CE563CB00F15C74 /* GXOpenGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB5CC81CE0E40500D5B648 /* GXOpenGL.cpp */; };
+		CAE3FF931DAB31CE0010CB99 /* GXData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE3FF911DAB31CE0010CB99 /* GXData.cpp */; };
+		CAE3FF941DAB31CE0010CB99 /* GXData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE3FF911DAB31CE0010CB99 /* GXData.cpp */; };
+		CAE3FF951DAB31CE0010CB99 /* GXData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE3FF911DAB31CE0010CB99 /* GXData.cpp */; };
 		CAE706CF1CD2F6EA0090F4DD /* GArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */; };
 		CAE706D01CD2F8950090F4DD /* GArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */; };
 		CAE706D11CD2F8950090F4DD /* GDataArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1C71B61CD2068100BEEA5B /* GDataArray.cpp */; };
@@ -452,6 +455,8 @@
 		CADB5DB81CF9E6300092C472 /* GXMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXMath.cpp; sourceTree = "<group>"; };
 		CADB5DB91CF9E6300092C472 /* GXMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXMath.h; sourceTree = "<group>"; };
 		CAE301541D7FB8BE00DBD69F /* GSRTexture2D.gxsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = GSRTexture2D.gxsl; sourceTree = "<group>"; };
+		CAE3FF911DAB31CE0010CB99 /* GXData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXData.cpp; sourceTree = "<group>"; };
+		CAE3FF921DAB31CE0010CB99 /* GXData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXData.h; sourceTree = "<group>"; };
 		CAE706CD1CD2F6EA0090F4DD /* GArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GArray.cpp; sourceTree = "<group>"; };
 		CAE706CE1CD2F6EA0090F4DD /* GArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GArray.h; sourceTree = "<group>"; };
 		CAE706D71CD2FA850090F4DD /* GMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GMap.cpp; sourceTree = "<group>"; };
@@ -747,6 +752,8 @@
 		CAC2D1231CD0C13800A0EBE5 /* Struct */ = {
 			isa = PBXGroup;
 			children = (
+				CAE3FF911DAB31CE0010CB99 /* GXData.cpp */,
+				CAE3FF921DAB31CE0010CB99 /* GXData.h */,
 				CA04FDDA1CE4557E00C9B596 /* GNumber.cpp */,
 				CA04FDDB1CE4557E00C9B596 /* GNumber.h */,
 				CAC2D12B1CD0C1EC00A0EBE5 /* GData.h */,
@@ -853,7 +860,7 @@
 		CA01E7521CBF483C004520E6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Gengxin Gu";
 				TargetAttributes = {
 					CA01E7591CBF483C004520E6 = {
@@ -927,6 +934,7 @@
 				CADB5DBE1CF9E6300092C472 /* GVector.cpp in Sources */,
 				CAE706D91CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CABB5CD31CE0E40500D5B648 /* GXOpenGL.cpp in Sources */,
+				CAE3FF931DAB31CE0010CB99 /* GXData.cpp in Sources */,
 				CABB5CCB1CE0E40500D5B648 /* GD3DContext.cpp in Sources */,
 				CA6387801D48D99700232BBB /* GJpeg.cpp in Sources */,
 				CA636DD31D1CDE5F0021D32F /* GBundle.cpp in Sources */,
@@ -1013,6 +1021,7 @@
 				CA1F60B21CD984C100C6307B /* GXCWnd.cpp in Sources */,
 				CA04FDEF1CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */,
 				CA9F8E861D30758F00A5EBCA /* GBundle.cpp in Sources */,
+				CAE3FF941DAB31CE0010CB99 /* GXData.cpp in Sources */,
 				CA6387711D48CFD600232BBB /* GDataWriter.cpp in Sources */,
 				CA04FDEB1CE4557E00C9B596 /* GNotice.cpp in Sources */,
 				CA63876F1D48CFD300232BBB /* GZipWriter.cpp in Sources */,
@@ -1099,6 +1108,7 @@
 				CA1F60B41CD984C100C6307B /* GXCWnd.cpp in Sources */,
 				CA04FDF01CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */,
 				CA9F8E8A1D30758F00A5EBCA /* GBundle.cpp in Sources */,
+				CAE3FF951DAB31CE0010CB99 /* GXData.cpp in Sources */,
 				CA6387721D48CFD600232BBB /* GDataWriter.cpp in Sources */,
 				CA04FDEC1CE4557E00C9B596 /* GNotice.cpp in Sources */,
 				CA6387701D48CFD300232BBB /* GZipWriter.cpp in Sources */,
@@ -1161,8 +1171,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1185,9 +1197,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SDKROOT = iphoneos;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
@@ -1208,8 +1221,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1225,7 +1240,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(PROJECT_NAME)";

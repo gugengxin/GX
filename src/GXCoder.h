@@ -20,6 +20,22 @@
 #endif
 #endif
 
+#ifndef GX_CAST_C
+#define GX_CAST_C(t,o)       const_cast<t>(o)
+#endif
+#ifndef GX_CAST_S
+#define GX_CAST_S(t,o)       static_cast<t>(o)
+#endif
+#ifndef GX_CAST_R
+#define GX_CAST_R(t,o)       reinterpret_cast<t>(o)
+#endif
+#ifndef GX_CAST_D
+#define GX_CAST_D(t,o)       GX_CAST_R(t,o)//dynamic_cast<t>(o)
+#endif
+#ifndef GX_CAST_PO
+#define GX_CAST_PO(t,p,ot)   GX_CAST_R(t*, GX_CAST_R(unsigned char*,p)+ot)
+#endif
+
 
 namespace GX {
 
@@ -62,7 +78,7 @@ namespace GX {
 		UUID(U64 u0, U64 u1);
         ~UUID();
 
-		inline U8* getPtr() {
+		inline const U8* getPtr() {
 			return m_Bytes.u8;
 		}
 		inline UNT getBytes() {

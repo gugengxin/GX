@@ -39,7 +39,7 @@ gint GSerialize::seEncode(GWriter* writer)
 {
     GEncoder coder(writer);
 
-	GX::UUID& uuid = (GX::UUID)seGetUUID();
+	const GX::UUID& uuid = seGetUUID();
 
     gint len=seGetBytes();
     if (len<0) {
@@ -48,8 +48,8 @@ gint GSerialize::seEncode(GWriter* writer)
 
     gint res=0;
 
-	gint nTemp = coder.encodeUUID(uuid);
-	if (nTemp!=(gint)uuid.getBytes()) {
+	gint nTemp = coder.encodeUUID(*(GX::UUID*)&uuid);
+	if (nTemp!=(gint)(*(GX::UUID*)&uuid).getBytes()) {
 		return -1;
 	}
 	res += nTemp;

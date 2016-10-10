@@ -511,7 +511,7 @@ namespace GX {
 
 	INT Decoder::decodeUUID(UUID& valueOut)
 	{
-		return decode(valueOut.getPtr(), valueOut.getBytes());
+		return decode((void*)valueOut.getPtr(), valueOut.getBytes());
 	}
 
 }
