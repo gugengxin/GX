@@ -100,6 +100,7 @@
 		CA6387881D48DD0200232BBB /* GDib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6387821D48DCD600232BBB /* GDib.cpp */; };
 		CA6387891D48DD0200232BBB /* GJpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA63877C1D48D99700232BBB /* GJpeg.cpp */; };
 		CA63878A1D48DD0200232BBB /* GPng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA63877E1D48D99700232BBB /* GPng.cpp */; };
+		CA6793B01DAFFACB00854B5E /* GFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */; };
 		CA7213331DA2893F005A7B9E /* GSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA731B8B1D9FEF9D00007EC4 /* GSerialize.cpp */; };
 		CA7213351DA28940005A7B9E /* GSerialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA731B8B1D9FEF9D00007EC4 /* GSerialize.cpp */; };
 		CA7213391DA36AF2005A7B9E /* GXCoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7213371DA36AF2005A7B9E /* GXCoder.cpp */; };
@@ -353,6 +354,8 @@
 		CA63877F1D48D99700232BBB /* GPng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPng.h; sourceTree = "<group>"; };
 		CA6387821D48DCD600232BBB /* GDib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDib.cpp; sourceTree = "<group>"; };
 		CA6387831D48DCD600232BBB /* GDib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDib.h; sourceTree = "<group>"; };
+		CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFrameBuffer.cpp; sourceTree = "<group>"; };
+		CA6793AF1DAFFACB00854B5E /* GFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFrameBuffer.h; sourceTree = "<group>"; };
 		CA7213371DA36AF2005A7B9E /* GXCoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXCoder.cpp; sourceTree = "<group>"; };
 		CA7213381DA36AF2005A7B9E /* GXCoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXCoder.h; sourceTree = "<group>"; };
 		CA7213411DA3B86B005A7B9E /* GCoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GCoder.cpp; sourceTree = "<group>"; };
@@ -709,6 +712,8 @@
 				CABB3FAE1CFE12D000A7367C /* GBuffer.cpp */,
 				CABB3FB41CFE133000A7367C /* GDataBuffer.h */,
 				CABB3FB31CFE133000A7367C /* GDataBuffer.cpp */,
+				CA6793AF1DAFFACB00854B5E /* GFrameBuffer.h */,
+				CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */,
 			);
 			name = Window;
 			sourceTree = "<group>";
@@ -912,6 +917,7 @@
 				CA9C16D21CC6132400204303 /* GClass.cpp in Sources */,
 				CAC2D1321CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CA0B16021CD086F500C33BB5 /* GCondition.cpp in Sources */,
+				CA6793B01DAFFACB00854B5E /* GFrameBuffer.cpp in Sources */,
 				CA1F60A71CD9834000C6307B /* GXCWnd.cpp in Sources */,
 				CA446E3F1D67E36F002E77DF /* GXMetal.cpp in Sources */,
 				CA04FDE71CE4557E00C9B596 /* glew.c in Sources */,
