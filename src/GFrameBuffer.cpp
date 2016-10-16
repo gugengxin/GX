@@ -14,13 +14,28 @@
 
 GX_GOBJECT_IMPLEMENT(GFrameBuffer, GObject);
 
+GFrameBuffer::Node::Node()
+{
+    m_Context=NULL;
+}
+
+GFrameBuffer::Node::~Node()
+{
+
+}
+
+
+
 GFrameBuffer::GFrameBuffer()
 {
-	
+    m_Node=NULL;
 }
 
 GFrameBuffer::~GFrameBuffer()
 {
+    if (m_Node) {
+        
+    }
 }
 
 

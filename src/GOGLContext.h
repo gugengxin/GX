@@ -16,6 +16,7 @@
 #endif
 #include "GDataArray.h"
 #include "GTexture2D.h"
+#include "GFrameBuffer.h"
 
 class GWindow;
 
@@ -51,11 +52,17 @@ protected:
     void doneShader();
 	void readyTexture();
 	void doneTexture();
+    void readyFrameBuffer();
+    void doneFrameBuffer();
 protected:
 	GDib* loadTexture2DNodeReadyDib(GDib* dib);
 	static void loadTexture2DNodeInMT(GObject* obj);
     static void unloadTextureNodeInMT(GObject* obj);
 	void unloadTextureNodeForContext(GTexture::Node* node);
+protected:
+    static void loadFrameBufferNodeInMT(GObject* obj);
+    static void unloadFrameBufferNodeInMT(GObject* obj);
+    void unloadFrameBufferNodeForContext(GFrameBuffer::Node* node);
 
 private:
 	GWindow* m_Window;

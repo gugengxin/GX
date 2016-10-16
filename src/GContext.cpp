@@ -9,27 +9,106 @@
 
 #include "GXGObject.h"
 
-GX_GOBJECT_IMPLEMENT(GContext::T2DNodeLoadObj, GObject);
+GX_GOBJECT_IMPLEMENT(GContext::NodeLoadObj, GObject);
 
-GContext::T2DNodeLoadObj::T2DNodeLoadObj()
+GContext::NodeLoadObj::NodeLoadObj()
+{
+    context=NULL;
+}
+GContext::NodeLoadObj::~NodeLoadObj()
 {
 }
 
+GX_GOBJECT_IMPLEMENT(GContext::NodeUnloadObj, GObject);
+
+GContext::NodeUnloadObj::NodeUnloadObj()
+{
+    context=NULL;
+}
+
+GContext::NodeUnloadObj::~NodeUnloadObj()
+{
+}
+
+
+
+
+GX_GOBJECT_IMPLEMENT(GContext::T2DNodeLoadObjBase, NodeLoadObj);
+
+GContext::T2DNodeLoadObjBase::T2DNodeLoadObjBase()
+{
+    param=NULL;
+    nodeOut=NULL;
+}
+GContext::T2DNodeLoadObjBase::~T2DNodeLoadObjBase()
+{
+
+}
+
+GX_GOBJECT_IMPLEMENT(GContext::T2DNodeLoadObj, T2DNodeLoadObjBase);
+
+GContext::T2DNodeLoadObj::T2DNodeLoadObj()
+{
+    dib=NULL;
+}
 GContext::T2DNodeLoadObj::~T2DNodeLoadObj()
 {
 
 }
 
-GX_GOBJECT_IMPLEMENT(GContext::T2DNodeUnloadObj, GObject);
+GX_GOBJECT_IMPLEMENT(GContext::T2DNodeCreateObj, T2DNodeLoadObjBase);
+
+GContext::T2DNodeCreateObj::T2DNodeCreateObj()
+{
+    
+}
+GContext::T2DNodeCreateObj::~T2DNodeCreateObj()
+{
+
+}
+
+GX_GOBJECT_IMPLEMENT(GContext::T2DNodeUnloadObj, NodeUnloadObj);
 
 GContext::T2DNodeUnloadObj::T2DNodeUnloadObj()
 {
+    nodeOut=NULL;
 }
-
 GContext::T2DNodeUnloadObj::~T2DNodeUnloadObj()
 {
-
 }
+
+
+
+
+
+
+GX_GOBJECT_IMPLEMENT(GContext::FBNodeLoadObj, NodeLoadObj);
+
+GContext::FBNodeLoadObj::FBNodeLoadObj()
+{
+    enableDepth=false;
+    nodeOut=NULL;
+
+    texTarget=NULL;
+}
+GContext::FBNodeLoadObj::~FBNodeLoadObj()
+{
+}
+
+GX_GOBJECT_IMPLEMENT(GContext::FBNodeUnloadObj, NodeUnloadObj);
+
+GContext::FBNodeUnloadObj::FBNodeUnloadObj()
+{
+    nodeOut=NULL;
+}
+GContext::FBNodeUnloadObj::~FBNodeUnloadObj()
+{
+}
+
+
+
+
+
 
 //不用在这里初始化
 GContext::GContext()
@@ -180,4 +259,43 @@ void GContext::unloadTextureNode(GTexture::Node* node)
 
 	GO::release(obj);
 }
+
+
+void GContext::addFrameBufferNodeInMT(GFrameBuffer::Node* node)
+{
+    m_FrameBuffers.add(node);
+}
+
+void GContext::removeFrameBufferNodeInMT(GFrameBuffer::Node* node)
+{
+    m_FrameBuffers.remove(node,false);
+}
+
+bool GContext::loadFrameBufferNode(GFrameBuffer::Node* node)
+{
+    FBNodeLoadObj* obj = FBNodeLoadObj::alloc();
+
+    obj->context=this;
+
+    obj->nodeOut=node;
+
+    if (GThread::current()->isMain()) {
+        loadFrameBufferNodeInMT(obj);
+    }
+    else {
+        GThread::current()->getRunLoop()->perform(unloadFrameBufferNodeInMT, obj, 0, true);
+    }
+
+    GO::release(obj);
+    
+    return node->isValid();
+}
+
+void GContext::unloadFrameBufferNode(GFrameBuffer::Node* node)
+{
+
+}
+
+
+
 

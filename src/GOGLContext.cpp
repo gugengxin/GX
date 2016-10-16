@@ -1,4 +1,4 @@
-﻿//
+//
 // Created by Gengxin Gu on 16/5/9.
 //
 
@@ -602,6 +602,23 @@ void GOGLContext::doneTexture()
 #endif
 }
 
+void GOGLContext::readyFrameBuffer()
+{
+#if defined(GX_OS_ANDROID)
+    pushOSHandle(g_Surface,g_Context);
+#else
+    makeCurrent();
+#endif
+}
+void GOGLContext::doneFrameBuffer()
+{
+#if defined(GX_OS_ANDROID)
+    popOSHandle();
+#else
+    makeClear();
+#endif
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 GDib* GOGLContext::loadTexture2DNodeReadyDib(GDib* dib)
@@ -648,11 +665,10 @@ GDib* GOGLContext::loadTexture2DNodeReadyDib(GDib* dib)
 
 void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
 {
-	GContext::T2DNodeLoadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObj*, obj);
+    GContext::T2DNodeLoadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObj*, obj);
+    GTexture::Handle& handle = nodeObj.nodeOut->getData();
     
     nodeObj.context->readyTexture();
-
-	GTexture::Handle& handle = nodeObj.nodeOut->getData();
     
 	GX_glGenTextures(1, &handle.m_Name);
     
@@ -785,7 +801,71 @@ void GOGLContext::unloadTextureNodeForContext(GTexture::Node* node)
 }
 
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+void GOGLContext::loadFrameBufferNodeInMT(GObject* obj)
+{
+    GContext::FBNodeLoadObj& nodeObj= *GX_CAST_R(GContext::FBNodeLoadObj*, obj);
+    GFrameBuffer::Handle& handle = nodeObj.nodeOut->getData();
+
+    if (!nodeObj.texTarget->isKindOfClass(GTexture2D::gclass)) {
+        return;
+    }
+
+    nodeObj.context->readyFrameBuffer();
+
+    GX_glGenFramebuffers(1,&handle.m_Name);
+    if (handle.m_Name) {
+        if (nodeObj.enableDepth) {
+            GX_glGenRenderbuffers(1,&handle.m_DepthName);
+
+            if (!handle.m_DepthName) {
+                GX_glDeleteFramebuffers(1,&handle.m_Name);
+                handle.m_Name=0;
+            }
+        }
+
+        if (handle.m_Name) {
+            GLuint oldFB;
+            GX_glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&oldFB);
+            GX_glBindFramebuffer(GL_FRAMEBUFFER, handle.m_Name);
+            GX_glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D, nodeObj.texTarget->getNode()->getData().getName(), 0);
+            if (nodeObj.enableDepth) {
+                GLuint oldRB;
+                glGetIntegerv(GL_RENDERBUFFER_BINDING, (GLint*)&oldRB);
+                glBindRenderbuffer(GL_RENDERBUFFER, handle.m_DepthName);
+                glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, GX_CAST_R(GTexture2D*, nodeObj.texTarget)->getWidth(), GX_CAST_R(GTexture2D*, nodeObj.texTarget)->getHeight());
+                glBindRenderbuffer(GL_RENDERBUFFER, oldRB);
+
+                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, handle.m_DepthName);
+            }
+            glBindFramebuffer(GL_FRAMEBUFFER, oldFB);
+        }
+    }
+
+    nodeObj.context->doneFrameBuffer();
+
+    if (handle.isValid()) {
+        nodeObj.nodeOut->m_Context=nodeObj.context;
+        nodeObj.nodeOut->m_Context->addFrameBufferNodeInMT(nodeObj.nodeOut);
+    }
+
+}
+void GOGLContext::unloadFrameBufferNodeInMT(GObject* obj)
+{
+}
+void GOGLContext::unloadFrameBufferNodeForContext(GFrameBuffer::Node* node)
+{
+}
+
+
+
+
+
+
+
+
+
 
 #endif

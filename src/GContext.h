@@ -12,9 +12,9 @@
 #include "GPainter.h"
 #include "GSRGraphics.h"
 #include "GSRTexture2D.h"
-#include "GTexture2D.h"
 #include "GReader.h"
-#include "GSRTexture2D.h"
+#include "GTexture2D.h"
+#include "GFrameBuffer.h"
 
 #include "GXGObject.h"
 
@@ -38,6 +38,62 @@ private:
 
 		SRIDCount,
 	};
+
+
+
+    class NodeLoadObj : public GObject {
+        GX_GOBJECT(NodeLoadObj);
+    public:
+        GContext* context;
+    };
+    class NodeUnloadObj : public GObject {
+        GX_GOBJECT(NodeUnloadObj);
+    public:
+        GContext* context;
+    };
+
+
+
+    class T2DNodeLoadObjBase : public NodeLoadObj {
+        GX_GOBJECT(T2DNodeLoadObjBase);
+    public:
+        GTexture2D::Parameter* param;
+        GTexture2D::Node* nodeOut;
+    };
+    class T2DNodeLoadObj : public T2DNodeLoadObjBase {
+        GX_GOBJECT(T2DNodeLoadObj);
+    public:
+        GDib* dib;
+    };
+    class T2DNodeCreateObj : public T2DNodeLoadObjBase {
+        GX_GOBJECT(T2DNodeCreateObj);
+    public:
+
+    };
+    class T2DNodeUnloadObj : public NodeUnloadObj {
+        GX_GOBJECT(T2DNodeUnloadObj);
+    public:
+        GTexture2D::Node* nodeOut;
+    };
+
+    
+
+
+    class FBNodeLoadObj : public NodeLoadObj {
+        GX_GOBJECT(FBNodeLoadObj);
+    public:
+        GFrameBuffer::Node* nodeOut;
+
+        bool enableDepth;
+        GTexture* texTarget;
+    };
+    class FBNodeUnloadObj : public NodeUnloadObj {
+        GX_GOBJECT(FBNodeUnloadObj);
+    public:
+        GFrameBuffer::Node* nodeOut;
+    };
+
+
 private:
     GContext();
 	virtual ~GContext();
@@ -50,44 +106,38 @@ private:
 	virtual void androidDestroy();
 	virtual void androidRecreate(GWindow* win);
 #endif
+//Shader
 public:
 	GSRGraphics* getSRGraphics(GSRGraphics::ID srID);
     GSRTexture2D* getSRTexture2D(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm);
+//Painter
 public:
 	GPainter& getPainter() {
 		return m_Painter;
 	}
+//Texture
 public:
     GTexture2D* loadTexture2D(const gchar* fileName);
-    
     GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param);
 private:
 	void addTextureNodeInMT(GTexture::Node* node);
 	void removeTextureNodeInMT(GTexture::Node* node);
-
-	class T2DNodeLoadObj : public GObject {
-		friend class GObject;
-		GX_GOBJECT(T2DNodeLoadObj);
-	public:
-		GContext* context;
-		GDib* dib;
-		GTexture2D::Parameter* param;
-		GTexture2D::Node* nodeOut;
-	};
-	class T2DNodeUnloadObj : public GObject {
-		friend class GObject;
-		GX_GOBJECT(T2DNodeUnloadObj);
-	public:
-		GContext* context;
-		GTexture2D::Node* nodeOut;
-	};
 	bool loadTexture2DNode(GTexture::Node* node, GDib* dib, GTexture2D::Parameter* param);
 	void unloadTextureNode(GTexture::Node* node);
+//FrameBuffer
+public:
+
+private:
+    void addFrameBufferNodeInMT(GFrameBuffer::Node* node);
+    void removeFrameBufferNodeInMT(GFrameBuffer::Node* node);
+    bool loadFrameBufferNode(GFrameBuffer::Node* node);
+    void unloadFrameBufferNode(GFrameBuffer::Node* node);
     
 private:
-	GPainter m_Painter;
-	GShader* m_Shaders[SRIDCount];
-	GDataList<GTexture::Handle> m_Textures;
+	GPainter                        m_Painter;
+	GShader*                        m_Shaders[SRIDCount];
+	GDataList<GTexture::Handle>     m_Textures;
+    GDataList<GFrameBuffer::Handle> m_FrameBuffers;
 };
 
 #include "GXGObjectUD.h"

@@ -26,6 +26,13 @@ public:
 		gint32 wrapV;
 	};
 public:
+
+    inline gint32 getWidth() {
+        return m_Width;
+    }
+    inline gint32 getHeight() {
+        return m_Height;
+    }
     
     
     
