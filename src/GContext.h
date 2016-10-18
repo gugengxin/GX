@@ -65,10 +65,12 @@ private:
     public:
         GDib* dib;
     };
-    class T2DNodeCreateObj : public T2DNodeLoadObjBase {
-        GX_GOBJECT(T2DNodeCreateObj);
+    class T2DNodeLoadCreateObj : public T2DNodeLoadObjBase {
+		GX_GOBJECT(T2DNodeLoadCreateObj);
     public:
-
+		GX::PixelFormat pixelFormat;
+		gint32          width;
+		gint32          height;
     };
     class T2DNodeUnloadObj : public NodeUnloadObj {
         GX_GOBJECT(T2DNodeUnloadObj);
@@ -117,12 +119,13 @@ public:
 	}
 //Texture
 public:
-    GTexture2D* loadTexture2D(const gchar* fileName);
     GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param);
+	GTexture2D* loadCreateTexture2D(GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param);
 private:
 	void addTextureNodeInMT(GTexture::Node* node);
 	void removeTextureNodeInMT(GTexture::Node* node);
 	bool loadTexture2DNode(GTexture::Node* node, GDib* dib, GTexture2D::Parameter* param);
+	bool loadTexture2DNode(GTexture::Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param);
 	void unloadTextureNode(GTexture::Node* node);
 //FrameBuffer
 public:

@@ -33,3 +33,13 @@ void GTexture2D::config(Node* node,GDib* dib,Parameter* param)
     m_Width=dib->getWidth();
     m_Height=dib->getHeight();
 }
+
+void GTexture2D::config(Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, Parameter* param)
+{
+	GX_UNUSED(pixelFormat);
+	GX_UNUSED(param);
+
+	setNode(node);
+	m_Width = width;
+	m_Height = height;
+}

@@ -46,6 +46,7 @@
     <ClCompile Include="..\..\src\GFileManager.cpp" />
     <ClCompile Include="..\..\src\GFileReader.cpp" />
     <ClCompile Include="..\..\src\GFileWriter.cpp" />
+    <ClCompile Include="..\..\src\GFrameBuffer.cpp" />
     <ClCompile Include="..\..\src\GJavaAPI.cpp" />
     <ClCompile Include="..\..\src\GJavaCAPI.cpp" />
     <ClCompile Include="..\..\src\GJavaClass.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="..\..\src\GFileManager.h" />
     <ClInclude Include="..\..\src\GFileReader.h" />
     <ClInclude Include="..\..\src\GFileWriter.h" />
+    <ClInclude Include="..\..\src\GFrameBuffer.h" />
     <ClInclude Include="..\..\src\GJavaAPI.h" />
     <ClInclude Include="..\..\src\GJavaCAPI.h" />
     <ClInclude Include="..\..\src\GJavaClass.h" />

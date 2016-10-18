@@ -12,12 +12,12 @@ for /r %GX_ROOT%\src %%i in (*.h,*.cpp) do (
 	%GX_TE% -i %%i -o %%i -oe UTF-8 -oebom8 1
 )
 
-for /r %GX_ROOT%\test\src %%i in (*.h,*.cpp) do (
+for /r %GX_ROOT%/test\src %%i in (*.h,*.cpp) do (
 	echo %%i
 	%GX_TE% -i %%i -o %%i -oe UTF-8 -oebom8 1
 )
 
-for /r %GX_ROOT%\tool\cmd\shared_src %%i in (*.h,*.cpp) do (
+for /r %GX_ROOT%/tool\cmd\shared_src %%i in (*.h,*.cpp) do (
 	echo %%i
 	%GX_TE% -i %%i -o %%i -oe UTF-8 -oebom8 1
 )

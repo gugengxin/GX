@@ -38,6 +38,7 @@ public:
     
 private:
     void config(Node* node,GDib* dib,Parameter* param);
+	void config(Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, Parameter* param);
     
 private:
     gint32 m_Width;

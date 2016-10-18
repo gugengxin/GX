@@ -40,6 +40,9 @@
     <Filter Include="src\Window\texture">
       <UniqueIdentifier>{eb06fe40-321b-42a8-9e4b-bd22143e6750}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Window\context">
+      <UniqueIdentifier>{6125dfc3-c48c-42fd-825b-46df102a1c85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GClass.cpp">
@@ -119,15 +122,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GJavaJAPI.cpp">
       <Filter>src\Unuse</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GContext.cpp">
-      <Filter>src\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GD3DContext.cpp">
-      <Filter>src\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GOGLContext.cpp">
-      <Filter>src\Window</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GXDirectX.cpp">
       <Filter>src\Window</Filter>
@@ -261,9 +255,6 @@
     <ClCompile Include="..\..\src\GJpeg.cpp">
       <Filter>src\Window\texture</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GMTLContext.cpp">
-      <Filter>src\Window</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GMShader.cpp">
       <Filter>src\Window\shader</Filter>
     </ClCompile>
@@ -281,6 +272,21 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GXData.cpp">
       <Filter>src\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFrameBuffer.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GContext.cpp">
+      <Filter>src\Window\context</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GD3DContext.cpp">
+      <Filter>src\Window\context</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GMTLContext.cpp">
+      <Filter>src\Window\context</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GOGLContext.cpp">
+      <Filter>src\Window\context</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -379,15 +385,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GJavaJAPI.h">
       <Filter>src\Unuse</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GContext.h">
-      <Filter>src\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GD3DContext.h">
-      <Filter>src\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GOGLContext.h">
-      <Filter>src\Window</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GXDirectX.h">
       <Filter>src\Window</Filter>
@@ -545,9 +542,6 @@
     <ClInclude Include="..\..\src\GJpeg.h">
       <Filter>src\Window\texture</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GMTLContext.h">
-      <Filter>src\Window</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GMShader.h">
       <Filter>src\Window\shader</Filter>
     </ClInclude>
@@ -565,6 +559,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GXData.h">
       <Filter>src\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFrameBuffer.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GContext.h">
+      <Filter>src\Window\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GD3DContext.h">
+      <Filter>src\Window\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GMTLContext.h">
+      <Filter>src\Window\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GOGLContext.h">
+      <Filter>src\Window\context</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

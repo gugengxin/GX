@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
     for(int i=0;i<argc;i++) {
         GCTextEditor te;
         te.setText(QString((const char*)argv[i]));
-        te.replace(QString("\\n"),QString("\n"));
-        te.replace(QString("\\t"),QString("\t"));
+        //te.replace(QString("\\n"),QString("\n"));
+        //te.replace(QString("\\t"),QString("\t"));
         argList.append(te.getText());
     }
     /*

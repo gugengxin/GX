@@ -56,13 +56,13 @@ GContext::T2DNodeLoadObj::~T2DNodeLoadObj()
 
 }
 
-GX_GOBJECT_IMPLEMENT(GContext::T2DNodeCreateObj, T2DNodeLoadObjBase);
+GX_GOBJECT_IMPLEMENT(GContext::T2DNodeLoadCreateObj, T2DNodeLoadObjBase);
 
-GContext::T2DNodeCreateObj::T2DNodeCreateObj()
+GContext::T2DNodeLoadCreateObj::T2DNodeLoadCreateObj()
 {
     
 }
-GContext::T2DNodeCreateObj::~T2DNodeCreateObj()
+GContext::T2DNodeLoadCreateObj::~T2DNodeLoadCreateObj()
 {
 
 }
@@ -212,6 +212,21 @@ GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTe
     return NULL;
 }
 
+GTexture2D*  GContext::loadCreateTexture2D(GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param)
+{
+	GTexture::Node* node = new GTexture::Node();
+	if (loadTexture2DNode(node, pixelFormat, width, height, param)) {
+		GTexture2D* tex2d = GTexture2D::alloc();
+		tex2d->config(node, pixelFormat, width, height, param);
+		GO::autorelease(tex2d);
+		return tex2d;
+	}
+	else {
+		delete node;
+	}
+	return NULL;
+}
+
 void GContext::addTextureNodeInMT(GTexture::Node* node)
 {
 	m_Textures.add(node);
@@ -231,6 +246,30 @@ bool GContext::loadTexture2DNode(GTexture::Node* node, GDib* dib, GTexture2D::Pa
 	T2DNodeLoadObj* obj = T2DNodeLoadObj::alloc();
 	obj->context = this;
 	obj->dib = dib;
+	obj->param = param;
+	obj->nodeOut = node;
+	if (GThread::current()->isMain()) {
+		loadTexture2DNodeInMT(obj);
+	}
+	else {
+		GThread::current()->getRunLoop()->perform(loadTexture2DNodeInMT, obj, 0, true);
+	}
+	GO::release(obj);
+
+	return node->isValid();
+}
+
+bool GContext::loadTexture2DNode(GTexture::Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param)
+{
+	if (pixelFormat != GX::PixelFormatRGBA8888) {
+		return false;
+	}
+
+	T2DNodeLoadCreateObj* obj=T2DNodeLoadCreateObj::alloc();
+	obj->context = this;
+	obj->pixelFormat = pixelFormat;
+	obj->width = width;
+	obj->height = height;
 	obj->param = param;
 	obj->nodeOut = node;
 	if (GThread::current()->isMain()) {

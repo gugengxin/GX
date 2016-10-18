@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by Gengxin Gu on 16/5/9.
 //
 
@@ -665,7 +665,7 @@ GDib* GOGLContext::loadTexture2DNodeReadyDib(GDib* dib)
 
 void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
 {
-    GContext::T2DNodeLoadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObj*, obj);
+	GContext::T2DNodeLoadObjBase& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObjBase*, obj);
     GTexture::Handle& handle = nodeObj.nodeOut->getData();
     
     nodeObj.context->readyTexture();
@@ -673,6 +673,25 @@ void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
 	GX_glGenTextures(1, &handle.m_Name);
     
 	if (handle.m_Name != 0) {
+
+		GX::PixelFormat pf;
+		gint32 w, h;
+		void* data;
+
+		if (obj->isKindOfClass(GContext::T2DNodeLoadCreateObj::gclass)) {
+			pf = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->pixelFormat;
+			w = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->width;
+			h = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->height;
+			data = NULL;
+		}
+		else {
+			GDib*& dib = GX_CAST_R(GContext::T2DNodeLoadObj*, obj)->dib;
+			pf = dib->getPixelFormat();
+			w = dib->getWidth();
+			h = dib->getHeight();
+			data = dib->getDataPtr();
+		}
+
         
 		GX_glBindTexture(GL_TEXTURE_2D, handle.m_Name);
         
@@ -714,7 +733,7 @@ void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
             GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
         }
         
-        if (nodeObj.dib->getWidth()%4==0) {
+        if (w%4==0) {
             GX_glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
         }
         else {
@@ -723,35 +742,35 @@ void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
         
         bool bTF=true;
         
-        switch(nodeObj.dib->getPixelFormat()) {
+        switch(pf) {
             case GX::PixelFormatRGBA8888:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, nodeObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w,h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
             }
                 break;
             case GX::PixelFormatRGB888:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, nodeObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  w,h, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
             }
                 break;
             case GX::PixelFormatRGB565:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, nodeObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  w,h, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
             }
                 break;
             case GX::PixelFormatRGBA4444:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, nodeObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  w,h, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
             }
                 break;
             case GX::PixelFormatRGBA5551:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, nodeObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  w,h, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
             }
                 break;
             case GX::PixelFormatA8:
             {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, nodeObj.dib->getWidth(),nodeObj.dib->getHeight(), 0, GL_ALPHA, GL_UNSIGNED_BYTE, nodeObj.dib->getDataPtr());
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, w,h, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
             }
                 break;
             default:
