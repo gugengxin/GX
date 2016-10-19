@@ -347,6 +347,12 @@ void GD3DContext::readyTexture()
 void GD3DContext::doneTexture()
 {
 }
+void GD3DContext::readyFrameBuffer()
+{
+}
+void GD3DContext::doneFrameBuffer()
+{
+}
 
 GDib* GD3DContext::loadTexture2DNodeReadyDib(GDib* dib)
 {
@@ -376,14 +382,33 @@ GDib* GD3DContext::loadTexture2DNodeReadyDib(GDib* dib)
 
 void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 {
-	GContext::T2DNodeLoadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObj*, obj);
+	GContext::T2DNodeLoadObjBase& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObjBase*, obj);
+	GTexture::Handle& handle = nodeObj.nodeOut->getData();
 
 	nodeObj.context->readyTexture();
 
-	GTexture::Handle& handle = nodeObj.nodeOut->getData();
+	GX::PixelFormat pf;
+	gint32 w, h, s;
+	void* dibData;
+
+	if (obj->isKindOfClass(GContext::T2DNodeLoadCreateObj::gclass)) {
+		pf = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->pixelFormat;
+		w = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->width;
+		h = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->height;
+		s = 0;
+		dibData = NULL;
+	}
+	else {
+		GDib*& dib = GX_CAST_R(GContext::T2DNodeLoadObj*, obj)->dib;
+		pf = dib->getPixelFormat();
+		w = dib->getWidth();
+		h = dib->getHeight();
+		s = dib->getStride();
+		dibData = dib->getDataPtr();
+	}
 
 	D3D10_TEXTURE2D_DESC desc = { 0 };
-	switch (nodeObj.dib->getPixelFormat())
+	switch (pf)
 	{
 	case GX::PixelFormatA8:
 	{
@@ -419,8 +444,8 @@ void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 		break;
 	}
 	if (desc.Format!=0) {
-		desc.Width = nodeObj.dib->getWidth();
-		desc.Height = nodeObj.dib->getHeight();
+		desc.Width = w;
+		desc.Height = h;
 		desc.MipLevels = 1;
 		desc.ArraySize = 1;
 		desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
@@ -436,12 +461,17 @@ void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 
 		ID3D10Device* device = GX::D3DDevice();
 
-		D3D10_SUBRESOURCE_DATA initialData;
-		initialData.pSysMem = nodeObj.dib->getDataPtr();
-		initialData.SysMemPitch = nodeObj.dib->getStride();
-		initialData.SysMemSlicePitch = 0;
-
-		HRESULT hr = device->CreateTexture2D(&desc, &initialData, &pTex2D);
+		HRESULT hr;
+		if (dibData) {
+			D3D10_SUBRESOURCE_DATA initialData;
+			initialData.pSysMem = dibData;
+			initialData.SysMemPitch = s;
+			initialData.SysMemSlicePitch = 0;
+			hr = device->CreateTexture2D(&desc, &initialData, &pTex2D);
+		}
+		else {
+			hr = device->CreateTexture2D(&desc, NULL, &pTex2D);
+		}
 		if (SUCCEEDED(hr)) {
 			hr=device->CreateShaderResourceView(pTex2D, NULL, &handle.m_Name);
 			pTex2D->Release();
@@ -510,5 +540,18 @@ void GD3DContext::unloadTextureNodeForContext(GTexture::Node* node)
 	handle.m_SamplerState = NULL;
 }
 
+
+void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
+{
+
+}
+void GD3DContext::unloadFrameBufferNodeInMT(GObject* obj)
+{
+
+}
+void GD3DContext::unloadFrameBufferNodeForContext(GFrameBuffer::Node* node)
+{
+
+}
 
 #endif

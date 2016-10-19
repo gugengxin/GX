@@ -415,6 +415,7 @@ GDib* GMTLContext::loadTexture2DNodeReadyDib(GDib* dib)
 
 void GMTLContext::loadTexture2DNodeInMT(GObject* obj)
 {
+#error T2DNodeLoadCreateObj
     GContext::T2DNodeLoadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObj*, obj);
     
     nodeObj.context->readyTexture();
