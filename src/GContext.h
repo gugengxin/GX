@@ -133,7 +133,8 @@ public:
 private:
     void addFrameBufferNodeInMT(GFrameBuffer::Node* node);
     void removeFrameBufferNodeInMT(GFrameBuffer::Node* node);
-    bool loadFrameBufferNode(GFrameBuffer::Node* node);
+	bool loadFrameBufferNode(GFrameBuffer::Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param, bool enableDepth);
+	bool loadFrameBufferNode(GFrameBuffer::Node* node, GTexture* texTarget, bool enableDepth);
     void unloadFrameBufferNode(GFrameBuffer::Node* node);
     
 private:

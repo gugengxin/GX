@@ -20,6 +20,7 @@
 // Down can't include other h file
 
 class GContext;
+class GTexture;
 
 //仅保存，生成和销毁都在Context完成
 class GFrameBuffer : public GObject
@@ -40,7 +41,8 @@ public:
             m_Name = 0;
             m_DepthName=0;
 #elif defined(GX_DIRECTX)
-
+			m_Name=NULL;
+			m_DepthName=NULL;
 #elif defined(GX_METAL)
 
 #endif
@@ -49,7 +51,7 @@ public:
 #if defined(GX_OPENGL)
             return m_Name != 0;
 #elif defined(GX_DIRECTX)
-
+			return m_Name != NULL;
 #elif defined(GX_METAL)
 
 #endif
@@ -60,7 +62,8 @@ public:
         GLuint      m_Name;
         GLuint      m_DepthName;
 #elif defined(GX_DIRECTX)
-
+		ID3D10RenderTargetView* m_Name;
+		ID3D10DepthStencilView* m_DepthName;
 #elif defined(GX_METAL)
         
 #endif
@@ -85,6 +88,7 @@ public:
 
     private:
         GContext* m_Context;
+		GTexture* m_TexTarget;
     };
     
 public:

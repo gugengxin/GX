@@ -16,7 +16,8 @@ GX_GOBJECT_IMPLEMENT(GFrameBuffer, GObject);
 
 GFrameBuffer::Node::Node()
 {
-    m_Context=NULL;
+    m_Context = NULL;
+	m_TexTarget = NULL;
 }
 
 GFrameBuffer::Node::~Node()

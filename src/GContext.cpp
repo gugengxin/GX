@@ -310,13 +310,23 @@ void GContext::removeFrameBufferNodeInMT(GFrameBuffer::Node* node)
     m_FrameBuffers.remove(node,false);
 }
 
-bool GContext::loadFrameBufferNode(GFrameBuffer::Node* node)
+bool GContext::loadFrameBufferNode(GFrameBuffer::Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param, bool enableDepth)
+{
+	GTexture2D* texTarget = loadCreateTexture2D(pixelFormat, width, height, param);
+	if (!texTarget) {
+		return false;
+	}
+	return loadFrameBufferNode(node, texTarget, enableDepth);
+}
+
+bool GContext::loadFrameBufferNode(GFrameBuffer::Node* node, GTexture* texTarget, bool enableDepth)
 {
     FBNodeLoadObj* obj = FBNodeLoadObj::alloc();
 
-    obj->context=this;
-
-    obj->nodeOut=node;
+    obj->context = this;
+	obj->nodeOut = node;
+	obj->texTarget = texTarget;
+	obj->enableDepth = enableDepth;
 
     if (GThread::current()->isMain()) {
         loadFrameBufferNodeInMT(obj);

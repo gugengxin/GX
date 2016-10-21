@@ -867,6 +867,8 @@ void GOGLContext::loadFrameBufferNodeInMT(GObject* obj)
 
     if (handle.isValid()) {
         nodeObj.nodeOut->m_Context=nodeObj.context;
+		nodeObj.nodeOut->m_TexTarget=nodeObj.texTarget;
+		GO::retain(nodeObj.nodeOut->m_TexTarget);
         nodeObj.nodeOut->m_Context->addFrameBufferNodeInMT(nodeObj.nodeOut);
     }
 

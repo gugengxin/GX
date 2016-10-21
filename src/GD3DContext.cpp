@@ -543,7 +543,25 @@ void GD3DContext::unloadTextureNodeForContext(GTexture::Node* node)
 
 void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 {
+	GContext::FBNodeLoadObj& nodeObj = *GX_CAST_R(GContext::FBNodeLoadObj*, obj);
+	GFrameBuffer::Handle& handle = nodeObj.nodeOut->getData();
 
+	if (!nodeObj.texTarget->isKindOfClass(GTexture2D::gclass)) {
+		return;
+	}
+
+	nodeObj.context->readyFrameBuffer();
+
+	
+
+	nodeObj.context->doneFrameBuffer();
+
+	if (handle.isValid()) {
+		nodeObj.nodeOut->m_Context = nodeObj.context;
+		nodeObj.nodeOut->m_TexTarget = nodeObj.texTarget;
+		GO::retain(nodeObj.nodeOut->m_TexTarget);
+		nodeObj.nodeOut->m_Context->addFrameBufferNodeInMT(nodeObj.nodeOut);
+	}
 }
 void GD3DContext::unloadFrameBufferNodeInMT(GObject* obj)
 {
