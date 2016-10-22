@@ -8,6 +8,7 @@
 
 #include "GFrameBuffer.h"
 //Down include other h file
+#include "GContext.h"
 
 //Up include other h file
 #include "GXGObject.h"
@@ -34,8 +35,8 @@ GFrameBuffer::GFrameBuffer()
 
 GFrameBuffer::~GFrameBuffer()
 {
-    if (m_Node) {
-        
+    if (m_Node && m_Node->getContext()) {
+        m_Node->getContext()->unloadFrameBufferNode(m_Node);
     }
 }
 

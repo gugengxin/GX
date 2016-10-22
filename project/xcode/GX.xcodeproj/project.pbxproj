@@ -685,9 +685,25 @@
 			path = ../../src;
 			sourceTree = "<group>";
 		};
+		CAA2D4DF1DBAFBB4007E53C8 /* context */ = {
+			isa = PBXGroup;
+			children = (
+				CABB5CC51CE0E40500D5B648 /* GOGLContext.h */,
+				CABB5CC41CE0E40500D5B648 /* GOGLContext.cpp */,
+				CABB5CB91CE0E40500D5B648 /* GD3DContext.h */,
+				CABB5CB81CE0E40500D5B648 /* GD3DContext.cpp */,
+				CA446E391D67DFD5002E77DF /* GMTLContext.h */,
+				CA446E381D67DFD5002E77DF /* GMTLContext.cpp */,
+				CABB5CB71CE0E40500D5B648 /* GContext.h */,
+				CABB5CB61CE0E40500D5B648 /* GContext.cpp */,
+			);
+			name = context;
+			sourceTree = "<group>";
+		};
 		CABB5CD41CE0E45000D5B648 /* Window */ = {
 			isa = PBXGroup;
 			children = (
+				CAA2D4DF1DBAFBB4007E53C8 /* context */,
 				CADB5DC01CF9E6A30092C472 /* shader */,
 				CA4CD5441D508D3F008005CF /* texture */,
 				CABB5CC71CE0E40500D5B648 /* GXDirectX.h */,
@@ -698,14 +714,6 @@
 				CA446E3D1D67E36F002E77DF /* GXMetal.cpp */,
 				CA1AD2761CD87CA900CEA1DC /* GWindow.h */,
 				CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */,
-				CABB5CC51CE0E40500D5B648 /* GOGLContext.h */,
-				CABB5CC41CE0E40500D5B648 /* GOGLContext.cpp */,
-				CABB5CB91CE0E40500D5B648 /* GD3DContext.h */,
-				CABB5CB81CE0E40500D5B648 /* GD3DContext.cpp */,
-				CA446E391D67DFD5002E77DF /* GMTLContext.h */,
-				CA446E381D67DFD5002E77DF /* GMTLContext.cpp */,
-				CABB5CB71CE0E40500D5B648 /* GContext.h */,
-				CABB5CB61CE0E40500D5B648 /* GContext.cpp */,
 				CAA7AFE81CFDF19E002D724E /* GPainter.h */,
 				CAA7AFE71CFDF19E002D724E /* GPainter.cpp */,
 				CABB3FAF1CFE12D000A7367C /* GBuffer.h */,

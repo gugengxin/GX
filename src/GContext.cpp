@@ -134,6 +134,20 @@ void GContext::destroy()
 {
     //GX_LOG_W(PrioINFO,"GContext","destroy");
     {
+        GFrameBuffer::Node* p=GX_CAST_R(GFrameBuffer::Node*, m_FrameBuffers.last());
+        while (p) {
+            GFrameBuffer::Node* pTemp=GX_CAST_R(GFrameBuffer::Node*, p->getPrev());
+            if (p->isValid()) {
+                readyTexture();
+                unloadFrameBufferNodeForContext(p);
+                doneTexture();
+            }
+            m_FrameBuffers.remove(p,false);
+            p->m_Context=NULL;
+            p=pTemp;
+        }
+    }
+    {
         GTexture::Node* p=GX_CAST_R(GTexture::Node*, m_Textures.last());
         while (p) {
             GTexture::Node* pTemp=GX_CAST_R(GTexture::Node*, p->getPrev());
@@ -342,7 +356,18 @@ bool GContext::loadFrameBufferNode(GFrameBuffer::Node* node, GTexture* texTarget
 
 void GContext::unloadFrameBufferNode(GFrameBuffer::Node* node)
 {
+    FBNodeUnloadObj* obj = FBNodeUnloadObj::alloc();
+    obj->context = this;
+    obj->nodeOut = node;
 
+    if (GThread::current()->isMain()) {
+        unloadFrameBufferNodeInMT(obj);
+    }
+    else {
+        GThread::current()->getRunLoop()->perform(unloadFrameBufferNodeInMT, obj, 0, true);
+    }
+    
+    GO::release(obj);
 }
 
 

@@ -19,10 +19,11 @@
 #include "GXGObject.h"
 class GContext;
 
-//仅保存，生成和销毁都在Context完成
 class GTexture : public GObject {
     GX_GOBJECT(GTexture);
 public:
+
+    //仅保存，生成和销毁都在Context完成
 	class Handle {
 #if defined(GX_OPENGL)
 		friend class GOGLContext;
@@ -96,7 +97,8 @@ public:
         void*   m_SamplerState;
 #endif
 	};
-	
+
+    //仅保存，生成和销毁都在Context完成
 	class Node : public GDataList<Handle>::Node {
 #if defined(GX_OPENGL)
 		friend class GOGLContext;
@@ -113,6 +115,9 @@ public:
 		inline bool isValid() {
 			return getData().isValid();
 		}
+        inline GContext* getContext() {
+            return m_Context;
+        }
     private:
         GContext* m_Context;
     };

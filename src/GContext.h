@@ -28,6 +28,8 @@ class GContext : public GContextBase
 #elif defined(GX_METAL)
     friend class GMTLContext;
 #endif
+    friend class GTexture;
+    friend class GFrameBuffer;
 private:
 	enum ShaderID {
 		SRID_Graphics = 0,
@@ -52,8 +54,6 @@ private:
         GContext* context;
     };
 
-
-
     class T2DNodeLoadObjBase : public NodeLoadObj {
         GX_GOBJECT(T2DNodeLoadObjBase);
     public:
@@ -77,9 +77,6 @@ private:
     public:
         GTexture2D::Node* nodeOut;
     };
-
-    
-
 
     class FBNodeLoadObj : public NodeLoadObj {
         GX_GOBJECT(FBNodeLoadObj);

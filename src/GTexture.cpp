@@ -7,7 +7,7 @@
 //
 
 #include "GTexture.h"
-
+#include "GContext.h"
 
 #include "GXGObject.h"
 
@@ -30,7 +30,7 @@ GTexture::GTexture()
 
 GTexture::~GTexture()
 {
-    if (m_Node) {
-        
+    if (m_Node && m_Node->getContext()) {
+        m_Node->getContext()->unloadTextureNode(m_Node);
     }
 }

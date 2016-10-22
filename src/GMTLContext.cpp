@@ -415,55 +415,71 @@ GDib* GMTLContext::loadTexture2DNodeReadyDib(GDib* dib)
 
 void GMTLContext::loadTexture2DNodeInMT(GObject* obj)
 {
-#error T2DNodeLoadCreateObj
-    GContext::T2DNodeLoadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObj*, obj);
-    
-    nodeObj.context->readyTexture();
-    
+    GContext::T2DNodeLoadObjBase& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObjBase*, obj);
     GTexture::Handle& handle = nodeObj.nodeOut->getData();
     
+    nodeObj.context->readyTexture();
+
+    GX::PixelFormat pf;
+    gint32 w, h, s;
+    void* data;
+
+    if (obj->isKindOfClass(GContext::T2DNodeLoadCreateObj::gclass)) {
+        pf = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->pixelFormat;
+        w = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->width;
+        h = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->height;
+        s = w*GX_PIXEL_FORMAT_SIZE(pf);
+        data = NULL;
+    }
+    else {
+        GDib*& dib = GX_CAST_R(GContext::T2DNodeLoadObj*, obj)->dib;
+        pf = dib->getPixelFormat();
+        w = dib->getWidth();
+        h = dib->getHeight();
+        s = dib->getStride();
+        data = dib->getDataPtr();
+    }
     
     
-    MTLPixelFormat pf=MTLPixelFormatInvalid;
+    MTLPixelFormat mpf=MTLPixelFormatInvalid;
     
-    switch (nodeObj.dib->getPixelFormat())
+    switch (pf)
     {
         case GX::PixelFormatA8:
-            pf=MTLPixelFormatA8Unorm;
+            mpf=MTLPixelFormatA8Unorm;
             break;
 #if defined(GX_OS_IPHONE)
         case GX::PixelFormatRGB565:
-            pf=MTLPixelFormatB5G6R5Unorm;
+            mpf=MTLPixelFormatB5G6R5Unorm;
             break;
         case GX::PixelFormatRGBA4444:
-            pf=MTLPixelFormatABGR4Unorm;
+            mpf=MTLPixelFormatABGR4Unorm;
             break;
         case GX::PixelFormatRGBA5551:
-            pf=MTLPixelFormatA1BGR5Unorm;
+            mpf=MTLPixelFormatA1BGR5Unorm;
             break;
 #endif
         case GX::PixelFormatRGBA8888:
-            pf=MTLPixelFormatRGBA8Unorm;
+            mpf=MTLPixelFormatRGBA8Unorm;
             break;
         case GX::PixelFormatBGRA8888:
-            pf=MTLPixelFormatBGRA8Unorm;
+            mpf=MTLPixelFormatBGRA8Unorm;
             break;
         default:
             break;
     }
     
-    if (pf!=MTLPixelFormatInvalid) {
+    if (mpf!=MTLPixelFormatInvalid) {
         id <MTLDevice> device=GX_CAST_R(id <MTLDevice>,nodeObj.context->getDevice());
         
-        MTLTextureDescriptor* texDesc=[MTLTextureDescriptor texture2DDescriptorWithPixelFormat:pf
-                                                                                         width:nodeObj.dib->getWidth()
-                                                                                        height:nodeObj.dib->getHeight()
-                                                                                     mipmapped:NO];
+        MTLTextureDescriptor* texDesc=[MTLTextureDescriptor texture2DDescriptorWithPixelFormat:mpf width:w height:h mipmapped:NO];
         id<MTLTexture> tex=[device newTextureWithDescriptor:texDesc];
         if (tex) {
-            MTLRegion region = MTLRegionMake2D(0, 0, nodeObj.dib->getWidth(), nodeObj.dib->getHeight());
-            [tex replaceRegion:region mipmapLevel:0 withBytes:nodeObj.dib->getDataPtr() bytesPerRow:nodeObj.dib->getStride()];
-            
+            if (data) {
+                MTLRegion region = MTLRegionMake2D(0, 0, w, h);
+                [tex replaceRegion:region mipmapLevel:0 withBytes:data bytesPerRow:s];
+            }
+
             MTLSamplerDescriptor* sprDesc=[[MTLSamplerDescriptor alloc] init];
             if (nodeObj.param) {
                 switch (nodeObj.param->filter) {
@@ -511,8 +527,6 @@ void GMTLContext::loadTexture2DNodeInMT(GObject* obj)
             }
         }
     }
-    
-    
     
     nodeObj.context->doneTexture();
     
