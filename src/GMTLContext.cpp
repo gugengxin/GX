@@ -536,31 +536,22 @@ void GMTLContext::loadTexture2DNodeInMT(GObject* obj)
     }
 }
 
-void GMTLContext::unloadTextureNodeInMT(GObject* obj)
-{
-    GContext::T2DNodeUnloadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeUnloadObj*, obj);
-    GTexture::Handle& handle = nodeObj.nodeOut->getData();
-    
-    nodeObj.context->readyTexture();
-    
-    [GX_CAST_R(id, handle.m_Name) release];
-    handle.m_Name = NULL;
-    [GX_CAST_R(id, handle.m_SamplerState) release];
-    handle.m_SamplerState = NULL;
-    
-    nodeObj.context->doneTexture();
-    
-    nodeObj.nodeOut->m_Context->removeTextureNodeInMT(nodeObj.nodeOut);
-    nodeObj.nodeOut->m_Context = NULL;
-}
-
 void GMTLContext::unloadTextureNodeForContext(GTexture::Node* node)
 {
-    GTexture::Handle& handle = node->getData();
-    [GX_CAST_R(id, handle.m_Name) release];
-    handle.m_Name = NULL;
-    [GX_CAST_R(id, handle.m_SamplerState) release];
-    handle.m_SamplerState = NULL;
+    if (node->isValid()) {
+        GTexture::Handle& handle = node->getData();
+        
+        readyTexture();
+        
+        [GX_CAST_R(id, handle.m_Name) release];
+        handle.m_Name = NULL;
+        [GX_CAST_R(id, handle.m_SamplerState) release];
+        handle.m_SamplerState = NULL;
+        
+        doneTexture();
+        
+        node->m_Context=NULL;
+    }
 }
 
 #endif
