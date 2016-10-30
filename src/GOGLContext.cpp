@@ -796,27 +796,19 @@ void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
     }
 }
 
-void GOGLContext::unloadTextureNodeInMT(GObject* obj)
-{
-	GContext::T2DNodeUnloadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeUnloadObj*, obj);
-    GTexture::Handle& handle = nodeObj.nodeOut->getData();
-
-    nodeObj.context->readyTexture();
-
-    GX_glDeleteTextures(1, &handle.m_Name);
-    handle.m_Name = 0;
-
-    nodeObj.context->doneTexture();
-
-    nodeObj.nodeOut->m_Context->removeTextureNodeInMT(nodeObj.nodeOut);
-    nodeObj.nodeOut->m_Context=NULL;
-}
-
 void GOGLContext::unloadTextureNodeForContext(GTexture::Node* node)
 {
-    GTexture::Handle& handle = node->getData();
-    GX_glDeleteTextures(1, &handle.m_Name);
-    handle.m_Name = 0;
+	if (node->isValid()) {
+
+		GTexture::Handle& handle = node->getData();
+		readyTexture();
+		GX_glDeleteTextures(1, &handle.m_Name);
+		handle.m_Name = 0;
+		doneTexture();
+
+		node->m_Context = NULL;
+	}
+
 }
 
 
@@ -873,11 +865,26 @@ void GOGLContext::loadFrameBufferNodeInMT(GObject* obj)
     }
 
 }
-void GOGLContext::unloadFrameBufferNodeInMT(GObject* obj)
-{
-}
 void GOGLContext::unloadFrameBufferNodeForContext(GFrameBuffer::Node* node)
 {
+	if (node->isValid()) {
+		GFrameBuffer::Handle& handle = node->getData();
+
+		readyFrameBuffer();
+
+		GX_glDeleteFramebuffers(1, &handle.m_Name);
+		handle.m_Name = 0;
+		if (handle.m_DepthName) {
+			GX_glDeleteRenderbuffers(1, &handle.m_DepthName);
+			handle.m_DepthName = 0;
+		}
+
+		doneFrameBuffer();
+
+		node->m_Context = NULL;
+		GO::release(node->m_TexTarget);
+		node->m_TexTarget = NULL;
+	}
 }
 
 

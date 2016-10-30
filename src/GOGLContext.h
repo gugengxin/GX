@@ -57,11 +57,9 @@ protected:
 protected:
 	GDib* loadTexture2DNodeReadyDib(GDib* dib);
 	static void loadTexture2DNodeInMT(GObject* obj);
-    static void unloadTextureNodeInMT(GObject* obj);
 	void unloadTextureNodeForContext(GTexture::Node* node);
 protected:
     static void loadFrameBufferNodeInMT(GObject* obj);
-    static void unloadFrameBufferNodeInMT(GObject* obj);
     void unloadFrameBufferNodeForContext(GFrameBuffer::Node* node);
 
 private:

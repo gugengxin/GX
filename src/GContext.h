@@ -124,6 +124,7 @@ private:
 	bool loadTexture2DNode(GTexture::Node* node, GDib* dib, GTexture2D::Parameter* param);
 	bool loadTexture2DNode(GTexture::Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param);
 	void unloadTextureNode(GTexture::Node* node);
+	static void unloadTextureNodeInMT(GObject* obj);
 //FrameBuffer
 public:
 
@@ -133,7 +134,7 @@ private:
 	bool loadFrameBufferNode(GFrameBuffer::Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param, bool enableDepth);
 	bool loadFrameBufferNode(GFrameBuffer::Node* node, GTexture* texTarget, bool enableDepth);
     void unloadFrameBufferNode(GFrameBuffer::Node* node);
-    
+	static void unloadFrameBufferNodeInMT(GObject* obj);
 private:
 	GPainter                        m_Painter;
 	GShader*                        m_Shaders[SRIDCount];

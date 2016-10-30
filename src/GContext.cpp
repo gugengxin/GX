@@ -137,13 +137,8 @@ void GContext::destroy()
         GFrameBuffer::Node* p=GX_CAST_R(GFrameBuffer::Node*, m_FrameBuffers.last());
         while (p) {
             GFrameBuffer::Node* pTemp=GX_CAST_R(GFrameBuffer::Node*, p->getPrev());
-            if (p->isValid()) {
-                readyTexture();
-                unloadFrameBufferNodeForContext(p);
-                doneTexture();
-            }
+			unloadFrameBufferNodeForContext(p);
             m_FrameBuffers.remove(p,false);
-            p->m_Context=NULL;
             p=pTemp;
         }
     }
@@ -151,13 +146,8 @@ void GContext::destroy()
         GTexture::Node* p=GX_CAST_R(GTexture::Node*, m_Textures.last());
         while (p) {
             GTexture::Node* pTemp=GX_CAST_R(GTexture::Node*, p->getPrev());
-            if (p->isValid()) {
-                readyTexture();
-                unloadTextureNodeForContext(p);
-                doneTexture();
-            }
+            unloadTextureNodeForContext(p);
             m_Textures.remove(p,false);
-            p->m_Context=NULL;
             p=pTemp;
         }
     }
@@ -313,6 +303,14 @@ void GContext::unloadTextureNode(GTexture::Node* node)
 	GO::release(obj);
 }
 
+void GContext::unloadTextureNodeInMT(GObject* obj)
+{
+	GContext::T2DNodeUnloadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeUnloadObj*, obj);
+
+	nodeObj.context->unloadTextureNodeForContext(nodeObj.nodeOut);
+
+	nodeObj.context->removeTextureNodeInMT(nodeObj.nodeOut);
+}
 
 void GContext::addFrameBufferNodeInMT(GFrameBuffer::Node* node)
 {
@@ -370,6 +368,14 @@ void GContext::unloadFrameBufferNode(GFrameBuffer::Node* node)
     GO::release(obj);
 }
 
+void GContext::unloadFrameBufferNodeInMT(GObject* obj)
+{
+	GContext::FBNodeUnloadObj& nodeObj = *GX_CAST_R(GContext::FBNodeUnloadObj*, obj);
+
+	nodeObj.context->unloadFrameBufferNodeForContext(nodeObj.nodeOut);
+
+	nodeObj.context->removeFrameBufferNodeInMT(nodeObj.nodeOut);
+}
 
 
 

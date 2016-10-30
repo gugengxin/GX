@@ -12,6 +12,8 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 #include "GXOpenGL.h"
+#include "GXDirectX.h"
+#include "GXMetal.h"
 
 #include "GDataList.h"
 
@@ -44,6 +46,7 @@ public:
 #elif defined(GX_DIRECTX)
 			m_Name=NULL;
 			m_DepthName=NULL;
+			m_RasterState=NULL;
 #elif defined(GX_METAL)
 
 #endif
@@ -65,6 +68,7 @@ public:
 #elif defined(GX_DIRECTX)
 		ID3D10RenderTargetView* m_Name;
 		ID3D10DepthStencilView* m_DepthName;
+		ID3D10RasterizerState*	m_RasterState;
 #elif defined(GX_METAL)
         
 #endif

@@ -379,7 +379,6 @@ GDib* GD3DContext::loadTexture2DNodeReadyDib(GDib* dib)
 	}
 	return NULL;
 }
-
 void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 {
 	GContext::T2DNodeLoadObjBase& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObjBase*, obj);
@@ -448,7 +447,12 @@ void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 		desc.Height = h;
 		desc.MipLevels = 1;
 		desc.ArraySize = 1;
-		desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
+		if (dibData) {
+			desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
+		}
+		else {//没有Dib数据，代表是为FrameBuffer创建
+			desc.BindFlags = D3D10_BIND_RENDER_TARGET|D3D10_BIND_SHADER_RESOURCE;
+		}
 		desc.SampleDesc.Count = 1;
 		desc.SampleDesc.Quality = 0;
 		desc.CPUAccessFlags = 0;
@@ -514,30 +518,22 @@ void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 		nodeObj.nodeOut->m_Context->addTextureNodeInMT(nodeObj.nodeOut);
 	}
 }
-void GD3DContext::unloadTextureNodeInMT(GObject* obj)
-{
-	GContext::T2DNodeUnloadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeUnloadObj*, obj);
-	GTexture::Handle& handle = nodeObj.nodeOut->getData();
-
-	nodeObj.context->readyTexture();
-
-	handle.m_Name->Release();
-	handle.m_Name = NULL;
-	handle.m_SamplerState->Release();
-	handle.m_SamplerState = NULL;
-
-	nodeObj.context->doneTexture();
-
-	nodeObj.nodeOut->m_Context->removeTextureNodeInMT(nodeObj.nodeOut);
-	nodeObj.nodeOut->m_Context = NULL;
-}
 void GD3DContext::unloadTextureNodeForContext(GTexture::Node* node)
 {
-	GTexture::Handle& handle = node->getData();
-	handle.m_Name->Release();
-	handle.m_Name = NULL;
-	handle.m_SamplerState->Release();
-	handle.m_SamplerState = NULL;
+	if (node->isValid()) {
+		GTexture::Handle& handle = node->getData();
+
+		readyTexture();
+
+		handle.m_Name->Release();
+		handle.m_Name = NULL;
+		handle.m_SamplerState->Release();
+		handle.m_SamplerState = NULL;
+
+		doneTexture();
+
+		node->m_Context = NULL;
+	}
 }
 
 
@@ -552,6 +548,65 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 
 	nodeObj.context->readyFrameBuffer();
 
+	ID3D10RenderTargetView* outRTView = NULL;
+	ID3D10DepthStencilView* outDSView = NULL;
+	ID3D10RasterizerState*	outRasterState = NULL;
+
+	ID3D10Device* device = GX::D3DDevice();
+	// 分配RGBA动态贴图
+	ID3D10ShaderResourceView* pTextureView = nodeObj.texTarget->getNode()->getData().getName();
+	ID3D10Texture2D* pTex2D = NULL;
+	pTextureView->GetResource((ID3D10Resource**)&pTex2D);
+	D3D10_TEXTURE2D_DESC dstex;
+	pTex2D->GetDesc(&dstex);
+
+	D3D10_RENDER_TARGET_VIEW_DESC descRT;
+	descRT.Format = dstex.Format;
+	descRT.ViewDimension = D3D10_RTV_DIMENSION_TEXTURE2D;
+	descRT.Texture2D.MipSlice = 0;
+	// for rendertarget
+	device->CreateRenderTargetView(pTex2D, &descRT, &outRTView);
+
+	if (nodeObj.enableDepth) {// 分配DepthStencil动态贴图
+		ID3D10Texture2D* pDSTex2D = NULL;
+		
+		dstex.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		dstex.Usage = D3D10_USAGE_DEFAULT;
+		dstex.BindFlags = D3D10_BIND_DEPTH_STENCIL;
+
+		device->CreateTexture2D(&dstex, NULL, &pDSTex2D);
+
+		D3D10_DEPTH_STENCIL_VIEW_DESC target_desc;
+		ZeroMemory(&target_desc, sizeof(target_desc));
+		target_desc.Format = dstex.Format;
+		target_desc.ViewDimension = D3D10_DSV_DIMENSION_TEXTURE2D;
+		target_desc.Texture2D.MipSlice = 0;
+
+		device->CreateDepthStencilView(pDSTex2D, &target_desc, &outDSView);
+
+		pDSTex2D->Release();
+	}
+	{// Rasterizer state对象
+		D3D10_RASTERIZER_DESC descRS;
+		ZeroMemory(&descRS, sizeof(descRS));
+
+		descRS.FillMode = D3D10_FILL_SOLID;
+		descRS.CullMode = D3D10_CULL_BACK;
+		descRS.FrontCounterClockwise = TRUE;
+		descRS.DepthBias = 0;
+		descRS.DepthBiasClamp = 0.0f;
+		descRS.SlopeScaledDepthBias = 0.0f;
+		descRS.DepthClipEnable = TRUE;
+		descRS.ScissorEnable = FALSE;
+		descRS.MultisampleEnable = FALSE;
+		descRS.AntialiasedLineEnable = FALSE;
+
+		device->CreateRasterizerState(&descRS, &outRasterState);
+	}
+	
+	handle.m_Name = outRTView;
+	handle.m_DepthName = outDSView;
+	handle.m_RasterState = outRasterState;
 	
 
 	nodeObj.context->doneFrameBuffer();
@@ -563,13 +618,28 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 		nodeObj.nodeOut->m_Context->addFrameBufferNodeInMT(nodeObj.nodeOut);
 	}
 }
-void GD3DContext::unloadFrameBufferNodeInMT(GObject* obj)
-{
-
-}
 void GD3DContext::unloadFrameBufferNodeForContext(GFrameBuffer::Node* node)
 {
+	if (node->isValid()) {
+		GFrameBuffer::Handle& handle = node->getData();
 
+		readyFrameBuffer();
+
+		handle.m_Name->Release();
+		handle.m_Name = NULL;
+		if (handle.m_DepthName) {
+			handle.m_DepthName->Release();
+			handle.m_DepthName = NULL;
+		}
+		handle.m_RasterState->Release();
+		handle.m_RasterState = NULL;
+
+		doneFrameBuffer();
+
+		node->m_Context = NULL;
+		GO::release(node->m_TexTarget);
+		node->m_TexTarget = NULL;
+	}
 }
 
 #endif
