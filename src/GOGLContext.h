@@ -100,7 +100,5 @@ private:
 #endif
 };
 
-    typedef GOGLContext GContextBase;
-
 #endif
 #endif //AS_GOGLCONTEXT_H

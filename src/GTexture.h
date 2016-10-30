@@ -12,9 +12,9 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 #include "GDataList.h"
-#include "GXOpenGL.h"
-#include "GXDirectX.h"
+#include "GX3DAPI.h"
 #include "GDib.h"
+#include "GXContext.h"
 
 #include "GXGObject.h"
 class GContext;
@@ -25,13 +25,7 @@ public:
 
     //仅保存，生成和销毁都在Context完成
 	class Handle {
-#if defined(GX_OPENGL)
-		friend class GOGLContext;
-#elif defined(GX_DIRECTX)
-		friend class GD3DContext;
-#elif defined(GX_METAL)
-        friend class GMTLContext;
-#endif
+        friend class GX_CONTEXT_BASE;
 	public:
 		Handle() {
 #if defined(GX_OPENGL)
@@ -100,13 +94,7 @@ public:
 
     //仅保存，生成和销毁都在Context完成
 	class Node : public GDataList<Handle>::Node {
-#if defined(GX_OPENGL)
-		friend class GOGLContext;
-#elif defined(GX_DIRECTX)
-		friend class GD3DContext;
-#elif defined(GX_METAL)
-        friend class GMTLContext;
-#endif
+        friend class GX_CONTEXT_BASE;
         friend class GContext;
     private:
         Node();

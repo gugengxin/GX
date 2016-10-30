@@ -321,6 +321,8 @@
 		CA1F60CC1CD9AD2900C6307B /* GXEncoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXEncoding.h; sourceTree = "<group>"; };
 		CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GTString.cpp; sourceTree = "<group>"; };
 		CA1F60D01CD9ED6A00C6307B /* GTString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTString.h; sourceTree = "<group>"; };
+		CA26E07A1DC64BBD003AF801 /* GXContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXContext.h; sourceTree = "<group>"; };
+		CA26E07B1DC64CD4003AF801 /* GX3DAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GX3DAPI.h; sourceTree = "<group>"; };
 		CA30908F1CFD1C46000B8DF2 /* GColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GColor.cpp; sourceTree = "<group>"; };
 		CA3090901CFD1C46000B8DF2 /* GColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GColor.h; sourceTree = "<group>"; };
 		CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GSRGraphics.cpp; sourceTree = "<group>"; };
@@ -591,6 +593,20 @@
 			name = String;
 			sourceTree = "<group>";
 		};
+		CA26E07C1DC64D89003AF801 /* 3DAPI */ = {
+			isa = PBXGroup;
+			children = (
+				CABB5CC71CE0E40500D5B648 /* GXDirectX.h */,
+				CABB5CC61CE0E40500D5B648 /* GXDirectX.cpp */,
+				CABB5CC91CE0E40500D5B648 /* GXOpenGL.h */,
+				CABB5CC81CE0E40500D5B648 /* GXOpenGL.cpp */,
+				CA446E3E1D67E36F002E77DF /* GXMetal.h */,
+				CA446E3D1D67E36F002E77DF /* GXMetal.cpp */,
+				CA26E07B1DC64CD4003AF801 /* GX3DAPI.h */,
+			);
+			name = 3DAPI;
+			sourceTree = "<group>";
+		};
 		CA4CD5441D508D3F008005CF /* texture */ = {
 			isa = PBXGroup;
 			children = (
@@ -688,6 +704,7 @@
 		CAA2D4DF1DBAFBB4007E53C8 /* context */ = {
 			isa = PBXGroup;
 			children = (
+				CA26E07A1DC64BBD003AF801 /* GXContext.h */,
 				CABB5CC51CE0E40500D5B648 /* GOGLContext.h */,
 				CABB5CC41CE0E40500D5B648 /* GOGLContext.cpp */,
 				CABB5CB91CE0E40500D5B648 /* GD3DContext.h */,
@@ -703,15 +720,10 @@
 		CABB5CD41CE0E45000D5B648 /* Window */ = {
 			isa = PBXGroup;
 			children = (
+				CA26E07C1DC64D89003AF801 /* 3DAPI */,
 				CAA2D4DF1DBAFBB4007E53C8 /* context */,
 				CADB5DC01CF9E6A30092C472 /* shader */,
 				CA4CD5441D508D3F008005CF /* texture */,
-				CABB5CC71CE0E40500D5B648 /* GXDirectX.h */,
-				CABB5CC61CE0E40500D5B648 /* GXDirectX.cpp */,
-				CABB5CC91CE0E40500D5B648 /* GXOpenGL.h */,
-				CABB5CC81CE0E40500D5B648 /* GXOpenGL.cpp */,
-				CA446E3E1D67E36F002E77DF /* GXMetal.h */,
-				CA446E3D1D67E36F002E77DF /* GXMetal.cpp */,
 				CA1AD2761CD87CA900CEA1DC /* GWindow.h */,
 				CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */,
 				CAA7AFE81CFDF19E002D724E /* GPainter.h */,

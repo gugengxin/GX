@@ -10,9 +10,7 @@
 #define GBuffer_h
 
 #include "GXPrefix.h"
-#include "GXOpenGL.h"
-#include "GXDirectX.h"
-#include "GXMetal.h"
+#include "GX3DAPI.h"
 
 class GIBuffer
 {

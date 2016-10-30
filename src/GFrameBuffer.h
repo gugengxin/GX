@@ -11,10 +11,8 @@
 
 #include "GXPrefix.h"
 #include "GObject.h"
-#include "GXOpenGL.h"
-#include "GXDirectX.h"
-#include "GXMetal.h"
-
+#include "GX3DAPI.h"
+#include "GXContext.h"
 #include "GDataList.h"
 
 
@@ -31,13 +29,7 @@ public:
 
     //仅保存，生成和销毁都在Context完成
     class Handle {
-#if defined(GX_OPENGL)
-        friend class GOGLContext;
-#elif defined(GX_DIRECTX)
-        friend class GD3DContext;
-#elif defined(GX_METAL)
-        friend class GMTLContext;
-#endif
+        friend class GX_CONTEXT_BASE;
     public:
         Handle() {
 #if defined(GX_OPENGL)
@@ -48,16 +40,14 @@ public:
 			m_DepthName=NULL;
 			m_RasterState=NULL;
 #elif defined(GX_METAL)
-
+            m_Name=NULL;
 #endif
         }
         inline bool isValid() {
 #if defined(GX_OPENGL)
             return m_Name != 0;
-#elif defined(GX_DIRECTX)
+#elif defined(GX_DIRECTX) || defined(GX_METAL)
 			return m_Name != NULL;
-#elif defined(GX_METAL)
-
 #endif
         }
 
@@ -70,19 +60,13 @@ public:
 		ID3D10DepthStencilView* m_DepthName;
 		ID3D10RasterizerState*	m_RasterState;
 #elif defined(GX_METAL)
-        
+        void*  m_Name;
 #endif
     };
 
     //仅保存，生成和销毁都在Context完成
     class Node : public GDataList<Handle>::Node {
-#if defined(GX_OPENGL)
-        friend class GOGLContext;
-#elif defined(GX_DIRECTX)
-        friend class GD3DContext;
-#elif defined(GX_METAL)
-        friend class GMTLContext;
-#endif
+        friend class GX_CONTEXT_BASE;
         friend class GContext;
     private:
         Node();

@@ -152,6 +152,12 @@ void GMTLContext::readyTexture()
 void GMTLContext::doneTexture()
 {
 }
+void GMTLContext::readyFrameBuffer()
+{
+}
+void GMTLContext::doneFrameBuffer()
+{
+}
 
 void* GMTLContext::getDevice()
 {
@@ -553,5 +559,48 @@ void GMTLContext::unloadTextureNodeForContext(GTexture::Node* node)
         node->m_Context=NULL;
     }
 }
+
+void GMTLContext::loadFrameBufferNodeInMT(GObject* obj)
+{
+    GContext::FBNodeLoadObj& nodeObj = *GX_CAST_R(GContext::FBNodeLoadObj*, obj);
+    GFrameBuffer::Handle& handle = nodeObj.nodeOut->getData();
+    
+    if (!nodeObj.texTarget->isKindOfClass(GTexture2D::gclass)) {
+        return;
+    }
+    
+    nodeObj.context->readyFrameBuffer();
+    
+    #warning TODO
+    
+    nodeObj.context->doneFrameBuffer();
+    
+    if (handle.isValid()) {
+        nodeObj.nodeOut->m_Context = nodeObj.context;
+        nodeObj.nodeOut->m_TexTarget = nodeObj.texTarget;
+        GO::retain(nodeObj.nodeOut->m_TexTarget);
+        nodeObj.nodeOut->m_Context->addFrameBufferNodeInMT(nodeObj.nodeOut);
+    }
+}
+void GMTLContext::unloadFrameBufferNodeForContext(GFrameBuffer::Node* node)
+{
+    if (node->isValid()) {
+        GFrameBuffer::Handle& handle = node->getData();
+        
+        readyFrameBuffer();
+        
+#warning TODO
+        
+        doneFrameBuffer();
+        
+        node->m_Context = NULL;
+        GO::release(node->m_TexTarget);
+        node->m_TexTarget = NULL;
+    }
+}
+
+
+
+
 
 #endif

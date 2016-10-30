@@ -14,6 +14,7 @@
 #if defined(GX_METAL)
 #include "GXMetal.h"
 #include "GTexture2D.h"
+#include "GFrameBuffer.h"
 
 class GWindow;
 
@@ -42,10 +43,15 @@ protected:
     void doneShader();
     void readyTexture();
     void doneTexture();
+    void readyFrameBuffer();
+    void doneFrameBuffer();
 protected:
     GDib* loadTexture2DNodeReadyDib(GDib* dib);
     static void loadTexture2DNodeInMT(GObject* obj);
     void unloadTextureNodeForContext(GTexture::Node* node);
+protected:
+    static void loadFrameBufferNodeInMT(GObject* obj);
+    void unloadFrameBufferNodeForContext(GFrameBuffer::Node* node);
 private:
     inline guint getDepthPixelFormat() {
         return m_DepthPixelFormat;
@@ -83,10 +89,6 @@ private:
     void* m_CommandBuffer;
     void* m_RenderEncoder;
 };
-
-
-
-typedef GMTLContext GContextBase;
 
 #endif
 

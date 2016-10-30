@@ -122,7 +122,7 @@ GContext::~GContext()
 //在这里初始化
 bool GContext::create(GWindow *win)
 {
-    if(! GContextBase::create(win)) {
+    if(!GX_CONTEXT_BASE::create(win)) {
         return false;
     }
     memset(m_Shaders, 0, sizeof(m_Shaders));
@@ -157,7 +157,7 @@ void GContext::destroy()
         m_Shaders[i]=NULL;
         doneShader();
     }
-    GContextBase::destroy();
+    GX_CONTEXT_BASE::destroy();
 }
 
 #if defined(GX_OS_ANDROID)
@@ -165,12 +165,12 @@ void GContext::androidDestroy()
 {
     //TODO
     //GX_LOG_W(PrioINFO,"GContext","androidDestroy");
-    GContextBase::androidDestroy();
+    GX_CONTEXT_BASE::androidDestroy();
 }
 void GContext::androidRecreate(GWindow* win)
 {
     //GX_LOG_W(PrioINFO,"GContext","androidRecreate");
-    GContextBase::androidRecreate(win);
+    GX_CONTEXT_BASE::androidRecreate(win);
     //TODO
 }
 #endif

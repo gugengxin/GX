@@ -9,6 +9,7 @@
 #include "GOGLContext.h"
 #include "GD3DContext.h"
 #include "GMTLContext.h"
+#include "GXContext.h"
 #include "GPainter.h"
 #include "GSRGraphics.h"
 #include "GSRTexture2D.h"
@@ -18,16 +19,10 @@
 
 #include "GXGObject.h"
 
-class GContext : public GContextBase
+class GContext : public GX_CONTEXT_BASE
 {
+    friend class GX_CONTEXT_BASE;
     friend class GWindow;
-#if defined(GX_OPENGL)
-    friend class GOGLContext;
-#elif defined(GX_DIRECTX)
-    friend class GD3DContext;
-#elif defined(GX_METAL)
-    friend class GMTLContext;
-#endif
     friend class GTexture;
     friend class GFrameBuffer;
 private:
