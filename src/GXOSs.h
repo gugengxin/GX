@@ -22,25 +22,58 @@
 #else
 #error
 #endif
-#elif defined(GX_OS_IOS)
+#elif defined(__APPLE__)
+#include <TargetConditionals.h>
 
+/* record
+    #if defined(_WIN32) || defined(__SYMBIAN32__)
+        #define SK_BUILD_FOR_WIN32
+    #elif defined(ANDROID) || defined(__ANDROID__)
+        #define SK_BUILD_FOR_ANDROID
+    #elif defined(linux) || defined(__linux) || defined(__FreeBSD__) || \
+          defined(__OpenBSD__) || defined(__sun) || defined(__NetBSD__) || \
+          defined(__DragonFly__) || defined(__Fuchsia__) || \
+          defined(__GLIBC__) || defined(__GNU__) || defined(__unix__)
+        #define SK_BUILD_FOR_UNIX
+    #elif TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+        #define SK_BUILD_FOR_IOS
+    #else
+        #define SK_BUILD_FOR_MAC
+    #endif
+//*/
+
+
+
+#if TARGET_OS_IOS
+
+#define GX_OS_IOS
 #define GX_OS_APPLE
 #define GX_OS_MOBILE
 #define GX_OS_IPHONE
 #define GX_IDE_XCODE
 
-#elif defined(GX_OS_APPLETV)
+#elif TARGET_OS_TV
 
+#define GX_OS_APPLETV
 #define GX_OS_APPLE
 #define GX_OS_MOBILE
 #define GX_OS_IPHONE
 #define GX_IDE_XCODE
 
-#elif defined(GX_OS_MACOSX)
+#elif TARGET_OS_OSX
 
+#define GX_OS_MACOSX
 #define GX_OS_APPLE
 #define GX_OS_DESKTOP
 #define GX_IDE_XCODE
+
+#else
+
+#error Unsupport OS
+
+#endif
+
+
 
 #elif defined(WIN32) || defined(WIN64)
 
