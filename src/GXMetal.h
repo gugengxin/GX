@@ -41,4 +41,4 @@ namespace GX {
 
 #endif
 
-#endif /* GXMetal_hpp */
+#endif /* GXMetal_h */

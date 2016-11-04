@@ -14,7 +14,7 @@
 #include "GX3DAPI.h"
 #include "GXContext.h"
 #include "GDataList.h"
-
+#include "GColor.h"
 
 #include "GXGObject.h"
 // Down can't include other h file
@@ -26,7 +26,16 @@ class GFrameBuffer : public GObject
 {
 	GX_GOBJECT(GFrameBuffer);
 public:
-
+#if defined(GX_OPENGL)
+    typedef GLuint Name;
+    typedef GLuint DepthName;
+#elif defined(GX_DIRECTX)
+    typedef ID3D10RenderTargetView* Name;
+    typedef ID3D10DepthStencilView* DepthName;
+#elif defined(GX_METAL)
+    typedef void* Name;
+    typedef void* DepthName;
+#endif
     //仅保存，生成和销毁都在Context完成
     class Handle {
         friend class GX_CONTEXT_BASE;
@@ -41,6 +50,7 @@ public:
 			m_RasterState=NULL;
 #elif defined(GX_METAL)
             m_Name=NULL;
+            m_DepthName=NULL;
 #endif
         }
         inline bool isValid() {
@@ -50,17 +60,20 @@ public:
 			return m_Name != NULL;
 #endif
         }
+        inline Name getName() {
+            return m_Name;
+        }
+        inline DepthName getDepthName() {
+            return m_DepthName;
+        }
 
     private:
+        Name m_Name;
+        DepthName m_DepthName;
 #if defined(GX_OPENGL)
-        GLuint      m_Name;
-        GLuint      m_DepthName;
 #elif defined(GX_DIRECTX)
-		ID3D10RenderTargetView* m_Name;
-		ID3D10DepthStencilView* m_DepthName;
 		ID3D10RasterizerState*	m_RasterState;
 #elif defined(GX_METAL)
-        void*  m_Name;
 #endif
     };
 
@@ -82,11 +95,18 @@ public:
     private:
         GContext* m_Context;
 		GTexture* m_TexTarget;
+        GColor4F  m_BgdColor;
     };
     
 public:
     inline Node* getNode() {
         return m_Node;
+    }
+    inline Name getName() {
+        if (m_Node) {
+            return m_Node->getData().getName();
+        }
+        return NULL;
     }
 
 protected:

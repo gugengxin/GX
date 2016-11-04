@@ -25,6 +25,9 @@
 #elif defined(__APPLE__)
 #include <TargetConditionals.h>
 
+#define GX_OS_APPLE
+#define GX_IDE_XCODE
+
 /* record
     #if defined(_WIN32) || defined(__SYMBIAN32__)
         #define SK_BUILD_FOR_WIN32
@@ -47,25 +50,19 @@
 #if TARGET_OS_IOS
 
 #define GX_OS_IOS
-#define GX_OS_APPLE
 #define GX_OS_MOBILE
 #define GX_OS_IPHONE
-#define GX_IDE_XCODE
 
 #elif TARGET_OS_TV
 
 #define GX_OS_APPLETV
-#define GX_OS_APPLE
 #define GX_OS_MOBILE
 #define GX_OS_IPHONE
-#define GX_IDE_XCODE
 
 #elif TARGET_OS_OSX
 
 #define GX_OS_MACOSX
-#define GX_OS_APPLE
 #define GX_OS_DESKTOP
-#define GX_IDE_XCODE
 
 #else
 

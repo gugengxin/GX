@@ -19,6 +19,7 @@ GFrameBuffer::Node::Node()
 {
     m_Context = NULL;
 	m_TexTarget = NULL;
+    m_BgdColor.set(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 GFrameBuffer::Node::~Node()

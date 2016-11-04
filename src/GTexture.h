@@ -22,6 +22,13 @@ class GContext;
 class GTexture : public GObject {
     GX_GOBJECT(GTexture);
 public:
+#if defined(GX_OPENGL)
+    typedef GLuint Name;
+#elif defined(GX_DIRECTX)
+    typedef ID3D10ShaderResourceView* Name;
+#elif defined(GX_METAL)
+    typedef void* Name;
+#endif
 
     //仅保存，生成和销毁都在Context完成
 	class Handle {
@@ -42,28 +49,18 @@ public:
 		inline bool isValid() {
 #if defined(GX_OPENGL)
 			return m_Name != 0;
-#elif defined(GX_DIRECTX)
+#elif defined(GX_DIRECTX) || defined(GX_METAL)
 			return m_Name != NULL;
-#elif defined(GX_METAL)
-            return m_Name != NULL;
 #endif
 		}
         
-#if defined(GX_OPENGL)
-        inline GLuint getName() {
+        inline Name getName() {
             return m_Name;
         }
-#elif defined(GX_DIRECTX)
-        inline ID3D10ShaderResourceView* getName() {
-            return m_Name;
-        }
+#if defined(GX_DIRECTX)
 		inline ID3D10ShaderResourceView** getNamePtr() {
 			return &m_Name;
 		}
-#elif defined(GX_METAL)
-        inline void* getName() {
-            return m_Name;
-        }
 #endif
         
 #if defined(GX_OPENGL)
@@ -81,14 +78,12 @@ public:
 #endif
         
 	private:
+        Name m_Name;
 #if defined(GX_OPENGL)
-		GLuint  m_Name;
 #elif defined(GX_DIRECTX)
-		ID3D10ShaderResourceView*	m_Name;
-		ID3D10SamplerState*			m_SamplerState;
+		ID3D10SamplerState* m_SamplerState;
 #elif defined(GX_METAL)
-        void*   m_Name;
-        void*   m_SamplerState;
+        void* m_SamplerState;
 #endif
 	};
 
@@ -113,6 +108,12 @@ public:
 public:
     inline Node* getNode() {
         return m_Node;
+    }
+    inline Name getName() {
+        if (m_Node) {
+            return m_Node->getData().getName();
+        }
+        return NULL;
     }
     
 protected:

@@ -571,7 +571,54 @@ void GMTLContext::loadFrameBufferNodeInMT(GObject* obj)
     
     nodeObj.context->readyFrameBuffer();
     
-    #warning TODO
+    MTLRenderPassDescriptor* rpdOut=nil;
+    id<MTLTexture> dsTexOut=nil;
+    
+    id<MTLDevice> device=GX_CAST_R(CAMetalLayer*,nodeObj.context->m_Window->getMetalLayer()).device;
+    
+    rpdOut=[MTLRenderPassDescriptor renderPassDescriptor];
+    
+    // create a color attachment every frame since we have to recreate the texture every frame
+    MTLRenderPassColorAttachmentDescriptor *colorAttachment = rpdOut.colorAttachments[0];
+    colorAttachment.texture = (id<MTLTexture>)nodeObj.texTarget->getName();
+    colorAttachment.loadAction = MTLLoadActionClear;
+    GColor4F& bgdClr=nodeObj.nodeOut->m_BgdColor;
+    colorAttachment.clearColor = MTLClearColorMake(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
+    colorAttachment.storeAction = MTLStoreActionStore;
+    
+    if (nodeObj.enableDepth) {
+        MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat: MTLPixelFormatDepth32Float_Stencil8
+                                                                                        width: colorAttachment.texture.width
+                                                                                       height: colorAttachment.texture.height
+                                                                                    mipmapped: NO];
+        
+        desc.textureType = MTLTextureType2D;
+        desc.sampleCount = 1;
+#if defined(GX_OS_IPHONE)
+        if ([[[UIDevice currentDevice] systemVersion] floatValue]>=9.0) {
+#endif
+            desc.usage = MTLTextureUsageUnknown;
+            desc.storageMode = MTLStorageModePrivate;
+#if defined(GX_OS_IPHONE)
+        }
+#endif
+        dsTexOut = [device newTextureWithDescriptor:desc];
+        
+        MTLRenderPassDepthAttachmentDescriptor *depthAttachment = rpdOut.depthAttachment;
+        depthAttachment.texture = dsTexOut;
+        depthAttachment.loadAction = MTLLoadActionClear;
+        depthAttachment.storeAction = MTLStoreActionDontCare;
+        depthAttachment.clearDepth = 1.0;
+        
+        MTLRenderPassStencilAttachmentDescriptor* stencilAttachment = rpdOut.stencilAttachment;
+        stencilAttachment.texture = dsTexOut;
+        stencilAttachment.loadAction = MTLLoadActionClear;
+        stencilAttachment.storeAction = MTLStoreActionDontCare;
+        stencilAttachment.clearStencil = 0;
+    }
+    
+    handle.m_Name=[rpdOut retain];
+    handle.m_DepthName=[dsTexOut retain];
     
     nodeObj.context->doneFrameBuffer();
     
@@ -589,7 +636,10 @@ void GMTLContext::unloadFrameBufferNodeForContext(GFrameBuffer::Node* node)
         
         readyFrameBuffer();
         
-#warning TODO
+        [GX_CAST_R(id, handle.m_Name) release];
+        handle.m_Name = NULL;
+        [GX_CAST_R(id, handle.m_DepthName) release];
+        handle.m_DepthName = NULL;
         
         doneFrameBuffer();
         
