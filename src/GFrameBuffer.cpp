@@ -42,3 +42,16 @@ GFrameBuffer::~GFrameBuffer()
 }
 
 
+void GFrameBuffer::renderBegin()
+{
+    
+}
+void GFrameBuffer::setViewport(float x, float y, float w, float h, float scale)
+{
+    
+}
+void GFrameBuffer::renderEnd()
+{
+    
+}
+

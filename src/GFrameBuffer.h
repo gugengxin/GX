@@ -108,6 +108,10 @@ public:
         }
         return NULL;
     }
+    
+    void renderBegin();
+    void setViewport(float x, float y, float w, float h, float scale);
+    void renderEnd();
 
 protected:
     inline void setNode(Node* v) {

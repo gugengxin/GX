@@ -11,6 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GObject.h"
+#include "GXContext.h"
 #include "GContext.h"
 #include "GXCWnd.h"
 #include "GColor.h"
@@ -42,13 +43,7 @@ private:
 
 class GWindow {
 	friend class GApplication;
-#if defined(GX_OPENGL)
-	friend class GOGLContext;
-#elif defined(GX_DIRECTX)
-	friend class GD3DContext;
-#elif defined(GX_METAL)
-    friend class GMTLContext;
-#endif
+    friend class GX_CONTEXT_BASE;
 private:
 	GWindow(void* osWinP);
 	~GWindow();
@@ -76,8 +71,8 @@ protected:
 
 private:
 	GContext m_Context;
-	gint	m_RenderStepTime;
-	gint64	m_RenderLastTime;
+	gint     m_RenderStepTime;
+	gint64	 m_RenderLastTime;
     GColor4F m_BgdColor;
 
 	void* m_OSWinP;
