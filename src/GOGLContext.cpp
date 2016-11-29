@@ -191,7 +191,10 @@ void GOGLContext::popOSHandle()
 
 #endif
 
+//Up include other h file
 #include "GXGObject.h"
+
+GX_GOBJECT_IMPLEMENT(GOGLContext,GBaseContext);
 
 //不用在这里初始化
 GOGLContext::GOGLContext()
@@ -210,7 +213,9 @@ bool GOGLContext::create(GWindow* win)
 		return false;
 	}
 #endif
-	m_Window = win;
+    if (!GBaseContext::create(win)) {
+        return false;
+    }
 
 #if defined(GX_OS_WINDOWS)
     m_DC = ::GetDC(M_OS_WND(m_Window->getOSWindow()));
@@ -273,7 +278,7 @@ bool GOGLContext::create(GWindow* win)
     NSOpenGLContext* shared=nil;
     //shared
     GWindow* aw = GApplication::shared()->firstWindow();
-    if (aw && aw != m_Window) {
+    if (aw && aw != getWindow()) {
         shared=GX_CAST_R(NSOpenGLContext*, GX_CAST_R(GOGLContext*, &aw->m_Context)->m_Context);
         pixelFormat=shared.pixelFormat;
     }
@@ -283,7 +288,7 @@ bool GOGLContext::create(GWindow* win)
     }
     
     m_Context=[[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:shared];
-    [GX_CAST_R(NSOpenGLContext*, m_Context) setView:GX_CAST_R(NSView*, m_Window->getOSWindow())];
+    [GX_CAST_R(NSOpenGLContext*, m_Context) setView:GX_CAST_R(NSView*, getWindow()->getOSWindow())];
     [GX_CAST_R(NSOpenGLContext*, m_Context) update];
 #elif defined(GX_OS_ANDROID)
 	CreateDC();
@@ -488,7 +493,8 @@ void GOGLContext::renderBegin()
 	}
 #endif
     
-	glClearColor(m_Window->m_BgdColor.r, m_Window->m_BgdColor.g, m_Window->m_BgdColor.b, m_Window->m_BgdColor.a);
+    GColor4F& bgdClr=getBgdColor();
+	glClearColor(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 

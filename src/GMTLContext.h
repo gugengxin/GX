@@ -23,7 +23,6 @@
 class GMTLContext : public GBaseContext {
     friend class GMShader;
     GX_VIRTUAL_GOBJECT(GMTLContext);
-
 public:
     virtual bool create(GWindow* win);
     virtual void destroy();

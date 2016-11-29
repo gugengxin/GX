@@ -14,20 +14,21 @@
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 #endif
+#include "GBaseContext.h"
 #include "GDataArray.h"
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
 
-class GWindow;
 
-class GOGLContext
+#include "GXGObject.h"
+// Down can't include other h file
+
+class GOGLContext : public GBaseContext
 #if defined(GX_OS_QT)
-        : public QOpenGLFunctions
+        , public QOpenGLFunctions
 #endif
 {
-protected:
-    GOGLContext();
-    virtual ~GOGLContext();
+    GX_VIRTUAL_GOBJECT(GOGLContext);
 public:
     virtual bool create(GWindow* win);
     virtual void destroy();
@@ -63,7 +64,6 @@ protected:
     void unloadFrameBufferNodeForContext(GFrameBuffer::Node* node);
 
 private:
-	GWindow* m_Window;
 #if defined(GX_OS_WINDOWS)
 	HDC   m_DC;
 	HGLRC m_Context;

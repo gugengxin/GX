@@ -258,10 +258,10 @@ void GSRGraphics::draw(GCanvas* canvas, GIBuffer* buffer, InputType inputType, g
     
     g_InputBFuns[inputType](getIndex0(), buffer);
     
-    setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)painter.updateMVPMatrix());
+    setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)canvas->updateMVPMatrix());
 
     if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
-        setUniform4fv(U_color_mul, 1, (const GLfloat*)painter.updateColorMul());
+        setUniform4fv(U_color_mul, 1, (const GLfloat*)canvas->updateColorMul());
     }
     GX_glDrawArrays((GLenum)mode, (GLint)first, (GLsizei)count);
     

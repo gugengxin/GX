@@ -384,9 +384,9 @@ void GSRTexture2D::draw(GCanvas* canvas,
 
     g_InputBFuns[inputType](isAlphaOnly(),isColorMul(),getMaskMode(), buffer);
 
-    setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)painter.updateMVPMatrix());
+    setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)canvas->updateMVPMatrix());
     if (isColorMul()) {
-        setUniform4fv(U_color_mul, 1, (const GLfloat*)painter.updateColorMul());
+        setUniform4fv(U_color_mul, 1, (const GLfloat*)canvas->updateColorMul());
     }
 
     GX_glActiveTexture ( GL_TEXTURE0 );

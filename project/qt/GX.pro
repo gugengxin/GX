@@ -24,8 +24,10 @@ SOURCES += \
 	../../src/GApplication.cpp\
 	../../src/GArray.cpp\
 	../../src/GAutoreleasePool.cpp\
+	../../src/GBaseContext.cpp\
 	#../../src/GBuffer.cpp\
 	../../src/GBundle.cpp\
+	../../src/GCanvas.cpp\
 	../../src/GClass.cpp\
 	../../src/GCoder.cpp\
 	../../src/GColor.cpp\
@@ -46,6 +48,7 @@ SOURCES += \
 	../../src/GFileManager.cpp\
 	../../src/GFileReader.cpp\
 	../../src/GFileWriter.cpp\
+	../../src/GFrameBuffer.cpp\
 	#../../src/GJavaAPI.cpp\
 	#../../src/GJavaCAPI.cpp\
 	#../../src/GJavaClass.cpp\
@@ -65,7 +68,6 @@ SOURCES += \
 	../../src/GOShader.cpp\
 	../../src/GOWHash.cpp\
 	../../src/GObject.cpp\
-	../../src/GPainter.cpp\
 	../../src/GPieceData.cpp\
 	../../src/GPng.cpp\
 	../../src/GPtr.cpp\
@@ -111,8 +113,10 @@ HEADERS += \
 	../../src/GApplication.h\
 	../../src/GArray.h\
 	../../src/GAutoreleasePool.h\
+	../../src/GBaseContext.h\
 	../../src/GBuffer.h\
 	../../src/GBundle.h\
+	../../src/GCanvas.h\
 	../../src/GClass.h\
 	../../src/GCoder.h\
 	../../src/GColor.h\
@@ -133,6 +137,7 @@ HEADERS += \
 	../../src/GFileManager.h\
 	../../src/GFileReader.h\
 	../../src/GFileWriter.h\
+	../../src/GFrameBuffer.h\
 	../../src/GJavaAPI.h\
 	../../src/GJavaCAPI.h\
 	../../src/GJavaClass.h\
@@ -155,7 +160,6 @@ HEADERS += \
 	../../src/GOShader.h\
 	../../src/GOWHash.h\
 	../../src/GObject.h\
-	../../src/GPainter.h\
 	../../src/GPieceData.h\
 	../../src/GPng.h\
 	../../src/GPtr.h\
@@ -178,8 +182,10 @@ HEADERS += \
 	../../src/GWindow.h\
 	../../src/GWriter.h\
 	../../src/GX.h\
+	../../src/GX3DAPI.h\
 	../../src/GXCWnd.h\
 	../../src/GXCoder.h\
+	../../src/GXContext.h\
 	../../src/GXData.h\
 	../../src/GXDirectX.h\
 	../../src/GXEncoding.h\
