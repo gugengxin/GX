@@ -73,7 +73,6 @@ private:
 	GContext m_Context;
 	gint     m_RenderStepTime;
 	gint64	 m_RenderLastTime;
-    GColor4F m_BgdColor;
 
 	void* m_OSWinP;
 #if defined(GX_OS_WINDOWS)

@@ -216,7 +216,7 @@ class GPDArray : public GPieceDataArray<T, GX_PDARRAY_N> {
 	friend class GApplication;
     friend class GAutoreleasePool;
     friend class GThread;
-	friend class GPainter;
+	friend class GCanvas;
 	friend class GOGLContext;
     GX_GOBJECT(GPDArray);
 };

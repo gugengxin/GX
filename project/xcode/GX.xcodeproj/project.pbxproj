@@ -68,6 +68,12 @@
 		CA3090971CFD1C54000B8DF2 /* GSRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */; };
 		CA3090981CFD1C57000B8DF2 /* GColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA30908F1CFD1C46000B8DF2 /* GColor.cpp */; };
 		CA3090991CFD1C58000B8DF2 /* GColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA30908F1CFD1C46000B8DF2 /* GColor.cpp */; };
+		CA3A7EAC1DED656800197FCB /* GBaseContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A7EAA1DED656800197FCB /* GBaseContext.cpp */; };
+		CA3A7EAF1DED66BF00197FCB /* GCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A7EAD1DED66BF00197FCB /* GCanvas.cpp */; };
+		CA3A7EB01DED66C400197FCB /* GCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A7EAD1DED66BF00197FCB /* GCanvas.cpp */; };
+		CA3A7EB11DED66C400197FCB /* GCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A7EAD1DED66BF00197FCB /* GCanvas.cpp */; };
+		CA3A7EB21DED6E0A00197FCB /* GBaseContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A7EAA1DED656800197FCB /* GBaseContext.cpp */; };
+		CA3A7EB31DED6E0B00197FCB /* GBaseContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A7EAA1DED656800197FCB /* GBaseContext.cpp */; };
 		CA446E3A1D67DFD5002E77DF /* GMTLContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA446E381D67DFD5002E77DF /* GMTLContext.cpp */; };
 		CA446E3B1D67DFD5002E77DF /* GMTLContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA446E381D67DFD5002E77DF /* GMTLContext.cpp */; };
 		CA446E3C1D67DFD5002E77DF /* GMTLContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA446E381D67DFD5002E77DF /* GMTLContext.cpp */; };
@@ -135,21 +141,18 @@
 		CA9F8E881D30758F00A5EBCA /* GZipBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA60FB5E1D1EC93C0091A665 /* GZipBundle.cpp */; };
 		CA9F8E891D30758F00A5EBCA /* GFileManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA636DD61D1CDF870021D32F /* GFileManager.cpp */; };
 		CA9F8E8A1D30758F00A5EBCA /* GBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA636DD11D1CDE5F0021D32F /* GBundle.cpp */; };
-		CAA7AFE91CFDF19E002D724E /* GPainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAA7AFE71CFDF19E002D724E /* GPainter.cpp */; };
 		CABB3F911CFE06EB00A7367C /* GXMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB81CF9E6300092C472 /* GXMath.cpp */; };
 		CABB3F921CFE06EB00A7367C /* GMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB01CF9E6300092C472 /* GMatrix.cpp */; };
 		CABB3F931CFE06EB00A7367C /* GVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB61CF9E6300092C472 /* GVector.cpp */; };
 		CABB3F941CFE06EB00A7367C /* GOShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB21CF9E6300092C472 /* GOShader.cpp */; };
 		CABB3F951CFE06EB00A7367C /* GDShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DAA1CF9E6300092C472 /* GDShader.cpp */; };
 		CABB3F961CFE06EB00A7367C /* GShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB41CF9E6300092C472 /* GShader.cpp */; };
-		CABB3F971CFE06EB00A7367C /* GPainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAA7AFE71CFDF19E002D724E /* GPainter.cpp */; };
 		CABB3F981CFE06EC00A7367C /* GXMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB81CF9E6300092C472 /* GXMath.cpp */; };
 		CABB3F991CFE06EC00A7367C /* GMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB01CF9E6300092C472 /* GMatrix.cpp */; };
 		CABB3F9A1CFE06EC00A7367C /* GVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB61CF9E6300092C472 /* GVector.cpp */; };
 		CABB3F9B1CFE06EC00A7367C /* GOShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB21CF9E6300092C472 /* GOShader.cpp */; };
 		CABB3F9C1CFE06EC00A7367C /* GDShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DAA1CF9E6300092C472 /* GDShader.cpp */; };
 		CABB3F9D1CFE06EC00A7367C /* GShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB41CF9E6300092C472 /* GShader.cpp */; };
-		CABB3F9E1CFE06EC00A7367C /* GPainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAA7AFE71CFDF19E002D724E /* GPainter.cpp */; };
 		CABB3FB01CFE12D000A7367C /* GBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB3FAE1CFE12D000A7367C /* GBuffer.cpp */; };
 		CABB3FB11CFE12D000A7367C /* GBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB3FAE1CFE12D000A7367C /* GBuffer.cpp */; };
 		CABB3FB21CFE12D000A7367C /* GBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABB3FAE1CFE12D000A7367C /* GBuffer.cpp */; };
@@ -328,6 +331,10 @@
 		CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GSRGraphics.cpp; sourceTree = "<group>"; };
 		CA3090921CFD1C46000B8DF2 /* GSRGraphics.gxsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GSRGraphics.gxsl; sourceTree = "<group>"; };
 		CA3090931CFD1C46000B8DF2 /* GSRGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSRGraphics.h; sourceTree = "<group>"; };
+		CA3A7EAA1DED656800197FCB /* GBaseContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GBaseContext.cpp; sourceTree = "<group>"; };
+		CA3A7EAB1DED656800197FCB /* GBaseContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBaseContext.h; sourceTree = "<group>"; };
+		CA3A7EAD1DED66BF00197FCB /* GCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GCanvas.cpp; sourceTree = "<group>"; };
+		CA3A7EAE1DED66BF00197FCB /* GCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCanvas.h; sourceTree = "<group>"; };
 		CA446E381D67DFD5002E77DF /* GMTLContext.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GMTLContext.cpp; sourceTree = "<group>"; };
 		CA446E391D67DFD5002E77DF /* GMTLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMTLContext.h; sourceTree = "<group>"; };
 		CA446E3D1D67E36F002E77DF /* GXMetal.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GXMetal.cpp; sourceTree = "<group>"; };
@@ -391,8 +398,6 @@
 		CA9C16D11CC6132400204303 /* GClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GClass.h; sourceTree = "<group>"; };
 		CA9C16D61CC615FF00204303 /* GOWHash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GOWHash.cpp; sourceTree = "<group>"; };
 		CA9C16D71CC615FF00204303 /* GOWHash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOWHash.h; sourceTree = "<group>"; };
-		CAA7AFE71CFDF19E002D724E /* GPainter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GPainter.cpp; sourceTree = "<group>"; };
-		CAA7AFE81CFDF19E002D724E /* GPainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPainter.h; sourceTree = "<group>"; };
 		CABB3FAE1CFE12D000A7367C /* GBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GBuffer.cpp; sourceTree = "<group>"; };
 		CABB3FAF1CFE12D000A7367C /* GBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBuffer.h; sourceTree = "<group>"; };
 		CABB3FB31CFE133000A7367C /* GDataBuffer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GDataBuffer.cpp; sourceTree = "<group>"; };
@@ -704,7 +709,11 @@
 		CAA2D4DF1DBAFBB4007E53C8 /* context */ = {
 			isa = PBXGroup;
 			children = (
+				CA3A7EAE1DED66BF00197FCB /* GCanvas.h */,
+				CA3A7EAD1DED66BF00197FCB /* GCanvas.cpp */,
 				CA26E07A1DC64BBD003AF801 /* GXContext.h */,
+				CA3A7EAB1DED656800197FCB /* GBaseContext.h */,
+				CA3A7EAA1DED656800197FCB /* GBaseContext.cpp */,
 				CABB5CC51CE0E40500D5B648 /* GOGLContext.h */,
 				CABB5CC41CE0E40500D5B648 /* GOGLContext.cpp */,
 				CABB5CB91CE0E40500D5B648 /* GD3DContext.h */,
@@ -726,8 +735,6 @@
 				CA4CD5441D508D3F008005CF /* texture */,
 				CA1AD2761CD87CA900CEA1DC /* GWindow.h */,
 				CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */,
-				CAA7AFE81CFDF19E002D724E /* GPainter.h */,
-				CAA7AFE71CFDF19E002D724E /* GPainter.cpp */,
 				CABB3FAF1CFE12D000A7367C /* GBuffer.h */,
 				CABB3FAE1CFE12D000A7367C /* GBuffer.cpp */,
 				CABB3FB41CFE133000A7367C /* GDataBuffer.h */,
@@ -932,7 +939,6 @@
 				CA1F60BB1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CA1C71B81CD2068100BEEA5B /* GDataArray.cpp in Sources */,
 				CABB5CCD1CE0E40500D5B648 /* GJavaCAPI.cpp in Sources */,
-				CAA7AFE91CFDF19E002D724E /* GPainter.cpp in Sources */,
 				CA7B4DE01CD5906F00F3D826 /* GUUID.cpp in Sources */,
 				CA9C16D21CC6132400204303 /* GClass.cpp in Sources */,
 				CAC2D1321CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
@@ -960,6 +966,7 @@
 				CADB5DBE1CF9E6300092C472 /* GVector.cpp in Sources */,
 				CAE706D91CD2FA850090F4DD /* GMap.cpp in Sources */,
 				CABB5CD31CE0E40500D5B648 /* GXOpenGL.cpp in Sources */,
+				CA3A7EAC1DED656800197FCB /* GBaseContext.cpp in Sources */,
 				CAE3FF931DAB31CE0010CB99 /* GXData.cpp in Sources */,
 				CABB5CCB1CE0E40500D5B648 /* GD3DContext.cpp in Sources */,
 				CA6387801D48D99700232BBB /* GJpeg.cpp in Sources */,
@@ -984,6 +991,7 @@
 				CA1AD27F1CD89DFB00CEA1DC /* GAutoreleasePool.cpp in Sources */,
 				CA4CD5431D508D2C008005CF /* GError.cpp in Sources */,
 				CABB3FB01CFE12D000A7367C /* GBuffer.cpp in Sources */,
+				CA3A7EAF1DED66BF00197FCB /* GCanvas.cpp in Sources */,
 				CA60FB601D1EC93C0091A665 /* GFileBundle.cpp in Sources */,
 				CAD624B21D11872E005E77EB /* GDataList.cpp in Sources */,
 				CAC7E44E1D1A63FE00719367 /* GReader.cpp in Sources */,
@@ -1018,7 +1026,6 @@
 				CA9C16D91CC615FF00204303 /* GOWHash.cpp in Sources */,
 				CA1F60BC1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CABB3F991CFE06EC00A7367C /* GMatrix.cpp in Sources */,
-				CABB3F9E1CFE06EC00A7367C /* GPainter.cpp in Sources */,
 				CA3090961CFD1C53000B8DF2 /* GSRGraphics.cpp in Sources */,
 				CA9F8E811D30757900A5EBCA /* GAppBundle.cpp in Sources */,
 				CAE303B91CE563CB00F15C74 /* GJavaCAPI.cpp in Sources */,
@@ -1037,6 +1044,7 @@
 				CAC2D1331CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CAE706D11CD2F8950090F4DD /* GDataArray.cpp in Sources */,
 				CA6387751D48CFE500232BBB /* GRBReader.cpp in Sources */,
+				CA3A7EB01DED66C400197FCB /* GCanvas.cpp in Sources */,
 				CA7213441DA3B86B005A7B9E /* GCoder.cpp in Sources */,
 				CA72133A1DA394DB005A7B9E /* GXCoder.cpp in Sources */,
 				CABB3F9A1CFE06EC00A7367C /* GVector.cpp in Sources */,
@@ -1082,6 +1090,7 @@
 				CA7213331DA2893F005A7B9E /* GSerialize.cpp in Sources */,
 				CAC708B21D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CABB3F981CFE06EC00A7367C /* GXMath.cpp in Sources */,
+				CA3A7EB21DED6E0A00197FCB /* GBaseContext.cpp in Sources */,
 				CA1F60D21CD9ED6A00C6307B /* GTString.cpp in Sources */,
 				CA1F60B11CD984C100C6307B /* GSystem.cpp in Sources */,
 				CA04FDFB1CE4557E00C9B596 /* GPtr.cpp in Sources */,
@@ -1105,7 +1114,6 @@
 				CA9C16DA1CC615FF00204303 /* GOWHash.cpp in Sources */,
 				CA1F60BD1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CABB3F921CFE06EB00A7367C /* GMatrix.cpp in Sources */,
-				CABB3F971CFE06EB00A7367C /* GPainter.cpp in Sources */,
 				CA3090971CFD1C54000B8DF2 /* GSRGraphics.cpp in Sources */,
 				CA9F8E821D30757A00A5EBCA /* GAppBundle.cpp in Sources */,
 				CAE303C31CE563CB00F15C74 /* GJavaCAPI.cpp in Sources */,
@@ -1124,6 +1132,7 @@
 				CAC2D1341CD0D43E00A0EBE5 /* GPieceData.cpp in Sources */,
 				CAE706D31CD2F8960090F4DD /* GDataArray.cpp in Sources */,
 				CA6387761D48CFE600232BBB /* GRBReader.cpp in Sources */,
+				CA3A7EB11DED66C400197FCB /* GCanvas.cpp in Sources */,
 				CA7213451DA3B86B005A7B9E /* GCoder.cpp in Sources */,
 				CA72133B1DA394DC005A7B9E /* GXCoder.cpp in Sources */,
 				CABB3F931CFE06EB00A7367C /* GVector.cpp in Sources */,
@@ -1169,6 +1178,7 @@
 				CA7213351DA28940005A7B9E /* GSerialize.cpp in Sources */,
 				CAC708B31D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CABB3F911CFE06EB00A7367C /* GXMath.cpp in Sources */,
+				CA3A7EB31DED6E0B00197FCB /* GBaseContext.cpp in Sources */,
 				CA1F60D31CD9ED6A00C6307B /* GTString.cpp in Sources */,
 				CA1F60B31CD984C100C6307B /* GSystem.cpp in Sources */,
 				CA04FDFC1CE4557E00C9B596 /* GPtr.cpp in Sources */,

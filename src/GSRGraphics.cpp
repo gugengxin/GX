@@ -250,7 +250,7 @@ void GSRGraphics::createUniformBuffer(void* device)
 #endif
 
 
-void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType, gint mode, gint first, gint count)
+void GSRGraphics::draw(GCanvas* canvas, GIBuffer* buffer, InputType inputType, gint mode, gint first, gint count)
 {
 #if defined(GX_OPENGL)
     
@@ -312,14 +312,14 @@ void GSRGraphics::draw(GPainter& painter, GIBuffer* buffer, InputType inputType,
     [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, buffer->getBuffer()) offset:buffer->getOffset() atIndex:0];
     
     void* pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) contents];
-    const float* mvp = painter.updateMVPMatrix();
+    const float* mvp = canvas->updateMVPMatrix();
     ((GMatrix4*)mvp)->transpose();
     memcpy(pMap, mvp, GX_MATRIX_SIZE);
     [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) offset:0 atIndex:1];
 
     if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
         pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) contents];
-        const float* clrMul = painter.updateColorMul();
+        const float* clrMul = canvas->updateColorMul();
         memcpy(pMap, clrMul, sizeof(GColor4F));
         [rce setFragmentBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) offset:0 atIndex:0];
     }

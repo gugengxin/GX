@@ -14,7 +14,7 @@
 #include "GDShader.h"
 #include "GMShader.h"
 #include "GBuffer.h"
-#include "GPainter.h"
+#include "GCanvas.h"
 #include "GTexture2D.h"
 
 
@@ -44,7 +44,7 @@ public:
         return (MaskMode)getIndex2();
     }
     
-    void draw(GPainter& painter,
+    void draw(GCanvas* canvas,
               GIBuffer* buffer,InputType inputType,
               GTexture2D* texBase,
               gint mode,gint first,gint count,

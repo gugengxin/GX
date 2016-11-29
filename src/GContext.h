@@ -10,7 +10,6 @@
 #include "GD3DContext.h"
 #include "GMTLContext.h"
 #include "GXContext.h"
-#include "GPainter.h"
 #include "GSRGraphics.h"
 #include "GSRTexture2D.h"
 #include "GReader.h"
@@ -104,11 +103,6 @@ private:
 public:
 	GSRGraphics* getSRGraphics(GSRGraphics::ID srID);
     GSRTexture2D* getSRTexture2D(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm);
-//Painter
-public:
-	GPainter& getPainter() {
-		return m_Painter;
-	}
 //Texture
 public:
     GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param);
@@ -131,7 +125,6 @@ private:
     void unloadFrameBufferNode(GFrameBuffer::Node* node);
 	static void unloadFrameBufferNodeInMT(GObject* obj);
 private:
-	GPainter                        m_Painter;
 	GShader*                        m_Shaders[SRIDCount];
 	GDataList<GTexture::Handle>     m_Textures;
     GDataList<GFrameBuffer::Handle> m_FrameBuffers;

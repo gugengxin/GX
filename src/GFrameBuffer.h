@@ -15,7 +15,6 @@
 #include "GXContext.h"
 #include "GDataList.h"
 #include "GColor.h"
-#include "GPainter.h"
 
 #include "GXGObject.h"
 // Down can't include other h file
@@ -120,7 +119,6 @@ protected:
     }
 private:
     Node* m_Node;
-    GPainter m_Painter;
 };
 
 // Up can't include other h file

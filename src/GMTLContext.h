@@ -13,16 +13,16 @@
 
 #if defined(GX_METAL)
 #include "GXMetal.h"
+#include "GBaseContext.h"
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
 
-class GWindow;
+#include "GXGObject.h"
+// Down can't include other h file
 
-class GMTLContext {
+class GMTLContext : public GBaseContext {
     friend class GMShader;
-protected:
-    GMTLContext();
-    virtual ~GMTLContext();
+    GX_VIRTUAL_GOBJECT(GMTLContext);
 
 public:
     virtual bool create(GWindow* win);
@@ -68,11 +68,8 @@ private:
     void clearDrawable();
     void setupRenderPassDescriptor(void* texture);
     void* renderPassDescriptor();
-
-private:
-    GWindow* m_Window;
     
-    // set these pixel formats to have the main drawable framebuffer get created with depth and/or stencil attachments
+private:
     guint m_DepthPixelFormat;
     guint m_StencilPixelFormat;
     guint m_SampleCount;
@@ -89,6 +86,9 @@ private:
     void* m_CommandBuffer;
     void* m_RenderEncoder;
 };
+
+// Up can't include other h file
+#include "GXGObjectUD.h"
 
 #endif
 

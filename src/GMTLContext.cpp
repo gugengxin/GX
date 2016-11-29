@@ -18,11 +18,16 @@
 #include "GApplication.h"
 #include "GWindow.h"
 
-#define M_METAL_LAYER()         GX_CAST_R(CAMetalLayer*,m_Window->getMetalLayer())
+#define M_METAL_LAYER()         GX_CAST_R(CAMetalLayer*,getWindow()->getMetalLayer())
 #define M_COMMAND_QUEUE()       GX_CAST_R(id<MTLCommandQueue>, m_CommandQueue)
 #define M_COMMAND_BUFFER()      GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer)
 #define M_RENDER_ENCODER()      GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder)
 #define M_DEPTH_STENCIL_STATE() GX_CAST_R(id<MTLDepthStencilState>, m_DepthStencilState)
+
+//Up include other h file
+#include "GXGObject.h"
+
+GX_GOBJECT_IMPLEMENT(GMTLContext,GBaseContext);
 
 //不用在这里初始化
 GMTLContext::GMTLContext()
@@ -35,7 +40,9 @@ GMTLContext::~GMTLContext()
 
 bool GMTLContext::create(GWindow* win)
 {
-    m_Window=win;
+    if (!GBaseContext::create(win)) {
+        return false;
+    }
     
     id <MTLDevice> device=M_METAL_LAYER().device;
     
@@ -55,7 +62,7 @@ bool GMTLContext::create(GWindow* win)
     m_CurrentDrawable=NULL;
     
     m_CommandQueue=[[device newCommandQueue] retain];
-    MTLDepthStencilDescriptor *dsStateDesc = [[MTLDepthStencilDescriptor alloc] init] ;
+    MTLDepthStencilDescriptor *dsStateDesc = [[MTLDepthStencilDescriptor alloc] init];
     dsStateDesc.depthCompareFunction = MTLCompareFunctionAlways;
     dsStateDesc.depthWriteEnabled = YES;
     m_DepthStencilState = [[device newDepthStencilStateWithDescriptor:dsStateDesc] retain];
@@ -81,7 +88,7 @@ void GMTLContext::destroy()
     [GX_CAST_R(id, m_RenderPassDescriptor) release];
     [GX_CAST_R(id, m_CurrentDrawable) release];
     
-    m_Window=NULL;
+    GBaseContext::destroy();
 }
 
 bool GMTLContext::resize(gfloat32 width,gfloat32 height)
@@ -97,7 +104,7 @@ void GMTLContext::renderBegin()
 {
     currentDrawable();
     
-    M_METAL_LAYER().drawableSize=CGSizeMake(m_Window->getWidth()*m_Window->getScale(), m_Window->getHeight()*m_Window->getScale());
+    M_METAL_LAYER().drawableSize=CGSizeMake(getWindow()->getWidth()*getWindow()->getScale(), getWindow()->getHeight()*getWindow()->getScale());
     m_CommandBuffer = [[M_COMMAND_QUEUE() commandBuffer] retain];
     m_RenderEncoder = [[M_COMMAND_BUFFER() renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, renderPassDescriptor())] retain];
     [M_RENDER_ENCODER() setDepthStencilState:M_DEPTH_STENCIL_STATE()];
@@ -196,7 +203,7 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
     
     // make sure to clear every frame for best performance
     colorAttachment.loadAction = MTLLoadActionClear;
-    GColor4F& bgdClr=m_Window->m_BgdColor;
+    GColor4F& bgdClr=getBgdColor();
     colorAttachment.clearColor = MTLClearColorMake(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
     
     // if sample count is greater than 1, render into using MSAA, then resolve into our color texture
@@ -574,7 +581,7 @@ void GMTLContext::loadFrameBufferNodeInMT(GObject* obj)
     MTLRenderPassDescriptor* rpdOut=nil;
     id<MTLTexture> dsTexOut=nil;
     
-    id<MTLDevice> device=GX_CAST_R(CAMetalLayer*,nodeObj.context->m_Window->getMetalLayer()).device;
+    id<MTLDevice> device=GX_CAST_R(CAMetalLayer*,nodeObj.context->getWindow()->getMetalLayer()).device;
     
     rpdOut=[MTLRenderPassDescriptor renderPassDescriptor];
     

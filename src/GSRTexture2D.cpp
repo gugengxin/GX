@@ -372,7 +372,7 @@ void GSRTexture2D::createUniformBuffer(void* device)
 
 
 
-void GSRTexture2D::draw(GPainter& painter,
+void GSRTexture2D::draw(GCanvas* canvas,
                         GIBuffer* buffer,GSRTexture2D::InputType inputType,
                         GTexture2D* texBase,
                         gint mode,gint first,gint count,
@@ -465,14 +465,14 @@ void GSRTexture2D::draw(GPainter& painter,
     [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, buffer->getBuffer()) offset:buffer->getOffset() atIndex:0];
     
     void* pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) contents];
-    const float* mvp = painter.updateMVPMatrix();
+    const float* mvp = canvas->updateMVPMatrix();
     ((GMatrix4*)mvp)->transpose();
     memcpy(pMap, mvp, GX_MATRIX_SIZE);
     [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) offset:0 atIndex:1];
     
     if (isColorMul()) {
         pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) contents];
-        const float* clrMul = painter.updateColorMul();
+        const float* clrMul = canvas->updateColorMul();
         memcpy(pMap, clrMul, sizeof(GColor4F));
         [rce setFragmentBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) offset:0 atIndex:0];
     }

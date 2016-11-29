@@ -4,7 +4,7 @@
 #include "GDShader.h"
 #include "GMShader.h"
 #include "GBuffer.h"
-#include "GPainter.h"
+#include "GCanvas.h"
 
 class GSRGraphics : public GShaderBase
 {
@@ -21,7 +21,7 @@ public:
 		IT_Float,
 	} InputType;
 public:
-	void draw(GPainter& painter, GIBuffer* buffer, InputType inputType, gint mode, gint first, gint count);
+	void draw(GCanvas* canvas, GIBuffer* buffer, InputType inputType, gint mode, gint first, gint count);
 
 private:
 	GSRGraphics(GContext* ctx,ID srID);

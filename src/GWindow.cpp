@@ -416,7 +416,6 @@ GWindow::GWindow(void* osWinP)
 {
 	m_RenderStepTime=1000/30;
 	m_RenderLastTime=0;
-    m_BgdColor.set(0, 0, 0, 1.0f);
 	m_OSWinP = osWinP;
 #if defined(GX_OS_WINDOWS)
 	WNDCLASS	wc;						// 窗口类结构
@@ -582,16 +581,16 @@ void GWindow::render()
 {
 	m_Context.setViewport(0.0f, 0.0f, getWidth(), getHeight(), getScale());
 
-	GPainter& painter = m_Context.getPainter();
+    GCanvas* canvas = &m_Context;
 
-	painter.enable3D(getWidth(), getHeight(), GX_PI / 3, 0.1f, 1000.0f);
-	painter.lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    //painter.enable2D(getWidth(), getHeight());
+	canvas->enable3D(getWidth(), getHeight(), GX_PI / 3, 0.1f, 1000.0f);
+	canvas->lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    //canvas->enable2D(getWidth(), getHeight());
 
     /*
 	GSRGraphics* graph = m_Context.getSRGraphics(GSRGraphics::ID_CAndCM);
 
-    painter.setColorMul(0, 1, 1, 1.0f);
+    canvas->setColorMul(0, 1, 1, 1.0f);
 	static GDataBuffer* data = NULL;
 	if (!data) {
 		data = GDataBuffer::alloc();
@@ -622,8 +621,9 @@ void GWindow::render()
 	graph->draw(painter, data, GSRGraphics::IT_Float, GX_TRIANGLES, 0, 3);
     //*/
 
+    //*
     GSRTexture2D* shader=m_Context.getSRTexture2D(false, true, GSRTexture2D::MM_None);
-    painter.setColorMul(0, 1, 0, 1.0f);
+    canvas->setColorMul(0, 1, 0, 1.0f);
 
     static GDataBuffer* data = NULL;
     static GTexture2D* tex=NULL;
@@ -661,7 +661,8 @@ void GWindow::render()
             GAppBundle::main()->closeReader(reader);
         }
     }
-    shader->draw(painter, data, GSRTexture2D::IT_Float_Float, tex, GX_TRIANGLE_STRIP, 0, 4, NULL);
+    shader->draw(canvas, data, GSRTexture2D::IT_Float_Float, tex, GX_TRIANGLE_STRIP, 0, 4, NULL);
+    //*/
 }
 
 void GWindow::renderForce()
