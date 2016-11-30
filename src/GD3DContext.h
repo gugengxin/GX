@@ -7,16 +7,16 @@
 
 #include "GXPrefix.h"
 #if defined(GX_DIRECTX)
+#include "GBaseContext.h"
 #include "GXDirectX.h"
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
 
-class GWindow;
+#include "GXGObject.h"
+// Down can't include other h file
 
-class GD3DContext {
-protected:
-    GD3DContext();
-    virtual ~GD3DContext();
+class GD3DContext : public GBaseContext {
+	GX_VIRTUAL_GOBJECT(GD3DContext);
 public:
 	virtual bool create(GWindow* win);
 	virtual void destroy();
@@ -47,8 +47,6 @@ protected:
 	void unloadFrameBufferNodeForContext(GFrameBuffer::Node* node);
 
 private:
-	GWindow* m_Window;
-
 	UINT m_Samples;
 	UINT m_SampleQuality;
 

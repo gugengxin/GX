@@ -7,6 +7,10 @@
 #include "GWindow.h"
 #include "GApplication.h"
 
+//Up include other h file
+#include "GXGObject.h"
+
+GX_GOBJECT_IMPLEMENT(GD3DContext, GBaseContext);
 
 //不用在这里初始化
 GD3DContext::GD3DContext()
@@ -20,10 +24,12 @@ GD3DContext::~GD3DContext()
 //在这里初始化
 bool GD3DContext::create(GWindow* win)
 {
-	m_Window = win;
+	if (!GBaseContext::create(win)) {
+		return false;
+	}
 	ID3D10Device* device = GX::D3DDevice();
-	UINT width = (UINT)m_Window->getWidth();
-	UINT height = (UINT)m_Window->getHeight();
+	UINT width = (UINT)getWindow()->getWidth();
+	UINT height = (UINT)getWindow()->getHeight();
 
 	m_Samples = (UINT)GApplication::sharedDelegate()->windowsSuggestedSamples();
 
@@ -89,7 +95,7 @@ bool GD3DContext::create(GWindow* win)
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 
 	// 后缓冲输出的窗口句柄. 
-	swapChainDesc.OutputWindow = (HWND)m_Window->getOSWindow();
+	swapChainDesc.OutputWindow = (HWND)getWindow()->getOSWindow();
 
 	swapChainDesc.SampleDesc.Count = m_Samples;
 	swapChainDesc.SampleDesc.Quality = m_SampleQuality;
@@ -216,6 +222,7 @@ void GD3DContext::destroy()
 		m_SwapChain->Release();
 		m_SwapChain = NULL;
 	}
+	GBaseContext::destroy();
 }
 
 bool GD3DContext::createView(UINT width,UINT height)
@@ -301,7 +308,8 @@ void GD3DContext::renderBegin()
     //设置光栅化状态，使其生效
     device->RSSetState(m_RasterState);
 
-	const FLOAT color[] = { m_Window->m_BgdColor.r, m_Window->m_BgdColor.g, m_Window->m_BgdColor.b, m_Window->m_BgdColor.a };
+	GColor4F& bgdClr = getBgdColor();
+	const FLOAT color[] = { bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a };
 	device->ClearRenderTargetView(m_RenderTargetView, color);
 	device->ClearDepthStencilView(m_DepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 }

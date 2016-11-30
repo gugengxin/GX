@@ -429,7 +429,7 @@ void GSRTexture2D::draw(GCanvas* canvas,
 
 	cbToMapped = m_ConstBuffers[CB_mvp_mat];
 	cbToMapped->Map(D3D10_MAP_WRITE_DISCARD, 0, &pMap);
-	const float* mvp = painter.updateMVPMatrix();
+	const float* mvp = canvas->updateMVPMatrix();
 	((GMatrix4*)mvp)->transpose();
 	memcpy(pMap, mvp, GX_MATRIX_SIZE);
 	cbToMapped->Unmap();
@@ -438,7 +438,7 @@ void GSRTexture2D::draw(GCanvas* canvas,
 	if (isColorMul()) {
 		cbToMapped = m_ConstBuffers[CB_color_mul];
 		cbToMapped->Map(D3D10_MAP_WRITE_DISCARD, 0, &pMap);
-		memcpy(pMap, painter.updateColorMul(), sizeof(GColor4F));
+		memcpy(pMap, canvas->updateColorMul(), sizeof(GColor4F));
 		cbToMapped->Unmap();
 		device->PSSetConstantBuffers(0, 1, &cbToMapped);
 	}

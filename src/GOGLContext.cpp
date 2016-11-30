@@ -399,6 +399,7 @@ void GOGLContext::destroy()
     //delete m_Context;
     m_Context=NULL;
 #endif
+	GBaseContext::destroy();
 }
 
 #if defined(GX_OS_ANDROID)

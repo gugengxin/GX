@@ -25,9 +25,6 @@
     <Filter Include="src\Window">
       <UniqueIdentifier>{91633f66-2b1b-460b-9747-2329acf4da93}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Window\glew">
-      <UniqueIdentifier>{78e8958d-1015-4cf7-b851-bbad82f4bbcb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Window\shader">
       <UniqueIdentifier>{7515a65e-5c60-4d83-8d87-cc7d9697a4e8}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,12 @@
     </Filter>
     <Filter Include="src\Window\context">
       <UniqueIdentifier>{6125dfc3-c48c-42fd-825b-46df102a1c85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Window\3DAPI">
+      <UniqueIdentifier>{7f3db198-c366-4d90-bc59-199fa21f19e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Window\3DAPI\glew">
+      <UniqueIdentifier>{78e8958d-1015-4cf7-b851-bbad82f4bbcb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -123,12 +126,6 @@
     <ClCompile Include="..\..\src\GJavaJAPI.cpp">
       <Filter>src\Unuse</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GXDirectX.cpp">
-      <Filter>src\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GXOpenGL.cpp">
-      <Filter>src\Window</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GNumber.cpp">
       <Filter>src\Struct</Filter>
     </ClCompile>
@@ -145,7 +142,7 @@
       <Filter>src\Thread</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\glew.c">
-      <Filter>src\Window\glew</Filter>
+      <Filter>src\Window\3DAPI\glew</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GWindow.cpp">
       <Filter>src\Window</Filter>
@@ -167,9 +164,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GSRGraphics.cpp">
       <Filter>src\Window\shader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GPainter.cpp">
-      <Filter>src\Window</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GBuffer.cpp">
       <Filter>src\Window</Filter>
@@ -261,9 +255,6 @@
     <ClCompile Include="..\..\src\GCoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GXMetal.cpp">
-      <Filter>src\Window</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GSerialize.cpp">
       <Filter>src\IO</Filter>
     </ClCompile>
@@ -287,6 +278,21 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GOGLContext.cpp">
       <Filter>src\Window\context</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GCanvas.cpp">
+      <Filter>src\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GBaseContext.cpp">
+      <Filter>src\Window\context</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GXDirectX.cpp">
+      <Filter>src\Window\3DAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GXMetal.cpp">
+      <Filter>src\Window\3DAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GXOpenGL.cpp">
+      <Filter>src\Window\3DAPI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -386,12 +392,6 @@
     <ClInclude Include="..\..\src\GJavaJAPI.h">
       <Filter>src\Unuse</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GXDirectX.h">
-      <Filter>src\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GXOpenGL.h">
-      <Filter>src\Window</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GThread.h">
       <Filter>src\Thread</Filter>
     </ClInclude>
@@ -411,13 +411,13 @@
       <Filter>src\Thread</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GL\glew.h">
-      <Filter>src\Window\glew</Filter>
+      <Filter>src\Window\3DAPI\glew</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GL\glxew.h">
-      <Filter>src\Window\glew</Filter>
+      <Filter>src\Window\3DAPI\glew</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GL\wglew.h">
-      <Filter>src\Window\glew</Filter>
+      <Filter>src\Window\3DAPI\glew</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GWindow.h">
       <Filter>src\Window</Filter>
@@ -439,9 +439,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GSRGraphics.h">
       <Filter>src\Window\shader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GPainter.h">
-      <Filter>src\Window</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GBuffer.h">
       <Filter>src\Window</Filter>
@@ -548,9 +545,6 @@
     <ClInclude Include="..\..\src\GCoder.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GXMetal.h">
-      <Filter>src\Window</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GSerialize.h">
       <Filter>src\IO</Filter>
     </ClInclude>
@@ -573,6 +567,27 @@
       <Filter>src\Window\context</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GOGLContext.h">
+      <Filter>src\Window\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GCanvas.h">
+      <Filter>src\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GBaseContext.h">
+      <Filter>src\Window\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXDirectX.h">
+      <Filter>src\Window\3DAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXMetal.h">
+      <Filter>src\Window\3DAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXOpenGL.h">
+      <Filter>src\Window\3DAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GX3DAPI.h">
+      <Filter>src\Window\3DAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXContext.h">
       <Filter>src\Window\context</Filter>
     </ClInclude>
   </ItemGroup>
