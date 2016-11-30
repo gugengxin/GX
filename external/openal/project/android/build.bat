@@ -10,14 +10,13 @@ pushd %LIBRARY_ROOT%\..\..
 set GX_ROOT=%cd%
 popd
 
-set SRC_DIR=openal-soft-openal-soft-1.17.2
-set SRC_ROOT=%PROJECT_ROOT%\%SRC_DIR%
-if exist %SRC_ROOT% (
-	rd /s/q %SRC_ROOT%
+set SRC_ROOT=%LIBRARY_ROOT%\src
+
+if exist %SRC_ROOT%\android (
+	rd /s/q %SRC_ROOT%\android
 )
-%GX_ROOT%\bin\unzip.exe %LIBRARY_ROOT%\%SRC_DIR%.zip -d %PROJECT_ROOT%
 mkdir %SRC_ROOT%\android\jni
-copy %PROJECT_ROOT%\jni\* %SRC_ROOT%\android\jni
+copy /y %PROJECT_ROOT%\jni\* %SRC_ROOT%\android\jni
 
 set OUTPUT_DIR=%LIBRARY_ROOT%\lib\ard
 if exist %OUTPUT_DIR% (
@@ -42,8 +41,8 @@ for /r %SRC_ROOT%\android\obj\local %%i in (*.a) do (
 	)
 )
 
-rd /s/q %SRC_ROOT%
+rd /s/q %SRC_ROOT%\android
 
-copy %PROJECT_ROOT%\libAndroid.mk %OUTPUT_DIR%\Android.mk
+copy /y %PROJECT_ROOT%\libAndroid.mk %OUTPUT_DIR%\Android.mk
 
 goto :EOF
