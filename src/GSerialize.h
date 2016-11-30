@@ -148,6 +148,10 @@ gint GUnserialize::ueDecodeObjects(GDecoder& coder,GArray<T>* objsOut,guint32 le
         }
         res+=nTemp;
 
+        if(res>(gint)len) {
+            return -1;
+        }
+
         T* obj=T::autoAlloc();
         nTemp=obj->ueDecode(coder,lenTemp);
         if(nTemp!=(gint)lenTemp) {
@@ -157,6 +161,10 @@ gint GUnserialize::ueDecodeObjects(GDecoder& coder,GArray<T>* objsOut,guint32 le
             return -1;
         }
         res+=nTemp;
+
+        if(res>(gint)len) {
+            return -1;
+        }
     }
     return res;
 }

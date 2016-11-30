@@ -318,13 +318,13 @@ bool GOGLContext::create(GWindow* win)
 	}
 #elif defined(GX_OS_QT)
     m_Context=new QOpenGLContext();
-    m_Context->setFormat(m_Window->m_OSWin->format());
+    m_Context->setFormat(getWindow()->m_OSWin->format());
     GWindow *aw = GApplication::shared()->firstWindow();
-    if (aw && aw != m_Window) {
+    if (aw && aw != getWindow()) {
         m_Context->setShareContext(GX_CAST_R(GOGLContext* , &aw->m_Context)->m_Context);
     }
     bool res=m_Context->create();
-    res=m_Context->makeCurrent(m_Window->m_OSWin);
+    res=m_Context->makeCurrent(getWindow()->m_OSWin);
     initializeOpenGLFunctions();
     m_Context->doneCurrent();
 #endif
@@ -529,7 +529,7 @@ void GOGLContext::renderEnd()
 #elif defined(GX_OS_ANDROID)
 	eglSwapBuffers(g_Display, m_Surface);
 #elif defined(GX_OS_QT)
-	m_Context->swapBuffers(m_Window->m_OSWin);
+    m_Context->swapBuffers(getWindow()->m_OSWin);
 #endif
 	makeClear();
 }
@@ -547,7 +547,7 @@ void GOGLContext::makeCurrent()
 #elif defined(GX_OS_MACOSX)
         [GX_CAST_R(NSOpenGLContext*,m_Context) makeCurrentContext];
 #elif defined(GX_OS_QT)
-        m_Context->makeCurrent(m_Window->m_OSWin);
+        m_Context->makeCurrent(getWindow()->m_OSWin);
 #endif
     }
     m_ContextMakeCount++;
@@ -850,14 +850,14 @@ void GOGLContext::loadFrameBufferNodeInMT(GObject* obj)
             GX_glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D, nodeObj.texTarget->getNode()->getData().getName(), 0);
             if (nodeObj.enableDepth) {
                 GLuint oldRB;
-                glGetIntegerv(GL_RENDERBUFFER_BINDING, (GLint*)&oldRB);
-                glBindRenderbuffer(GL_RENDERBUFFER, handle.m_DepthName);
-                glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, GX_CAST_R(GTexture2D*, nodeObj.texTarget)->getWidth(), GX_CAST_R(GTexture2D*, nodeObj.texTarget)->getHeight());
-                glBindRenderbuffer(GL_RENDERBUFFER, oldRB);
+                GX_glGetIntegerv(GL_RENDERBUFFER_BINDING, (GLint*)&oldRB);
+                GX_glBindRenderbuffer(GL_RENDERBUFFER, handle.m_DepthName);
+                GX_glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, GX_CAST_R(GTexture2D*, nodeObj.texTarget)->getWidth(), GX_CAST_R(GTexture2D*, nodeObj.texTarget)->getHeight());
+                GX_glBindRenderbuffer(GL_RENDERBUFFER, oldRB);
 
-                glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, handle.m_DepthName);
+                GX_glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, handle.m_DepthName);
             }
-            glBindFramebuffer(GL_FRAMEBUFFER, oldFB);
+            GX_glBindFramebuffer(GL_FRAMEBUFFER, oldFB);
         }
     }
 

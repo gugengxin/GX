@@ -113,7 +113,11 @@ public:
         if (m_Node) {
             return m_Node->getData().getName();
         }
+#if defined(GX_OPENGL)
+        return 0;
+#else
         return NULL;
+#endif
     }
     
 protected:
