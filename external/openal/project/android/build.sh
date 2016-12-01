@@ -8,14 +8,12 @@ cd ../..
 GX_ROOT=$PWD
 
 
-SRC_DIR=openal-soft-openal-soft-1.17.2
-SRC_ROOT=$PROJECT_ROOT/$SRC_DIR
-if [ -d $SRC_ROOT ] 
-then
-rm -rf $SRC_ROOT
-fi
+SRC_ROOT=$LIBRARY_ROOT/src
 
-unzip $LIBRARY_ROOT/$SRC_DIR.zip -d $PROJECT_ROOT
+if [ -d $SRC_ROOT/android ] 
+then
+rm -rf $SRC_ROOT/android
+fi
 mkdir -p $SRC_ROOT/android
 cp -r $PROJECT_ROOT/jni $SRC_ROOT/android
 
@@ -48,7 +46,7 @@ find $SRC_ROOT/android/obj/local -name "*.a" -exec bash -c "move_lib {} $OUTPUT_
 
 cp -r $SRC_ROOT/include $LIBRARY_ROOT
 
-rm -rf $SRC_ROOT
+rm -rf $SRC_ROOT/android
 cp $PROJECT_ROOT/libAndroid.mk $OUTPUT_DIR/Android.mk
 
 
