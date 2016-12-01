@@ -5,7 +5,7 @@ PATH_FROM_SRC := ../../../src
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := png
-LOCAL_C_INCLUDES:= $(LOCAL_PATH)/../../../include
+LOCAL_C_INCLUDES:= $(LOCAL_PATH)/../../../include $(LOCAL_PATH)/../../../../zlib/include
 LOCAL_SRC_FILES := \
 $(PATH_FROM_SRC)/png.c\
 $(PATH_FROM_SRC)/pngerror.c\

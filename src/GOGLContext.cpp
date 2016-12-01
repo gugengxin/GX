@@ -306,7 +306,7 @@ bool GOGLContext::create(GWindow* win)
 	EGLContext shared = g_Context;
 	if (shared == EGL_NO_CONTEXT) {
 		GWindow *aw = GApplication::shared()->firstWindow();
-		if (aw && aw != m_Window) {
+		if (aw && aw != getWindow()) {
 			shared = GX_CAST_R(EGLContext, GX_CAST_R(GOGLContext * , &aw->m_Context)->m_Context);
 		}
 	}
@@ -456,12 +456,12 @@ bool GOGLContext::resize(gfloat32 width,gfloat32 height)
 	if (m_Surface != EGL_NO_SURFACE) {
 		if(m_Surface==g_Surface) {
 			eglDestroySurface(g_Display, m_Surface);
-			m_Surface = eglCreateWindowSurface(g_Display, g_Config, m_Window->m_OSWin, NULL);
+			m_Surface = eglCreateWindowSurface(g_Display, g_Config, getWindow()->m_OSWin, NULL);
 			g_Surface=m_Surface;
 		}
 		else {
 			eglDestroySurface(g_Display, m_Surface);
-			m_Surface = eglCreateWindowSurface(g_Display, g_Config, m_Window->m_OSWin, NULL);
+			m_Surface = eglCreateWindowSurface(g_Display, g_Config, getWindow()->m_OSWin, NULL);
 		}
 	}
 	return true;

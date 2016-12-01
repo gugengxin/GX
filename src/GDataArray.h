@@ -188,11 +188,11 @@ GDArray<T>::~GDArray()
 
 
 template <typename T,guint32 N>
-class GPieceDataArray : public GDataArray<T, GX::PieceData< (guint32)sizeof(T)*N >> {
+class GPieceDataArray : public GDataArray<T, GX::PieceData<(guint32)(sizeof(T)*N)> > {
     GX_GOBJECT(GPieceDataArray);
 };
 
-GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA guint32 N, GPieceDataArray<T GX_COMMA N>, GDataArray<T GX_COMMA GX::PieceData< (guint32)sizeof(T)*N >>);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA guint32 N, GPieceDataArray<T GX_COMMA N>, GDataArray< T GX_COMMA GX::PieceData<(guint32)(sizeof(T)*N)> >);
 
 template <typename T,guint32 N>
 GPieceDataArray<T,N>::GPieceDataArray()
