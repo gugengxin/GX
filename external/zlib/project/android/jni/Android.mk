@@ -4,7 +4,8 @@ GX_PATH_FROM_SRC := ../../../src
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := zlib
+LOCAL_MODULE    := gx_zlib
+LOCAL_MODULE_FILENAME := zlib
 LOCAL_C_INCLUDES:= $(LOCAL_PATH)/../../../include
 LOCAL_CFLAGS 	:= -D GX_ZLIB_NO_FILE64
 LOCAL_SRC_FILES := \

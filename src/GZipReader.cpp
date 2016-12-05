@@ -14,6 +14,8 @@
 #include "iowin32.h"
 #endif
 
+#include "GLog.h"
+
 #if GX_PTR_32BIT
 
 #define M_OPENZIP(path,def)			unzOpen2((const char*)path,def)
@@ -122,6 +124,9 @@ bool GZipReader::open(const gtchar* path, bool createMap)
 				if (bTF) {
 					GString* name = GString::alloc();
 					bTF = (M_GETCURRENTFILEINFO(M_ZIPFILE(), NULL, name->prepareBuffer(info.size_filename), info.size_filename, NULL, 0, NULL, 0) == UNZ_OK);
+
+					GX_LOG_P1(PrioDEBUG,"GZipReader::open","file:%s",name->c_str());
+
 					if (bTF) {
 						Node* node = Node::alloc();
 						node->setOffset(getOffset());

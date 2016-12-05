@@ -4,8 +4,10 @@ PATH_FROM_SRC := ../../../src
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := png
+LOCAL_MODULE    := gx_libpng
+LOCAL_MODULE_FILENAME := libpng
 LOCAL_C_INCLUDES:= $(LOCAL_PATH)/../../../include $(LOCAL_PATH)/../../../../zlib/include
+LOCAL_STATIC_LIBRARIES := gx_zlib
 LOCAL_SRC_FILES := \
 $(PATH_FROM_SRC)/png.c\
 $(PATH_FROM_SRC)/pngerror.c\

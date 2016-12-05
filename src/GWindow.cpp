@@ -618,7 +618,7 @@ void GWindow::render()
 		data->setStride(sizeof(md[0]));
 	}
 
-	graph->draw(painter, data, GSRGraphics::IT_Float, GX_TRIANGLES, 0, 3);
+	graph->draw(canvas, data, GSRGraphics::IT_Float, GX_TRIANGLES, 0, 3);
     //*/
 
     //*

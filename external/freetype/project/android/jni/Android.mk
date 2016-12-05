@@ -4,7 +4,8 @@ PATH_FROM_SRC := ../../../src
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := freetype
+LOCAL_MODULE    := gx_freetype
+LOCAL_MODULE_FILENAME := freetype
 LOCAL_CFLAGS +=  -D__LINUX_CPL__ -DUNICODE -DFT2_BUILD_LIBRARY
 LOCAL_C_INCLUDES:= $(LOCAL_PATH)/../../../include $(LOCAL_PATH)/../../../src
 LOCAL_SRC_FILES := $(PATH_FROM_SRC)/base/ftsystem.c \

@@ -4,7 +4,8 @@ PATH_FROM_SRC := ../../../src
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := jpeg
+LOCAL_MODULE    := gx_libjpeg
+LOCAL_MODULE_FILENAME := libjpeg
 LOCAL_C_INCLUDES:= $(LOCAL_PATH)/../../../include $(LOCAL_PATH)/../../../include/ard $(LOCAL_PATH)/../../../src
 LOCAL_SRC_FILES := \
 $(PATH_FROM_SRC)/jaricom.c\

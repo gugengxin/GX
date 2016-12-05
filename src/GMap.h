@@ -72,9 +72,10 @@ public:
         if (m_ObjCount>=m_ObjArray.getCount()*2) {
             increaseCapability(m_ObjArray.getCount());
         }
-        
-        gint idx=GX_CAST_S(gint, key->getHash())%m_ObjArray.getCount();
-        
+
+        //gint idx=GX_CAST_S(gint, GX_CAST_S(guint,key->getHash())%GX_CAST_S(guint,m_ObjArray.getCount()));
+        gint idx=indexOfHash(key->getHash(),m_ObjArray.getCount());
+
         Node* p=m_ObjArray.get(idx);
         
         if(!p) {
@@ -104,7 +105,8 @@ public:
     
     O* get(K* key) {
         if(m_ObjCount>0) {
-            gint idx=GX_CAST_S(gint, key->getHash())%m_ObjArray.getCount();
+            //gint idx=GX_CAST_S(gint, key->getHash())%m_ObjArray.getCount();
+			gint idx=indexOfHash(key->getHash(),m_ObjArray.getCount());
             Node* p=m_ObjArray.get(idx);
             while(p) {
                 if(p->getKey()->isEqual(key)) {
@@ -120,7 +122,8 @@ public:
 			if (m_ObjCount < m_ObjArray.getCount() / 2) {
 				decreaseCapability(m_ObjArray.getCount());
 			}
-            gint idx=GX_CAST_S(gint, key->getHash())%m_ObjArray.getCount();
+            //gint idx=GX_CAST_S(gint, key->getHash())%m_ObjArray.getCount();
+			gint idx=indexOfHash(key->getHash(),m_ObjArray.getCount());
             Node* p=m_ObjArray.get(idx);
             Node* pLast=NULL;
             while(p) {
@@ -263,23 +266,29 @@ public:
 	}
 
 private:
-    bool increaseCapability(gint dc) {
-        for (gint i=0;; i++) {
-            if(capabilitys[i]>dc) {
-                dc=capabilitys[i];
-                break;
-            }
-            else if(capabilitys[i]<=0) {
-                return false;
-            }
-        }
-        
+	inline gint indexOfHash(guint hash,gint count) {
+		return GX_CAST_S(gint, hash%GX_CAST_S(guint,count));
+	}
+	bool increaseCapability(gint dc) {
+		gint i=0;
+		while(true) {
+			if (capabilitys[i] > dc) {
+				dc = capabilitys[i];
+				break;
+			}
+			else if (capabilitys[i] <= 0) {
+				return false;
+			}
+			i++;
+		}
+
 		return changeCapability(dc);
-    }
+	}
 
 	bool decreaseCapability(gint dc) {
-		for (gint i = 0;; i++) {
-			if (capabilitys[i]>=dc) {
+		gint i=0;
+		while(true) {
+			if (capabilitys[i] >= dc) {
 				if (i <= 0) {
 					return false;
 				}
@@ -291,6 +300,7 @@ private:
 			else if (capabilitys[i] <= 0) {
 				return false;
 			}
+			i++;
 		}
 		return changeCapability(dc);
 	}
@@ -308,7 +318,8 @@ private:
 		for (gint i = 0; i<tempArr.getCount(); i++) {
 			Node* p = tempArr.get(i);
 			while (p) {
-				gint idx = GX_CAST_S(gint, p->getKey()->getHash()) % dc;
+				//gint idx = GX_CAST_S(gint, p->getKey()->getHash()) % dc;
+				gint idx = indexOfHash(p->getKey()->getHash(),dc);
 
 				Node* pNew = m_ObjArray.get(idx);
 				if (pNew) {

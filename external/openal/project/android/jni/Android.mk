@@ -4,7 +4,8 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE     := openal
+LOCAL_MODULE     := gx_openal
+LOCAL_MODULE_FILENAME := openal
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../include
 LOCAL_C_INCLUDES        := $(LOCAL_EXPORT_C_INCLUDES)           \

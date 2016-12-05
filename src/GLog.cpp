@@ -71,7 +71,7 @@ static const gchar* PrioString[] = {
 #endif
 
 
-void GLog::Print(gint prio, const gchar* tag, const gchar* fmt, ...)
+void GLog::print(gint prio, const gchar* tag, const gchar* fmt, ...)
 {
 #ifdef GX_DEBUG
 	M_CONSOLE_INIT();
@@ -100,7 +100,7 @@ void GLog::Print(gint prio, const gchar* tag, const gchar* fmt, ...)
     GX_UNUSED(fmt);
 #endif
 }
-void GLog::Write(gint prio, const gchar* tag, const gchar* msg)
+void GLog::write(gint prio, const gchar* tag, const gchar* msg)
 {
 #ifdef GX_DEBUG
 	M_CONSOLE_INIT();
