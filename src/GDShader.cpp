@@ -31,7 +31,7 @@ bool GDShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
 	ID3D10Blob* vertexShaderBuffer;
 	ID3D10Blob* pixelShaderBuffer;
 
-	ID3D10Device* device = GX::D3DDevice();
+	ID3D10Device* device = GX::d3dDevice();
 
 	// 初始化指针为空. 
 	errorMessage = 0;

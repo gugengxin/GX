@@ -271,7 +271,7 @@ void GSRGraphics::draw(GCanvas* canvas, GIBuffer* buffer, InputType inputType, g
     
 #elif defined(GX_DIRECTX)
 
-	ID3D10Device* device = GX::D3DDevice();
+	ID3D10Device* device = GX::d3dDevice();
 
 	UINT offset = (UINT)buffer->getOffset();
 	UINT stride = (UINT)buffer->getStride();

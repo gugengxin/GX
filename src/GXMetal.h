@@ -16,7 +16,7 @@
 #import <Metal/Metal.h>
 
 namespace GX {
-    id<MTLDevice> MetalDevice();
+    id<MTLDevice> metalDevice();
 }
 
 #endif

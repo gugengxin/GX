@@ -13,7 +13,7 @@
 #pragma comment(lib, "D3DCompiler.lib")
 
 namespace GX {
-	ID3D10Device* D3DDevice();
+	ID3D10Device* d3dDevice();
 }
 
 #define GX_POINTS			D3D10_PRIMITIVE_TOPOLOGY_POINTLIST

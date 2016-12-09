@@ -416,7 +416,7 @@ void GSRTexture2D::draw(GCanvas* canvas,
     
 #elif defined(GX_DIRECTX)
 
-	ID3D10Device* device = GX::D3DDevice();
+	ID3D10Device* device = GX::d3dDevice();
 
 	UINT offset = (UINT)buffer->getOffset();
 	UINT stride = (UINT)buffer->getStride();

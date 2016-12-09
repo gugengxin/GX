@@ -27,7 +27,7 @@ bool GD3DContext::create(GWindow* win)
 	if (!GBaseContext::create(win)) {
 		return false;
 	}
-	ID3D10Device* device = GX::D3DDevice();
+	ID3D10Device* device = GX::d3dDevice();
 	UINT width = (UINT)getWindow()->getWidth();
 	UINT height = (UINT)getWindow()->getHeight();
 
@@ -227,7 +227,7 @@ void GD3DContext::destroy()
 
 bool GD3DContext::createView(UINT width,UINT height)
 {
-	ID3D10Device* device = GX::D3DDevice();
+	ID3D10Device* device = GX::d3dDevice();
 	HRESULT result;
 	// `取出第一个display buffer`
 	ID3D10Texture2D *pBuffer = NULL;
@@ -300,7 +300,7 @@ bool GD3DContext::renderCheck()
 
 void GD3DContext::renderBegin()
 {
-	ID3D10Device* device = GX::D3DDevice();
+	ID3D10Device* device = GX::d3dDevice();
     // 设置深度模版状态，使其生效
     device->OMSetDepthStencilState(m_DepthStencilState, 1);
     // 绑定渲染目标视图和深度缓冲到渲染管线.
@@ -323,13 +323,13 @@ void GD3DContext::setViewport(float x, float y, float w, float h, float scale)
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 
-	GX::D3DDevice()->RSSetViewports(1, &viewport);
+	GX::d3dDevice()->RSSetViewports(1, &viewport);
 }
 void GD3DContext::renderEnd()
 {
 	m_SwapChain->Present(0,0);
 
-    ID3D10Device* device = GX::D3DDevice();
+    ID3D10Device* device = GX::d3dDevice();
     device->RSSetState(NULL);
     device->OMSetRenderTargets(0, NULL, NULL);
     device->OMSetDepthStencilState(NULL, 1);
@@ -471,7 +471,7 @@ void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 
 		ID3D10Texture2D* pTex2D = NULL;
 
-		ID3D10Device* device = GX::D3DDevice();
+		ID3D10Device* device = GX::d3dDevice();
 
 		HRESULT hr;
 		if (dibData) {
@@ -560,7 +560,7 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 	ID3D10DepthStencilView* outDSView = NULL;
 	ID3D10RasterizerState*	outRasterState = NULL;
 
-	ID3D10Device* device = GX::D3DDevice();
+	ID3D10Device* device = GX::d3dDevice();
 	// 分配RGBA动态贴图
 	ID3D10ShaderResourceView* pTextureView = nodeObj.texTarget->getNode()->getData().getName();
 	ID3D10Texture2D* pTex2D = NULL;

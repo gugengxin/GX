@@ -39,7 +39,7 @@ bool GDataBufferBase::changeBytes(guint toSize)
 #ifdef GX_OPENGL
 	return m_Data.changeBytes(toSize);
 #elif defined(GX_DIRECTX)
-	ID3D10Device* device = GX::D3DDevice();
+	ID3D10Device* device = GX::d3dDevice();
 
 	ID3D10Buffer* bufNew;
 
@@ -61,7 +61,7 @@ bool GDataBufferBase::changeBytes(guint toSize)
 	m_DataBytes = toSize;
 	return true;
 #elif defined(GX_METAL)
-    id<MTLBuffer> bufNew=[GX::MetalDevice() newBufferWithLength:toSize options:0];
+    id<MTLBuffer> bufNew=[GX::metalDevice() newBufferWithLength:toSize options:0];
     if (!bufNew) {
         return false;
     }

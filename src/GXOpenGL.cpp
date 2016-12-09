@@ -24,7 +24,7 @@ namespace GX
 		return ::DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
 
-	bool GLEWInit()
+	bool glewInit()
 	{
 		bool res = false;
 

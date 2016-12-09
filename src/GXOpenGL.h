@@ -29,7 +29,7 @@ extern GLXEWContext _glxewctx;
 
 namespace GX
 {
-	bool GLEWInit();
+	bool glewInit();
 }
 
 #pragma comment(lib, "opengl32.lib")

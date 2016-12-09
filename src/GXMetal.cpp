@@ -14,7 +14,7 @@ namespace GX {
     
     static id<MTLDevice> g_Device = NULL;
     
-    id<MTLDevice> MetalDevice()
+    id<MTLDevice> metalDevice()
     {
         if (!g_Device) {
             g_Device=[MTLCreateSystemDefaultDevice() retain];

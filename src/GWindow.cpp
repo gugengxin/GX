@@ -175,7 +175,7 @@ NSView
 #endif
         
 #if defined(GX_METAL)
-        _metalLayer.device          = GX::MetalDevice();
+        _metalLayer.device          = GX::metalDevice();
         _metalLayer.pixelFormat     = MTLPixelFormatBGRA8Unorm;
         // this is the default but if we wanted to perform compute on the final rendering layer we could set this to no
         _metalLayer.framebufferOnly = YES;

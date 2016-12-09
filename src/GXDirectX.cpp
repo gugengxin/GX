@@ -8,7 +8,7 @@
 namespace GX {
 	static ID3D10Device* g_D3DDevice = NULL;
 
-	ID3D10Device* D3DDevice()
+	ID3D10Device* d3dDevice()
 	{
 		if (!g_D3DDevice) {
 			UINT createDeviceFlags = 0;

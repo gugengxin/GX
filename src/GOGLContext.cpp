@@ -208,8 +208,8 @@ GOGLContext::~GOGLContext()
 bool GOGLContext::create(GWindow* win)
 {
 #if defined(GX_OS_WINDOWS)
-	static bool g_GLEWInit = GX::GLEWInit();
-	if(!g_GLEWInit) {
+    static bool g_GLEWInited = GX::glewInit();
+	if(!g_GLEWInited) {
 		return false;
 	}
 #endif
