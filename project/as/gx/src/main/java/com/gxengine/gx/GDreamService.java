@@ -19,82 +19,68 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	public void onCreate() {
 		super.onCreate();
 		Log.d(this.getClass().getSimpleName(),"onCreate");
-		try {
-			ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
-            Bundle bundle = ai.metaData;
-            String libName = bundle.getString("android.app.lib_name");
-            System.loadLibrary(libName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-		GJavaJAPI.appCreate(GX.LaunchTypeDaydream,this);
-		GX.main(GX.LaunchTypeDaydream);
+
+		_window=new GWindow(this,this);
+		this.setContentView(_window);
+		GAndroidJ.dreamServiceOnCreate(this);
 	}
 
 	@Override
 	public void onAttachedToWindow() {
 		super.onAttachedToWindow();
 		Log.d(this.getClass().getSimpleName(),"onAttachedToWindow");
-		startTimer();
-		GJavaJAPI.appStart();
+
+		GAndroidJ.dreamServiceOnAttachedToWindow(this);
 	}
 
 	@Override
 	public void onDreamingStarted() {
 		super.onDreamingStarted();
 		Log.d(this.getClass().getSimpleName(),"onDreamingStarted");
-		_window=new GWindow(this,this);
-		this.setContentView(_window);
-		GJavaJAPI.appResume();
+
+		GAndroidJ.dreamServiceOnDreamingStarted(this);
 	}
 
 	@Override
 	public void onDreamingStopped() {
-		super.onDreamingStopped();
+		GAndroidJ.dreamServiceOnDreamingStopped(this);
+
 		Log.d(this.getClass().getSimpleName(),"onDreamingStopped");
-		GJavaJAPI.appPause();
+		super.onDreamingStopped();
 	}
 
 	@Override
 	public void onDetachedFromWindow() {
-		super.onDetachedFromWindow();
+		GAndroidJ.dreamServiceOnDetachedFromWindow(this);
+
 		Log.d(this.getClass().getSimpleName(),"onDetachedFromWindow");
-		GJavaJAPI.appStop();
-		stopTimer();
+		super.onDetachedFromWindow();
 	}
 
 	@Override
 	public void onDestroy() {
+		GAndroidJ.dreamServiceOnDestroy(this);
+
 		Log.d(this.getClass().getSimpleName(),"onDestroy");
-		GJavaJAPI.appDestroy();
 		super.onDestroy();
-
-		int nPid = android.os.Process.myPid();
-	    android.os.Process.killProcess(nPid);
-	}
-
-	@Override
-	public void onLowMemory() {
-		super.onLowMemory();
-		GJavaJAPI.appLowMemory();
 	}
 
 	@Override
 	public void onWindowCreated(GWindow win, Surface surface) {
 		Log.d(this.getClass().getSimpleName(),"onWindowCreated");
-		GJavaJAPI.mainWindowHasCreated(surface);
+		GAndroidJ.windowOnCreated(win,surface,this);
 	}
 	
 	@Override
 	public void onWindowChanged(GWindow win, Surface surface, int width, int height) {
 		Log.d(this.getClass().getSimpleName(),"onWindowChanged");
-		GJavaJAPI.mainWindowHasChanged(surface, width, height);
+		GAndroidJ.windowOnChanged(win,surface,width,height,this);
 	}
 	
 	@Override
 	public void onWindowDestroyed(GWindow win, Surface surface) {
+		GAndroidJ.windowOnDestroyed(win,surface,this);
 		Log.d(this.getClass().getSimpleName(),"onWindowDestroyed");
-		GJavaJAPI.mainWindowHasDestroyed(surface);
 	}
 	
 	@Override
@@ -102,24 +88,5 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 		
 	}
 	
-	private void startTimer() {
-		_handler.postDelayed(_runnable,GActivity.IDLE_MS_PE_RFRAME);
-	}
-	private void stopTimer() {
-		_handler.removeCallbacks(_runnable);
-	}
-	
-	private void idle() {
-		GJavaJAPI.appIdle();
-	}
-	
 	GWindow _window;
-	
-	private Handler _handler = new Handler( );
-	private Runnable _runnable = new Runnable( ) {
-		public void run ( ) {
-			_handler.postDelayed(this,GActivity.IDLE_MS_PE_RFRAME);
-			idle();
-		}
-	};
 }

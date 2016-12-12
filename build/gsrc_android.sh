@@ -15,5 +15,5 @@ ${GX_TE} -i ${GX_ROOT}/project/as/gx/src/main/cpp/Android.mk \
 -fd ${GX_ROOT}/src \
 -fe .cpp -fe .c \
 -fsp "LOCAL_SRC_FILES += \$(ENGINE_PATH_FROM_SRC)/src" -fss "\n" \
--fi GJavaAPI.cpp -fi GJavaCAPI.cpp -fi GJavaClass.cpp -fi GJavaJAPI.cpp
+-fi GJNI.cpp -fi GAndroid.cpp -fi GAndroidC.cpp -fi GAndroidJ.cpp
 

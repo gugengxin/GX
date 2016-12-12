@@ -19,113 +19,72 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.d(this.getClass().getSimpleName(),"onCreate");
-		try {
-			ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
-            Bundle bundle = ai.metaData;
-            String libName = bundle.getString("android.app.lib_name");
-            System.loadLibrary(libName);
-        } catch (Exception e) {
-			throw new RuntimeException("Error getting application info", e);
-        }
-		GJavaJAPI.appCreate(GX.LaunchTypeActivity,this);
-		GX.main(GX.LaunchTypeActivity);
-		
+
 		_window=new GWindow(this,this);
 		this.setContentView(_window);
+		GAndroidJ.activityOnCreate(this);
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
         Log.d(this.getClass().getSimpleName(),"onStart");
-		startTimer();
-		GJavaJAPI.appStart();
+		GAndroidJ.activityOnStart(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
         Log.d(this.getClass().getSimpleName(),"onResume");
-		GJavaJAPI.appResume();
+		GAndroidJ.activityOnResume(this);
 	}
 
 	@Override
 	protected void onPause() {
+		GAndroidJ.activityOnPause(this);
+
+		Log.d(this.getClass().getSimpleName(),"onPause");
 		super.onPause();
-        Log.d(this.getClass().getSimpleName(),"onPause");
-		GJavaJAPI.appPause();
 	}
 
 	@Override
 	protected void onStop() {
+		GAndroidJ.activityOnStop(this);
+
+		Log.d(this.getClass().getSimpleName(),"onStop");
 		super.onStop();
-        Log.d(this.getClass().getSimpleName(),"onStop");
-		GJavaJAPI.appStop();
-		stopTimer();
 	}
 
 	@Override
 	protected void onDestroy() {
+		GAndroidJ.activityOnDestroy(this);
+
         Log.d(this.getClass().getSimpleName(),"onDestroy");
-		GJavaJAPI.appDestroy();
 		super.onDestroy();
-		
-		int nPid = android.os.Process.myPid();
-	    android.os.Process.killProcess(nPid);
-	}
-	 
-	@Override
-	public void onLowMemory() {
-		super.onLowMemory();
-		GJavaJAPI.appLowMemory();
 	}
 	
 	@Override
 	public void onWindowCreated(GWindow win, Surface surface) {
         Log.d(this.getClass().getSimpleName(),"onWindowCreated");
-		GJavaJAPI.mainWindowHasCreated(surface);
+		GAndroidJ.windowOnCreated(win,surface,this);
 	}
 	
 	@Override
 	public void onWindowChanged(GWindow win, Surface surface, int width, int height) {
         Log.d(this.getClass().getSimpleName(),"onWindowChanged");
-		GJavaJAPI.mainWindowHasChanged(surface, width, height);
+		GAndroidJ.windowOnChanged(win,surface,width,height,this);
 	}
 	
 	@Override
 	public void onWindowDestroyed(GWindow win, Surface surface) {
+		GAndroidJ.windowOnDestroyed(win,surface,this);
         Log.d(this.getClass().getSimpleName(),"onWindowDestroyed");
-		GJavaJAPI.mainWindowHasDestroyed(surface);
 	}
 	
 	@Override
 	public void onWindowTouchEvent(GWindow win, MotionEvent event) {
-		int idx=event.getActionIndex();
-		GJavaJAPI.mainWindowOnTouchEvent(event.getActionMasked(),
-				event.getPointerId(idx), 
-				event.getX(idx)*event.getXPrecision(), 
-				event.getY(idx)*event.getYPrecision());
+
 	}
 
-	
-	private void startTimer() {
-		_handler.postDelayed(_runnable,IDLE_MS_PE_RFRAME);
-	}
-	private void stopTimer() {
-		_handler.removeCallbacks(_runnable);
-	}
-	
-	private void idle() {
-		GJavaJAPI.appIdle();
-	}
-	
 	private GWindow _window;
-
-	private Handler _handler = new Handler( );
-	private Runnable _runnable = new Runnable( ) {
-		public void run ( ) {
-			_handler.postDelayed(this,IDLE_MS_PE_RFRAME);
-			idle();
-		}
-	};
 }

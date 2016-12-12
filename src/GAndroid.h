@@ -11,18 +11,21 @@
 #include "GJNI.h"
 
 class GAndroid : public GJNI {
+    friend void Java_com_gxengine_gx_GAndroidJ_appOnCreate(JNIEnv *, jclass, jobject, jobject);
 public:
     static GAndroid* shared();
 private:
     GAndroid();
-    ~GAndroid();
+    virtual ~GAndroid();
 
+    void init(JNIEnv *env, jobject ardApp, jobject classLoader);
 
+public:
 
 
 
 private:
-
+    jobject m_AndroidApp;
 };
 
 

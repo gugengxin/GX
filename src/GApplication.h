@@ -16,7 +16,6 @@
 #if defined(GX_OS_ANDROID)
 #include <android/input.h>
 #include <android/native_activity.h>
-#include "com_gxengine_gx_GJavaJAPI.h"
 #elif defined(GX_OS_QT)
 #include <QTimer>
 #endif

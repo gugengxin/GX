@@ -12,10 +12,6 @@ LOCAL_C_INCLUDES:= $(ENGINE_PATH)/src
 LOCAL_CFLAGS 	+= -DGX_OS_ANDROID -Wno-multichar 
 LOCAL_CPPFLAGS	+= -DGX_OS_ANDROID -fno-rtti
 LOCAL_SRC_FILES := \
- $(ENGINE_PATH_FROM_SRC)/src/GJavaAPI.cpp \
- $(ENGINE_PATH_FROM_SRC)/src/GJavaCAPI.cpp \
- $(ENGINE_PATH_FROM_SRC)/src/GJavaClass.cpp \
- $(ENGINE_PATH_FROM_SRC)/src/GJavaJAPI.cpp \
  $(ENGINE_PATH_FROM_SRC)/src/GJNI.cpp \
  $(ENGINE_PATH_FROM_SRC)/src/GAndroid.cpp \
  $(ENGINE_PATH_FROM_SRC)/src/GAndroidC.cpp \

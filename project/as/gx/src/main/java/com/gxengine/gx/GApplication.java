@@ -8,6 +8,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.gxengine.GX;
+
 /**
  * Created by GuGengxin on 2016/12/8.
  */
@@ -34,13 +36,14 @@ public class GApplication extends Application {
             throw new RuntimeException("Error getting application info", e);
         }
 
-
-
+        GAndroidJ.appOnCreate(this,getClassLoader());
+        GX.main();
         startTimer();
     }
 
     @Override
     public void onTerminate() {
+        GAndroidJ.appOnTerminate(this);
         stopTimer();
         super.onTerminate();
     }
@@ -100,7 +103,7 @@ public class GApplication extends Application {
     }
 
     private void idle() {
-
+        GAndroidJ.appIdle(this);
     }
 
     private Handler _handler = new Handler( );

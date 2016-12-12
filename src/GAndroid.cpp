@@ -14,12 +14,18 @@ GAndroid* GAndroid::shared()
 
 GAndroid::GAndroid()
 {
-
+    m_AndroidApp=NULL;
 }
 
 GAndroid::~GAndroid()
 {
 
+}
+
+void GAndroid::init(JNIEnv *env, jobject ardApp, jobject classLoader)
+{
+    GJNI::init(env,classLoader);
+    m_AndroidApp=ardApp;
 }
 
 

@@ -18,7 +18,6 @@
 #if defined(GX_OS_ANDROID)
 #include <android/native_window.h>
 #include <android/native_window_jni.h>
-#include "com_gxengine_gx_GJavaJAPI.h"
 #elif defined(GX_OS_QT)
 #include <QWindow>
 

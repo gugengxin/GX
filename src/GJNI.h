@@ -17,7 +17,7 @@ public:
 
 protected:
     GJNI();
-    ~GJNI();
+    virtual ~GJNI();
 
     void init(JNIEnv *env, jobject classLoader);
 
