@@ -6,7 +6,21 @@
 #if defined(GX_OS_ANDROID)
 
 
+GAndroid* GAndroid::shared()
+{
+    static GAndroid g_Obj;
+    return &g_Obj;
+}
 
+GAndroid::GAndroid()
+{
+
+}
+
+GAndroid::~GAndroid()
+{
+
+}
 
 
 

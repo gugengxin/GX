@@ -16,6 +16,10 @@ LOCAL_SRC_FILES := \
  $(ENGINE_PATH_FROM_SRC)/src/GJavaCAPI.cpp \
  $(ENGINE_PATH_FROM_SRC)/src/GJavaClass.cpp \
  $(ENGINE_PATH_FROM_SRC)/src/GJavaJAPI.cpp \
+ $(ENGINE_PATH_FROM_SRC)/src/GJNI.cpp \
+ $(ENGINE_PATH_FROM_SRC)/src/GAndroid.cpp \
+ $(ENGINE_PATH_FROM_SRC)/src/GAndroidC.cpp \
+ $(ENGINE_PATH_FROM_SRC)/src/GAndroidJ.cpp \
 
 include $(BUILD_STATIC_LIBRARY)
 

@@ -16,14 +16,15 @@ public class GApplication extends Application {
 
     public static final long IDLE_MS_PE_RFRAME=1000L/60;
 
-
-    public GApplication() {
-        super();
+    private static GApplication INSTANCE;
+    public static GApplication shared() {
+        return INSTANCE;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        INSTANCE=this;
 
         try {
             Bundle bundle = getApplicationInfo().metaData;
@@ -32,6 +33,9 @@ public class GApplication extends Application {
         } catch (Exception e) {
             throw new RuntimeException("Error getting application info", e);
         }
+
+
+
         startTimer();
     }
 

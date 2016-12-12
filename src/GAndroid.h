@@ -8,9 +8,22 @@
 #include "GXPrefix.h"
 #if defined(GX_OS_ANDROID)
 
+#include "GJNI.h"
+
+class GAndroid : public GJNI {
+public:
+    static GAndroid* shared();
+private:
+    GAndroid();
+    ~GAndroid();
 
 
 
+
+
+private:
+
+};
 
 
 #endif
