@@ -1,8 +1,7 @@
 ﻿#include "GSystem.h"
 #include "GLog.h"
 #if defined(GX_OS_ANDROID)
-#include "GJavaCAPI.h"
-#include "time.h"
+#include <time.h>
 #elif defined(GX_OS_APPLE)
 #import <Foundation/Foundation.h>
 #include <sys/time.h>

@@ -25,6 +25,14 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appOnTerminate
 
 /*
  * Class:     com_gxengine_gx_GAndroidJ
+ * Method:    appOnLowMemory
+ * Signature: (Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appOnLowMemory
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     com_gxengine_gx_GAndroidJ
  * Method:    appIdle
  * Signature: (Ljava/lang/Object;)V
  */

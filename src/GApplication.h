@@ -52,12 +52,8 @@ public:
 
     class Delegate {
     public:
-        virtual void appCreate(GApplication* application) {GX_UNUSED(application)}
-        virtual void appStart(GApplication* application) {GX_UNUSED(application)}
-        virtual void appResume(GApplication* application) {GX_UNUSED(application)}
-        virtual void appPause(GApplication* application) {GX_UNUSED(application)}
-        virtual void appStop(GApplication* application) {GX_UNUSED(application)}
-        virtual void appDestroy(GApplication* application) {GX_UNUSED(application)}
+		virtual void appDidFinishLaunching(GApplication* application){GX_UNUSED(application)}
+		virtual void appWillTerminate(GApplication* application){GX_UNUSED(application)}
 
 		virtual void appCanCreateWindow(GApplication* application,void* osWindow) {
             GX_UNUSED(application)
@@ -92,12 +88,8 @@ private:
     void idle();
 #endif
 
-	void eventCreate();
-	void eventStart();
-	void eventResume();
-	void eventPause();
-	void eventStop();
-	void eventDestroy();
+	void eventDidFinishLaunching();
+	void eventWillTerminate();
 
 	void setCanCreateWindow(void* osWindow);
 
@@ -125,24 +117,41 @@ private:
 	GX::CWnd m_MsgWnd;
 	UINT m_TimerID;
 #elif defined(GX_OS_ANDROID)
-    friend void Java_com_gxengine_gx_GJavaJAPI_appCreate
-            (JNIEnv *, jclass, jint, jobject);
-    friend void Java_com_gxengine_gx_GJavaJAPI_appStart
-            (JNIEnv *, jclass);
-    friend void Java_com_gxengine_gx_GJavaJAPI_appResume
-            (JNIEnv *, jclass);
-    friend void Java_com_gxengine_gx_GJavaJAPI_appIdle
-            (JNIEnv *, jclass);
-    friend void Java_com_gxengine_gx_GJavaJAPI_appPause
-            (JNIEnv *, jclass);
-    friend void Java_com_gxengine_gx_GJavaJAPI_appStop
-            (JNIEnv *, jclass);
-    friend void Java_com_gxengine_gx_GJavaJAPI_appDestroy
-            (JNIEnv *, jclass);
-    friend void Java_com_gxengine_gx_GJavaJAPI_appLowMemory
-            (JNIEnv *, jclass);
-	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasCreated
-			(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_appIdle(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_activityOnCreate(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_activityOnStart(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_activityOnResume(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_activityOnPause(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_activityOnStop(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_activityOnDestroy(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_dreamServiceOnCreate(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_dreamServiceOnAttachedToWindow(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDreamingStarted(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDreamingStopped(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDetachedFromWindow(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDestroy(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_windowOnCreated(JNIEnv *, jclass, jobject, jobject, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_windowOnChanged(JNIEnv *, jclass, jobject, jobject, jint, jint, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_windowOnDestroyed(JNIEnv *, jclass, jobject, jobject, jobject);
+
+	typedef enum __WinHolderType {
+		_WinHolderType_Activity=0,
+		_WinHolderType_DreamService,
+	} _WinHolderType;
+
+	class _WinData {
+	public:
+		_WinData() {
+			holder=NULL;
+			type=_WinHolderType_Activity;
+		}
+		jobject holder;
+		_WinHolderType type;
+	};
+	
+    void winHolderOnCreate(jobject holder,_WinHolderType type);
+
+	GPDArray<_WinData> m_WinHolders;
 #elif defined(GX_OS_QT)
     QTimer m_Timer;
 #endif

@@ -10,8 +10,7 @@
 #if defined(GX_OS_APPLE)
 #include <CoreFoundation/CoreFoundation.h>
 #elif defined(GX_OS_ANDROID)
-#include "GJavaClass.h"
-#include "GJavaCAPI.h"
+#include "GAndroidC.h"
 #elif defined(GX_OS_WINDOWS)
 #include <objbase.h>
 #endif
@@ -26,9 +25,7 @@ GUUID::GUUID()
     (*((CFUUIDBytes*)&m_Bytes))=CFUUIDGetUUIDBytes(uuid);
     CFRelease(uuid);
 #elif defined(GX_OS_ANDROID)
-    GJavaJNIEnvAutoPtr jniEnv;
-
-    GJavaCAPI::shared()->UUIDCreate(jniEnv.get(),m_Bytes);
+    GAndroidC::shared()->UUIDCreate(m_Bytes);
 
 #elif defined(GX_OS_MICROSOFT)
     //GUID guid;

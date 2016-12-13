@@ -16,7 +16,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #define M_RESOURCE_DIR_NAME "Contents/Resources"
 #elif defined(GX_OS_ANDROID)
-#include "GJavaCAPI.h"
+#include "GAndroidC.h"
 #define M_RESOURCE_DIR_NAME "assets"
 #elif defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 #include <Windows.h>
@@ -56,8 +56,7 @@ GAppBundle::GAppBundle()
     CFRelease(str);
     CFRelease(url);
 #elif defined(GX_OS_ANDROID)
-    GJavaJNIEnvAutoPtr 	jniEnv;
-    GPath* path=GJavaCAPI::shared()->appGetPackageCodePath(jniEnv.get());
+    GPath* path=GAndroidC::shared()->appGetPackageCodePath();
     if(path) {
         open(path->c_str(),true);
     }

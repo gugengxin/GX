@@ -375,7 +375,7 @@ void* GWindow::getMetalLayer()
 
 #elif defined(GX_OS_ANDROID)
 
-#include "GJavaCAPI.h"
+#include "GAndroidC.h"
 
 void GWindow::androidDestroy()
 {
@@ -391,8 +391,7 @@ void GWindow::androidRecreate(ANativeWindow* nw)
 	GX_LOG_W(PrioDEBUG,"GWindow","androidRecreate");
 	ANativeWindow_acquire(nw);
 	m_OSWin = nw;
-	GJavaJNIEnvAutoPtr jniEnv;
-	m_OSWinScale = GJavaCAPI::shared()->appGetDefaultWindowScale(jniEnv.get());
+	m_OSWinScale = GAndroidC::shared()->appGetDefaultWindowScale();
 	m_Context.androidRecreate(this);
 }
 
@@ -464,8 +463,7 @@ GWindow::GWindow(void* osWinP)
 #elif defined(GX_OS_ANDROID)
 	ANativeWindow_acquire(GX_CAST_R(ANativeWindow*, osWinP));
 	m_OSWin = GX_CAST_R(ANativeWindow*, osWinP);
-	GJavaJNIEnvAutoPtr jniEnv;
-	m_OSWinScale = GJavaCAPI::shared()->appGetDefaultWindowScale(jniEnv.get());
+	m_OSWinScale = GAndroidC::shared()->appGetDefaultWindowScale();
 #elif defined(GX_OS_QT)
 	m_OSWin = new _GQWindow();
 	m_OSWin->setDelegate(this);

@@ -29,11 +29,11 @@ public class GApplication extends Application {
         INSTANCE=this;
 
         try {
-            Bundle bundle = getApplicationInfo().metaData;
+            Bundle bundle = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA).metaData;
             String libName = bundle.getString("gx.app.lib_name");
             System.loadLibrary(libName);
         } catch (Exception e) {
-            throw new RuntimeException("Error getting application info", e);
+            throw new RuntimeException("Error load gx.app.lib_name", e);
         }
 
         GAndroidJ.appOnCreate(this,getClassLoader());
@@ -56,6 +56,7 @@ public class GApplication extends Application {
     @Override
     public void onLowMemory() {
         super.onLowMemory();
+        GAndroidJ.appOnLowMemory(this);
     }
 
     @Override

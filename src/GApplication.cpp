@@ -15,10 +15,7 @@
 #include <Mmsystem.h>
 #pragma comment(lib, "Winmm.lib")
 #elif defined(GX_OS_ANDROID)
-#include "GJavaClass.h"
-#include "GJavaCAPI.h"
 #include <android/sensor.h>
-#include "GLog.h"
 #endif
 #include "GThread.h"
 #include "GLog.h"
@@ -244,6 +241,14 @@ void GApplication::destroyWinMsgWnd()
 
 #elif defined(GX_OS_ANDROID)
 
+void GApplication::winHolderOnCreate(jobject holder,_WinHolderType type)
+{
+	_WinData wd;
+	wd.holder=holder;
+	wd.type=type;
+	m_WinHolders.add(wd);
+}
+
 #endif
 
 
@@ -265,37 +270,8 @@ void GApplication::main(Delegate* dge, InitData* initData)
     GApplication* app=shared();
     app->m_Delegate=dge;
 	memcpy(&app->m_InitData,initData, sizeof(InitData));
-
     GThread::current()->setMain();
-
-	app->eventCreate();
-
-#if defined(GX_OS_APPLE)
-    app->eventStart();
-#if defined(GX_OS_MACOSX)
-    app->eventResume();
-#endif
-#elif defined(GX_OS_WINDOWS)
-	app->eventStart();
-    app->eventResume();
-#elif defined(GX_OS_ANDROID)
-	switch (GX::JavaGetLaunchType()) {
-		case GX::JavaLaunchTypeActivity: {
-
-		}
-			break;
-		case GX::JavaLaunchTypeDaydream: {
-
-		}
-			break;
-		default:
-			GX_ASSERT(0);
-			break;
-	}
-#elif defined(GX_OS_QT)
-    app->eventStart();
-    app->eventResume();
-#endif
+    app->eventDidFinishLaunching();
 }
 
 
@@ -344,10 +320,17 @@ void GApplication::idle()
 	GRunLoop::current()->run();
 }
 
-void GApplication::eventCreate()
+void GApplication::eventDidFinishLaunching()
 {
-	m_Delegate->appCreate(this);
+	m_Delegate->appDidFinishLaunching(this);
 }
+
+void GApplication::eventWillTerminate()
+{
+	m_Delegate->appWillTerminate(this);
+}
+
+/*
 void GApplication::eventStart()
 {
 #if defined(GX_OS_APPLE)
@@ -358,7 +341,6 @@ void GApplication::eventStart()
     connect(&m_Timer,SIGNAL(timeout()),this,SLOT(idle()));
     m_Timer.start(1000/60);
 #endif
-	m_Delegate->appStart(this);
 }
 void GApplication::eventResume()
 {
@@ -385,10 +367,7 @@ void GApplication::eventStop()
     disconnect(&m_Timer,SIGNAL(timeout()),this,SLOT(idle()));
 #endif
 }
-void GApplication::eventDestroy()
-{
-	m_Delegate->appDestroy(this);
-}
+//*/
 
 
 void GApplication::setCanCreateWindow(void* osWindow)

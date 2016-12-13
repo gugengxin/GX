@@ -6,6 +6,7 @@
 #if defined(GX_OS_ANDROID)
 
 #include "GAndroid.h"
+#include "GApplication.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,13 +35,24 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appOnTerminate
 
 /*
  * Class:     com_gxengine_gx_GAndroidJ
+ * Method:    appOnLowMemory
+ * Signature: (Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appOnLowMemory
+        (JNIEnv *, jclass, jobject)
+{
+
+}
+
+/*
+ * Class:     com_gxengine_gx_GAndroidJ
  * Method:    appIdle
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appIdle
         (JNIEnv *, jclass, jobject)
 {
-
+    GApplication::shared()->idle();
 }
 
 /*
@@ -49,9 +61,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appIdle
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnCreate
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnCreate(winHolder,GApplication::_WinHolderType_Activity);
 }
 
 /*
@@ -115,9 +127,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnDestroy
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnCreate
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnCreate(winHolder,GApplication::_WinHolderType_DreamService);
 }
 
 /*
