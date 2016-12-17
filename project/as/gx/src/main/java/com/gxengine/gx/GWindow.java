@@ -3,11 +3,13 @@ package com.gxengine.gx;
 import java.lang.ref.WeakReference;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
-public class GWindow extends GOpenGLView {
+public class GWindow extends SurfaceView implements SurfaceHolder.Callback {
 	
 	public interface Delegate {
 		public void onWindowCreated(GWindow win, Surface surface);
@@ -15,7 +17,6 @@ public class GWindow extends GOpenGLView {
 		public void onWindowDestroyed(GWindow win, Surface surface);
 		public void onWindowTouchEvent(GWindow win, MotionEvent event);
 	}
-	
 
 	public GWindow(Context context, Delegate dge) {
 		super(context);
@@ -29,23 +30,19 @@ public class GWindow extends GOpenGLView {
 	public void setDelegate(Delegate dge) {
 		_delegate=new WeakReference<Delegate>(dge);
 	}
-	
+
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		super.surfaceCreated(holder);
-		
 		getDelegate().onWindowCreated(this, holder.getSurface());
 	}
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-		super.surfaceChanged(holder,format,width,height);
 		getDelegate().onWindowChanged(this, holder.getSurface(), width, height);
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		super.surfaceDestroyed(holder);
 		getDelegate().onWindowDestroyed(this, holder.getSurface());
 	}
 

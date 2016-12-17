@@ -119,6 +119,7 @@ private:
 #elif defined(GX_OS_ANDROID)
 	friend void Java_com_gxengine_gx_GAndroidJ_appIdle(JNIEnv *, jclass, jobject);
 	friend void Java_com_gxengine_gx_GAndroidJ_activityOnCreate(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_activityOnReStart(JNIEnv *, jclass, jobject);
 	friend void Java_com_gxengine_gx_GAndroidJ_activityOnStart(JNIEnv *, jclass, jobject);
 	friend void Java_com_gxengine_gx_GAndroidJ_activityOnResume(JNIEnv *, jclass, jobject);
 	friend void Java_com_gxengine_gx_GAndroidJ_activityOnPause(JNIEnv *, jclass, jobject);

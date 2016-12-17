@@ -26,11 +26,20 @@ public class GActivity extends Activity implements GWindow.Delegate {
 	}
 
 	@Override
+	protected void onRestart() {
+		super.onRestart();
+		Log.d(this.getClass().getSimpleName(),"onRestart");
+		GAndroidJ.activityOnReStart(this);
+	}
+
+	@Override
 	protected void onStart() {
 		super.onStart();
         Log.d(this.getClass().getSimpleName(),"onStart");
 		GAndroidJ.activityOnStart(this);
 	}
+
+
 
 	@Override
 	protected void onResume() {

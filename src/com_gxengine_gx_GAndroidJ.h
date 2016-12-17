@@ -49,6 +49,14 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnCreate
 
 /*
  * Class:     com_gxengine_gx_GAndroidJ
+ * Method:    activityOnReStart
+ * Signature: (Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnReStart
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     com_gxengine_gx_GAndroidJ
  * Method:    activityOnStart
  * Signature: (Ljava/lang/Object;)V
  */

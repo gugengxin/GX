@@ -11,6 +11,7 @@ public class GAndroidJ {
     public static native void appIdle(Object app);
 
     public static native void activityOnCreate(Object activity);
+    public static native void activityOnReStart(Object activity);
     public static native void activityOnStart(Object activity);
     public static native void activityOnResume(Object activity);
     public static native void activityOnPause(Object activity);
