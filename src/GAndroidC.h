@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by Gu Gengxin on 2016/12/10.
 //
 
@@ -25,6 +25,8 @@ public:
     GPath* appGetCacheDir();
     GPath* appGetPackageCodePath(JNIEnv* jniEnv);
     GPath* appGetPackageCodePath();
+    void appStartActivity(JNIEnv* jniEnv);
+    void appStartActivity();
     void UUIDCreate(JNIEnv* jniEnv,guint8* uuidOut);
     void UUIDCreate(guint8* uuidOut);
 
@@ -32,6 +34,7 @@ private:
     jmethodID m_MappGetDefaultWindowScale;
     jmethodID m_MappGetCacheDir;
     jmethodID m_MappGetPackageCodePath;
+    jmethodID m_MappStartActivity;
     jmethodID m_MUUIDCreate;
 };
 

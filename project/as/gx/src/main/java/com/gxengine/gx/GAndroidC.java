@@ -1,5 +1,7 @@
 package com.gxengine.gx;
 
+import android.content.Intent;
+
 import java.util.UUID;
 
 /**
@@ -15,6 +17,11 @@ public class GAndroidC {
     }
     public static String appGetPackageCodePath() {
         return GApplication.shared().getPackageCodePath();
+    }
+
+    public static void appStartActivity() {
+        Intent intent=new Intent(GApplication.shared(),GActivity.class);
+        GApplication.shared().startActivity(intent);
     }
 
     public static byte[] UUIDCreate() {
@@ -42,4 +49,5 @@ public class GAndroidC {
         res[8+7]=(byte)((v>>>7)&0xFF);
         return res;
     }
+
 }

@@ -40,6 +40,8 @@ private:
 
 #endif
 
+#include "GGame.h"
+
 class GWindow {
 	friend class GApplication;
     friend class GX_CONTEXT_BASE;
@@ -72,7 +74,7 @@ private:
 	GContext m_Context;
 	gint     m_RenderStepTime;
 	gint64	 m_RenderLastTime;
-
+private:
 	void* m_OSWinP;
 #if defined(GX_OS_WINDOWS)
 	static LRESULT CALLBACK wndProcP(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -89,9 +91,6 @@ private:
 	void* m_OSWin;
 	void* m_OSWinCtrler;
 #elif defined(GX_OS_ANDROID)
-	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasCreated(JNIEnv *env, jclass, jobject surface);
-	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasChanged(JNIEnv *, jclass, jobject, jint, jint);
-	friend void Java_com_gxengine_gx_GJavaJAPI_mainWindowHasDestroyed(JNIEnv *, jclass, jobject);
 	void androidDestroy();
 	void androidRecreate(ANativeWindow* nw);
 
@@ -102,6 +101,8 @@ private:
     _GQWindow* m_OSWin;
     QWidget* m_Container;
 #endif
+private:
+	GGame* m_Game;
 };
 
 

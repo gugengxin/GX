@@ -16,6 +16,7 @@
 #pragma comment(lib, "Winmm.lib")
 #elif defined(GX_OS_ANDROID)
 #include <android/sensor.h>
+#include "GAndroidC.h"
 #endif
 #include "GThread.h"
 #include "GLog.h"
@@ -243,10 +244,19 @@ void GApplication::destroyWinMsgWnd()
 
 void GApplication::winHolderOnCreate(jobject holder,_WinHolderType type)
 {
+	for (gint i = 0; i < m_WinDatas.getCount(); ++i) {
+		_WinData& wd=m_WinDatas.get(i);
+		if(wd.holder==NULL && wd.gclass!=NULL) {
+			wd.holder=holder;
+			wd.type=type;
+			return;
+		}
+	}
+
 	_WinData wd;
 	wd.holder=holder;
 	wd.type=type;
-	m_WinHolders.add(wd);
+	m_WinDatas.add(wd);
 }
 
 #endif
@@ -322,12 +332,36 @@ void GApplication::idle()
 
 void GApplication::eventDidFinishLaunching()
 {
-	m_Delegate->appDidFinishLaunching(this);
+	m_Delegate->appDidFinishLaunching(this,m_InitData);
 }
 
 void GApplication::eventWillTerminate()
 {
 	m_Delegate->appWillTerminate(this);
+}
+
+void GApplication::startGame(GClass& gameGClass, void* osWin, bool waitOtherStart)
+{
+#if defined(GX_OS_APPLE) || defined(GX_OS_WINDOWS) || defined(GX_OS_QT)
+
+#elif defined(GX_OS_ANDROID)
+	for (gint i = 0; i < m_WinDatas.getCount(); ++i) {
+		_WinData& wd=m_WinDatas.get(i);
+		if(wd.holder!=NULL && wd.gclass==NULL) {
+			wd.gclass=&gameGClass;
+			return;
+		}
+	}
+	_WinData wd;
+	wd.gclass=&gameGClass;
+	m_WinDatas.add(wd);
+
+	if(!waitOtherStart) {
+		GAndroidC::shared()->appStartActivity();
+	}
+#else
+#error
+#endif
 }
 
 /*
@@ -368,12 +402,6 @@ void GApplication::eventStop()
 #endif
 }
 //*/
-
-
-void GApplication::setCanCreateWindow(void* osWindow)
-{
-    m_Delegate->appCanCreateWindow(this, osWindow);
-}
 
 void GApplication::addWindow(void* osWin)
 {

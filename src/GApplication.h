@@ -33,32 +33,28 @@ public:
 	class InitData {
 	public:
         InitData() {
-            m_OSWindow=NULL;
+			m_OSWinForLaunch=NULL;
         }
-		InitData(void* osWin) {
-			m_OSWindow = osWin;
-		}
 		~InitData() {
 
 		}
 
-		void* getOSWindow() {
-			return m_OSWindow;
+		void setOSWindowForLaunch(void* v) {
+			m_OSWinForLaunch=v;
+		}
+		void* getOSWindowForLaunch() const {
+			return m_OSWinForLaunch;
 		}
 
 	private:
-		void* m_OSWindow;
+		void* m_OSWinForLaunch;
 	};
 
     class Delegate {
     public:
-		virtual void appDidFinishLaunching(GApplication* application){GX_UNUSED(application)}
+		virtual void appDidFinishLaunching(GApplication* application, const InitData& initData){GX_UNUSED(application)}
 		virtual void appWillTerminate(GApplication* application){GX_UNUSED(application)}
 
-		virtual void appCanCreateWindow(GApplication* application,void* osWindow) {
-            GX_UNUSED(application)
-            GX_UNUSED(osWindow)
-		}
         virtual void appReceivedMemoryWarning(GApplication* application){GX_UNUSED(application)}
 
 		virtual gint windowsSuggestedSamples() {
@@ -91,7 +87,9 @@ private:
 	void eventDidFinishLaunching();
 	void eventWillTerminate();
 
-	void setCanCreateWindow(void* osWindow);
+public:
+	///waitOtherStart 目前只在android启动时有效，如果android启动的Activity为GActivity或其派生类，请传true
+	void startGame(GClass& gameGClass, void* osWin, bool waitOtherStart=true);
 
 public:
     void addWindow(void* osWin);
@@ -102,8 +100,8 @@ public:
 
 private:
     Delegate* m_Delegate;
-    GPDArray<GWindow*> m_Windows;
 	InitData m_InitData;
+    GPDArray<GWindow*> m_Windows;
     
 #if defined(GX_OS_APPLE)
     friend class _AppBridge;
@@ -136,7 +134,8 @@ private:
 	friend void Java_com_gxengine_gx_GAndroidJ_windowOnDestroyed(JNIEnv *, jclass, jobject, jobject, jobject);
 
 	typedef enum __WinHolderType {
-		_WinHolderType_Activity=0,
+		_WinHolderType_Unknown=0,
+		_WinHolderType_Activity,
 		_WinHolderType_DreamService,
 	} _WinHolderType;
 
@@ -144,15 +143,17 @@ private:
 	public:
 		_WinData() {
 			holder=NULL;
-			type=_WinHolderType_Activity;
+			type=_WinHolderType_Unknown;
+			gclass=NULL;
 		}
 		jobject holder;
 		_WinHolderType type;
+		GClass* gclass;
 	};
 	
     void winHolderOnCreate(jobject holder,_WinHolderType type);
 
-	GPDArray<_WinData> m_WinHolders;
+	GPDArray<_WinData> m_WinDatas;
 #elif defined(GX_OS_QT)
     QTimer m_Timer;
 #endif

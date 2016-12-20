@@ -9,7 +9,7 @@ private:
 	AppDge();
 	~AppDge();
 public:
-    virtual void appCanCreateWindow(GApplication* application,void* osWindow);
+    virtual void appDidFinishLaunching(GApplication* application, const GApplication::InitData& initData);
 
     virtual gint windowsSuggestedSamples() {
         return 0;

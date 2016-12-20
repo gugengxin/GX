@@ -496,6 +496,7 @@ GWindow::GWindow(void* osWinP)
     }
 #endif
 	m_Context.create(this);
+	m_Game=NULL;
 }	
 
 GWindow::~GWindow()
@@ -514,6 +515,7 @@ GWindow::~GWindow()
     //delete m_OSWin;
     //delete m_Container;
 #endif
+	GO::release(m_Game);
 }
 
 float GWindow::getWidth()

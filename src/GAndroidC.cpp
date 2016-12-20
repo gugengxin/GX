@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by Gu Gengxin on 2016/12/10.
 //
 
@@ -23,6 +23,7 @@ GAndroidC::GAndroidC()
     M_METHOD(appGetDefaultWindowScale);
     M_METHOD(appGetCacheDir);
     M_METHOD(appGetPackageCodePath);
+    M_METHOD(appStartActivity);
     M_METHOD(UUIDCreate);
 #undef M_METHOD
 }
@@ -38,11 +39,12 @@ void GAndroidC::init(JNIEnv* jniEnv,const char* className)
 {
     GJNI::Caller::init(jniEnv,className);
 
-#define M_METHOD_INIT(name,sign,isStatic) M_METHOD_ID(name)=getMethod(jniEnv,#name,sign,isStatic)
-    M_METHOD_INIT(appGetDefaultWindowScale,"()F",true);
-    M_METHOD_INIT(appGetCacheDir,"()Ljava/lang/String;",true);
-    M_METHOD_INIT(appGetPackageCodePath,"()Ljava/lang/String;",true);
-    M_METHOD_INIT(UUIDCreate,"()[B",true);
+#define M_METHOD_INIT(name,sign) M_METHOD_ID(name)=getMethod(jniEnv,#name,sign,true)
+    M_METHOD_INIT(appGetDefaultWindowScale,"()F");
+    M_METHOD_INIT(appGetCacheDir,"()Ljava/lang/String;");
+    M_METHOD_INIT(appGetPackageCodePath,"()Ljava/lang/String;");
+    M_METHOD_INIT(appStartActivity,"()V");
+    M_METHOD_INIT(UUIDCreate,"()[B");
 #undef M_METHOD_INIT
 }
 
@@ -93,6 +95,17 @@ GPath* GAndroidC::appGetPackageCodePath()
 {
     GJNI::EnvHolder env;
     return appGetPackageCodePath(env.get());
+}
+
+void GAndroidC::appStartActivity(JNIEnv* jniEnv)
+{
+    callStaticVoidMethod(jniEnv,M_METHOD_ID(appStartActivity));
+}
+
+void GAndroidC::appStartActivity()
+{
+    GJNI::EnvHolder env;
+    appStartActivity(env.get());
 }
 
 void GAndroidC::UUIDCreate(JNIEnv* jniEnv,guint8* uuidOut)
