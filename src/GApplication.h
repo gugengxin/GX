@@ -29,6 +29,7 @@ class GApplication
 #if defined(GX_OS_QT)
         Q_OBJECT
 #endif
+    friend class GWindow;
 public:
 	class InitData {
 	public:
@@ -92,11 +93,12 @@ public:
 	void startGame(GClass& gameGClass, void* osWin, bool waitOtherStart=true);
 
 public:
-    void addWindow(void* osWin);
     GWindow* firstWindow();
     gint getWindowCount();
     GWindow* getWindow(gint idx);
-    void removeWindow(GWindow* win);
+private:
+	GWindow* addWindow(void* osWin,GClass* gameGClass);
+	void removeWindow(GWindow* win);
 
 private:
     Delegate* m_Delegate;
@@ -115,6 +117,9 @@ private:
 	GX::CWnd m_MsgWnd;
 	UINT m_TimerID;
 #elif defined(GX_OS_ANDROID)
+    friend class GAndroid;
+	friend void Java_com_gxengine_gx_GAndroidJ_appOnCreate(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_appOnTerminate(JNIEnv *, jclass, jobject);
 	friend void Java_com_gxengine_gx_GAndroidJ_appIdle(JNIEnv *, jclass, jobject);
 	friend void Java_com_gxengine_gx_GAndroidJ_activityOnCreate(JNIEnv *, jclass, jobject);
 	friend void Java_com_gxengine_gx_GAndroidJ_activityOnReStart(JNIEnv *, jclass, jobject);
@@ -145,13 +150,27 @@ private:
 			holder=NULL;
 			type=_WinHolderType_Unknown;
 			gclass=NULL;
+			window=NULL;
 		}
 		jobject holder;
 		_WinHolderType type;
 		GClass* gclass;
+		GWindow* window;
 	};
+
+	_WinData* getWDFromHolder(JNIEnv* env,jobject holder);
+	gint getWDIndexFromHolder(JNIEnv* env,jobject holder);
 	
-    void winHolderOnCreate(jobject holder,_WinHolderType type);
+    void winHolderOnCreate(JNIEnv* env, jobject holder,_WinHolderType type);
+	void winHolderOnStart(JNIEnv* env, jobject holder,_WinHolderType type);
+	void winHolderOnResume(JNIEnv* env, jobject holder,_WinHolderType type);
+	void winHolderOnPause(JNIEnv* env, jobject holder,_WinHolderType type);
+	void winHolderOnStop(JNIEnv* env, jobject holder,_WinHolderType type);
+	void winHolderOnDestroy(JNIEnv* env, jobject holder,_WinHolderType type);
+
+	void winOnCreated(JNIEnv* env, jobject win, jobject surface, jobject winHolder);
+	void winOnChanged(JNIEnv* env, jobject win, jobject surface,jint width, jint height, jobject winHolder);
+	void winOnDestroyed(JNIEnv* env, jobject win, jobject surface, jobject winHolder);
 
 	GPDArray<_WinData> m_WinDatas;
 #elif defined(GX_OS_QT)

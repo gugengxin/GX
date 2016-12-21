@@ -5,6 +5,7 @@
 #include "GAndroid.h"
 #if defined(GX_OS_ANDROID)
 
+#include "GApplication.h"
 
 GAndroid* GAndroid::shared()
 {
@@ -28,6 +29,12 @@ void GAndroid::init(JNIEnv *env, jobject ardApp, jobject classLoader)
     m_AndroidApp=ardApp;
 }
 
+void GAndroid::uninit(JNIEnv *env, jobject ardApp)
+{
+    GApplication::shared()->eventWillTerminate();
+    m_AndroidApp=NULL;
+    GJNI::uninit(env);
+}
 
 
 

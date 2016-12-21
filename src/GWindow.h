@@ -46,7 +46,7 @@ class GWindow {
 	friend class GApplication;
     friend class GX_CONTEXT_BASE;
 private:
-	GWindow(void* osWinP);
+	GWindow(void* osWinP, GClass* gameGClass);
 	~GWindow();
 public:
 	inline void* getOSWindow() {
@@ -63,12 +63,14 @@ public:
 public:
 	void idle();
 	void renderIfNeed();
-protected:
+private:
 	void renderForce();
 	void render();
-protected:
+private:
+	void eventAttachToApp();
+	void eventDetachFromApp();
     void eventResize();
-    void eventDestroy();
+    void eventDestroy();//依附的系统窗口销毁时调用
 
 private:
 	GContext m_Context;

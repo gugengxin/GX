@@ -36,15 +36,17 @@ public class GApplication extends Application {
             throw new RuntimeException("Error load gx.app.lib_name", e);
         }
 
-        GAndroidJ.appOnCreate(this,getClassLoader());
+        GAndroidJ.appInit(this,getClassLoader());
         GX.main();
         startTimer();
+        GAndroidJ.appOnCreate(this);
     }
 
     @Override
     public void onTerminate() {
         GAndroidJ.appOnTerminate(this);
         stopTimer();
+        GAndroidJ.appUninit(this);
         super.onTerminate();
     }
 

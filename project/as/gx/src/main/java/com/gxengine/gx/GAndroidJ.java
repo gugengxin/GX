@@ -5,8 +5,10 @@ package com.gxengine.gx;
  */
 
 public class GAndroidJ {
-    public static native void appOnCreate(Object app,Object classLoader);
+    public static native void appInit(Object app,Object classLoader);
+    public static native void appOnCreate(Object app);
     public static native void appOnTerminate(Object app);
+    public static native void appUninit(Object app);
     public static native void appOnLowMemory(Object app);
     public static native void appIdle(Object app);
 

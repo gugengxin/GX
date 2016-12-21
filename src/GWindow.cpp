@@ -411,7 +411,7 @@ _GQWindow::~_GQWindow()
 #endif
 
 
-GWindow::GWindow(void* osWinP)
+GWindow::GWindow(void* osWinP, GClass* gameGClass)
 {
 	m_RenderStepTime=1000/30;
 	m_RenderLastTime=0;
@@ -496,7 +496,7 @@ GWindow::GWindow(void* osWinP)
     }
 #endif
 	m_Context.create(this);
-	m_Game=NULL;
+	m_Game=GX_CAST_R(GGame*,gameGClass->alloc());
 }	
 
 GWindow::~GWindow()
@@ -682,6 +682,15 @@ void GWindow::renderIfNeed()
 	}
 }
 
+void GWindow::eventAttachToApp()
+{
+
+}
+
+void GWindow::eventDetachFromApp()
+{
+
+}
 
 void GWindow::eventResize()
 {

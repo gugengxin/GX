@@ -1,17 +1,18 @@
-//
+﻿//
 // Created by Gengxin Gu on 2016/12/20.
 //
 
 #include "Game.h"
 
+GX_OBJECT_IMPLEMENT(Game,GObject);
 
 bool Game::init()
 {
-    if(!GObject::init()) {
-        return false;
-    }
+    bool res=GObject::init();
+    if(res) {
 
-    return true;
+    }
+    return res;
 }
 
 void Game::uninit()

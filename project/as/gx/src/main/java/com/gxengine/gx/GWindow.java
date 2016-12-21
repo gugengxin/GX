@@ -21,6 +21,7 @@ public class GWindow extends SurfaceView implements SurfaceHolder.Callback {
 	public GWindow(Context context, Delegate dge) {
 		super(context);
 		setDelegate(dge);
+		this.getHolder().addCallback(this);
 	}
 
 	public Delegate getDelegate() {

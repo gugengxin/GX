@@ -9,11 +9,19 @@ extern "C" {
 #endif
 /*
  * Class:     com_gxengine_gx_GAndroidJ
- * Method:    appOnCreate
+ * Method:    appInit
  * Signature: (Ljava/lang/Object;Ljava/lang/Object;)V
  */
-JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appOnCreate
+JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appInit
   (JNIEnv *, jclass, jobject, jobject);
+
+/*
+ * Class:     com_gxengine_gx_GAndroidJ
+ * Method:    appOnCreate
+ * Signature: (Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appOnCreate
+  (JNIEnv *, jclass, jobject);
 
 /*
  * Class:     com_gxengine_gx_GAndroidJ
@@ -21,6 +29,14 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appOnCreate
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appOnTerminate
+  (JNIEnv *, jclass, jobject);
+
+/*
+ * Class:     com_gxengine_gx_GAndroidJ
+ * Method:    appUninit
+ * Signature: (Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appUninit
   (JNIEnv *, jclass, jobject);
 
 /*

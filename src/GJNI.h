@@ -20,6 +20,7 @@ protected:
     virtual ~GJNI();
 
     void init(JNIEnv *env, jobject classLoader);
+    void uninit(JNIEnv *env);
 
 public:
     JNIEnv *attachEnv(bool *needDetach);

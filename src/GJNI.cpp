@@ -43,6 +43,11 @@ void GJNI::init(JNIEnv *env, jobject classLoader)
     env->DeleteLocalRef(clClass);
 }
 
+void GJNI::uninit(JNIEnv *env)
+{
+
+}
+
 
 JNIEnv *GJNI::attachEnv(bool *needDetach)
 {

@@ -13,13 +13,24 @@ extern "C" {
 #endif
 /*
  * Class:     com_gxengine_gx_GAndroidJ
+ * Method:    appInit
+ * Signature: (Ljava/lang/Object;Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appInit
+        (JNIEnv *env, jclass, jobject app, jobject classLoader)
+{
+    GAndroid::shared()->init(env,app,classLoader);
+}
+
+/*
+ * Class:     com_gxengine_gx_GAndroidJ
  * Method:    appOnCreate
  * Signature: (Ljava/lang/Object;Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appOnCreate
-        (JNIEnv *env, jclass, jobject app, jobject classLoader)
+        (JNIEnv *, jclass, jobject)
 {
-    GAndroid::shared()->init(env,app,classLoader);
+    GApplication::shared()->eventDidFinishLaunching();
 }
 
 /*
@@ -30,7 +41,18 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appOnCreate
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appOnTerminate
         (JNIEnv *, jclass, jobject)
 {
+    GApplication::shared()->eventWillTerminate();
+}
 
+/*
+ * Class:     com_gxengine_gx_GAndroidJ
+ * Method:    appUninit
+ * Signature: (Ljava/lang/Object;)V
+ */
+JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appUninit
+        (JNIEnv *env, jclass, jobject app)
+{
+    GAndroid::shared()->uninit(env,app);
 }
 
 /*
@@ -61,9 +83,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_appIdle
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnCreate
-        (JNIEnv *, jclass, jobject winHolder)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-    GApplication::shared()->winHolderOnCreate(winHolder,GApplication::_WinHolderType_Activity);
+    GApplication::shared()->winHolderOnCreate(env,winHolder,GApplication::_WinHolderType_Activity);
 }
 
 /*
@@ -83,9 +105,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnReStart
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnStart
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnStart(env,winHolder,GApplication::_WinHolderType_Activity);
 }
 
 /*
@@ -94,9 +116,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnStart
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnResume
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnResume(env,winHolder,GApplication::_WinHolderType_Activity);
 }
 
 /*
@@ -105,9 +127,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnResume
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnPause
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnPause(env,winHolder,GApplication::_WinHolderType_Activity);
 }
 
 /*
@@ -116,9 +138,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnPause
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnStop
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnStop(env,winHolder,GApplication::_WinHolderType_Activity);
 }
 
 /*
@@ -127,9 +149,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnStop
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnDestroy
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnDestroy(env,winHolder,GApplication::_WinHolderType_Activity);
 }
 
 /*
@@ -138,9 +160,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_activityOnDestroy
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnCreate
-        (JNIEnv *, jclass, jobject winHolder)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-    GApplication::shared()->winHolderOnCreate(winHolder,GApplication::_WinHolderType_DreamService);
+    GApplication::shared()->winHolderOnCreate(env,winHolder,GApplication::_WinHolderType_DreamService);
 }
 
 /*
@@ -149,9 +171,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnCreate
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnAttachedToWindow
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnStart(env,winHolder,GApplication::_WinHolderType_DreamService);
 }
 
 /*
@@ -160,9 +182,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnAttachedToWi
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDreamingStarted
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnResume(env,winHolder,GApplication::_WinHolderType_DreamService);
 }
 
 /*
@@ -171,9 +193,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDreamingStar
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDreamingStopped
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnPause(env,winHolder,GApplication::_WinHolderType_DreamService);
 }
 
 /*
@@ -182,9 +204,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDreamingStop
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDetachedFromWindow
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnStop(env,winHolder,GApplication::_WinHolderType_DreamService);
 }
 
 /*
@@ -193,9 +215,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDetachedFrom
  * Signature: (Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDestroy
-        (JNIEnv *, jclass, jobject)
+        (JNIEnv *env, jclass, jobject winHolder)
 {
-
+    GApplication::shared()->winHolderOnDestroy(env,winHolder,GApplication::_WinHolderType_DreamService);
 }
 
 /*
@@ -204,9 +226,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_dreamServiceOnDestroy
  * Signature: (Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_windowOnCreated
-        (JNIEnv *, jclass, jobject, jobject, jobject)
+        (JNIEnv *env, jclass, jobject win, jobject surface, jobject winHolder)
 {
-
+    GApplication::shared()->winOnCreated(env,win,surface,winHolder);
 }
 
 /*
@@ -215,9 +237,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_windowOnCreated
  * Signature: (Ljava/lang/Object;Ljava/lang/Object;IILjava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_windowOnChanged
-        (JNIEnv *, jclass, jobject, jobject, jint, jint, jobject)
+        (JNIEnv *env, jclass, jobject win, jobject surface, jint width, jint height, jobject winHolder)
 {
-
+    GApplication::shared()->winOnChanged(env,win,surface,width,height,winHolder);
 }
 
 /*
@@ -226,9 +248,9 @@ JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_windowOnChanged
  * Signature: (Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V
  */
 JNIEXPORT void JNICALL Java_com_gxengine_gx_GAndroidJ_windowOnDestroyed
-        (JNIEnv *, jclass, jobject, jobject, jobject)
+        (JNIEnv *env, jclass, jobject win, jobject surface, jobject winHolder)
 {
-
+    GApplication::shared()->winOnDestroyed(env,win,surface,winHolder);
 }
 
 #ifdef __cplusplus

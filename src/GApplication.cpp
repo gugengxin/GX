@@ -242,22 +242,105 @@ void GApplication::destroyWinMsgWnd()
 
 #elif defined(GX_OS_ANDROID)
 
-void GApplication::winHolderOnCreate(jobject holder,_WinHolderType type)
+GApplication::_WinData* GApplication::getWDFromHolder(JNIEnv* env,jobject holder)
+{
+	for (gint i = 0; i < m_WinDatas.getCount(); ++i) {
+		_WinData* wd=m_WinDatas.getPtr(i);
+		if(env->IsSameObject(wd->holder,holder)) {
+			return wd;
+		}
+	}
+	return NULL;
+}
+
+gint GApplication::getWDIndexFromHolder(JNIEnv* env,jobject holder)
+{
+	for (gint i = 0; i < m_WinDatas.getCount(); ++i) {
+		_WinData* wd=m_WinDatas.getPtr(i);
+		if(env->IsSameObject(wd->holder,holder)) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+void GApplication::winHolderOnCreate(JNIEnv* env, jobject holder,_WinHolderType type)
 {
 	for (gint i = 0; i < m_WinDatas.getCount(); ++i) {
 		_WinData& wd=m_WinDatas.get(i);
 		if(wd.holder==NULL && wd.gclass!=NULL) {
-			wd.holder=holder;
+			wd.holder=env->NewWeakGlobalRef(holder);
 			wd.type=type;
 			return;
 		}
 	}
 
 	_WinData wd;
-	wd.holder=holder;
+	wd.holder=env->NewWeakGlobalRef(holder);
 	wd.type=type;
 	m_WinDatas.add(wd);
 }
+
+void GApplication::winHolderOnStart(JNIEnv* env, jobject holder,_WinHolderType type)
+{
+
+}
+
+void GApplication::winHolderOnResume(JNIEnv* env, jobject holder,_WinHolderType type)
+{
+
+}
+
+void GApplication::winHolderOnPause(JNIEnv* env, jobject holder,_WinHolderType type)
+{
+
+}
+
+void GApplication::winHolderOnStop(JNIEnv* env, jobject holder,_WinHolderType type)
+{
+
+}
+
+void GApplication::winHolderOnDestroy(JNIEnv* env, jobject holder,_WinHolderType type)
+{
+	gint idx=getWDIndexFromHolder(env,holder);
+	if(idx>=0) {
+		_WinData& wd=m_WinDatas.get(idx);
+		env->DeleteWeakGlobalRef(wd.holder);
+		m_WinDatas.remove(idx);
+	}
+}
+
+void GApplication::winOnCreated(JNIEnv* env, jobject win, jobject surface, jobject winHolder)
+{
+	_WinData* wd=getWDFromHolder(env,winHolder);
+	if(wd && wd->holder && wd->gclass) {
+
+		ANativeWindow* nw=ANativeWindow_fromSurface(env, surface);
+		if(!wd->window) {
+			wd->window=addWindow(nw,wd->gclass);
+		}
+		else {
+			wd->window->androidRecreate(nw);
+		}
+		ANativeWindow_release(nw);
+	}
+}
+void GApplication::winOnChanged(JNIEnv* env, jobject win, jobject surface,jint width, jint height, jobject winHolder)
+{
+	_WinData* wd=getWDFromHolder(env,winHolder);
+	if(wd && wd->holder && wd->gclass && wd->window) {
+		wd->window->eventResize();
+	}
+}
+void GApplication::winOnDestroyed(JNIEnv* env, jobject win, jobject surface, jobject winHolder)
+{
+	_WinData* wd=getWDFromHolder(env,winHolder);
+	if(wd && wd->holder && wd->gclass && wd->window) {
+		wd->window->androidDestroy();
+	}
+}
+
 
 #endif
 
@@ -403,11 +486,6 @@ void GApplication::eventStop()
 }
 //*/
 
-void GApplication::addWindow(void* osWin)
-{
-    m_Windows.add(new GWindow(osWin));
-}
-
 GWindow *GApplication::firstWindow()
 {
     if(m_Windows.getCount()>0) {
@@ -426,10 +504,19 @@ GWindow *GApplication::getWindow(gint idx)
     return m_Windows.get(idx);
 }
 
+GWindow* GApplication::addWindow(void* osWin,GClass* gameGClass)
+{
+	GWindow* res=new GWindow(osWin,gameGClass);
+	m_Windows.add(res);
+	res->eventAttachToApp();
+	return res;
+}
+
 void GApplication::removeWindow(GWindow *win)
 {
 	for (gint i = 0; i < m_Windows.getCount(); i++) {
         if (win == m_Windows.get(i)) {
+			win->eventDetachFromApp();
 			delete win;
 			m_Windows.remove(i);
 			break;
