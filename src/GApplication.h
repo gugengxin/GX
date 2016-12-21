@@ -89,8 +89,7 @@ private:
 	void eventWillTerminate();
 
 public:
-	///waitOtherStart 目前只在android启动时有效，如果android启动的Activity为GActivity或其派生类，请传true
-	void startGame(GClass& gameGClass, void* osWin, bool waitOtherStart=true);
+	void startGame(GClass& gameGClass, void* osWin);
 
 public:
     GWindow* firstWindow();
@@ -118,7 +117,7 @@ private:
 	UINT m_TimerID;
 #elif defined(GX_OS_ANDROID)
     friend class GAndroid;
-	friend void Java_com_gxengine_gx_GAndroidJ_appOnCreate(JNIEnv *, jclass, jobject);
+	friend void Java_com_gxengine_gx_GAndroidJ_appOnCreate(JNIEnv *, jclass, jobject, jobject);
 	friend void Java_com_gxengine_gx_GAndroidJ_appOnTerminate(JNIEnv *, jclass, jobject);
 	friend void Java_com_gxengine_gx_GAndroidJ_appIdle(JNIEnv *, jclass, jobject);
 	friend void Java_com_gxengine_gx_GAndroidJ_activityOnCreate(JNIEnv *, jclass, jobject);
@@ -151,11 +150,13 @@ private:
 			type=_WinHolderType_Unknown;
 			gclass=NULL;
 			window=NULL;
+			createdOnLaunch=false;
 		}
 		jobject holder;
 		_WinHolderType type;
 		GClass* gclass;
 		GWindow* window;
+		bool createdOnLaunch;
 	};
 
 	_WinData* getWDFromHolder(JNIEnv* env,jobject holder);
@@ -172,6 +173,7 @@ private:
 	void winOnChanged(JNIEnv* env, jobject win, jobject surface,jint width, jint height, jobject winHolder);
 	void winOnDestroyed(JNIEnv* env, jobject win, jobject surface, jobject winHolder);
 
+	bool m_IsAppDidFinishLaunching;
 	GPDArray<_WinData> m_WinDatas;
 #elif defined(GX_OS_QT)
     QTimer m_Timer;

@@ -307,7 +307,14 @@ void GApplication::winHolderOnDestroy(JNIEnv* env, jobject holder,_WinHolderType
 	if(idx>=0) {
 		_WinData& wd=m_WinDatas.get(idx);
 		env->DeleteWeakGlobalRef(wd.holder);
-		m_WinDatas.remove(idx);
+		if(wd.createdOnLaunch) {
+			wd.holder=NULL;
+			wd.type=_WinHolderType_Unknown;
+			wd.window=NULL;
+		}
+		else {
+			m_WinDatas.remove(idx);
+		}
 	}
 }
 
@@ -378,6 +385,8 @@ GApplication::GApplication()
     m_Helper=[[_AppHelper alloc] initWithDelegate:this];
 #elif defined(GX_OS_WINDOWS)
 	m_TimerID = 0;
+#elif defined(GX_OS_ANDROID)
+	m_IsAppDidFinishLaunching=false;
 #endif
 }
 
@@ -415,7 +424,13 @@ void GApplication::idle()
 
 void GApplication::eventDidFinishLaunching()
 {
+#if defined(GX_OS_ANDROID)
+	m_IsAppDidFinishLaunching=true;
+#endif
 	m_Delegate->appDidFinishLaunching(this,m_InitData);
+#if defined(GX_OS_ANDROID)
+	m_IsAppDidFinishLaunching=false;
+#endif
 }
 
 void GApplication::eventWillTerminate()
@@ -423,7 +438,7 @@ void GApplication::eventWillTerminate()
 	m_Delegate->appWillTerminate(this);
 }
 
-void GApplication::startGame(GClass& gameGClass, void* osWin, bool waitOtherStart)
+void GApplication::startGame(GClass& gameGClass, void* osWin)
 {
 #if defined(GX_OS_APPLE) || defined(GX_OS_WINDOWS) || defined(GX_OS_QT)
 
@@ -437,9 +452,10 @@ void GApplication::startGame(GClass& gameGClass, void* osWin, bool waitOtherStar
 	}
 	_WinData wd;
 	wd.gclass=&gameGClass;
+	wd.createdOnLaunch=m_IsAppDidFinishLaunching;
 	m_WinDatas.add(wd);
 
-	if(!waitOtherStart) {
+	if(!m_IsAppDidFinishLaunching) {
 		GAndroidC::shared()->appStartActivity();
 	}
 #else

@@ -12,8 +12,8 @@
 #include "com_gxengine_gx_GAndroidJ.h"
 
 class GAndroid : public GJNI {
-    friend void Java_com_gxengine_gx_GAndroidJ_appInit(JNIEnv*, jclass, jobject, jobject);
-    friend void Java_com_gxengine_gx_GAndroidJ_appUninit(JNIEnv*, jclass, jobject);
+    friend void Java_com_gxengine_gx_GAndroidJ_appOnCreate(JNIEnv*, jclass, jobject, jobject);
+    friend void Java_com_gxengine_gx_GAndroidJ_appOnTerminate(JNIEnv *, jclass, jobject);
 public:
     static GAndroid* shared();
 private:
