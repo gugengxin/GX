@@ -44,7 +44,8 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GXTEST));
 
-	GApplication::InitData data(hwndWindow);
+	GApplication::InitData data;
+	data.setOSWindowForLaunch(hwndWindow);
 
 	GApplication::main(AppDge::shared(),&data);
 

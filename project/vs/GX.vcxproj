@@ -20,6 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GAction.cpp" />
+    <ClCompile Include="..\..\src\GAndroid.cpp" />
+    <ClCompile Include="..\..\src\GAndroidC.cpp" />
+    <ClCompile Include="..\..\src\GAndroidJ.cpp" />
     <ClCompile Include="..\..\src\GAppBundle.cpp" />
     <ClCompile Include="..\..\src\GApplication.cpp" />
     <ClCompile Include="..\..\src\GArray.cpp" />
@@ -49,10 +52,8 @@
     <ClCompile Include="..\..\src\GFileReader.cpp" />
     <ClCompile Include="..\..\src\GFileWriter.cpp" />
     <ClCompile Include="..\..\src\GFrameBuffer.cpp" />
-    <ClCompile Include="..\..\src\GJavaAPI.cpp" />
-    <ClCompile Include="..\..\src\GJavaCAPI.cpp" />
-    <ClCompile Include="..\..\src\GJavaClass.cpp" />
-    <ClCompile Include="..\..\src\GJavaJAPI.cpp" />
+    <ClCompile Include="..\..\src\GGame.cpp" />
+    <ClCompile Include="..\..\src\GJNI.cpp" />
     <ClCompile Include="..\..\src\GJpeg.cpp" />
     <ClCompile Include="..\..\src\glew.c" />
     <ClCompile Include="..\..\src\GList.cpp" />
@@ -104,8 +105,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\com_gxengine_GX.h" />
-    <ClInclude Include="..\..\src\com_gxengine_gx_GJavaJAPI.h" />
+    <ClInclude Include="..\..\src\com_gxengine_gx_GAndroidJ.h" />
     <ClInclude Include="..\..\src\GAction.h" />
+    <ClInclude Include="..\..\src\GAndroid.h" />
+    <ClInclude Include="..\..\src\GAndroidC.h" />
+    <ClInclude Include="..\..\src\GAndroidJ.h" />
     <ClInclude Include="..\..\src\GAppBundle.h" />
     <ClInclude Include="..\..\src\GApplication.h" />
     <ClInclude Include="..\..\src\GArray.h" />
@@ -135,10 +139,8 @@
     <ClInclude Include="..\..\src\GFileReader.h" />
     <ClInclude Include="..\..\src\GFileWriter.h" />
     <ClInclude Include="..\..\src\GFrameBuffer.h" />
-    <ClInclude Include="..\..\src\GJavaAPI.h" />
-    <ClInclude Include="..\..\src\GJavaCAPI.h" />
-    <ClInclude Include="..\..\src\GJavaClass.h" />
-    <ClInclude Include="..\..\src\GJavaJAPI.h" />
+    <ClInclude Include="..\..\src\GGame.h" />
+    <ClInclude Include="..\..\src\GJNI.h" />
     <ClInclude Include="..\..\src\GJpeg.h" />
     <ClInclude Include="..\..\src\GList.h" />
     <ClInclude Include="..\..\src\GLog.h" />

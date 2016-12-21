@@ -114,18 +114,6 @@
     <ClCompile Include="..\..\src\GSystem.cpp">
       <Filter>src\App</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GJavaAPI.cpp">
-      <Filter>src\Unuse</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GJavaCAPI.cpp">
-      <Filter>src\Unuse</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GJavaClass.cpp">
-      <Filter>src\Unuse</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GJavaJAPI.cpp">
-      <Filter>src\Unuse</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GNumber.cpp">
       <Filter>src\Struct</Filter>
     </ClCompile>
@@ -294,6 +282,21 @@
     <ClCompile Include="..\..\src\GXOpenGL.cpp">
       <Filter>src\Window\3DAPI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GGame.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GAndroid.cpp">
+      <Filter>src\Unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GAndroidC.cpp">
+      <Filter>src\Unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GAndroidJ.cpp">
+      <Filter>src\Unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GJNI.cpp">
+      <Filter>src\Unuse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GClass.h">
@@ -375,21 +378,6 @@
       <Filter>src\App</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\com_gxengine_GX.h">
-      <Filter>src\Unuse</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\com_gxengine_gx_GJavaJAPI.h">
-      <Filter>src\Unuse</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GJavaAPI.h">
-      <Filter>src\Unuse</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GJavaCAPI.h">
-      <Filter>src\Unuse</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GJavaClass.h">
-      <Filter>src\Unuse</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GJavaJAPI.h">
       <Filter>src\Unuse</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GThread.h">
@@ -589,6 +577,24 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GXContext.h">
       <Filter>src\Window\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GGame.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\com_gxengine_gx_GAndroidJ.h">
+      <Filter>src\Unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GAndroid.h">
+      <Filter>src\Unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GAndroidC.h">
+      <Filter>src\Unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GAndroidJ.h">
+      <Filter>src\Unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GJNI.h">
+      <Filter>src\Unuse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

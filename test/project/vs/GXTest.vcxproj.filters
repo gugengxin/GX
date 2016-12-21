@@ -36,6 +36,9 @@
     <ClInclude Include="..\..\src\AppDge.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Game.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -45,6 +48,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\AppDge.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Game.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
