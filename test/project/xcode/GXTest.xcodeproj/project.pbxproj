@@ -15,6 +15,9 @@
 		CA75BAD31D830D4400236109 /* lena_rgb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA75BAD21D830D4400236109 /* lena_rgb.jpg */; };
 		CA75BAD41D830D4400236109 /* lena_rgb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA75BAD21D830D4400236109 /* lena_rgb.jpg */; };
 		CA75BAD51D830D4400236109 /* lena_rgb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA75BAD21D830D4400236109 /* lena_rgb.jpg */; };
+		CA80D1EE1E0A525D001E57AF /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA80D1EC1E0A525D001E57AF /* Game.cpp */; };
+		CA80D1EF1E0A525D001E57AF /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA80D1EC1E0A525D001E57AF /* Game.cpp */; };
+		CA80D1F01E0A525D001E57AF /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA80D1EC1E0A525D001E57AF /* Game.cpp */; };
 		CA9C16321CC5DFE200204303 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16311CC5DFE200204303 /* main.m */; };
 		CA9C16351CC5DFE200204303 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16341CC5DFE200204303 /* AppDelegate.mm */; };
 		CA9C163D1CC5DFE200204303 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA9C163C1CC5DFE200204303 /* Assets.xcassets */; };
@@ -60,6 +63,8 @@
 		CA1F60B51CD9894600C6307B /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		CA1F60C91CD99A6500C6307B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA75BAD21D830D4400236109 /* lena_rgb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lena_rgb.jpg; sourceTree = "<group>"; };
+		CA80D1EC1E0A525D001E57AF /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
+		CA80D1ED1E0A525D001E57AF /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		CA9C162D1CC5DFE200204303 /* GXTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA9C16311CC5DFE200204303 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CA9C16331CC5DFE200204303 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -119,6 +124,8 @@
 			children = (
 				CA1F60AA1CD984BB00C6307B /* AppDge.h */,
 				CA1F60A91CD984BB00C6307B /* AppDge.cpp */,
+				CA80D1ED1E0A525D001E57AF /* Game.h */,
+				CA80D1EC1E0A525D001E57AF /* Game.cpp */,
 			);
 			name = src;
 			path = ../../src;
@@ -313,9 +320,12 @@
 				TargetAttributes = {
 					CA9C162C1CC5DFE200204303 = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = YS4H72RSCW;
+						ProvisioningStyle = Manual;
 					};
 					CA9C16841CC5E7D800204303 = {
 						CreatedOnToolsVersion = 7.3;
+						ProvisioningStyle = Manual;
 					};
 					CA9C169C1CC5E94D00204303 = {
 						CreatedOnToolsVersion = 7.3;
@@ -411,6 +421,7 @@
 				CA9C16351CC5DFE200204303 /* AppDelegate.mm in Sources */,
 				CA9C16321CC5DFE200204303 /* main.m in Sources */,
 				CA1F60AB1CD984BB00C6307B /* AppDge.cpp in Sources */,
+				CA80D1EE1E0A525D001E57AF /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +432,7 @@
 				CA9C168C1CC5E7D800204303 /* AppDelegate.mm in Sources */,
 				CA9C16891CC5E7D800204303 /* main.m in Sources */,
 				CA1F60AC1CD984BB00C6307B /* AppDge.cpp in Sources */,
+				CA80D1EF1E0A525D001E57AF /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,6 +443,7 @@
 				CA9C16A41CC5E94D00204303 /* main.m in Sources */,
 				CA9C16A11CC5E94D00204303 /* AppDelegate.mm in Sources */,
 				CA1F60AD1CD984BB00C6307B /* AppDge.cpp in Sources */,
+				CA80D1F01E0A525D001E57AF /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,9 +550,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = YS4H72RSCW;
 				INFOPLIST_FILE = "$(SRCROOT)/ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;
+				PROVISIONING_PROFILE = "db714bbc-f207-4e03-898b-d94818c00ef1";
+				PROVISIONING_PROFILE_SPECIFIER = CommonDEV;
 			};
 			name = Debug;
 		};
@@ -549,9 +566,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = YS4H72RSCW;
 				INFOPLIST_FILE = "$(SRCROOT)/ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;
+				PROVISIONING_PROFILE = "db714bbc-f207-4e03-898b-d94818c00ef1";
+				PROVISIONING_PROFILE_SPECIFIER = CommonDEV;
 			};
 			name = Release;
 		};
@@ -561,6 +581,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/atv/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;
@@ -575,6 +596,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/atv/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;

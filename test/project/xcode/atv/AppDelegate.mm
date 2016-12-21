@@ -17,11 +17,18 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions
 {
-    GApplication::main(AppDge::shared());
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+ 
+    _window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [_window makeKeyAndVisible];
+    
+    GApplication::InitData initData;
+    initData.setOSWindowForLaunch(_window);
+    
+    GApplication::main(AppDge::shared(),&initData);
     
     return YES;
 }

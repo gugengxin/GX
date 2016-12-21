@@ -53,7 +53,10 @@ public:
 
     class Delegate {
     public:
-		virtual void appDidFinishLaunching(GApplication* application, const InitData& initData){GX_UNUSED(application)}
+        virtual void appDidFinishLaunching(GApplication* application, const InitData& initData){
+            GX_UNUSED(application)
+            GX_UNUSED(initData);
+        }
 		virtual void appWillTerminate(GApplication* application){GX_UNUSED(application)}
 
         virtual void appReceivedMemoryWarning(GApplication* application){GX_UNUSED(application)}

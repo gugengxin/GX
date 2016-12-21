@@ -20,6 +20,9 @@ MOC_DIR = moc
 SOURCES += \
 #__SOURCES_START__
 	../../src/GAction.cpp\
+	#../../src/GAndroid.cpp\
+	#../../src/GAndroidC.cpp\
+	#../../src/GAndroidJ.cpp\
 	../../src/GAppBundle.cpp\
 	../../src/GApplication.cpp\
 	../../src/GArray.cpp\
@@ -49,10 +52,8 @@ SOURCES += \
 	../../src/GFileReader.cpp\
 	../../src/GFileWriter.cpp\
 	../../src/GFrameBuffer.cpp\
-	#../../src/GJavaAPI.cpp\
-	#../../src/GJavaCAPI.cpp\
-	#../../src/GJavaClass.cpp\
-	#../../src/GJavaJAPI.cpp\
+	../../src/GGame.cpp\
+	#../../src/GJNI.cpp\
 	../../src/GJpeg.cpp\
 	../../src/GList.cpp\
 	../../src/GLog.cpp\
@@ -109,6 +110,9 @@ win32 {
 HEADERS += \
 #__HEADERS_START__
 	../../src/GAction.h\
+	../../src/GAndroid.h\
+	../../src/GAndroidC.h\
+	../../src/GAndroidJ.h\
 	../../src/GAppBundle.h\
 	../../src/GApplication.h\
 	../../src/GArray.h\
@@ -138,10 +142,8 @@ HEADERS += \
 	../../src/GFileReader.h\
 	../../src/GFileWriter.h\
 	../../src/GFrameBuffer.h\
-	../../src/GJavaAPI.h\
-	../../src/GJavaCAPI.h\
-	../../src/GJavaClass.h\
-	../../src/GJavaJAPI.h\
+	../../src/GGame.h\
+	../../src/GJNI.h\
 	../../src/GJpeg.h\
 	../../src/GL/glew.h\
 	../../src/GL/glxew.h\
@@ -205,7 +207,7 @@ HEADERS += \
 	../../src/GZipReader.h\
 	../../src/GZipWriter.h\
 	../../src/com_gxengine_GX.h\
-	../../src/com_gxengine_gx_GJavaJAPI.h\
+	../../src/com_gxengine_gx_GAndroidJ.h\
 #__HEADERS_END__
 
 

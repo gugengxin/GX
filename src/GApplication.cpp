@@ -35,20 +35,8 @@ public:
     inline void AppIdle() {
         m_Target->idle();
     }
-    inline void AppDidBecomeActive() {
-        m_Target->eventResume();
-    }
-    inline void AppWillResignActive() {
-        m_Target->eventPause();
-    }
-    inline void AppDidEnterBackground() {
-        m_Target->eventStop();
-    }
-    inline void AppWillEnterForeground() {
-        m_Target->eventStart();
-    }
     inline void AppWillTerminate() {
-        m_Target->eventDestroy();
+        m_Target->eventWillTerminate();
     }
     inline void AppDidReceiveMemoryWarning() {
         
@@ -79,22 +67,6 @@ private:
         
 #if defined(GX_OS_IPHONE)
         NSNotificationCenter* nc=[NSNotificationCenter defaultCenter];
-        [nc addObserver:self
-               selector:@selector(noteAppDidBecomeActive:)
-                   name:UIApplicationDidBecomeActiveNotification
-                 object:nil];
-        [nc addObserver:self
-               selector:@selector(noteAppWillResignActive:)
-                   name:UIApplicationWillResignActiveNotification
-                 object:nil];
-        [nc addObserver:self
-               selector:@selector(noteAppDidEnterBackground:)
-                   name:UIApplicationDidEnterBackgroundNotification
-                 object:nil];
-        [nc addObserver:self
-               selector:@selector(noteAppWillEnterForeground:)
-                   name:UIApplicationWillEnterForegroundNotification
-                 object:nil];
         [nc addObserver:self
                selector:@selector(noteAppWillTerminate:)
                    name:UIApplicationWillTerminateNotification
@@ -170,22 +142,6 @@ private:
     _bridge.AppIdle();
 }
 
-- (void)noteAppDidBecomeActive:(NSNotification*)note
-{
-    _bridge.AppDidBecomeActive();
-}
-- (void)noteAppWillResignActive:(NSNotification*)note
-{
-    _bridge.AppWillResignActive();
-}
-- (void)noteAppDidEnterBackground:(NSNotification*)note
-{
-    _bridge.AppDidEnterBackground();
-}
-- (void)noteAppWillEnterForeground:(NSNotification*)note
-{
-    _bridge.AppWillEnterForeground();
-}
 - (void)noteAppDidReceiveMemoryWarning:(NSNotification*)note
 {
     _bridge.AppDidReceiveMemoryWarning();
@@ -431,17 +387,35 @@ void GApplication::eventDidFinishLaunching()
 #if defined(GX_OS_ANDROID)
 	m_IsAppDidFinishLaunching=false;
 #endif
+    
+#if defined(GX_OS_APPLE)
+    [GX_CAST_R(_AppHelper*, m_Helper) start];
+#elif defined(GX_OS_WINDOWS)
+    createWinMsgWndAndStart();
+#elif defined(GX_OS_QT)
+    connect(&m_Timer,SIGNAL(timeout()),this,SLOT(idle()));
+    m_Timer.start(1000/60);
+#endif
 }
 
 void GApplication::eventWillTerminate()
 {
 	m_Delegate->appWillTerminate(this);
+    
+#if defined(GX_OS_APPLE)
+    [GX_CAST_R(_AppHelper*, m_Helper) stop];
+#elif defined(GX_OS_WINDOWS)
+    destroyWinMsgWnd();
+#elif defined(GX_OS_QT)
+    m_Timer.stop();
+    disconnect(&m_Timer,SIGNAL(timeout()),this,SLOT(idle()));
+#endif
 }
 
 void GApplication::startGame(GClass& gameGClass, void* osWin)
 {
 #if defined(GX_OS_APPLE) || defined(GX_OS_WINDOWS) || defined(GX_OS_QT)
-
+    addWindow(osWin, &gameGClass);
 #elif defined(GX_OS_ANDROID)
 	for (gint i = 0; i < m_WinDatas.getCount(); ++i) {
 		_WinData& wd=m_WinDatas.get(i);
@@ -462,45 +436,6 @@ void GApplication::startGame(GClass& gameGClass, void* osWin)
 #error
 #endif
 }
-
-/*
-void GApplication::eventStart()
-{
-#if defined(GX_OS_APPLE)
-    [GX_CAST_R(_AppHelper*, m_Helper) start];
-#elif defined(GX_OS_WINDOWS)
-    createWinMsgWndAndStart();
-#elif defined(GX_OS_QT)
-    connect(&m_Timer,SIGNAL(timeout()),this,SLOT(idle()));
-    m_Timer.start(1000/60);
-#endif
-}
-void GApplication::eventResume()
-{
-	m_Delegate->appResume(this);
-
-#if defined(GX_OS_APPLE) || defined(GX_OS_WINDOWS) || defined(GX_OS_QT)
-    setCanCreateWindow(m_InitData.getOSWindow());
-#endif
-}
-void GApplication::eventPause()
-{
-	m_Delegate->appPause(this);
-}
-void GApplication::eventStop()
-{
-	m_Delegate->appStop(this);
-    
-#if defined(GX_OS_APPLE)
-    [GX_CAST_R(_AppHelper*, m_Helper) stop];
-#elif defined(GX_OS_WINDOWS)
-	destroyWinMsgWnd();
-#elif defined(GX_OS_QT)
-    m_Timer.stop();
-    disconnect(&m_Timer,SIGNAL(timeout()),this,SLOT(idle()));
-#endif
-}
-//*/
 
 GWindow *GApplication::firstWindow()
 {

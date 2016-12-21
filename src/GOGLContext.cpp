@@ -230,7 +230,7 @@ bool GOGLContext::create(GWindow* win)
     EAGLSharegroup* group=nil;
     //shared
     GWindow* aw = GApplication::shared()->firstWindow();
-    if (aw && aw != m_Window) {
+    if (aw && aw != getWindow()) {
         group=GX_CAST_R(EAGLContext*, GX_CAST_R(GOGLContext*, &aw->m_Context)->m_Context).sharegroup;
     }
     m_Context=[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:group];
@@ -425,7 +425,7 @@ bool GOGLContext::resize(gfloat32 width,gfloat32 height)
     
     glBindRenderbuffer(GL_RENDERBUFFER, m_ColorRenderbuffer);
     [GX_CAST_R(EAGLContext*, m_Context) renderbufferStorage:GL_RENDERBUFFER
-                                               fromDrawable:(id<EAGLDrawable>)GX_CAST_R(UIView*, m_Window->m_OSWin).layer];
+                                               fromDrawable:(id<EAGLDrawable>)GX_CAST_R(UIView*, getWindow()->m_OSWin).layer];
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &m_BackingWidth);
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &m_BackingHeight);
     

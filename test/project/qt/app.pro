@@ -23,10 +23,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         MainWindow.cpp \
-    ../../src/AppDge.cpp
+    ../../src/AppDge.cpp \
+    ../../src/Game.cpp
 
 HEADERS  += MainWindow.h \
-    ../../src/AppDge.h
+    ../../src/AppDge.h \
+    ../../src/Game.h
 
 FORMS    += MainWindow.ui
 

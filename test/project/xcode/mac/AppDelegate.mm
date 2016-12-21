@@ -19,7 +19,9 @@
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
-    GApplication::InitData initData(_window);
+    GApplication::InitData initData;
+    initData.setOSWindowForLaunch(_window);
+    
     GApplication::main(AppDge::shared(),&initData);
 }
 
