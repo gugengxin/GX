@@ -27,12 +27,7 @@ public:\
 GX_GOBJECT_DECLARE_BASE(cls,vis)\
 avis:\
     static cls* alloc() {\
-        cls* res=new cls();\
-        if(!res->init()) {\
-            delete res;\
-            res=NULL;\
-        }\
-        return res;\
+        return new cls();\
 	}\
     static cls* autoAlloc() {\
         cls* res=alloc();\

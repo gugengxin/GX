@@ -244,6 +244,18 @@
 		CAE706E11CD3494F0090F4DD /* GString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706DF1CD3494F0090F4DD /* GString.cpp */; };
 		CAE706E21CD3494F0090F4DD /* GString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706DF1CD3494F0090F4DD /* GString.cpp */; };
 		CAE706E31CD3494F0090F4DD /* GString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAE706DF1CD3494F0090F4DD /* GString.cpp */; };
+		CAFDCDE51E0B6E5E00D22117 /* GGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC293331E0A4409004519D8 /* GGame.cpp */; };
+		CAFDCDE61E0B6E5E00D22117 /* GGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC293331E0A4409004519D8 /* GGame.cpp */; };
+		CAFDCDE71E0B6E8300D22117 /* GAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2932D1E0A4409004519D8 /* GAndroid.cpp */; };
+		CAFDCDE81E0B6E8300D22117 /* GAndroidC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2932F1E0A4409004519D8 /* GAndroidC.cpp */; };
+		CAFDCDE91E0B6E8300D22117 /* GAndroidJ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC293311E0A4409004519D8 /* GAndroidJ.cpp */; };
+		CAFDCDEA1E0B6E8300D22117 /* GJNI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC293351E0A4409004519D8 /* GJNI.cpp */; };
+		CAFDCDEB1E0B6E8300D22117 /* GFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */; };
+		CAFDCDEC1E0B6E8E00D22117 /* GAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2932D1E0A4409004519D8 /* GAndroid.cpp */; };
+		CAFDCDED1E0B6E8E00D22117 /* GAndroidC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC2932F1E0A4409004519D8 /* GAndroidC.cpp */; };
+		CAFDCDEE1E0B6E8E00D22117 /* GAndroidJ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC293311E0A4409004519D8 /* GAndroidJ.cpp */; };
+		CAFDCDEF1E0B6E8E00D22117 /* GJNI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC293351E0A4409004519D8 /* GJNI.cpp */; };
+		CAFDCDF01E0B6E8E00D22117 /* GFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -706,8 +718,6 @@
 		CAA2D4DF1DBAFBB4007E53C8 /* context */ = {
 			isa = PBXGroup;
 			children = (
-				CA3A7EAE1DED66BF00197FCB /* GCanvas.h */,
-				CA3A7EAD1DED66BF00197FCB /* GCanvas.cpp */,
 				CA26E07A1DC64BBD003AF801 /* GXContext.h */,
 				CA3A7EAB1DED656800197FCB /* GBaseContext.h */,
 				CA3A7EAA1DED656800197FCB /* GBaseContext.cpp */,
@@ -732,6 +742,8 @@
 				CA4CD5441D508D3F008005CF /* texture */,
 				CA1AD2761CD87CA900CEA1DC /* GWindow.h */,
 				CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */,
+				CA3A7EAE1DED66BF00197FCB /* GCanvas.h */,
+				CA3A7EAD1DED66BF00197FCB /* GCanvas.cpp */,
 				CABB3FAF1CFE12D000A7367C /* GBuffer.h */,
 				CABB3FAE1CFE12D000A7367C /* GBuffer.cpp */,
 				CABB3FB41CFE133000A7367C /* GDataBuffer.h */,
@@ -1017,6 +1029,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAFDCDE71E0B6E8300D22117 /* GAndroid.cpp in Sources */,
+				CAFDCDE81E0B6E8300D22117 /* GAndroidC.cpp in Sources */,
+				CAFDCDE91E0B6E8300D22117 /* GAndroidJ.cpp in Sources */,
+				CAFDCDEA1E0B6E8300D22117 /* GJNI.cpp in Sources */,
+				CAFDCDEB1E0B6E8300D22117 /* GFrameBuffer.cpp in Sources */,
 				CA3090981CFD1C57000B8DF2 /* GColor.cpp in Sources */,
 				CAE303BF1CE563CB00F15C74 /* GOGLContext.cpp in Sources */,
 				CA1F60C21CD996F700C6307B /* GDataString.cpp in Sources */,
@@ -1062,6 +1079,7 @@
 				CABB3F9B1CFE06EC00A7367C /* GOShader.cpp in Sources */,
 				CA9F8E851D30758F00A5EBCA /* GFileManager.cpp in Sources */,
 				CAE706DA1CD2FA850090F4DD /* GMap.cpp in Sources */,
+				CAFDCDE51E0B6E5E00D22117 /* GGame.cpp in Sources */,
 				CAC2D11D1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */,
 				CAE303BC1CE563CB00F15C74 /* GLog.cpp in Sources */,
 				CA9C16CD1CC6102E00204303 /* GObject.cpp in Sources */,
@@ -1101,6 +1119,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAFDCDEC1E0B6E8E00D22117 /* GAndroid.cpp in Sources */,
+				CAFDCDED1E0B6E8E00D22117 /* GAndroidC.cpp in Sources */,
+				CAFDCDEE1E0B6E8E00D22117 /* GAndroidJ.cpp in Sources */,
+				CAFDCDEF1E0B6E8E00D22117 /* GJNI.cpp in Sources */,
+				CAFDCDF01E0B6E8E00D22117 /* GFrameBuffer.cpp in Sources */,
 				CA3090991CFD1C58000B8DF2 /* GColor.cpp in Sources */,
 				CAE303C91CE563CB00F15C74 /* GOGLContext.cpp in Sources */,
 				CA1F60C31CD996F700C6307B /* GDataString.cpp in Sources */,
@@ -1146,6 +1169,7 @@
 				CABB3F941CFE06EB00A7367C /* GOShader.cpp in Sources */,
 				CA9F8E891D30758F00A5EBCA /* GFileManager.cpp in Sources */,
 				CAE706DB1CD2FA850090F4DD /* GMap.cpp in Sources */,
+				CAFDCDE61E0B6E5E00D22117 /* GGame.cpp in Sources */,
 				CAC2D11E1CD0BEC500A0EBE5 /* GRunLoop.cpp in Sources */,
 				CAE303C61CE563CB00F15C74 /* GLog.cpp in Sources */,
 				CA9C16CE1CC6102E00204303 /* GObject.cpp in Sources */,

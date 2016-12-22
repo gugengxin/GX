@@ -12,10 +12,14 @@
 
 #include "GXPrefix.h"
 
+#include "GXMath.h"
+
 #include "GData.h"
 #include "GPieceData.h"
 #include "GString.h"
 #include "GWString.h"
+#include "GVector.h"
+#include "GMatrix.h"
 
 #include "GDataReader.h"
 #include "GDataWriter.h"
@@ -32,9 +36,13 @@
 #include "GZipBundle.h"
 #include "GAppBundle.h"
 
+#include "GDataBuffer.h"
+#include "GFrameBuffer.h"
+
 #include "GLog.h"
 #include "GError.h"
 #include "GApplication.h"
+#include "GGame.h"
 
 
 #endif /* GX_h */

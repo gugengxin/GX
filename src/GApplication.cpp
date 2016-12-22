@@ -325,7 +325,8 @@ void GApplication::main(Delegate* dge, InitData* initData)
 {
     GApplication* app=shared();
     app->m_Delegate=dge;
-	memcpy(&app->m_InitData,initData, sizeof(InitData));
+	//memcpy(&app->m_InitData,initData, sizeof(InitData));
+    app->m_InitData=*initData;
     GThread::current()->setMain();
     app->eventDidFinishLaunching();
 }
@@ -373,7 +374,6 @@ void GApplication::idle()
 	for (gint i = 0; i < m_Windows.getCount(); i++) {
 		GWindow* win = m_Windows.get(i);
 		win->idle();
-		win->renderIfNeed();
 	}
 	GRunLoop::current()->run();
 }

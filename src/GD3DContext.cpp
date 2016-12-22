@@ -7,11 +7,6 @@
 #include "GWindow.h"
 #include "GApplication.h"
 
-//Up include other h file
-#include "GXGObject.h"
-
-GX_GOBJECT_IMPLEMENT(GD3DContext, GBaseContext);
-
 //不用在这里初始化
 GD3DContext::GD3DContext()
 {
@@ -308,7 +303,7 @@ void GD3DContext::renderBegin()
     //设置光栅化状态，使其生效
     device->RSSetState(m_RasterState);
 
-	GColor4F& bgdClr = getBgdColor();
+	const GColor4F& bgdClr=getWindow()->getBackgroundColor();
 	const FLOAT color[] = { bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a };
 	device->ClearRenderTargetView(m_RenderTargetView, color);
 	device->ClearDepthStencilView(m_DepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);

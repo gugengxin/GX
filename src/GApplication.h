@@ -19,7 +19,6 @@
 #elif defined(GX_OS_QT)
 #include <QTimer>
 #endif
-class GWindow;
 
 class GApplication
 #if defined(GX_OS_QT)

@@ -7,10 +7,13 @@
 
 #include "GX.h"
 
-class Game : public GObject {
+class Game : public GGame {
     GX_OBJECT(Game);
+protected:
+    virtual void init(GWindow* window);
 public:
-
+    virtual void idle();
+    virtual void render(GCanvas* canvas);
 private:
 
 };

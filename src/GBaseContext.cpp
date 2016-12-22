@@ -7,12 +7,8 @@
 //
 
 #include "GBaseContext.h"
-//Down include other h file
+#include "GWindow.h"
 
-//Up include other h file
-#include "GXGObject.h"
-
-GX_GOBJECT_IMPLEMENT(GBaseContext, GCanvas);
 
 GBaseContext::GBaseContext()
 {
@@ -32,5 +28,4 @@ void GBaseContext::destroy()
 {
     m_Window=NULL;
 }
-
 

@@ -194,8 +194,6 @@ void GOGLContext::popOSHandle()
 //Up include other h file
 #include "GXGObject.h"
 
-GX_GOBJECT_IMPLEMENT(GOGLContext,GBaseContext);
-
 //不用在这里初始化
 GOGLContext::GOGLContext()
 {
@@ -494,7 +492,7 @@ void GOGLContext::renderBegin()
 	}
 #endif
     
-    GColor4F& bgdClr=getBgdColor();
+    const GColor4F& bgdClr=getWindow()->getBackgroundColor();
 	glClearColor(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }

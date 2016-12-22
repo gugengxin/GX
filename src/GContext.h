@@ -34,9 +34,7 @@ private:
 
 		SRIDCount,
 	};
-
-
-
+    
     class NodeLoadObj : public GObject {
         GX_GOBJECT(NodeLoadObj);
     public:
@@ -90,7 +88,7 @@ private:
 private:
     GContext();
 	virtual ~GContext();
-public:
+private:
     virtual bool create(GWindow* win);
     virtual void destroy();
 

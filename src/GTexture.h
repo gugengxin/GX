@@ -20,7 +20,7 @@
 class GContext;
 
 class GTexture : public GObject {
-    GX_GOBJECT(GTexture);
+    GX_VIRTUAL_GOBJECT(GTexture);
 public:
 #if defined(GX_OPENGL)
     typedef GLuint Name;
@@ -119,6 +119,9 @@ public:
         return NULL;
 #endif
     }
+    virtual gint32 getWidth()=0;
+    virtual gint32 getHeight()=0;
+    virtual gint32 getDepth()=0;
     
 protected:
     inline void setNode(Node* v) {

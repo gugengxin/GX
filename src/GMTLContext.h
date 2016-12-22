@@ -17,24 +17,23 @@
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
 
-#include "GXGObject.h"
-// Down can't include other h file
-
 class GMTLContext : public GBaseContext {
     friend class GMShader;
-    GX_VIRTUAL_GOBJECT(GMTLContext);
-public:
+protected:
+    GMTLContext();
+    virtual ~GMTLContext();
+protected:
     virtual bool create(GWindow* win);
     virtual void destroy();
     
-public:
+protected:
     bool resize(gfloat32 width,gfloat32 height);
     
     bool renderCheck();
     void renderBegin();
     void setViewport(float x, float y, float w, float h, float scale);
     void renderEnd();
-public:
+protected:
     void makeCurrent();
     void makeClear();
 protected:
@@ -85,9 +84,6 @@ private:
     void* m_CommandBuffer;
     void* m_RenderEncoder;
 };
-
-// Up can't include other h file
-#include "GXGObjectUD.h"
 
 #endif
 

@@ -1,4 +1,4 @@
-﻿//
+//
 //  GXObject.h
 //  GX
 //
@@ -14,7 +14,7 @@
 vis:\
     cls() {}\
     virtual ~cls() {}\
-    virtual bool init();\
+protected:\
     virtual void uninit();\
 public:\
     static GClass   gclass;\
@@ -33,12 +33,7 @@ public:\
 GX_OBJECT_DECLARE_BASE(cls,vis)\
 avis:\
     static cls* alloc() {\
-        cls* res=new cls();\
-        if(!res->init()) {\
-            delete res;\
-            res=NULL;\
-        }\
-        return res;\
+        return new cls();\
 	}\
     static cls* autoAlloc() {\
         cls* res=alloc();\

@@ -36,6 +36,10 @@ public:
     } Matrix;
     
 public:
+    virtual float getWidth()=0;
+    virtual float getHeight()=0;
+    virtual float getScale()=0;
+    
     /// 矩阵开始2D模式
     void enable2D(float width, float height);
     /// 矩阵开始3D模式
@@ -75,9 +79,12 @@ public:
         return &m_ColorMul.r;
     }
     
-protected:
-    GColor4F& getBgdColor() {
+public:
+    const GColor4F& getBackgroundColor() {
         return m_BgdColor;
+    }
+    void setBackgroundColor(float r,float g,float b,float a) {
+        m_BgdColor.set(r, g, b, a);
     }
     
 private:

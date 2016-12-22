@@ -12,12 +12,11 @@
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
 
-#include "GXGObject.h"
-// Down can't include other h file
-
 class GD3DContext : public GBaseContext {
-	GX_VIRTUAL_GOBJECT(GD3DContext);
-public:
+protected:
+    GD3DContext();
+    virtual ~GD3DContext();
+protected:
 	virtual bool create(GWindow* win);
 	virtual void destroy();
 	bool resize(gfloat32 width, gfloat32 height);
@@ -28,7 +27,7 @@ public:
 	void renderEnd();
 private:
 	bool createView(UINT width, UINT height);
-public:
+protected:
 	void makeCurrent();
 	void makeClear();
 protected:

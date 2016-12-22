@@ -15,6 +15,7 @@
 #include "GXContext.h"
 #include "GDataList.h"
 #include "GColor.h"
+#include "GCanvas.h"
 
 #include "GXGObject.h"
 // Down can't include other h file
@@ -22,7 +23,7 @@
 class GContext;
 class GTexture;
 
-class GFrameBuffer : public GObject
+class GFrameBuffer : public GCanvas
 {
 	GX_GOBJECT(GFrameBuffer);
 public:
@@ -91,6 +92,8 @@ public:
         inline GContext* getContext() {
             return m_Context;
         }
+        float getWidth();
+        float getHeight();
 
     private:
         GContext* m_Context;
@@ -113,6 +116,10 @@ public:
 #endif
     }
     
+    virtual float getWidth();
+    virtual float getHeight();
+    virtual float getScale();
+    
     void renderBegin();
     void setViewport(float x, float y, float w, float h, float scale);
     void renderEnd();
@@ -123,6 +130,7 @@ protected:
     }
 private:
     Node* m_Node;
+    float m_Scale;
 };
 
 // Up can't include other h file

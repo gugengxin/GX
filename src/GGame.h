@@ -11,19 +11,33 @@
 
 #include "GXPrefix.h"
 #include "GObject.h"
-
+#include "GCanvas.h"
 
 
 #include "GXGObject.h"
 // Down can't include other h file
 
+class GWindow;
+
 class GGame : public GObject
 {
+    friend class GWindow;
 	GX_VIRTUAL_GOBJECT(GGame);
+protected:
+    virtual void init(GWindow* window);
+    virtual void uninit();
 public:
-
+    inline GWindow* getWindow() {
+        return m_Window;
+    }
+    virtual gint getFPS();//默认=30
+    virtual void idle();
+    virtual void render(GCanvas* canvas);
 private:
-
+    void run();
+private:
+    GWindow* m_Window;
+    gint64	 m_RunLastTime;
 };
 
 // Up can't include other h file

@@ -27,11 +27,14 @@ public:
 	};
 public:
 
-    inline gint32 getWidth() {
+    virtual gint32 getWidth() {
         return m_Width;
     }
-    inline gint32 getHeight() {
+    virtual gint32 getHeight() {
         return m_Height;
+    }
+    virtual gint32 getDepth() {
+        return 0;
     }
     
     

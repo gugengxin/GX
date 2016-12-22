@@ -11,6 +11,36 @@
 #include "GLog.h"
 #include "GApplication.h"
 
+
+#include "GXGObject.h"
+
+GX_GOBJECT_IMPLEMENT(GWindow::Canvas,GCanvas);
+
+GWindow::Canvas::Canvas()
+{
+    m_Window=NULL;
+}
+
+GWindow::Canvas::~Canvas()
+{
+    
+}
+
+float GWindow::Canvas::getWidth()
+{
+    return m_Window->getWidth();
+}
+float GWindow::Canvas::getHeight()
+{
+    return m_Window->getHeight();
+}
+float GWindow::Canvas::getScale()
+{
+    return m_Window->getScale();
+}
+
+
+
 #if defined(GX_OS_WINDOWS)
 
 static void SetWindowToHWND(HWND hWnd, GWindow* win)
@@ -413,8 +443,6 @@ _GQWindow::~_GQWindow()
 
 GWindow::GWindow(void* osWinP, GClass* gameGClass)
 {
-	m_RenderStepTime=1000/30;
-	m_RenderLastTime=0;
 	m_OSWinP = osWinP;
 #if defined(GX_OS_WINDOWS)
 	WNDCLASS	wc;						// 窗口类结构
@@ -496,11 +524,16 @@ GWindow::GWindow(void* osWinP, GClass* gameGClass)
     }
 #endif
 	m_Context.create(this);
+    m_Canvas=Canvas::alloc();
+    
+    m_Canvas->setWindow(this);
 	m_Game=GX_CAST_R(GGame*,gameGClass->alloc());
+    m_Game->init(this);
 }	
 
 GWindow::~GWindow()
 {
+    GO::release(m_Canvas);
     m_Context.destroy();
 #if defined(GX_OS_WINDOWS)
 	SetWindowToHWND(m_OSWin.getHWND(),NULL);
@@ -569,6 +602,7 @@ float GWindow::getScale()
 
 void GWindow::idle()
 {
+    m_Game->run();
 }
 
 
@@ -579,107 +613,12 @@ void GWindow::idle()
 
 void GWindow::render()
 {
-	m_Context.setViewport(0.0f, 0.0f, getWidth(), getHeight(), getScale());
-
-    GCanvas* canvas = &m_Context;
-
-	canvas->enable3D(getWidth(), getHeight(), GX_PI / 3, 0.1f, 1000.0f);
-	canvas->lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-    //canvas->enable2D(getWidth(), getHeight());
-
-    /*
-	GSRGraphics* graph = m_Context.getSRGraphics(GSRGraphics::ID_CAndCM);
-
-    canvas->setColorMul(0, 1, 1, 1.0f);
-	static GDataBuffer* data = NULL;
-	if (!data) {
-		data = GDataBuffer::alloc();
-
-        typedef struct {
-            GVector3 pos;
-            GColor4 clr;
-        } MD;
-
-        MD md[3];
-
-		md[0].pos.set(-100.0f, -100.0f, 0.0f);
-		md[1].pos.set(100.0f, -100.0f, 0.0f);
-		md[2].pos.set(0.0f, 100.0f, 0.0f);
-
-        md[0].clr.set(1.0f, 0, 0, 1.0f);
-        md[1].clr.set(0.0f, 1, 0, 1.0f);
-        md[2].clr.set(0.0f, 0, 1, 1.0f);
-        
-		data->changeBytes(sizeof(md));
-		void* p = data->map();
-		memcpy(p, &md[0], sizeof(md));
-		data->unmap();
-		data->setOffset(0);
-		data->setStride(sizeof(md[0]));
-	}
-
-	graph->draw(canvas, data, GSRGraphics::IT_Float, GX_TRIANGLES, 0, 3);
-    //*/
-
-    //*
-    GSRTexture2D* shader=m_Context.getSRTexture2D(false, true, GSRTexture2D::MM_None);
-    canvas->setColorMul(0, 1, 0, 1.0f);
-
-    static GDataBuffer* data = NULL;
-    static GTexture2D* tex=NULL;
-    if (!data) {
-        data = GDataBuffer::alloc();
-
-        typedef struct {
-            GVector3 pos;
-            GVector2 tc;
-        } MD;
-
-        MD md[4];
-
-        md[0].pos.set(-100.0f, -100.0f, 0.0f);
-        md[1].pos.set(100.0f, -100.0f, 0.0f);
-        md[2].pos.set(-100.0f, 100.0f, 0.0f);
-        md[3].pos.set(100.0f, 100.0f, 0.0f);
-
-        md[0].tc.set(0.0f, 1.0f);
-        md[1].tc.set(1.0f, 1.0f);
-        md[2].tc.set(0.0f, 0.0f);
-        md[3].tc.set(1.0f, 0.0f);
-
-        data->changeBytes(sizeof(md));
-        void* p = data->map();
-        memcpy(p, &md[0], sizeof(md));
-        data->unmap();
-        data->setOffset(0);
-        data->setStride(sizeof(md[0]));
-
-        GReader* reader=GAppBundle::main()->openReader("lena_rgb.jpg");
-        if (reader) {
-            tex=m_Context.loadTexture2D(reader, GDib::JPEG, NULL);
-            GO::retain(tex);
-            GAppBundle::main()->closeReader(reader);
-        }
+    if(m_Context.renderCheck()) {
+        m_Context.renderBegin();
+        m_Context.setViewport(0.0f, 0.0f, getWidth(), getHeight(), getScale());
+        m_Game->render(m_Canvas);
+        m_Context.renderEnd();
     }
-    shader->draw(canvas, data, GSRTexture2D::IT_Float_Float, tex, GX_TRIANGLE_STRIP, 0, 4, NULL);
-    //*/
-}
-
-void GWindow::renderForce()
-{
-	m_RenderLastTime = GSystem::currentTimeMS();
-	if(m_Context.renderCheck()) {
-		m_Context.renderBegin();
-		this->render();
-		m_Context.renderEnd();
-	}
-}
-
-void GWindow::renderIfNeed()
-{
-	if (GSystem::currentTimeMS() - m_RenderLastTime >= m_RenderStepTime) {
-		renderForce();
-	}
 }
 
 void GWindow::eventAttachToApp()

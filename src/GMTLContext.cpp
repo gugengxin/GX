@@ -24,11 +24,6 @@
 #define M_RENDER_ENCODER()      GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder)
 #define M_DEPTH_STENCIL_STATE() GX_CAST_R(id<MTLDepthStencilState>, m_DepthStencilState)
 
-//Up include other h file
-#include "GXGObject.h"
-
-GX_GOBJECT_IMPLEMENT(GMTLContext,GBaseContext);
-
 //不用在这里初始化
 GMTLContext::GMTLContext()
 {
@@ -203,7 +198,7 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
     
     // make sure to clear every frame for best performance
     colorAttachment.loadAction = MTLLoadActionClear;
-    GColor4F& bgdClr=getBgdColor();
+    const GColor4F& bgdClr=getWindow()->getBackgroundColor();
     colorAttachment.clearColor = MTLClearColorMake(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
     
     // if sample count is greater than 1, render into using MSAA, then resolve into our color texture

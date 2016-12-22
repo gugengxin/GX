@@ -30,8 +30,8 @@ protected:
 
     GObject();
     virtual ~GObject();
-    
-    virtual bool init();
+
+    virtual void init();
     virtual void uninit();
 public:
     static GClass   gclass;

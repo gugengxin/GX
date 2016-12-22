@@ -19,17 +19,15 @@
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
 
-
-#include "GXGObject.h"
-// Down can't include other h file
-
 class GOGLContext : public GBaseContext
 #if defined(GX_OS_QT)
         , public QOpenGLFunctions
 #endif
 {
-    GX_VIRTUAL_GOBJECT(GOGLContext);
-public:
+protected:
+    GOGLContext();
+    virtual ~GOGLContext();
+protected:
     virtual bool create(GWindow* win);
     virtual void destroy();
 #if defined(GX_OS_ANDROID)
@@ -37,7 +35,7 @@ protected:
 	virtual void androidDestroy();
 	virtual void androidRecreate(GWindow* win);
 #endif
-public:
+protected:
     bool resize(gfloat32 width,gfloat32 height);
 
 	bool renderCheck();
@@ -45,7 +43,7 @@ public:
 	void setViewport(float x, float y, float w, float h, float scale);
 	void renderEnd();
 
-public:
+protected:
 	void makeCurrent();
 	void makeClear();
 protected:

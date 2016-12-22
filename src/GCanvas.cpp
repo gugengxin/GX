@@ -17,6 +17,7 @@ GX_GOBJECT_IMPLEMENT(GCanvas, GObject);
 GCanvas::GCanvas()
 {
 	m_ColorMul.set(1.0f, 1.0f, 1.0f, 1.0f);
+    m_BgdColor.set(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 GCanvas::~GCanvas()

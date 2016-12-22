@@ -15,6 +15,8 @@
 #include "GContext.h"
 #include "GXCWnd.h"
 #include "GColor.h"
+#include "GCanvas.h"
+#include "GGame.h"
 #if defined(GX_OS_ANDROID)
 #include <android/native_window.h>
 #include <android/native_window_jni.h>
@@ -40,11 +42,28 @@ private:
 
 #endif
 
-#include "GGame.h"
+
+#include "GXGObject.h"
 
 class GWindow {
 	friend class GApplication;
     friend class GX_CONTEXT_BASE;
+private:
+    class Canvas : public GCanvas {
+        friend class GWindow;
+        GX_GOBJECT(Canvas);
+    public:
+        virtual float getWidth();
+        virtual float getHeight();
+        virtual float getScale();
+        
+    private:
+        inline void setWindow(GWindow* v) {
+            m_Window=v;
+        }
+    private:
+        GWindow* m_Window;
+    };
 private:
 	GWindow(void* osWinP, GClass* gameGClass);
 	~GWindow();
@@ -59,12 +78,19 @@ public:
     float getWidth();
     float getHeight();
     float getScale();
+    const GColor4F getBackgroundColor() const {
+        return m_Canvas->getBackgroundColor();
+    }
+    
+    inline GContext& getContext() {
+        return m_Context;
+    }
+    inline GCanvas* getCanvas() {
+        return m_Canvas;
+    }
     
 public:
 	void idle();
-	void renderIfNeed();
-private:
-	void renderForce();
 	void render();
 private:
 	void eventAttachToApp();
@@ -74,8 +100,7 @@ private:
 
 private:
 	GContext m_Context;
-	gint     m_RenderStepTime;
-	gint64	 m_RenderLastTime;
+    Canvas*  m_Canvas;
 private:
 	void* m_OSWinP;
 #if defined(GX_OS_WINDOWS)
@@ -107,6 +132,6 @@ private:
 	GGame* m_Game;
 };
 
-
+#include "GXGObjectUD.h"
 
 #endif /* GWindow_h */

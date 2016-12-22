@@ -103,12 +103,7 @@ GClass* GObject::getClass()
 }
 GObject* GObject::alloc()
 {
-    GObject* res=new GObject();
-    if(!res->init()) {
-        delete res;
-        res=NULL;
-    }
-    return res;
+    return new GObject();
 }
 GObject* GObject::autoAlloc()
 {
@@ -134,12 +129,13 @@ GObject::~GObject()
     
 }
 
-bool GObject::init()
+void GObject::init()
 {
-    return true;
+    
 }
 void GObject::uninit()
 {
+    //不能做事情，因为引擎内部类没有调用init
 }
 
 bool  GObject::isMemberOfClass(GClass* pClass)
