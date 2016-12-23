@@ -15,22 +15,25 @@ template <typename T,typename DT>
 class GDataArray : public GDataArrayBase {
     GX_GOBJECT(GDataArray);
 public:
+    inline bool isEmpty() {
+        return m_Data.getBytes()<=0;
+    }
 	inline gint getCount() {
 		return (gint)(m_Data.getBytes() / sizeof(T));
 	}
     inline guint getBytes() {
         return m_Data.getBytes();
     }
-    inline T& get(gint index) {
+    inline const T& get(gint index) {
         return GX_CAST_R(T*, m_Data.getPtr())[index];
     }
-	inline T* getPtr(gint index) {
+	inline const T* getPtr(gint index) {
 		return &GX_CAST_R(T*, m_Data.getPtr())[index];
 	}
-	inline T& first() {
+	inline const T& first() {
 		return GX_CAST_R(T*, m_Data.getPtr())[0];
 	}
-	inline T& last() {
+	inline const T& last() {
 		return GX_CAST_R(T*, m_Data.getPtr())[(m_Data.getBytes() / sizeof(T))-1];
 	}
 
@@ -87,18 +90,35 @@ public:
 		if (!changeCount(dc + 1)) {
 			return false;
 		}
-		memmove((void*)&(GX_CAST_R(T*, m_Data.getPtr())[index + 1]),
-			(void*)&(GX_CAST_R(T*, m_Data.getPtr())[index]),
-			(size_t)(dc - index)*sizeof(T));
+        move(index + 1, index, dc - index);
 		GX_CAST_R(T*, m_Data.getPtr())[index] = v;
 		return true;
 	}
+    bool insert(gint index,const T& v,gint count) {
+        if (count<0) {
+            return false;
+        }
+        if (index < 0) {
+            return false;
+        }
+        gint dc = getCount();
+        if (index > dc) {
+            return false;
+        }
+        if (!changeCount(dc + count)) {
+            return false;
+        }
+        move(index + count, index, dc - index);
+        for (gint i=0; i<count; i++) {
+            GX_CAST_R(T*, m_Data.getPtr())[index+i] = v;
+        }
+        return true;
+    }
+    
 	bool remove(gint index) {
 		gint dc = getCount();
 		if (index >= 0 && index<dc) {
-			memmove((void*)&(GX_CAST_R(T*, m_Data.getPtr())[index]),
-				(void*)&(GX_CAST_R(T*, m_Data.getPtr())[index + 1]),
-				(size_t)(dc - index - 1)*sizeof(T));
+            move(index, index + 1, dc - index - 1);
 			if (changeCount(dc - 1)) {
 				return true;
 			}
@@ -113,10 +133,7 @@ public:
 		if (dc <= 0 || indexFrom + indexCount>dc) {
 			return false;
 		}
-
-		memmove((void*)&(GX_CAST_R(T*, m_Data.getPtr())[indexFrom]), 
-			(void*)&(GX_CAST_R(T*, m_Data.getPtr())[indexFrom + indexCount]),
-			(dc - indexFrom - indexCount)*sizeof(T));
+        move(indexFrom, indexFrom + indexCount, dc - indexFrom - indexCount);
 		return changeCount(dc - indexCount);
 	}
     bool removeLast() {
@@ -139,13 +156,34 @@ public:
 	void removeAll() {
 		changeCount(0);
 	}
+    
     inline void zeroSelf() {
         m_Data.zeroSelf();
     }
+    
 protected:
 	inline bool changeCount(gint toCount) {
 		return m_Data.changeBytes(GX_CAST_S(guint,toCount)*GX_CAST_S(guint,sizeof(T)));
 	}
+    inline void move(gint idxTo, gint idx, gint len) {
+        memmove((void*)&(GX_CAST_R(T*, m_Data.getPtr())[idxTo]),
+                (void*)&(GX_CAST_R(T*, m_Data.getPtr())[idx]),
+                len*sizeof(T));
+    }
+    bool expand(gint idx, gint len, gint lenTo) {
+        gint cntCur=getCount();
+        if (len > lenTo) {
+            move(idx + lenTo, idx + len, cntCur - idx - len);
+            return changeCount(cntCur - (len-lenTo)+1);
+        }
+        else if (len < lenTo) {
+            if (!changeCount(cntCur + (lenTo-len)+1)) {
+                return false;
+            }
+            move(idx + lenTo, idx + len, cntCur - idx - len);
+        }
+        return true;
+    }
     inline DT& getData() {
         return m_Data;
     }
@@ -189,6 +227,7 @@ GDArray<T>::~GDArray()
 
 template <typename T,guint32 N>
 class GPieceDataArray : public GDataArray<T, GX::PieceData<(guint32)(sizeof(T)*N)> > {
+    friend class GString;
     GX_GOBJECT(GPieceDataArray);
 };
 

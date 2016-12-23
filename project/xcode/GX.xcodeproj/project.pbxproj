@@ -53,15 +53,6 @@
 		CA1F60B21CD984C100C6307B /* GXCWnd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A41CD9834000C6307B /* GXCWnd.cpp */; };
 		CA1F60B31CD984C100C6307B /* GSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A21CD9834000C6307B /* GSystem.cpp */; };
 		CA1F60B41CD984C100C6307B /* GXCWnd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A41CD9834000C6307B /* GXCWnd.cpp */; };
-		CA1F60BB1CD995FC00C6307B /* GWString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60B91CD995FC00C6307B /* GWString.cpp */; };
-		CA1F60BC1CD995FC00C6307B /* GWString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60B91CD995FC00C6307B /* GWString.cpp */; };
-		CA1F60BD1CD995FC00C6307B /* GWString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60B91CD995FC00C6307B /* GWString.cpp */; };
-		CA1F60C11CD996F700C6307B /* GDataString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60BF1CD996F700C6307B /* GDataString.cpp */; };
-		CA1F60C21CD996F700C6307B /* GDataString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60BF1CD996F700C6307B /* GDataString.cpp */; };
-		CA1F60C31CD996F700C6307B /* GDataString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60BF1CD996F700C6307B /* GDataString.cpp */; };
-		CA1F60D11CD9ED6A00C6307B /* GTString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */; };
-		CA1F60D21CD9ED6A00C6307B /* GTString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */; };
-		CA1F60D31CD9ED6A00C6307B /* GTString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */; };
 		CA3090941CFD1C46000B8DF2 /* GColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA30908F1CFD1C46000B8DF2 /* GColor.cpp */; };
 		CA3090951CFD1C46000B8DF2 /* GSRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */; };
 		CA3090961CFD1C53000B8DF2 /* GSRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */; };
@@ -322,13 +313,7 @@
 		CA1F60A31CD9834000C6307B /* GSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSystem.h; sourceTree = "<group>"; };
 		CA1F60A41CD9834000C6307B /* GXCWnd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = GXCWnd.cpp; sourceTree = "<group>"; };
 		CA1F60A51CD9834000C6307B /* GXCWnd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXCWnd.h; sourceTree = "<group>"; };
-		CA1F60B91CD995FC00C6307B /* GWString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GWString.cpp; sourceTree = "<group>"; };
-		CA1F60BA1CD995FC00C6307B /* GWString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWString.h; sourceTree = "<group>"; };
-		CA1F60BF1CD996F700C6307B /* GDataString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDataString.cpp; sourceTree = "<group>"; };
-		CA1F60C01CD996F700C6307B /* GDataString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataString.h; sourceTree = "<group>"; };
 		CA1F60CC1CD9AD2900C6307B /* GXEncoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXEncoding.h; sourceTree = "<group>"; };
-		CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GTString.cpp; sourceTree = "<group>"; };
-		CA1F60D01CD9ED6A00C6307B /* GTString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTString.h; sourceTree = "<group>"; };
 		CA26E07A1DC64BBD003AF801 /* GXContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXContext.h; sourceTree = "<group>"; };
 		CA26E07B1DC64CD4003AF801 /* GX3DAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GX3DAPI.h; sourceTree = "<group>"; };
 		CA30908F1CFD1C46000B8DF2 /* GColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GColor.cpp; sourceTree = "<group>"; };
@@ -593,14 +578,8 @@
 			isa = PBXGroup;
 			children = (
 				CA1F60CC1CD9AD2900C6307B /* GXEncoding.h */,
-				CA1F60C01CD996F700C6307B /* GDataString.h */,
-				CA1F60BF1CD996F700C6307B /* GDataString.cpp */,
 				CAE706E01CD3494F0090F4DD /* GString.h */,
 				CAE706DF1CD3494F0090F4DD /* GString.cpp */,
-				CA1F60BA1CD995FC00C6307B /* GWString.h */,
-				CA1F60B91CD995FC00C6307B /* GWString.cpp */,
-				CA1F60D01CD9ED6A00C6307B /* GTString.h */,
-				CA1F60CF1CD9ED6A00C6307B /* GTString.cpp */,
 			);
 			name = String;
 			sourceTree = "<group>";
@@ -793,8 +772,8 @@
 		CAC2D1231CD0C13800A0EBE5 /* Struct */ = {
 			isa = PBXGroup;
 			children = (
-				CAE3FF911DAB31CE0010CB99 /* GXData.cpp */,
 				CAE3FF921DAB31CE0010CB99 /* GXData.h */,
+				CAE3FF911DAB31CE0010CB99 /* GXData.cpp */,
 				CA04FDDA1CE4557E00C9B596 /* GNumber.cpp */,
 				CA04FDDB1CE4557E00C9B596 /* GNumber.h */,
 				CAC2D12B1CD0C1EC00A0EBE5 /* GData.h */,
@@ -940,12 +919,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA60FB611D1EC93C0091A665 /* GZipBundle.cpp in Sources */,
-				CA1F60C11CD996F700C6307B /* GDataString.cpp in Sources */,
 				CA636DD81D1CDF870021D32F /* GAppBundle.cpp in Sources */,
 				CA04FDEE1CE4557E00C9B596 /* GNoticeCenter.cpp in Sources */,
 				CADB5DBC1CF9E6300092C472 /* GOShader.cpp in Sources */,
 				CA9C16D81CC615FF00204303 /* GOWHash.cpp in Sources */,
-				CA1F60BB1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CA1C71B81CD2068100BEEA5B /* GDataArray.cpp in Sources */,
 				CA7B4DE01CD5906F00F3D826 /* GUUID.cpp in Sources */,
 				CA9C16D21CC6132400204303 /* GClass.cpp in Sources */,
@@ -1004,7 +981,6 @@
 				CAD624B21D11872E005E77EB /* GDataList.cpp in Sources */,
 				CAC7E44E1D1A63FE00719367 /* GReader.cpp in Sources */,
 				CA7B4DE81CD594FF00F3D826 /* GApplication.cpp in Sources */,
-				CA1F60D11CD9ED6A00C6307B /* GTString.cpp in Sources */,
 				CADB5DBA1CF9E6300092C472 /* GDShader.cpp in Sources */,
 				CABB5CD01CE0E40500D5B648 /* GLog.cpp in Sources */,
 				CACC51221D70A364007D6B79 /* GMShader.cpp in Sources */,
@@ -1036,9 +1012,7 @@
 				CAFDCDEB1E0B6E8300D22117 /* GFrameBuffer.cpp in Sources */,
 				CA3090981CFD1C57000B8DF2 /* GColor.cpp in Sources */,
 				CAE303BF1CE563CB00F15C74 /* GOGLContext.cpp in Sources */,
-				CA1F60C21CD996F700C6307B /* GDataString.cpp in Sources */,
 				CA9C16D91CC615FF00204303 /* GOWHash.cpp in Sources */,
-				CA1F60BC1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CABB3F991CFE06EC00A7367C /* GMatrix.cpp in Sources */,
 				CA3090961CFD1C53000B8DF2 /* GSRGraphics.cpp in Sources */,
 				CA9F8E811D30757900A5EBCA /* GAppBundle.cpp in Sources */,
@@ -1103,7 +1077,6 @@
 				CAC708B21D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CABB3F981CFE06EC00A7367C /* GXMath.cpp in Sources */,
 				CA3A7EB21DED6E0A00197FCB /* GBaseContext.cpp in Sources */,
-				CA1F60D21CD9ED6A00C6307B /* GTString.cpp in Sources */,
 				CA1F60B11CD984C100C6307B /* GSystem.cpp in Sources */,
 				CA04FDFB1CE4557E00C9B596 /* GPtr.cpp in Sources */,
 				CA0B15F21CD07A3600C33BB5 /* GThread.cpp in Sources */,
@@ -1126,9 +1099,7 @@
 				CAFDCDF01E0B6E8E00D22117 /* GFrameBuffer.cpp in Sources */,
 				CA3090991CFD1C58000B8DF2 /* GColor.cpp in Sources */,
 				CAE303C91CE563CB00F15C74 /* GOGLContext.cpp in Sources */,
-				CA1F60C31CD996F700C6307B /* GDataString.cpp in Sources */,
 				CA9C16DA1CC615FF00204303 /* GOWHash.cpp in Sources */,
-				CA1F60BD1CD995FC00C6307B /* GWString.cpp in Sources */,
 				CABB3F921CFE06EB00A7367C /* GMatrix.cpp in Sources */,
 				CA3090971CFD1C54000B8DF2 /* GSRGraphics.cpp in Sources */,
 				CA9F8E821D30757A00A5EBCA /* GAppBundle.cpp in Sources */,
@@ -1193,7 +1164,6 @@
 				CAC708B31D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CABB3F911CFE06EB00A7367C /* GXMath.cpp in Sources */,
 				CA3A7EB31DED6E0B00197FCB /* GBaseContext.cpp in Sources */,
-				CA1F60D31CD9ED6A00C6307B /* GTString.cpp in Sources */,
 				CA1F60B31CD984C100C6307B /* GSystem.cpp in Sources */,
 				CA04FDFC1CE4557E00C9B596 /* GPtr.cpp in Sources */,
 				CA0B15F31CD07A3600C33BB5 /* GThread.cpp in Sources */,

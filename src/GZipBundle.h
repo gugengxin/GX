@@ -11,8 +11,8 @@
 
 #include "GXPrefix.h"
 #include "GBundle.h"
-#include "GTString.h"
 #include "GMutex.h"
+#include "GString.h"
 
 #include "GXGObject.h"
 // Down can't include other h file
@@ -28,7 +28,7 @@ public:
 	virtual GReader* openReader(const gchar* fileName);
 	virtual void closeReader(GReader* reader);
 private:
-    GPath m_RootPath;
+    GString m_RootPath;
 	GZipReader* m_Reader;
     GMutex m_Mutex;
 };

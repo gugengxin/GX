@@ -55,13 +55,14 @@ guint32 GOWHash::compute(const gchar* str,Type hashType)
     return seed1;
 }
 
-GOWHash::Code GOWHash::compute(const gchar* str)
+template <typename T>
+GOWHash::Code _computeCStringCode(const T* str)
 {
-    Code res={0x7FED7FED,0x7FED7FED,0x7FED7FED};
+    GOWHash::Code res={0x7FED7FED,0x7FED7FED,0x7FED7FED};
     guint32 seed2A=0xEEEEEEEE,seed2B=0xEEEEEEEE,seed2C=0xEEEEEEEE;
     
     int ch;
-    gchar *key = (gchar *)str;
+    const T* key = (const T*)str;
     
     while (*key)
     {
@@ -83,32 +84,19 @@ GOWHash::Code GOWHash::compute(const gchar* str)
     return res;
 }
 
+GOWHash::Code GOWHash::compute(const gchar* str)
+{
+    return _computeCStringCode(str);
+}
+
 GOWHash::Code GOWHash::compute(const gwchar* str)
 {
-    Code res={0x7FED7FED,0x7FED7FED,0x7FED7FED};
-    guint32 seed2A=0xEEEEEEEE,seed2B=0xEEEEEEEE,seed2C=0xEEEEEEEE;
-    
-    int ch;
-    gwchar *key = (gwchar *)str;
-    
-    while (*key)
-    {
-        ch = toupper((int)(*key));
-        //seed1 = g_CryptTable[(hashType << 8) + ch] ^ (seed1 + seed2);
-        //seed2 = ch + seed1 + seed2 + (seed2 << 5) + 3;
-        
-        res.codeA=g_CryptTable[(0 << 8) + ch] ^ (res.codeA + seed2A);
-        seed2A = (guint32)(ch) + res.codeA + seed2A + (seed2A << 5) + 3;
-        
-        res.codeB=g_CryptTable[(1 << 8) + ch] ^ (res.codeB + seed2B);
-        seed2B = (guint32)(ch) + res.codeB + seed2B + (seed2B << 5) + 3;
-        
-        res.codeC=g_CryptTable[(2 << 8) + ch] ^ (res.codeC + seed2C);
-        seed2C = (guint32)(ch) + res.codeC + seed2C + (seed2C << 5) + 3;
-        
-        key++;
-    }
-    return res;
+    return _computeCStringCode(str);
+}
+
+GOWHash::Code GOWHash::compute(const guchar* str)
+{
+    return _computeCStringCode(str);
 }
 
 bool GOWHash::compare(Code& code0,Code& code1)

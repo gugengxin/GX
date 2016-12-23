@@ -1,4 +1,4 @@
-﻿//
+//
 //  GXTypes.h
 //  GX
 //
@@ -25,8 +25,9 @@ typedef double gfloat64;
 
 typedef char gchar;
 typedef wchar_t gwchar;
+typedef guint16 guchar;
 
-#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS) || (__SIZEOF_WCHAR_T__ == 2)
 #define GX_WCHAR_16BIT 1
 #define GX_WCHAR_32BIT 0
 #else

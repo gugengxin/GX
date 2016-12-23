@@ -11,7 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GBundle.h"
-#include "GTString.h"
+#include "GString.h"
 
 
 
@@ -28,7 +28,7 @@ public:
 	virtual GReader* openReader(const gchar* fileName);
 	virtual void closeReader(GReader* reader);
 private:
-	GPath m_RootPath;
+	GString m_RootPath;
 };
 
 // Up can't include other h file
