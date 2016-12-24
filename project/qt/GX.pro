@@ -9,6 +9,7 @@ QT       += widgets opengl
 TARGET = GX
 TEMPLATE = lib
 CONFIG += staticlib
+QMAKE_MAC_SDK = macosx10.12
 DEFINES += GX_OS_QT
 win32:DEFINES += _UNICODE
 DESTDIR = ../../product/qt
@@ -43,7 +44,6 @@ SOURCES += \
 	../../src/GDataBuffer.cpp\
 	../../src/GDataList.cpp\
 	../../src/GDataReader.cpp\
-	../../src/GDataString.cpp\
 	../../src/GDataWriter.cpp\
 	../../src/GDib.cpp\
 	../../src/GError.cpp\
@@ -81,13 +81,11 @@ SOURCES += \
 	../../src/GShader.cpp\
 	../../src/GString.cpp\
 	../../src/GSystem.cpp\
-	../../src/GTString.cpp\
 	../../src/GTexture.cpp\
 	../../src/GTexture2D.cpp\
 	../../src/GThread.cpp\
 	../../src/GUUID.cpp\
 	../../src/GVector.cpp\
-	../../src/GWString.cpp\
 	../../src/GWindow.cpp\
 	../../src/GWriter.cpp\
 	#../../src/GXCWnd.cpp\
@@ -133,7 +131,6 @@ HEADERS += \
 	../../src/GDataBuffer.h\
 	../../src/GDataList.h\
 	../../src/GDataReader.h\
-	../../src/GDataString.h\
 	../../src/GDataWriter.h\
 	../../src/GDib.h\
 	../../src/GError.h\
@@ -174,13 +171,11 @@ HEADERS += \
 	../../src/GShader.h\
 	../../src/GString.h\
 	../../src/GSystem.h\
-	../../src/GTString.h\
 	../../src/GTexture.h\
 	../../src/GTexture2D.h\
 	../../src/GThread.h\
 	../../src/GUUID.h\
 	../../src/GVector.h\
-	../../src/GWString.h\
 	../../src/GWindow.h\
 	../../src/GWriter.h\
 	../../src/GX.h\

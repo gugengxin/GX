@@ -1,6 +1,8 @@
 
 QT       += opengl
 
+QMAKE_MAC_SDK = macosx10.12
+
 DEFINES += GX_OS_QT
 win32:DEFINES += _UNICODE
 
