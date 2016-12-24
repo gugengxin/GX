@@ -35,11 +35,11 @@ void GFileBundle::close()
 
 GReader* GFileBundle::openReader(const gchar* fileName)
 {
-	GPath path;
-	path.set(m_RootPath.c_str(), m_RootPath.getLength());
+	GString path;
+    path.set(&m_RootPath);
 	path.appendPathComponent(fileName);
 	GFileReader* res = GFileReader::alloc();
-	if (!res->open(path.c_str())) {
+	if (!res->open(path.pathString())) {
 		GO::release(res);
 		return NULL;
 	}

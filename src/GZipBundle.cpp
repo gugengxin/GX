@@ -57,7 +57,7 @@ GReader* GZipBundle::openReader(const gchar* fileName)
         m_Mutex.unlock();
         
         res=GZipReader::alloc();
-        if (res->open(m_RootPath.c_str(),false)) {
+        if (res->open(m_RootPath.pathString(),false)) {
             if (m_Reader->getMap()) {
                 res->setMap(m_Reader->getMap());
             }

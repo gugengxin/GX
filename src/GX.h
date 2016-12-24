@@ -17,7 +17,6 @@
 #include "GData.h"
 #include "GPieceData.h"
 #include "GString.h"
-#include "GWString.h"
 #include "GVector.h"
 #include "GMatrix.h"
 

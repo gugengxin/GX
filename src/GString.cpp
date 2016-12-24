@@ -12,9 +12,19 @@
 //Up include other h file
 #include "GXGObject.h"
 
-
-namespace GX
-{
+namespace GX {
+    static const gchar* g_NumChars = "0123456789abcdef0123456789ABCDEF";
+    
+    template <typename T> void _strSwap(T* str, gint len)
+    {
+        T temp;
+        for (gint i = 0; i < len / 2; i++) {
+            temp = str[i];
+            str[i] = str[len - i-1];
+            str[len - i - 1] = temp;
+        }
+    }
+    
     template <typename T> gint strlen(const T* v)
     {
         gint res=0;
@@ -24,20 +34,92 @@ namespace GX
         }
         return res;
     }
+}
+
+
+namespace GX
+{
+    template <typename T> gint gu16toa(guint16 v, T* strOut, StringRadix radix)
+    {
+        gint co = 0;
+        if (radix == SR_HEX) {
+            co = 16;
+            radix = SR_Hex;
+        }
+        gint res = 0;
+        guint16 vTemp;
+        do {
+            vTemp = v%radix;
+            v /= radix;
+            strOut[res] = GX_CAST_S(T, g_NumChars[co + vTemp]);
+            res++;
+        } while (v > 0);
+        _strSwap(strOut, res);
+        return res;
+    }
+    template <typename T> gint gi16toa(gint16 v, T* strOut, StringRadix radix)
+    {
+        if (radix == SR_Decimal && v<0) {
+            strOut[0] = GX_CAST_S(T, '-');
+            return gu16toa(GX_CAST_S(guint16, -v), strOut+1, radix) + 1;
+        }
+        return gu16toa(GX_CAST_S(guint16, v), strOut, radix);
+    }
     
-    gint gi16toa(gint16 v, gchar* strOut, StringRadix radix);
-    gint gu16toa(guint16 v, gchar* strOut, StringRadix radix);
-    gint gi32toa(gint32 v, gchar* strOut, StringRadix radix);
-    gint gu32toa(guint32 v, gchar* strOut, StringRadix radix);
-    gint gi64toa(gint64 v, gchar* strOut, StringRadix radix);
-    gint gu64toa(guint64 v, gchar* strOut, StringRadix radix);
+    template <typename T> gint gu32toa(guint32 v, T* strOut, StringRadix radix)
+    {
+        gint co=0;
+        if (radix == SR_HEX) {
+            co = 16;
+            radix = SR_Hex;
+        }
+        gint res = 0;
+        guint32 vTemp;
+        do {
+            vTemp = v%radix;
+            v /= radix;
+            strOut[res] = GX_CAST_S(T, g_NumChars[co+vTemp]);
+            res++;
+        } while (v > 0);
+        _strSwap(strOut, res);
+        return res;
+    }
+    template <typename T> gint gi32toa(gint32 v, T* strOut, StringRadix radix)
+    {
+        if (radix == SR_Decimal && v<0) {
+            strOut[0] = GX_CAST_S(T, '-');
+            return gu32toa(GX_CAST_S(guint32, -v), strOut+1, radix) + 1;
+        }
+        return gu32toa(GX_CAST_S(guint32, v), strOut, radix);
+    }
     
-    gint gi16toa(gint16 v, gwchar* strOut, StringRadix radix);
-    gint gu16toa(guint16 v, gwchar* strOut, StringRadix radix);
-    gint gi32toa(gint32 v, gwchar* strOut, StringRadix radix);
-    gint gu32toa(guint32 v, gwchar* strOut, StringRadix radix);
-    gint gi64toa(gint64 v, gwchar* strOut, StringRadix radix);
-    gint gu64toa(guint64 v, gwchar* strOut, StringRadix radix);
+    template <typename T> gint gu64toa(guint64 v, T* strOut, StringRadix radix)
+    {
+        gint co = 0;
+        if (radix == SR_HEX) {
+            co = 16;
+            radix = SR_Hex;
+        }
+        gint res = 0;
+        guint64 vTemp;
+        do {
+            vTemp = v%radix;
+            v /= radix;
+            strOut[res] = GX_CAST_S(T, g_NumChars[co + vTemp]);
+            res++;
+        } while (v > 0);
+        _strSwap(strOut, res);
+        return res;
+    }
+    template <typename T> gint gi64toa(gint64 v, T* strOut, StringRadix radix)
+    {
+        if (radix == SR_Decimal && v<0) {
+            strOut[0] = GX_CAST_S(T, '-');
+            return gu64toa(GX_CAST_S(guint64, -v), strOut+1, radix) + 1;
+        }
+        return gu64toa(GX_CAST_S(guint64, v), strOut, radix);
+    }
+    
     
     template <typename T> gint gf32toa(gfloat32 v, T* strOut, gint precision)
     {
@@ -184,196 +266,18 @@ namespace GX
         return res*m;
     }
     
-    
-    void strUTF8toUTF16(const gchar* utf8Text, gint cbUtf8Text, gwchar* utf16Text, gint& ccUtf16Text);
-    gint strUTF8toUTF16Count(const gchar* utf8Text, gint cbUtf8Text);
-    gint strUTF8OneChartoUTF16(const gchar* utf8Text, gint cbUtf8Text, gwchar& utf16Out);
-    void strUTF16toUTF8(const gwchar* utf16Text, gint ccUtf16Text, gchar* utf8Text, gint& cbUtf8Text);
-    gint strUTF16toUTF8Count(const gwchar* utf16Text, gint ccUtf16Text);
-    gint strUTF16OneChartoUTF8(const gwchar utf16Char, gchar* utf8Out);
 }
 
 namespace GX
 {
-    static const gchar* g_NumChars = "0123456789abcdef0123456789ABCDEF";
-    
-    template <typename T> void _strSwap(T* str, gint len)
-    {
-        T temp;
-        for (gint i = 0; i < len / 2; i++) {
-            temp = str[i];
-            str[i] = str[len - i-1];
-            str[len - i - 1] = temp;
-        }
-    }
-    
-    gint gi16toa(gint16 v, gchar* strOut, StringRadix radix)
-    {
-        if (radix == SR_Decimal && v<0) {
-            strOut[0] = '-';
-            return gu16toa(GX_CAST_S(guint16, -v), strOut+1, radix) + 1;
-        }
-        return gu16toa(GX_CAST_S(guint16, v), strOut, radix);
-    }
-    gint gu16toa(guint16 v, gchar* strOut, StringRadix radix)
-    {
-        gint co = 0;
-        if (radix == SR_HEX) {
-            co = 16;
-            radix = SR_Hex;
-        }
-        gint res = 0;
-        guint16 vTemp;
-        do {
-            vTemp = v%radix;
-            v /= radix;
-            strOut[res] = g_NumChars[co + vTemp];
-            res++;
-        } while (v > 0);
-        _strSwap(strOut, res);
-        return res;
-    }
-    gint gi32toa(gint32 v, gchar* strOut, StringRadix radix)
-    {
-        if (radix == SR_Decimal && v<0) {
-            strOut[0] = '-';
-            return gu32toa(GX_CAST_S(guint32, -v), strOut+1, radix) + 1;
-        }
-        return gu32toa(GX_CAST_S(guint32, v), strOut, radix);
-    }
-    gint gu32toa(guint32 v, gchar* strOut, StringRadix radix)
-    {
-        gint co=0;
-        if (radix == SR_HEX) {
-            co = 16;
-            radix = SR_Hex;
-        }
-        gint res = 0;
-        guint32 vTemp;
-        do {
-            vTemp = v%radix;
-            v /= radix;
-            strOut[res] = g_NumChars[co+vTemp];
-            res++;
-        } while (v > 0);
-        _strSwap(strOut, res);
-        return res;
-    }
-    gint gi64toa(gint64 v, gchar* strOut, StringRadix radix)
-    {
-        if (radix == SR_Decimal && v<0) {
-            strOut[0] = '-';
-            return gu64toa(GX_CAST_S(guint64, -v), strOut+1, radix) + 1;
-        }
-        return gu64toa(GX_CAST_S(guint64, v), strOut, radix);
-    }
-    gint gu64toa(guint64 v, gchar* strOut, StringRadix radix)
-    {
-        gint co = 0;
-        if (radix == SR_HEX) {
-            co = 16;
-            radix = SR_Hex;
-        }
-        gint res = 0;
-        guint64 vTemp;
-        do {
-            vTemp = v%radix;
-            v /= radix;
-            strOut[res] = g_NumChars[co + vTemp];
-            res++;
-        } while (v > 0);
-        _strSwap(strOut, res);
-        return res;
-    }
-    
-    gint gi16toa(gint16 v, gwchar* strOut, StringRadix radix)
-    {
-        if (radix == SR_Decimal && v<0) {
-            strOut[0] = '-';
-            return gu16toa(GX_CAST_S(guint16, -v), strOut+1, radix) + 1;
-        }
-        return gu16toa(GX_CAST_S(guint16, v), strOut, radix);
-    }
-    gint gu16toa(guint16 v, gwchar* strOut, StringRadix radix)
-    {
-        gint co = 0;
-        if (radix == SR_HEX) {
-            co = 16;
-            radix = SR_Hex;
-        }
-        gint res = 0;
-        guint16 vTemp;
-        do {
-            vTemp = v%radix;
-            v /= radix;
-            strOut[res] = g_NumChars[co + vTemp];
-            res++;
-        } while (v > 0);
-        _strSwap(strOut, res);
-        return res;
-    }
-    gint gi32toa(gint32 v, gwchar* strOut, StringRadix radix)
-    {
-        if (radix == SR_Decimal && v<0) {
-            strOut[0] = '-';
-            return gu32toa(GX_CAST_S(guint32, -v), strOut+1, radix) + 1;
-        }
-        return gu32toa(GX_CAST_S(guint32, v), strOut, radix);
-    }
-    gint gu32toa(guint32 v, gwchar* strOut, StringRadix radix)
-    {
-        gint co = 0;
-        if (radix == SR_HEX) {
-            co = 16;
-            radix = SR_Hex;
-        }
-        gint res = 0;
-        guint32 vTemp;
-        do {
-            vTemp = v%radix;
-            v /= radix;
-            strOut[res] = g_NumChars[co + vTemp];
-            res++;
-        } while (v > 0);
-        _strSwap(strOut, res);
-        return res;
-    }
-    gint gi64toa(gint64 v, gwchar* strOut, StringRadix radix)
-    {
-        if (radix == SR_Decimal && v<0) {
-            strOut[0] = '-';
-            return gu64toa(GX_CAST_S(guint64, -v), strOut+1, radix) + 1;
-        }
-        return gu64toa(GX_CAST_S(guint64, v), strOut, radix);
-    }
-    gint gu64toa(guint64 v, gwchar* strOut, StringRadix radix)
-    {
-        gint co = 0;
-        if (radix == SR_HEX) {
-            co = 16;
-            radix = SR_Hex;
-        }
-        gint res = 0;
-        guint64 vTemp;
-        do {
-            vTemp = v%radix;
-            v /= radix;
-            strOut[res] = g_NumChars[co + vTemp];
-            res++;
-        } while (v > 0);
-        _strSwap(strOut, res);
-        return res;
-    }
-    
-    
-    void strUTF8toUTF16(const gchar* utf8Text, gint cbUtf8Text, gwchar* utf16Text, gint& ccUtf16Text)
+    void strUTF8toUTF16(const gchar* utf8Text, gint cbUtf8Text, guchar* utf16Text, gint& ccUtf16Text)
     {
         gint oldccUtf16Text = ccUtf16Text;
         while (cbUtf8Text > 0 && ccUtf16Text > 0)
         {
             if ((*utf8Text & 0x80) == 0)
             {
-                *utf16Text = (gwchar)utf8Text[0];
+                *utf16Text = (guchar)utf8Text[0];
                 cbUtf8Text -= 1;
                 utf8Text += 1;
             }
@@ -459,11 +363,54 @@ namespace GX
         }
         return ccUtf16Text;
     }
-    gint strUTF8OneChartoUTF16(const gchar* utf8Text, gint cbUtf8Text, gwchar& utf16Out)
+    gint strUTF8toUTF16Count(const gchar* utf8Text,gint* utf8TextLenOut)
+    {
+        gint res = 0;
+        gint& utf8TextLen=(*utf8TextLenOut);
+        utf8TextLen=0;
+        
+        while (utf8Text[0] != 0) {
+            if ((utf8Text[0] & 0x80) == 0) {
+                utf8TextLen++;
+                utf8Text++;
+            }
+            else if ((utf8Text[0] & 0xE0) == 0xC0) {
+                if (utf8Text[1] != 0 && ((utf8Text[1] & 0xC0) == 0x80))
+                {
+                    utf8TextLen += 2;
+                    utf8Text += 2;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            else if ((utf8Text[0] & 0xF0) == 0xE0)
+            {
+                if (utf8Text[1] != 0 && utf8Text[2] != 0 && ((utf8Text[1] & 0xC0) == 0x80) && ((utf8Text[2] & 0xC0) == 0x80))
+                {
+                    utf8TextLen += 3;
+                    utf8Text += 3;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            else
+            {
+                break;
+            }
+            ++res;
+        }
+        return res;
+    }
+    
+    gint strUTF8OneChartoUTF16(const gchar* utf8Text, gint cbUtf8Text, guchar& utf16Out)
     {
         if ((*utf8Text & 0x80) == 0)
         {
-            utf16Out = (gwchar)utf8Text[0];
+            utf16Out = (guchar)utf8Text[0];
             return 1;
         }
         else if ((*utf8Text & 0xE0) == 0xC0)
@@ -489,7 +436,9 @@ namespace GX
         }
         return 0;
     }
-    void strUTF16toUTF8(const gwchar* utf16Text, gint ccUtf16Text, gchar* utf8Text, gint& cbUtf8Text)
+    
+    
+    void strUTF16toUTF8(const guchar* utf16Text, gint ccUtf16Text, gchar* utf8Text, gint& cbUtf8Text)
     {
         gint oldcbUtf8Text = cbUtf8Text;
         while (ccUtf16Text > 0)
@@ -543,7 +492,7 @@ namespace GX
         }
         cbUtf8Text = oldcbUtf8Text - cbUtf8Text;
     }
-    gint strUTF16toUTF8Count(const gwchar* utf16Text, gint ccUtf16Text)
+    gint strUTF16toUTF8Count(const guchar* utf16Text, gint ccUtf16Text)
     {
         gint cbUtf8Text = 0;
         while (ccUtf16Text > 0)
@@ -565,7 +514,7 @@ namespace GX
         }
         return cbUtf8Text;
     }
-    gint strUTF16OneChartoUTF8(const gwchar utf16Char, gchar* utf8Out)
+    gint strUTF16OneChartoUTF8(const guchar utf16Char, gchar* utf8Out)
     {
         if ((utf16Char & ~0x007F) == 0)
         {
@@ -722,7 +671,22 @@ void GString::cutOff(gint len)
     modifyDone();
 }
 
-
+const gchar* GString::utf8String()
+{
+    return GX_CAST_R(const gchar*, getCString(GX::SE_Utf8));
+}
+const gwchar* GString::unicodeString()
+{
+    return GX_CAST_R(const gwchar*, getCString(GX::SE_Unicode));
+}
+const gtchar* GString::pathString()
+{
+#if defined(GX_PATH_IS_WCHAR)
+    return GX_CAST_R(const gwchar*, getCString(GX::SE_Unicode));
+#else
+    return GX_CAST_R(const gchar*, getCString(GX::SE_Utf8));
+#endif
+}
 
 void GString::set(gchar v, gint count)
 {
@@ -833,14 +797,17 @@ void GString::set(const gchar* v, gint len, gint count)
     if (count <= 0) {
         return;
     }
+    gint utf16Len;
     if (len<0) {
-        len = GX::strlen(v);
+        utf16Len=GX::strUTF8toUTF16Count(v, &len);
     }
-    if (m_Buffer.changeCount(len*count + 1)) {
-        for (gint j=0; j<count; j++) {
-            for (gint i = 0; i < len; i++) {
-                m_Buffer.set(j*len+i, GX_CAST_S(guchar, v[i]));
-            }
+    else {
+        utf16Len=GX::strUTF8toUTF16Count(v, len);
+    }
+    if (m_Buffer.changeCount(utf16Len*count + 1)) {
+        GX::strUTF8toUTF16(v, len, (guchar*)m_Buffer.getPtr(0), utf16Len);
+        for (gint j=1; j<count; j++) {
+            memcpy((void*)m_Buffer.getPtr(0+j*utf16Len), (const void*)m_Buffer.getPtr(0), utf16Len*sizeof(guchar));
         }
         setCStringEnd();
         modifyDone();
@@ -851,15 +818,18 @@ void GString::append(const gchar* v, gint len, gint count)
     if (count <= 0) {
         return;
     }
+    gint utf16Len;
     if (len<0) {
-        len = GX::strlen(v);
+        utf16Len=GX::strUTF8toUTF16Count(v, &len);
+    }
+    else {
+        utf16Len=GX::strUTF8toUTF16Count(v, len);
     }
     gint lenCur = getLength();
-    if (m_Buffer.changeCount(lenCur + len*count + 1)) {
-        for (gint j=0; j<count; j++) {
-            for (gint i = 0; i < len; i++) {
-                m_Buffer.set(lenCur+j*len+i, GX_CAST_S(guchar, v[i]));
-            }
+    if (m_Buffer.changeCount(lenCur + utf16Len*count + 1)) {
+        GX::strUTF8toUTF16(v, len, (guchar*)m_Buffer.getPtr(lenCur), utf16Len);
+        for (gint j=1; j<count; j++) {
+            memcpy((void*)m_Buffer.getPtr(lenCur+j*utf16Len), (const void*)m_Buffer.getPtr(lenCur), utf16Len*sizeof(guchar));
         }
         setCStringEnd();
         modifyDone();
@@ -881,14 +851,17 @@ void GString::replace(gint idx, gint lenR, const gchar* v, gint len, gint count)
     if (idx > lenCur) {
         return;
     }
+    gint utf16Len;
     if (len<0) {
-        len = GX::strlen(v);
+        utf16Len=GX::strUTF8toUTF16Count(v, &len);
     }
-    if (m_Buffer.expand(idx, lenR, len*count)) {
-        for (gint j=0; j<count; j++) {
-            for (gint i = 0; i < len; i++) {
-                m_Buffer.set(idx+j*len+i, GX_CAST_S(guchar, v[i]));
-            }
+    else {
+        utf16Len=GX::strUTF8toUTF16Count(v, len);
+    }
+    if (m_Buffer.expand(idx, lenR, utf16Len*count)) {
+        GX::strUTF8toUTF16(v, len, (guchar*)m_Buffer.getPtr(idx), utf16Len);
+        for (gint j=1; j<count; j++) {
+            memcpy((void*)m_Buffer.getPtr(idx+j*utf16Len), (const void*)m_Buffer.getPtr(idx), utf16Len*sizeof(guchar));
         }
         setCStringEnd();
         modifyDone();
@@ -909,21 +882,24 @@ void GString::replace(gint idx, gint lenR,
     if (idx > lenCur) {
         return;
     }
+    gint utf16Len;
     if (len<0) {
-        len = GX::strlen(v);
+        utf16Len=GX::strUTF8toUTF16Count(v, &len);
     }
-    if (m_Buffer.expand(idx, lenR, preCount + len*count + sufCount)) {
+    else {
+        utf16Len=GX::strUTF8toUTF16Count(v, len);
+    }
+    if (m_Buffer.expand(idx, lenR, preCount + utf16Len*count + sufCount)) {
         gint start = idx;
         for (gint i=0; i<preCount; i++) {
             m_Buffer.set(start+i, GX_CAST_S(guchar, preChar));
         }
         start += preCount;
-        for (gint j=0; j<count; j++) {
-            for (gint i = 0; i < len; i++) {
-                m_Buffer.set(start+j*len+i, GX_CAST_S(guchar, v[i]));
-            }
+        GX::strUTF8toUTF16(v, len, (guchar*)m_Buffer.getPtr(start), utf16Len);
+        for (gint j=1; j<count; j++) {
+            memcpy((void*)m_Buffer.getPtr(start+j*utf16Len), (const void*)m_Buffer.getPtr(start), utf16Len*sizeof(guchar));
         }
-        start += len*count;
+        start += utf16Len*count;
         for (gint i=0; i<sufCount; i++) {
             m_Buffer.set(start+i, GX_CAST_S(guchar, sufChar));
         }
@@ -944,9 +920,13 @@ void GString::set(const gwchar* v, gint len, gint count)
     }
     if (m_Buffer.changeCount(len*count + 1)) {
         for (gint j=0; j<count; j++) {
+#if GX_WCHAR_16BIT
+            memcpy((void*)m_Buffer.getPtr(j*len), (const void*)v, len*sizeof(gwchar));
+#else
             for (gint i = 0; i < len; i++) {
                 m_Buffer.set(j*len+i, GX_CAST_S(guchar, v[i]));
             }
+#endif
         }
         setCStringEnd();
         modifyDone();
@@ -963,9 +943,13 @@ void GString::append(const gwchar* v, gint len, gint count)
     gint lenCur = getLength();
     if (m_Buffer.changeCount(lenCur + len*count + 1)) {
         for (gint j=0; j<count; j++) {
+#if GX_WCHAR_16BIT
+            memcpy((void*)m_Buffer.getPtr(lenCur+j*len), (const void*)v, len*sizeof(gwchar));
+#else
             for (gint i = 0; i < len; i++) {
                 m_Buffer.set(lenCur+j*len+i, GX_CAST_S(guchar, v[i]));
             }
+#endif
         }
         setCStringEnd();
         modifyDone();
@@ -992,9 +976,13 @@ void GString::replace(gint idx, gint lenR, const gwchar* v, gint len, gint count
     }
     if (m_Buffer.expand(idx, lenR, len*count)) {
         for (gint j=0; j<count; j++) {
+#if GX_WCHAR_16BIT
+            memcpy((void*)m_Buffer.getPtr(idx+j*len), (const void*)v, len*sizeof(gwchar));
+#else
             for (gint i = 0; i < len; i++) {
                 m_Buffer.set(idx+j*len+i, GX_CAST_S(guchar, v[i]));
             }
+#endif
         }
         setCStringEnd();
         modifyDone();
@@ -1025,9 +1013,13 @@ void GString::replace(gint idx, gint lenR,
         }
         start += preCount;
         for (gint j=0; j<count; j++) {
+#if GX_WCHAR_16BIT
+            memcpy((void*)m_Buffer.getPtr(start+j*len), (const void*)v, len*sizeof(gwchar));
+#else
             for (gint i = 0; i < len; i++) {
                 m_Buffer.set(start+j*len+i, GX_CAST_S(guchar, v[i]));
             }
+#endif
         }
         start += len*count;
         for (gint i=0; i<sufCount; i++) {
@@ -1040,227 +1032,289 @@ void GString::replace(gint idx, gint lenR,
     }
 }
 
+void GString::set(GString* v, gint count)
+{
+    if (count <= 0) {
+        return;
+    }
+    gint lenV=v->getLength();
+    if (m_Buffer.changeCount(lenV*count+1)) {
+        const void* src=(const void*)v->m_Buffer.getPtr(0);
+        for (gint j=0; j<count; j++) {
+            memcpy((void*)m_Buffer.getPtr(0+j*lenV), src, lenV*sizeof(guchar));
+        }
+        setCStringEnd();
+        modifyDone();
+    }
+    
+}
+void GString::append(GString* v, gint count)
+{
+    if (count <= 0) {
+        return;
+    }
+    gint lenCur = getLength();
+    gint lenV=v->getLength();
+    if (m_Buffer.changeCount(lenCur + lenV*count + 1)) {
+        const void* src=(const void*)v->m_Buffer.getPtr(0);
+        for (gint j=0; j<count; j++) {
+            memcpy((void*)m_Buffer.getPtr(lenCur+j*lenV), src, lenV*sizeof(guchar));
+        }
+        setCStringEnd();
+        modifyDone();
+    }
+}
+void GString::insert(gint idx, GString* v, gint count)
+{
+    replace(idx,0, v, count);
+}
+void GString::replace(gint idx, gint lenR, GString* v, gint count)
+{
+    if (count <= 0) {
+        return;
+    }
+    if (idx < 0 || lenR<0) {
+        return;
+    }
+    gint lenCur = getLength();
+    if (idx > lenCur) {
+        return;
+    }
+    gint lenV=v->getLength();
+    
+    if (m_Buffer.expand(idx, lenR, lenV*count)) {
+        const void* src=(const void*)v->m_Buffer.getPtr(0);
+        for (gint j=0; j<count; j++) {
+            memcpy((void*)m_Buffer.getPtr(idx+j*lenV), src, lenV*sizeof(guchar));
+        }
+        setCStringEnd();
+        modifyDone();
+    }
+}
+
+
+
 
 #define M_SET \
 if (vsLen < 0 && tempLen < -vsLen) {\
-set(fillChar, -vsLen - tempLen);\
-append(temp, tempLen);\
+    set(fillChar, -vsLen - tempLen);\
+    append(temp, tempLen);\
 }\
 else if (vsLen > 0 && tempLen < vsLen) {\
-set(temp, tempLen);\
-append(fillChar, vsLen - tempLen);\
+    set(temp, tempLen);\
+    append(fillChar, vsLen - tempLen);\
 }\
 else {\
-set(temp, tempLen);\
+    set(temp, tempLen);\
 }
 #define M_APPEND \
 if (vsLen < 0 && tempLen < -vsLen) {\
-append(fillChar, -vsLen - tempLen);\
-append(temp, tempLen);\
+    append(fillChar, -vsLen - tempLen);\
+    append(temp, tempLen);\
 }\
 else if (vsLen > 0 && tempLen < vsLen) {\
-append(temp, tempLen);\
-append(fillChar, vsLen - tempLen);\
+    append(temp, tempLen);\
+    append(fillChar, vsLen - tempLen);\
 }\
 else {\
-append(temp, tempLen);\
+    append(temp, tempLen);\
 }
 #define M_REPLACE \
 replace(idx, lenR, \
-fillChar, (vsLen < 0 && tempLen < -vsLen) ? -vsLen - tempLen : 0, \
-fillChar, (vsLen > 0 && tempLen < vsLen) ? vsLen - tempLen : 0, \
-temp, tempLen, 1);
+    fillChar, (vsLen < 0 && tempLen < -vsLen) ? -vsLen - tempLen : 0, \
+    fillChar, (vsLen > 0 && tempLen < vsLen) ? vsLen - tempLen : 0, \
+    temp, tempLen, 1);
 
 
-void GString::setInt16(gint16 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::setInt16(gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[16];
+    gwchar temp[16];
     gint tempLen = GX::gi16toa(v, temp, radix);
     M_SET
 }
-void GString::appendInt16(gint16 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::appendInt16(gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[16];
+    gwchar temp[16];
     gint tempLen = GX::gi16toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertInt16(gint idx, gint16 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::insertInt16(gint idx, gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     replaceInt16(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceInt16(gint idx, gint lenR, gint16 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::replaceInt16(gint idx, gint lenR, gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[16];
+    gwchar temp[16];
     gint tempLen = GX::gi16toa(v, temp, radix);
     M_REPLACE
 }
-void GString::setUint16(guint16 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::setUint16(guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[16];
+    gwchar temp[16];
     gint tempLen = GX::gu16toa(v, temp, radix);
     M_SET
 }
-void GString::appendUint16(guint16 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::appendUint16(guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[16];
+    gwchar temp[16];
     gint tempLen = GX::gu16toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertUint16(gint idx, guint16 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::insertUint16(gint idx, guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     replaceUint16(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceUint16(gint idx, gint lenR, guint16 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::replaceUint16(gint idx, gint lenR, guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[16];
+    gwchar temp[16];
     gint tempLen = GX::gu16toa(v, temp, radix);
     M_REPLACE
 }
 
-void GString::setInt32(gint32 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::setInt32(gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[32];
+    gwchar temp[32];
     gint tempLen = GX::gi32toa(v, temp, radix);
     M_SET
 }
-void GString::appendInt32(gint32 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::appendInt32(gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[32];
+    gwchar temp[32];
     gint tempLen = GX::gi32toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertInt32(gint idx, gint32 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::insertInt32(gint idx, gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     replaceInt32(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceInt32(gint idx, gint lenR, gint32 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::replaceInt32(gint idx, gint lenR, gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[32];
+    gwchar temp[32];
     gint tempLen = GX::gi32toa(v, temp, radix);
     M_REPLACE
 }
-void GString::setUint32(guint32 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::setUint32(guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[32];
+    gwchar temp[32];
     gint tempLen = GX::gu32toa(v, temp, radix);
     M_SET
 }
-void GString::appendUint32(guint32 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::appendUint32(guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[32];
+    gwchar temp[32];
     gint tempLen = GX::gu32toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertUint32(gint idx, guint32 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::insertUint32(gint idx, guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     replaceUint32(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceUint32(gint idx, gint lenR, guint32 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::replaceUint32(gint idx, gint lenR, guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[32];
+    gwchar temp[32];
     gint tempLen = GX::gu32toa(v, temp, radix);
     M_REPLACE
 }
 
-void GString::setInt64(gint64 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::setInt64(gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[64];
+    gwchar temp[64];
     gint tempLen = GX::gi64toa(v, temp, radix);
     M_SET
 }
-void GString::appendInt64(gint64 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::appendInt64(gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[64];
+    gwchar temp[64];
     gint tempLen = GX::gi64toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertInt64(gint idx, gint64 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::insertInt64(gint idx, gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     replaceInt64(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceInt64(gint idx, gint lenR, gint64 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::replaceInt64(gint idx, gint lenR, gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[64];
+    gwchar temp[64];
     gint tempLen = GX::gi64toa(v, temp, radix);
     M_REPLACE
 }
-void GString::setUint64(guint64 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::setUint64(guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[64];
+    gwchar temp[64];
     gint tempLen = GX::gu64toa(v, temp, radix);
     M_SET
 }
-void GString::appendUint64(guint64 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::appendUint64(guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[64];
+    gwchar temp[64];
     gint tempLen = GX::gu64toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertUint64(gint idx, guint64 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::insertUint64(gint idx, guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     replaceUint64(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceUint64(gint idx, gint lenR, guint64 v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::replaceUint64(gint idx, gint lenR, guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    gchar temp[64];
+    gwchar temp[64];
     gint tempLen = GX::gu64toa(v, temp, radix);
     M_REPLACE
 }
 
-void GString::setFloat32(gfloat32 v, gint precision, gint vsLen, gchar fillChar)
+void GString::setFloat32(gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
 {
-    gchar temp[8 + 32];
+    gwchar temp[8 + 32];
     gint tempLen = GX::gf32toa(v, temp, precision);
     M_SET
 }
-void GString::appendFloat32(gfloat32 v, gint precision, gint vsLen, gchar fillChar)
+void GString::appendFloat32(gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
 {
-    gchar temp[8 + 32];
+    gwchar temp[8 + 32];
     gint tempLen = GX::gf32toa(v, temp, precision);
     M_APPEND
 }
-void GString::insertFloat32(gint idx, gfloat32 v, gint precision, gint vsLen, gchar fillChar)
+void GString::insertFloat32(gint idx, gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
 {
     replaceFloat32(idx, 0, v, precision, vsLen, fillChar);
 }
-void GString::replaceFloat32(gint idx, gint lenR, gfloat32 v, gint precision, gint vsLen, gchar fillChar)
+void GString::replaceFloat32(gint idx, gint lenR, gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
 {
     if (precision > 30) {
         precision = 30;
     }
-    gchar temp[8 + 32];
+    gwchar temp[8 + 32];
     gint tempLen = GX::gf32toa(v, temp, precision);
     M_REPLACE
 }
 
-void GString::setFloat64(gfloat64 v, gint precision, gint vsLen, gchar fillChar)
+void GString::setFloat64(gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
 {
     if (precision > 30) {
         precision = 30;
     }
-    gchar temp[17 + 32];
+    gwchar temp[17 + 32];
     gint tempLen = GX::gf64toa(v, temp, precision);
     M_SET
 }
-void GString::appendFloat64(gfloat64 v, gint precision, gint vsLen, gchar fillChar)
+void GString::appendFloat64(gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
 {
     if (precision > 30) {
         precision = 30;
     }
-    gchar temp[17 + 32];
+    gwchar temp[17 + 32];
     gint tempLen = GX::gf64toa(v, temp, precision);
     M_APPEND
 }
-void GString::insertFloat64(gint idx, gfloat64 v, gint precision, gint vsLen, gchar fillChar)
+void GString::insertFloat64(gint idx, gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
 {
     replaceFloat64(idx, 0, v, precision, vsLen, fillChar);
 }
-void GString::replaceFloat64(gint idx, gint lenR, gfloat64 v, gint precision, gint vsLen, gchar fillChar)
+void GString::replaceFloat64(gint idx, gint lenR, gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
 {
     if (precision > 30) {
         precision = 30;
     }
-    gchar temp[17 + 32];
+    gwchar temp[17 + 32];
     gint tempLen = GX::gf64toa(v, temp, precision);
     M_REPLACE
 }
@@ -1269,7 +1323,7 @@ void GString::replaceFloat64(gint idx, gint lenR, gfloat64 v, gint precision, gi
 #undef M_APPEND
 #undef M_REPLACE
 
-void GString::setInt(gint v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::setInt(gint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     setInt32(v, radix, vsLen, fillChar);
@@ -1277,7 +1331,7 @@ void GString::setInt(gint v, GX::StringRadix radix, gint vsLen, gchar fillChar)
     setInt64(v, radix, vsLen, fillChar);
 #endif
 }
-void GString::appendInt(gint v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::appendInt(gint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     appendInt32(v, radix, vsLen, fillChar);
@@ -1285,7 +1339,7 @@ void GString::appendInt(gint v, GX::StringRadix radix, gint vsLen, gchar fillCha
     appendInt64(v, radix, vsLen, fillChar);
 #endif
 }
-void GString::insertInt(gint idx, gint v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::insertInt(gint idx, gint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     insertInt32(idx, v, radix, vsLen, fillChar);
@@ -1293,7 +1347,7 @@ void GString::insertInt(gint idx, gint v, GX::StringRadix radix, gint vsLen, gch
     insertInt64(idx, v, radix, vsLen, fillChar);
 #endif
 }
-void GString::replaceInt(gint idx, gint lenR, gint v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::replaceInt(gint idx, gint lenR, gint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     replaceInt32(idx, lenR, v, radix, vsLen, fillChar);
@@ -1302,7 +1356,7 @@ void GString::replaceInt(gint idx, gint lenR, gint v, GX::StringRadix radix, gin
 #endif
 }
 
-void GString::setUint(guint v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::setUint(guint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     setUint32(v, radix, vsLen, fillChar);
@@ -1310,7 +1364,7 @@ void GString::setUint(guint v, GX::StringRadix radix, gint vsLen, gchar fillChar
     setUint64(v, radix, vsLen, fillChar);
 #endif
 }
-void GString::appendUint(guint v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::appendUint(guint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     appendUint32(v, radix, vsLen, fillChar);
@@ -1318,7 +1372,7 @@ void GString::appendUint(guint v, GX::StringRadix radix, gint vsLen, gchar fillC
     appendUint64(v, radix, vsLen, fillChar);
 #endif
 }
-void GString::insertUint(gint idx, guint v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::insertUint(gint idx, guint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     insertUint32(idx, v, radix, vsLen, fillChar);
@@ -1326,7 +1380,7 @@ void GString::insertUint(gint idx, guint v, GX::StringRadix radix, gint vsLen, g
     insertUint64(idx, v, radix, vsLen, fillChar);
 #endif
 }
-void GString::replaceUint(gint idx, gint lenR, guint v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::replaceUint(gint idx, gint lenR, guint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     replaceUint32(idx, v, lenR, radix, vsLen, fillChar);
@@ -1335,7 +1389,7 @@ void GString::replaceUint(gint idx, gint lenR, guint v, GX::StringRadix radix, g
 #endif
 }
 
-void GString::setFloat(gfloat v, gint precision, gint vsLen, gchar fillChar)
+void GString::setFloat(gfloat v, gint precision, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     setFloat32(v, precision, vsLen, fillChar);
@@ -1343,7 +1397,7 @@ void GString::setFloat(gfloat v, gint precision, gint vsLen, gchar fillChar)
     setFloat64(v, precision, vsLen, fillChar);
 #endif
 }
-void GString::appendFloat(gfloat v, gint precision, gint vsLen, gchar fillChar)
+void GString::appendFloat(gfloat v, gint precision, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     appendFloat32(v, precision, vsLen, fillChar);
@@ -1351,7 +1405,7 @@ void GString::appendFloat(gfloat v, gint precision, gint vsLen, gchar fillChar)
     appendFloat64(v, precision, vsLen, fillChar);
 #endif
 }
-void GString::insertFloat(gint idx, gfloat v, gint precision, gint vsLen, gchar fillChar)
+void GString::insertFloat(gint idx, gfloat v, gint precision, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     insertFloat32(idx, v, precision, vsLen, fillChar);
@@ -1359,7 +1413,7 @@ void GString::insertFloat(gint idx, gfloat v, gint precision, gint vsLen, gchar 
     insertFloat64(idx, v, precision, vsLen, fillChar);
 #endif
 }
-void GString::replaceFloat(gint idx, gint lenR, gfloat v, gint precision, gint vsLen, gchar fillChar)
+void GString::replaceFloat(gint idx, gint lenR, gfloat v, gint precision, gint vsLen, gwchar fillChar)
 {
 #if GX_PTR_32BIT
     replaceFloat32(idx, lenR, v, precision, vsLen, fillChar);
@@ -1369,19 +1423,19 @@ void GString::replaceFloat(gint idx, gint lenR, gfloat v, gint precision, gint v
 }
 
 
-void GString::setPtr(void* v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::setPtr(void* v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     setUint(GX_CAST_R(guint, v), radix, vsLen, fillChar);
 }
-void GString::appendPtr(void* v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::appendPtr(void* v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     appendUint(GX_CAST_R(guint, v), radix, vsLen, fillChar);
 }
-void GString::insertPtr(gint idx, void* v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::insertPtr(gint idx, void* v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     insertUint(idx, GX_CAST_R(guint, v), radix, vsLen, fillChar);
 }
-void GString::replacePtr(gint idx, gint lenR, void* v, GX::StringRadix radix, gint vsLen, gchar fillChar)
+void GString::replacePtr(gint idx, gint lenR, void* v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     replaceUint(idx, lenR, GX_CAST_R(guint, v), radix, vsLen, fillChar);
 }
@@ -1497,6 +1551,72 @@ void GString::setCStringEnd()
 void GString::modifyDone()
 {
     m_OWHash.codeA=0;
+    if (m_OutBuf.getBytes()>0) {
+        m_OutBuf.freeSelf();
+    }
+}
+
+gint GString::getCStringLength(GX::StringEncoding se)
+{
+    if (m_Buffer.isEmpty()) {
+        return 0;
+    }
+    
+    if (se==GX::SE_Utf8) {
+        if (m_OutBuf.getBytes()>0 && m_OutBufSE==se) {
+            return GX_CAST_S(gint, m_OutBuf.getBytes()/sizeof(gchar));
+        }
+        return GX::strUTF16toUTF8Count(m_Buffer.getPtr(0), m_Buffer.getCount()-1);
+    }
+    else if (se==GX::SE_Utf16 || se==GX::SE_Utf32) {
+        return m_Buffer.getCount()-1;
+    }
+    
+    return 0;
+}
+
+const void* GString::getCString(GX::StringEncoding se)
+{
+    if (m_OutBuf.getBytes()>0 && m_OutBufSE==se) {
+        return m_OutBuf.getPtr();
+    }
+    
+    if (se==GX::SE_Utf8) {
+        if (m_Buffer.isEmpty()) {
+            return "";
+        }
+        gint lenTo=GX::strUTF16toUTF8Count(m_Buffer.getPtr(0), m_Buffer.getCount());
+        m_OutBuf.changeBytes(lenTo*sizeof(gchar));
+        GX::strUTF16toUTF8(m_Buffer.getPtr(0), m_Buffer.getCount(), GX_CAST_R(gchar*, m_OutBuf.getPtr()), lenTo);
+        
+        m_OutBufSE=se;
+        return m_OutBuf.getPtr();
+    }
+    else if (se==GX::SE_Utf16) {
+        if (m_Buffer.isEmpty()) {
+            static guchar g_Buf[]={0};
+            return g_Buf;
+        }
+        return m_Buffer.getPtr(0);
+    }
+    else if (se==GX::SE_Utf32) {
+        if (m_Buffer.isEmpty()) {
+            static guint32 g_Buf[]={0u};
+            return g_Buf;
+        }
+        
+        gint lenTo=m_Buffer.getCount();
+        m_OutBuf.changeBytes(lenTo*sizeof(guint32));
+        guint32* p=GX_CAST_R(guint32*, m_OutBuf.getPtr());
+        for (gint i=0; i<lenTo; ++i) {
+            (*p)=GX_CAST_S(guint32, m_Buffer.get(i));
+        }
+        
+        m_OutBufSE=se;
+        return m_OutBuf.getPtr();
+    }
+    
+    return NULL;
 }
 
 

@@ -23,7 +23,6 @@
 #elif defined(GX_OS_QT)
 #include <QFileInfo>
 #endif
-#include "GDataString.h"
 
 #include "GXGObject.h"
 
@@ -45,7 +44,10 @@ GFileManager::~GFileManager()
 bool GFileManager::fileExists(const gtchar* path, bool* isDirectory)
 {
 #if defined(GX_OS_APPLE)
-    gint len = GX::strlen(path);
+    gint len = 0;
+    while (path[len]!=0) {
+        len++;
+    }
 
     NSString* strPath = [[NSString alloc] initWithBytesNoCopy:(void*)path length:(NSUInteger)len encoding:NSUTF8StringEncoding freeWhenDone:NO];
 	BOOL isDir = NO;

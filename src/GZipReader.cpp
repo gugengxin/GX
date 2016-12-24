@@ -116,26 +116,30 @@ bool GZipReader::open(const gtchar* path, bool createMap)
 	if (m_ZipFile != NULL) {
 		if (createMap) {
 			m_Map = Map::alloc();
+            
+            GX::Data nameBuf;
 
 			bool bTF = gotoFirstFile();
 			while (bTF) {
 				M_FILE_INFO info;
 				bTF = (M_GETCURRENTFILEINFO(M_ZIPFILE(), &info, NULL, 0, NULL, 0, NULL, 0) == UNZ_OK);
 				if (bTF) {
-					GString* name = GString::alloc();
-					bTF = (M_GETCURRENTFILEINFO(M_ZIPFILE(), NULL, name->prepareBuffer(info.size_filename), info.size_filename, NULL, 0, NULL, 0) == UNZ_OK);
-
-					GX_LOG_P1(PrioDEBUG,"GZipReader::open","file:%s",name->c_str());
-
+                    nameBuf.changeBytesIfNeed(info.size_filename+1);
+					bTF = (M_GETCURRENTFILEINFO(M_ZIPFILE(), NULL, (char *)nameBuf.getPtr(), info.size_filename, NULL, 0, NULL, 0) == UNZ_OK);
 					if (bTF) {
+                        GString* name = GString::alloc();
+                        name->set((const gchar*)nameBuf.getPtr(),(gint)info.size_filename);
+                        
 						Node* node = Node::alloc();
 						node->setOffset(getOffset());
+                        
 						m_Map->set(name, node);
+                        
 						GO::release(node);
+                        GO::release(name);
 
 						bTF = gotoNextFile();
 					}
-					GO::release(name);
 				}
 			}
 		}
@@ -203,16 +207,18 @@ GZipReader::FileInfo* GZipReader::currentFileInfo()
 GString* GZipReader::currentFileName()
 {
 	M_FILE_INFO info;
-	GString* res = GString::alloc();
-	if ((M_GETCURRENTFILEINFO(M_ZIPFILE(), &info, NULL, 0, NULL, 0, NULL, 0) == UNZ_OK) &&
-		(M_GETCURRENTFILEINFO(M_ZIPFILE(), NULL, res->prepareBuffer(info.size_filename), info.size_filename, NULL, 0, NULL, 0) == UNZ_OK)) {
-		GO::autorelease(res);
+	if ((M_GETCURRENTFILEINFO(M_ZIPFILE(), &info, NULL, 0, NULL, 0, NULL, 0) == UNZ_OK)) {
+        GX::Data nameBuf;
+        if (nameBuf.changeBytes(info.size_filename+1)) {
+            if((M_GETCURRENTFILEINFO(M_ZIPFILE(), NULL, (char *)nameBuf.getPtr(), info.size_filename, NULL, 0, NULL, 0) == UNZ_OK)) {
+                GString* name = GString::autoAlloc();
+                name->set((const gchar*)nameBuf.getPtr(),(gint)info.size_filename);
+                return name;
+            }
+        }
+        
 	}
-	else {
-		GO::release(res);
-		res = NULL;
-	}
-	return res;
+	return NULL;
 }
 
 bool GZipReader::openCurrentFile()

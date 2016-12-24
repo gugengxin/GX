@@ -81,7 +81,7 @@ GReader* GAppBundle::openReader(const gchar* fileName)
     GString path;
     path.append(M_RESOURCE_DIR_NAME);
     path.appendPathComponent(fileName);
-    return M_BASE_CLASS::openReader(path.c_str());
+    return M_BASE_CLASS::openReader(path.pathString());
 #else
 #error
     return NULL;

@@ -21,28 +21,44 @@ GOShader::~GOShader()
 
 bool GOShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
 {
-
-	GString str;
+    GX::Data srcData;
+    guint srcIdx=0;
+    
 	const Macro* pSM = macro;
 	while (pSM->name) {
-		str.append("#define ");
-		str.append(pSM->name);
-		str.append("\n");
+        size_t nameLen=strlen(pSM->name);
+        srcData.changeBytes(srcIdx+(8+nameLen+1)+1);
+        
+        memcpy(srcData.getPtr(srcIdx), "#define ", 8);
+        srcIdx+=8;
+        
+        memcpy(srcData.getPtr(srcIdx), pSM->name, nameLen);
+        srcIdx+=nameLen;
+        
+        memcpy(srcData.getPtr(srcIdx), "\n", 1);
+        srcIdx+=1;
+        
 		pSM++;
 	}
-	gint mlen = str.getLength();
-    str.append(srcVS);
+    
+	guint mlen = srcIdx;
+    
+    size_t srcLen=strlen(srcVS);
+    srcData.changeBytes(srcIdx+(srcLen)+1);
+    memcpy(srcData.getPtr(srcIdx), srcVS, srcLen+1);
+    
 
     GLuint vertShader=0;
-	if (!compileShader(&vertShader, GL_VERTEX_SHADER, (const GLchar*)str.c_str())) {
+	if (!compileShader(&vertShader, GL_VERTEX_SHADER, (const GLchar*)srcData.getPtr())) {
         return false;
     }
 
-	str.cutOff(mlen);
-    str.append(srcFP);
+    srcLen=strlen(srcFP);
+    srcData.changeBytesIfNeed(mlen+(srcLen)+1);
+    memcpy(srcData.getPtr(mlen), srcFP, srcLen+1);
 
     GLuint fragShader=0;
-	if (!compileShader(&fragShader, GL_FRAGMENT_SHADER, (const GLchar*)str.c_str())) {
+	if (!compileShader(&fragShader, GL_FRAGMENT_SHADER, (const GLchar*)srcData.getPtr())) {
         if (vertShader) {
             GX_glDeleteShader(vertShader);
             vertShader = 0;

@@ -21,7 +21,6 @@ namespace GX {
 #else
         SE_Unicode=SE_Utf32,
 #endif
-        SE_GB2312   =3,
     } StringEncoding;
 
 	typedef enum _StringRadix {
