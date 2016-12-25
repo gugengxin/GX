@@ -10,7 +10,8 @@
 class Game : public GGame {
     GX_OBJECT(Game);
 protected:
-    virtual void init(GWindow* window);
+    virtual void eventStart(GWindow* window);
+    virtual void eventStop();
 public:
     virtual void idle();
     virtual void render(GCanvas* canvas);

@@ -25,8 +25,8 @@ public:
     static void autorelease(GObject* obj);
 	static gint32 refCount(GObject* obj);
 protected:
-	static void* gnew(size_t size);
-	static void gdel(void* p);
+	static void* gmalloc(size_t size);
+	static void gfree(void* p);
 
     GObject();
     virtual ~GObject();

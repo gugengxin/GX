@@ -9,7 +9,11 @@ QT       += widgets opengl
 TARGET = GX
 TEMPLATE = lib
 CONFIG += staticlib
-QMAKE_MAC_SDK = macosx10.12
+macx {
+    QMAKE_MAC_SDK = macosx10.12
+    #QMAKE_CXXFLAGS_WARN_ON += -Wno-overloaded-virtual
+    #QMAKE_CXXFLAGS += -Wno-overloaded-virtual
+}
 DEFINES += GX_OS_QT
 win32:DEFINES += _UNICODE
 DESTDIR = ../../product/qt

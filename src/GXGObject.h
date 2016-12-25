@@ -17,17 +17,19 @@ public:\
 	}\
 public:\
 	void* operator new(size_t size) {\
-		return GObject::gnew(size);\
+		return GObject::gmalloc(size);\
 	}\
 	void operator delete(void* p) {\
-		GObject::gdel(p);\
+		GObject::gfree(p);\
 	}
 
 #define GX_GOBJECT_DECLARE(cls,vis,avis) \
 GX_GOBJECT_DECLARE_BASE(cls,vis)\
 avis:\
     static cls* alloc() {\
-        return new cls();\
+        cls* res=new cls();\
+        res->init();\
+        return res;\
 	}\
     static cls* autoAlloc() {\
         cls* res=alloc();\

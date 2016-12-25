@@ -28,15 +28,14 @@ GGame::~GGame()
     
 }
 
-void GGame::init(GWindow* window)
+void GGame::eventStart(GWindow* window)
 {
-    GObject::init();
-    
     m_Window=window;
 }
-void GGame::uninit()
+
+void GGame::eventStop()
 {
-    
+    m_Window=NULL;
 }
 
 gint GGame::getFPS()
@@ -51,7 +50,7 @@ void GGame::idle()
 
 void GGame::render(GCanvas* canvas)
 {
-    
+    GX_UNUSED(canvas)
 }
 
 void GGame::run()
@@ -61,6 +60,7 @@ void GGame::run()
         fps=30;
     }
     if (GSystem::currentTimeMS()-m_RunLastTime>=1000/fps) {
+        m_RunLastTime=GSystem::currentTimeMS();
         idle();
         m_Window->render();
     }

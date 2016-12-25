@@ -24,8 +24,8 @@ class GGame : public GObject
     friend class GWindow;
 	GX_VIRTUAL_GOBJECT(GGame);
 protected:
-    virtual void init(GWindow* window);
-    virtual void uninit();
+    virtual void eventStart(GWindow* window);
+    virtual void eventStop();
 public:
     inline GWindow* getWindow() {
         return m_Window;

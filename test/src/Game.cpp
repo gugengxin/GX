@@ -6,18 +6,32 @@
 
 GX_OBJECT_IMPLEMENT(Game,GGame);
 
-void Game::init(GWindow* window)
+void Game::init()
 {
-    GGame::init(window);
+    GGame::init();
     
     
 }
 
 void Game::uninit()
 {
-
+    
     GGame::uninit();
 }
+
+void Game::eventStart(GWindow* window)
+{
+    GGame::eventStart(window);
+    
+}
+
+void Game::eventStop()
+{
+
+    GGame::eventStop();
+}
+
+
 
 
 void Game::idle()

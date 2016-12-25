@@ -82,13 +82,13 @@ gint32 GObject::refCount(GObject* obj)
 	return 0;
 }
 
-void* GObject::gnew(size_t size)
+void* GObject::gmalloc(size_t size)
 {
 	void* p = malloc(size + sizeof(_ObjExData));
 	_ObjExDataInit(GX_CAST_R(_ObjExData*,p));
 	return GX_CAST_R(guint8*, p) + sizeof(_ObjExData);
 }
-void GObject::gdel(void* p)
+void GObject::gfree(void* p)
 {
 	_ObjExData* exData = GX_CAST_R(_ObjExData*, p) - 1;
 	_ObjExDataFina(exData);
@@ -113,11 +113,11 @@ GObject* GObject::autoAlloc()
 }
 void* GObject::operator new(size_t size)
 {
-	return gnew(size);
+	return gmalloc(size);
 }
 void GObject::operator delete(void* p)
 {
-	gdel(p);
+	gfree(p);
 }
 
 GObject::GObject()
