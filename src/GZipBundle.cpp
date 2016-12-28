@@ -42,13 +42,13 @@ void GZipBundle::close()
     m_RootPath.clear();
 }
 
-GReader* GZipBundle::openReader(const gchar* fileName)
+GReader* GZipBundle::openReader(GString* fileName)
 {
     GZipReader* res=NULL;
     
     m_Mutex.lock();
     if (!m_Reader->isCurrentFileOpened()) {
-        if (m_Reader->gotoFile(fileName) && m_Reader->openCurrentFile()) {
+        if (m_Reader->gotoFile(fileName->utf8String()) && m_Reader->openCurrentFile()) {
             res=m_Reader;
         }
         m_Mutex.unlock();
@@ -61,7 +61,7 @@ GReader* GZipBundle::openReader(const gchar* fileName)
             if (m_Reader->getMap()) {
                 res->setMap(m_Reader->getMap());
             }
-            if (!res->gotoFile(fileName) || !res->openCurrentFile()) {
+			if (!res->gotoFile(fileName->utf8String()) || !res->openCurrentFile()) {
                 GO::release(res);
                 res=NULL;
             }

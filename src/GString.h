@@ -24,6 +24,7 @@ class GString : public GObject, public GSerialize, public GUnserialize {
     friend class GZipBundle;
     friend class GFileBundle;
     friend class GAppBundle;
+	friend class GBundle;
     friend class GZipReader;
     GX_GOBJECT(GString);
 public:
@@ -69,6 +70,11 @@ public:
     void append(gchar v, gint count=1);
     void insert(gint idx, gchar v, gint count=1);
     void replace(gint idx, gint lenR, gchar v, gint count=1);
+
+	void set(guchar v, gint count = 1);
+	void append(guchar v, gint count = 1);
+	void insert(gint idx, guchar v, gint count = 1);
+	void replace(gint idx, gint lenR, guchar v, gint count = 1);
     
     void set(gwchar v, gint count=1);
     void append(gwchar v, gint count=1);
@@ -83,6 +89,15 @@ public:
                  gchar preChar, gint preCount,
                  gchar sufChar, gint sufCount,
                  const gchar* v, gint len=-1, gint count=1);
+
+	void set(const guchar* v, gint len = -1, gint count = 1);
+	void append(const guchar* v, gint len = -1, gint count = 1);
+	void insert(gint idx, const guchar* v, gint len = -1, gint count = 1);
+	void replace(gint idx, gint lenR, const guchar* v, gint len = -1, gint count = 1);
+	void replace(gint idx, gint lenR,
+		guchar preChar, gint preCount,
+		guchar sufChar, gint sufCount,
+		const guchar* v, gint len = -1, gint count = 1);
     
     void set(const gwchar* v, gint len = -1, gint count = 1);
     void append(const gwchar* v, gint len = -1, gint count = 1);
@@ -97,7 +112,6 @@ public:
     void append(GString* v, gint count = 1);
     void insert(gint idx, GString* v, gint count = 1);
     void replace(gint idx, gint lenR, GString* v, gint count = 1);
-    
     
 public:
     void setInt16(gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
@@ -166,9 +180,13 @@ public:
     Formater replaceFormat(gint idx, gint lenR, const gchar* fmt, gint len = -1);
     
 public:
+	guchar pathSeparator();
+	bool firstIsSeparator();
     bool lastIsSeparator();
     void appendPathComponent(const gchar* component, gint len = -1);
+	void appendPathComponent(const guchar* component, gint len = -1);
     void appendPathComponent(const gwchar* component, gint len = -1);
+	void appendPathComponent(GString* component);
     
 protected:
     inline guint32 getOWHashA() {

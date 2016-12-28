@@ -85,7 +85,7 @@ LRESULT CALLBACK GWindow::wndProcP(HWND hWnd, UINT message, WPARAM wParam, LPARA
 			RECT rc;
 			::GetClientRect(hWnd, &rc);
 			::MoveWindow(win->m_OSWin.getHWND(), 0, 0, rc.right - rc.left, rc.bottom - rc.top, FALSE);
-			win->renderForce();
+			win->render();
 		}
 		break;
 		default:

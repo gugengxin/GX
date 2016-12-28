@@ -12,6 +12,7 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 #include "GReader.h"
+#include "GString.h"
 
 
 #include "GXGObject.h"
@@ -23,7 +24,8 @@ class GBundle : public GObject
 public:
 	virtual void close()=0;
 
-	virtual GReader* openReader(const gchar* fileName)=0;
+	GReader* openReader(const gchar* fileName);
+	virtual GReader* openReader(GString* fileName) = 0;
 	virtual void closeReader(GReader* reader)=0;
 };
 

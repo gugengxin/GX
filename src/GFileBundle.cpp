@@ -33,7 +33,7 @@ void GFileBundle::close()
 	m_RootPath.clear();
 }
 
-GReader* GFileBundle::openReader(const gchar* fileName)
+GReader* GFileBundle::openReader(GString* fileName)
 {
 	GString path;
     path.set(&m_RootPath);

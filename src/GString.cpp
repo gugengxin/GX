@@ -690,106 +690,89 @@ const gtchar* GString::pathString()
 
 void GString::set(gchar v, gint count)
 {
-    if (count <= 0) {
-        return;
-    }
-    if(m_Buffer.changeCount(count+1)) {
-        for (gint i=0; i<count; i++) {
-            m_Buffer.set(i, GX_CAST_S(guchar, v));
-        }
-        setCStringEnd();
-        modifyDone();
-    }
+	set(GX_CAST_S(guchar, v), count);
 }
 void GString::append(gchar v, gint count)
 {
-    if (count <= 0) {
-        return;
-    }
-    gint lenCur = getLength();
-    if (m_Buffer.changeCount(lenCur + count + 1)) {
-        for (gint i=0; i<count; i++) {
-            m_Buffer.set(lenCur+i, GX_CAST_S(guchar, v));
-        }
-        setCStringEnd();
-        modifyDone();
-    }
+	append(GX_CAST_S(guchar, v), count);
 }
 void GString::insert(gint idx, gchar v, gint count)
 {
-    replace(idx, 0, v, count);
+	insert(idx, GX_CAST_S(guchar, v), count);
 }
 void GString::replace(gint idx, gint lenR, gchar v, gint count)
 {
-    if (idx < 0 || lenR<0) {
-        return;
-    }
-    if (count <= 0) {
-        return;
-    }
-    gint lenCur = getLength();
-    if (idx > lenCur) {
-        return;
-    }
-    if (m_Buffer.expand(idx, lenR, count)) {
-        for (gint i=0; i<count; i++) {
-            m_Buffer.set(idx+i, GX_CAST_S(guchar, v));
-        }
-        setCStringEnd();
-        modifyDone();
-    }
+	replace(idx, lenR, GX_CAST_S(guchar, v), count);
 }
+
+void GString::set(guchar v, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	if (m_Buffer.changeCount(count + 1)) {
+		for (gint i = 0; i<count; i++) {
+			m_Buffer.set(i, v);
+		}
+		setCStringEnd();
+		modifyDone();
+	}
+}
+void GString::append(guchar v, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (m_Buffer.changeCount(lenCur + count + 1)) {
+		for (gint i = 0; i<count; i++) {
+			m_Buffer.set(lenCur + i, v);
+		}
+		setCStringEnd();
+		modifyDone();
+	}
+}
+void GString::insert(gint idx, guchar v, gint count)
+{
+	replace(idx, 0, v, count);
+}
+void GString::replace(gint idx, gint lenR, guchar v, gint count)
+{
+	if (idx < 0 || lenR<0) {
+		return;
+	}
+	if (count <= 0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (idx > lenCur) {
+		return;
+	}
+	if (m_Buffer.expand(idx, lenR, count)) {
+		for (gint i = 0; i<count; i++) {
+			m_Buffer.set(idx + i, v);
+		}
+		setCStringEnd();
+		modifyDone();
+	}
+}
+
 
 void GString::set(gwchar v, gint count)
 {
-    if (count <= 0) {
-        return;
-    }
-    if(m_Buffer.changeCount(count+1)) {
-        for (gint i=0; i<count; i++) {
-            m_Buffer.set(i, GX_CAST_S(guchar, v));
-        }
-        setCStringEnd();
-        modifyDone();
-    }
+	set(GX_CAST_S(guchar, v), count);
 }
 void GString::append(gwchar v, gint count)
 {
-    if (count <= 0) {
-        return;
-    }
-    gint lenCur = getLength();
-    if (m_Buffer.changeCount(lenCur + count + 1)) {
-        for (gint i=0; i<count; i++) {
-            m_Buffer.set(lenCur+i, GX_CAST_S(guchar, v));
-        }
-        setCStringEnd();
-        modifyDone();
-    }
+	append(GX_CAST_S(guchar, v), count);
 }
 void GString::insert(gint idx, gwchar v, gint count)
 {
-    replace(idx, 0, v, count);
+	insert(idx, GX_CAST_S(guchar, v), count);
 }
 void GString::replace(gint idx, gint lenR, gwchar v, gint count)
 {
-    if (idx < 0 || lenR<0) {
-        return;
-    }
-    if (count <= 0) {
-        return;
-    }
-    gint lenCur = getLength();
-    if (idx > lenCur) {
-        return;
-    }
-    if (m_Buffer.expand(idx, lenR, count)) {
-        for (gint i=0; i<count; i++) {
-            m_Buffer.set(idx+i, GX_CAST_S(guchar, v));
-        }
-        setCStringEnd();
-        modifyDone();
-    }
+	replace(idx, lenR, GX_CAST_S(guchar, v), count);
 }
 
 void GString::set(const gchar* v, gint len, gint count)
@@ -910,8 +893,110 @@ void GString::replace(gint idx, gint lenR,
     }
 }
 
+
+void GString::set(const guchar* v, gint len, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	if (len<0) {
+		len = GX::strlen(v);
+	}
+	if (m_Buffer.changeCount(len*count + 1)) {
+		for (gint j = 0; j<count; j++) {
+			memcpy((void*)m_Buffer.getPtr(j*len), (const void*)v, len*sizeof(guchar));
+		}
+		setCStringEnd();
+		modifyDone();
+	}
+}
+void GString::append(const guchar* v, gint len, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	if (len<0) {
+		len = GX::strlen(v);
+	}
+	gint lenCur = getLength();
+	if (m_Buffer.changeCount(lenCur + len*count + 1)) {
+		for (gint j = 0; j<count; j++) {
+			memcpy((void*)m_Buffer.getPtr(lenCur + j*len), (const void*)v, len*sizeof(guchar));
+		}
+		setCStringEnd();
+		modifyDone();
+	}
+}
+void GString::insert(gint idx, const guchar* v, gint len, gint count)
+{
+	replace(idx, 0, v, len, count);
+}
+void GString::replace(gint idx, gint lenR, const guchar* v, gint len, gint count)
+{
+	if (count <= 0) {
+		return;
+	}
+	if (idx < 0 || lenR<0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (idx > lenCur) {
+		return;
+	}
+	if (len<0) {
+		len = GX::strlen(v);
+	}
+	if (m_Buffer.expand(idx, lenR, len*count)) {
+		for (gint j = 0; j<count; j++) {
+			memcpy((void*)m_Buffer.getPtr(idx + j*len), (const void*)v, len*sizeof(guchar));
+		}
+		setCStringEnd();
+		modifyDone();
+	}
+}
+void GString::replace(gint idx, gint lenR,
+	guchar preChar, gint preCount,
+	guchar sufChar, gint sufCount,
+	const guchar* v, gint len, gint count)
+{
+	if (preCount <0 || count < 0 || sufCount<0 || preCount + count + sufCount <= 0) {
+		return;
+	}
+	if (idx < 0 || lenR<0) {
+		return;
+	}
+	gint lenCur = getLength();
+	if (idx > lenCur) {
+		return;
+	}
+	if (len<0) {
+		len = GX::strlen(v);
+	}
+	if (m_Buffer.expand(idx, lenR, preCount + len*count + sufCount)) {
+		gint start = idx;
+		for (gint i = 0; i<preCount; i++) {
+			m_Buffer.set(start + i, GX_CAST_S(guchar, preChar));
+		}
+		start += preCount;
+		for (gint j = 0; j<count; j++) {
+			memcpy((void*)m_Buffer.getPtr(start + j*len), (const void*)v, len*sizeof(guchar));
+		}
+		start += len*count;
+		for (gint i = 0; i<sufCount; i++) {
+			m_Buffer.set(start + i, GX_CAST_S(guchar, sufChar));
+		}
+		start += sufCount;
+
+		setCStringEnd();
+		modifyDone();
+	}
+}
+
 void GString::set(const gwchar* v, gint len, gint count)
 {
+#if GX_WCHAR_16BIT
+	set(GX_CAST_R(const guchar*, v), len, count);
+#else
     if (count <= 0) {
         return;
     }
@@ -920,20 +1005,20 @@ void GString::set(const gwchar* v, gint len, gint count)
     }
     if (m_Buffer.changeCount(len*count + 1)) {
         for (gint j=0; j<count; j++) {
-#if GX_WCHAR_16BIT
-            memcpy((void*)m_Buffer.getPtr(j*len), (const void*)v, len*sizeof(gwchar));
-#else
             for (gint i = 0; i < len; i++) {
                 m_Buffer.set(j*len+i, GX_CAST_S(guchar, v[i]));
             }
-#endif
         }
         setCStringEnd();
         modifyDone();
     }
+#endif
 }
 void GString::append(const gwchar* v, gint len, gint count)
 {
+#if GX_WCHAR_16BIT
+	append(GX_CAST_R(const guchar*, v), len, count);
+#else
     if (count <= 0) {
         return;
     }
@@ -943,24 +1028,28 @@ void GString::append(const gwchar* v, gint len, gint count)
     gint lenCur = getLength();
     if (m_Buffer.changeCount(lenCur + len*count + 1)) {
         for (gint j=0; j<count; j++) {
-#if GX_WCHAR_16BIT
-            memcpy((void*)m_Buffer.getPtr(lenCur+j*len), (const void*)v, len*sizeof(gwchar));
-#else
             for (gint i = 0; i < len; i++) {
                 m_Buffer.set(lenCur+j*len+i, GX_CAST_S(guchar, v[i]));
             }
-#endif
         }
         setCStringEnd();
         modifyDone();
     }
+#endif
 }
 void GString::insert(gint idx, const gwchar* v, gint len, gint count)
 {
+#if GX_WCHAR_16BIT
+	insert(idx, GX_CAST_R(const guchar*, v), len, count);
+#else
     replace(idx,0, v, len, count);
+#endif
 }
 void GString::replace(gint idx, gint lenR, const gwchar* v, gint len, gint count)
 {
+#if GX_WCHAR_16BIT
+	replace(idx, lenR, GX_CAST_R(const guchar*, v), len, count);
+#else
     if (count <= 0) {
         return;
     }
@@ -976,23 +1065,23 @@ void GString::replace(gint idx, gint lenR, const gwchar* v, gint len, gint count
     }
     if (m_Buffer.expand(idx, lenR, len*count)) {
         for (gint j=0; j<count; j++) {
-#if GX_WCHAR_16BIT
-            memcpy((void*)m_Buffer.getPtr(idx+j*len), (const void*)v, len*sizeof(gwchar));
-#else
             for (gint i = 0; i < len; i++) {
                 m_Buffer.set(idx+j*len+i, GX_CAST_S(guchar, v[i]));
             }
-#endif
         }
         setCStringEnd();
         modifyDone();
-    }
+	}
+#endif
 }
 void GString::replace(gint idx, gint lenR,
                       gwchar preChar, gint preCount,
                       gwchar sufChar, gint sufCount,
                       const gwchar* v, gint len, gint count)
 {
+#if GX_WCHAR_16BIT
+	replace(idx, lenR, preChar, preCount, sufChar, sufCount, GX_CAST_R(const guchar*, v), len, count);
+#else
     if (preCount <0 || count < 0 || sufCount<0 || preCount+count+sufCount<=0) {
         return;
     }
@@ -1013,13 +1102,9 @@ void GString::replace(gint idx, gint lenR,
         }
         start += preCount;
         for (gint j=0; j<count; j++) {
-#if GX_WCHAR_16BIT
-            memcpy((void*)m_Buffer.getPtr(start+j*len), (const void*)v, len*sizeof(gwchar));
-#else
             for (gint i = 0; i < len; i++) {
                 m_Buffer.set(start+j*len+i, GX_CAST_S(guchar, v[i]));
             }
-#endif
         }
         start += len*count;
         for (gint i=0; i<sufCount; i++) {
@@ -1030,6 +1115,7 @@ void GString::replace(gint idx, gint lenR,
         setCStringEnd();
         modifyDone();
     }
+#endif
 }
 
 void GString::set(GString* v, gint count)
@@ -1467,7 +1553,23 @@ GString::Formater GString::replaceFormat(gint idx, gint lenR, const gchar* fmt, 
 
 
 
-
+guchar GString::pathSeparator()
+{
+#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
+	return GX_CAST_S(guchar,'\\');
+#else
+	return GX_CAST_S(guchar,'/');
+#endif
+}
+bool GString::firstIsSeparator()
+{
+	gint count = m_Buffer.getCount();
+	if (count>0) {
+		const guchar c = m_Buffer.first();
+		return (c == (guchar)'/' || c == (guchar)'\\');
+	}
+	return false;
+}
 
 bool GString::lastIsSeparator()
 {
@@ -1497,14 +1599,34 @@ void GString::appendPathComponent(const gchar* component, gint len)
             append(component, len);
         }
         else {
-#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
-            append('\\');
-#else
-            append('/');
-#endif
+			append(pathSeparator());
             append(component, len);
         }
     }
+}
+
+void GString::appendPathComponent(const guchar* component, gint len)
+{
+	if (lastIsSeparator()) {
+		if (component[0] == GX_CAST_S(guchar, '/') || component[0] == GX_CAST_S(guchar, '\\')) {
+			if (len < 0) {
+				len = GX::strlen(component);
+			}
+			append(component + 1, len - 1);
+		}
+		else {
+			append(component, len);
+		}
+	}
+	else {
+		if (component[0] == GX_CAST_S(guchar, '/') || component[0] == GX_CAST_S(guchar, '\\')) {
+			append(component, len);
+		}
+		else {
+			append(pathSeparator());
+			append(component, len);
+		}
+	}
 }
 
 void GString::appendPathComponent(const gwchar* component, gint len)
@@ -1525,17 +1647,16 @@ void GString::appendPathComponent(const gwchar* component, gint len)
             append(component, len);
         }
         else {
-#if defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
-            append(L'\\');
-#else
-            append(L'/');
-#endif
+			append(pathSeparator());
             append(component, len);
         }
     }
 }
 
-
+void GString::appendPathComponent(GString* component)
+{
+	appendPathComponent(GX_CAST_R(const guchar*, component->m_Buffer.getPtr(0)), component->getLength());
+}
 
 
 

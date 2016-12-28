@@ -60,15 +60,6 @@
     <ClCompile Include="..\..\src\GLog.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GDataString.cpp">
-      <Filter>src\String</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GTString.cpp">
-      <Filter>src\String</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GWString.cpp">
-      <Filter>src\String</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GString.cpp">
       <Filter>src\String</Filter>
     </ClCompile>
@@ -322,15 +313,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GLog.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GDataString.h">
-      <Filter>src\String</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GTString.h">
-      <Filter>src\String</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GWString.h">
-      <Filter>src\String</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GString.h">
       <Filter>src\String</Filter>

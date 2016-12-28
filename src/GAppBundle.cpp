@@ -23,15 +23,7 @@
 #define M_RESOURCE_DIR_NAME "assets"
 #endif
 
-
-
-#if defined(GX_OS_APPLE) || defined(GX_OS_WINDOWS) || defined(GX_OS_QT)
-#define M_BASE_CLASS GFileBundle
-#elif defined(GX_OS_ANDROID)
-#define M_BASE_CLASS GZipBundle
-#endif
-
-GX_GOBJECT_IMPLEMENT(GAppBundle, M_BASE_CLASS);
+GX_GOBJECT_IMPLEMENT(GAppBundle, GX_APPBUNDLE_BASE);
 
 GAppBundle* GAppBundle::main()
 {
@@ -73,15 +65,15 @@ GAppBundle::~GAppBundle()
 {
 }
 
-GReader* GAppBundle::openReader(const gchar* fileName)
+GReader* GAppBundle::openReader(GString* fileName)
 {
 #if defined(GX_OS_IPHONE)
-    return M_BASE_CLASS::openReader(fileName);
+	return GX_APPBUNDLE_BASE::openReader(fileName);
 #elif defined(GX_OS_MACOSX) || defined(GX_OS_WINDOWS) || defined(GX_OS_ANDROID) || defined(GX_OS_QT)
     GString path;
     path.append(M_RESOURCE_DIR_NAME);
     path.appendPathComponent(fileName);
-    return M_BASE_CLASS::openReader(path.pathString());
+	return GX_APPBUNDLE_BASE::openReader(&path);
 #else
 #error
     return NULL;
@@ -90,5 +82,5 @@ GReader* GAppBundle::openReader(const gchar* fileName)
 
 void GAppBundle::closeReader(GReader* reader)
 {
-    M_BASE_CLASS::closeReader(reader);
+	GX_APPBUNDLE_BASE::closeReader(reader);
 }

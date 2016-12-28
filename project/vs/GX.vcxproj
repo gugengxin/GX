@@ -42,7 +42,6 @@
     <ClCompile Include="..\..\src\GDataBuffer.cpp" />
     <ClCompile Include="..\..\src\GDataList.cpp" />
     <ClCompile Include="..\..\src\GDataReader.cpp" />
-    <ClCompile Include="..\..\src\GDataString.cpp" />
     <ClCompile Include="..\..\src\GDataWriter.cpp" />
     <ClCompile Include="..\..\src\GDib.cpp" />
     <ClCompile Include="..\..\src\GDShader.cpp" />
@@ -85,12 +84,10 @@
     <ClCompile Include="..\..\src\GTexture.cpp" />
     <ClCompile Include="..\..\src\GTexture2D.cpp" />
     <ClCompile Include="..\..\src\GThread.cpp" />
-    <ClCompile Include="..\..\src\GTString.cpp" />
     <ClCompile Include="..\..\src\GUUID.cpp" />
     <ClCompile Include="..\..\src\GVector.cpp" />
     <ClCompile Include="..\..\src\GWindow.cpp" />
     <ClCompile Include="..\..\src\GWriter.cpp" />
-    <ClCompile Include="..\..\src\GWString.cpp" />
     <ClCompile Include="..\..\src\GXCoder.cpp" />
     <ClCompile Include="..\..\src\GXCWnd.cpp" />
     <ClCompile Include="..\..\src\GXData.cpp" />
@@ -129,7 +126,6 @@
     <ClInclude Include="..\..\src\GDataBuffer.h" />
     <ClInclude Include="..\..\src\GDataList.h" />
     <ClInclude Include="..\..\src\GDataReader.h" />
-    <ClInclude Include="..\..\src\GDataString.h" />
     <ClInclude Include="..\..\src\GDataWriter.h" />
     <ClInclude Include="..\..\src\GDib.h" />
     <ClInclude Include="..\..\src\GDShader.h" />
@@ -174,12 +170,10 @@
     <ClInclude Include="..\..\src\GTexture.h" />
     <ClInclude Include="..\..\src\GTexture2D.h" />
     <ClInclude Include="..\..\src\GThread.h" />
-    <ClInclude Include="..\..\src\GTString.h" />
     <ClInclude Include="..\..\src\GUUID.h" />
     <ClInclude Include="..\..\src\GVector.h" />
     <ClInclude Include="..\..\src\GWindow.h" />
     <ClInclude Include="..\..\src\GWriter.h" />
-    <ClInclude Include="..\..\src\GWString.h" />
     <ClInclude Include="..\..\src\GX.h" />
     <ClInclude Include="..\..\src\GX3DAPI.h" />
     <ClInclude Include="..\..\src\GXCoder.h" />

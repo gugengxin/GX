@@ -18,18 +18,20 @@
 #include "GXGObject.h"
 // Down can't include other h file
 
-class GAppBundle : public 
 #if defined(GX_OS_WINDOWS) || defined(GX_OS_APPLE) || defined(GX_OS_QT)
-	GFileBundle
+#define GX_APPBUNDLE_BASE GFileBundle
 #elif defined(GX_OS_ANDROID)
-	GZipBundle
+#define GX_APPBUNDLE_BASE GZipBundle
 #endif
+
+class GAppBundle : public GX_APPBUNDLE_BASE
 {
 	GX_GOBJECT_FINAL(GAppBundle);
 public:
     static GAppBundle* main();
 public:
-    virtual GReader* openReader(const gchar* fileName);
+	using GX_APPBUNDLE_BASE::openReader;
+    virtual GReader* openReader(GString* fileName);
     virtual void closeReader(GReader* reader);
 };
 

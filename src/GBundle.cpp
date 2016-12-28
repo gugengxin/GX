@@ -20,4 +20,10 @@ GBundle::~GBundle()
 {
 }
 
+GReader* GBundle::openReader(const gchar* fileName)
+{
+	GString str;
+	str.set(fileName);
+	return openReader(&str);
+}
 

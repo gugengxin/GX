@@ -25,7 +25,8 @@ public:
 	bool open(const gtchar* path);
 	virtual void close();
 
-	virtual GReader* openReader(const gchar* fileName);
+	using GBundle::openReader;
+	virtual GReader* openReader(GString* fileName);
 	virtual void closeReader(GReader* reader);
 private:
 	GString m_RootPath;
