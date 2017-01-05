@@ -26,7 +26,7 @@
 
 class GAppBundle : public GX_APPBUNDLE_BASE
 {
-	GX_GOBJECT_FINAL(GAppBundle);
+	GX_FINAL_GOBJECT(GAppBundle);
 public:
     static GAppBundle* main();
 public:

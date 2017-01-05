@@ -56,7 +56,8 @@ avis:\
 
 
 #define GX_OBJECT(cls)          GX_OBJECT_DECLARE(cls,protected,public)
-#define GX_OBJECT_FINAL(cls)    GX_OBJECT_DECLARE(cls,private,public)
+#define GX_FINAL_OBJECT(cls)    GX_OBJECT_DECLARE(cls,private,public)
+#define GX_PRIVATE_OBJECT(cls)  GX_OBJECT_DECLARE(cls,private,private)
 #define GX_VIRTUAL_OBJECT(cls)  GX_VIRTUAL_OBJECT_DECLARE(cls,protected,public)
 
 #define GX_OBJECT_IMPLEMENT(cls,pc) \

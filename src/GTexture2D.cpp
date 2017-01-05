@@ -25,7 +25,7 @@ GTexture2D::~GTexture2D()
 
 }
 
-void GTexture2D::config(Node* node,GDib* dib,Parameter* param)
+void GTexture2D::config(Node* node, GDib* dib, Parameter* param)
 {
     GX_UNUSED(param);
 

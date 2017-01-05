@@ -34,37 +34,20 @@ public:
 	class Handle {
         friend class GX_CONTEXT_BASE;
 	public:
-		Handle() {
-#if defined(GX_OPENGL)
-			m_Name = 0;
-#elif defined(GX_DIRECTX)
-			m_Name = NULL;
-			m_SamplerState = NULL;
-#elif defined(GX_METAL)
-            m_Name=NULL;
-            m_SamplerState=NULL;
-#endif
-		}
+        Handle();
+        ~Handle();
 
-		inline bool isValid() {
-#if defined(GX_OPENGL)
-			return m_Name != 0;
-#elif defined(GX_DIRECTX) || defined(GX_METAL)
-			return m_Name != NULL;
-#endif
-		}
+        bool isValid();
         
         inline Name getName() {
             return m_Name;
         }
-#if defined(GX_DIRECTX)
-		inline ID3D10ShaderResourceView** getNamePtr() {
-			return &m_Name;
-		}
-#endif
-        
 #if defined(GX_OPENGL)
+        
 #elif defined(GX_DIRECTX)
+        inline ID3D10ShaderResourceView** getNamePtr() {
+            return &m_Name;
+        }
         inline ID3D10SamplerState* getSamplerState() {
             return m_SamplerState;
         }
@@ -109,16 +92,7 @@ public:
     inline Node* getNode() {
         return m_Node;
     }
-    inline Name getName() {
-        if (m_Node) {
-            return m_Node->getData().getName();
-        }
-#if defined(GX_OPENGL)
-        return 0;
-#else
-        return NULL;
-#endif
-    }
+    Name getName();
     virtual gint32 getWidth()=0;
     virtual gint32 getHeight()=0;
     virtual gint32 getDepth()=0;

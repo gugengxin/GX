@@ -104,7 +104,7 @@ public:
 //Texture
 public:
     GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param);
-	GTexture2D* loadCreateTexture2D(GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param);
+	GTexture2D* loadTexture2D(GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param);
 private:
 	void addTextureNodeInMT(GTexture::Node* node);
 	void removeTextureNodeInMT(GTexture::Node* node);
@@ -114,11 +114,11 @@ private:
 	static void unloadTextureNodeInMT(GObject* obj);
 //FrameBuffer
 public:
-
+    GFrameBuffer* loadFrameBuffer(GTexture* tex, bool enableDepth);
+    GFrameBuffer* loadFrameBuffer(GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param, bool enableDepth);
 private:
     void addFrameBufferNodeInMT(GFrameBuffer::Node* node);
     void removeFrameBufferNodeInMT(GFrameBuffer::Node* node);
-	bool loadFrameBufferNode(GFrameBuffer::Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param, bool enableDepth);
 	bool loadFrameBufferNode(GFrameBuffer::Node* node, GTexture* texTarget, bool enableDepth);
     void unloadFrameBufferNode(GFrameBuffer::Node* node);
 	static void unloadFrameBufferNodeInMT(GObject* obj);

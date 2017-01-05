@@ -25,7 +25,8 @@ class GTexture;
 
 class GFrameBuffer : public GCanvas
 {
-	GX_GOBJECT(GFrameBuffer);
+    friend class GContext;
+	GX_PRIVATE_GOBJECT(GFrameBuffer);
 public:
 #if defined(GX_OPENGL)
     typedef GLuint Name;
@@ -41,26 +42,10 @@ public:
     class Handle {
         friend class GX_CONTEXT_BASE;
     public:
-        Handle() {
-#if defined(GX_OPENGL)
-            m_Name = 0;
-            m_DepthName=0;
-#elif defined(GX_DIRECTX)
-			m_Name=NULL;
-			m_DepthName=NULL;
-			m_RasterState=NULL;
-#elif defined(GX_METAL)
-            m_Name=NULL;
-            m_DepthName=NULL;
-#endif
-        }
-        inline bool isValid() {
-#if defined(GX_OPENGL)
-            return m_Name != 0;
-#elif defined(GX_DIRECTX) || defined(GX_METAL)
-			return m_Name != NULL;
-#endif
-        }
+        Handle();
+        ~Handle();
+        
+        bool isValid();
         inline Name getName() {
             return m_Name;
         }
@@ -92,6 +77,9 @@ public:
         inline GContext* getContext() {
             return m_Context;
         }
+        inline GTexture* getTexture() {
+            return m_TexTarget;
+        }
         float getWidth();
         float getHeight();
 
@@ -102,19 +90,8 @@ public:
     };
     
 public:
-    inline Node* getNode() {
-        return m_Node;
-    }
-    inline Name getName() {
-        if (m_Node) {
-            return m_Node->getData().getName();
-        }
-#if defined(GX_OPENGL)
-        return 0;
-#else
-        return NULL;
-#endif
-    }
+    Name getName();
+    GTexture* getTexture();
     
     virtual float getWidth();
     virtual float getHeight();
@@ -124,10 +101,14 @@ public:
     void setViewport(float x, float y, float w, float h, float scale);
     void renderEnd();
 
-protected:
+private:
+    inline Node* getNode() {
+        return m_Node;
+    }
     inline void setNode(Node* v) {
         m_Node=v;
     }
+    void config(Node* node);
 private:
     Node* m_Node;
     float m_Scale;

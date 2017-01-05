@@ -17,7 +17,7 @@
 
 class GTexture2D : public GTexture {
     friend class GContext;
-    GX_GOBJECT(GTexture2D);
+    GX_PRIVATE_GOBJECT(GTexture2D);
 public:
 	class Parameter {
 	public:
@@ -40,7 +40,7 @@ public:
     
     
 private:
-    void config(Node* node,GDib* dib,Parameter* param);
+    void config(Node* node, GDib* dib, Parameter* param);
 	void config(Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, Parameter* param);
     
 private:

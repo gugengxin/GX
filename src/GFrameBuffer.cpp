@@ -16,6 +16,39 @@
 
 GX_GOBJECT_IMPLEMENT(GFrameBuffer, GCanvas);
 
+
+GFrameBuffer::Handle::Handle()
+{
+#if defined(GX_OPENGL)
+    m_Name = 0;
+    m_DepthName=0;
+#elif defined(GX_DIRECTX)
+    m_Name=NULL;
+    m_DepthName=NULL;
+    m_RasterState=NULL;
+#elif defined(GX_METAL)
+    m_Name=NULL;
+    m_DepthName=NULL;
+#endif
+}
+
+GFrameBuffer::Handle::~Handle()
+{
+    
+}
+
+bool GFrameBuffer::Handle::isValid()
+{
+#if defined(GX_OPENGL)
+    return m_Name != 0;
+#elif defined(GX_DIRECTX) || defined(GX_METAL)
+    return m_Name != NULL;
+#endif
+}
+
+
+
+
 GFrameBuffer::Node::Node()
 {
     m_Context = NULL;
@@ -26,6 +59,25 @@ GFrameBuffer::Node::Node()
 GFrameBuffer::Node::~Node()
 {
 
+}
+
+GFrameBuffer::Name GFrameBuffer::getName()
+{
+    if (m_Node) {
+        return m_Node->getData().getName();
+    }
+#if defined(GX_OPENGL)
+    return 0;
+#else
+    return NULL;
+#endif
+}
+GTexture* GFrameBuffer::getTexture()
+{
+    if (m_Node) {
+        m_Node->getTexture();
+    }
+    return NULL;
 }
 
 float GFrameBuffer::Node::getWidth()
@@ -65,6 +117,10 @@ float GFrameBuffer::getScale()
     return m_Scale;
 }
 
+void GFrameBuffer::config(Node* node)
+{
+    setNode(node);
+}
 
 void GFrameBuffer::renderBegin()
 {

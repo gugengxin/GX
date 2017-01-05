@@ -49,7 +49,8 @@ avis:\
 
 
 #define GX_GOBJECT(cls)          GX_GOBJECT_DECLARE(cls,protected,public)
-#define GX_GOBJECT_FINAL(cls)    GX_GOBJECT_DECLARE(cls,private,public)
+#define GX_FINAL_GOBJECT(cls)    GX_GOBJECT_DECLARE(cls,private,public)
+#define GX_PRIVATE_GOBJECT(cls)  GX_GOBJECT_DECLARE(cls,private,private)
 #define GX_VIRTUAL_GOBJECT(cls)  GX_VIRTUAL_GOBJECT_DECLARE(cls,protected,public)
 
 #define GX_GOBJECT_IMPLEMENT(cls,pc) \
