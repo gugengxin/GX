@@ -362,6 +362,30 @@ namespace GX {
 #define GX_WARP_MIRRORED	GL_MIRRORED_REPEAT
 #define GX_WARP_CLAMP		GL_CLAMP_TO_EDGE
 
+namespace GX {
+    class OGLContext {
+    public:
+        OGLContext();
+    public:
+#if defined(GX_OS_WINDOWS)
+        HDC   DC;
+        HGLRC context;
+#elif defined(GX_OS_APPLE)
+        void* context;
+#elif defined(GX_OS_ANDROID)
+        EGLDisplay display;
+        EGLSurface surface;
+        EGLContext context;
+#elif defined(GX_OS_QT)
+        QSurface*       surface;
+        QOpenGLContext* context;
+#endif
+    };
+    
+    void openGLPushContext(const OGLContext& ctt);
+    void openGLPopContext();
+}
+
 
 #endif
 #endif //AS_GXOPENGL_H

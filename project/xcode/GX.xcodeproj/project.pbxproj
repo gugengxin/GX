@@ -403,7 +403,7 @@
 		CABB5CC51CE0E40500D5B648 /* GOGLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GOGLContext.h; sourceTree = "<group>"; };
 		CABB5CC61CE0E40500D5B648 /* GXDirectX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXDirectX.cpp; sourceTree = "<group>"; };
 		CABB5CC71CE0E40500D5B648 /* GXDirectX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXDirectX.h; sourceTree = "<group>"; };
-		CABB5CC81CE0E40500D5B648 /* GXOpenGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXOpenGL.cpp; sourceTree = "<group>"; };
+		CABB5CC81CE0E40500D5B648 /* GXOpenGL.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GXOpenGL.cpp; sourceTree = "<group>"; };
 		CABB5CC91CE0E40500D5B648 /* GXOpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXOpenGL.h; sourceTree = "<group>"; };
 		CAC2932C1E0A4409004519D8 /* com_gxengine_gx_GAndroidJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_gx_GAndroidJ.h; sourceTree = "<group>"; };
 		CAC2932D1E0A4409004519D8 /* GAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAndroid.cpp; sourceTree = "<group>"; };

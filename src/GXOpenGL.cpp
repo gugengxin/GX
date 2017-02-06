@@ -5,6 +5,19 @@
 #include "GXOpenGL.h"
 #if defined(GX_OPENGL)
 #include "GLog.h"
+#include "GDataArray.h"
+
+#if defined(GX_OS_WINDOWS)
+#include "GXCWnd.h"
+#elif defined(GX_OS_IPHONE)
+#import <OpenGLES/EAGL.h>
+#elif defined(GX_OS_MACOSX)
+#include <Cocoa/Cocoa.h>
+#endif
+
+#include "GXGObject.h"
+
+#if defined(GX_OS_WINDOWS)
 
 #ifdef GLEW_MX
 GLEWContext _glewctx;
@@ -13,8 +26,6 @@ WGLEWContext _wglewctx;
 #elif !defined(__APPLE__) || defined(GLEW_APPLE_GLX)
 GLXEWContext _glxewctx;
 #endif
-
-#include "GXCWnd.h"
 
 namespace GX
 {
@@ -70,8 +81,7 @@ namespace GX
 }
 #endif
 
-
-#if defined(GX_OS_QT)
+#elif defined(GX_OS_QT)
 
 namespace GX {
 
@@ -82,5 +92,100 @@ QOpenGLFunctions *openGLFuns()
 
 }
 #endif
+
+
+
+
+
+namespace GX {
+    
+    static class _ContextStack : public GPDArray<OGLContext> {
+        GX_GOBJECT_DECLARE(_ContextStack, public, public);
+    public:
+        
+    } g_CttStack;
+    
+    GX_GOBJECT_IMPLEMENT(_ContextStack, GPDArray<OGLContext>);
+    
+    _ContextStack::_ContextStack()
+    {
+        
+    }
+    _ContextStack::~_ContextStack()
+    {
+        
+    }
+    
+    OGLContext::OGLContext()
+    {
+#if defined(GX_OS_WINDOWS)
+        DC=NULL;
+        context=NULL;
+#elif defined(GX_OS_APPLE)
+        context=NULL;
+#elif defined(GX_OS_ANDROID)
+        display=EGL_NO_DISPLAY;
+        surface=EGL_NO_SURFACE;
+        context=EGL_NO_CONTEXT;
+#elif defined(GX_OS_QT)
+        surface=NULL;
+        context=NULL;
+#endif
+    }
+    
+#if defined(GX_OS_ANDROID)
+    static EGLDisplay g_Display=EGL_NO_DISPLAY;
+#endif
+    static void openGLContextMakeCurrent(const OGLContext& ctt)
+    {
+#if defined(GX_OS_WINDOWS)
+        wglMakeCurrent(ctt.DC, ctt.context);
+#elif defined(GX_OS_IPHONE)
+        [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*,ctt.context)];
+#elif defined(GX_OS_MACOSX)
+        [GX_CAST_R(NSOpenGLContext*,ctt.context) makeCurrentContext];
+#elif defined(GX_OS_ANDROID)
+        g_Display=ctt.display;
+        eglMakeCurrent(g_Display, ctt.surface, ctt.surface, ctt.context);
+#elif defined(GX_OS_QT)
+        ctt.context->makeCurrent(ctt.surface);
+#endif
+    }
+    
+    static void openGLContextMakeClear()
+    {
+#if defined(GX_OS_WINDOWS)
+        wglMakeCurrent(NULL, NULL);
+#elif defined(GX_OS_IPHONE)
+        [EAGLContext setCurrentContext:nil];
+#elif defined(GX_OS_MACOSX)
+        [NSOpenGLContext clearCurrentContext];
+#elif defined(GX_OS_ANDROID)
+        eglMakeCurrent(g_Display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+        g_Display=EGL_NO_DISPLAY;
+#elif defined(GX_OS_QT)
+        m_Context->doneCurrent();
+#endif
+    }
+    
+    void openGLPushContext(const OGLContext& ctt)
+    {
+        g_CttStack.add(ctt);
+        openGLContextMakeCurrent(ctt);
+    }
+    void openGLPopContext()
+    {
+        g_CttStack.removeLast();
+        if (g_CttStack.isEmpty()) {
+            openGLContextMakeClear();
+        }
+        else {
+            openGLContextMakeCurrent(g_CttStack.last());
+        }
+    }
+    
+    
+}
+
 
 #endif

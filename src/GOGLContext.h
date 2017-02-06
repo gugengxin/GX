@@ -62,11 +62,8 @@ protected:
     void unloadFrameBufferNodeForContext(GFrameBuffer::Node* node);
 
 private:
-#if defined(GX_OS_WINDOWS)
-	HDC   m_DC;
-	HGLRC m_Context;
-#elif defined(GX_OS_APPLE)
-    void* m_Context;
+    GX::OGLContext m_Context;
+
 #if defined(GX_OS_IPHONE)
     gint32   m_BackingWidth;
     gint32   m_BackingHeight;
@@ -76,25 +73,6 @@ private:
     guint32  m_DepthRenderbuffer;
     guint32  m_SaaFramebuffer;
     guint32  m_SaaRenderbuffer;
-#endif
-#elif defined(GX_OS_ANDROID)
-	EGLSurface m_Surface;
-	EGLContext m_Context;
-#elif defined(GX_OS_QT)
-    QOpenGLContext* m_Context;
-#endif
-#if defined(GX_OS_ANDROID)
-    class OSHandle {
-    public:
-        EGLSurface surface;
-        EGLContext context;
-    };
-    void pushOSHandle(EGLSurface surface,EGLContext context);
-    void popOSHandle();
-
-    GPDArray<OSHandle> m_OSHandles;
-#else
-    gint m_ContextMakeCount;
 #endif
 };
 

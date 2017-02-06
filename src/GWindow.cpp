@@ -174,7 +174,7 @@ NSView
         _bridge.setTarget(dge);
 #if defined(GX_OS_IPHONE)
         self.opaque          = YES;
-        self.backgroundColor = nil;
+        self.backgroundColor = [UIColor blackColor];
 #if defined(GX_METAL)
         _metalLayer=(CAMetalLayer*)self.layer;
 #elif defined(GX_OPENGL)
