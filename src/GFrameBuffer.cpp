@@ -82,11 +82,11 @@ GTexture* GFrameBuffer::getTexture()
 
 float GFrameBuffer::Node::getWidth()
 {
-    return m_TexTarget->getWidth();
+    return GX_CAST_S(float,m_TexTarget->getWidth());
 }
 float GFrameBuffer::Node::getHeight()
 {
-    return m_TexTarget->getHeight();
+	return GX_CAST_S(float, m_TexTarget->getHeight());
 }
 
 

@@ -181,7 +181,7 @@ GOGLContext::~GOGLContext()
 bool GOGLContext::create(GWindow* win)
 {
 #if defined(GX_OS_WINDOWS)
-    static bool g_GLEWInited = GX::glewInit();
+	static bool g_GLEWInited = GX::openGLEWInit();
 	if(!g_GLEWInited) {
 		return false;
 	}
@@ -191,13 +191,13 @@ bool GOGLContext::create(GWindow* win)
     }
 
 #if defined(GX_OS_WINDOWS)
-    m_DC = ::GetDC(M_OS_WND(m_Window->getOSWindow()));
-    ConfigDC(m_DC);
-    m_Context = ::wglCreateContext(m_DC);
+    m_Context.DC = ::GetDC(M_OS_WND(getWindow()->getOSWindow()));
+	ConfigDC(m_Context.DC);
+	m_Context.context = ::wglCreateContext(m_Context.DC);
     //shared
     GWindow* aw = GApplication::shared()->firstWindow();
-    if (aw && aw != m_Window) {
-        wglShareLists(((GOGLContext*)&aw->m_Context)->m_Context, m_Context);
+	if (aw && aw != getWindow()) {
+		wglShareLists(((GOGLContext*)&aw->m_Context)->m_Context.context, m_Context.context);
     }
 #elif defined(GX_OS_IPHONE)
     EAGLSharegroup* group=nil;
@@ -307,13 +307,13 @@ bool GOGLContext::create(GWindow* win)
 void GOGLContext::destroy()
 {
 #if defined(GX_OS_WINDOWS)
-	if (m_Context) {
-		wglDeleteContext(m_Context);
-		m_Context = NULL;
+	if (m_Context.context) {
+		wglDeleteContext(m_Context.context);
+		m_Context.context = NULL;
 	}
-	if (m_DC) {
-		::ReleaseDC(M_OS_WND(m_Window->getOSWindow()), m_DC);
-		m_DC = NULL;
+	if (m_Context.DC) {
+		::ReleaseDC(M_OS_WND(getWindow()->getOSWindow()), m_Context.DC);
+		m_Context.DC = NULL;
 	}
 #elif defined(GX_OS_APPLE)
 #if defined(GX_OS_IPHONE)
@@ -469,7 +469,7 @@ void GOGLContext::setViewport(float x, float y, float w, float h, float scale)
 void GOGLContext::renderEnd()
 {
 #if defined(GX_OS_WINDOWS)
-	::SwapBuffers(m_DC);
+	::SwapBuffers(m_Context.DC);
 #elif defined(GX_OS_IPHONE)
 	if (m_SaaFramebuffer)
 	{

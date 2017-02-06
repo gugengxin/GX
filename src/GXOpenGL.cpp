@@ -35,7 +35,7 @@ namespace GX
 		return ::DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
 
-	bool glewInit()
+	bool openGLEWInit()
 	{
 		bool res = false;
 
@@ -63,7 +63,7 @@ namespace GX
 				}
 
 				if (!wglewIsSupported("WGLEW_ARB_pixel_format ""WGLEW_ARB_create_context ")) {
-					GX_LOG_W(PrioDEBUG, "GXOpenGL::GlewInit", "Not support ARB");
+					GX_LOG_W(PrioDEBUG, "GXOpenGL::openGLEWInit", "Not support ARB");
 				}
 
 				wglMakeCurrent(NULL, NULL);
