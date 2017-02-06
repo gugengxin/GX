@@ -1,4 +1,4 @@
-﻿/*
+/*
 ** The OpenGL Extension Wrangler Library
 ** Copyright (C) 2008-2015, Nigel Stewart <nigels[]users sourceforge net>
 ** Copyright (C) 2002-2008, Milan Ikits <milan ikits[]ieee org>
@@ -53,6 +53,7 @@
 ** MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
 */
 
+//GLEW v2.0.0
 #include "GXOSs.h"
 #if defined(GX_OS_WINDOWS) && defined(GX_OPENGL)
 #ifndef GLEW_MX
@@ -1204,18 +1205,8 @@ typedef BOOL (WINAPI * PFNWGLWAITFORSBCOMLPROC) (HDC hdc, INT64 target_sbc, INT6
 
 /* ------------------------------------------------------------------------- */
 
-#ifdef GLEW_MX
-#define WGLEW_FUN_EXPORT
-#define WGLEW_VAR_EXPORT
-#else
 #define WGLEW_FUN_EXPORT GLEW_FUN_EXPORT
 #define WGLEW_VAR_EXPORT GLEW_VAR_EXPORT
-#endif /* GLEW_MX */
-
-#ifdef GLEW_MX
-struct WGLEWContextStruct
-{
-#endif /* GLEW_MX */
 
 WGLEW_FUN_EXPORT PFNWGLSETSTEREOEMITTERSTATE3DLPROC __wglewSetStereoEmitterState3DL;
 
@@ -1420,34 +1411,18 @@ WGLEW_VAR_EXPORT GLboolean __WGLEW_NV_vertex_array_range;
 WGLEW_VAR_EXPORT GLboolean __WGLEW_NV_video_capture;
 WGLEW_VAR_EXPORT GLboolean __WGLEW_NV_video_output;
 WGLEW_VAR_EXPORT GLboolean __WGLEW_OML_sync_control;
-
-#ifdef GLEW_MX
-}; /* WGLEWContextStruct */
-#endif /* GLEW_MX */
-
 /* ------------------------------------------------------------------------- */
-
-#ifdef GLEW_MX
-
-typedef struct WGLEWContextStruct WGLEWContext;
-GLEWAPI GLenum GLEWAPIENTRY wglewContextInit (WGLEWContext *ctx);
-GLEWAPI GLboolean GLEWAPIENTRY wglewContextIsSupported (const WGLEWContext *ctx, const char *name);
-
-#define wglewInit() wglewContextInit(wglewGetContext())
-#define wglewIsSupported(x) wglewContextIsSupported(wglewGetContext(), x)
-
-#define WGLEW_GET_VAR(x) (*(const GLboolean*)&(wglewGetContext()->x))
-#define WGLEW_GET_FUN(x) wglewGetContext()->x
-
-#else /* GLEW_MX */
 
 GLEWAPI GLenum GLEWAPIENTRY wglewInit ();
 GLEWAPI GLboolean GLEWAPIENTRY wglewIsSupported (const char *name);
 
+#ifndef WGLEW_GET_VAR
 #define WGLEW_GET_VAR(x) (*(const GLboolean*)&x)
-#define WGLEW_GET_FUN(x) x
+#endif
 
-#endif /* GLEW_MX */
+#ifndef WGLEW_GET_FUN
+#define WGLEW_GET_FUN(x) x
+#endif
 
 GLEWAPI GLboolean GLEWAPIENTRY wglewGetExtension (const char *name);
 

@@ -578,6 +578,9 @@
     <ClInclude Include="..\..\src\GJNI.h">
       <Filter>src\Unuse</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\GL\eglew.h">
+      <Filter>src\Window\3DAPI\glew</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\GSRGraphics.gxsl">

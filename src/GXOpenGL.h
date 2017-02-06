@@ -15,6 +15,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+/* GLEW_MX
 #ifdef GLEW_MX  
 extern GLEWContext _glewctx;
 #define glewGetContext() (&_glewctx)  
@@ -26,6 +27,7 @@ extern GLXEWContext _glxewctx;
 #define glxewGetContext() (&_glxewctx)  
 #endif  
 #endif
+//*/
 
 namespace GX
 {

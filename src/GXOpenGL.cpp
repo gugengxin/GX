@@ -19,6 +19,7 @@
 
 #if defined(GX_OS_WINDOWS)
 
+/* GLEW_MX
 #ifdef GLEW_MX
 GLEWContext _glewctx;
 #ifdef _WIN32
@@ -26,6 +27,7 @@ WGLEWContext _wglewctx;
 #elif !defined(__APPLE__) || defined(GLEW_APPLE_GLX)
 GLXEWContext _glxewctx;
 #endif
+//*/
 
 namespace GX
 {
@@ -79,7 +81,9 @@ namespace GX
 	}
 
 }
+/* GLEW_MX
 #endif
+//*/
 
 #elif defined(GX_OS_QT)
 
