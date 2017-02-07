@@ -460,13 +460,13 @@ void GOGLContext::renderBegin()
 #endif
     
     const GColor4F& bgdClr=getWindow()->getBackgroundColor();
-	glClearColor(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	GX_glClearColor(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
+	GX_glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 void GOGLContext::setViewport(float x, float y, float w, float h, float scale)
 {
-	glViewport((GLint)(x*scale), (GLint)(y*scale), (GLint)(w*scale), (GLint)(h*scale));
+	GX_glViewport((GLint)(x*scale), (GLint)(y*scale), (GLint)(w*scale), (GLint)(h*scale));
 }
 
 void GOGLContext::renderEnd()

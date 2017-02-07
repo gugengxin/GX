@@ -97,6 +97,7 @@ public:
     virtual float getHeight();
     virtual float getScale();
     
+    bool renderCheck();
     void renderBegin();
     void setViewport(float x, float y, float w, float h, float scale);
     void renderEnd();
@@ -112,6 +113,14 @@ private:
 private:
     Node* m_Node;
     float m_Scale;
+#if defined(GX_OPENGL)
+    GLuint  m_PreBindName;
+    GLint   m_PreViewport[4];
+#elif defined(GX_DIRECTX)
+    
+#elif defined(GX_METAL)
+    
+#endif
 };
 
 // Up can't include other h file

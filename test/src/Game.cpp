@@ -171,10 +171,24 @@ void Game::render(GCanvas* canvas)
             GO::retain(tex);
             GAppBundle::main()->closeReader(reader);
         }
+        
+        if (fb->renderCheck()) {
+            fb->renderBegin();
+            
+            fb->setViewport(0, 0, fb->getWidth(), fb->getHeight(), fb->getScale());
+            
+            fb->enable2D(fb->getWidth(), fb->getHeight());
+            
+            fb->translate(fb->getWidth()*0.5f, fb->getHeight()*0.5f, 0.0f);
+            
+            shader->draw(fb, data, GSRTexture2D::IT_Float_Float, tex, GX_TRIANGLE_STRIP, 0, 4, NULL);
+            
+            fb->renderEnd();
+        }
     }
     
     
     
-    shader->draw(canvas, data, GSRTexture2D::IT_Float_Float, tex, GX_TRIANGLE_STRIP, 0, 4, NULL);
+    shader->draw(canvas, data, GSRTexture2D::IT_Float_Float, GX_CAST_R(GTexture2D*, fb->getTexture()), GX_TRIANGLE_STRIP, 0, 4, NULL);
     //*/
 }

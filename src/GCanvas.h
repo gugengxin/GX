@@ -80,7 +80,7 @@ public:
     }
     
 public:
-    const GColor4F& getBackgroundColor() {
+    const GColor4F& getBackgroundColor() const {
         return m_BgdColor;
     }
     void setBackgroundColor(float r,float g,float b,float a) {

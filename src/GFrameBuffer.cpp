@@ -75,7 +75,7 @@ GFrameBuffer::Name GFrameBuffer::getName()
 GTexture* GFrameBuffer::getTexture()
 {
     if (m_Node) {
-        m_Node->getTexture();
+        return m_Node->getTexture();
     }
     return NULL;
 }
@@ -95,6 +95,17 @@ GFrameBuffer::GFrameBuffer()
 {
     m_Node=NULL;
     m_Scale=1.0f;
+#if defined(GX_OPENGL)
+    m_PreBindName=0;
+    m_PreViewport[0]=0;
+    m_PreViewport[1]=0;
+    m_PreViewport[2]=0;
+    m_PreViewport[3]=0;
+#elif defined(GX_DIRECTX)
+    
+#elif defined(GX_METAL)
+    
+#endif
 }
 
 GFrameBuffer::~GFrameBuffer()
@@ -122,16 +133,56 @@ void GFrameBuffer::config(Node* node)
     setNode(node);
 }
 
+bool GFrameBuffer::renderCheck()
+{
+    if (!m_Node) {
+        return false;
+    }
+    return true;
+}
+
 void GFrameBuffer::renderBegin()
 {
+    m_Node->getContext()->makeCurrent();
     
+#if defined(GX_OPENGL)
+    
+    GX_glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&m_PreBindName);
+    GX_glGetIntegerv(GL_VIEWPORT, m_PreViewport);
+    GX_glBindFramebuffer(GL_FRAMEBUFFER, m_Node->getData().getName());
+    
+    const GColor4F& bgdClr=getBackgroundColor();
+    GX_glClearColor(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
+    GX_glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    
+#elif defined(GX_DIRECTX)
+    
+#elif defined(GX_METAL)
+    
+#endif
 }
+
 void GFrameBuffer::setViewport(float x, float y, float w, float h, float scale)
 {
+#if defined(GX_OPENGL)
+    GX_glViewport((GLint)(x*scale), (GLint)(y*scale), (GLint)(w*scale), (GLint)(h*scale));
+#elif defined(GX_DIRECTX)
     
+#elif defined(GX_METAL)
+    
+#endif
 }
+
 void GFrameBuffer::renderEnd()
 {
+#if defined(GX_OPENGL)
+    GX_glBindFramebuffer(GL_FRAMEBUFFER, m_PreBindName);
+    GX_glViewport(m_PreViewport[0], m_PreViewport[1], m_PreViewport[2], m_PreViewport[3]);
+#elif defined(GX_DIRECTX)
     
+#elif defined(GX_METAL)
+    
+#endif
+    m_Node->getContext()->makeClear();
 }
 
