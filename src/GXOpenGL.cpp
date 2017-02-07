@@ -168,7 +168,10 @@ namespace GX {
         eglMakeCurrent(g_Display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
         g_Display=EGL_NO_DISPLAY;
 #elif defined(GX_OS_QT)
-        m_Context->doneCurrent();
+        QOpenGLContext* cur=QOpenGLContext::currentContext();
+        if(cur) {
+            cur->doneCurrent();
+        }
 #endif
     }
     

@@ -146,6 +146,7 @@ HEADERS += \
 	../../src/GGame.h\
 	../../src/GJNI.h\
 	../../src/GJpeg.h\
+	../../src/GL/eglew.h\
 	../../src/GL/glew.h\
 	../../src/GL/glxew.h\
 	../../src/GL/wglew.h\

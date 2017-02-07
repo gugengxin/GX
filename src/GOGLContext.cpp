@@ -290,16 +290,17 @@ bool GOGLContext::create(GWindow* win)
 		g_Context = m_Context;
 	}
 #elif defined(GX_OS_QT)
-    m_Context=new QOpenGLContext();
-    m_Context->setFormat(getWindow()->m_OSWin->format());
+    m_Context.surface=getWindow()->m_OSWin;
+    m_Context.context=new QOpenGLContext();
+    m_Context.context->setFormat(getWindow()->m_OSWin->format());
     GWindow *aw = GApplication::shared()->firstWindow();
     if (aw && aw != getWindow()) {
-        m_Context->setShareContext(GX_CAST_R(GOGLContext* , &aw->m_Context)->m_Context);
+        m_Context.context->setShareContext(GX_CAST_R(GOGLContext* , &aw->m_Context)->m_Context.context);
     }
-    bool res=m_Context->create();
-    res=m_Context->makeCurrent(getWindow()->m_OSWin);
+    bool res=m_Context.context->create();
+    res=m_Context.context->makeCurrent(getWindow()->m_OSWin);
     initializeOpenGLFunctions();
-    m_Context->doneCurrent();
+    m_Context.context->doneCurrent();
 #endif
 	return true;
 }
@@ -359,7 +360,7 @@ void GOGLContext::destroy()
 	}
 #elif defined(GX_OS_QT)
     //delete m_Context;
-    m_Context=NULL;
+    m_Context.context=NULL;
 #endif
 	GBaseContext::destroy();
 }
@@ -492,7 +493,7 @@ void GOGLContext::renderEnd()
 #elif defined(GX_OS_ANDROID)
 	eglSwapBuffers(g_Display, m_Surface);
 #elif defined(GX_OS_QT)
-    m_Context->swapBuffers(getWindow()->m_OSWin);
+    m_Context.context->swapBuffers(getWindow()->m_OSWin);
 #endif
 	makeClear();
 }
