@@ -9,7 +9,7 @@
 #if defined(GX_OS_ANDROID)
 
 #include "GJNI.h"
-#include "GTString.h"
+#include "GString.h"
 
 class GAndroidC : public  GJNI::Caller {
 public:
@@ -21,10 +21,10 @@ private:
 public:
     float appGetDefaultWindowScale(JNIEnv* jniEnv);
     float appGetDefaultWindowScale();
-    GPath* appGetCacheDir(JNIEnv* jniEnv);
-    GPath* appGetCacheDir();
-    GPath* appGetPackageCodePath(JNIEnv* jniEnv);
-    GPath* appGetPackageCodePath();
+    GString* appGetCacheDir(JNIEnv* jniEnv);
+    GString* appGetCacheDir();
+    GString* appGetPackageCodePath(JNIEnv* jniEnv);
+    GString* appGetPackageCodePath();
     void appStartActivity(JNIEnv* jniEnv);
     void appStartActivity();
     void UUIDCreate(JNIEnv* jniEnv,guint8* uuidOut);

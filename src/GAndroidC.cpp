@@ -59,39 +59,39 @@ float GAndroidC::appGetDefaultWindowScale()
     return appGetDefaultWindowScale(env.get());
 }
 
-GPath* GAndroidC::appGetCacheDir(JNIEnv* jniEnv)
+GString* GAndroidC::appGetCacheDir(JNIEnv* jniEnv)
 {
-    GPath *res = NULL;
+    GString *res = NULL;
     jstring str = (jstring) callStaticObjectMethod(jniEnv,M_METHOD_ID(appGetCacheDir));
     const char *cstr = jniEnv->GetStringUTFChars(str, NULL);
     if (cstr) {
-        res = GPath::autoAlloc();
+        res = GString::autoAlloc();
         res->set(cstr);
         jniEnv->ReleaseStringUTFChars(str, cstr);
     }
     jniEnv->DeleteLocalRef(str);
     return res;
 }
-GPath* GAndroidC::appGetCacheDir()
+GString* GAndroidC::appGetCacheDir()
 {
     GJNI::EnvHolder env;
     return appGetCacheDir(env.get());
 }
 
-GPath* GAndroidC::appGetPackageCodePath(JNIEnv* jniEnv)
+GString* GAndroidC::appGetPackageCodePath(JNIEnv* jniEnv)
 {
-    GPath *res = NULL;
+    GString *res = NULL;
     jstring str = (jstring) callStaticObjectMethod(jniEnv,M_METHOD_ID(appGetPackageCodePath));
     const char *cstr = jniEnv->GetStringUTFChars(str, NULL);
     if (cstr) {
-        res = GPath::autoAlloc();
+        res = GString::autoAlloc();
         res->set(cstr);
         jniEnv->ReleaseStringUTFChars(str, cstr);
     }
     jniEnv->DeleteLocalRef(str);
     return res;
 }
-GPath* GAndroidC::appGetPackageCodePath()
+GString* GAndroidC::appGetPackageCodePath()
 {
     GJNI::EnvHolder env;
     return appGetPackageCodePath(env.get());

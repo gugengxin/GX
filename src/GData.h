@@ -20,16 +20,16 @@ class GData : public GObject, public GSerialize, public GUnserialize {
 	friend class GPieceData;
     GX_GOBJECT(GData);
 public:
-    inline void* getPtr() {
+    inline void* getPtr() const {
         return m_Buffer;
     }
-	inline void* getPtr(guint offset) {
+	inline void* getPtr(guint offset) const {
 		return GX_CAST_R(guint8*, m_Buffer) + offset;
 	}
-    inline guint getBytes() {
+    inline guint getBytes() const {
         return m_Bytes;
     }
-    inline bool isStatic() {
+    inline bool isStatic() const {
         return m_IsStatic;
     }
     

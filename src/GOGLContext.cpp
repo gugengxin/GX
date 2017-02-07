@@ -266,11 +266,13 @@ bool GOGLContext::create(GWindow* win)
 #elif defined(GX_OS_ANDROID)
 	CreateDC();
 
+    m_Context.display=g_Display;
+
 	EGLint format;
 	eglGetConfigAttrib(g_Display, g_Config, EGL_NATIVE_VISUAL_ID, &format);
 	ANativeWindow_setBuffersGeometry(win->m_OSWin, 0, 0, format);
 
-	m_Surface = eglCreateWindowSurface(g_Display, g_Config, win->m_OSWin, NULL);
+	m_Context.surface = eglCreateWindowSurface(g_Display, g_Config, win->m_OSWin, NULL);
 
 	const EGLint attribs_context[] = {
 			EGL_CONTEXT_CLIENT_VERSION, 2,
@@ -280,14 +282,14 @@ bool GOGLContext::create(GWindow* win)
 	if (shared == EGL_NO_CONTEXT) {
 		GWindow *aw = GApplication::shared()->firstWindow();
 		if (aw && aw != getWindow()) {
-			shared = GX_CAST_R(EGLContext, GX_CAST_R(GOGLContext * , &aw->m_Context)->m_Context);
+			shared = GX_CAST_R(EGLContext, GX_CAST_R(GOGLContext * , &aw->m_Context)->m_Context.context);
 		}
 	}
-	m_Context = eglCreateContext(g_Display, g_Config, shared, attribs_context);
+	m_Context.context = eglCreateContext(g_Display, g_Config, shared, attribs_context);
 
 	if (g_Surface==EGL_NO_SURFACE) {
-		g_Surface = m_Surface;
-		g_Context = m_Context;
+		g_Surface = m_Context.surface;
+		g_Context = m_Context.context;
 	}
 #elif defined(GX_OS_QT)
     m_Context.surface=getWindow()->m_OSWin;
@@ -346,17 +348,17 @@ void GOGLContext::destroy()
     [GX_CAST_R(id, m_Context.context) release];
     m_Context.context=NULL;
 #elif defined(GX_OS_ANDROID)
-	if(m_Context!=EGL_NO_CONTEXT) {
-		if(m_Context!=g_Context) {
-			eglDestroyContext(g_Display, m_Context);
+	if(m_Context.context!=EGL_NO_CONTEXT) {
+		if(m_Context.context!=g_Context) {
+			eglDestroyContext(g_Display, m_Context.context);
 		}
-		m_Context=EGL_NO_CONTEXT;
+		m_Context.context=EGL_NO_CONTEXT;
 	}
-	if(m_Surface!=EGL_NO_SURFACE) {
-		if(m_Surface!=g_Surface) {
-			eglDestroySurface(g_Display, m_Surface);
+	if(m_Context.surface!=EGL_NO_SURFACE) {
+		if(m_Context.surface!=g_Surface) {
+			eglDestroySurface(g_Display, m_Context.surface);
 		}
-		m_Surface=EGL_NO_SURFACE;
+        m_Context.surface=EGL_NO_SURFACE;
 	}
 #elif defined(GX_OS_QT)
     //delete m_Context;
@@ -416,15 +418,15 @@ bool GOGLContext::resize(gfloat32 width,gfloat32 height)
     [GX_CAST_R(NSOpenGLContext*, m_Context.context) update];
     return true;
 #elif defined(GX_OS_ANDROID)
-	if (m_Surface != EGL_NO_SURFACE) {
-		if(m_Surface==g_Surface) {
-			eglDestroySurface(g_Display, m_Surface);
-			m_Surface = eglCreateWindowSurface(g_Display, g_Config, getWindow()->m_OSWin, NULL);
-			g_Surface=m_Surface;
+	if (m_Context.surface != EGL_NO_SURFACE) {
+		if(m_Context.surface==g_Surface) {
+			eglDestroySurface(g_Display, m_Context.surface);
+            m_Context.surface = eglCreateWindowSurface(g_Display, g_Config, getWindow()->m_OSWin, NULL);
+			g_Surface=m_Context.surface;
 		}
 		else {
-			eglDestroySurface(g_Display, m_Surface);
-			m_Surface = eglCreateWindowSurface(g_Display, g_Config, getWindow()->m_OSWin, NULL);
+			eglDestroySurface(g_Display, m_Context.surface);
+            m_Context.surface = eglCreateWindowSurface(g_Display, g_Config, getWindow()->m_OSWin, NULL);
 		}
 	}
 	return true;
@@ -438,7 +440,7 @@ bool GOGLContext::resize(gfloat32 width,gfloat32 height)
 bool GOGLContext::renderCheck()
 {
 #if defined(GX_OS_ANDROID)
-    return m_Surface != EGL_NO_SURFACE;
+    return m_Context.surface != EGL_NO_SURFACE;
 #else
 	return true;
 #endif
@@ -491,7 +493,7 @@ void GOGLContext::renderEnd()
 #elif defined(GX_OS_MACOSX)
 	[GX_CAST_R(NSOpenGLContext*,m_Context.context) flushBuffer];
 #elif defined(GX_OS_ANDROID)
-	eglSwapBuffers(g_Display, m_Surface);
+	eglSwapBuffers(g_Display, m_Context.surface);
 #elif defined(GX_OS_QT)
     m_Context.context->swapBuffers(getWindow()->m_OSWin);
 #endif

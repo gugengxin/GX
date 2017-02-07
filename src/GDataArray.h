@@ -15,25 +15,25 @@ template <typename T,typename DT>
 class GDataArray : public GDataArrayBase {
     GX_GOBJECT(GDataArray);
 public:
-    inline bool isEmpty() {
+    inline bool isEmpty() const {
         return m_Data.getBytes()<=0;
     }
-	inline gint getCount() {
+	inline gint getCount() const {
 		return (gint)(m_Data.getBytes() / sizeof(T));
 	}
-    inline guint getBytes() {
+    inline guint getBytes() const {
         return m_Data.getBytes();
     }
-    inline const T& get(gint index) {
+    inline T& get(gint index) const {
         return GX_CAST_R(T*, m_Data.getPtr())[index];
     }
-	inline const T* getPtr(gint index) {
+	inline T* getPtr(gint index) const {
 		return &GX_CAST_R(T*, m_Data.getPtr())[index];
 	}
-	inline const T& first() {
+	inline T& first() const {
 		return GX_CAST_R(T*, m_Data.getPtr())[0];
 	}
-	inline const T& last() {
+	inline T& last() const {
 		return GX_CAST_R(T*, m_Data.getPtr())[(m_Data.getBytes() / sizeof(T))-1];
 	}
 

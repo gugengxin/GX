@@ -48,9 +48,9 @@ GAppBundle::GAppBundle()
     CFRelease(str);
     CFRelease(url);
 #elif defined(GX_OS_ANDROID)
-    GPath* path=GAndroidC::shared()->appGetPackageCodePath();
+    GString* path=GAndroidC::shared()->appGetPackageCodePath();
     if(path) {
-        open(path->c_str(),true);
+        open(path->utf8String(),true);
     }
 #elif defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 	TCHAR buf[1024];

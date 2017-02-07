@@ -21,16 +21,16 @@ namespace GX {
 		Data();
 		virtual ~Data();
 
-		inline void* getPtr() {
+		inline void* getPtr() const {
 			return m_Buffer;
 		}
-		inline void* getPtr(UNT offset) {
+		inline void* getPtr(UNT offset) const {
 			return GX_CAST_R(U8*, m_Buffer) + offset;
 		}
-		inline UNT getBytes() {
+		inline UNT getBytes() const {
 			return m_Bytes;
 		}
-		inline bool isStatic() {
+		inline bool isStatic() const {
 			return m_IsStatic;
 		}
 
