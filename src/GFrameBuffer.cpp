@@ -156,7 +156,22 @@ void GFrameBuffer::renderBegin()
     GX_glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     
 #elif defined(GX_DIRECTX)
-    
+	ID3D10Device* device = GX::d3dDevice();
+
+	ID3D10RenderTargetView* rtv = m_Node->getData().getName();
+	ID3D10DepthStencilView* dsv = m_Node->getData().getDepthName();
+	// 设置深度模版状态，使其生效
+	device->OMSetDepthStencilState(m_Node->getData().getDepthName(), 1);
+	// 绑定渲染目标视图和深度缓冲到渲染管线.
+	
+	device->OMSetRenderTargets(1, &rtv, dsv);
+	//设置光栅化状态，使其生效
+	device->RSSetState(m_Node->getData().getRasterState());
+
+	const GColor4F& bgdClr = getBackgroundColor();
+	const FLOAT color[] = { bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a };
+	device->ClearRenderTargetView(rtv, color);
+	device->ClearDepthStencilView(dsv, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 #elif defined(GX_METAL)
     
 #endif

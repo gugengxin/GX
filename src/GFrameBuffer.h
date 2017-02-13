@@ -39,20 +39,26 @@ public:
     typedef void* DepthName;
 #endif
     //仅保存，生成和销毁都在Context完成
-    class Handle {
-        friend class GX_CONTEXT_BASE;
-    public:
-        Handle();
-        ~Handle();
-        
-        bool isValid();
-        inline Name getName() {
-            return m_Name;
-        }
-        inline DepthName getDepthName() {
-            return m_DepthName;
-        }
+	class Handle {
+		friend class GX_CONTEXT_BASE;
+	public:
+		Handle();
+		~Handle();
 
+		bool isValid();
+		inline Name getName() const {
+			return m_Name;
+		}
+		inline DepthName getDepthName() const {
+			return m_DepthName;
+		}
+#if defined(GX_OPENGL)
+#elif defined(GX_DIRECTX)
+		inline ID3D10RasterizerState*	getRasterState() const {
+			return m_RasterState;
+		}
+#elif defined(GX_METAL)
+#endif
     private:
         Name m_Name;
         DepthName m_DepthName;

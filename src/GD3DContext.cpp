@@ -452,14 +452,15 @@ void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 		desc.ArraySize = 1;
 		if (dibData) {
 			desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
+			desc.Usage = D3D10_USAGE_IMMUTABLE;
 		}
 		else {//没有Dib数据，代表是为FrameBuffer创建
-			desc.BindFlags = D3D10_BIND_RENDER_TARGET|D3D10_BIND_SHADER_RESOURCE;
+			desc.BindFlags = D3D10_BIND_RENDER_TARGET | D3D10_BIND_SHADER_RESOURCE;
+			desc.Usage = D3D10_USAGE_DEFAULT;
 		}
 		desc.SampleDesc.Count = 1;
 		desc.SampleDesc.Quality = 0;
 		desc.CPUAccessFlags = 0;
-		desc.Usage = D3D10_USAGE_IMMUTABLE;
 		desc.MiscFlags = 0;
 
 		D3D10_SUBRESOURCE_DATA data = { 0 };
