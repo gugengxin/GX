@@ -102,7 +102,11 @@ GFrameBuffer::GFrameBuffer()
     m_PreViewport[2]=0;
     m_PreViewport[3]=0;
 #elif defined(GX_DIRECTX)
-    
+	m_PreName=NULL;
+	m_PreDepthName=NULL;
+	m_PreRasterState=NULL;
+	m_PreDepthStencilState=NULL;
+	//m_PreViewport;
 #elif defined(GX_METAL)
     
 #endif
@@ -158,10 +162,16 @@ void GFrameBuffer::renderBegin()
 #elif defined(GX_DIRECTX)
 	ID3D10Device* device = GX::d3dDevice();
 
+	device->OMGetRenderTargets(1, &m_PreName, &m_PreDepthName);
+	device->OMGetDepthStencilState(&m_PreDepthStencilState,NULL);
+	device->RSGetState(&m_PreRasterState);
+	UINT numVP = 1;
+	device->RSGetViewports(&numVP, &m_PreViewport);
+
 	ID3D10RenderTargetView* rtv = m_Node->getData().getName();
 	ID3D10DepthStencilView* dsv = m_Node->getData().getDepthName();
 	// 设置深度模版状态，使其生效
-	device->OMSetDepthStencilState(m_Node->getData().getDepthName(), 1);
+	device->OMSetDepthStencilState(m_Node->getData().getDepthStencilState(), 1);
 	// 绑定渲染目标视图和深度缓冲到渲染管线.
 	
 	device->OMSetRenderTargets(1, &rtv, dsv);
@@ -182,7 +192,15 @@ void GFrameBuffer::setViewport(float x, float y, float w, float h, float scale)
 #if defined(GX_OPENGL)
     GX_glViewport((GLint)(x*scale), (GLint)(y*scale), (GLint)(w*scale), (GLint)(h*scale));
 #elif defined(GX_DIRECTX)
-    
+	D3D10_VIEWPORT viewport;
+	viewport.TopLeftX = (INT)(x*scale);
+	viewport.TopLeftY = (INT)(y*scale);
+	viewport.Width = (UINT)(w*scale);
+	viewport.Height = (UINT)(h*scale);
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+
+	GX::d3dDevice()->RSSetViewports(1, &viewport);
 #elif defined(GX_METAL)
     
 #endif
@@ -194,7 +212,23 @@ void GFrameBuffer::renderEnd()
     GX_glBindFramebuffer(GL_FRAMEBUFFER, m_PreBindName);
     GX_glViewport(m_PreViewport[0], m_PreViewport[1], m_PreViewport[2], m_PreViewport[3]);
 #elif defined(GX_DIRECTX)
-    
+	ID3D10Device* device = GX::d3dDevice();
+	device->OMSetRenderTargets(1, &m_PreName, m_PreDepthName);
+	if (m_PreName) {
+		m_PreName->Release();
+	}
+	if (m_PreDepthName) {
+		m_PreDepthName->Release();
+	}
+	device->OMSetDepthStencilState(m_PreDepthStencilState, 1);
+	if (m_PreDepthStencilState) {
+		m_PreDepthStencilState->Release();
+	}
+	device->RSSetState(m_PreRasterState);
+	if (m_PreRasterState) {
+		m_PreRasterState->Release();
+	}
+	device->RSSetViewports(1, &m_PreViewport);
 #elif defined(GX_METAL)
     
 #endif

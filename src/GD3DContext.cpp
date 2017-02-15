@@ -555,6 +555,7 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 	ID3D10RenderTargetView* outRTView = NULL;
 	ID3D10DepthStencilView* outDSView = NULL;
 	ID3D10RasterizerState*	outRasterState = NULL;
+	ID3D10DepthStencilState* outDepthStencilState = NULL;
 
 	ID3D10Device* device = GX::d3dDevice();
 	// 分配RGBA动态贴图
@@ -607,10 +608,37 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 
 		device->CreateRasterizerState(&descRS, &outRasterState);
 	}
+	if (nodeObj.enableDepth) {
+		//深度设置
+		D3D10_DEPTH_STENCIL_DESC dsDesc;
+		dsDesc.DepthEnable = false;                      //启用深度测试
+		dsDesc.DepthWriteMask = D3D10_DEPTH_WRITE_MASK_ALL;//启用深度缓存写入功能
+		dsDesc.DepthFunc = D3D10_COMPARISON_LESS;     //深度测试函数（该值为普通的深度测试）
+
+		//模板设置 
+		dsDesc.StencilEnable = false;                      //启用模板测试
+		dsDesc.StencilReadMask = 0xff;                      //模板测试（读取）时的掩码
+		dsDesc.StencilWriteMask = 0xff;                      //更新（写入）模板的掩码
+		//下面两部分是关键
+		//告诉模板缓冲区如何处理朝前的三角片
+		dsDesc.FrontFace.StencilFailOp = D3D10_STENCIL_OP_KEEP;
+		dsDesc.FrontFace.StencilDepthFailOp = D3D10_STENCIL_OP_KEEP;
+		dsDesc.FrontFace.StencilPassOp = D3D10_STENCIL_OP_REPLACE;
+		dsDesc.FrontFace.StencilFunc = D3D10_COMPARISON_ALWAYS;
+		//如何处理朝后的三角片 
+		dsDesc.BackFace.StencilFailOp = D3D10_STENCIL_OP_KEEP;
+		dsDesc.BackFace.StencilDepthFailOp = D3D10_STENCIL_OP_KEEP;
+		dsDesc.BackFace.StencilPassOp = D3D10_STENCIL_OP_REPLACE;
+		dsDesc.BackFace.StencilFunc = D3D10_COMPARISON_ALWAYS;
+
+		//使用描述创建深度模板缓冲区
+		device->CreateDepthStencilState(&dsDesc, &outDepthStencilState);
+	}
 	
 	handle.m_Name = outRTView;
 	handle.m_DepthName = outDSView;
 	handle.m_RasterState = outRasterState;
+	handle.m_DepthStencilState = outDepthStencilState;
 	
 
 	nodeObj.context->doneFrameBuffer();

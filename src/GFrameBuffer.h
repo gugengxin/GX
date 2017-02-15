@@ -57,6 +57,9 @@ public:
 		inline ID3D10RasterizerState*	getRasterState() const {
 			return m_RasterState;
 		}
+		inline ID3D10DepthStencilState* getDepthStencilState() const {
+			return m_DepthStencilState;
+		}
 #elif defined(GX_METAL)
 #endif
     private:
@@ -64,7 +67,8 @@ public:
         DepthName m_DepthName;
 #if defined(GX_OPENGL)
 #elif defined(GX_DIRECTX)
-		ID3D10RasterizerState*	m_RasterState;
+		ID3D10RasterizerState*	m_RasterState; 
+		ID3D10DepthStencilState* m_DepthStencilState;
 #elif defined(GX_METAL)
 #endif
     };
@@ -123,9 +127,13 @@ private:
     GLuint  m_PreBindName;
     GLint   m_PreViewport[4];
 #elif defined(GX_DIRECTX)
-    
+	ID3D10RenderTargetView*		m_PreName;
+	ID3D10DepthStencilView*		m_PreDepthName;
+	ID3D10RasterizerState*		m_PreRasterState;
+	ID3D10DepthStencilState*	m_PreDepthStencilState;
+	D3D10_VIEWPORT				m_PreViewport;
 #elif defined(GX_METAL)
-    
+	
 #endif
 };
 
