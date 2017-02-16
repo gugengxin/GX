@@ -243,15 +243,15 @@ void GCSL::initWords()
 
 void GCSL::skip_white_space(QChar& ch, GCSLReader& reader)
 {
-    while (ch==' ' || ch=='\t' || ch=='\n' || ch=='\r') {
-       if(ch=='\r') {
+    while (ch.unicode()==' ' || ch.unicode()=='\t' || ch.unicode()=='\n' || ch.unicode()=='\r') {
+       if(ch.unicode()=='\r') {
            reader.wrap();
            ch=reader.getChar();
            if(ch!='\n') {
                return;
            }
        }
-       else if(ch=='\n') {
+       else if(ch.unicode()=='\n') {
            reader.wrap();
            ch=reader.getChar();
            if(ch!='\r') {
@@ -267,25 +267,25 @@ void GCSL::parse_comment0(QChar& ch, GCSLReader& reader)
     ch=reader.getChar();
     while(true) {
         while(true) {
-            if(ch=='\n' || ch=='\r' || ch<=0) {
+            if(ch.unicode()=='\n' || ch.unicode()=='\r' || ch.unicode()<=0) {
                 break;
             }
             else {
                 ch=reader.getChar();
             }
         }
-        if(ch=='\n') {
+        if(ch.unicode()=='\n') {
             reader.wrap();
             ch=reader.getChar();
-            if(ch=='\r') {
+            if(ch.unicode()=='\r') {
                 ch=reader.getChar();
             }
             return;
         }
-        else if(ch=='\r') {
+        else if(ch.unicode()=='\r') {
             reader.wrap();
             ch=reader.getChar();
-            if(ch=='\n') {
+            if(ch.unicode()=='\n') {
                 ch=reader.getChar();
             }
             return;
@@ -301,30 +301,30 @@ void GCSL::parse_comment1(QChar& ch, GCSLReader& reader)
     ch=reader.getChar();
     while(true) {
         while(true) {
-            if(ch=='\n' || ch=='\r' || ch=='*' || ch<=0) {
+            if(ch.unicode()=='\n' || ch.unicode()=='\r' || ch.unicode()=='*' || ch.unicode()<=0) {
                 break;
             }
             else {
                 ch=reader.getChar();
             }
         }
-        if(ch=='\n') {
+        if(ch.unicode()=='\n') {
             reader.wrap();
             ch=reader.getChar();
-            if(ch=='\r') {
+            if(ch.unicode()=='\r') {
                 ch=reader.getChar();
             }
         }
-        else if(ch=='\r') {
+        else if(ch.unicode()=='\r') {
             reader.wrap();
             ch=reader.getChar();
-            if(ch=='\n') {
+            if(ch.unicode()=='\n') {
                 ch=reader.getChar();
             }
         }
-        else if(ch=='*') {
+        else if(ch.unicode()=='*') {
             ch=reader.getChar();
-            if(ch=='/') {
+            if(ch.unicode()=='/') {
                 ch=reader.getChar();
                 return;
             }
@@ -338,15 +338,15 @@ void GCSL::parse_comment1(QChar& ch, GCSLReader& reader)
 void GCSL::preprocess(QChar& ch, GCSLReader& reader)
 {
     while(true) {
-        if(ch==' ' || ch=='\t' || ch=='\n' || ch=='\r') {
+        if(ch.unicode()==' ' || ch.unicode()=='\t' || ch.unicode()=='\n' || ch.unicode()=='\r') {
             skip_white_space(ch,reader);
         }
-        else if(ch=='/') {
+        else if(ch.unicode()=='/') {
             ch=reader.getChar();
-            if(ch=='/') {
+            if(ch.unicode()=='/') {
                 parse_comment0(ch,reader);
             }
-            else if(ch=='*') {
+            else if(ch.unicode()=='*') {
                 parse_comment1(ch,reader);
             }
             else {
@@ -365,7 +365,7 @@ void GCSL::parse_ID(QChar &ch, GCSLReader &reader, QString& strOut)
 {
     strOut.append(ch);
     ch=reader.getChar();
-    while(ch.isLetterOrNumber() || ch=='_') {
+    while(ch.isLetterOrNumber() || ch.unicode()=='_') {
         strOut.append(ch);
         ch=reader.getChar();
     }
@@ -376,9 +376,9 @@ void GCSL::parse_number(QChar &ch, GCSLReader &reader, QString& strOut)
     strOut.append(ch);
     ch=reader.getChar();
     bool hasPoint=false;
-    while(ch.isNumber() || (ch=='.' && !hasPoint)) {
+    while(ch.isNumber() || (ch.unicode()=='.' && !hasPoint)) {
         strOut.append(ch);
-        if(ch=='.') {
+        if(ch.unicode()=='.') {
             hasPoint=true;
         }
         ch=reader.getChar();
@@ -391,7 +391,7 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
 
     tokenOut->setRC(reader);
 
-    if( ch.isLetter() || ch=='_' || ch=='#' ) {
+    if( ch.isLetter() || ch.unicode()=='_' || ch.unicode()=='#' ) {
         QString str;
         parse_ID(ch,reader,str);
 
@@ -432,51 +432,51 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
             m_WordMap[str]=p;
         }
     }
-    else if(ch==';') {
+    else if(ch.unicode()==';') {
         tokenOut->setType(GCSLToken::T_Semicolon,";");
 
         ch=reader.getChar();
     }
-    else if(ch=='(') {
+    else if(ch.unicode()=='(') {
         tokenOut->setType(GCSLToken::T_S_Brackets_L,"(");
 
         ch=reader.getChar();
     }
-    else if(ch==')') {
+    else if(ch.unicode()==')') {
         tokenOut->setType(GCSLToken::T_S_Brackets_R,")");
 
         ch=reader.getChar();
     }
-    else if(ch=='[') {
+    else if(ch.unicode()=='[') {
         tokenOut->setType(GCSLToken::T_M_Brackets_L,"[");
 
         ch=reader.getChar();
     }
-    else if(ch==']') {
+    else if(ch.unicode()==']') {
         tokenOut->setType(GCSLToken::T_M_Brackets_R,"]");
 
         ch=reader.getChar();
     }
-    else if(ch=='{') {
+    else if(ch.unicode()=='{') {
         tokenOut->setType(GCSLToken::T_B_Brackets_L,"{");
 
         ch=reader.getChar();
     }
-    else if(ch=='}') {
+    else if(ch.unicode()=='}') {
 
         tokenOut->setType(GCSLToken::T_B_Brackets_R,"}");
 
         ch=reader.getChar();
     }
-    else if(ch==',') {
+    else if(ch.unicode()==',') {
         tokenOut->setType(GCSLToken::T_Comma,",");
 
         ch=reader.getChar();
     }
-    else if(ch=='=') {
+    else if(ch.unicode()=='=') {
         ch=reader.getChar();
 
-        if(ch=='=') {
+        if(ch.unicode()=='=') {
             tokenOut->setType(GCSLToken::T_EqualEqual,"==");
             ch=reader.getChar();
         }
@@ -485,14 +485,14 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         }
 
     }
-    else if(ch=='+') {
+    else if(ch.unicode()=='+') {
         ch=reader.getChar();
 
-        if(ch=='+') {
+        if(ch.unicode()=='+') {
             tokenOut->setType(GCSLToken::T_PlusPlus,"++");
             ch=reader.getChar();
         }
-        else if(ch=='=') {
+        else if(ch.unicode()=='=') {
             tokenOut->setType(GCSLToken::T_PlusEqual,"+=");
             ch=reader.getChar();
         }
@@ -501,14 +501,14 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         }
 
     }
-    else if(ch=='-') {
+    else if(ch.unicode()=='-') {
         ch=reader.getChar();
 
-        if(ch=='-') {
+        if(ch.unicode()=='-') {
             tokenOut->setType(GCSLToken::T_MinusMinus,"--");
             ch=reader.getChar();
         }
-        else if(ch=='=') {
+        else if(ch.unicode()=='=') {
             tokenOut->setType(GCSLToken::T_MinusEqual,"-=");
             ch=reader.getChar();
         }
@@ -517,10 +517,10 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         }
 
     }
-    else if(ch=='*') {
+    else if(ch.unicode()=='*') {
         ch=reader.getChar();
 
-        if(ch=='=') {
+        if(ch.unicode()=='=') {
             tokenOut->setType(GCSLToken::T_MultiplyEqual,"*=");
             ch=reader.getChar();
         }
@@ -529,10 +529,10 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         }
 
     }
-    else if(ch=='/') {
+    else if(ch.unicode()=='/') {
         ch=reader.getChar();
 
-        if(ch=='=') {
+        if(ch.unicode()=='=') {
             tokenOut->setType(GCSLToken::T_DivEqual,"/=");
             ch=reader.getChar();
         }
@@ -540,14 +540,14 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
             tokenOut->setType(GCSLToken::T_Div,"/");
         }
     }
-    else if(ch=='.') {
+    else if(ch.unicode()=='.') {
         tokenOut->setType(GCSLToken::T_Period,".");
 
         ch=reader.getChar();
     }
-    else if(ch=='&') {
+    else if(ch.unicode()=='&') {
         ch=reader.getChar();
-        if(ch=='&') {
+        if(ch.unicode()=='&') {
             tokenOut->setType(GCSLToken::T_And,"&&");
         }
         else {
@@ -560,9 +560,9 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         }
         ch=reader.getChar();
     }
-    else if(ch=='|') {
+    else if(ch.unicode()=='|') {
         ch=reader.getChar();
-        if(ch=='|') {
+        if(ch.unicode()=='|') {
             tokenOut->setType(GCSLToken::T_Or,"||");
         }
         else {
@@ -575,17 +575,17 @@ bool GCSL::getToken(QChar& ch,GCSLReader& reader,GCSLToken* tokenOut,GCSLError* 
         }
         ch=reader.getChar();
     }
-    else if(ch=='!') {
+    else if(ch.unicode()=='!') {
         tokenOut->setType(GCSLToken::T_Not,"!");
 
         ch=reader.getChar();
     }
-    else if(ch==':') {
+    else if(ch.unicode()==':') {
         tokenOut->setType(GCSLToken::T_Colon,":");
 
         ch=reader.getChar();
     }
-    else if(ch<=0) {
+    else if(ch.unicode()<=0) {
         tokenOut->setType(GCSLToken::T_EOF,"");
     }
     else {
