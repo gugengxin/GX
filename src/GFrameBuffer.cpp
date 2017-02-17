@@ -29,6 +29,8 @@ GFrameBuffer::Handle::Handle()
 #elif defined(GX_METAL)
     m_Name=NULL;
     m_DepthName=NULL;
+    m_StencilTex=NULL;
+    m_DepthStencilState=NULL;
 #endif
 }
 
@@ -108,7 +110,8 @@ GFrameBuffer::GFrameBuffer()
 	m_PreDepthStencilState=NULL;
 	//m_PreViewport;
 #elif defined(GX_METAL)
-    
+    m_CommandBuffer=NULL;
+    m_RenderEncoder=NULL;
 #endif
 }
 
@@ -184,6 +187,18 @@ void GFrameBuffer::renderBegin()
 	device->ClearDepthStencilView(dsv, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 #elif defined(GX_METAL)
     
+#define M_COMMAND_BUFFER()      GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer)
+#define M_RENDER_ENCODER()      GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder)
+#define M_DEPTH_STENCIL_STATE() GX_CAST_R(id<MTLDepthStencilState>, m_DepthStencilState)
+    
+    m_CommandBuffer=[[GX_CAST_R(id<MTLCommandQueue>, m_Node->getContext()->getCommandQueue()) commandBuffer] retain];
+    m_RenderEncoder = [[GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer) renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, m_Node->getData().getName())] retain];
+    if (m_Node->getData().isEnableDepth()) {
+        [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) setDepthStencilState:GX_CAST_R(id<MTLDepthStencilState>, m_Node->getData().getDepthStencilState())];
+    }
+#if defined(GX_DEBUG)
+    [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) pushDebugGroup:@"GFrameBuffer"];
+#endif
 #endif
 }
 
@@ -202,7 +217,14 @@ void GFrameBuffer::setViewport(float x, float y, float w, float h, float scale)
 
 	GX::d3dDevice()->RSSetViewports(1, &viewport);
 #elif defined(GX_METAL)
-    
+    MTLViewport vt;
+    vt.originX=x*scale;
+    vt.originY=y*scale;
+    vt.width=w*scale;
+    vt.height=h*scale;
+    vt.znear=0;
+    vt.zfar=1;
+    [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) setViewport:vt];
 #endif
 }
 
@@ -230,7 +252,16 @@ void GFrameBuffer::renderEnd()
 	}
 	device->RSSetViewports(1, &m_PreViewport);
 #elif defined(GX_METAL)
+#if defined(GX_DEBUG)
+    [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) popDebugGroup];
+#endif
+    [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) endEncoding];
+    [GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer) commit];
     
+    [GX_CAST_R(id, m_RenderEncoder) release];
+    m_RenderEncoder=NULL;
+    [GX_CAST_R(id, m_CommandBuffer) release];
+    m_CommandBuffer=NULL;
 #endif
     m_Node->getContext()->makeClear();
 }

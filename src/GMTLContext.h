@@ -45,12 +45,13 @@ protected:
     void doneFrameBuffer();
 protected:
     GDib* loadTexture2DNodeReadyDib(GDib* dib);
+    GX::PixelFormat getPixelFormatForFB() const;
     static void loadTexture2DNodeInMT(GObject* obj);
     void unloadTextureNodeForContext(GTexture::Node* node);
 protected:
     static void loadFrameBufferNodeInMT(GObject* obj);
     void unloadFrameBufferNodeForContext(GFrameBuffer::Node* node);
-private:
+protected:
     inline guint getDepthPixelFormat() {
         return m_DepthPixelFormat;
     }
@@ -62,10 +63,15 @@ private:
     }
     
     void* getDevice();
+    void* getMetalLayer();
     void* currentDrawable();
     void clearDrawable();
     void setupRenderPassDescriptor(void* texture);
     void* renderPassDescriptor();
+    void* getCommandQueue();
+    void* getCommandBuffer();
+    void* getRenderEncoder();
+    
     
 private:
     guint m_DepthPixelFormat;

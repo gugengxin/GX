@@ -25,7 +25,7 @@ protected:
     virtual void destroy();
     
 protected:
-    inline GWindow* getWindow() {
+    inline GWindow* getWindow() const {
         return m_Window;
     }
 private:

@@ -135,7 +135,7 @@ void Game::render(GCanvas* canvas)
     
     
     if (!fb) {
-        fb=context.loadFrameBuffer(GX::PixelFormatRGBA8888, 200, 200, NULL, false);
+        fb=context.loadFrameBuffer(200, 200, NULL, false);
         GX_ASSERT(fb!=NULL);
         GO::retain(fb);
         

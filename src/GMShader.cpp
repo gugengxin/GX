@@ -9,6 +9,7 @@
 #include "GMShader.h"
 #if defined(GX_METAL)
 #include "GContext.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define M_LIBRARY()         GX_CAST_R(id<MTLLibrary>,m_Library)
 #define M_PIPELINE_STATE()  GX_CAST_R(id<MTLRenderPipelineState>,m_PipelineState)
@@ -59,13 +60,15 @@ bool GMShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
         if(!fragmentProgram)
             NSLog(@">> ERROR: Couldn't load fragment function from default library");
         
+        CAMetalLayer* winLr=GX_CAST_R(CAMetalLayer*, getContext()->getMetalLayer());
+        
         MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
         
         pipelineStateDescriptor.label                           = @"GMShader";
         pipelineStateDescriptor.sampleCount                     = getContext()->getSampleCount();
         pipelineStateDescriptor.vertexFunction                  = vertexProgram;
         pipelineStateDescriptor.fragmentFunction                = fragmentProgram;
-        pipelineStateDescriptor.colorAttachments[0].pixelFormat = MTLPixelFormatBGRA8Unorm;
+        pipelineStateDescriptor.colorAttachments[0].pixelFormat = winLr.pixelFormat;
         pipelineStateDescriptor.depthAttachmentPixelFormat      = (MTLPixelFormat)getContext()->getDepthPixelFormat();
         pipelineStateDescriptor.stencilAttachmentPixelFormat    = (MTLPixelFormat)getContext()->getStencilPixelFormat();
         
@@ -96,11 +99,6 @@ bool GMShader::setUniformBuffer(gint idx,void* device,guint bufLen)
     getUBuffers()[idx]=[[GX_CAST_R(id<MTLDevice>,device) newBufferWithLength:bufLen options:0] retain];
 
     return getUBuffers()[idx]!=nil;
-}
-
-void* GMShader::currentRenderEncoder()
-{
-    return getContext()->m_RenderEncoder;
 }
 
 void GMShader::setFragmentTexture(void* rce,GTexture* tex,guint idx)

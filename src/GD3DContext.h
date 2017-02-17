@@ -39,6 +39,7 @@ protected:
 	void doneFrameBuffer();
 protected:
 	GDib* loadTexture2DNodeReadyDib(GDib* dib);
+    GX::PixelFormat getPixelFormatForFB() const;
 	static void loadTexture2DNodeInMT(GObject* obj);
 	void unloadTextureNodeForContext(GTexture::Node* node);
 protected:

@@ -39,6 +39,12 @@ float GWindow::Canvas::getScale()
     return m_Window->getScale();
 }
 
+#if defined(GX_METAL)
+void* GWindow::Canvas::getRenderEncoder()
+{
+    return m_Window->getContext().getRenderEncoder();
+}
+#endif
 
 
 #if defined(GX_OS_WINDOWS)

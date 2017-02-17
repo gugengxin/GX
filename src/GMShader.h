@@ -26,7 +26,6 @@ public:
     
 protected:
     bool setUniformBuffer(gint idx,void* device,guint bufLen);
-    void* currentRenderEncoder();
     void setFragmentTexture(void* rce,GTexture* tex,guint idx);
 private:
     virtual gint getPLStateCount() = 0;

@@ -614,6 +614,11 @@ GDib* GOGLContext::loadTexture2DNodeReadyDib(GDib* dib)
 	return NULL;
 }
 
+GX::PixelFormat GOGLContext::getPixelFormatForFB() const
+{
+    return GX::PixelFormatRGBA8888;
+}
+
 void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
 {
 	GContext::T2DNodeLoadObjBase& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObjBase*, obj);

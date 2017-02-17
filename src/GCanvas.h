@@ -86,6 +86,10 @@ public:
     void setBackgroundColor(float r,float g,float b,float a) {
         m_BgdColor.set(r, g, b, a);
     }
+#if defined(GX_METAL)
+public:
+    virtual void* getRenderEncoder()=0;
+#endif
     
 private:
     GMatrix4 m_Matrixs[MatrixCount];

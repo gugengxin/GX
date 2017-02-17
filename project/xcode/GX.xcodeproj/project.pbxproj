@@ -353,7 +353,7 @@
 		CA63877F1D48D99700232BBB /* GPng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPng.h; sourceTree = "<group>"; };
 		CA6387821D48DCD600232BBB /* GDib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDib.cpp; sourceTree = "<group>"; };
 		CA6387831D48DCD600232BBB /* GDib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDib.h; sourceTree = "<group>"; };
-		CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFrameBuffer.cpp; sourceTree = "<group>"; };
+		CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GFrameBuffer.cpp; sourceTree = "<group>"; };
 		CA6793AF1DAFFACB00854B5E /* GFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFrameBuffer.h; sourceTree = "<group>"; };
 		CA7213371DA36AF2005A7B9E /* GXCoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXCoder.cpp; sourceTree = "<group>"; };
 		CA7213381DA36AF2005A7B9E /* GXCoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXCoder.h; sourceTree = "<group>"; };

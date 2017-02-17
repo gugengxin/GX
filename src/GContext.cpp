@@ -216,21 +216,6 @@ GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTe
     return NULL;
 }
 
-GTexture2D*  GContext::loadTexture2D(GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param)
-{
-	GTexture::Node* node = new GTexture::Node();
-	if (loadTexture2DNode(node, pixelFormat, width, height, param)) {
-		GTexture2D* res = GTexture2D::alloc();
-		res->config(node, pixelFormat, width, height, param);
-		GO::autorelease(res);
-		return res;
-	}
-	else {
-		delete node;
-	}
-	return NULL;
-}
-
 void GContext::addTextureNodeInMT(GTexture::Node* node)
 {
 	m_Textures.add(node);
@@ -265,10 +250,6 @@ bool GContext::loadTexture2DNode(GTexture::Node* node, GDib* dib, GTexture2D::Pa
 
 bool GContext::loadTexture2DNode(GTexture::Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param)
 {
-	if (pixelFormat != GX::PixelFormatRGBA8888) {
-		return false;
-	}
-
 	T2DNodeLoadCreateObj* obj=T2DNodeLoadCreateObj::alloc();
 	obj->context = this;
 	obj->pixelFormat = pixelFormat;
@@ -312,11 +293,24 @@ void GContext::unloadTextureNodeInMT(GObject* obj)
 	nodeObj.context->removeTextureNodeInMT(nodeObj.nodeOut);
 }
 
-
-GFrameBuffer* GContext::loadFrameBuffer(GTexture* tex, bool enableDepth)
+GFrameBuffer* GContext::loadFrameBuffer(gint32 width, gint32 height, GTexture2D::Parameter* param, bool enableDepth)
 {
+    GTexture2D* texTarget=NULL;
+    {
+        GTexture::Node* node = new GTexture::Node();
+        GX::PixelFormat pixelFormat=getPixelFormatForFB();
+        if (loadTexture2DNode(node, pixelFormat, width, height, param)) {
+            texTarget = GTexture2D::alloc();
+            texTarget->config(node, pixelFormat, width, height, param);
+            GO::autorelease(texTarget);
+        }
+        else {
+            delete node;
+            return NULL;
+        }
+    }
     GFrameBuffer::Node* node = new GFrameBuffer::Node();
-    if (loadFrameBufferNode(node, tex, enableDepth)) {
+    if (loadFrameBufferNode(node, texTarget, enableDepth)) {
         GFrameBuffer* res = GFrameBuffer::alloc();
         res->config(node);
         GO::autorelease(res);
@@ -326,16 +320,6 @@ GFrameBuffer* GContext::loadFrameBuffer(GTexture* tex, bool enableDepth)
         delete node;
     }
     return NULL;
-}
-
-GFrameBuffer* GContext::loadFrameBuffer(GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param, bool enableDepth)
-{
-    GTexture2D* texTarget = loadTexture2D(pixelFormat, width, height, param);
-    if (!texTarget) {
-        return NULL;
-    }
-    
-    return loadFrameBuffer(texTarget, enableDepth);
 }
 
 

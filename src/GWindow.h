@@ -56,7 +56,10 @@ private:
         virtual float getWidth();
         virtual float getHeight();
         virtual float getScale();
-        
+#if defined(GX_METAL)
+    public:
+        virtual void* getRenderEncoder();
+#endif
     private:
         inline void setWindow(GWindow* v) {
             m_Window=v;

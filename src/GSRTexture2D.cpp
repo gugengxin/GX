@@ -458,7 +458,7 @@ void GSRTexture2D::draw(GCanvas* canvas,
     
 #elif defined(GX_METAL)
     
-    id<MTLRenderCommandEncoder>rce=GX_CAST_R(id<MTLRenderCommandEncoder>, currentRenderEncoder());
+    id<MTLRenderCommandEncoder>rce=GX_CAST_R(id<MTLRenderCommandEncoder>, canvas->getRenderEncoder());
     
     [rce setRenderPipelineState:GX_CAST_R(id<MTLRenderPipelineState>,getPLStates()[inputType])];
     

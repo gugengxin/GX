@@ -305,7 +305,7 @@ void GSRGraphics::draw(GCanvas* canvas, GIBuffer* buffer, InputType inputType, g
     
 #elif defined(GX_METAL)
     
-    id<MTLRenderCommandEncoder>rce=GX_CAST_R(id<MTLRenderCommandEncoder>, currentRenderEncoder());
+    id<MTLRenderCommandEncoder>rce=GX_CAST_R(id<MTLRenderCommandEncoder>, canvas->getRenderEncoder());
     
     [rce setRenderPipelineState:GX_CAST_R(id<MTLRenderPipelineState>,getPLStates()[inputType])];
     

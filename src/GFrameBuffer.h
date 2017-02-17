@@ -52,6 +52,14 @@ public:
 		inline DepthName getDepthName() const {
 			return m_DepthName;
 		}
+        inline bool isEnableDepth() {
+#if defined(GX_OPENGL)
+            return m_DepthName!=0;
+#elif defined(GX_DIRECTX) || defined(GX_METAL)
+            return m_DepthName!=NULL;
+#endif
+            
+        }
 #if defined(GX_OPENGL)
 #elif defined(GX_DIRECTX)
 		inline ID3D10RasterizerState*	getRasterState() const {
@@ -61,6 +69,9 @@ public:
 			return m_DepthStencilState;
 		}
 #elif defined(GX_METAL)
+        inline void* getDepthStencilState() {
+            return m_DepthStencilState;
+        }
 #endif
     private:
         Name m_Name;
@@ -70,6 +81,8 @@ public:
 		ID3D10RasterizerState*	m_RasterState; 
 		ID3D10DepthStencilState* m_DepthStencilState;
 #elif defined(GX_METAL)
+        void* m_StencilTex;
+        void* m_DepthStencilState;
 #endif
     };
 
@@ -120,6 +133,12 @@ private:
         m_Node=v;
     }
     void config(Node* node);
+#if defined(GX_METAL)
+public:
+    virtual void* getRenderEncoder() {
+        return m_RenderEncoder;
+    }
+#endif
 private:
     Node* m_Node;
     float m_Scale;
@@ -133,7 +152,8 @@ private:
 	ID3D10DepthStencilState*	m_PreDepthStencilState;
 	D3D10_VIEWPORT				m_PreViewport;
 #elif defined(GX_METAL)
-	
+    void* m_CommandBuffer;
+    void* m_RenderEncoder;
 #endif
 };
 

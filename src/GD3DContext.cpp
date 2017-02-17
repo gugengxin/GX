@@ -382,6 +382,12 @@ GDib* GD3DContext::loadTexture2DNodeReadyDib(GDib* dib)
 	}
 	return NULL;
 }
+
+GX::PixelFormat GD3DContext::getPixelFormatForFB() const
+{
+    return GX::PixelFormatRGBA8888;
+}
+
 void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 {
 	GContext::T2DNodeLoadObjBase& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObjBase*, obj);
