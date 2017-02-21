@@ -257,6 +257,7 @@ void GFrameBuffer::renderEnd()
 #endif
     [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) endEncoding];
     [GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer) commit];
+    [GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer) waitUntilCompleted];
     
     [GX_CAST_R(id, m_RenderEncoder) release];
     m_RenderEncoder=NULL;
