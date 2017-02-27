@@ -32,7 +32,7 @@ void Game::eventStart(GWindow* window)
     //*
     GSRTexture2D* shader=context.getSRTexture2D(false, true, GSRTexture2D::MM_None);
     
-    g_FB=context.loadFrameBuffer(200, 200, NULL, false);
+    g_FB=context.loadFrameBuffer(200, 200, NULL, true);
     GX_ASSERT(g_FB!=NULL);
     GO::retain(g_FB);
     
@@ -79,9 +79,12 @@ void Game::eventStart(GWindow* window)
         
         fb->setViewport(0, 0, fb->getWidth(), fb->getHeight(), fb->getScale());
         
-        fb->enable2D(fb->getWidth(), fb->getHeight());
-        
-        fb->translate(fb->getWidth()*0.5f, fb->getHeight()*0.5f, 0.0f);
+        //fb->enable2D(fb->getWidth(), fb->getHeight());
+		fb->enable3D(fb->getWidth(), fb->getHeight(), GX_PI / 3.0f, 0.1f, 1000.0f);
+		fb->lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
+        //fb->translate(fb->getWidth()*0.5f, fb->getHeight()*0.5f, 0.0f);
+		fb->translate(20.0f, 20.0f, -100.0f);
         
         shader->draw(fb, data, GSRTexture2D::IT_Float_Float, tex, GX_TRIANGLE_STRIP, 0, 4, NULL);
         

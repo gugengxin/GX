@@ -122,6 +122,21 @@ GFrameBuffer::~GFrameBuffer()
     }
 }
 
+void GFrameBuffer::enable2D(float width, float height)
+{
+	GCanvas::enable2D(width, height);
+#if defined(GX_OPENGL)
+	getMatrix(MatrixProjection).scale(1.0f, -1.0f, 1.0f);
+#endif
+}
+void GFrameBuffer::enable3D(float width, float height, float fovy, float zNear, float zFar)
+{
+	GCanvas::enable3D(width, height, fovy, zNear, zFar);
+#if defined(GX_OPENGL)
+	getMatrix(MatrixProjection).scale(1.0f, -1.0f, 1.0f);
+#endif
+}
+
 float GFrameBuffer::getWidth()
 {
     return m_Node->getWidth()/m_Scale;

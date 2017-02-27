@@ -22,29 +22,17 @@
 
 class GCanvas : public GObject
 {
-	GX_VIRTUAL_GOBJECT(GCanvas);
-public:
-    typedef enum _Matrix {
-        MatrixModel = 0,
-        MatrixView,
-        MatrixProjection,
-        MatrixMV,
-        MatrixMVP,
-        
-        ///////////////////
-        MatrixCount,
-    } Matrix;
-    
+	GX_VIRTUAL_GOBJECT(GCanvas);    
 public:
     virtual float getWidth()=0;
     virtual float getHeight()=0;
     virtual float getScale()=0;
     
     /// 矩阵开始2D模式
-    void enable2D(float width, float height);
+    virtual void enable2D(float width, float height);
     /// 矩阵开始3D模式
     /// @param fovy 单位为弧度
-    void enable3D(float width, float height, float fovy, float zNear, float zFar);
+	virtual void enable3D(float width, float height, float fovy, float zNear, float zFar);
     /// 设置相机视图
     void lookAt(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
     
@@ -90,7 +78,20 @@ public:
 public:
     virtual void* getRenderEncoder()=0;
 #endif
-    
+protected:
+	typedef enum _Matrix {
+		MatrixModel = 0,
+		MatrixView,
+		MatrixProjection,
+		MatrixMV,
+		MatrixMVP,
+
+		///////////////////
+		MatrixCount,
+	} Matrix;
+	inline GMatrix4& getMatrix(int idx) {
+		return m_Matrixs[idx];
+	}
 private:
     GMatrix4 m_Matrixs[MatrixCount];
     GPDArray<GMatrix4> m_MatrixStack;
