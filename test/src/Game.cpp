@@ -32,7 +32,7 @@ void Game::eventStart(GWindow* window)
     //*
     GSRTexture2D* shader=context.getSRTexture2D(false, true, GSRTexture2D::MM_None);
     
-    g_FB=context.loadFrameBuffer(200, 200, NULL, true);
+    g_FB=context.loadFrameBuffer(200, 200, NULL, GFrameBuffer::UseFor3D);
     GX_ASSERT(g_FB!=NULL);
     GO::retain(g_FB);
     

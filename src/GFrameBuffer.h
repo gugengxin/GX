@@ -113,6 +113,11 @@ public:
     };
     
 public:
+    typedef enum _Use {
+        UseFor2D=0,
+        UseFor3D,
+    } Use;
+public:
     Name getName();
     GTexture* getTexture();
     

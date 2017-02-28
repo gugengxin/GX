@@ -86,7 +86,7 @@ GX_GOBJECT_IMPLEMENT(GContext::FBNodeLoadObj, NodeLoadObj);
 
 GContext::FBNodeLoadObj::FBNodeLoadObj()
 {
-    enableDepth=false;
+    use=GFrameBuffer::UseFor2D;
     nodeOut=NULL;
 
     texTarget=NULL;
@@ -293,7 +293,7 @@ void GContext::unloadTextureNodeInMT(GObject* obj)
 	nodeObj.context->removeTextureNodeInMT(nodeObj.nodeOut);
 }
 
-GFrameBuffer* GContext::loadFrameBuffer(gint32 width, gint32 height, GTexture2D::Parameter* param, bool enableDepth)
+GFrameBuffer* GContext::loadFrameBuffer(gint32 width, gint32 height, GTexture2D::Parameter* param, GFrameBuffer::Use use)
 {
     GTexture2D* texTarget=NULL;
     {
@@ -310,7 +310,7 @@ GFrameBuffer* GContext::loadFrameBuffer(gint32 width, gint32 height, GTexture2D:
         }
     }
     GFrameBuffer::Node* node = new GFrameBuffer::Node();
-    if (loadFrameBufferNode(node, texTarget, enableDepth)) {
+    if (loadFrameBufferNode(node, texTarget, use)) {
         GFrameBuffer* res = GFrameBuffer::alloc();
         res->config(node);
         GO::autorelease(res);
@@ -333,14 +333,14 @@ void GContext::removeFrameBufferNodeInMT(GFrameBuffer::Node* node)
     m_FrameBuffers.remove(node,false);
 }
 
-bool GContext::loadFrameBufferNode(GFrameBuffer::Node* node, GTexture* texTarget, bool enableDepth)
+bool GContext::loadFrameBufferNode(GFrameBuffer::Node* node, GTexture* texTarget, GFrameBuffer::Use use)
 {
     FBNodeLoadObj* obj = FBNodeLoadObj::alloc();
 
     obj->context = this;
 	obj->nodeOut = node;
 	obj->texTarget = texTarget;
-	obj->enableDepth = enableDepth;
+	obj->use = use;
 
     if (GThread::current()->isMain()) {
         loadFrameBufferNodeInMT(obj);

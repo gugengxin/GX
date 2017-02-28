@@ -784,7 +784,7 @@ void GOGLContext::loadFrameBufferNodeInMT(GObject* obj)
 
     GX_glGenFramebuffers(1,&handle.m_Name);
     if (handle.m_Name) {
-        if (nodeObj.enableDepth) {
+        if (nodeObj.use==GFrameBuffer::UseFor3D) {
             GX_glGenRenderbuffers(1,&handle.m_DepthName);
 
             if (!handle.m_DepthName) {
@@ -798,7 +798,7 @@ void GOGLContext::loadFrameBufferNodeInMT(GObject* obj)
             GX_glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&oldFB);
             GX_glBindFramebuffer(GL_FRAMEBUFFER, handle.m_Name);
             GX_glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D, nodeObj.texTarget->getNode()->getData().getName(), 0);
-            if (nodeObj.enableDepth) {
+            if (nodeObj.use==GFrameBuffer::UseFor3D) {
                 GLuint oldRB;
                 GX_glGetIntegerv(GL_RENDERBUFFER_BINDING, (GLint*)&oldRB);
                 GX_glBindRenderbuffer(GL_RENDERBUFFER, handle.m_DepthName);

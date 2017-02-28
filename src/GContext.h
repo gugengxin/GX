@@ -75,7 +75,7 @@ private:
     public:
         GFrameBuffer::Node* nodeOut;
 
-        bool enableDepth;
+        GFrameBuffer::Use use;
         GTexture* texTarget;
     };
     class FBNodeUnloadObj : public NodeUnloadObj {
@@ -113,11 +113,11 @@ private:
 	static void unloadTextureNodeInMT(GObject* obj);
 //FrameBuffer
 public:
-    GFrameBuffer* loadFrameBuffer(gint32 width, gint32 height, GTexture2D::Parameter* param, bool enableDepth);
+    GFrameBuffer* loadFrameBuffer(gint32 width, gint32 height, GTexture2D::Parameter* param, GFrameBuffer::Use use);
 private:
     void addFrameBufferNodeInMT(GFrameBuffer::Node* node);
     void removeFrameBufferNodeInMT(GFrameBuffer::Node* node);
-	bool loadFrameBufferNode(GFrameBuffer::Node* node, GTexture* texTarget, bool enableDepth);
+	bool loadFrameBufferNode(GFrameBuffer::Node* node, GTexture* texTarget, GFrameBuffer::Use use);
     void unloadFrameBufferNode(GFrameBuffer::Node* node);
 	static void unloadFrameBufferNodeInMT(GObject* obj);
 private:
