@@ -578,7 +578,7 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 	// for rendertarget
 	device->CreateRenderTargetView(pTex2D, &descRT, &outRTView);
 
-	if (nodeObj.enableDepth) {// 分配DepthStencil动态贴图
+	if (nodeObj.use==GFrameBuffer::UseFor3D) {// 分配DepthStencil动态贴图
 		ID3D10Texture2D* pDSTex2D = NULL;
 		
 		dstex.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -614,7 +614,7 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 
 		device->CreateRasterizerState(&descRS, &outRasterState);
 	}
-	if (nodeObj.enableDepth) {
+	if (nodeObj.use == GFrameBuffer::UseFor3D) {
 		//深度设置
 		D3D10_DEPTH_STENCIL_DESC dsDesc;
 		dsDesc.DepthEnable = false;                      //启用深度测试
