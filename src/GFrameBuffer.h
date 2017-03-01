@@ -105,6 +105,13 @@ public:
         }
         float getWidth();
         float getHeight();
+        
+        const GColor4F getBackgroundColor() const {
+            return m_BgdColor;
+        }
+        void setBackgroundColor(float r,float g,float b,float a) {
+            m_BgdColor.set(r, g, b, a);
+        }
 
     private:
         GContext* m_Context;
@@ -127,6 +134,9 @@ public:
     virtual float getWidth();
     virtual float getHeight();
     virtual float getScale();
+    
+    virtual const GColor4F& getBackgroundColor() const;
+    virtual void setBackgroundColor(float r,float g,float b,float a);
     
     bool renderCheck();
     void renderBegin();

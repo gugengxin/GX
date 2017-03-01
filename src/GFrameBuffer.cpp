@@ -150,6 +150,15 @@ float GFrameBuffer::getScale()
     return m_Scale;
 }
 
+const GColor4F& GFrameBuffer::getBackgroundColor() const
+{
+    return m_Node->getBackgroundColor();
+}
+void GFrameBuffer::setBackgroundColor(float r,float g,float b,float a)
+{
+    m_Node->setBackgroundColor(r, g, b, a);
+}
+
 void GFrameBuffer::config(Node* node)
 {
     setNode(node);
@@ -205,6 +214,11 @@ void GFrameBuffer::renderBegin()
 #define M_COMMAND_BUFFER()      GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer)
 #define M_RENDER_ENCODER()      GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder)
 #define M_DEPTH_STENCIL_STATE() GX_CAST_R(id<MTLDepthStencilState>, m_DepthStencilState)
+    
+    MTLRenderPassDescriptor* rpd=GX_CAST_R(MTLRenderPassDescriptor*, m_Node->getData().getName());
+    MTLRenderPassColorAttachmentDescriptor *colorAttachment = rpd.colorAttachments[0];
+    const GColor4F& bgdClr=m_Node->getBackgroundColor();
+    colorAttachment.clearColor = MTLClearColorMake(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
     
     m_CommandBuffer=[[GX_CAST_R(id<MTLCommandQueue>, m_Node->getContext()->getCommandQueue()) commandBuffer] retain];
     m_RenderEncoder = [[GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer) renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, m_Node->getData().getName())] retain];

@@ -68,12 +68,8 @@ public:
     }
     
 public:
-    const GColor4F& getBackgroundColor() const {
-        return m_BgdColor;
-    }
-    void setBackgroundColor(float r,float g,float b,float a) {
-        m_BgdColor.set(r, g, b, a);
-    }
+    virtual const GColor4F& getBackgroundColor() const =0;
+    virtual void setBackgroundColor(float r,float g,float b,float a) =0;
 #if defined(GX_METAL)
 public:
     virtual void* getRenderEncoder()=0;
@@ -96,7 +92,6 @@ private:
     GMatrix4 m_Matrixs[MatrixCount];
     GPDArray<GMatrix4> m_MatrixStack;
     GColor4F m_ColorMul;
-    GColor4F m_BgdColor;
 };
 
 // Up can't include other h file

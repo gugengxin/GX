@@ -56,6 +56,10 @@ private:
         virtual float getWidth();
         virtual float getHeight();
         virtual float getScale();
+        
+        virtual const GColor4F& getBackgroundColor() const;
+        virtual void setBackgroundColor(float r,float g,float b,float a);
+        
 #if defined(GX_METAL)
     public:
         virtual void* getRenderEncoder();
@@ -82,7 +86,10 @@ public:
     float getHeight();
     float getScale();
     const GColor4F getBackgroundColor() const {
-        return m_Canvas->getBackgroundColor();
+        return m_BgdColor;
+    }
+    void setBackgroundColor(float r,float g,float b,float a) {
+        m_BgdColor.set(r, g, b, a);
     }
     
     inline GContext& getContext() {
@@ -104,6 +111,7 @@ private:
 private:
 	GContext m_Context;
     Canvas*  m_Canvas;
+    GColor4F m_BgdColor;
 private:
 	void* m_OSWinP;
 #if defined(GX_OS_WINDOWS)

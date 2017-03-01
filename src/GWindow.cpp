@@ -39,6 +39,15 @@ float GWindow::Canvas::getScale()
     return m_Window->getScale();
 }
 
+const GColor4F& GWindow::Canvas::getBackgroundColor() const
+{
+    return m_Window->getBackgroundColor();
+}
+void GWindow::Canvas::setBackgroundColor(float r,float g,float b,float a)
+{
+    m_Window->setBackgroundColor(r, g, b, a);
+}
+
 #if defined(GX_METAL)
 void* GWindow::Canvas::getRenderEncoder()
 {
@@ -450,6 +459,7 @@ _GQWindow::~_GQWindow()
 GWindow::GWindow(void* osWinP, GClass* gameGClass)
 {
 	m_OSWinP = osWinP;
+    m_BgdColor.set(0.0f, 0.0f, 0.0f, 1.0f);
 #if defined(GX_OS_WINDOWS)
 	WNDCLASS	wc;						// 窗口类结构
 	DWORD		dwExStyle;				// 扩展窗口风格
