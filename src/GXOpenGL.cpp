@@ -137,6 +137,19 @@ namespace GX {
 #endif
     }
     
+    bool OGLContext::isValid()
+    {
+#if defined(GX_OS_WINDOWS)
+        return context!=NULL;
+#elif defined(GX_OS_APPLE)
+        return context!=NULL;
+#elif defined(GX_OS_ANDROID)
+        return context!=EGL_NO_CONTEXT;
+#elif defined(GX_OS_QT)
+        return context!=NULL;
+#endif
+    }
+    
 #if defined(GX_OS_ANDROID)
     static EGLDisplay g_Display=EGL_NO_DISPLAY;
 #endif

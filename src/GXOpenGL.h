@@ -369,6 +369,8 @@ namespace GX {
     class OGLContext {
     public:
         OGLContext();
+        
+        bool isValid();
     public:
 #if defined(GX_OS_WINDOWS)
         HDC   DC;

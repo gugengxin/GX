@@ -126,7 +126,16 @@ void GFrameBuffer::enable2D(float width, float height)
 {
 	GCanvas::enable2D(width, height);
 #if defined(GX_OPENGL)
+    GMatrix4 m(1.0f,    0.0f,   0.0f,   0.0f,
+               0.0f,    -1.0f,  0.0f,   0.0f,
+               0.0f,    0.0f,   1.0f,   0.0f,
+               0.0f,    height, 0.0f,   1.0f);
+    getMatrix(MatrixProjection).multiply(m);
+    /*
+    getMatrix(MatrixProjection).translate(0, height, 0.0f);
 	getMatrix(MatrixProjection).scale(1.0f, -1.0f, 1.0f);
+    //*/
+    
 #endif
 }
 void GFrameBuffer::enable3D(float width, float height, float fovy, float zNear, float zFar)

@@ -653,7 +653,9 @@ void GWindow::eventResize()
     float nh=getHeight();
     float s=getScale();
     
-    m_Context.resize(nw*s, nh*s);
+    if(m_Context.resize(nw*s, nh*s)) {
+        render();
+    }
 }
 
 void GWindow::eventDestroy()
