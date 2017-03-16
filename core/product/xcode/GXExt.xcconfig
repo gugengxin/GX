@@ -1,0 +1,12 @@
+
+GX_EXTERNAL_ZLIB_INC = $(GX_ROOT)/external/zlib/include
+GX_EXTERNAL_ZLIB_LIB = $(GX_ROOT)/external/zlib/lib/$(GX_OS_DIRNAME)/libzlib.a
+
+GX_EXTERNAL_LIBPNG_INC = $(GX_ROOT)/external/libpng/include
+GX_EXTERNAL_LIBPNG_LIB = $(GX_ROOT)/external/libpng/lib/$(GX_OS_DIRNAME)/liblibpng.a
+
+GX_EXTERNAL_LIBJPEG_INC = $(GX_ROOT)/external/libjpeg/include $(GX_ROOT)/external/libjpeg/include/$(GX_OS_DIRNAME)
+GX_EXTERNAL_LIBJPEG_LIB = $(GX_ROOT)/external/libjpeg/lib/$(GX_OS_DIRNAME)/liblibjpeg.a
+
+GX_EXTERNAL_INCS = $(GX_EXTERNAL_ZLIB_INC) $(GX_EXTERNAL_LIBPNG_INC) $(GX_EXTERNAL_LIBJPEG_INC)
+GX_EXTERNAL_LIBS = $(GX_EXTERNAL_ZLIB_LIB) $(GX_EXTERNAL_LIBPNG_LIB) $(GX_EXTERNAL_LIBJPEG_LIB)

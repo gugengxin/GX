@@ -1,0 +1,10 @@
+//
+//  Config_ios.xcconfig
+//  GXCoreTest
+//
+//  Created by Gengxin Gu on 2017/3/16.
+//  Copyright © 2017年 Gengxin Gu. All rights reserved.
+//
+
+GX_ROOT = ../../../..
+#include "../../../product/xcode/GXCore_ios"

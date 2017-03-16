@@ -1,0 +1,11 @@
+
+
+#include "GXOS_ios"
+#include "GXExt_ios"
+#include "GXExt"
+
+GX_HEADER_SEARCH_PATHS = $(GX_ROOT)/core/src
+GX_OTHER_LDFLAGS = $(GX_EXTERNAL_LIBS)
+
+HEADER_SEARCH_PATHS = $(inherited) $(GX_HEADER_SEARCH_PATHS)
+OTHER_LDFLAGS = $(inherited) $(GX_OTHER_LDFLAGS)

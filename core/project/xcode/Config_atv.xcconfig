@@ -1,0 +1,3 @@
+
+GX_ROOT = ../../..
+#include "GXCoreLib_atv"
