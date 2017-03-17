@@ -38,9 +38,11 @@
 #if defined(Q_OS_WIN)
 #undef GX_OS_WINDOWS
 #define GX_OS_QT_WINDOWS
+#define GX_OS_DESKTOP
 #elif defined(Q_OS_OSX)
 #undef GX_OS_MACOSX
 #define GX_OS_QT_MACOSX
+#define GX_OS_DESKTOP
 #else
 #error
 #endif
@@ -82,8 +84,8 @@
 #ifndef GX_OPENGL
 #if defined(GX_OS_QT) \
     || defined(GX_OS_ANDROID) \
-    //|| defined(GX_OS_APPLE) \
-    //|| defined(GX_OS_WINDOWS) \
+    /* || defined(GX_OS_APPLE) */ \
+    /* || defined(GX_OS_WINDOWS) */ \
 
 #define GX_OPENGL
 
