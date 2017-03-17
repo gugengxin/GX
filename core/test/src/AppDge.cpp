@@ -18,6 +18,8 @@ AppDge::~AppDge()
 
 void AppDge::appDidFinishLaunching(GApplication* application, const GApplication::InitData& initData)
 {
+    GX_UNUSED(application);
+    GX_UNUSED(initData);
 //	application->startGame(Game::gclass,initData.getOSWindowForLaunch());
     /*
 	GString* str = GString::autoAlloc();

@@ -8,9 +8,18 @@ xcuserdata
 *.o
 moc_*.cpp
 
-core/project/build-GX*
+core/project/build-*
+core/project/qt/debug/
+core/project/qt/release/
+core/project/qt/obj/
+core/project/qt/moc/
+core/project/qt/Makefile*
 core/product/vs/lib/
 core/product/qt/
+
+core/test/project/build-*
+
+
 
 bin/
 product/vs/lib/
@@ -54,3 +63,4 @@ external/openal/lib
 external/pthread-win32/lib/
 external/pthread-win32/include/
 external/pthread-win32/pthread-win32/
+core/test/project/build-GXCoreTest-Desktop_Qt_5_8_0_clang_64bit-Debug
