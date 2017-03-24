@@ -10,7 +10,7 @@ pushd %LIBRARY_ROOT%\..\..
 set GX_ROOT=%cd%
 popd
 
-call %GX_ROOT%\bin\vc120.bat
+call %GX_ROOT%\bin\vc.bat
 
 msbuild %PROJECT_ROOT%\zlib.sln /t:Rebuild /p:Configuration=Debug,Platform=Win32
 msbuild %PROJECT_ROOT%\zlib.sln /t:Rebuild /p:Configuration=Release,Platform=Win32

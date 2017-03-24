@@ -1,9 +1,9 @@
 @echo off
 
-echo Setup VC120 environment
+echo Setup VC environment
 
 call :CMD_EXIST msbuild || ( 
-	call %~dp0vc12_amd64_vcvars64.bat
+	call %~dp0vcvars32.bat
 )
 
 goto :EOF
