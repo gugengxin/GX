@@ -16,7 +16,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #define M_RESOURCE_DIR_NAME "Contents/Resources"
 #elif defined(GX_OS_ANDROID)
-#include "GAndroidC.h"
+#include "GAndroidApp.h"
 #define M_RESOURCE_DIR_NAME "assets"
 #elif defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
 #include <Windows.h>
@@ -48,7 +48,7 @@ GAppBundle::GAppBundle()
     CFRelease(str);
     CFRelease(url);
 #elif defined(GX_OS_ANDROID)
-    GString* path=GAndroidC::shared()->appGetPackageCodePath();
+    GString* path=GAndroidApp::shared()->getPackageCodePath();
     if(path) {
         open(path->utf8String(),true);
     }

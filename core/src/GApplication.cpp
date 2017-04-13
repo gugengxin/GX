@@ -15,8 +15,7 @@
 #include <Mmsystem.h>
 #pragma comment(lib, "Winmm.lib")
 #elif defined(GX_OS_ANDROID)
-#include <android/sensor.h>
-#include "GAndroidC.h"
+
 #endif
 #include "GThread.h"
 #include "GLog.h"
@@ -198,113 +197,6 @@ void GApplication::destroyWinMsgWnd()
 
 #elif defined(GX_OS_ANDROID)
 
-GApplication::_WinData* GApplication::getWDFromHolder(JNIEnv* env,jobject holder)
-{
-	for (gint i = 0; i < m_WinDatas.getCount(); ++i) {
-		_WinData* wd=m_WinDatas.getPtr(i);
-		if(env->IsSameObject(wd->holder,holder)) {
-			return wd;
-		}
-	}
-	return NULL;
-}
-
-gint GApplication::getWDIndexFromHolder(JNIEnv* env,jobject holder)
-{
-	for (gint i = 0; i < m_WinDatas.getCount(); ++i) {
-		_WinData* wd=m_WinDatas.getPtr(i);
-		if(env->IsSameObject(wd->holder,holder)) {
-			return i;
-		}
-	}
-	return -1;
-}
-
-void GApplication::winHolderOnCreate(JNIEnv* env, jobject holder,_WinHolderType type)
-{
-	for (gint i = 0; i < m_WinDatas.getCount(); ++i) {
-		_WinData& wd=m_WinDatas.get(i);
-		if(wd.holder==NULL && wd.gclass!=NULL) {
-			wd.holder=env->NewWeakGlobalRef(holder);
-			wd.type=type;
-			return;
-		}
-	}
-
-	_WinData wd;
-	wd.holder=env->NewWeakGlobalRef(holder);
-	wd.type=type;
-	m_WinDatas.add(wd);
-}
-
-void GApplication::winHolderOnStart(JNIEnv* env, jobject holder,_WinHolderType type)
-{
-
-}
-
-void GApplication::winHolderOnResume(JNIEnv* env, jobject holder,_WinHolderType type)
-{
-
-}
-
-void GApplication::winHolderOnPause(JNIEnv* env, jobject holder,_WinHolderType type)
-{
-
-}
-
-void GApplication::winHolderOnStop(JNIEnv* env, jobject holder,_WinHolderType type)
-{
-
-}
-
-void GApplication::winHolderOnDestroy(JNIEnv* env, jobject holder,_WinHolderType type)
-{
-	gint idx=getWDIndexFromHolder(env,holder);
-	if(idx>=0) {
-		_WinData& wd=m_WinDatas.get(idx);
-		env->DeleteWeakGlobalRef(wd.holder);
-		if(wd.createdOnLaunch) {
-			wd.holder=NULL;
-			wd.type=_WinHolderType_Unknown;
-			wd.window=NULL;
-		}
-		else {
-			m_WinDatas.remove(idx);
-		}
-	}
-}
-
-void GApplication::winOnCreated(JNIEnv* env, jobject win, jobject surface, jobject winHolder)
-{
-	_WinData* wd=getWDFromHolder(env,winHolder);
-	if(wd && wd->holder && wd->gclass) {
-
-		ANativeWindow* nw=ANativeWindow_fromSurface(env, surface);
-		if(!wd->window) {
-			wd->window=addWindow(nw,wd->gclass);
-		}
-		else {
-			wd->window->androidRecreate(nw);
-		}
-		ANativeWindow_release(nw);
-	}
-}
-void GApplication::winOnChanged(JNIEnv* env, jobject win, jobject surface,jint width, jint height, jobject winHolder)
-{
-	_WinData* wd=getWDFromHolder(env,winHolder);
-	if(wd && wd->holder && wd->gclass && wd->window) {
-		wd->window->eventResize();
-	}
-}
-void GApplication::winOnDestroyed(JNIEnv* env, jobject win, jobject surface, jobject winHolder)
-{
-	_WinData* wd=getWDFromHolder(env,winHolder);
-	if(wd && wd->holder && wd->gclass && wd->window) {
-		wd->window->androidDestroy();
-	}
-}
-
-
 #endif
 
 
@@ -321,12 +213,10 @@ GApplication::Delegate* GApplication::sharedDelegate()
 	return shared()->m_Delegate;
 }
 
-void GApplication::main(Delegate* dge, InitData* initData)
+void GApplication::main(Delegate* dge)
 {
     GApplication* app=shared();
     app->m_Delegate=dge;
-	//memcpy(&app->m_InitData,initData, sizeof(InitData));
-    app->m_InitData=*initData;
     GThread::current()->setMain();
     app->eventDidFinishLaunching();
 }
@@ -343,7 +233,7 @@ GApplication::GApplication()
 #elif defined(GX_OS_WINDOWS)
 	m_TimerID = 0;
 #elif defined(GX_OS_ANDROID)
-	m_IsAppDidFinishLaunching=false;
+
 #endif
 }
 
@@ -365,13 +255,7 @@ void GApplication::idle()
 
 void GApplication::eventDidFinishLaunching()
 {
-#if defined(GX_OS_ANDROID)
-	m_IsAppDidFinishLaunching=true;
-#endif
-	m_Delegate->appDidFinishLaunching(this,m_InitData);
-#if defined(GX_OS_ANDROID)
-	m_IsAppDidFinishLaunching=false;
-#endif
+	m_Delegate->appDidFinishLaunching(this);
     
 #if defined(GX_OS_APPLE)
     [GX_CAST_R(_AppHelper*, m_Helper) start];
@@ -395,4 +279,9 @@ void GApplication::eventWillTerminate()
     m_Timer.stop();
     disconnect(&m_Timer,SIGNAL(timeout()),this,SLOT(idle()));
 #endif
+}
+
+void GApplication::eventReceivedMemoryWarning()
+{
+    m_Delegate->appReceivedMemoryWarning(this);
 }

@@ -38,9 +38,7 @@ MOC_DIR = moc
 SOURCES += \
 #__SOURCES_START__
 	../../src/GAction.cpp\
-	#../../src/GAndroid.cpp\
-	#../../src/GAndroidC.cpp\
-	#../../src/GAndroidJ.cpp\
+	#../../src/GAndroidApp.cpp\
 	../../src/GAppBundle.cpp\
 	../../src/GApplication.cpp\
 	../../src/GArray.cpp\
@@ -102,9 +100,7 @@ win32 {
 HEADERS += \
 #__HEADERS_START__
 	../../src/GAction.h\
-	../../src/GAndroid.h\
-	../../src/GAndroidC.h\
-	../../src/GAndroidJ.h\
+	../../src/GAndroidApp.h\
 	../../src/GAppBundle.h\
 	../../src/GApplication.h\
 	../../src/GArray.h\
@@ -168,8 +164,7 @@ HEADERS += \
 	../../src/GZipBundle.h\
 	../../src/GZipReader.h\
 	../../src/GZipWriter.h\
-	../../src/com_gxengine_GX.h\
-	../../src/com_gxengine_gx_GAndroidJ.h\
+	../../src/com_gxengine_core_GAndroidApp.h\
 #__HEADERS_END__
 
 #pthread

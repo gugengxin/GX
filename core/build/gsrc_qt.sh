@@ -14,7 +14,7 @@ ${GX_TE} -i ${GX_ROOT}/core/project/qt/GXCore.pro -o ${GX_ROOT}/core/project/qt/
 -fd ${GX_ROOT}/core/src \
 -fe .cpp -fe .c \
 -fsp "\t../../src" -fss "\\\n" \
--ff GJNI.cpp -ff GAndroid.cpp -ff GAndroidC.cpp -ff GAndroidJ.cpp -ff GXCWnd.cpp \
+-ff GJNI.cpp -ff GAndroidApp.cpp -ff GXCWnd.cpp \
 -fsfp "\t#../../src" -fsfs "\\\n" \
 -fi GXPthread.cpp
 

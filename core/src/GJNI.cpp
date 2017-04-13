@@ -45,7 +45,8 @@ void GJNI::init(JNIEnv *env, jobject classLoader)
 
 void GJNI::uninit(JNIEnv *env)
 {
-
+    env->DeleteGlobalRef(m_CLClass);
+    env->DeleteGlobalRef(m_CLInst);
 }
 
 
@@ -119,14 +120,19 @@ void GJNI::Caller::init(JNIEnv* jniEnv,const char* className)
     jniEnv->DeleteLocalRef(tmp);
 }
 
-jmethodID GJNI::Caller::getMethod(JNIEnv* jniEnv,const char* name,const char* sig,bool isStatic)
+void GJNI::Caller::uninit(JNIEnv* jniEnv)
 {
-    if(isStatic) {
-        return jniEnv->GetStaticMethodID(m_Class,name,sig);
-    }
-    else {
-        return jniEnv->GetMethodID(m_Class,name,sig);
-    }
+    jniEnv->DeleteGlobalRef(m_Class);
+}
+
+jmethodID GJNI::Caller::getMethod(JNIEnv* jniEnv,const char* name,const char* sig)
+{
+    return jniEnv->GetMethodID(m_Class,name,sig);
+}
+
+jmethodID GJNI::Caller::getStaticMethod(JNIEnv* jniEnv,const char* name,const char* sig)
+{
+    return jniEnv->GetStaticMethodID(m_Class,name,sig);
 }
 
 void GJNI::Caller::callStaticVoidMethod(JNIEnv* jniEnv,jmethodID method,...)

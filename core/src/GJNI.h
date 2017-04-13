@@ -68,12 +68,14 @@ public:
         virtual ~Caller();
 
         virtual void init(JNIEnv* jniEnv,const char* className);
+        virtual void uninit(JNIEnv* jniEnv);
 
         inline jclass getClass() {
             return m_Class;
         }
 
-        jmethodID getMethod(JNIEnv* jniEnv,const char* name,const char* sig,bool isStatic);
+        jmethodID getMethod(JNIEnv* jniEnv,const char* name,const char* sig);
+        jmethodID getStaticMethod(JNIEnv* jniEnv,const char* name,const char* sig);
 
         void callStaticVoidMethod(JNIEnv* jniEnv,jmethodID method,...);
         jobject callStaticObjectMethod(JNIEnv* jniEnv,jmethodID method,...);
@@ -87,6 +89,11 @@ public:
     private:
         jclass 		m_Class;
     };
+
+#define GX_JNI_CALLER_METHOD(name) jmethodID m_M##name
+#define GX_JNI_CALLER_METHOD_GET(name) m_M##name
+#define GX_JNI_CALLER_METHOD_INIT(jniEnv,name,sign) GX_JNI_CALLER_METHOD_GET(name)=getMethod(jniEnv,#name,sign)
+#define GX_JNI_CALLER_STATIC_METHOD_INIT(jniEnv,name,sign) GX_JNI_CALLER_METHOD_GET(name)=getStaticMethod(jniEnv,#name,sign)
 
 };
 

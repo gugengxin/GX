@@ -10,7 +10,7 @@
 #if defined(GX_OS_APPLE)
 #include <CoreFoundation/CoreFoundation.h>
 #elif defined(GX_OS_ANDROID)
-#include "GAndroidC.h"
+#include "GAndroidApp.h"
 #elif defined(GX_OS_WINDOWS)
 #include <objbase.h>
 #endif
@@ -25,7 +25,7 @@ GUUID::GUUID()
     (*((CFUUIDBytes*)&m_Bytes))=CFUUIDGetUUIDBytes(uuid);
     CFRelease(uuid);
 #elif defined(GX_OS_ANDROID)
-    GAndroidC::shared()->UUIDCreate(m_Bytes);
+    GAndroidApp::shared()->createUUID(m_Bytes);
 
 #elif defined(GX_OS_MICROSOFT)
     //GUID guid;
