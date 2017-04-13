@@ -43,8 +43,7 @@
     _window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [_window makeKeyAndVisible];
     
-    GApplication::InitData initData;
-    GApplication::main(AppDge::shared(),&initData);
+    GApplication::main(AppDge::shared());
     
     _window.rootViewController=[[[UIViewController alloc] init] autorelease];
     return YES;

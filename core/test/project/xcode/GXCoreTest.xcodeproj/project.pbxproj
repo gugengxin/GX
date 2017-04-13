@@ -287,6 +287,7 @@
 				TargetAttributes = {
 					CA027B241E7ACFF000146D1A = {
 						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = YS4H72RSCW;
 						ProvisioningStyle = Automatic;
 					};
 					CA027B421E7AD0F700146D1A = {
@@ -524,6 +525,7 @@
 			baseConfigurationReference = CA027B791E7AD42800146D1A /* Config_ios.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YS4H72RSCW;
 				INFOPLIST_FILE = "$(SRCROOT)/ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXCoreTest.ios;
@@ -535,6 +537,7 @@
 			baseConfigurationReference = CA027B791E7AD42800146D1A /* Config_ios.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = YS4H72RSCW;
 				INFOPLIST_FILE = "$(SRCROOT)/ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXCoreTest.ios;

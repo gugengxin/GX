@@ -10,15 +10,6 @@
 		CA3A960C1E7A727B00CEFD8E /* GAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A958F1E7A727B00CEFD8E /* GAction.cpp */; };
 		CA3A960D1E7A727B00CEFD8E /* GAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A958F1E7A727B00CEFD8E /* GAction.cpp */; };
 		CA3A960E1E7A727B00CEFD8E /* GAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A958F1E7A727B00CEFD8E /* GAction.cpp */; };
-		CA3A96101E7A727B00CEFD8E /* GAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95911E7A727B00CEFD8E /* GAndroid.cpp */; };
-		CA3A96111E7A727B00CEFD8E /* GAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95911E7A727B00CEFD8E /* GAndroid.cpp */; };
-		CA3A96121E7A727B00CEFD8E /* GAndroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95911E7A727B00CEFD8E /* GAndroid.cpp */; };
-		CA3A96141E7A727B00CEFD8E /* GAndroidC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95931E7A727B00CEFD8E /* GAndroidC.cpp */; };
-		CA3A96151E7A727B00CEFD8E /* GAndroidC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95931E7A727B00CEFD8E /* GAndroidC.cpp */; };
-		CA3A96161E7A727B00CEFD8E /* GAndroidC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95931E7A727B00CEFD8E /* GAndroidC.cpp */; };
-		CA3A96181E7A727B00CEFD8E /* GAndroidJ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95951E7A727B00CEFD8E /* GAndroidJ.cpp */; };
-		CA3A96191E7A727B00CEFD8E /* GAndroidJ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95951E7A727B00CEFD8E /* GAndroidJ.cpp */; };
-		CA3A961A1E7A727B00CEFD8E /* GAndroidJ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95951E7A727B00CEFD8E /* GAndroidJ.cpp */; };
 		CA3A961C1E7A727B00CEFD8E /* GAppBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95971E7A727B00CEFD8E /* GAppBundle.cpp */; };
 		CA3A961D1E7A727B00CEFD8E /* GAppBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95971E7A727B00CEFD8E /* GAppBundle.cpp */; };
 		CA3A961E1E7A727B00CEFD8E /* GAppBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A95971E7A727B00CEFD8E /* GAppBundle.cpp */; };
@@ -178,28 +169,10 @@
 		CA3A96F51E7A727C00CEFD8E /* GZipWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A96081E7A727B00CEFD8E /* GZipWriter.cpp */; };
 		CA3A96F61E7A727C00CEFD8E /* GZipWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A96081E7A727B00CEFD8E /* GZipWriter.cpp */; };
 		CA3A96F71E7A727C00CEFD8E /* GZipWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A96081E7A727B00CEFD8E /* GZipWriter.cpp */; };
+		CA4D74B21E9FD1640048CA04 /* GAndroidApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA4D74B01E9FD1640048CA04 /* GAndroidApp.cpp */; };
+		CA4D74B31E9FD1640048CA04 /* GAndroidApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA4D74B01E9FD1640048CA04 /* GAndroidApp.cpp */; };
+		CA4D74B41E9FD1640048CA04 /* GAndroidApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA4D74B01E9FD1640048CA04 /* GAndroidApp.cpp */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		CA3A95681E7A617F00CEFD8E /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CA3A95791E7A631900CEFD8E /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "include/$(PRODUCT_NAME)";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CA027B191E7ACCB300146D1A /* Config_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_atv.xcconfig; sourceTree = "<group>"; };
@@ -208,16 +181,8 @@
 		CA3A956A1E7A617F00CEFD8E /* GXCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3A957B1E7A631900CEFD8E /* GXCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3A95881E7A638C00CEFD8E /* GXCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA3A958D1E7A727B00CEFD8E /* com_gxengine_GX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_GX.h; sourceTree = "<group>"; };
-		CA3A958E1E7A727B00CEFD8E /* com_gxengine_gx_GAndroidJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_gx_GAndroidJ.h; sourceTree = "<group>"; };
 		CA3A958F1E7A727B00CEFD8E /* GAction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAction.cpp; sourceTree = "<group>"; };
 		CA3A95901E7A727B00CEFD8E /* GAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAction.h; sourceTree = "<group>"; };
-		CA3A95911E7A727B00CEFD8E /* GAndroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAndroid.cpp; sourceTree = "<group>"; };
-		CA3A95921E7A727B00CEFD8E /* GAndroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAndroid.h; sourceTree = "<group>"; };
-		CA3A95931E7A727B00CEFD8E /* GAndroidC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAndroidC.cpp; sourceTree = "<group>"; };
-		CA3A95941E7A727B00CEFD8E /* GAndroidC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAndroidC.h; sourceTree = "<group>"; };
-		CA3A95951E7A727B00CEFD8E /* GAndroidJ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAndroidJ.cpp; sourceTree = "<group>"; };
-		CA3A95961E7A727B00CEFD8E /* GAndroidJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAndroidJ.h; sourceTree = "<group>"; };
 		CA3A95971E7A727B00CEFD8E /* GAppBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAppBundle.cpp; sourceTree = "<group>"; };
 		CA3A95981E7A727B00CEFD8E /* GAppBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAppBundle.h; sourceTree = "<group>"; };
 		CA3A95991E7A727B00CEFD8E /* GApplication.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GApplication.cpp; sourceTree = "<group>"; };
@@ -337,6 +302,9 @@
 		CA3A97031E7A79D000CEFD8E /* GXCoreLib_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GXCoreLib_atv.xcconfig; sourceTree = "<group>"; };
 		CA3A97041E7A79D000CEFD8E /* GXCoreLib_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GXCoreLib_ios.xcconfig; sourceTree = "<group>"; };
 		CA3A97051E7A79D000CEFD8E /* GXCoreLib_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GXCoreLib_mac.xcconfig; sourceTree = "<group>"; };
+		CA4D74AF1E9FD1640048CA04 /* com_gxengine_core_GAndroidApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_core_GAndroidApp.h; sourceTree = "<group>"; };
+		CA4D74B01E9FD1640048CA04 /* GAndroidApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAndroidApp.cpp; sourceTree = "<group>"; };
+		CA4D74B11E9FD1640048CA04 /* GAndroidApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAndroidApp.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -421,16 +389,11 @@
 		CA3A96FA1E7A736B00CEFD8E /* unuse */ = {
 			isa = PBXGroup;
 			children = (
+				CA4D74AF1E9FD1640048CA04 /* com_gxengine_core_GAndroidApp.h */,
+				CA4D74B01E9FD1640048CA04 /* GAndroidApp.cpp */,
+				CA4D74B11E9FD1640048CA04 /* GAndroidApp.h */,
 				CA3A95BF1E7A727B00CEFD8E /* GJNI.cpp */,
 				CA3A95C01E7A727B00CEFD8E /* GJNI.h */,
-				CA3A958D1E7A727B00CEFD8E /* com_gxengine_GX.h */,
-				CA3A958E1E7A727B00CEFD8E /* com_gxengine_gx_GAndroidJ.h */,
-				CA3A95911E7A727B00CEFD8E /* GAndroid.cpp */,
-				CA3A95921E7A727B00CEFD8E /* GAndroid.h */,
-				CA3A95931E7A727B00CEFD8E /* GAndroidC.cpp */,
-				CA3A95941E7A727B00CEFD8E /* GAndroidC.h */,
-				CA3A95951E7A727B00CEFD8E /* GAndroidJ.cpp */,
-				CA3A95961E7A727B00CEFD8E /* GAndroidJ.h */,
 			);
 			name = unuse;
 			sourceTree = "<group>";
@@ -595,7 +558,6 @@
 			buildPhases = (
 				CA3A95661E7A617F00CEFD8E /* Sources */,
 				CA3A95671E7A617F00CEFD8E /* Frameworks */,
-				CA3A95681E7A617F00CEFD8E /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -612,7 +574,6 @@
 			buildPhases = (
 				CA3A95771E7A631900CEFD8E /* Sources */,
 				CA3A95781E7A631900CEFD8E /* Frameworks */,
-				CA3A95791E7A631900CEFD8E /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -704,7 +665,6 @@
 				CA3A96381E7A727B00CEFD8E /* GColor.cpp in Sources */,
 				CA3A96AC1E7A727C00CEFD8E /* GReader.cpp in Sources */,
 				CA3A96641E7A727B00CEFD8E /* GFileReader.cpp in Sources */,
-				CA3A96181E7A727B00CEFD8E /* GAndroidJ.cpp in Sources */,
 				CA3A96C01E7A727C00CEFD8E /* GThread.cpp in Sources */,
 				CA3A96A01E7A727C00CEFD8E /* GPng.cpp in Sources */,
 				CA3A96301E7A727B00CEFD8E /* GClass.cpp in Sources */,
@@ -713,7 +673,6 @@
 				CA3A96C41E7A727C00CEFD8E /* GUUID.cpp in Sources */,
 				CA3A96D01E7A727C00CEFD8E /* GXCoder.cpp in Sources */,
 				CA3A96B81E7A727C00CEFD8E /* GString.cpp in Sources */,
-				CA3A96141E7A727B00CEFD8E /* GAndroidC.cpp in Sources */,
 				CA3A962C1E7A727B00CEFD8E /* GBundle.cpp in Sources */,
 				CA3A96681E7A727B00CEFD8E /* GFileWriter.cpp in Sources */,
 				CA3A96201E7A727B00CEFD8E /* GApplication.cpp in Sources */,
@@ -730,8 +689,8 @@
 				CA3A965C1E7A727B00CEFD8E /* GFileBundle.cpp in Sources */,
 				CA3A968C1E7A727C00CEFD8E /* GNoticeCenter.cpp in Sources */,
 				CA3A96D81E7A727C00CEFD8E /* GXData.cpp in Sources */,
+				CA4D74B21E9FD1640048CA04 /* GAndroidApp.cpp in Sources */,
 				CA3A96601E7A727B00CEFD8E /* GFileManager.cpp in Sources */,
-				CA3A96101E7A727B00CEFD8E /* GAndroid.cpp in Sources */,
 				CA3A96241E7A727B00CEFD8E /* GArray.cpp in Sources */,
 				CA3A96741E7A727B00CEFD8E /* GList.cpp in Sources */,
 				CA3A96341E7A727B00CEFD8E /* GCoder.cpp in Sources */,
@@ -768,7 +727,6 @@
 				CA3A96391E7A727B00CEFD8E /* GColor.cpp in Sources */,
 				CA3A96AD1E7A727C00CEFD8E /* GReader.cpp in Sources */,
 				CA3A96651E7A727B00CEFD8E /* GFileReader.cpp in Sources */,
-				CA3A96191E7A727B00CEFD8E /* GAndroidJ.cpp in Sources */,
 				CA3A96C11E7A727C00CEFD8E /* GThread.cpp in Sources */,
 				CA3A96A11E7A727C00CEFD8E /* GPng.cpp in Sources */,
 				CA3A96311E7A727B00CEFD8E /* GClass.cpp in Sources */,
@@ -777,7 +735,6 @@
 				CA3A96C51E7A727C00CEFD8E /* GUUID.cpp in Sources */,
 				CA3A96D11E7A727C00CEFD8E /* GXCoder.cpp in Sources */,
 				CA3A96B91E7A727C00CEFD8E /* GString.cpp in Sources */,
-				CA3A96151E7A727B00CEFD8E /* GAndroidC.cpp in Sources */,
 				CA3A962D1E7A727B00CEFD8E /* GBundle.cpp in Sources */,
 				CA3A96691E7A727B00CEFD8E /* GFileWriter.cpp in Sources */,
 				CA3A96211E7A727B00CEFD8E /* GApplication.cpp in Sources */,
@@ -794,8 +751,8 @@
 				CA3A965D1E7A727B00CEFD8E /* GFileBundle.cpp in Sources */,
 				CA3A968D1E7A727C00CEFD8E /* GNoticeCenter.cpp in Sources */,
 				CA3A96D91E7A727C00CEFD8E /* GXData.cpp in Sources */,
+				CA4D74B31E9FD1640048CA04 /* GAndroidApp.cpp in Sources */,
 				CA3A96611E7A727B00CEFD8E /* GFileManager.cpp in Sources */,
-				CA3A96111E7A727B00CEFD8E /* GAndroid.cpp in Sources */,
 				CA3A96251E7A727B00CEFD8E /* GArray.cpp in Sources */,
 				CA3A96751E7A727B00CEFD8E /* GList.cpp in Sources */,
 				CA3A96351E7A727B00CEFD8E /* GCoder.cpp in Sources */,
@@ -832,7 +789,6 @@
 				CA3A963A1E7A727B00CEFD8E /* GColor.cpp in Sources */,
 				CA3A96AE1E7A727C00CEFD8E /* GReader.cpp in Sources */,
 				CA3A96661E7A727B00CEFD8E /* GFileReader.cpp in Sources */,
-				CA3A961A1E7A727B00CEFD8E /* GAndroidJ.cpp in Sources */,
 				CA3A96C21E7A727C00CEFD8E /* GThread.cpp in Sources */,
 				CA3A96A21E7A727C00CEFD8E /* GPng.cpp in Sources */,
 				CA3A96321E7A727B00CEFD8E /* GClass.cpp in Sources */,
@@ -841,7 +797,6 @@
 				CA3A96C61E7A727C00CEFD8E /* GUUID.cpp in Sources */,
 				CA3A96D21E7A727C00CEFD8E /* GXCoder.cpp in Sources */,
 				CA3A96BA1E7A727C00CEFD8E /* GString.cpp in Sources */,
-				CA3A96161E7A727B00CEFD8E /* GAndroidC.cpp in Sources */,
 				CA3A962E1E7A727B00CEFD8E /* GBundle.cpp in Sources */,
 				CA3A966A1E7A727B00CEFD8E /* GFileWriter.cpp in Sources */,
 				CA3A96221E7A727B00CEFD8E /* GApplication.cpp in Sources */,
@@ -858,8 +813,8 @@
 				CA3A965E1E7A727B00CEFD8E /* GFileBundle.cpp in Sources */,
 				CA3A968E1E7A727C00CEFD8E /* GNoticeCenter.cpp in Sources */,
 				CA3A96DA1E7A727C00CEFD8E /* GXData.cpp in Sources */,
+				CA4D74B41E9FD1640048CA04 /* GAndroidApp.cpp in Sources */,
 				CA3A96621E7A727B00CEFD8E /* GFileManager.cpp in Sources */,
-				CA3A96121E7A727B00CEFD8E /* GAndroid.cpp in Sources */,
 				CA3A96261E7A727B00CEFD8E /* GArray.cpp in Sources */,
 				CA3A96761E7A727B00CEFD8E /* GList.cpp in Sources */,
 				CA3A96361E7A727B00CEFD8E /* GCoder.cpp in Sources */,

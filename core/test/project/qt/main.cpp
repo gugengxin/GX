@@ -6,8 +6,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    GApplication::InitData initData;
-    GApplication::main(AppDge::shared(),&initData);
+    GApplication::main(AppDge::shared());
 
     MainWindow w;
     w.show();
