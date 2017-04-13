@@ -16,6 +16,8 @@
 #include <android/native_activity.h>
 #elif defined(GX_OS_QT)
 #include <QTimer>
+#elif defined(GX_OS_WINDOWS)
+#include "GXCWnd.h"
 #endif
 
 class GApplication

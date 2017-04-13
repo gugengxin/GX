@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\com_gxengine_core_GAndroidApp.h" />
+    <ClInclude Include="..\..\src\GAction.h" />
+    <ClInclude Include="..\..\src\GAndroidApp.h" />
+    <ClInclude Include="..\..\src\GAppBundle.h" />
+    <ClInclude Include="..\..\src\GApplication.h" />
+    <ClInclude Include="..\..\src\GArray.h" />
+    <ClInclude Include="..\..\src\GAutoreleasePool.h" />
+    <ClInclude Include="..\..\src\GBundle.h" />
+    <ClInclude Include="..\..\src\GClass.h" />
+    <ClInclude Include="..\..\src\GCoder.h" />
+    <ClInclude Include="..\..\src\GColor.h" />
+    <ClInclude Include="..\..\src\GCondition.h" />
+    <ClInclude Include="..\..\src\GData.h" />
+    <ClInclude Include="..\..\src\GDataArray.h" />
+    <ClInclude Include="..\..\src\GDataList.h" />
+    <ClInclude Include="..\..\src\GDataReader.h" />
+    <ClInclude Include="..\..\src\GDataWriter.h" />
+    <ClInclude Include="..\..\src\GDib.h" />
+    <ClInclude Include="..\..\src\GError.h" />
+    <ClInclude Include="..\..\src\GFileBundle.h" />
+    <ClInclude Include="..\..\src\GFileManager.h" />
+    <ClInclude Include="..\..\src\GFileReader.h" />
+    <ClInclude Include="..\..\src\GFileWriter.h" />
+    <ClInclude Include="..\..\src\GJNI.h" />
+    <ClInclude Include="..\..\src\GJpeg.h" />
+    <ClInclude Include="..\..\src\GList.h" />
+    <ClInclude Include="..\..\src\GLog.h" />
+    <ClInclude Include="..\..\src\GMap.h" />
+    <ClInclude Include="..\..\src\GMatrix.h" />
+    <ClInclude Include="..\..\src\GMutex.h" />
+    <ClInclude Include="..\..\src\GNotice.h" />
+    <ClInclude Include="..\..\src\GNoticeCenter.h" />
+    <ClInclude Include="..\..\src\GNumber.h" />
+    <ClInclude Include="..\..\src\GObject.h" />
+    <ClInclude Include="..\..\src\GOWHash.h" />
+    <ClInclude Include="..\..\src\GPieceData.h" />
+    <ClInclude Include="..\..\src\GPng.h" />
+    <ClInclude Include="..\..\src\GPtr.h" />
+    <ClInclude Include="..\..\src\GRBReader.h" />
+    <ClInclude Include="..\..\src\GReader.h" />
+    <ClInclude Include="..\..\src\GRunLoop.h" />
+    <ClInclude Include="..\..\src\GSerialize.h" />
+    <ClInclude Include="..\..\src\GString.h" />
+    <ClInclude Include="..\..\src\GSystem.h" />
+    <ClInclude Include="..\..\src\GThread.h" />
+    <ClInclude Include="..\..\src\GUUID.h" />
+    <ClInclude Include="..\..\src\GVector.h" />
+    <ClInclude Include="..\..\src\GWriter.h" />
+    <ClInclude Include="..\..\src\GXCoder.h" />
+    <ClInclude Include="..\..\src\GXCore.h" />
+    <ClInclude Include="..\..\src\GXCWnd.h" />
+    <ClInclude Include="..\..\src\GXData.h" />
+    <ClInclude Include="..\..\src\GXEncoding.h" />
+    <ClInclude Include="..\..\src\GXFILE.h" />
+    <ClInclude Include="..\..\src\GXGObject.h" />
+    <ClInclude Include="..\..\src\GXGObjectUD.h" />
+    <ClInclude Include="..\..\src\GXMath.h" />
+    <ClInclude Include="..\..\src\GXObject.h" />
+    <ClInclude Include="..\..\src\GXOS.h" />
+    <ClInclude Include="..\..\src\GXPixel.h" />
+    <ClInclude Include="..\..\src\GXPrefix.h" />
+    <ClInclude Include="..\..\src\GXPthread.h" />
+    <ClInclude Include="..\..\src\GXTypes.h" />
+    <ClInclude Include="..\..\src\GZipBundle.h" />
+    <ClInclude Include="..\..\src\GZipReader.h" />
+    <ClInclude Include="..\..\src\GZipWriter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\GAction.cpp" />
+    <ClCompile Include="..\..\src\GAndroidApp.cpp" />
+    <ClCompile Include="..\..\src\GAppBundle.cpp" />
+    <ClCompile Include="..\..\src\GApplication.cpp" />
+    <ClCompile Include="..\..\src\GArray.cpp" />
+    <ClCompile Include="..\..\src\GAutoreleasePool.cpp" />
+    <ClCompile Include="..\..\src\GBundle.cpp" />
+    <ClCompile Include="..\..\src\GClass.cpp" />
+    <ClCompile Include="..\..\src\GCoder.cpp" />
+    <ClCompile Include="..\..\src\GColor.cpp" />
+    <ClCompile Include="..\..\src\GCondition.cpp" />
+    <ClCompile Include="..\..\src\GData.cpp" />
+    <ClCompile Include="..\..\src\GDataArray.cpp" />
+    <ClCompile Include="..\..\src\GDataList.cpp" />
+    <ClCompile Include="..\..\src\GDataReader.cpp" />
+    <ClCompile Include="..\..\src\GDataWriter.cpp" />
+    <ClCompile Include="..\..\src\GDib.cpp" />
+    <ClCompile Include="..\..\src\GError.cpp" />
+    <ClCompile Include="..\..\src\GFileBundle.cpp" />
+    <ClCompile Include="..\..\src\GFileManager.cpp" />
+    <ClCompile Include="..\..\src\GFileReader.cpp" />
+    <ClCompile Include="..\..\src\GFileWriter.cpp" />
+    <ClCompile Include="..\..\src\GJNI.cpp" />
+    <ClCompile Include="..\..\src\GJpeg.cpp" />
+    <ClCompile Include="..\..\src\GList.cpp" />
+    <ClCompile Include="..\..\src\GLog.cpp" />
+    <ClCompile Include="..\..\src\GMap.cpp" />
+    <ClCompile Include="..\..\src\GMatrix.cpp" />
+    <ClCompile Include="..\..\src\GMutex.cpp" />
+    <ClCompile Include="..\..\src\GNotice.cpp" />
+    <ClCompile Include="..\..\src\GNoticeCenter.cpp" />
+    <ClCompile Include="..\..\src\GNumber.cpp" />
+    <ClCompile Include="..\..\src\GObject.cpp" />
+    <ClCompile Include="..\..\src\GOWHash.cpp" />
+    <ClCompile Include="..\..\src\GPieceData.cpp" />
+    <ClCompile Include="..\..\src\GPng.cpp" />
+    <ClCompile Include="..\..\src\GPtr.cpp" />
+    <ClCompile Include="..\..\src\GRBReader.cpp" />
+    <ClCompile Include="..\..\src\GReader.cpp" />
+    <ClCompile Include="..\..\src\GRunLoop.cpp" />
+    <ClCompile Include="..\..\src\GSerialize.cpp" />
+    <ClCompile Include="..\..\src\GString.cpp" />
+    <ClCompile Include="..\..\src\GSystem.cpp" />
+    <ClCompile Include="..\..\src\GThread.cpp" />
+    <ClCompile Include="..\..\src\GUUID.cpp" />
+    <ClCompile Include="..\..\src\GVector.cpp" />
+    <ClCompile Include="..\..\src\GWriter.cpp" />
+    <ClCompile Include="..\..\src\GXCoder.cpp" />
+    <ClCompile Include="..\..\src\GXCWnd.cpp" />
+    <ClCompile Include="..\..\src\GXData.cpp" />
+    <ClCompile Include="..\..\src\GXMath.cpp" />
+    <ClCompile Include="..\..\src\GXPthread.cpp" />
+    <ClCompile Include="..\..\src\GZipBundle.cpp" />
+    <ClCompile Include="..\..\src\GZipReader.cpp" />
+    <ClCompile Include="..\..\src\GZipWriter.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9A0E1A95-9E3A-4BB9-8784-D099E189CA08}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>GXCore</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)..\..\product\vs\lib\win\vc\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)..\..\product\vs\lib\win\vc\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(ProjectDir)..\..\product\vs\lib\win\vc\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(ProjectDir)..\..\product\vs\lib\win\vc\$(PlatformTarget)\$(Configuration)\</OutDir>
+    <IntDir>$(PlatformTarget)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\..\external\zlib\include;$(ProjectDir)..\..\..\external\libpng\include;$(ProjectDir)..\..\..\external\libjpeg\include;$(ProjectDir)..\..\..\external\libjpeg\include\win;$(ProjectDir)..\..\..\external\pthread-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\..\external\zlib\include;$(ProjectDir)..\..\..\external\libpng\include;$(ProjectDir)..\..\..\external\libjpeg\include;$(ProjectDir)..\..\..\external\libjpeg\include\win;$(ProjectDir)..\..\..\external\pthread-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\..\external\zlib\include;$(ProjectDir)..\..\..\external\libpng\include;$(ProjectDir)..\..\..\external\libjpeg\include;$(ProjectDir)..\..\..\external\libjpeg\include\win;$(ProjectDir)..\..\..\external\pthread-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;$(ProjectDir)..\..\..\external\zlib\include;$(ProjectDir)..\..\..\external\libpng\include;$(ProjectDir)..\..\..\external\libjpeg\include;$(ProjectDir)..\..\..\external\libjpeg\include\win;$(ProjectDir)..\..\..\external\pthread-win32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

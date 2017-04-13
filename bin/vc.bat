@@ -3,7 +3,7 @@
 echo Setup VC environment
 
 call :CMD_EXIST msbuild || ( 
-	call %~dp0vcvars32.bat
+	call %~dp0vcvars64.bat
 )
 
 goto :EOF

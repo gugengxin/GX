@@ -6,7 +6,7 @@ set GX_ROOT=%cd%
 popd
 set GX_BIN=%GX_ROOT%\bin
 call %GX_BIN%\qt.bat
-call %GX_BIN%\vc120.bat
+call %GX_BIN%\vc.bat
 
 set QT_QMAKE=qmake.exe
 set QT_DEPLOY=windeployqt.exe

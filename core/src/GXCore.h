@@ -1,4 +1,4 @@
-//
+﻿//
 //  GXCore.h
 //  GXCore
 //

@@ -61,7 +61,7 @@ namespace GX
 		}
 		return result;
 #else
-		return fabs(v);
+		return GX_CAST_S(float,fabs(v));
 #endif
 	}
 	/// 开平方
