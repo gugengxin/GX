@@ -9,18 +9,19 @@ cd ${GX_CURRENT}
 GX_BIN=${GX_ROOT}/bin
 GX_TE=${GX_BIN}/gx_te
 
-${GX_TE} -i ${GX_ROOT}/project/qt/GX.pro -o ${GX_ROOT}/project/qt/GX.pro \
+#core
+${GX_TE} -i ${GX_ROOT}/core/project/qt/GXCore.pro -o ${GX_ROOT}/core/project/qt/GXCore.pro \
 -fp "#__SOURCES_START__" -fs "#__SOURCES_END__" \
--fd ${GX_ROOT}/src \
+-fd ${GX_ROOT}/core/src \
 -fe .cpp -fe .c \
 -fsp "\t../../src" -fss "\\\n" \
--ff GBuffer.cpp -ff GD3DContext.cpp -ff GDShader.cpp -ff GJNI.cpp -ff GAndroid.cpp -ff GAndroidC.cpp -ff GAndroidJ.cpp -ff glew.c -ff GXCWnd.cpp -ff GXDirectX.cpp -ff GMShader.cpp -ff GMTLContext.cpp -ff GXMetal.cpp -ff GMShader.cpp \
+-ff GJNI.cpp -ff GAndroidApp.cpp -ff GXCWnd.cpp \
 -fsfp "\t#../../src" -fsfs "\\\n" \
 -fi GXPthread.cpp
 
-${GX_TE} -i ${GX_ROOT}/project/qt/GX.pro -o ${GX_ROOT}/project/qt/GX.pro \
+${GX_TE} -i ${GX_ROOT}/core/project/qt/GXCore.pro -o ${GX_ROOT}/core/project/qt/GXCore.pro \
 -fp "#__HEADERS_START__" -fs "#__HEADERS_END__" \
--fd ${GX_ROOT}/src \
+-fd ${GX_ROOT}/core/src \
 -fe .h \
 -fsp "\t../../src" -fss "\\\n"
 
