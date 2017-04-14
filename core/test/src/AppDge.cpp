@@ -97,64 +97,64 @@ void AppDge::appDidFinishLaunching(GApplication* application)
 
             //*
             {
-                GX::B8 v;
+                GX::B8 v=true;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeB8 %d %d", (gint32)decoder.decodeB8(v),(gint32)v);
             }
             {
-                GX::I8 v;
+                GX::I8 v=-12;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeI8 %d %d", (gint32)decoder.decodeI8(v),(gint32)v);
             }
             {
-                GX::U8 v;
+                GX::U8 v=23;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeU8 %d %d", (gint32)decoder.decodeU8(v),(gint32)v);
             }
             {
-                GX::I16 v;
+                GX::I16 v=433;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeI16 %d %hd", (gint32)decoder.decodeI16(v),v);
             }
             {
-                GX::U16 v;
+                GX::U16 v=43434;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeU16 %d %hu", (gint32)decoder.decodeU16(v),v);
             }
             {
-                GX::I32 v;
+                GX::I32 v=-21321;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeI32 %d %d", (gint32)decoder.decodeI32(v),v);
             }
             {
-                GX::U32 v;
+                GX::U32 v=4324234;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeU32 %d %u", (gint32)decoder.decodeU32(v),v);
             }
             {
-                GX::I64 v;
+                GX::I64 v=3213213213;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeI64 %d %lld", (gint32)decoder.decodeI64(v),v);
             }
             {
-                GX::U64 v;
+                GX::U64 v=43243253636;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeU64 %d %llu", (gint32)decoder.decodeU64(v),v);
             }
             {
-                GX::F32 v;
+                GX::F32 v=1.212121f;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeU32 %d %f", (gint32)decoder.decodeF32(v),v);
             }
             {
-                GX::F64 v;
+                GX::F64 v=42342342.432424234;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeI64 %d %lf", (gint32)decoder.decodeF64(v),v);
             }
 
             {
-                GX::VI32 v;
+                GX::VI32 v=1000;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeVI32 %d %d", (gint32)decoder.decodeVI32(v),v);
             }
             {
-                GX::VU32 v;
+                GX::VU32 v=20000;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeVU32 %d %u", (gint32)decoder.decodeVU32(v),v);
             }
             {
-                GX::VI64 v;
+                GX::VI64 v=121324324324;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeVI64 %d %lld", (gint32)decoder.decodeVI64(v),v);
             }
             {
-                GX::VU64 v;
+                GX::VU64 v=4234823941294;
                 GX_LOG_P2(PrioDEBUG, "AppDge", "decodeVU64 %d %llu", (gint32)decoder.decodeVU64(v),v);
             }
             //*/

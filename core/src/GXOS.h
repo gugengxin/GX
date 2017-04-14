@@ -24,7 +24,7 @@
 #define GX_OS_MACOSX
 #elif defined(ANDROID) || defined(__ANDROID__)
 #define GX_OS_ANDROID
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(WIN64)
 #define GX_OS_WINDOWS
 #else
 #error Unsupport OS
