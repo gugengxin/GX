@@ -27,9 +27,12 @@ do
 	cd ${BUILD_DIR}
 	qmake -makefile ${PROJECT_DIR}/${PROJECT_NAMES[$i]}.pro
 	make
-	cp ./${PROJECT_NAMES[$i]} ${GX_BIN}
+	rm -f ${GX_BIN}/${PROJECT_NAMES[$i]}
+	rm -rf ${GX_BIN}/${PROJECT_NAMES[$i]}.app
+	cp -r ./${PROJECT_NAMES[$i]}.app ${GX_BIN}
 	cd ${GX_CURRENT}
 	rm -rf ${BUILD_DIR}
 
-	#macdeployqt ${GX_BIN}/${PROJECT_NAMES[$i]}
+	macdeployqt ${GX_BIN}/${PROJECT_NAMES[$i]}.app
+	ln -s ${GX_BIN}/${PROJECT_NAMES[$i]}.app/Contents/MacOS/${PROJECT_NAMES[$i]} ${GX_BIN}/${PROJECT_NAMES[$i]}
 done
