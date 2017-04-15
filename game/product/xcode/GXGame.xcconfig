@@ -1,0 +1,7 @@
+
+//game
+GX_GAME_HEADER_SEARCH_PATHS = $(GX_ROOT)/game/src
+
+//xcode config
+HEADER_SEARCH_PATHS = $(inherited) $(GX_CORE_HEADER_SEARCH_PATHS)
+OTHER_LDFLAGS       = $(inherited) $(GX_EXTERNAL_LIBS)

@@ -1,0 +1,10 @@
+
+GX_ROOT = ../../..
+
+#include "../../../core/product/xcode/GXCore"
+#include "../../product/xcode/GXGame"
+
+HEADER_SEARCH_PATHS = $(inherited) $(GX_EXTERNAL_INCS) $(GX_CORE_HEADER_SEARCH_PATHS) $(GX_GAME_HEADER_SEARCH_PATHS)
+OTHER_LDFLAGS       = $(inherited)
+
+

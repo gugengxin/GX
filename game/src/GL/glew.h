@@ -78,7 +78,7 @@
 */
 
 //GLEW v2.0.0
-#include "GXOSs.h"
+#include "GXOS.h"
 #if defined(GX_OS_WINDOWS) && defined(GX_OPENGL)
 #ifndef GLEW_MX
 #define GLEW_MX

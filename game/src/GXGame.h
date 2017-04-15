@@ -1,4 +1,4 @@
-﻿//
+//
 //  GX.h
 //  GX
 //
@@ -10,7 +10,7 @@
 #define GX_h
 
 
-#include "GXPrefix.h"
+#include "GXCore.h"
 
 #include "GXMath.h"
 
@@ -37,10 +37,6 @@
 
 #include "GDataBuffer.h"
 #include "GFrameBuffer.h"
-
-#include "GLog.h"
-#include "GError.h"
-#include "GApplication.h"
 #include "GGame.h"
 
 

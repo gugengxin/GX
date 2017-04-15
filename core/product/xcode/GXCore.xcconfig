@@ -19,9 +19,8 @@ GX_EXTERNAL_LIBJPEG_LIB = $(GX_ROOT)/external/libjpeg/lib/$(GX_OS_DIR_NAME)/libl
 GX_EXTERNAL_INCS = $(GX_EXTERNAL_ZLIB_INC) $(GX_EXTERNAL_LIBPNG_INC) $(GX_EXTERNAL_LIBJPEG_INC)
 GX_EXTERNAL_LIBS = $(GX_EXTERNAL_ZLIB_LIB) $(GX_EXTERNAL_LIBPNG_LIB) $(GX_EXTERNAL_LIBJPEG_LIB)
 
+//core
 GX_CORE_HEADER_SEARCH_PATHS = $(GX_ROOT)/core/src
-GX_CORE_OTHER_LDFLAGS =
-
 
 //xcode config
 COMPRESS_PNG_FILES[sdk=iphoneos*]           = NO
@@ -32,4 +31,4 @@ CLANG_ENABLE_OBJC_ARC                       = NO
 ONLY_ACTIVE_ARCH                            = NO
 GCC_ENABLE_CPP_RTTI                         = NO
 HEADER_SEARCH_PATHS                         = $(inherited) $(GX_CORE_HEADER_SEARCH_PATHS)
-OTHER_LDFLAGS                               = $(inherited) $(GX_EXTERNAL_LIBS) $(GX_CORE_OTHER_LDFLAGS)
+OTHER_LDFLAGS                               = $(inherited) $(GX_EXTERNAL_LIBS)
