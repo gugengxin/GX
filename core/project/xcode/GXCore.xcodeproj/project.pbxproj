@@ -175,9 +175,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CA027B191E7ACCB300146D1A /* Config_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_atv.xcconfig; sourceTree = "<group>"; };
-		CA027B1A1E7ACCB300146D1A /* Config_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_ios.xcconfig; sourceTree = "<group>"; };
-		CA027B1B1E7ACCB300146D1A /* Config_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_mac.xcconfig; sourceTree = "<group>"; };
+		CA027B1A1E7ACCB300146D1A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		CA3A956A1E7A617F00CEFD8E /* GXCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3A957B1E7A631900CEFD8E /* GXCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3A95881E7A638C00CEFD8E /* GXCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -302,6 +300,7 @@
 		CA4D74AF1E9FD1640048CA04 /* com_gxengine_core_GAndroidApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_core_GAndroidApp.h; sourceTree = "<group>"; };
 		CA4D74B01E9FD1640048CA04 /* GAndroidApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAndroidApp.cpp; sourceTree = "<group>"; };
 		CA4D74B11E9FD1640048CA04 /* GAndroidApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAndroidApp.h; sourceTree = "<group>"; };
+		CA5BCA391EA26545006CF7DE /* GXCore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXCore.xcconfig; path = ../../product/xcode/GXCore.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,9 +331,7 @@
 		CA3A95611E7A617F00CEFD8E = {
 			isa = PBXGroup;
 			children = (
-				CA027B1A1E7ACCB300146D1A /* Config_ios.xcconfig */,
-				CA027B191E7ACCB300146D1A /* Config_atv.xcconfig */,
-				CA027B1B1E7ACCB300146D1A /* Config_mac.xcconfig */,
+				CA5BCA371EA2652E006CF7DE /* config */,
 				CA3A958C1E7A727B00CEFD8E /* src */,
 				CA3A956B1E7A617F00CEFD8E /* Products */,
 			);
@@ -541,6 +538,15 @@
 				CA3A95BA1E7A727B00CEFD8E /* GFileManager.h */,
 			);
 			name = IO;
+			sourceTree = "<group>";
+		};
+		CA5BCA371EA2652E006CF7DE /* config */ = {
+			isa = PBXGroup;
+			children = (
+				CA027B1A1E7ACCB300146D1A /* Config.xcconfig */,
+				CA5BCA391EA26545006CF7DE /* GXCore.xcconfig */,
+			);
+			name = config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -828,6 +834,7 @@
 /* Begin XCBuildConfiguration section */
 		CA3A95711E7A617F00CEFD8E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA027B1A1E7ACCB300146D1A /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -877,6 +884,7 @@
 		};
 		CA3A95721E7A617F00CEFD8E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA027B1A1E7ACCB300146D1A /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -920,7 +928,6 @@
 		};
 		CA3A95741E7A617F00CEFD8E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B1A1E7ACCB300146D1A /* Config_ios.xcconfig */;
 			buildSettings = {
 				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -931,7 +938,6 @@
 		};
 		CA3A95751E7A617F00CEFD8E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B1A1E7ACCB300146D1A /* Config_ios.xcconfig */;
 			buildSettings = {
 				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -942,7 +948,6 @@
 		};
 		CA3A95821E7A631900CEFD8E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B191E7ACCB300146D1A /* Config_atv.xcconfig */;
 			buildSettings = {
 				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -953,7 +958,6 @@
 		};
 		CA3A95831E7A631900CEFD8E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B191E7ACCB300146D1A /* Config_atv.xcconfig */;
 			buildSettings = {
 				EXECUTABLE_PREFIX = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -964,7 +968,6 @@
 		};
 		CA3A958A1E7A638C00CEFD8E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B1B1E7ACCB300146D1A /* Config_mac.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				EXECUTABLE_PREFIX = "";
@@ -975,7 +978,6 @@
 		};
 		CA3A958B1E7A638C00CEFD8E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B1B1E7ACCB300146D1A /* Config_mac.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				EXECUTABLE_PREFIX = "";
