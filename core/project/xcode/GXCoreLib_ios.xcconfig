@@ -1,9 +1,0 @@
-
-#include "../../product/xcode/GXOS_ios"
-#include "../../product/xcode/GXExt_ios"
-#include "../../product/xcode/GXExt"
-
-GX_HEADER_SEARCH_PATHS = $(GX_EXTERNAL_INCS)
-
-HEADER_SEARCH_PATHS = $(inherited) $(GX_HEADER_SEARCH_PATHS)
-OTHER_LDFLAGS = $(inherited)

@@ -299,9 +299,6 @@
 		CA3A96081E7A727B00CEFD8E /* GZipWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GZipWriter.cpp; sourceTree = "<group>"; };
 		CA3A96091E7A727B00CEFD8E /* GZipWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZipWriter.h; sourceTree = "<group>"; };
 		CA3A96F91E7A72A100CEFD8E /* GXCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXCore.h; sourceTree = "<group>"; };
-		CA3A97031E7A79D000CEFD8E /* GXCoreLib_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GXCoreLib_atv.xcconfig; sourceTree = "<group>"; };
-		CA3A97041E7A79D000CEFD8E /* GXCoreLib_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GXCoreLib_ios.xcconfig; sourceTree = "<group>"; };
-		CA3A97051E7A79D000CEFD8E /* GXCoreLib_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GXCoreLib_mac.xcconfig; sourceTree = "<group>"; };
 		CA4D74AF1E9FD1640048CA04 /* com_gxengine_core_GAndroidApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_core_GAndroidApp.h; sourceTree = "<group>"; };
 		CA4D74B01E9FD1640048CA04 /* GAndroidApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAndroidApp.cpp; sourceTree = "<group>"; };
 		CA4D74B11E9FD1640048CA04 /* GAndroidApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAndroidApp.h; sourceTree = "<group>"; };
@@ -338,9 +335,6 @@
 				CA027B1A1E7ACCB300146D1A /* Config_ios.xcconfig */,
 				CA027B191E7ACCB300146D1A /* Config_atv.xcconfig */,
 				CA027B1B1E7ACCB300146D1A /* Config_mac.xcconfig */,
-				CA3A97041E7A79D000CEFD8E /* GXCoreLib_ios.xcconfig */,
-				CA3A97031E7A79D000CEFD8E /* GXCoreLib_atv.xcconfig */,
-				CA3A97051E7A79D000CEFD8E /* GXCoreLib_mac.xcconfig */,
 				CA3A958C1E7A727B00CEFD8E /* src */,
 				CA3A956B1E7A617F00CEFD8E /* Products */,
 			);
