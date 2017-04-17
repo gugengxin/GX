@@ -7,4 +7,4 @@
 //
 
 GX_ROOT = ../../../..
-#include "../../../product/xcode/GXCore_ios"
+#include "../../../product/xcode/GXCore"

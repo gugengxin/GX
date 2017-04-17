@@ -73,9 +73,7 @@
 		CA027B711E7AD39700146D1A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		CA027B741E7AD3D300146D1A /* AppDge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDge.cpp; sourceTree = "<group>"; };
 		CA027B751E7AD3D300146D1A /* AppDge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDge.h; sourceTree = "<group>"; };
-		CA027B791E7AD42800146D1A /* Config_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_ios.xcconfig; sourceTree = "<group>"; };
-		CA027B7A1E7AD43400146D1A /* Config_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_atv.xcconfig; sourceTree = "<group>"; };
-		CA027B7B1E7AD43E00146D1A /* Config_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_mac.xcconfig; sourceTree = "<group>"; };
+		CA027B791E7AD42800146D1A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		CA027B7D1E7AD49F00146D1A /* GXCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GXCore.xcodeproj; path = ../../../project/xcode/GXCore.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,9 +108,7 @@
 		CA027B1C1E7ACFF000146D1A = {
 			isa = PBXGroup;
 			children = (
-				CA027B791E7AD42800146D1A /* Config_ios.xcconfig */,
-				CA027B7A1E7AD43400146D1A /* Config_atv.xcconfig */,
-				CA027B7B1E7AD43E00146D1A /* Config_mac.xcconfig */,
+				CA027B791E7AD42800146D1A /* Config.xcconfig */,
 				CA027B731E7AD3D300146D1A /* src */,
 				CA027B271E7ACFF000146D1A /* ios */,
 				CA027B441E7AD0F700146D1A /* atv */,
@@ -434,6 +430,7 @@
 /* Begin XCBuildConfiguration section */
 		CA027B3A1E7ACFF000146D1A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA027B791E7AD42800146D1A /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -481,6 +478,7 @@
 		};
 		CA027B3B1E7ACFF000146D1A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA027B791E7AD42800146D1A /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -522,7 +520,6 @@
 		};
 		CA027B3D1E7ACFF000146D1A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B791E7AD42800146D1A /* Config_ios.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YS4H72RSCW;
@@ -534,7 +531,6 @@
 		};
 		CA027B3E1E7ACFF000146D1A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B791E7AD42800146D1A /* Config_ios.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YS4H72RSCW;
@@ -546,7 +542,6 @@
 		};
 		CA027B551E7AD0F800146D1A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B7A1E7AD43400146D1A /* Config_atv.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -561,7 +556,6 @@
 		};
 		CA027B561E7AD0F800146D1A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B7A1E7AD43400146D1A /* Config_atv.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -576,7 +570,6 @@
 		};
 		CA027B6A1E7AD21700146D1A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B7B1E7AD43E00146D1A /* Config_mac.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
@@ -591,7 +584,6 @@
 		};
 		CA027B6B1E7AD21700146D1A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA027B7B1E7AD43E00146D1A /* Config_mac.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
