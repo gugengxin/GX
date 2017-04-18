@@ -41,7 +41,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GXCORETEST));
 
-	GApplication::main(AppDge::shared());
+	GApplication::main(0,NULL,"AppDge");
 
     MSG msg;
 
