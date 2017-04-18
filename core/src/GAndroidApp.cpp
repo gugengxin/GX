@@ -119,6 +119,14 @@ JNIEXPORT void JNICALL Java_com_gxengine_core_GAndroidApp_jniOnCreate
     GAndroidApp::shared()->init(env,sender,classLoader);
 }
 
+JNIEXPORT void JNICALL Java_com_gxengine_core_GAndroidApp_jniMain
+        (JNIEnv *env, jobject sender, jstring appDgeName)
+{
+    const char *cstr = env->GetStringUTFChars(appDgeName, NULL);
+    GApplication::main(0,NULL,cstr);
+    env->ReleaseStringUTFChars(appDgeName, cstr);
+}
+
 JNIEXPORT void JNICALL Java_com_gxengine_core_GAndroidApp_jniOnTerminate
         (JNIEnv *env, jobject sender)
 {

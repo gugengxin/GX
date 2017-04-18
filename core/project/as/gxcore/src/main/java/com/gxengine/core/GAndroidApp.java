@@ -63,15 +63,17 @@ public class GAndroidApp extends Application {
 
         try {
             Bundle bundle = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA).metaData;
-            String libName = bundle.getString("gx.core.app.lib_name");
-            System.loadLibrary(libName);
-        } catch (Exception e) {
-            throw new RuntimeException("Error load gx.core.app.lib_name", e);
-        }
+            String libName = bundle.getString("gx.core.lib.name");
+            String appDgeName=bundle.getString("gx.core.app.delegate.name");
 
-        jniOnCreate(getClassLoader());
-        jniMain();
-        startTimer();
+            System.loadLibrary(libName);
+            jniOnCreate(getClassLoader());
+            jniMain(appDgeName);
+            startTimer();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error onCreate", e);
+        }
     }
 
     @Override
@@ -129,7 +131,7 @@ public class GAndroidApp extends Application {
     }
 
     private native void jniOnCreate(ClassLoader classLoader);
-    private native void jniMain();
+    private native void jniMain(String appDgeName);
     private native void jniOnTerminate();
     private native void jniOnLowMemory();
     private native void jniIdle();
