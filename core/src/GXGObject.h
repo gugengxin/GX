@@ -15,6 +15,8 @@ public:\
     virtual GClass* getClass() {\
 		return &gclass;\
 	}\
+private:\
+    static GClass::Initializer gclassInitializer;\
 public:\
 	void* operator new(size_t size) {\
 		return GObject::gmalloc(size);\
@@ -54,8 +56,13 @@ avis:\
 #define GX_VIRTUAL_GOBJECT(cls)  GX_VIRTUAL_GOBJECT_DECLARE(cls,protected,public)
 
 #define GX_GOBJECT_IMPLEMENT(cls,pc) \
-GClass cls::gclass(sizeof(cls),GX_CAST_R(GClass::Alloc,cls::alloc),&(pc::gclass))
+GClass cls::gclass(#cls,sizeof(cls),GX_CAST_R(GClass::Alloc,cls::alloc),&(pc::gclass));\
+GClass::Initializer cls::gclassInitializer(&cls::gclass)
 
 #define GX_GOBJECT_TEMPLATE_IMPLEMENT(T,cls,pc) \
 template <T> \
 GClass cls::gclass(sizeof(cls),reinterpret_cast<GClass::Alloc>(cls::alloc),&(pc::gclass))
+
+
+
+

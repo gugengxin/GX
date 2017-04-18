@@ -19,7 +19,7 @@
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
-    GApplication::main(AppDge::shared());
+    GApplication::main(0, NULL, "AppDge");
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {

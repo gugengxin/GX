@@ -22,7 +22,7 @@ public:
 };
 
 
-template <typename K,typename O>
+template <class K,class O>
 class GMap : public GMapBase {
 	friend class GNoticeCenter;
     GX_GOBJECT(GMap);

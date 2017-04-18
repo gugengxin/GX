@@ -19,7 +19,7 @@ class GSerialize {
 public:
     static gint seBytesOfKeyAndData(guint32 key,guint len);
     static gint seBytesOfKeyAndObject(guint32 key,GSerialize* obj);
-    template <typename T> static gint seBytesOfKeyAndObjects(guint32 key,GArray<T>* objs);
+    template <class T> static gint seBytesOfKeyAndObjects(guint32 key,GArray<T>* objs);
 public:
     GSerialize();
     virtual ~GSerialize();
@@ -30,7 +30,7 @@ public:
 
     gint seEncodeKeyAndData(GEncoder& coder,guint32 key,const void* buf,guint len);
     gint seEncodeKeyAndObject(GEncoder& coder,guint32 key,GSerialize* obj);
-    template <typename T> gint seEncodeKeyAndObjects(GEncoder& coder,guint32 key,GArray<T>* objs);
+    template <class T> gint seEncodeKeyAndObjects(GEncoder& coder,guint32 key,GArray<T>* objs);
     
 protected:
 	virtual const GX::UUID& seGetUUID()=0;
@@ -48,9 +48,9 @@ public:
     gint ueDecode(GDecoder& coder,guint32 len);
 
     gint ueDecodeData(GDecoder& coder,void* dataOut,guint dataBytes);
-    template <typename T> gint ueDecodeObject(GDecoder& coder,T** objOut,guint32 len);
-    template <typename T> gint ueDecodeObjects(GDecoder& coder,GArray<T>* objsOut,guint32 len);
-    template <typename T> gint ueDecodeObjects(GDecoder& coder,GArray<T>** objsOut,guint32 len);
+    template <class T> gint ueDecodeObject(GDecoder& coder,T** objOut,guint32 len);
+    template <class T> gint ueDecodeObjects(GDecoder& coder,GArray<T>* objsOut,guint32 len);
+    template <class T> gint ueDecodeObjects(GDecoder& coder,GArray<T>** objsOut,guint32 len);
 protected:
 	virtual const GX::UUID& ueGetUUID() = 0;
     virtual gint ueDecodeField(GDecoder& coder,guint32 key,guint32 len)=0;///返回<0失败 0没有此Key >0成功
@@ -60,7 +60,7 @@ protected:
 
 //////////////////////////
 
-template <typename T>
+template <class T>
 gint GSerialize::seBytesOfKeyAndObjects(guint32 key,GArray<T>* objs)
 {
     gint len=GX::bytesOfVU32((guint32)objs->getCount());
@@ -78,7 +78,7 @@ gint GSerialize::seBytesOfKeyAndObjects(guint32 key,GArray<T>* objs)
     return GX::bytesOfVU32(key)+GX::bytesOfVU32((guint32)len)+len;
 }
 
-template <typename T>
+template <class T>
 gint GSerialize::seEncodeKeyAndObjects(GEncoder& coder,guint32 key,GArray<T>* objs)
 {
     gint res=coder.encodeVU32(key);
@@ -125,14 +125,14 @@ gint GSerialize::seEncodeKeyAndObjects(GEncoder& coder,guint32 key,GArray<T>* ob
 }
 
 
-template <typename T>
+template <class T>
 gint GUnserialize::ueDecodeObject(GDecoder& coder,T** objOut,guint32 len)
 {
     (*objOut)=T::autoAlloc();
     return (*objOut)->ueDecode(coder,len);
 }
 
-template <typename T>
+template <class T>
 gint GUnserialize::ueDecodeObjects(GDecoder& coder,GArray<T>* objsOut,guint32 len)
 {
     guint32 count=0;
@@ -169,7 +169,7 @@ gint GUnserialize::ueDecodeObjects(GDecoder& coder,GArray<T>* objsOut,guint32 le
     return res;
 }
 
-template <typename T>
+template <class T>
 gint GUnserialize::ueDecodeObjects(GDecoder& coder,GArray<T>** objsOut,guint32 len)
 {
     (*objsOut)=GArray<T>::autoAlloc();

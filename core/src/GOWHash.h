@@ -25,10 +25,12 @@ public:
         TypeC,
     } Type;
     
-    static guint32 compute(const gchar* str,Type hashType);
     static Code compute(const gchar* str);
+    static Code compute(const gchar* str,gint len);
     static Code compute(const gwchar* str);
+    static Code compute(const gwchar* str,gint len);
     static Code compute(const guchar* str);
+    static Code compute(const guchar* str,gint len);
     static bool compare(Code& code0,Code& code1);
 };
 

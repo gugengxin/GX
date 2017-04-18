@@ -200,6 +200,20 @@ void GApplication::destroyWinMsgWnd()
 #endif
 
 
+#include "GXGObject.h"
+
+
+GX_GOBJECT_IMPLEMENT(GApplication::Delegate, GObject);
+
+GApplication::Delegate::Delegate()
+{
+    
+}
+
+GApplication::Delegate::~Delegate()
+{
+    
+}
 
 
 GApplication* GApplication::shared()
@@ -213,12 +227,12 @@ GApplication::Delegate* GApplication::sharedDelegate()
 	return shared()->m_Delegate;
 }
 
-void GApplication::main(Delegate* dge)
+void GApplication::main(int argc, char *argv[], const char* delegateClassName)
 {
-    GApplication* app=shared();
-    app->m_Delegate=dge;
     GThread::current()->setMain();
-    app->eventDidFinishLaunching();
+    GApplication* app=shared();
+    app->m_Delegate=GX_CAST_R(GApplication::Delegate*,GClass::allocObject(delegateClassName));
+    app->eventDidFinishLaunching(argc,argv);
 }
 
 
@@ -246,6 +260,7 @@ GApplication::~GApplication()
 		timeKillEvent(m_TimerID);
 	}
 #endif
+    GO::release(m_Delegate);
 }
 
 void GApplication::idle()
@@ -253,9 +268,9 @@ void GApplication::idle()
 	GRunLoop::current()->run();
 }
 
-void GApplication::eventDidFinishLaunching()
+void GApplication::eventDidFinishLaunching(int argc, char *argv[])
 {
-	m_Delegate->appDidFinishLaunching(this);
+	m_Delegate->appDidFinishLaunching(this,argc,argv);
     
 #if defined(GX_OS_APPLE)
     [GX_CAST_R(_AppHelper*, m_Helper) start];

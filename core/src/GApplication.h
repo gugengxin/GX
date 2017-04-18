@@ -20,6 +20,8 @@
 #include "GXCWnd.h"
 #endif
 
+#include "GXGObject.h"
+
 class GApplication
 #if defined(GX_OS_QT)
         : public QObject
@@ -30,10 +32,13 @@ class GApplication
 #endif
     friend class GWindow;
 public:
-	class Delegate {
+    class Delegate : public GObject {
+        GX_GOBJECT(Delegate);
     public:
-        virtual void appDidFinishLaunching(GApplication* application) {
+        virtual void appDidFinishLaunching(GApplication* application,int argc, char *argv[]) {
             GX_UNUSED(application)
+            GX_UNUSED(argc)
+            GX_UNUSED(argv)
         }
 		virtual void appWillTerminate(GApplication* application){
 			GX_UNUSED(application)
@@ -46,7 +51,7 @@ public:
 public:
     static GApplication* shared();
 	static GApplication::Delegate* sharedDelegate();
-	static void main(Delegate* dge);
+    static void main(int argc, char *argv[], const char* delegateClassName);
 private:
     GApplication();
     ~GApplication();
@@ -59,7 +64,7 @@ private:
     void idle();
 #endif
 private:
-	void eventDidFinishLaunching();
+	void eventDidFinishLaunching(int argc, char *argv[]);
 	void eventWillTerminate();
 	void eventReceivedMemoryWarning();
 
@@ -86,6 +91,6 @@ private:
 #endif
 };
 
-
+#include "GXGObjectUD.h"
 
 #endif /* GApplication_h */

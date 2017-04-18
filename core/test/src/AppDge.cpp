@@ -1,22 +1,24 @@
 ﻿#include "AppDge.h"
 
 
+GX_OBJECT_IMPLEMENT(AppDge, GApplication::Delegate);
+
 AppDge* AppDge::shared()
 {
-	static AppDge g_Obj;
-	return &g_Obj;
+    return GX_CAST_R(AppDge*, GApplication::sharedDelegate());
 }
 
-AppDge::AppDge()
+void AppDge::init()
 {
+    
 }
 
-
-AppDge::~AppDge()
+void AppDge::uninit()
 {
+    
 }
 
-void AppDge::appDidFinishLaunching(GApplication* application)
+void AppDge::appDidFinishLaunching(GApplication* application,int argc, char *argv[])
 {
     GX_UNUSED(application);
 //	application->startGame(Game::gclass,initData.getOSWindowForLaunch());

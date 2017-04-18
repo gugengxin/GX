@@ -40,11 +40,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSLog(@"%s",__FUNCTION__);
+    
+    GApplication::main(0, NULL, "AppDge");
+    
     _window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [_window makeKeyAndVisible];
-    
-    GApplication::main(AppDge::shared());
-    
     _window.rootViewController=[[[UIViewController alloc] init] autorelease];
     return YES;
 }

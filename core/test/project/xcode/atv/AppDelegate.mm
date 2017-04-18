@@ -25,7 +25,7 @@
     _window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [_window makeKeyAndVisible];
     
-    GApplication::main(AppDge::shared());
+    GApplication::main(0, NULL, "AppDge");
     
     _window.rootViewController=[[[UIViewController alloc] init] autorelease];
     return YES;

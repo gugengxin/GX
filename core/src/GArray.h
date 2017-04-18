@@ -12,7 +12,7 @@ class GArrayBase : public GObject
 	GX_GOBJECT(GArrayBase);
 };
 
-template <typename T>
+template <class T>
 class GArray : public GArrayBase {
 	friend class GRunLoop;
 	friend class GNCObserver;
@@ -146,14 +146,14 @@ private:
 	
 };
 
-GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T, GArray<T>, GArrayBase);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(class T, GArray<T>, GArrayBase);
 
-template <typename T>
+template <class T>
 GArray<T>::GArray()
 {
 
 }
-template <typename T>
+template <class T>
 GArray<T>::~GArray()
 {
 	for (gint i = 0; i < getCount(); i++) {
