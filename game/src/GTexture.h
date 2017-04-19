@@ -10,6 +10,7 @@
 #define GTexture_h
 
 #include "GXPrefix.h"
+#include "GX3DAPIType.h"
 #include "GObject.h"
 #include "GDataList.h"
 #include "GX3DAPI.h"

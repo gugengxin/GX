@@ -12,29 +12,6 @@
 
 #include "GXCore.h"
 
-#include "GXMath.h"
-
-#include "GData.h"
-#include "GPieceData.h"
-#include "GString.h"
-#include "GVector.h"
-#include "GMatrix.h"
-
-#include "GDataReader.h"
-#include "GDataWriter.h"
-#include "GFileReader.h"
-#include "GFileWriter.h"
-#include "GZipReader.h"
-#include "GZipWriter.h"
-#include "GRBReader.h"
-
-#include "GCoder.h"
-
-#include "GBundle.h"
-#include "GFileBundle.h"
-#include "GZipBundle.h"
-#include "GAppBundle.h"
-
 #include "GDataBuffer.h"
 #include "GFrameBuffer.h"
 #include "GGame.h"

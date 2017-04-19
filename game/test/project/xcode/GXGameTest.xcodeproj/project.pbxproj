@@ -27,33 +27,56 @@
 		CA9C16A11CC5E94D00204303 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16A01CC5E94D00204303 /* AppDelegate.mm */; };
 		CA9C16A41CC5E94D00204303 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16A31CC5E94D00204303 /* main.m */; };
 		CA9C16A61CC5E94D00204303 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA9C16A51CC5E94D00204303 /* Assets.xcassets */; };
-		CA9C16DC1CC618CB00204303 /* GX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9C164F1CC5E01B00204303 /* GX.a */; };
-		CA9C16DD1CC618D000204303 /* GX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9C16511CC5E01B00204303 /* GX.a */; };
-		CA9C16DE1CC618D600204303 /* GX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9C16531CC5E01B00204303 /* GX.a */; };
-		CAD5A68A1D76BE1F0072CA3E /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAD5A6891D76BE1F0072CA3E /* Metal.framework */; };
+		CACEDED31EA75E470010BC1E /* GXCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEC51EA75CF90010BC1E /* GXCore.a */; };
+		CACEDED41EA75E470010BC1E /* GXGame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEB91EA75CE80010BC1E /* GXGame.a */; };
+		CACEDED51EA75E4F0010BC1E /* GXCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEC71EA75CF90010BC1E /* GXCore.a */; };
+		CACEDED61EA75E4F0010BC1E /* GXGame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEBB1EA75CE80010BC1E /* GXGame.a */; };
+		CACEDED71EA75E550010BC1E /* GXCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEC91EA75CF90010BC1E /* GXCore.a */; };
+		CACEDED81EA75E550010BC1E /* GXGame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEBD1EA75CE80010BC1E /* GXGame.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		CA9C164E1CC5E01B00204303 /* PBXContainerItemProxy */ = {
+		CACEDEB81EA75CE80010BC1E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = CA9C16481CC5E01B00204303 /* GX.xcodeproj */;
+			containerPortal = CACEDEB21EA75CE80010BC1E /* GXGame.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CA01E75A1CBF483C004520E6;
-			remoteInfo = GXios;
+			remoteInfo = GX_ios;
 		};
-		CA9C16501CC5E01B00204303 /* PBXContainerItemProxy */ = {
+		CACEDEBA1EA75CE80010BC1E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = CA9C16481CC5E01B00204303 /* GX.xcodeproj */;
+			containerPortal = CACEDEB21EA75CE80010BC1E /* GXGame.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CA01E76A1CBF50A9004520E6;
-			remoteInfo = GXatv;
+			remoteInfo = GX_atv;
 		};
-		CA9C16521CC5E01B00204303 /* PBXContainerItemProxy */ = {
+		CACEDEBC1EA75CE80010BC1E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = CA9C16481CC5E01B00204303 /* GX.xcodeproj */;
+			containerPortal = CACEDEB21EA75CE80010BC1E /* GXGame.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = CA01E7841CBF51B9004520E6;
-			remoteInfo = GXmac;
+			remoteInfo = GX_mac;
+		};
+		CACEDEC41EA75CF90010BC1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CACEDEBE1EA75CF80010BC1E /* GXCore.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CA3A956A1E7A617F00CEFD8E;
+			remoteInfo = GXCore_ios;
+		};
+		CACEDEC61EA75CF90010BC1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CACEDEBE1EA75CF80010BC1E /* GXCore.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CA3A957B1E7A631900CEFD8E;
+			remoteInfo = GXCore_atv;
+		};
+		CACEDEC81EA75CF90010BC1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CACEDEBE1EA75CF80010BC1E /* GXCore.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CA3A95881E7A638C00CEFD8E;
+			remoteInfo = GXCore_mac;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -65,29 +88,27 @@
 		CA75BAD21D830D4400236109 /* lena_rgb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lena_rgb.jpg; sourceTree = "<group>"; };
 		CA80D1EC1E0A525D001E57AF /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		CA80D1ED1E0A525D001E57AF /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
-		CA9C162D1CC5DFE200204303 /* GXTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA9C162D1CC5DFE200204303 /* GXGameTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXGameTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA9C16311CC5DFE200204303 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CA9C16331CC5DFE200204303 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CA9C16341CC5DFE200204303 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		CA9C163C1CC5DFE200204303 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA9C16411CC5DFE200204303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CA9C16481CC5E01B00204303 /* GX.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GX.xcodeproj; path = ../../../project/xcode/GX.xcodeproj; sourceTree = "<group>"; };
-		CA9C16851CC5E7D800204303 /* GXTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA9C16851CC5E7D800204303 /* GXGameTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXGameTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA9C16881CC5E7D800204303 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CA9C168A1CC5E7D800204303 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CA9C168B1CC5E7D800204303 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		CA9C16931CC5E7D800204303 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA9C16951CC5E7D800204303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CA9C169D1CC5E94D00204303 /* GXTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA9C169D1CC5E94D00204303 /* GXGameTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GXGameTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA9C169F1CC5E94D00204303 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CA9C16A01CC5E94D00204303 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		CA9C16A31CC5E94D00204303 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CA9C16A51CC5E94D00204303 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA9C16AA1CC5E94D00204303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CA9C16BF1CC5FDCB00204303 /* Config_ios.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_ios.xcconfig; sourceTree = "<group>"; };
-		CA9C16C31CC5FDD600204303 /* Config_mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_mac.xcconfig; sourceTree = "<group>"; };
-		CA9C16C41CC5FDE200204303 /* Config_atv.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config_atv.xcconfig; sourceTree = "<group>"; };
-		CAD5A6891D76BE1F0072CA3E /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
+		CA9C16BF1CC5FDCB00204303 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		CACEDEB21EA75CE80010BC1E /* GXGame.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GXGame.xcodeproj; path = ../../../project/xcode/GXGame.xcodeproj; sourceTree = "<group>"; };
+		CACEDEBE1EA75CF80010BC1E /* GXCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GXCore.xcodeproj; path = ../../../../core/project/xcode/GXCore.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +116,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA9C16DC1CC618CB00204303 /* GX.a in Frameworks */,
+				CACEDED31EA75E470010BC1E /* GXCore.a in Frameworks */,
+				CACEDED41EA75E470010BC1E /* GXGame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +125,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA9C16DD1CC618D000204303 /* GX.a in Frameworks */,
+				CACEDED51EA75E4F0010BC1E /* GXCore.a in Frameworks */,
+				CACEDED61EA75E4F0010BC1E /* GXGame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,8 +134,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAD5A68A1D76BE1F0072CA3E /* Metal.framework in Frameworks */,
-				CA9C16DE1CC618D600204303 /* GX.a in Frameworks */,
+				CACEDED71EA75E550010BC1E /* GXCore.a in Frameworks */,
+				CACEDED81EA75E550010BC1E /* GXGame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,9 +166,7 @@
 		CA9C16241CC5DFE200204303 = {
 			isa = PBXGroup;
 			children = (
-				CA9C16BF1CC5FDCB00204303 /* Config_ios.xcconfig */,
-				CA9C16C41CC5FDE200204303 /* Config_atv.xcconfig */,
-				CA9C16C31CC5FDD600204303 /* Config_mac.xcconfig */,
+				CA9C16BF1CC5FDCB00204303 /* Config.xcconfig */,
 				CA75BAD11D830D4400236109 /* assets */,
 				CA1F60A81CD984BB00C6307B /* src */,
 				CA9C162F1CC5DFE200204303 /* ios */,
@@ -159,9 +180,9 @@
 		CA9C162E1CC5DFE200204303 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CA9C162D1CC5DFE200204303 /* GXTest.app */,
-				CA9C16851CC5E7D800204303 /* GXTest.app */,
-				CA9C169D1CC5E94D00204303 /* GXTest.app */,
+				CA9C162D1CC5DFE200204303 /* GXGameTest.app */,
+				CA9C16851CC5E7D800204303 /* GXGameTest.app */,
+				CA9C169D1CC5E94D00204303 /* GXGameTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -190,20 +211,10 @@
 		CA9C16471CC5E00100204303 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CAD5A68E1D76BE2C0072CA3E /* mac */,
-				CA9C16481CC5E01B00204303 /* GX.xcodeproj */,
+				CACEDEBE1EA75CF80010BC1E /* GXCore.xcodeproj */,
+				CACEDEB21EA75CE80010BC1E /* GXGame.xcodeproj */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		CA9C16491CC5E01B00204303 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CA9C164F1CC5E01B00204303 /* GX.a */,
-				CA9C16511CC5E01B00204303 /* GX.a */,
-				CA9C16531CC5E01B00204303 /* GX.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		CA9C16861CC5E7D800204303 /* atv */ = {
@@ -247,20 +258,32 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		CAD5A68E1D76BE2C0072CA3E /* mac */ = {
+		CACEDEB31EA75CE80010BC1E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CAD5A6891D76BE1F0072CA3E /* Metal.framework */,
+				CACEDEB91EA75CE80010BC1E /* GXGame.a */,
+				CACEDEBB1EA75CE80010BC1E /* GXGame.a */,
+				CACEDEBD1EA75CE80010BC1E /* GXGame.a */,
 			);
-			name = mac;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CACEDEBF1EA75CF80010BC1E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CACEDEC51EA75CF90010BC1E /* GXCore.a */,
+				CACEDEC71EA75CF90010BC1E /* GXCore.a */,
+				CACEDEC91EA75CF90010BC1E /* GXCore.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CA9C162C1CC5DFE200204303 /* GXTest_ios */ = {
+		CA9C162C1CC5DFE200204303 /* GXGameTest_ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA9C16441CC5DFE200204303 /* Build configuration list for PBXNativeTarget "GXTest_ios" */;
+			buildConfigurationList = CA9C16441CC5DFE200204303 /* Build configuration list for PBXNativeTarget "GXGameTest_ios" */;
 			buildPhases = (
 				CA9C16291CC5DFE200204303 /* Sources */,
 				CA9C162A1CC5DFE200204303 /* Frameworks */,
@@ -270,14 +293,14 @@
 			);
 			dependencies = (
 			);
-			name = GXTest_ios;
+			name = GXGameTest_ios;
 			productName = GXTest;
-			productReference = CA9C162D1CC5DFE200204303 /* GXTest.app */;
+			productReference = CA9C162D1CC5DFE200204303 /* GXGameTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CA9C16841CC5E7D800204303 /* GXTest_atv */ = {
+		CA9C16841CC5E7D800204303 /* GXGameTest_atv */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA9C16961CC5E7D800204303 /* Build configuration list for PBXNativeTarget "GXTest_atv" */;
+			buildConfigurationList = CA9C16961CC5E7D800204303 /* Build configuration list for PBXNativeTarget "GXGameTest_atv" */;
 			buildPhases = (
 				CA9C16811CC5E7D800204303 /* Sources */,
 				CA9C16821CC5E7D800204303 /* Frameworks */,
@@ -287,14 +310,14 @@
 			);
 			dependencies = (
 			);
-			name = GXTest_atv;
+			name = GXGameTest_atv;
 			productName = GXTest;
-			productReference = CA9C16851CC5E7D800204303 /* GXTest.app */;
+			productReference = CA9C16851CC5E7D800204303 /* GXGameTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CA9C169C1CC5E94D00204303 /* GXTest_mac */ = {
+		CA9C169C1CC5E94D00204303 /* GXGameTest_mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA9C16AB1CC5E94D00204303 /* Build configuration list for PBXNativeTarget "GXTest_mac" */;
+			buildConfigurationList = CA9C16AB1CC5E94D00204303 /* Build configuration list for PBXNativeTarget "GXGameTest_mac" */;
 			buildPhases = (
 				CA9C16991CC5E94D00204303 /* Sources */,
 				CA9C169A1CC5E94D00204303 /* Frameworks */,
@@ -304,9 +327,9 @@
 			);
 			dependencies = (
 			);
-			name = GXTest_mac;
+			name = GXGameTest_mac;
 			productName = GXTest;
-			productReference = CA9C169D1CC5E94D00204303 /* GXTest.app */;
+			productReference = CA9C169D1CC5E94D00204303 /* GXGameTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -332,7 +355,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CA9C16281CC5DFE200204303 /* Build configuration list for PBXProject "GXTest" */;
+			buildConfigurationList = CA9C16281CC5DFE200204303 /* Build configuration list for PBXProject "GXGameTest" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -344,39 +367,64 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = CA9C16491CC5E01B00204303 /* Products */;
-					ProjectRef = CA9C16481CC5E01B00204303 /* GX.xcodeproj */;
+					ProductGroup = CACEDEBF1EA75CF80010BC1E /* Products */;
+					ProjectRef = CACEDEBE1EA75CF80010BC1E /* GXCore.xcodeproj */;
+				},
+				{
+					ProductGroup = CACEDEB31EA75CE80010BC1E /* Products */;
+					ProjectRef = CACEDEB21EA75CE80010BC1E /* GXGame.xcodeproj */;
 				},
 			);
 			projectRoot = "";
 			targets = (
-				CA9C162C1CC5DFE200204303 /* GXTest_ios */,
-				CA9C16841CC5E7D800204303 /* GXTest_atv */,
-				CA9C169C1CC5E94D00204303 /* GXTest_mac */,
+				CA9C162C1CC5DFE200204303 /* GXGameTest_ios */,
+				CA9C16841CC5E7D800204303 /* GXGameTest_atv */,
+				CA9C169C1CC5E94D00204303 /* GXGameTest_mac */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		CA9C164F1CC5E01B00204303 /* GX.a */ = {
+		CACEDEB91EA75CE80010BC1E /* GXGame.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = GX.a;
-			remoteRef = CA9C164E1CC5E01B00204303 /* PBXContainerItemProxy */;
+			path = GXGame.a;
+			remoteRef = CACEDEB81EA75CE80010BC1E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CA9C16511CC5E01B00204303 /* GX.a */ = {
+		CACEDEBB1EA75CE80010BC1E /* GXGame.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = GX.a;
-			remoteRef = CA9C16501CC5E01B00204303 /* PBXContainerItemProxy */;
+			path = GXGame.a;
+			remoteRef = CACEDEBA1EA75CE80010BC1E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CA9C16531CC5E01B00204303 /* GX.a */ = {
+		CACEDEBD1EA75CE80010BC1E /* GXGame.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = GX.a;
-			remoteRef = CA9C16521CC5E01B00204303 /* PBXContainerItemProxy */;
+			path = GXGame.a;
+			remoteRef = CACEDEBC1EA75CE80010BC1E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CACEDEC51EA75CF90010BC1E /* GXCore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = GXCore.a;
+			remoteRef = CACEDEC41EA75CF90010BC1E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CACEDEC71EA75CF90010BC1E /* GXCore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = GXCore.a;
+			remoteRef = CACEDEC61EA75CF90010BC1E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CACEDEC91EA75CF90010BC1E /* GXCore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = GXCore.a;
+			remoteRef = CACEDEC81EA75CF90010BC1E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -452,6 +500,7 @@
 /* Begin XCBuildConfiguration section */
 		CA9C16421CC5DFE200204303 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA9C16BF1CC5FDCB00204303 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -502,6 +551,7 @@
 		};
 		CA9C16431CC5DFE200204303 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CA9C16BF1CC5FDCB00204303 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -546,7 +596,6 @@
 		};
 		CA9C16451CC5DFE200204303 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA9C16BF1CC5FDCB00204303 /* Config_ios.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -554,7 +603,7 @@
 				DEVELOPMENT_TEAM = YS4H72RSCW;
 				INFOPLIST_FILE = "$(SRCROOT)/ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXGameTest;
 				PROVISIONING_PROFILE = "db714bbc-f207-4e03-898b-d94818c00ef1";
 				PROVISIONING_PROFILE_SPECIFIER = CommonDEV;
 			};
@@ -562,14 +611,13 @@
 		};
 		CA9C16461CC5DFE200204303 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA9C16BF1CC5FDCB00204303 /* Config_ios.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = YS4H72RSCW;
 				INFOPLIST_FILE = "$(SRCROOT)/ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXGameTest;
 				PROVISIONING_PROFILE = "db714bbc-f207-4e03-898b-d94818c00ef1";
 				PROVISIONING_PROFILE_SPECIFIER = CommonDEV;
 			};
@@ -577,14 +625,13 @@
 		};
 		CA9C16971CC5E7D800204303 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA9C16C41CC5FDE200204303 /* Config_atv.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/atv/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXGameTest;
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 			};
@@ -592,14 +639,13 @@
 		};
 		CA9C16981CC5E7D800204303 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA9C16C41CC5FDE200204303 /* Config_atv.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/atv/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXGameTest;
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
 			};
@@ -607,28 +653,26 @@
 		};
 		CA9C16AC1CC5E94D00204303 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA9C16C31CC5FDD600204303 /* Config_mac.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXGameTest;
 				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		CA9C16AD1CC5E94D00204303 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA9C16C31CC5FDD600204303 /* Config_mac.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXGameTest;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -636,7 +680,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CA9C16281CC5DFE200204303 /* Build configuration list for PBXProject "GXTest" */ = {
+		CA9C16281CC5DFE200204303 /* Build configuration list for PBXProject "GXGameTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA9C16421CC5DFE200204303 /* Debug */,
@@ -645,7 +689,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA9C16441CC5DFE200204303 /* Build configuration list for PBXNativeTarget "GXTest_ios" */ = {
+		CA9C16441CC5DFE200204303 /* Build configuration list for PBXNativeTarget "GXGameTest_ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA9C16451CC5DFE200204303 /* Debug */,
@@ -654,7 +698,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA9C16961CC5E7D800204303 /* Build configuration list for PBXNativeTarget "GXTest_atv" */ = {
+		CA9C16961CC5E7D800204303 /* Build configuration list for PBXNativeTarget "GXGameTest_atv" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA9C16971CC5E7D800204303 /* Debug */,
@@ -663,7 +707,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA9C16AB1CC5E94D00204303 /* Build configuration list for PBXNativeTarget "GXTest_mac" */ = {
+		CA9C16AB1CC5E94D00204303 /* Build configuration list for PBXNativeTarget "GXGameTest_mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA9C16AC1CC5E94D00204303 /* Debug */,

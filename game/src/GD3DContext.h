@@ -6,6 +6,7 @@
 #define AS_GD3DCONTEXT_H
 
 #include "GXPrefix.h"
+#include "GX3DAPIType.h"
 #if defined(GX_DIRECTX)
 #include "GBaseContext.h"
 #include "GXDirectX.h"

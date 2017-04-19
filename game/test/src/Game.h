@@ -5,7 +5,7 @@
 #ifndef AS_GAME_H
 #define AS_GAME_H
 
-#include "GX.h"
+#include "GXGame.h"
 
 class Game : public GGame {
     GX_OBJECT(Game);

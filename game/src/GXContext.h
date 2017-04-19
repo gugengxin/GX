@@ -10,6 +10,7 @@
 #define GXContext_h
 
 #include "GXPrefix.h"
+#include "GX3DAPIType.h"
 
 #if defined(GX_OPENGL)
 #define GX_CONTEXT_BASE GOGLContext

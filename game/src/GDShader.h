@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "GXPrefix.h"
+#include "GX3DAPIType.h"
 #if defined(GX_DIRECTX)
 #include "GShader.h"
 #include "GXDirectX.h"

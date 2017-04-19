@@ -232,6 +232,7 @@ void GApplication::main(int argc, char *argv[], const char* delegateClassName)
     GThread::current()->setMain();
     GApplication* app=shared();
     app->m_Delegate=GX_CAST_R(GApplication::Delegate*,GClass::allocObject(delegateClassName));
+    GX_ASSERT(app->m_Delegate->isKindOfClass(GApplication::Delegate::gclass));
     app->eventDidFinishLaunching(argc,argv);
 }
 

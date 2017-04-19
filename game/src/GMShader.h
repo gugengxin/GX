@@ -10,6 +10,7 @@
 #define GMShader_h
 
 #include "GXPrefix.h"
+#include "GX3DAPIType.h"
 #if defined(GX_METAL)
 #include "GXMetal.h"
 #include "GShader.h"

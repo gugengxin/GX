@@ -6,6 +6,7 @@
 #define AS_GXOPENGL_H
 
 #include "GXPrefix.h"
+#include "GX3DAPIType.h"
 #if defined(GX_OPENGL)
 
 

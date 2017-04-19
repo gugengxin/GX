@@ -10,6 +10,7 @@
 #define GCanvas_h
 
 #include "GXPrefix.h"
+#include "GX3DAPIType.h"
 #include "GObject.h"
 #include "GMatrix.h"
 #include "GDataArray.h"

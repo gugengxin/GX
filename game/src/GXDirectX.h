@@ -6,6 +6,7 @@
 #define AS_GXDIRECTX_H
 
 #include "GXPrefix.h"
+#include "GX3DAPIType.h"
 #if defined(GX_DIRECTX)
 
 #include <d3d10.h>

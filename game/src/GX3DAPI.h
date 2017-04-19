@@ -10,6 +10,8 @@
 #define GX3DAPI_h
 
 
+#include "GX3DAPIType.h"
+
 #include "GXOpenGL.h"
 #include "GXDirectX.h"
 #include "GXMetal.h"

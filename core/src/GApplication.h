@@ -30,7 +30,6 @@ class GApplication
 #if defined(GX_OS_QT)
         Q_OBJECT
 #endif
-    friend class GWindow;
 public:
     class Delegate : public GObject {
         GX_GOBJECT(Delegate);
@@ -46,6 +45,16 @@ public:
         virtual void appReceivedMemoryWarning(GApplication* application){
 			GX_UNUSED(application)
 		}
+    public://for game
+        virtual gint windowsSuggestedSamples() {
+            return 0;
+        }
+        virtual gint windowsSuggestedDepth() {
+            return 24;
+        }
+        virtual gint windowsSuggestedStencil() {
+            return 8;
+        }
     };
 	
 public:

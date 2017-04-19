@@ -6,6 +6,7 @@
 #define AS_GOGLCONTEXT_H
 
 #include "GXPrefix.h"
+#include "GX3DAPIType.h"
 #if defined(GX_OPENGL)
 #include "GXOpenGL.h"
 #if defined(GX_OS_ANDROID)

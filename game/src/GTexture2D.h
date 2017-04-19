@@ -10,6 +10,7 @@
 #define GTexture2D_h
 
 #include "GXPrefix.h"
+#include "GX3DAPIType.h"
 #include "GTexture.h"
 #include "GDib.h"
 

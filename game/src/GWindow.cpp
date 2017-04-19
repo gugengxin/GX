@@ -543,7 +543,7 @@ GWindow::GWindow(void* osWinP, GClass* gameGClass)
     m_Canvas=Canvas::alloc();
     
     m_Canvas->setWindow(this);
-	m_Game=GX_CAST_R(GGame*,gameGClass->alloc());
+	m_Game=GX_CAST_R(GGame*,gameGClass->allocObject());
     m_Game->eventStart(this);
 }	
 

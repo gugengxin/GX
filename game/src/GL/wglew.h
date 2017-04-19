@@ -54,7 +54,7 @@
 */
 
 //GLEW v2.0.0
-#include "GXOS.h"
+#include "GX3DAPIType.h"
 #if defined(GX_OS_WINDOWS) && defined(GX_OPENGL)
 #ifndef GLEW_MX
 #define GLEW_MX

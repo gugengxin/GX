@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "GX.h"
+#include "GXGame.h"
 
 class AppDge : public GApplication::Delegate 
 {
@@ -9,7 +9,7 @@ private:
 	AppDge();
 	~AppDge();
 public:
-    virtual void appDidFinishLaunching(GApplication* application, const GApplication::InitData& initData);
+    virtual void appDidFinishLaunching(GApplication* application,int argc, char *argv[]);
 
     virtual gint windowsSuggestedSamples() {
         return 0;

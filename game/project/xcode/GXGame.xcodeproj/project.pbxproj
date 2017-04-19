@@ -129,6 +129,7 @@
 		CAC708B01D13CDFE00B98028 /* GTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTexture2D.h; sourceTree = "<group>"; };
 		CACC51201D70A364007D6B79 /* GMShader.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GMShader.cpp; sourceTree = "<group>"; };
 		CACC51211D70A364007D6B79 /* GMShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMShader.h; sourceTree = "<group>"; };
+		CACEDED91EA760F40010BC1E /* GX3DAPIType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GX3DAPIType.h; sourceTree = "<group>"; };
 		CAD4C7811D577E9300F01C06 /* GSRTexture2D.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GSRTexture2D.cpp; sourceTree = "<group>"; };
 		CAD4C7821D577E9300F01C06 /* GSRTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSRTexture2D.h; sourceTree = "<group>"; };
 		CADB5DAA1CF9E6300092C472 /* GDShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GDShader.cpp; sourceTree = "<group>"; };
@@ -213,6 +214,7 @@
 				CA446E3E1D67E36F002E77DF /* GXMetal.h */,
 				CA446E3D1D67E36F002E77DF /* GXMetal.cpp */,
 				CA26E07B1DC64CD4003AF801 /* GX3DAPI.h */,
+				CACEDED91EA760F40010BC1E /* GX3DAPIType.h */,
 			);
 			name = 3DAPI;
 			sourceTree = "<group>";
@@ -256,9 +258,9 @@
 				CABB3FB31CFE133000A7367C /* GDataBuffer.cpp */,
 				CA6793AF1DAFFACB00854B5E /* GFrameBuffer.h */,
 				CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */,
-				CA9C16C91CC6079000204303 /* GXGame.h */,
 				CAC293341E0A4409004519D8 /* GGame.h */,
 				CAC293331E0A4409004519D8 /* GGame.cpp */,
+				CA9C16C91CC6079000204303 /* GXGame.h */,
 			);
 			name = src;
 			path = ../../src;
@@ -306,9 +308,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CA01E7591CBF483C004520E6 /* GX_ios */ = {
+		CA01E7591CBF483C004520E6 /* GXGame_ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA01E7631CBF483C004520E6 /* Build configuration list for PBXNativeTarget "GX_ios" */;
+			buildConfigurationList = CA01E7631CBF483C004520E6 /* Build configuration list for PBXNativeTarget "GXGame_ios" */;
 			buildPhases = (
 				CA01E7561CBF483C004520E6 /* Sources */,
 				CA01E7571CBF483C004520E6 /* Frameworks */,
@@ -317,14 +319,14 @@
 			);
 			dependencies = (
 			);
-			name = GX_ios;
+			name = GXGame_ios;
 			productName = GX;
 			productReference = CA01E75A1CBF483C004520E6 /* GXGame.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CA01E7691CBF50A9004520E6 /* GX_atv */ = {
+		CA01E7691CBF50A9004520E6 /* GXGame_atv */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA01E7721CBF50A9004520E6 /* Build configuration list for PBXNativeTarget "GX_atv" */;
+			buildConfigurationList = CA01E7721CBF50A9004520E6 /* Build configuration list for PBXNativeTarget "GXGame_atv" */;
 			buildPhases = (
 				CA01E7661CBF50A9004520E6 /* Sources */,
 				CA01E7671CBF50A9004520E6 /* Frameworks */,
@@ -333,14 +335,14 @@
 			);
 			dependencies = (
 			);
-			name = GX_atv;
+			name = GXGame_atv;
 			productName = GXatv;
 			productReference = CA01E76A1CBF50A9004520E6 /* GXGame.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CA01E7831CBF51B9004520E6 /* GX_mac */ = {
+		CA01E7831CBF51B9004520E6 /* GXGame_mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA01E78A1CBF51B9004520E6 /* Build configuration list for PBXNativeTarget "GX_mac" */;
+			buildConfigurationList = CA01E78A1CBF51B9004520E6 /* Build configuration list for PBXNativeTarget "GXGame_mac" */;
 			buildPhases = (
 				CA01E7801CBF51B9004520E6 /* Sources */,
 				CA01E7811CBF51B9004520E6 /* Frameworks */,
@@ -349,7 +351,7 @@
 			);
 			dependencies = (
 			);
-			name = GX_mac;
+			name = GXGame_mac;
 			productName = GXmac;
 			productReference = CA01E7841CBF51B9004520E6 /* GXGame.a */;
 			productType = "com.apple.product-type.library.static";
@@ -386,9 +388,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CA01E7591CBF483C004520E6 /* GX_ios */,
-				CA01E7691CBF50A9004520E6 /* GX_atv */,
-				CA01E7831CBF51B9004520E6 /* GX_mac */,
+				CA01E7591CBF483C004520E6 /* GXGame_ios */,
+				CA01E7691CBF50A9004520E6 /* GXGame_atv */,
+				CA01E7831CBF51B9004520E6 /* GXGame_mac */,
 			);
 		};
 /* End PBXProject section */
@@ -652,7 +654,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA01E7631CBF483C004520E6 /* Build configuration list for PBXNativeTarget "GX_ios" */ = {
+		CA01E7631CBF483C004520E6 /* Build configuration list for PBXNativeTarget "GXGame_ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA01E7641CBF483C004520E6 /* Debug */,
@@ -661,7 +663,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA01E7721CBF50A9004520E6 /* Build configuration list for PBXNativeTarget "GX_atv" */ = {
+		CA01E7721CBF50A9004520E6 /* Build configuration list for PBXNativeTarget "GXGame_atv" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA01E7701CBF50A9004520E6 /* Debug */,
@@ -670,7 +672,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA01E78A1CBF51B9004520E6 /* Build configuration list for PBXNativeTarget "GX_mac" */ = {
+		CA01E78A1CBF51B9004520E6 /* Build configuration list for PBXNativeTarget "GXGame_mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA01E78B1CBF51B9004520E6 /* Debug */,
