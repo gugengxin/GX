@@ -56,6 +56,15 @@ public:
             return 8;
         }
     };
+    
+    class Component {
+    public:
+        Component() {}
+        virtual ~Component() {}
+        
+        virtual gint getAppCID()=0;//唯一标识
+        virtual void idle()=0;
+    };
 	
 public:
     static GApplication* shared();
@@ -64,6 +73,12 @@ public:
 private:
     GApplication();
     ~GApplication();
+    
+public:
+    void addComponent(Component* v);
+    void removeComponent(Component* v);
+    Component* firstComponent(gint cid);
+    
 
 #if defined(GX_OS_QT)
 private slots:
@@ -79,6 +94,7 @@ private:
 
 private:
     Delegate* m_Delegate;
+    GPDArray<Component*> m_Components;
     
 #if defined(GX_OS_APPLE)
     friend class _AppBridge;

@@ -19,10 +19,9 @@
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
-    GApplication::InitData initData;
-    initData.setOSWindowForLaunch(_window);
+    GApplication::main(0,NULL,"AppDge");
     
-    GApplication::main(AppDge::shared(),&initData);
+    GWindow::main(_window, "Game");
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {

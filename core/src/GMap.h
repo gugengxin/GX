@@ -103,7 +103,7 @@ public:
         }
     }
     
-    O* get(K* key) {
+    O* get(K* key) const {
         if(m_ObjCount>0) {
             //gint idx=GX_CAST_S(gint, key->getHash())%m_ObjArray.getCount();
 			gint idx=indexOfHash(key->getHash(),m_ObjArray.getCount());
@@ -162,7 +162,7 @@ public:
 		m_ObjArray.changeCount(0);
     }
     
-	GArray<K>* getAllKeys() {
+	GArray<K>* getAllKeys() const {
 		GArray<K>* res = GArray<K>::autoAlloc();
 		if (m_ObjCount > 0) {
 			for (gint i = 0; i < m_ObjArray.getCount(); i++) {
@@ -175,7 +175,7 @@ public:
 		}
 		return res;
 	}
-	GArray<O>* getAllObjects() {
+	GArray<O>* getAllObjects() const {
 		GArray<O>* res = GArray<O>::autoAlloc();
 		if (m_ObjCount > 0) {
 			for (gint i = 0; i < m_ObjArray.getCount(); i++) {
@@ -266,7 +266,7 @@ public:
 	}
 
 private:
-	inline gint indexOfHash(guint hash,gint count) {
+	inline gint indexOfHash(guint hash,gint count) const {
 		return GX_CAST_S(gint, hash%GX_CAST_S(guint,count));
 	}
 	bool increaseCapability(gint dc) {

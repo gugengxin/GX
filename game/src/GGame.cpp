@@ -28,14 +28,14 @@ GGame::~GGame()
     
 }
 
-void GGame::eventStart(GWindow* window)
+void GGame::eventStart()
 {
-    m_Window=window;
+    
 }
 
 void GGame::eventStop()
 {
-    m_Window=NULL;
+    
 }
 
 gint GGame::getFPS()

@@ -261,11 +261,44 @@ GApplication::~GApplication()
 		timeKillEvent(m_TimerID);
 	}
 #endif
+    
+    gint count=m_Components.getCount();
+    for (gint i=0; i<count; ++i) {
+        delete m_Components.get(i);
+    }
     GO::release(m_Delegate);
+}
+
+void GApplication::addComponent(Component* v)
+{
+    m_Components.add(v);
+}
+void GApplication::removeComponent(Component* v)
+{
+    gint idx=m_Components.getIndex(v);
+    if (idx>=0) {
+        delete v;
+        m_Components.remove(idx);
+    }
+}
+GApplication::Component* GApplication::firstComponent(gint cid)
+{
+    gint count=m_Components.getCount();
+    for (gint i=0; i<count; ++i) {
+        Component* obj=m_Components.get(i);
+        if (obj->getAppCID()==cid) {
+            return obj;
+        }
+    }
+    return NULL;
 }
 
 void GApplication::idle()
 {
+    gint count=m_Components.getCount();
+    for (gint i=0; i<count; ++i) {
+        m_Components.get(i)->idle();
+    }
 	GRunLoop::current()->run();
 }
 

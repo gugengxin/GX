@@ -10,12 +10,14 @@ AppDge* AppDge::shared()
 
 void AppDge::init()
 {
+    GApplication::Delegate::init();
     
 }
 
 void AppDge::uninit()
 {
     
+    GApplication::Delegate::uninit();
 }
 
 void AppDge::appDidFinishLaunching(GApplication* application,int argc, char *argv[])

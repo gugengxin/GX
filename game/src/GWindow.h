@@ -10,23 +10,21 @@
 #define GWindow_h
 
 #include "GXPrefix.h"
-#include "GObject.h"
+#include "GApplication.h"
 #include "GXContext.h"
 #include "GContext.h"
-#include "GXCWnd.h"
 #include "GColor.h"
 #include "GCanvas.h"
 #include "GGame.h"
-#if defined(GX_OS_ANDROID)
+#if defined(GX_OS_WINDOWS)
+#include "GXCWnd.h"
+#elif defined(GX_OS_ANDROID)
 #include <android/native_window.h>
 #include <android/native_window_jni.h>
 #elif defined(GX_OS_QT)
 #include <QWindow>
-
 class GWindow;
-
-class _GQWindow : public QWindow
-{
+class _GQWindow : public QWindow {
     Q_OBJECT
 public:
     _GQWindow();
@@ -39,13 +37,12 @@ protected:
 private:
     GWindow* m_Delegate;
 };
-
 #endif
 
 
 #include "GXGObject.h"
 
-class GWindow {
+class GWindow : public GApplication::Component {
 	friend class GApplication;
     friend class GX_CONTEXT_BASE;
 private:
@@ -71,9 +68,13 @@ private:
     private:
         GWindow* m_Window;
     };
+public:
+    static void main(void* osWinP,const char* gameClassName);
 private:
-	GWindow(void* osWinP, GClass* gameGClass);
+	GWindow(void* osWinP);
 	~GWindow();
+    void startGame(const char* gameClassName);
+    void stopGame();
 public:
 	inline void* getOSWindow() {
 #if defined(GX_OS_WINDOWS)
@@ -100,11 +101,14 @@ public:
     }
     
 public:
-	void idle();
+    static const gint AppCID;
+    static GWindow* first();
+    virtual gint getAppCID();
+	virtual void idle();
+    
+public:
 	void render();
 private:
-	void eventAttachToApp();
-	void eventDetachFromApp();
     void eventResize();
     void eventDestroy();//依附的系统窗口销毁时调用
 

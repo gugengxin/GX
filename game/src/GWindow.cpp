@@ -11,7 +11,6 @@
 #include "GLog.h"
 #include "GApplication.h"
 
-
 #include "GXGObject.h"
 
 GX_GOBJECT_IMPLEMENT(GWindow::Canvas,GCanvas);
@@ -455,8 +454,14 @@ _GQWindow::~_GQWindow()
 
 #endif
 
+void GWindow::main(void* osWinP,const char* gameClassName)
+{
+    GWindow* win=new GWindow(osWinP);
+    GApplication::shared()->addComponent(win);
+    win->startGame(gameClassName);
+}
 
-GWindow::GWindow(void* osWinP, GClass* gameGClass)
+GWindow::GWindow(void* osWinP)
 {
 	m_OSWinP = osWinP;
     m_BgdColor.set(0.0f, 0.0f, 0.0f, 1.0f);
@@ -543,8 +548,6 @@ GWindow::GWindow(void* osWinP, GClass* gameGClass)
     m_Canvas=Canvas::alloc();
     
     m_Canvas->setWindow(this);
-	m_Game=GX_CAST_R(GGame*,gameGClass->allocObject());
-    m_Game->eventStart(this);
 }	
 
 GWindow::~GWindow()
@@ -565,6 +568,24 @@ GWindow::~GWindow()
     //delete m_Container;
 #endif
 	GO::release(m_Game);
+}
+
+void GWindow::startGame(const char* gameClassName)
+{
+    GClass* gameClass=GClass::findInMap(gameClassName);
+    GX_ASSERT(gameClass!=NULL);
+    m_Game=GX_CAST_R(GGame*,gameClass->allocObject());
+    GX_ASSERT(m_Game->isKindOfClass(GGame::gclass));
+    m_Game->m_Window=this;
+    m_Game->eventStart();
+}
+
+void GWindow::stopGame()
+{
+    m_Game->eventStop();
+    m_Game->m_Window=NULL;
+    GO::release(m_Game);
+    m_Game=NULL;
 }
 
 float GWindow::getWidth()
@@ -614,7 +635,17 @@ float GWindow::getScale()
 #endif
 }
 
+const gint GWindow::AppCID=0xABCD;
 
+GWindow* GWindow::first()
+{
+    return GX_CAST_R(GWindow*, GApplication::shared()->firstComponent(AppCID));
+}
+
+gint GWindow::getAppCID()
+{
+    return AppCID;
+}
 
 void GWindow::idle()
 {
@@ -637,16 +668,6 @@ void GWindow::render()
     }
 }
 
-void GWindow::eventAttachToApp()
-{
-
-}
-
-void GWindow::eventDetachFromApp()
-{
-
-}
-
 void GWindow::eventResize()
 {
     float nw=getWidth();
@@ -660,6 +681,7 @@ void GWindow::eventResize()
 
 void GWindow::eventDestroy()
 {
-    GApplication::shared()->removeWindow(this);
+    stopGame();
+    GApplication::shared()->removeComponent(this);
 }
 

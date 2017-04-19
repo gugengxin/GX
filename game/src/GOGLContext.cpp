@@ -8,6 +8,7 @@
 #include "GLog.h"
 #include "GThread.h"
 #include "GContext.h"
+#include "GWindow.h"
 
 #if defined(GX_OS_WINDOWS)
 #include <Windows.h>
@@ -195,14 +196,14 @@ bool GOGLContext::create(GWindow* win)
 	ConfigDC(m_Context.DC);
 	m_Context.context = ::wglCreateContext(m_Context.DC);
     //shared
-    GWindow* aw = GApplication::shared()->firstWindow();
+    GWindow* aw = GWindow::first();
 	if (aw && aw != getWindow()) {
 		wglShareLists(((GOGLContext*)&aw->m_Context)->m_Context.context, m_Context.context);
     }
 #elif defined(GX_OS_IPHONE)
     EAGLSharegroup* group=nil;
     //shared
-    GWindow* aw = GApplication::shared()->firstWindow();
+    GWindow* aw = GWindow::first();
     if (aw && aw != getWindow()) {
         group=GX_CAST_R(EAGLContext*, GX_CAST_R(GOGLContext*, &aw->m_Context)->m_Context.context).sharegroup;
     }
@@ -256,7 +257,7 @@ bool GOGLContext::create(GWindow* win)
     NSOpenGLPixelFormat *pixelFormat=nil;
     NSOpenGLContext* shared=nil;
     //shared
-    GWindow* aw = GApplication::shared()->firstWindow();
+    GWindow* aw = GWindow::first();
     if (aw && aw != getWindow()) {
         shared=GX_CAST_R(NSOpenGLContext*, GX_CAST_R(GOGLContext*, &aw->m_Context)->m_Context.context);
         pixelFormat=shared.pixelFormat;
@@ -286,7 +287,7 @@ bool GOGLContext::create(GWindow* win)
 	};
 	EGLContext shared = g_Context;
 	if (shared == EGL_NO_CONTEXT) {
-		GWindow *aw = GApplication::shared()->firstWindow();
+		GWindow *aw = GWindow::first();
 		if (aw && aw != getWindow()) {
 			shared = GX_CAST_R(EGLContext, GX_CAST_R(GOGLContext * , &aw->m_Context)->m_Context.context);
 		}
@@ -301,7 +302,7 @@ bool GOGLContext::create(GWindow* win)
     m_Context.surface=getWindow()->m_OSWin;
     m_Context.context=new QOpenGLContext();
     m_Context.context->setFormat(getWindow()->m_OSWin->format());
-    GWindow *aw = GApplication::shared()->firstWindow();
+    GWindow *aw = GWindow::first();
     if (aw && aw != getWindow()) {
         m_Context.context->setShareContext(GX_CAST_R(GOGLContext* , &aw->m_Context)->m_Context.context);
     }

@@ -117,10 +117,10 @@ public:
         }
     }
 
-    Node* first() {
+    Node* first() const {
         return m_Node;
     }
-    Node* last() {
+    Node* last() const {
         return m_NodeLast;
     }
     

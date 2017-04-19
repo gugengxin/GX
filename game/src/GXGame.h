@@ -1,4 +1,4 @@
-﻿//
+//
 //  GX.h
 //  GX
 //
@@ -12,9 +12,10 @@
 
 #include "GXCore.h"
 
-#include "GDataBuffer.h"
-#include "GFrameBuffer.h"
+#include "GWindow.h"
 #include "GGame.h"
+
+#include "GDataBuffer.h"
 
 
 #endif /* GX_h */

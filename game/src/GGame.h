@@ -24,10 +24,10 @@ class GGame : public GObject
     friend class GWindow;
 	GX_VIRTUAL_GOBJECT(GGame);
 protected:
-    virtual void eventStart(GWindow* window);
+    virtual void eventStart();
     virtual void eventStop();
 public:
-    inline GWindow* getWindow() {
+    GWindow* getWindow() {
         return m_Window;
     }
     virtual gint getFPS();//默认=30

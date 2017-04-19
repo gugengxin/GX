@@ -43,11 +43,8 @@
     _window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [_window makeKeyAndVisible];
     
-    GApplication::InitData initData;
-    initData.setOSWindowForLaunch(_window);
-    
-    GApplication::main(AppDge::shared(),&initData);
-    
+    GApplication::main(0,NULL,"AppDge");
+    GWindow::main(_window, "Game");
     
     return YES;
 }

@@ -15,29 +15,39 @@ template <typename T,typename DT>
 class GDataArray : public GDataArrayBase {
     GX_GOBJECT(GDataArray);
 public:
-    inline bool isEmpty() const {
+    bool isEmpty() const {
         return m_Data.getBytes()<=0;
     }
-	inline gint getCount() const {
+	gint getCount() const {
 		return (gint)(m_Data.getBytes() / sizeof(T));
 	}
-    inline guint getBytes() const {
+    guint getBytes() const {
         return m_Data.getBytes();
     }
-    inline T& get(gint index) const {
+    T& get(gint index) const {
         return GX_CAST_R(T*, m_Data.getPtr())[index];
     }
-	inline T* getPtr(gint index) const {
+	T* getPtr(gint index) const {
 		return &GX_CAST_R(T*, m_Data.getPtr())[index];
 	}
-	inline T& first() const {
+	T& first() const {
 		return GX_CAST_R(T*, m_Data.getPtr())[0];
 	}
-	inline T& last() const {
+	T& last() const {
 		return GX_CAST_R(T*, m_Data.getPtr())[(m_Data.getBytes() / sizeof(T))-1];
 	}
+    
+    gint getIndex(const T& v) const {
+        gint count=getCount();
+        for (gint i=0; i<count; i++) {
+            if (v==get(i)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-	inline void set(gint index,const T& v) {
+	void set(gint index,const T& v) {
 		GX_CAST_R(T*, m_Data.getPtr())[index] = v;
 	}
 	bool add(const T& v) {

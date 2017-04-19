@@ -18,23 +18,33 @@ class GArray : public GArrayBase {
 	friend class GNCObserver;
 	GX_GOBJECT(GArray);
 public:
-	inline gint getCount() {
+	gint getCount() const {
 		return (gint)(m_Data.getBytes() / sizeof(T*));
 	}
-	inline T* get(gint index) {
+	T* get(gint index) const {
 		return GX_CAST_R(T**, m_Data.getPtr())[index];
 	}
-    inline T* first() {
+    T* first() const {
         if (m_Data.getBytes()>0) {
             return GX_CAST_R(T**, m_Data.getPtr())[0];
         }
         return NULL;
     }
-    inline T* last() {
+    T* last() const {
         if (m_Data.getBytes()>0) {
             return GX_CAST_R(T**, m_Data.getPtr())[(m_Data.getBytes() / sizeof(T*))-1];
         }
         return NULL;
+    }
+    
+    gint getIndex(const T* v) const {
+        gint count=getCount();
+        for (gint i=0; i<count; i++) {
+            if (v==get(i)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 	bool add(T* v) {
@@ -132,6 +142,7 @@ public:
 		}
 		changeCount(0);
 	}
+    
 
 protected:
 	inline bool changeCount(gint toCount) {

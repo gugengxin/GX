@@ -20,11 +20,11 @@ void Game::uninit()
     GGame::uninit();
 }
 
-void Game::eventStart(GWindow* window)
+void Game::eventStart()
 {
-    GGame::eventStart(window);
+    GGame::eventStart();
     
-    window->getCanvas()->setBackgroundColor(1, 0, 1, 1);
+    getWindow()->getCanvas()->setBackgroundColor(1, 0, 1, 1);
     
 
     //*
