@@ -151,13 +151,19 @@ int main(int argc, char *argv[])
         for(int i=1;i+1<argList.size();i+=2) {
             QString& str=argList[i];
             if(str=="-i") {
-                in=argList[i+1];
+                GCTextEditor te;
+                te.setText(QString((const char*)argv[i+1]));
+                te.replace(QString("\t"),QString("\\t"));
+                in=te.getText();
             }
             else if(str=="-ie") {
                 ine=argList[i+1];
             }
             else if(str=="-o") {
-                out=argList[i+1];
+                GCTextEditor te;
+                te.setText(QString((const char*)argv[i+1]));
+                te.replace(QString("\t"),QString("\\t"));
+                out=te.getText();
             }
             else if(str=="-oe") {
                 oute=argList[i+1];
