@@ -8,16 +8,16 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class GWindow extends SurfaceView implements SurfaceHolder.Callback {
+public class GAndroidWindow extends SurfaceView implements SurfaceHolder.Callback {
 	
 	public interface Delegate {
-		public void onWindowCreated(GWindow win, Surface surface);
-		public void onWindowChanged(GWindow win, Surface surface, int width, int height);
-		public void onWindowDestroyed(GWindow win, Surface surface);
-		public void onWindowTouchEvent(GWindow win, MotionEvent event);
+		public void onWindowCreated(GAndroidWindow win, Surface surface);
+		public void onWindowChanged(GAndroidWindow win, Surface surface, int width, int height);
+		public void onWindowDestroyed(GAndroidWindow win, Surface surface);
+		public void onWindowTouchEvent(GAndroidWindow win, MotionEvent event);
 	}
 
-	public GWindow(Context context, Delegate dge) {
+	public GAndroidWindow(Context context, Delegate dge) {
 		super(context);
 		setDelegate(dge);
 		this.getHolder().addCallback(this);

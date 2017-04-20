@@ -11,7 +11,7 @@
         <meta-data android:name="gx.core.lib.name" android:value="GXGameTest" />
         <meta-data android:name="gx.core.app.delegate.name" android:value="AppDge" />
 
-        <activity android:name="com.gxengine.game.GActivity"
+        <activity android:name="com.gxengine.game.GAndroidActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize"
                   android:screenOrientation="sensorLandscape"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name="com.gxengine.game.GDreamService"
+            android:name="com.gxengine.game.GAndroidDaydream"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.service.dreams.DreamService" />

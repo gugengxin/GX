@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 import android.view.Surface;
 
 @SuppressLint("NewApi")
-public class GDreamService extends DreamService implements GWindow.Delegate {
+public class GAndroidDaydream extends DreamService implements GAndroidWindow.Delegate {
 
 	public Bundle getMetaDataBundle() {
 		try {
@@ -26,6 +26,12 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.d(this.getClass().getSimpleName(),"onStartCommand");
 
+        {
+            Bundle bundle = intent.getExtras();
+            if(bundle!=null) {
+                _gameClassName = bundle.getString(GAndroidActivity.KEY_GAME_CLASS_NAME);
+            }
+        }
 
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -35,8 +41,18 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 		super.onCreate();
 		Log.d(this.getClass().getSimpleName(),"onCreate");
 
-		_window=new GWindow(this,this);
+		_window=new GAndroidWindow(this,this);
 		this.setContentView(_window);
+
+        if (_gameClassName==null) {
+            Bundle bundle = getMetaDataBundle();
+            if(bundle!=null) {
+                _gameClassName = bundle.getString(GAndroidActivity.KEY_GAME_CLASS_NAME);
+            }
+        }
+        if (_gameClassName==null) {
+            throw new RuntimeException("Error no gameClassName");
+        }
 
 		_jniBridgeID=jniOnCreate();
 	}
@@ -82,25 +98,25 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	}
 
 	@Override
-	public void onWindowCreated(GWindow win, Surface surface) {
+	public void onWindowCreated(GAndroidWindow win, Surface surface) {
 		Log.d(this.getClass().getSimpleName(),"onWindowCreated");
-		jniOnWindowCreated(_jniBridgeID,win,surface);
+		jniOnWindowCreated(_jniBridgeID,win,surface,_gameClassName);
 	}
 	
 	@Override
-	public void onWindowChanged(GWindow win, Surface surface, int width, int height) {
+	public void onWindowChanged(GAndroidWindow win, Surface surface, int width, int height) {
 		Log.d(this.getClass().getSimpleName(),"onWindowChanged");
 		jniOnWindowChanged(_jniBridgeID,win,surface,width,height);
 	}
 	
 	@Override
-	public void onWindowDestroyed(GWindow win, Surface surface) {
+	public void onWindowDestroyed(GAndroidWindow win, Surface surface) {
 		jniOnWindowDestroyed(_jniBridgeID,win,surface);
 		Log.d(this.getClass().getSimpleName(),"onWindowDestroyed");
 	}
 	
 	@Override
-	public void onWindowTouchEvent(GWindow win, MotionEvent event) {
+	public void onWindowTouchEvent(GAndroidWindow win, MotionEvent event) {
 		
 	}
 
@@ -110,10 +126,11 @@ public class GDreamService extends DreamService implements GWindow.Delegate {
 	private native void jniOnDreamingStopped(long bridgeID);
 	private native void jniOnDetachedFromWindow(long bridgeID);
 	private native void jniOnDestroy(long bridgeID);
-	private native void jniOnWindowCreated(long bridgeID,GWindow win,Surface surface);
-	private native void jniOnWindowChanged(long bridgeID,GWindow win,Surface surface,int width, int height);
-	private native void jniOnWindowDestroyed(long bridgeID,GWindow win,Surface surface);
+	private native void jniOnWindowCreated(long bridgeID, GAndroidWindow win, Surface surface, String gameClassName);
+	private native void jniOnWindowChanged(long bridgeID, GAndroidWindow win, Surface surface, int width, int height);
+	private native void jniOnWindowDestroyed(long bridgeID, GAndroidWindow win, Surface surface);
 	
-	GWindow _window;
-	private long _jniBridgeID;
+	GAndroidWindow _window=null;
+	private long _jniBridgeID=0L;
+    private String _gameClassName=null;
 }

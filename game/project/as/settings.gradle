@@ -1,8 +1,9 @@
+ext {
+    GX_ROOT="../../.."
+}
+
 include ':gxgame'
-//ext {
-//    GX_ROOT="../.."
-//}
-//include ':app'
-//project(':app').projectDir = new File(GX_ROOT+'/test/project/as/app')
+include ':gxcore'
+project(':gxcore').projectDir = new File(GX_ROOT + '/core/project/as/gxcore')
 
 
