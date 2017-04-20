@@ -8,9 +8,8 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    GApplication::InitData initData;
-    initData.setOSWindowForLaunch(&w);
-    GApplication::main(AppDge::shared(),&initData);
+    GApplication::main(argc,argv,"AppDge");
+    GWindow::main(&w,"Game");
 
     return a.exec();
 }

@@ -7,8 +7,11 @@
 !include( config.pri ) {
     error(" Couldn't find the config.pri file! ")
 }
-!include( $$GX_ROOT/product/qt/GX.pri ) {
-    error(" Couldn't find the GX.pri file! ")
+!include( $$GX_ROOT/core/product/qt/GXCore.pri ) {
+    error(" Couldn't find the GXCore.pri file! ")
+}
+!include( $$GX_ROOT/game/product/qt/GXGame.pri ) {
+    error(" Couldn't find the GXGame.pri file! ")
 }
 
 

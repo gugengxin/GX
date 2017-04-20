@@ -15,9 +15,16 @@ moc_*.cpp
 **/vs/x64/
 **/vs/x86/
 **/vs/ipch/
+**/product/vs/lib/
 
 **/build-GX*/
 **/build-gx*/
+**/project/qt/debug/
+**/project/qt/release/
+**/project/qt/obj/
+**/project/qt/moc/
+**/project/qt/Makefile*
+**/product/qt/*.a
 
 bin/Qt5Core.dll
 bin/vcredist_x64.exe
@@ -32,22 +39,3 @@ external/openal/lib
 external/pthread-win32/lib/
 external/pthread-win32/include/
 external/pthread-win32/pthread-win32/
-
-core/project/qt/debug/
-core/project/qt/release/
-core/project/qt/obj/
-core/project/qt/moc/
-core/project/qt/Makefile*
-
-core/product/vs/lib/
-core/product/qt/
-
-product/vs/lib/
-product/qt/
-
-project/qt/debug/
-project/qt/release/
-project/qt/obj/
-project/qt/moc/
-project/qt/Makefile*
-test/project/vs/assets/

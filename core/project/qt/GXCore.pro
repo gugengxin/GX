@@ -179,7 +179,7 @@ INCLUDEPATH += $$PWD/../../../external/libpng/include
 #libjpeg
 INCLUDEPATH += $$PWD/../../../external/libjpeg/include
 win32:macx {
-    INCLUDEPATH += $$PWD/../../../external/libjpeg/include/mac
+    INCLUDEPATH += $$PWD/../../../external/libjpeg/include/win
 }
 else:macx {
     INCLUDEPATH += $$PWD/../../../external/libjpeg/include/mac

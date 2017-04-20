@@ -824,7 +824,7 @@ void GOGLContext::loadFrameBufferNodeInMT(GObject* obj)
 
                 GX_glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, handle.m_DepthName);
             }
-            GLenum cfs=glCheckFramebufferStatus(GL_FRAMEBUFFER);
+            GLenum cfs=GX_glCheckFramebufferStatus(GL_FRAMEBUFFER);
             if (cfs!=GL_FRAMEBUFFER_COMPLETE) {
                 GX_LOG_P1(PrioDEBUG, "GOGLContext", "loadFrameBufferNodeInMT glCheckFramebufferStatus=%u", cfs);
             }

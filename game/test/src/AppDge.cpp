@@ -22,5 +22,7 @@ void AppDge::uninit()
 
 void AppDge::appDidFinishLaunching(GApplication* application,int argc, char *argv[])
 {
-    
+    GX_UNUSED(application);
+    GX_UNUSED(argc);
+    GX_UNUSED(argv);
 }
