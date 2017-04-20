@@ -94,7 +94,7 @@ SOURCES += \
 #__SOURCES_END__
 
 win32 {
-    SOURCES += ./../src/GXPthread.cpp
+    SOURCES += ../../src/GXPthread.cpp
 }
 
 HEADERS += \
@@ -178,7 +178,7 @@ INCLUDEPATH += $$PWD/../../../external/zlib/include
 INCLUDEPATH += $$PWD/../../../external/libpng/include
 #libjpeg
 INCLUDEPATH += $$PWD/../../../external/libjpeg/include
-win32:macx {
+win32 {
     INCLUDEPATH += $$PWD/../../../external/libjpeg/include/win
 }
 else:macx {

@@ -39,12 +39,10 @@ bool GOShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
         srcIdx+=1;
         
 		pSM++;
-	}
-    
-	guint mlen = srcIdx;
+    }
     
     size_t srcLen=strlen(srcVS);
-    srcData.changeBytes(srcIdx+(srcLen)+1);
+    srcData.changeBytes(srcIdx+srcLen+1);
     memcpy(srcData.getPtr(srcIdx), srcVS, srcLen+1);
     
 
@@ -54,8 +52,8 @@ bool GOShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
     }
 
     srcLen=strlen(srcFP);
-    srcData.changeBytesIfNeed(mlen+(srcLen)+1);
-    memcpy(srcData.getPtr(mlen), srcFP, srcLen+1);
+    srcData.changeBytesIfNeed(srcIdx+srcLen+1);
+    memcpy(srcData.getPtr(srcIdx), srcFP, srcLen+1);
 
     GLuint fragShader=0;
 	if (!compileShader(&fragShader, GL_FRAGMENT_SHADER, (const GLchar*)srcData.getPtr())) {

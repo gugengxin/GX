@@ -25,6 +25,8 @@ moc_*.cpp
 **/project/qt/moc/
 **/project/qt/Makefile*
 **/product/qt/*.a
+**/product/qt/*.lib
+**/product/qt/*.pdb
 
 bin/Qt5Core.dll
 bin/vcredist_x64.exe

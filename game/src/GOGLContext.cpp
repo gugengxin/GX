@@ -306,8 +306,11 @@ bool GOGLContext::create(GWindow* win)
     if (aw && aw != getWindow()) {
         m_Context.context->setShareContext(GX_CAST_R(GOGLContext* , &aw->m_Context)->m_Context.context);
     }
-    bool res=m_Context.context->create();
-    res=m_Context.context->makeCurrent(getWindow()->m_OSWin);
+    if(!m_Context.context->create()) {
+        return false;
+    }
+    GX_ASSERT(!m_Context.context->isOpenGLES());
+    m_Context.context->makeCurrent(getWindow()->m_OSWin);
     initializeOpenGLFunctions();
     m_Context.context->doneCurrent();
 #endif

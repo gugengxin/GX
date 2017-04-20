@@ -9,16 +9,16 @@
 #ifndef GXEncoding_h
 #define GXEncoding_h
 
-#include "GXOS.h"
+#include "GXTypes.h"
 
 namespace GX {
     typedef enum _StringEncoding {
         SE_Utf8     =0,
         SE_Utf16    =1,
         SE_Utf32    =2,
-#if defined(GX_OS_WINDOWS)
+#if GX_WCHAR_16BIT
         SE_Unicode=SE_Utf16,
-#else
+#elif GX_WCHAR_32BIT
         SE_Unicode=SE_Utf32,
 #endif
     } StringEncoding;
