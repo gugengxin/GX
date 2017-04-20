@@ -1,18 +1,18 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by GXTest.rc
+// Used by GXGameTest.rc
 //
 
 #define IDS_APP_TITLE			103
 
 #define IDR_MAINFRAME			128
-#define IDD_GXTEST_DIALOG	102
+#define IDD_GXGAMETEST_DIALOG	102
 #define IDD_ABOUTBOX			103
 #define IDM_ABOUT				104
 #define IDM_EXIT				105
-#define IDI_GXTEST			107
+#define IDI_GXGAMETEST			107
 #define IDI_SMALL				108
-#define IDC_GXTEST			109
+#define IDC_GXGAMETEST			109
 #define IDC_MYICON				2
 #ifndef IDC_STATIC
 #define IDC_STATIC				-1

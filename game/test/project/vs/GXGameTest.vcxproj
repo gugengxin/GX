@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x64">
-      <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
@@ -19,63 +19,74 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{29900B08-D1A1-4BDD-9444-93BF0E808637}</ProjectGuid>
+    <ProjectGuid>{4B02F0C4-F1C0-4F93-B772-A81AAD6777CC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>GXTest</RootNamespace>
+    <RootNamespace>GXGameTest</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Config.props" />
-    <Import Project="..\..\..\product\vs\config\GX.props" />
-    <Import Project="..\..\..\product\vs\config\GX_debug.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="Config.props" />
-    <Import Project="..\..\..\product\vs\config\GX.props" />
-    <Import Project="..\..\..\product\vs\config\GX_debug.props" />
+    <Import Project="..\..\..\..\core\product\vs\config\GXCore.props" />
+    <Import Project="..\..\..\..\core\product\vs\config\GXCore_debug.props" />
+    <Import Project="..\..\..\product\vs\config\GXGame.props" />
+    <Import Project="..\..\..\product\vs\config\GXGame_debug.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Config.props" />
-    <Import Project="..\..\..\product\vs\config\GX.props" />
-    <Import Project="..\..\..\product\vs\config\GX_release.props" />
+    <Import Project="..\..\..\..\core\product\vs\config\GXCore.props" />
+    <Import Project="..\..\..\..\core\product\vs\config\GXCore_release.props" />
+    <Import Project="..\..\..\product\vs\config\GXGame.props" />
+    <Import Project="..\..\..\product\vs\config\GXGame_release.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Config.props" />
-    <Import Project="..\..\..\product\vs\config\GX.props" />
-    <Import Project="..\..\..\product\vs\config\GX_release.props" />
+    <Import Project="..\..\..\..\core\product\vs\config\GXCore.props" />
+    <Import Project="..\..\..\..\core\product\vs\config\GXCore_debug.props" />
+    <Import Project="..\..\..\product\vs\config\GXGame.props" />
+    <Import Project="..\..\..\product\vs\config\GXGame_debug.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Config.props" />
+    <Import Project="..\..\..\..\core\product\vs\config\GXCore.props" />
+    <Import Project="..\..\..\..\core\product\vs\config\GXCore_release.props" />
+    <Import Project="..\..\..\product\vs\config\GXGame.props" />
+    <Import Project="..\..\..\product\vs\config\GXGame_release.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -96,22 +107,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
-set ASSETS_DIR=$(ProjectDir)assets
-if NOT EXIST %ASSETS_DIR% (
-	md %ASSETS_DIR%
-)
-copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
+      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
+xcopy /i /e /y ..\..\assets assets</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -119,23 +123,16 @@ copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN64;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
-set ASSETS_DIR=$(ProjectDir)assets
-if NOT EXIST %ASSETS_DIR% (
-	md %ASSETS_DIR%
-)
-copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
+      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
+xcopy /i /e /y ..\..\assets assets</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -146,24 +143,17 @@ copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
-set ASSETS_DIR=$(ProjectDir)assets
-if NOT EXIST %ASSETS_DIR% (
-	md %ASSETS_DIR%
-)
-copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
+      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
+xcopy /i /e /y ..\..\assets assets</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -173,25 +163,18 @@ copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN64;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
     <PreBuildEvent>
-      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc$(PlatformToolsetVersion)\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
-set ASSETS_DIR=$(ProjectDir)assets
-if NOT EXIST %ASSETS_DIR% (
-	md %ASSETS_DIR%
-)
-copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
+      <Command>copy /y $(GXRoot)\external\pthread-win32\lib\win\vc\$(PlatformTarget)\$(Configuration)\pthread_dll.dll $(OutDir)
+xcopy /i /e /y ..\..\assets assets</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -200,7 +183,7 @@ copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
   <ItemGroup>
     <ClInclude Include="..\..\src\AppDge.h" />
     <ClInclude Include="..\..\src\Game.h" />
-    <ClInclude Include="GXTest.h" />
+    <ClInclude Include="GXGameTest.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -208,7 +191,7 @@ copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
   <ItemGroup>
     <ClCompile Include="..\..\src\AppDge.cpp" />
     <ClCompile Include="..\..\src\Game.cpp" />
-    <ClCompile Include="GXTest.cpp" />
+    <ClCompile Include="GXGameTest.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -217,10 +200,10 @@ copy /y $(ProjectDir)..\..\assets\*.* %ASSETS_DIR%</Command>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="GXTest.rc" />
+    <ResourceCompile Include="GXGameTest.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="GXTest.ico" />
+    <Image Include="GXGameTest.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="src">
-      <UniqueIdentifier>{98bfe399-5954-4f53-b055-4f04200f8dbd}</UniqueIdentifier>
+      <UniqueIdentifier>{ae0f0b96-20a2-4c3c-8f22-56ce199f8735}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,7 +30,7 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="GXTest.h">
+    <ClInclude Include="GXGameTest.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\AppDge.h">
@@ -44,7 +44,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="GXTest.cpp">
+    <ClCompile Include="GXGameTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\AppDge.cpp">
@@ -55,7 +55,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="GXTest.rc">
+    <ResourceCompile Include="GXGameTest.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -63,7 +63,7 @@
     <Image Include="small.ico">
       <Filter>资源文件</Filter>
     </Image>
-    <Image Include="GXTest.ico">
+    <Image Include="GXGameTest.ico">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>
