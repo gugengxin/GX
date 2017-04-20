@@ -56,24 +56,27 @@ public class GAndroidApp extends Application {
         return res;
     }
 
+    public Bundle getMetaDataBundle() {
+        try {
+            return getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA).metaData;
+        } catch (Exception e) {
+            throw new RuntimeException("Error getMetaDataBundle", e);
+        }
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
 
-        try {
-            Bundle bundle = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA).metaData;
-            String libName = bundle.getString("gx.core.lib.name");
-            String appDgeName=bundle.getString("gx.core.app.delegate.name");
+        Bundle bundle = getMetaDataBundle();
+        String libName = bundle.getString("gx.core.lib.name");
+        String appDgeName=bundle.getString("gx.core.app.delegate.name");
 
-            System.loadLibrary(libName);
-            jniOnCreate(getClassLoader());
-            jniMain(appDgeName);
-            startTimer();
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error onCreate", e);
-        }
+        System.loadLibrary(libName);
+        jniOnCreate(getClassLoader());
+        jniMain(appDgeName);
+        startTimer();
     }
 
     @Override

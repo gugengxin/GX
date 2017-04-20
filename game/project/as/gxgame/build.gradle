@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+
+ext {
+    GX_ROOT="../../../.."
+}
+apply from: this.GX_ROOT + "/game/product/as/config.gradle"
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "26.0.0-rc1"
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        debug {
+            debuggable true
+            jniDebuggable true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    externalNativeBuild {
+        ndkBuild {
+            path "src/main/cpp/Android.mk"
+        }
+    }
+    defaultConfig {
+        externalNativeBuild {
+            ndkBuild {
+
+            }
+        }
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+}

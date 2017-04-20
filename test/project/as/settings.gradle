@@ -1,6 +1,0 @@
-ext {
-    GX_ROOT="../../.."
-}
-include ':app'
-include ':gx'
-project(':gx').projectDir = new File(GX_ROOT + '/project/as/gx')

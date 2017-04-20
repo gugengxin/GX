@@ -1,8 +1,0 @@
-include ':gx'
-//ext {
-//    GX_ROOT="../.."
-//}
-//include ':app'
-//project(':app').projectDir = new File(GX_ROOT+'/test/project/as/app')
-
-

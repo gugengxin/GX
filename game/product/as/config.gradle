@@ -1,5 +1,5 @@
 
-println "Initialize GXCore build"
+println "Initialize GXGame build"
 
 //def GXInit(){
 //    Properties properties = new Properties()
@@ -15,7 +15,7 @@ android {
         debug {
 			externalNativeBuild {
 				ndkBuild {
-					cFlags.add("-DGX_DEBUG")
+
 				}
 			}
         }
@@ -35,4 +35,4 @@ android {
 }
 
 
-println "Initialize GXCore build done"
+println "Initialize GXGame build done"
