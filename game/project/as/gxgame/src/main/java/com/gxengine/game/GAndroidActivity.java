@@ -12,13 +12,15 @@ import com.gxengine.core.GAndroidApp;
 
 public class GAndroidActivity extends Activity implements GAndroidWindow.Delegate {
 
-    public static final String KEY_GAME_CLASS_NAME="gx.game.class.name";
+    public static final String KEY_GAME_CLASS_NAME="gx.game.name";
 
 	public static void start(String gameClassName) {
         Intent intent=new Intent(GAndroidApp.shared(),GAndroidActivity.class);
-        Bundle bundle=new Bundle();
-        bundle.putString(KEY_GAME_CLASS_NAME, gameClassName);
-        intent.putExtras(bundle);
+        if (gameClassName!=null) {
+			Bundle bundle = new Bundle();
+			bundle.putString(KEY_GAME_CLASS_NAME, gameClassName);
+			intent.putExtras(bundle);
+		}
         GAndroidApp.shared().startActivity(intent);
 	}
 
@@ -37,9 +39,6 @@ public class GAndroidActivity extends Activity implements GAndroidWindow.Delegat
 		super.onCreate(savedInstanceState);
 		Log.d(this.getClass().getSimpleName(),"onCreate");
 
-		_window=new GAndroidWindow(this,this);
-		this.setContentView(_window);
-
         {
             Bundle bundle = this.getIntent().getExtras();
             if(bundle!=null) {
@@ -56,6 +55,8 @@ public class GAndroidActivity extends Activity implements GAndroidWindow.Delegat
             throw new RuntimeException("Error no gameClassName");
         }
 
+		_window=new GAndroidWindow(this,this);
+		this.setContentView(_window);
         _jniBridgeID=jniOnCreate();
 	}
 

@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GSRGraphics_h
+#define GSRGraphics_h
+
 #include "GXPrefix.h"
 #include "GOShader.h"
 #include "GDShader.h"
@@ -41,3 +43,4 @@ private:
 	GX_SHADER_INPUT(2, 1, 2, 1, 2);
 };
 
+#endif

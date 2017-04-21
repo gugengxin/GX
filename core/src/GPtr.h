@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GPtr_h
+#define GPtr_h
+
 
 #include "GXPrefix.h"
 #include "GObject.h"
@@ -22,3 +24,5 @@ private:
 };
 
 #include "GXGObjectUD.h"
+
+#endif

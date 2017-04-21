@@ -15,6 +15,9 @@ import java.util.UUID;
 
 public class GAndroidApp extends Application {
 
+    public static final String KEY_LIB_NAME="gx.lib.name";
+    public static final String KEY_DELEGATE_CLASS_NAME="gx.core.app.delegate.name";
+
     public static final long IDLE_MS_PE_RFRAME = 1000L / 60;
 
     private static GAndroidApp INSTANCE;
@@ -70,8 +73,8 @@ public class GAndroidApp extends Application {
         INSTANCE = this;
 
         Bundle bundle = getMetaDataBundle();
-        String libName = bundle.getString("gx.core.lib.name");
-        String appDgeName=bundle.getString("gx.core.app.delegate.name");
+        String libName = bundle.getString(KEY_LIB_NAME);
+        String appDgeName=bundle.getString(KEY_DELEGATE_CLASS_NAME);
 
         System.loadLibrary(libName);
         jniOnCreate(getClassLoader());

@@ -14,6 +14,7 @@
 #if defined(GX_OS_ANDROID)
 #include <android/input.h>
 #include <android/native_activity.h>
+#include "com_gxengine_core_GAndroidApp.h"
 #elif defined(GX_OS_QT)
 #include <QTimer>
 #elif defined(GX_OS_WINDOWS)

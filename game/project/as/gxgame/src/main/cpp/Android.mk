@@ -8,24 +8,27 @@ $(call import-add-path,$(ENGINE_PATH))
 #Android与系统交互部分
 include $(CLEAR_VARS)
 LOCAL_MODULE    := GXGameAndroid
-LOCAL_C_INCLUDES:= $(ENGINE_PATH)/src
+LOCAL_C_INCLUDES:= $(ENGINE_PATH)/core/src $(ENGINE_PATH)/game/src
 LOCAL_CFLAGS 	+= -Wno-multichar
 LOCAL_CPPFLAGS	+= -fno-rtti
-LOCAL_SRC_FILES :=
+LOCAL_SRC_FILES := \
+    $(ENGINE_PATH_FROM_SRC)/game/src/GAndroidEntrance.cpp\
+    $(ENGINE_PATH_FROM_SRC)/game/src/GAndroidActivity.cpp\
+    $(ENGINE_PATH_FROM_SRC)/game/src/GAndroidDaydream.cpp
 
 include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
 LOCAL_MODULE    := GXGame
-LOCAL_C_INCLUDES:= $(ENGINE_PATH)/game/src
+LOCAL_C_INCLUDES:= $(ENGINE_PATH)/core/src $(ENGINE_PATH)/game/src
 LOCAL_EXPORT_C_INCLUDES:= $(ENGINE_PATH)/game/src
 LOCAL_CFLAGS 	+= -Wno-multichar
 LOCAL_CPPFLAGS	+= -fno-rtti
 LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
 LOCAL_EXPORT_CPPFLAGS := $(LOCAL_CPPFLAGS)
 LOCAL_WHOLE_STATIC_LIBRARIES := GXGameAndroid
-LOCAL_STATIC_LIBRARIES	:=
+#LOCAL_STATIC_LIBRARIES	:=
 #LOCAL_LDLIBS 	:=
 LOCAL_EXPORT_LDLIBS := -lEGL -lGLESv2 -lOpenSLES
 #__LOCAL_SRC_FILES_START__

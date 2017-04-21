@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GNumber_h
+#define GNumber_h
+
 #include "GXPrefix.h"
 #include "GObject.h"
 
@@ -43,3 +45,5 @@ private:
 
 
 #include "GXGObjectUD.h"
+
+#endif

@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GXCWnd_h
+#define GXCWnd_h
+
 
 #include "GXPrefix.h"
 
@@ -27,3 +29,4 @@ namespace GX
 
 #endif
 
+#endif

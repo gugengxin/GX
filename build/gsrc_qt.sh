@@ -33,7 +33,7 @@ ${GX_TE} -i ${PRO_FILE} -o ${PRO_FILE} \
 -fd ${GX_ROOT}/game/src \
 -fe .cpp -fe .c \
 -fsp "\t../../src" -fss "\\\n" \
--ff GBuffer.cpp -ff GD3DContext.cpp -ff GDShader.cpp -ff GMShader.cpp -ff GMTLContext.cpp -ff GXDirectX.cpp -ff GXMetal.cpp -ff glew.c \
+-ff GAndroidEntrance.cpp -ff GAndroidActivity.cpp -ff GAndroidDaydream.cpp -ff GBuffer.cpp -ff GD3DContext.cpp -ff GDShader.cpp -ff GMShader.cpp -ff GMTLContext.cpp -ff GXDirectX.cpp -ff GXMetal.cpp -ff glew.c \
 -fsfp "\t#../../src" -fsfs "\\\n"
 
 ${GX_TE} -i ${PRO_FILE} -o ${PRO_FILE} \

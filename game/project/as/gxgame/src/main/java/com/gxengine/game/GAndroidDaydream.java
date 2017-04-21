@@ -10,8 +10,20 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
 
+import com.gxengine.core.GAndroidApp;
+
 @SuppressLint("NewApi")
 public class GAndroidDaydream extends DreamService implements GAndroidWindow.Delegate {
+
+	public static void start(String gameClassName) {
+		Intent intent=new Intent(GAndroidApp.shared(),GAndroidDaydream.class);
+		if (gameClassName!=null) {
+			Bundle bundle = new Bundle();
+			bundle.putString(GAndroidActivity.KEY_GAME_CLASS_NAME, gameClassName);
+			intent.putExtras(bundle);
+		}
+		GAndroidApp.shared().startService(intent);
+	}
 
 	public Bundle getMetaDataBundle() {
 		try {
@@ -41,19 +53,18 @@ public class GAndroidDaydream extends DreamService implements GAndroidWindow.Del
 		super.onCreate();
 		Log.d(this.getClass().getSimpleName(),"onCreate");
 
+		if (_gameClassName==null) {
+			Bundle bundle = getMetaDataBundle();
+			if(bundle!=null) {
+				_gameClassName = bundle.getString(GAndroidActivity.KEY_GAME_CLASS_NAME);
+			}
+		}
+		if (_gameClassName==null) {
+			throw new RuntimeException("Error no gameClassName");
+		}
+
 		_window=new GAndroidWindow(this,this);
 		this.setContentView(_window);
-
-        if (_gameClassName==null) {
-            Bundle bundle = getMetaDataBundle();
-            if(bundle!=null) {
-                _gameClassName = bundle.getString(GAndroidActivity.KEY_GAME_CLASS_NAME);
-            }
-        }
-        if (_gameClassName==null) {
-            throw new RuntimeException("Error no gameClassName");
-        }
-
 		_jniBridgeID=jniOnCreate();
 	}
 

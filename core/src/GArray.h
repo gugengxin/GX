@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿#ifndef GArray_h
+#define GArray_h
 
 #include "GXPrefix.h"
 #include <string.h>
@@ -173,3 +174,5 @@ GArray<T>::~GArray()
 }
 
 #include "GXGObjectUD.h"
+
+#endif

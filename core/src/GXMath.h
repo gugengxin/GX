@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GXMath_h
+#define GXMath_h
+
 #include "GXPrefix.h"
 #include <math.h>
 #include <float.h>
@@ -385,3 +387,4 @@ namespace GX
 	void vector4Transform(const float* m, const float* v, float* dst);
 }
 
+#endif

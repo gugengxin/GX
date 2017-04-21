@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GShader_h
+#define GShader_h
+
 
 #include "GXPrefix.h"
 
@@ -51,3 +53,4 @@ private:
     guint8      m_Index[4];
 };
 
+#endif

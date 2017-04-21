@@ -8,26 +8,27 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
 
-        <meta-data android:name="gx.core.lib.name" android:value="GXGameTest" />
+        <meta-data android:name="gx.lib.name" android:value="GXGameTest" />
         <meta-data android:name="gx.core.app.delegate.name" android:value="AppDge" />
 
         <activity android:name="com.gxengine.game.GAndroidActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize"
                   android:screenOrientation="sensorLandscape"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            <meta-data android:name="gx.game.name" android:value="AppDge" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service
-            android:name="com.gxengine.game.GAndroidDaydream"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.service.dreams.DreamService" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </service>
+        <!--<service-->
+            <!--android:name="com.gxengine.game.GAndroidDaydream"-->
+            <!--android:exported="true">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.service.dreams.DreamService" />-->
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+            <!--</intent-filter>-->
+        <!--</service>-->
 
     </application>
 

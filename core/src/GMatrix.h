@@ -1,8 +1,9 @@
-﻿#pragma once
+﻿
+#ifndef GMatrix_h
+#define GMatrix_h
+
 
 #include "GXPrefix.h"
-
-
 
 
 class GMatrix4
@@ -52,3 +53,4 @@ public:
 	float m[16];
 };
 
+#endif

@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GColor_h
+#define GColor_h
+
 #include "GXPrefix.h"
 
 class GColor4
@@ -35,3 +37,4 @@ public:
 	float r, g, b, a;
 };
 
+#endif

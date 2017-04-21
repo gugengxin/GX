@@ -12,6 +12,6 @@ set MK_FILE=%GX_ROOT%\core\project\as\gxcore\src\main\cpp\Android.mk
 
 ::game
 set MK_FILE=%GX_ROOT%\game\project\as\gxcore\src\main\cpp\Android.mk
-%GX_TE% -i %MK_FILE% -o %MK_FILE% -fp "#__LOCAL_SRC_FILES_START__" -fs "#__LOCAL_SRC_FILES_END__" -fd %GX_ROOT%\game\src -fe .cpp -fe .c -fsp "LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/game/src" -fss "\n"
+%GX_TE% -i %MK_FILE% -o %MK_FILE% -fp "#__LOCAL_SRC_FILES_START__" -fs "#__LOCAL_SRC_FILES_END__" -fd %GX_ROOT%\game\src -fe .cpp -fe .c -fsp "LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/game/src" -fss "\n" -fi GAndroidEntrance.cpp -fi GAndroidActivity.cpp -fi GAndroidDaydream.cpp
 
 pause

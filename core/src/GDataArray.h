@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿#ifndef GDataArray_h
+#define GDataArray_h
 
 #include "GXPrefix.h"
 #include <string.h>
@@ -284,3 +285,5 @@ GPDArray<T>::~GPDArray()
 }
 
 #include "GXGObjectUD.h"
+
+#endif

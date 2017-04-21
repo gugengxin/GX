@@ -8,7 +8,7 @@ $(call import-add-path,$(ENGINE_PATH))
 #Android与系统交互部分
 include $(CLEAR_VARS)
 LOCAL_MODULE    := GXCoreAndroid
-LOCAL_C_INCLUDES:= $(ENGINE_PATH)/src
+LOCAL_C_INCLUDES:= $(ENGINE_PATH)/core/src
 LOCAL_CFLAGS 	+= -Wno-multichar
 LOCAL_CPPFLAGS	+= -fno-rtti
 LOCAL_SRC_FILES := \
@@ -29,7 +29,7 @@ LOCAL_EXPORT_CPPFLAGS := $(LOCAL_CPPFLAGS)
 LOCAL_WHOLE_STATIC_LIBRARIES := GXCoreAndroid
 LOCAL_STATIC_LIBRARIES	:= gx_zlib gx_libpng gx_libjpeg
 #LOCAL_LDLIBS 	:=
-LOCAL_EXPORT_LDLIBS := -llog -landroid
+LOCAL_EXPORT_LDLIBS := -landroid -llog
 #__LOCAL_SRC_FILES_START__
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GAction.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GAppBundle.cpp

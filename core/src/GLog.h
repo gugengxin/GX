@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GLog_h
+#define GLog_h
+
 #include "GXPrefix.h"
 
 class GLog {
@@ -38,4 +40,4 @@ public:
 #define GX_LOG_P6(prio,tag,fmt,p1,p2,p3,p4,p5,p6)
 #endif
 
-
+#endif

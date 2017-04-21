@@ -18,4 +18,4 @@ LOCAL_SRC_FILES := \
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,core/project/as/gxcore/src/main/cpp)
-$(call import-module,game/project/as/gxcore/src/main/cpp)
+$(call import-module,game/project/as/gxgame/src/main/cpp)

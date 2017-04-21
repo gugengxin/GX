@@ -419,7 +419,7 @@ void* GWindow::getMetalLayer()
 
 #elif defined(GX_OS_ANDROID)
 
-#include "GAndroidC.h"
+#include "GAndroidApp.h"
 
 void GWindow::androidDestroy()
 {
@@ -435,7 +435,7 @@ void GWindow::androidRecreate(ANativeWindow* nw)
 	GX_LOG_W(PrioDEBUG,"GWindow","androidRecreate");
 	ANativeWindow_acquire(nw);
 	m_OSWin = nw;
-	m_OSWinScale = GAndroidC::shared()->appGetDefaultWindowScale();
+	m_OSWinScale = GAndroidApp::shared()->getDefaultWindowScale();
 	m_Context.androidRecreate(this);
 }
 
@@ -454,11 +454,12 @@ _GQWindow::~_GQWindow()
 
 #endif
 
-void GWindow::main(void* osWinP,const char* gameClassName)
+GWindow* GWindow::main(void* osWinP,const char* gameClassName)
 {
     GWindow* win=new GWindow(osWinP);
     GApplication::shared()->addComponent(win);
     win->startGame(gameClassName);
+    return win;
 }
 
 GWindow::GWindow(void* osWinP)
@@ -512,7 +513,7 @@ GWindow::GWindow(void* osWinP)
 #elif defined(GX_OS_ANDROID)
 	ANativeWindow_acquire(GX_CAST_R(ANativeWindow*, osWinP));
 	m_OSWin = GX_CAST_R(ANativeWindow*, osWinP);
-	m_OSWinScale = GAndroidC::shared()->appGetDefaultWindowScale();
+	m_OSWinScale = GAndroidApp::shared()->getDefaultWindowScale();
 #elif defined(GX_OS_QT)
 	m_OSWin = new _GQWindow();
 	m_OSWin->setDelegate(this);

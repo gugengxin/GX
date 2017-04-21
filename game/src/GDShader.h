@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GDShader_h
+#define GDShader_h
+
 #include "GXPrefix.h"
 #include "GX3DAPIType.h"
 #if defined(GX_DIRECTX)
@@ -58,6 +60,8 @@ private:\
 			m_ConstBuffers[i]->Release();\
 	}
 
+
+#endif
 
 #endif
 

@@ -45,6 +45,9 @@ private:
 class GWindow : public GApplication::Component {
 	friend class GApplication;
     friend class GX_CONTEXT_BASE;
+#if defined(GX_OS_ANDROID)
+	friend class GAndroidEntrance;
+#endif
 private:
     class Canvas : public GCanvas {
         friend class GWindow;
@@ -69,7 +72,7 @@ private:
         GWindow* m_Window;
     };
 public:
-    static void main(void* osWinP,const char* gameClassName);
+    static GWindow* main(void* osWinP,const char* gameClassName);
 private:
 	GWindow(void* osWinP);
 	~GWindow();

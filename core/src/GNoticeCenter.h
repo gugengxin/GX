@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GNoticeCenter_h
+#define GNoticeCenter_h
+
 
 #include "GXPrefix.h"
 #include "GMap.h"
@@ -60,3 +62,5 @@ private:
 };
 
 #include "GXGObjectUD.h"
+
+#endif

@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GOShader_h
+#define GOShader_h
+
 
 #include "GXPrefix.h"
 #include "GX3DAPIType.h"
@@ -109,3 +111,4 @@ private:\
 
 #endif
 
+#endif

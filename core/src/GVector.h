@@ -1,4 +1,6 @@
-﻿#pragma once
+﻿#ifndef GVector_h
+#define GVector_h
+
 
 #include "GXPrefix.h"
 
@@ -74,3 +76,4 @@ public:
 	float w;
 };
 
+#endif

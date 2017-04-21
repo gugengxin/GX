@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
 
-        <meta-data android:name="gx.core.lib.name" android:value="GXCoreTest" />
+        <meta-data android:name="gx.lib.name" android:value="GXCoreTest" />
         <meta-data android:name="gx.core.app.delegate.name" android:value="AppDge" />
 
         <activity android:name=".MainActivity"
