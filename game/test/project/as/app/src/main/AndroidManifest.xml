@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gxengine.gxtest">
+    package="com.gxengine.game.test">
 
     <application
         android:name="com.gxengine.core.GAndroidApp"
@@ -15,7 +15,7 @@
                   android:configChanges="keyboardHidden|orientation|screenSize"
                   android:screenOrientation="sensorLandscape"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-            <meta-data android:name="gx.game.name" android:value="AppDge" />
+            <meta-data android:name="gx.game.name" android:value="Game" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -86,6 +86,7 @@ public:
         void callVoidMethod(JNIEnv* jniEnv,jobject obj,jmethodID method,...);
         jobject callObjectMethod(JNIEnv* jniEnv,jobject obj,jmethodID method,...);
         jint callIntMethod(JNIEnv* jniEnv,jobject obj,jmethodID method,...);
+        jfloat callFloatMethod(JNIEnv* jniEnv,jobject obj,jmethodID method,...);
     private:
         jclass 		m_Class;
     };

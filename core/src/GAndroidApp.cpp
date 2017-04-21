@@ -43,7 +43,7 @@ void GAndroidApp::uninit(JNIEnv *env, jobject ardApp)
 
 float GAndroidApp::getDefaultWindowScale(JNIEnv *jniEnv)
 {
-    return callStaticFloatMethod(jniEnv,GX_JNI_CALLER_METHOD_GET(getDefaultWindowScale));
+    return callFloatMethod(jniEnv,m_JNIObject,GX_JNI_CALLER_METHOD_GET(getDefaultWindowScale));
 }
 
 float GAndroidApp::getDefaultWindowScale()
@@ -55,7 +55,7 @@ float GAndroidApp::getDefaultWindowScale()
 GString *GAndroidApp::getCacheDirAbsolutePath(JNIEnv *jniEnv)
 {
     GString *res = NULL;
-    jstring str = (jstring) callStaticObjectMethod(jniEnv,GX_JNI_CALLER_METHOD_GET(getCacheDirAbsolutePath));
+    jstring str = (jstring) callObjectMethod(jniEnv,m_JNIObject,GX_JNI_CALLER_METHOD_GET(getCacheDirAbsolutePath));
     const char *cstr = jniEnv->GetStringUTFChars(str, NULL);
     if (cstr) {
         res = GString::autoAlloc();
@@ -75,7 +75,7 @@ GString *GAndroidApp::getCacheDirAbsolutePath()
 GString *GAndroidApp::getPackageCodePath(JNIEnv *jniEnv)
 {
     GString *res = NULL;
-    jstring str = (jstring) callStaticObjectMethod(jniEnv,GX_JNI_CALLER_METHOD_GET(getPackageCodePath));
+    jstring str = (jstring) callObjectMethod(jniEnv,m_JNIObject,GX_JNI_CALLER_METHOD_GET(getPackageCodePath));
     const char *cstr = jniEnv->GetStringUTFChars(str, NULL);
     if (cstr) {
         res = GString::autoAlloc();
@@ -94,7 +94,7 @@ GString *GAndroidApp::getPackageCodePath()
 
 void GAndroidApp::createUUID(JNIEnv *jniEnv, guint8 *uuidOut)
 {
-    jbyteArray barr = (jbyteArray) callStaticObjectMethod(jniEnv, GX_JNI_CALLER_METHOD_GET(createUUID));
+    jbyteArray barr = (jbyteArray) callObjectMethod(jniEnv, m_JNIObject,GX_JNI_CALLER_METHOD_GET(createUUID));
 
     jbyte *ba = jniEnv->GetByteArrayElements(barr, JNI_FALSE);
 

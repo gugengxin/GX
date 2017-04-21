@@ -197,6 +197,15 @@ jint GJNI::Caller::callIntMethod(JNIEnv* jniEnv,jobject obj,jmethodID method,...
     return result;
 }
 
+jfloat GJNI::Caller::callFloatMethod(JNIEnv* jniEnv,jobject obj,jmethodID method,...)
+{
+    va_list args;
+    jfloat result;
+    va_start(args, method);
+    result = jniEnv->CallFloatMethodV(obj, method, args);
+    va_end(args);
+    return result;
+}
 
 /*
 #ifdef __cplusplus
