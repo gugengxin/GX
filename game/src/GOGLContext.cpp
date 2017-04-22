@@ -529,6 +529,7 @@ void GOGLContext::readyShader()
 {
 #if defined(GX_OS_ANDROID)
     GX::OGLContext ctt;
+    ctt.display=g_Display;
     ctt.surface=g_Surface;
     ctt.context=g_Context;
     GX::openGLPushContext(ctt);
@@ -550,6 +551,7 @@ void GOGLContext::readyTexture()
 {
 #if defined(GX_OS_ANDROID)
     GX::OGLContext ctt;
+    ctt.display=g_Display;
     ctt.surface=g_Surface;
     ctt.context=g_Context;
     GX::openGLPushContext(ctt);
@@ -570,6 +572,7 @@ void GOGLContext::readyFrameBuffer()
 {
 #if defined(GX_OS_ANDROID)
     GX::OGLContext ctt;
+    ctt.display=g_Display;
     ctt.surface=g_Surface;
     ctt.context=g_Context;
     GX::openGLPushContext(ctt);
