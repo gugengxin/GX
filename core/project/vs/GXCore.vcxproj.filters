@@ -4,96 +4,39 @@
     <Filter Include="src">
       <UniqueIdentifier>{86513758-4176-4c9e-bee4-8797eedd0f7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\unused">
+      <UniqueIdentifier>{c60e6f27-5b3b-401a-b179-7d41f86730a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\IO">
+      <UniqueIdentifier>{00b21dd1-ea8d-48e0-b9bd-6b7a91423ef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\IO\bundle">
+      <UniqueIdentifier>{335aad72-d340-437e-8d3e-8df9ffcbd3a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\struct">
+      <UniqueIdentifier>{acb56782-8b98-411e-853f-616951ef46cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\thread">
+      <UniqueIdentifier>{6bfc0f4d-c9c6-4060-8cdc-63ddea4a0e16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\com_gxengine_core_GAndroidApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GAction.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GAndroidApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GAppBundle.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GApplication.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GArray.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GAutoreleasePool.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GBundle.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GClass.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GCoder.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GColor.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GCondition.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GData.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GDataArray.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GDataList.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GDataReader.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GDataWriter.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GDib.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GError.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GFileBundle.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GFileManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GFileReader.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GFileWriter.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GJNI.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GJpeg.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GList.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GLog.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GMap.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GMatrix.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GMutex.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GNotice.h">
@@ -102,55 +45,13 @@
     <ClInclude Include="..\..\src\GNoticeCenter.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GNumber.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GObject.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GOWHash.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GPieceData.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GPng.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GPtr.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GRBReader.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GReader.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GRunLoop.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GSerialize.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GString.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GSystem.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GThread.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GUUID.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GVector.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GWriter.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GXCoder.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GXCore.h">
@@ -160,12 +61,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GXData.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GXEncoding.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GXFILE.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GXGObject.h">
@@ -189,108 +84,162 @@
     <ClInclude Include="..\..\src\GXPrefix.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GXPthread.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GXTypes.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GZipBundle.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\src\GAndroidApp.h">
+      <Filter>src\unused</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDataReader.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDataWriter.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFileManager.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFileReader.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFileWriter.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GJNI.h">
+      <Filter>src\unused</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GRBReader.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GResourceManager.h">
+      <Filter>src\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GZipReader.h">
-      <Filter>src</Filter>
+      <Filter>src\IO</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GZipWriter.h">
-      <Filter>src</Filter>
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GAppBundle.h">
+      <Filter>src\IO\bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GBundle.h">
+      <Filter>src\IO\bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFileBundle.h">
+      <Filter>src\IO\bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GZipBundle.h">
+      <Filter>src\IO\bundle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\com_gxengine_core_GAndroidApp.h">
+      <Filter>src\unused</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GArray.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GData.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDataArray.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDataList.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GMap.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GMatrix.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GNumber.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GPieceData.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GPtr.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GString.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GUUID.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GVector.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GColor.h">
+      <Filter>src\struct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDib.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GJpeg.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GPng.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GReader.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GWriter.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GSerialize.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GCoder.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXEncoding.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXFILE.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXCoder.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GCondition.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GMutex.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GRunLoop.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GThread.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXPthread.h">
+      <Filter>src\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GList.h">
+      <Filter>src\struct</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GAction.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GAndroidApp.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GAppBundle.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GApplication.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GArray.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GAutoreleasePool.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GBundle.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GClass.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GCoder.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GColor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GCondition.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GData.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GDataArray.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GDataList.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GDataReader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GDataWriter.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GDib.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GError.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GFileBundle.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GFileManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GFileReader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GFileWriter.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GJNI.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GJpeg.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GList.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GLog.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GMap.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GMatrix.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GMutex.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GNotice.cpp">
@@ -299,55 +248,13 @@
     <ClCompile Include="..\..\src\GNoticeCenter.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GNumber.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GObject.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GOWHash.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GPieceData.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GPng.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GPtr.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GRBReader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GReader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GRunLoop.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GSerialize.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GString.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GSystem.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GThread.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GUUID.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GVector.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GWriter.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GXCoder.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GXCWnd.cpp">
@@ -359,17 +266,131 @@
     <ClCompile Include="..\..\src\GXMath.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GXPthread.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\src\GAndroidApp.cpp">
+      <Filter>src\unused</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GZipBundle.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\src\GDataReader.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDataWriter.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFileManager.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFileReader.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFileWriter.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GJNI.cpp">
+      <Filter>src\unused</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GRBReader.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GResourceManager.cpp">
+      <Filter>src\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GZipReader.cpp">
-      <Filter>src</Filter>
+      <Filter>src\IO</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GZipWriter.cpp">
-      <Filter>src</Filter>
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GAppBundle.cpp">
+      <Filter>src\IO\bundle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GBundle.cpp">
+      <Filter>src\IO\bundle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFileBundle.cpp">
+      <Filter>src\IO\bundle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GZipBundle.cpp">
+      <Filter>src\IO\bundle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GArray.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GData.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDataArray.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDataList.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GMap.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GMatrix.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GNumber.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GPieceData.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GPtr.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GString.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GUUID.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GVector.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GColor.cpp">
+      <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDib.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GJpeg.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GPng.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GReader.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GWriter.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GSerialize.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GCoder.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GXCoder.cpp">
+      <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GCondition.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GMutex.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GRunLoop.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GThread.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GXPthread.cpp">
+      <Filter>src\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GList.cpp">
+      <Filter>src\struct</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
