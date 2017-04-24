@@ -17,6 +17,7 @@ template <class T>
 class GArray : public GArrayBase {
 	friend class GRunLoop;
 	friend class GNCObserver;
+    friend class GResourceManager;
 	GX_GOBJECT(GArray);
 public:
 	gint getCount() const {

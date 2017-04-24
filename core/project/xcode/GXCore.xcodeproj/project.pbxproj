@@ -172,6 +172,9 @@
 		CA4D74B21E9FD1640048CA04 /* GAndroidApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA4D74B01E9FD1640048CA04 /* GAndroidApp.cpp */; };
 		CA4D74B31E9FD1640048CA04 /* GAndroidApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA4D74B01E9FD1640048CA04 /* GAndroidApp.cpp */; };
 		CA4D74B41E9FD1640048CA04 /* GAndroidApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA4D74B01E9FD1640048CA04 /* GAndroidApp.cpp */; };
+		CA530F0B1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */; };
+		CA530F0C1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */; };
+		CA530F0D1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -300,6 +303,8 @@
 		CA4D74AF1E9FD1640048CA04 /* com_gxengine_core_GAndroidApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_core_GAndroidApp.h; sourceTree = "<group>"; };
 		CA4D74B01E9FD1640048CA04 /* GAndroidApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAndroidApp.cpp; sourceTree = "<group>"; };
 		CA4D74B11E9FD1640048CA04 /* GAndroidApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAndroidApp.h; sourceTree = "<group>"; };
+		CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GResourceManager.cpp; sourceTree = "<group>"; };
+		CA530F0A1EADDF9E004DCFAB /* GResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GResourceManager.h; sourceTree = "<group>"; };
 		CA5BCA391EA26545006CF7DE /* GXCore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXCore.xcconfig; path = ../../product/xcode/GXCore.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -481,12 +486,12 @@
 			isa = PBXGroup;
 			children = (
 				CA3A95FF1E7A727B00CEFD8E /* GXPixel.h */,
-				CA3A95B31E7A727B00CEFD8E /* GDib.cpp */,
 				CA3A95B41E7A727B00CEFD8E /* GDib.h */,
-				CA3A95C11E7A727B00CEFD8E /* GJpeg.cpp */,
+				CA3A95B31E7A727B00CEFD8E /* GDib.cpp */,
 				CA3A95C21E7A727B00CEFD8E /* GJpeg.h */,
-				CA3A95D91E7A727B00CEFD8E /* GPng.cpp */,
+				CA3A95C11E7A727B00CEFD8E /* GJpeg.cpp */,
 				CA3A95DA1E7A727B00CEFD8E /* GPng.h */,
+				CA3A95D91E7A727B00CEFD8E /* GPng.cpp */,
 			);
 			name = dib;
 			sourceTree = "<group>";
@@ -536,6 +541,8 @@
 				CA3A95A41E7A727B00CEFD8E /* GCoder.h */,
 				CA3A95B91E7A727B00CEFD8E /* GFileManager.cpp */,
 				CA3A95BA1E7A727B00CEFD8E /* GFileManager.h */,
+				CA530F0A1EADDF9E004DCFAB /* GResourceManager.h */,
+				CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */,
 			);
 			name = IO;
 			sourceTree = "<group>";
@@ -654,6 +661,7 @@
 				CA3A96281E7A727B00CEFD8E /* GAutoreleasePool.cpp in Sources */,
 				CA3A96A81E7A727C00CEFD8E /* GRBReader.cpp in Sources */,
 				CA3A96C81E7A727C00CEFD8E /* GVector.cpp in Sources */,
+				CA530F0B1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */,
 				CA3A96701E7A727B00CEFD8E /* GJpeg.cpp in Sources */,
 				CA3A96881E7A727C00CEFD8E /* GNotice.cpp in Sources */,
 				CA3A96E81E7A727C00CEFD8E /* GXPthread.cpp in Sources */,
@@ -716,6 +724,7 @@
 				CA3A96291E7A727B00CEFD8E /* GAutoreleasePool.cpp in Sources */,
 				CA3A96A91E7A727C00CEFD8E /* GRBReader.cpp in Sources */,
 				CA3A96C91E7A727C00CEFD8E /* GVector.cpp in Sources */,
+				CA530F0C1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */,
 				CA3A96711E7A727B00CEFD8E /* GJpeg.cpp in Sources */,
 				CA3A96891E7A727C00CEFD8E /* GNotice.cpp in Sources */,
 				CA3A96E91E7A727C00CEFD8E /* GXPthread.cpp in Sources */,
@@ -778,6 +787,7 @@
 				CA3A962A1E7A727B00CEFD8E /* GAutoreleasePool.cpp in Sources */,
 				CA3A96AA1E7A727C00CEFD8E /* GRBReader.cpp in Sources */,
 				CA3A96CA1E7A727C00CEFD8E /* GVector.cpp in Sources */,
+				CA530F0D1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */,
 				CA3A96721E7A727B00CEFD8E /* GJpeg.cpp in Sources */,
 				CA3A968A1E7A727C00CEFD8E /* GNotice.cpp in Sources */,
 				CA3A96EA1E7A727C00CEFD8E /* GXPthread.cpp in Sources */,

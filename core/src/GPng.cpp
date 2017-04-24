@@ -99,33 +99,33 @@ GDib* GPng::read(GReader* reader)
 		NULL, NULL, NULL);
 
 	GX::PixelFormat pf;
-	switch (color_type)
-	{
-	case PNG_COLOR_TYPE_GRAY:
-	{
-		pf = GX::PixelFormatA8;
-		bits = 1;
-	}
-	break;
-	case PNG_COLOR_TYPE_RGB:
-	{
-		pf = GX::PixelFormatRGB888;
-		bits = 3;
-	}
-	break;
-	case PNG_COLOR_TYPE_RGB_ALPHA:
-	{
-		pf = GX::PixelFormatRGBA8888;
-		bits = 4;
-	}
-	break;
-	case PNG_COLOR_TYPE_GRAY_ALPHA:
-	default:
-	{
-		pf = GX::PixelFormatUnknown;
-	}
-	break;
-	}
+    switch (color_type)
+    {
+        case PNG_COLOR_TYPE_GRAY:
+        {
+            pf = GX::PixelFormatA8;
+            bits = 1;
+        }
+            break;
+        case PNG_COLOR_TYPE_RGB:
+        {
+            pf = GX::PixelFormatRGB888;
+            bits = 3;
+        }
+            break;
+        case PNG_COLOR_TYPE_RGB_ALPHA:
+        {
+            pf = GX::PixelFormatRGBA8888;
+            bits = 4;
+        }
+            break;
+        case PNG_COLOR_TYPE_GRAY_ALPHA:
+        default:
+        {
+            pf = GX::PixelFormatUnknown;
+        }
+            break;
+    }
     
     GDib* res=NULL;
 	if (pf != GX::PixelFormatUnknown) {

@@ -3,7 +3,7 @@
 //  GX
 //
 //  Created by GuGengxin.
-// Copyright by gxengine.com
+//  Copyright by gxengine.com
 //
 
 #include "___OBJECTNAME___.h"
