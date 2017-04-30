@@ -43,7 +43,11 @@ public:
         void replaceEnd(gint lastLen);
     public:
         Formater& arg(gchar v,gint count=1);
+        Formater& arg(guchar v,gint count=1);
         Formater& arg(gwchar v,gint count=1);
+        
+        
+        void end();
     private:
         GString* m_String;
         gint m_Cursor;
@@ -54,7 +58,7 @@ public:
     
 public:
     gint getLength();
-    guint getHash();
+    virtual guint getHash();
     guchar at(gint idx);
     void remove(gint idx, gint len);
     void clear();

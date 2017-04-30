@@ -18,6 +18,8 @@ namespace GX {
 	typedef void(*Callback)(GObject*);
 }
 
+class GString;
+
 class GObject {
 public:
 	static void retain(GObject* obj);
@@ -48,6 +50,7 @@ public:
 public:
     virtual guint getHash();
     virtual bool isEqual(GObject* obj);
+    virtual GString* description();
 };
 
 typedef GObject GO;

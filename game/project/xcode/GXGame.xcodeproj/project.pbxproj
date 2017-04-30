@@ -76,15 +76,40 @@
 		CAFDCDE61E0B6E5E00D22117 /* GGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAC293331E0A4409004519D8 /* GGame.cpp */; };
 		CAFDCDEB1E0B6E8300D22117 /* GFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */; };
 		CAFDCDF01E0B6E8E00D22117 /* GFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */; };
+		CAFE76F11EB50A3600E43016 /* GAndroidActivity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAFE76E41EB50A3600E43016 /* GAndroidActivity.cpp */; };
+		CAFE76F21EB50A3600E43016 /* GAndroidDaydream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAFE76E61EB50A3600E43016 /* GAndroidDaydream.cpp */; };
+		CAFE76F31EB50A3600E43016 /* GAndroidEntrance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAFE76E81EB50A3600E43016 /* GAndroidEntrance.cpp */; };
+		CAFE76F41EB50A3600E43016 /* GTextureManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAFE76EF1EB50A3600E43016 /* GTextureManager.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CAFE76FB1EB5189400E43016 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CAFE76F51EB5189400E43016 /* GXCore.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CA3A956A1E7A617F00CEFD8E;
+			remoteInfo = GXCore_ios;
+		};
+		CAFE76FD1EB5189400E43016 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CAFE76F51EB5189400E43016 /* GXCore.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CA3A957B1E7A631900CEFD8E;
+			remoteInfo = GXCore_atv;
+		};
+		CAFE76FF1EB5189400E43016 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CAFE76F51EB5189400E43016 /* GXCore.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CA3A95881E7A638C00CEFD8E;
+			remoteInfo = GXCore_mac;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		CA01E75A1CBF483C004520E6 /* GXGame.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXGame.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA01E76A1CBF50A9004520E6 /* GXGame.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXGame.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA01E7841CBF51B9004520E6 /* GXGame.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXGame.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA04FDD21CE4557E00C9B596 /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
-		CA04FDD31CE4557E00C9B596 /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
-		CA04FDD41CE4557E00C9B596 /* wglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wglew.h; sourceTree = "<group>"; };
 		CA04FDD51CE4557E00C9B596 /* glew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glew.c; sourceTree = "<group>"; };
 		CA07A2471EA1BCAE00F21A88 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GWindow.cpp; sourceTree = "<group>"; };
@@ -139,6 +164,21 @@
 		CADB5DB41CF9E6300092C472 /* GShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GShader.cpp; sourceTree = "<group>"; };
 		CADB5DB51CF9E6300092C472 /* GShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GShader.h; sourceTree = "<group>"; };
 		CAE301541D7FB8BE00DBD69F /* GSRTexture2D.gxsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = GSRTexture2D.gxsl; sourceTree = "<group>"; };
+		CAFE76E21EB50A3600E43016 /* com_gxengine_game_GAndroidActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_game_GAndroidActivity.h; sourceTree = "<group>"; };
+		CAFE76E31EB50A3600E43016 /* com_gxengine_game_GAndroidDaydream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_gxengine_game_GAndroidDaydream.h; sourceTree = "<group>"; };
+		CAFE76E41EB50A3600E43016 /* GAndroidActivity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAndroidActivity.cpp; sourceTree = "<group>"; };
+		CAFE76E51EB50A3600E43016 /* GAndroidActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAndroidActivity.h; sourceTree = "<group>"; };
+		CAFE76E61EB50A3600E43016 /* GAndroidDaydream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAndroidDaydream.cpp; sourceTree = "<group>"; };
+		CAFE76E71EB50A3600E43016 /* GAndroidDaydream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAndroidDaydream.h; sourceTree = "<group>"; };
+		CAFE76E81EB50A3600E43016 /* GAndroidEntrance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GAndroidEntrance.cpp; sourceTree = "<group>"; };
+		CAFE76E91EB50A3600E43016 /* GAndroidEntrance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAndroidEntrance.h; sourceTree = "<group>"; };
+		CAFE76EB1EB50A3600E43016 /* eglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eglew.h; sourceTree = "<group>"; };
+		CAFE76EC1EB50A3600E43016 /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
+		CAFE76ED1EB50A3600E43016 /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
+		CAFE76EE1EB50A3600E43016 /* wglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wglew.h; sourceTree = "<group>"; };
+		CAFE76EF1EB50A3600E43016 /* GTextureManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GTextureManager.cpp; sourceTree = "<group>"; };
+		CAFE76F01EB50A3600E43016 /* GTextureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTextureManager.h; sourceTree = "<group>"; };
+		CAFE76F51EB5189400E43016 /* GXCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GXCore.xcodeproj; path = ../../../core/project/xcode/GXCore.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +211,7 @@
 			children = (
 				CA9C16B01CC5EDAC00204303 /* config */,
 				CA9C16C51CC5FF7500204303 /* src */,
+				CAFE76F51EB5189400E43016 /* GXCore.xcodeproj */,
 				CA01E75B1CBF483C004520E6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -185,20 +226,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CA04FDD11CE4557E00C9B596 /* GL */ = {
-			isa = PBXGroup;
-			children = (
-				CA04FDD21CE4557E00C9B596 /* glew.h */,
-				CA04FDD31CE4557E00C9B596 /* glxew.h */,
-				CA04FDD41CE4557E00C9B596 /* wglew.h */,
-			);
-			path = GL;
-			sourceTree = "<group>";
-		};
 		CA1F60CB1CD9ACA200C6307B /* Unuse */ = {
 			isa = PBXGroup;
 			children = (
-				CA04FDD11CE4557E00C9B596 /* GL */,
+				CAFE76E21EB50A3600E43016 /* com_gxengine_game_GAndroidActivity.h */,
+				CAFE76E31EB50A3600E43016 /* com_gxengine_game_GAndroidDaydream.h */,
+				CAFE76E41EB50A3600E43016 /* GAndroidActivity.cpp */,
+				CAFE76E51EB50A3600E43016 /* GAndroidActivity.h */,
+				CAFE76E61EB50A3600E43016 /* GAndroidDaydream.cpp */,
+				CAFE76E71EB50A3600E43016 /* GAndroidDaydream.h */,
+				CAFE76E81EB50A3600E43016 /* GAndroidEntrance.cpp */,
+				CAFE76E91EB50A3600E43016 /* GAndroidEntrance.h */,
+				CAFE76EA1EB50A3600E43016 /* GL */,
 				CA04FDD51CE4557E00C9B596 /* glew.c */,
 			);
 			name = Unuse;
@@ -222,6 +261,8 @@
 		CA4CD5441D508D3F008005CF /* texture */ = {
 			isa = PBXGroup;
 			children = (
+				CAFE76F01EB50A3600E43016 /* GTextureManager.h */,
+				CAFE76EF1EB50A3600E43016 /* GTextureManager.cpp */,
 				CAC708AB1D13CDE900B98028 /* GTexture.h */,
 				CAC708AA1D13CDE900B98028 /* GTexture.cpp */,
 				CAC708B01D13CDFE00B98028 /* GTexture2D.h */,
@@ -305,6 +346,27 @@
 			name = shader;
 			sourceTree = "<group>";
 		};
+		CAFE76EA1EB50A3600E43016 /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				CAFE76EB1EB50A3600E43016 /* eglew.h */,
+				CAFE76EC1EB50A3600E43016 /* glew.h */,
+				CAFE76ED1EB50A3600E43016 /* glxew.h */,
+				CAFE76EE1EB50A3600E43016 /* wglew.h */,
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
+		CAFE76F61EB5189400E43016 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CAFE76FC1EB5189400E43016 /* GXCore.a */,
+				CAFE76FE1EB5189400E43016 /* GXCore.a */,
+				CAFE77001EB5189400E43016 /* GXCore.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -386,6 +448,12 @@
 			mainGroup = CA01E7511CBF483C004520E6;
 			productRefGroup = CA01E75B1CBF483C004520E6 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CAFE76F61EB5189400E43016 /* Products */;
+					ProjectRef = CAFE76F51EB5189400E43016 /* GXCore.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				CA01E7591CBF483C004520E6 /* GXGame_ios */,
@@ -394,6 +462,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CAFE76FC1EB5189400E43016 /* GXCore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = GXCore.a;
+			remoteRef = CAFE76FB1EB5189400E43016 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CAFE76FE1EB5189400E43016 /* GXCore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = GXCore.a;
+			remoteRef = CAFE76FD1EB5189400E43016 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CAFE77001EB5189400E43016 /* GXCore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = GXCore.a;
+			remoteRef = CAFE76FF1EB5189400E43016 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CA01E7561CBF483C004520E6 /* Sources */ = {
@@ -412,12 +504,16 @@
 				CABB5CD31CE0E40500D5B648 /* GXOpenGL.cpp in Sources */,
 				CA3A7EAC1DED656800197FCB /* GBaseContext.cpp in Sources */,
 				CABB5CCB1CE0E40500D5B648 /* GD3DContext.cpp in Sources */,
+				CAFE76F41EB50A3600E43016 /* GTextureManager.cpp in Sources */,
 				CABB5CD21CE0E40500D5B648 /* GXDirectX.cpp in Sources */,
+				CAFE76F31EB50A3600E43016 /* GAndroidEntrance.cpp in Sources */,
 				CABB3FB51CFE133000A7367C /* GDataBuffer.cpp in Sources */,
 				CA446E3A1D67DFD5002E77DF /* GMTLContext.cpp in Sources */,
 				CABB3FB01CFE12D000A7367C /* GBuffer.cpp in Sources */,
 				CA3A7EAF1DED66BF00197FCB /* GCanvas.cpp in Sources */,
 				CADB5DBA1CF9E6300092C472 /* GDShader.cpp in Sources */,
+				CAFE76F21EB50A3600E43016 /* GAndroidDaydream.cpp in Sources */,
+				CAFE76F11EB50A3600E43016 /* GAndroidActivity.cpp in Sources */,
 				CACC51221D70A364007D6B79 /* GMShader.cpp in Sources */,
 				CAC708B11D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CADB5DBD1CF9E6300092C472 /* GShader.cpp in Sources */,

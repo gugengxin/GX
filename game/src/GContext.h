@@ -15,6 +15,7 @@
 #include "GReader.h"
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
+#include "GTextureManager.h"
 
 #include "GXGObject.h"
 
@@ -24,6 +25,7 @@ class GContext : public GX_CONTEXT_BASE
     friend class GWindow;
     friend class GTexture;
     friend class GFrameBuffer;
+    friend class GTextureManager;
 private:
 	enum ShaderID {
 		SRID_Graphics = 0,
@@ -124,6 +126,8 @@ private:
 	GShader*                        m_Shaders[SRIDCount];
 	GDataList<GTexture::Handle>     m_Textures;
     GDataList<GFrameBuffer::Handle> m_FrameBuffers;
+private:
+    GTextureManager m_TextureManager;
 };
 
 #include "GXGObjectUD.h"

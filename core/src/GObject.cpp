@@ -9,6 +9,7 @@
 #include "GObject.h"
 #include "GThread.h"
 #include <pthread.h>
+#include "GString.h"
 
 
 static pthread_mutex_t g_Mutex;
@@ -166,6 +167,12 @@ bool GObject::isEqual(GObject* obj)
     return this==obj;
 }
 
+GString* GObject::description()
+{
+    GString* res=GString::autoAlloc();
+    //res->format("%@").arg(0).end();
+    return res;
+}
 
 
 

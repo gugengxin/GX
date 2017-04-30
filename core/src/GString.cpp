@@ -584,6 +584,16 @@ GString::Formater& GString::Formater::arg(gchar v, gint count)
     return *this;
 }
 
+GString::Formater& GString::Formater::arg(guchar v, gint count)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replace(getCursor(), 2, v, count);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+
 GString::Formater& GString::Formater::arg(gwchar v,gint count)
 {
     if (moveCursor()) {
@@ -594,6 +604,19 @@ GString::Formater& GString::Formater::arg(gwchar v,gint count)
     return *this;
 }
 
+void GString::Formater::end()
+{
+    gint curEnd = m_String->getLength() - m_CursorEnd;
+    while (m_Cursor<curEnd-1) {
+        if (m_String->at(m_Cursor)==(guchar)'%' && m_String->at(m_Cursor + 1) == (guchar)'%') {
+            m_String->remove(m_Cursor + 1, 1);
+            m_Cursor++;
+        }
+        else {
+            m_Cursor++;
+        }
+    }
+}
 
 
 

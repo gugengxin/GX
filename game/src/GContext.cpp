@@ -111,7 +111,7 @@ GContext::FBNodeUnloadObj::~FBNodeUnloadObj()
 
 
 //不用在这里初始化
-GContext::GContext()
+GContext::GContext() : m_TextureManager(this)
 {
 }
 //不用在这里反初始化
