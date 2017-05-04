@@ -68,6 +68,7 @@ LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GPng.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GPtr.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GRBReader.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GReader.cpp
+LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GResourceManager.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GRunLoop.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GSerialize.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GString.cpp

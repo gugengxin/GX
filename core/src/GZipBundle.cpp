@@ -32,7 +32,7 @@ bool GZipBundle::open(const gtchar* path,bool createMap)
         m_Reader=NULL;
         return false;
     }
-    m_RootPath.set(path);
+    m_RootPath.setChars(path);
     return true;
 }
 

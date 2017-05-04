@@ -71,7 +71,7 @@ GReader* GAppBundle::openReader(GString* fileName)
 	return GX_APPBUNDLE_BASE::openReader(fileName);
 #elif defined(GX_OS_MACOSX) || defined(GX_OS_WINDOWS) || defined(GX_OS_ANDROID) || defined(GX_OS_QT)
     GString path;
-    path.append(M_RESOURCE_DIR_NAME);
+    path.appendChars(M_RESOURCE_DIR_NAME);
     path.appendPathComponent(fileName);
 	return GX_APPBUNDLE_BASE::openReader(&path);
 #else

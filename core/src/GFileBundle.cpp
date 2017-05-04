@@ -24,7 +24,7 @@ GFileBundle::~GFileBundle()
 
 bool GFileBundle::open(const gtchar* path)
 {
-    m_RootPath.set(path);
+    m_RootPath.setChars(path);
     return true;
 }
 
@@ -36,7 +36,7 @@ void GFileBundle::close()
 GReader* GFileBundle::openReader(GString* fileName)
 {
 	GString path;
-    path.set(&m_RootPath);
+    path.setString(&m_RootPath);
 	path.appendPathComponent(fileName);
 	GFileReader* res = GFileReader::alloc();
 	if (!res->open(path.pathString())) {

@@ -76,6 +76,7 @@ SOURCES += \
 	../../src/GPtr.cpp\
 	../../src/GRBReader.cpp\
 	../../src/GReader.cpp\
+	../../src/GResourceManager.cpp\
 	../../src/GRunLoop.cpp\
 	../../src/GSerialize.cpp\
 	../../src/GString.cpp\
@@ -138,6 +139,7 @@ HEADERS += \
 	../../src/GPtr.h\
 	../../src/GRBReader.h\
 	../../src/GReader.h\
+	../../src/GResourceManager.h\
 	../../src/GRunLoop.h\
 	../../src/GSerialize.h\
 	../../src/GString.h\

@@ -128,7 +128,7 @@ bool GZipReader::open(const gtchar* path, bool createMap)
 					bTF = (M_GETCURRENTFILEINFO(M_ZIPFILE(), NULL, (char *)nameBuf.getPtr(), info.size_filename, NULL, 0, NULL, 0) == UNZ_OK);
 					if (bTF) {
                         GString* name = GString::alloc();
-                        name->set((const gchar*)nameBuf.getPtr(),(gint)info.size_filename);
+                        name->setChars((const gchar*)nameBuf.getPtr(),(gint)info.size_filename);
                         
 						Node* node = Node::alloc();
 						node->setOffset(getOffset());
@@ -183,7 +183,7 @@ bool GZipReader::gotoFile(const gchar* fileName)
 {
 	if (m_Map) {
 		GString name;
-		name.set(fileName);
+		name.setChars(fileName);
 		Node* node = m_Map->get(&name);
 		if (node) {
 			return setOffset(node->getOffset());
@@ -212,7 +212,7 @@ GString* GZipReader::currentFileName()
         if (nameBuf.changeBytes(info.size_filename+1)) {
             if((M_GETCURRENTFILEINFO(M_ZIPFILE(), NULL, (char *)nameBuf.getPtr(), info.size_filename, NULL, 0, NULL, 0) == UNZ_OK)) {
                 GString* name = GString::autoAlloc();
-                name->set((const gchar*)nameBuf.getPtr(),(gint)info.size_filename);
+                name->setChars((const gchar*)nameBuf.getPtr(),(gint)info.size_filename);
                 return name;
             }
         }

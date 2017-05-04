@@ -578,7 +578,7 @@ GString::Formater& GString::Formater::arg(gchar v, gint count)
 {
     if (moveCursor()) {
         gint lastLen=replaceStart();
-        getString()->replace(getCursor(), 2, v, count);
+        getString()->replaceChar(getCursor(), 2, v, count);
         replaceEnd(lastLen);
     }
     return *this;
@@ -588,7 +588,7 @@ GString::Formater& GString::Formater::arg(guchar v, gint count)
 {
     if (moveCursor()) {
         gint lastLen=replaceStart();
-        getString()->replace(getCursor(), 2, v, count);
+        getString()->replaceChar(getCursor(), 2, v, count);
         replaceEnd(lastLen);
     }
     return *this;
@@ -598,11 +598,167 @@ GString::Formater& GString::Formater::arg(gwchar v,gint count)
 {
     if (moveCursor()) {
         gint lastLen=replaceStart();
-        getString()->replace(getCursor(), 2, v, count);
+        getString()->replaceChar(getCursor(), 2, v, count);
         replaceEnd(lastLen);
     }
     return *this;
 }
+
+GString::Formater& GString::Formater::arg(const gchar* v, gint len, gint count)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceChars(getCursor(), 2, v, len, count);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(const guchar* v, gint len, gint count)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceChars(getCursor(), 2, v, len, count);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(const gwchar* v, gint len, gint count)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceChars(getCursor(), 2, v, len, count);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+
+GString::Formater& GString::Formater::arg(gchar preChar, gint preCount,
+                                          gchar sufChar, gint sufCount,
+                                          const gchar* v, gint len, gint count)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceChars(getCursor(), 2, preChar, preCount, sufChar, sufCount, v, len, count);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(guchar preChar, gint preCount,
+                                          guchar sufChar, gint sufCount,
+                                          const guchar* v, gint len, gint count)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceChars(getCursor(), 2, preChar, preCount, sufChar, sufCount, v, len, count);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(gwchar preChar, gint preCount,
+                                          gwchar sufChar, gint sufCount,
+                                          const gwchar* v, gint len, gint count)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceChars(getCursor(), 2, preChar, preCount, sufChar, sufCount, v, len, count);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+
+
+GString::Formater& GString::Formater::arg(gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceNumber(getCursor(), 2, v, radix, vsLen, fillChar);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceNumber(getCursor(), 2, v, radix, vsLen, fillChar);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceNumber(getCursor(), 2, v, radix, vsLen, fillChar);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceNumber(getCursor(), 2, v, radix, vsLen, fillChar);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceNumber(getCursor(), 2, v, radix, vsLen, fillChar);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceNumber(getCursor(), 2, v, radix, vsLen, fillChar);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceNumber(getCursor(), 2, v, precision, vsLen, fillChar);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceNumber(getCursor(), 2, v, precision, vsLen, fillChar);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+GString::Formater& GString::Formater::arg(void* v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replacePtr(getCursor(), 2, v, radix, vsLen, fillChar);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+
+GString::Formater& GString::Formater::arg(GObject* v, gint count)
+{
+    if (moveCursor()) {
+        gint lastLen=replaceStart();
+        getString()->replaceString(getCursor(), 2, v->description(), count);
+        replaceEnd(lastLen);
+    }
+    return *this;
+}
+
 
 void GString::Formater::end()
 {
@@ -634,6 +790,14 @@ GString::~GString()
     
 }
 
+guint GString::getHash()
+{
+    if (m_OWHash.codeA==0) {
+        m_OWHash=GOWHash::compute(m_Buffer.getPtr(0));
+    }
+    return m_OWHash.codeA;
+}
+
 bool GString::isEqual(GObject* obj)
 {
     if (obj->isKindOfClass(GString::gclass)) {
@@ -645,6 +809,11 @@ bool GString::isEqual(GObject* obj)
     return false;
 }
 
+GString* GString::description()
+{
+    return this;
+}
+
 gint GString::getLength()
 {
     gint res=m_Buffer.getCount();
@@ -652,14 +821,6 @@ gint GString::getLength()
         return 0;
     }
     return res-1;
-}
-
-guint GString::getHash()
-{
-    if (m_OWHash.codeA==0) {
-        m_OWHash=GOWHash::compute(m_Buffer.getPtr(0));
-    }
-    return m_OWHash.codeA;
 }
 
 guchar GString::at(gint idx)
@@ -711,24 +872,24 @@ const gtchar* GString::pathString()
 #endif
 }
 
-void GString::set(gchar v, gint count)
+void GString::setChar(gchar v, gint count)
 {
-	set(GX_CAST_S(guchar, v), count);
+	setChar(GX_CAST_S(guchar, v), count);
 }
-void GString::append(gchar v, gint count)
+void GString::appendChar(gchar v, gint count)
 {
-	append(GX_CAST_S(guchar, v), count);
+	appendChar(GX_CAST_S(guchar, v), count);
 }
-void GString::insert(gint idx, gchar v, gint count)
+void GString::insertChar(gint idx, gchar v, gint count)
 {
-	insert(idx, GX_CAST_S(guchar, v), count);
+	insertChar(idx, GX_CAST_S(guchar, v), count);
 }
-void GString::replace(gint idx, gint lenR, gchar v, gint count)
+void GString::replaceChar(gint idx, gint lenR, gchar v, gint count)
 {
-	replace(idx, lenR, GX_CAST_S(guchar, v), count);
+	replaceChar(idx, lenR, GX_CAST_S(guchar, v), count);
 }
 
-void GString::set(guchar v, gint count)
+void GString::setChar(guchar v, gint count)
 {
 	if (count <= 0) {
 		return;
@@ -741,7 +902,7 @@ void GString::set(guchar v, gint count)
 		modifyDone();
 	}
 }
-void GString::append(guchar v, gint count)
+void GString::appendChar(guchar v, gint count)
 {
 	if (count <= 0) {
 		return;
@@ -755,11 +916,11 @@ void GString::append(guchar v, gint count)
 		modifyDone();
 	}
 }
-void GString::insert(gint idx, guchar v, gint count)
+void GString::insertChar(gint idx, guchar v, gint count)
 {
-	replace(idx, 0, v, count);
+	replaceChar(idx, 0, v, count);
 }
-void GString::replace(gint idx, gint lenR, guchar v, gint count)
+void GString::replaceChar(gint idx, gint lenR, guchar v, gint count)
 {
 	if (idx < 0 || lenR<0) {
 		return;
@@ -781,24 +942,24 @@ void GString::replace(gint idx, gint lenR, guchar v, gint count)
 }
 
 
-void GString::set(gwchar v, gint count)
+void GString::setChar(gwchar v, gint count)
 {
-	set(GX_CAST_S(guchar, v), count);
+	setChar(GX_CAST_S(guchar, v), count);
 }
-void GString::append(gwchar v, gint count)
+void GString::appendChar(gwchar v, gint count)
 {
-	append(GX_CAST_S(guchar, v), count);
+	appendChar(GX_CAST_S(guchar, v), count);
 }
-void GString::insert(gint idx, gwchar v, gint count)
+void GString::insertChar(gint idx, gwchar v, gint count)
 {
-	insert(idx, GX_CAST_S(guchar, v), count);
+	insertChar(idx, GX_CAST_S(guchar, v), count);
 }
-void GString::replace(gint idx, gint lenR, gwchar v, gint count)
+void GString::replaceChar(gint idx, gint lenR, gwchar v, gint count)
 {
-	replace(idx, lenR, GX_CAST_S(guchar, v), count);
+	replaceChar(idx, lenR, GX_CAST_S(guchar, v), count);
 }
 
-void GString::set(const gchar* v, gint len, gint count)
+void GString::setChars(const gchar* v, gint len, gint count)
 {
     if (count <= 0) {
         return;
@@ -819,7 +980,7 @@ void GString::set(const gchar* v, gint len, gint count)
         modifyDone();
     }
 }
-void GString::append(const gchar* v, gint len, gint count)
+void GString::appendChars(const gchar* v, gint len, gint count)
 {
     if (count <= 0) {
         return;
@@ -841,11 +1002,11 @@ void GString::append(const gchar* v, gint len, gint count)
         modifyDone();
     }
 }
-void GString::insert(gint idx, const gchar* v, gint len, gint count)
+void GString::insertChars(gint idx, const gchar* v, gint len, gint count)
 {
-    replace(idx,0, v, len, count);
+    replaceChars(idx,0, v, len, count);
 }
-void GString::replace(gint idx, gint lenR, const gchar* v, gint len, gint count)
+void GString::replaceChars(gint idx, gint lenR, const gchar* v, gint len, gint count)
 {
     if (count <= 0) {
         return;
@@ -873,7 +1034,7 @@ void GString::replace(gint idx, gint lenR, const gchar* v, gint len, gint count)
         modifyDone();
     }
 }
-void GString::replace(gint idx, gint lenR,
+void GString::replaceChars(gint idx, gint lenR,
                       gchar preChar, gint preCount,
                       gchar sufChar, gint sufCount,
                       const gchar* v, gint len, gint count)
@@ -917,7 +1078,7 @@ void GString::replace(gint idx, gint lenR,
 }
 
 
-void GString::set(const guchar* v, gint len, gint count)
+void GString::setChars(const guchar* v, gint len, gint count)
 {
 	if (count <= 0) {
 		return;
@@ -933,7 +1094,7 @@ void GString::set(const guchar* v, gint len, gint count)
 		modifyDone();
 	}
 }
-void GString::append(const guchar* v, gint len, gint count)
+void GString::appendChars(const guchar* v, gint len, gint count)
 {
 	if (count <= 0) {
 		return;
@@ -950,11 +1111,11 @@ void GString::append(const guchar* v, gint len, gint count)
 		modifyDone();
 	}
 }
-void GString::insert(gint idx, const guchar* v, gint len, gint count)
+void GString::insertChars(gint idx, const guchar* v, gint len, gint count)
 {
-	replace(idx, 0, v, len, count);
+	replaceChars(idx, 0, v, len, count);
 }
-void GString::replace(gint idx, gint lenR, const guchar* v, gint len, gint count)
+void GString::replaceChars(gint idx, gint lenR, const guchar* v, gint len, gint count)
 {
 	if (count <= 0) {
 		return;
@@ -977,7 +1138,7 @@ void GString::replace(gint idx, gint lenR, const guchar* v, gint len, gint count
 		modifyDone();
 	}
 }
-void GString::replace(gint idx, gint lenR,
+void GString::replaceChars(gint idx, gint lenR,
 	guchar preChar, gint preCount,
 	guchar sufChar, gint sufCount,
 	const guchar* v, gint len, gint count)
@@ -1015,10 +1176,10 @@ void GString::replace(gint idx, gint lenR,
 	}
 }
 
-void GString::set(const gwchar* v, gint len, gint count)
+void GString::setChars(const gwchar* v, gint len, gint count)
 {
 #if GX_WCHAR_16BIT
-	set(GX_CAST_R(const guchar*, v), len, count);
+	setChars(GX_CAST_R(const guchar*, v), len, count);
 #else
     if (count <= 0) {
         return;
@@ -1037,10 +1198,10 @@ void GString::set(const gwchar* v, gint len, gint count)
     }
 #endif
 }
-void GString::append(const gwchar* v, gint len, gint count)
+void GString::appendChars(const gwchar* v, gint len, gint count)
 {
 #if GX_WCHAR_16BIT
-	append(GX_CAST_R(const guchar*, v), len, count);
+	appendChars(GX_CAST_R(const guchar*, v), len, count);
 #else
     if (count <= 0) {
         return;
@@ -1060,18 +1221,18 @@ void GString::append(const gwchar* v, gint len, gint count)
     }
 #endif
 }
-void GString::insert(gint idx, const gwchar* v, gint len, gint count)
+void GString::insertChars(gint idx, const gwchar* v, gint len, gint count)
 {
 #if GX_WCHAR_16BIT
-	insert(idx, GX_CAST_R(const guchar*, v), len, count);
+	insertChars(idx, GX_CAST_R(const guchar*, v), len, count);
 #else
-    replace(idx,0, v, len, count);
+    replaceChars(idx,0, v, len, count);
 #endif
 }
-void GString::replace(gint idx, gint lenR, const gwchar* v, gint len, gint count)
+void GString::replaceChars(gint idx, gint lenR, const gwchar* v, gint len, gint count)
 {
 #if GX_WCHAR_16BIT
-	replace(idx, lenR, GX_CAST_R(const guchar*, v), len, count);
+	replaceChars(idx, lenR, GX_CAST_R(const guchar*, v), len, count);
 #else
     if (count <= 0) {
         return;
@@ -1097,13 +1258,13 @@ void GString::replace(gint idx, gint lenR, const gwchar* v, gint len, gint count
 	}
 #endif
 }
-void GString::replace(gint idx, gint lenR,
+void GString::replaceChars(gint idx, gint lenR,
                       gwchar preChar, gint preCount,
                       gwchar sufChar, gint sufCount,
                       const gwchar* v, gint len, gint count)
 {
 #if GX_WCHAR_16BIT
-	replace(idx, lenR, preChar, preCount, sufChar, sufCount, GX_CAST_R(const guchar*, v), len, count);
+	replaceChars(idx, lenR, preChar, preCount, sufChar, sufCount, GX_CAST_R(const guchar*, v), len, count);
 #else
     if (preCount <0 || count < 0 || sufCount<0 || preCount+count+sufCount<=0) {
         return;
@@ -1141,7 +1302,7 @@ void GString::replace(gint idx, gint lenR,
 #endif
 }
 
-void GString::set(GString* v, gint count)
+void GString::setString(GString* v, gint count)
 {
     if (count <= 0) {
         return;
@@ -1157,7 +1318,7 @@ void GString::set(GString* v, gint count)
     }
     
 }
-void GString::append(GString* v, gint count)
+void GString::appendString(GString* v, gint count)
 {
     if (count <= 0) {
         return;
@@ -1173,11 +1334,11 @@ void GString::append(GString* v, gint count)
         modifyDone();
     }
 }
-void GString::insert(gint idx, GString* v, gint count)
+void GString::insertString(gint idx, GString* v, gint count)
 {
-    replace(idx,0, v, count);
+    replaceString(idx,0, v, count);
 }
-void GString::replace(gint idx, gint lenR, GString* v, gint count)
+void GString::replaceString(gint idx, gint lenR, GString* v, gint count)
 {
     if (count <= 0) {
         return;
@@ -1206,187 +1367,187 @@ void GString::replace(gint idx, gint lenR, GString* v, gint count)
 
 #define M_SET \
 if (vsLen < 0 && tempLen < -vsLen) {\
-    set(fillChar, -vsLen - tempLen);\
-    append(temp, tempLen);\
+    setChar(fillChar, -vsLen - tempLen);\
+    appendChars(temp, tempLen);\
 }\
 else if (vsLen > 0 && tempLen < vsLen) {\
-    set(temp, tempLen);\
-    append(fillChar, vsLen - tempLen);\
+    setChars(temp, tempLen);\
+    appendChar(fillChar, vsLen - tempLen);\
 }\
 else {\
-    set(temp, tempLen);\
+    setChars(temp, tempLen);\
 }
 #define M_APPEND \
 if (vsLen < 0 && tempLen < -vsLen) {\
-    append(fillChar, -vsLen - tempLen);\
-    append(temp, tempLen);\
+    appendChar(fillChar, -vsLen - tempLen);\
+    appendChars(temp, tempLen);\
 }\
 else if (vsLen > 0 && tempLen < vsLen) {\
-    append(temp, tempLen);\
-    append(fillChar, vsLen - tempLen);\
+    appendChars(temp, tempLen);\
+    appendChar(fillChar, vsLen - tempLen);\
 }\
 else {\
-    append(temp, tempLen);\
+    appendChars(temp, tempLen);\
 }
 #define M_REPLACE \
-replace(idx, lenR, \
+replaceChars(idx, lenR, \
     fillChar, (vsLen < 0 && tempLen < -vsLen) ? -vsLen - tempLen : 0, \
     fillChar, (vsLen > 0 && tempLen < vsLen) ? vsLen - tempLen : 0, \
     temp, tempLen, 1);
 
 
-void GString::setInt16(gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::setNumber(gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[16];
     gint tempLen = GX::gi16toa(v, temp, radix);
     M_SET
 }
-void GString::appendInt16(gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::appendNumber(gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[16];
     gint tempLen = GX::gi16toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertInt16(gint idx, gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::insertNumber(gint idx, gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    replaceInt16(idx, 0, v, radix, vsLen, fillChar);
+    replaceNumber(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceInt16(gint idx, gint lenR, gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::replaceNumber(gint idx, gint lenR, gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[16];
     gint tempLen = GX::gi16toa(v, temp, radix);
     M_REPLACE
 }
-void GString::setUint16(guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::setNumber(guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[16];
     gint tempLen = GX::gu16toa(v, temp, radix);
     M_SET
 }
-void GString::appendUint16(guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::appendNumber(guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[16];
     gint tempLen = GX::gu16toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertUint16(gint idx, guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::insertNumber(gint idx, guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    replaceUint16(idx, 0, v, radix, vsLen, fillChar);
+    replaceNumber(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceUint16(gint idx, gint lenR, guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::replaceNumber(gint idx, gint lenR, guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[16];
     gint tempLen = GX::gu16toa(v, temp, radix);
     M_REPLACE
 }
 
-void GString::setInt32(gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::setNumber(gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[32];
     gint tempLen = GX::gi32toa(v, temp, radix);
     M_SET
 }
-void GString::appendInt32(gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::appendNumber(gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[32];
     gint tempLen = GX::gi32toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertInt32(gint idx, gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::insertNumber(gint idx, gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    replaceInt32(idx, 0, v, radix, vsLen, fillChar);
+    replaceNumber(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceInt32(gint idx, gint lenR, gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::replaceNumber(gint idx, gint lenR, gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[32];
     gint tempLen = GX::gi32toa(v, temp, radix);
     M_REPLACE
 }
-void GString::setUint32(guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::setNumber(guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[32];
     gint tempLen = GX::gu32toa(v, temp, radix);
     M_SET
 }
-void GString::appendUint32(guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::appendNumber(guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[32];
     gint tempLen = GX::gu32toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertUint32(gint idx, guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::insertNumber(gint idx, guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    replaceUint32(idx, 0, v, radix, vsLen, fillChar);
+    replaceNumber(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceUint32(gint idx, gint lenR, guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::replaceNumber(gint idx, gint lenR, guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[32];
     gint tempLen = GX::gu32toa(v, temp, radix);
     M_REPLACE
 }
 
-void GString::setInt64(gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::setNumber(gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[64];
     gint tempLen = GX::gi64toa(v, temp, radix);
     M_SET
 }
-void GString::appendInt64(gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::appendNumber(gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[64];
     gint tempLen = GX::gi64toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertInt64(gint idx, gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::insertNumber(gint idx, gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    replaceInt64(idx, 0, v, radix, vsLen, fillChar);
+    replaceNumber(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceInt64(gint idx, gint lenR, gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::replaceNumber(gint idx, gint lenR, gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[64];
     gint tempLen = GX::gi64toa(v, temp, radix);
     M_REPLACE
 }
-void GString::setUint64(guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::setNumber(guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[64];
     gint tempLen = GX::gu64toa(v, temp, radix);
     M_SET
 }
-void GString::appendUint64(guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::appendNumber(guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[64];
     gint tempLen = GX::gu64toa(v, temp, radix);
     M_APPEND
 }
-void GString::insertUint64(gint idx, guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::insertNumber(gint idx, guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    replaceUint64(idx, 0, v, radix, vsLen, fillChar);
+    replaceNumber(idx, 0, v, radix, vsLen, fillChar);
 }
-void GString::replaceUint64(gint idx, gint lenR, guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+void GString::replaceNumber(gint idx, gint lenR, guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
     gwchar temp[64];
     gint tempLen = GX::gu64toa(v, temp, radix);
     M_REPLACE
 }
 
-void GString::setFloat32(gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
+void GString::setNumber(gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
 {
     gwchar temp[8 + 32];
     gint tempLen = GX::gf32toa(v, temp, precision);
     M_SET
 }
-void GString::appendFloat32(gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
+void GString::appendNumber(gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
 {
     gwchar temp[8 + 32];
     gint tempLen = GX::gf32toa(v, temp, precision);
     M_APPEND
 }
-void GString::insertFloat32(gint idx, gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
+void GString::insertNumber(gint idx, gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
 {
-    replaceFloat32(idx, 0, v, precision, vsLen, fillChar);
+    replaceNumber(idx, 0, v, precision, vsLen, fillChar);
 }
-void GString::replaceFloat32(gint idx, gint lenR, gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
+void GString::replaceNumber(gint idx, gint lenR, gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
 {
     if (precision > 30) {
         precision = 30;
@@ -1396,29 +1557,29 @@ void GString::replaceFloat32(gint idx, gint lenR, gfloat32 v, gint precision, gi
     M_REPLACE
 }
 
-void GString::setFloat64(gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
-{
-    if (precision > 30) {
-        precision = 30;
-    }
-    gwchar temp[17 + 32];
-    gint tempLen = GX::gf64toa(v, temp, precision);
-    M_SET
-}
-void GString::appendFloat64(gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
+void GString::setNumber(gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
 {
     if (precision > 30) {
         precision = 30;
     }
     gwchar temp[17 + 32];
     gint tempLen = GX::gf64toa(v, temp, precision);
+    M_SET
+}
+void GString::appendNumber(gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
+{
+    if (precision > 30) {
+        precision = 30;
+    }
+    gwchar temp[17 + 32];
+    gint tempLen = GX::gf64toa(v, temp, precision);
     M_APPEND
 }
-void GString::insertFloat64(gint idx, gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
+void GString::insertNumber(gint idx, gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
 {
-    replaceFloat64(idx, 0, v, precision, vsLen, fillChar);
+    replaceNumber(idx, 0, v, precision, vsLen, fillChar);
 }
-void GString::replaceFloat64(gint idx, gint lenR, gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
+void GString::replaceNumber(gint idx, gint lenR, gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
 {
     if (precision > 30) {
         precision = 30;
@@ -1432,145 +1593,46 @@ void GString::replaceFloat64(gint idx, gint lenR, gfloat64 v, gint precision, gi
 #undef M_APPEND
 #undef M_REPLACE
 
-void GString::setInt(gint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    setInt32(v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    setInt64(v, radix, vsLen, fillChar);
-#endif
-}
-void GString::appendInt(gint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    appendInt32(v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    appendInt64(v, radix, vsLen, fillChar);
-#endif
-}
-void GString::insertInt(gint idx, gint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    insertInt32(idx, v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    insertInt64(idx, v, radix, vsLen, fillChar);
-#endif
-}
-void GString::replaceInt(gint idx, gint lenR, gint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    replaceInt32(idx, lenR, v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    replaceInt64(idx, lenR, v, radix, vsLen, fillChar);
-#endif
-}
-
-void GString::setUint(guint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    setUint32(v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    setUint64(v, radix, vsLen, fillChar);
-#endif
-}
-void GString::appendUint(guint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    appendUint32(v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    appendUint64(v, radix, vsLen, fillChar);
-#endif
-}
-void GString::insertUint(gint idx, guint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    insertUint32(idx, v, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    insertUint64(idx, v, radix, vsLen, fillChar);
-#endif
-}
-void GString::replaceUint(gint idx, gint lenR, guint v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    replaceUint32(idx, v, lenR, radix, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    replaceUint64(idx, v, lenR, radix, vsLen, fillChar);
-#endif
-}
-
-void GString::setFloat(gfloat v, gint precision, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    setFloat32(v, precision, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    setFloat64(v, precision, vsLen, fillChar);
-#endif
-}
-void GString::appendFloat(gfloat v, gint precision, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    appendFloat32(v, precision, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    appendFloat64(v, precision, vsLen, fillChar);
-#endif
-}
-void GString::insertFloat(gint idx, gfloat v, gint precision, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    insertFloat32(idx, v, precision, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    insertFloat64(idx, v, precision, vsLen, fillChar);
-#endif
-}
-void GString::replaceFloat(gint idx, gint lenR, gfloat v, gint precision, gint vsLen, gwchar fillChar)
-{
-#if GX_PTR_32BIT
-    replaceFloat32(idx, lenR, v, precision, vsLen, fillChar);
-#elif GX_PTR_64BIT
-    replaceFloat64(idx, lenR, v, precision, vsLen, fillChar);
-#endif
-}
-
-
 void GString::setPtr(void* v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    setUint(GX_CAST_R(guint, v), radix, vsLen, fillChar);
+    setNumber(GX_CAST_R(guint, v), radix, vsLen, fillChar);
 }
 void GString::appendPtr(void* v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    appendUint(GX_CAST_R(guint, v), radix, vsLen, fillChar);
+    appendNumber(GX_CAST_R(guint, v), radix, vsLen, fillChar);
 }
 void GString::insertPtr(gint idx, void* v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    insertUint(idx, GX_CAST_R(guint, v), radix, vsLen, fillChar);
+    insertNumber(idx, GX_CAST_R(guint, v), radix, vsLen, fillChar);
 }
 void GString::replacePtr(gint idx, gint lenR, void* v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
 {
-    replaceUint(idx, lenR, GX_CAST_R(guint, v), radix, vsLen, fillChar);
+    replaceNumber(idx, lenR, GX_CAST_R(guint, v), radix, vsLen, fillChar);
 }
+
 
 GString::Formater GString::format(const gchar* fmt, gint len)
 {
-    set(fmt, len);
+    setChars(fmt, len);
     return Formater(this, 0, 0);
 }
 
 GString::Formater GString::appendFormat(const gchar* fmt, gint len)
 {
     gint lenCur = getLength();
-    append(fmt,len);
+    appendChars(fmt,len);
     return Formater(this, lenCur, 0);
 }
 GString::Formater GString::insertFormat(gint idx, const gchar* fmt, gint len)
 {
     gint lenTemp = getLength() - idx;
-    insert(idx, fmt, len);
+    insertChars(idx, fmt, len);
     return Formater(this, idx, lenTemp);
 }
 GString::Formater GString::replaceFormat(gint idx, gint lenR, const gchar* fmt, gint len)
 {
     gint lenTemp = getLength() - idx - lenR;
-    replace(idx, lenR, fmt, len);
+    replaceChars(idx, lenR, fmt, len);
     return Formater(this, idx, lenTemp);
 }
 
@@ -1611,19 +1673,19 @@ void GString::appendPathComponent(const gchar* component, gint len)
             if (len < 0) {
                 len = GX::strlen(component);
             }
-            append(component + 1, len - 1);
+            appendChars(component + 1, len - 1);
         }
         else {
-            append(component, len);
+            appendChars(component, len);
         }
     }
     else {
         if (component[0] == '/' || component[0] == '\\') {
-            append(component, len);
+            appendChars(component, len);
         }
         else {
-			append(pathSeparator());
-            append(component, len);
+			appendChar(pathSeparator());
+            appendChars(component, len);
         }
     }
 }
@@ -1635,19 +1697,19 @@ void GString::appendPathComponent(const guchar* component, gint len)
 			if (len < 0) {
 				len = GX::strlen(component);
 			}
-			append(component + 1, len - 1);
+			appendChars(component + 1, len - 1);
 		}
 		else {
-			append(component, len);
+			appendChars(component, len);
 		}
 	}
 	else {
 		if (component[0] == GX_CAST_S(guchar, '/') || component[0] == GX_CAST_S(guchar, '\\')) {
-			append(component, len);
+			appendChars(component, len);
 		}
 		else {
-			append(pathSeparator());
-			append(component, len);
+			appendChar(pathSeparator());
+			appendChars(component, len);
 		}
 	}
 }
@@ -1659,19 +1721,19 @@ void GString::appendPathComponent(const gwchar* component, gint len)
             if (len < 0) {
                 len = GX::strlen(component);
             }
-            append(component + 1, len - 1);
+            appendChars(component + 1, len - 1);
         }
         else {
-            append(component, len);
+            appendChars(component, len);
         }
     }
     else {
         if (component[0] == L'/' || component[0] == L'\\') {
-            append(component, len);
+            appendChars(component, len);
         }
         else {
-			append(pathSeparator());
-            append(component, len);
+			appendChar(pathSeparator());
+            appendChars(component, len);
         }
     }
 }

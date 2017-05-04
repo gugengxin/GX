@@ -24,6 +24,9 @@ MOC_DIR = moc
 
 SOURCES += \
 #__SOURCES_START__
+	#../../src/GAndroidActivity.cpp\
+	#../../src/GAndroidDaydream.cpp\
+	#../../src/GAndroidEntrance.cpp\
 	../../src/GBaseContext.cpp\
 	#../../src/GBuffer.cpp\
 	../../src/GCanvas.cpp\
@@ -42,6 +45,7 @@ SOURCES += \
 	../../src/GShader.cpp\
 	../../src/GTexture.cpp\
 	../../src/GTexture2D.cpp\
+	../../src/GTextureManager.cpp\
 	../../src/GWindow.cpp\
 	#../../src/GXDirectX.cpp\
 	#../../src/GXMetal.cpp\
@@ -51,6 +55,9 @@ SOURCES += \
 
 HEADERS += \
 #__HEADERS_START__
+	../../src/GAndroidActivity.h\
+	../../src/GAndroidDaydream.h\
+	../../src/GAndroidEntrance.h\
 	../../src/GBaseContext.h\
 	../../src/GBuffer.h\
 	../../src/GCanvas.h\
@@ -73,6 +80,7 @@ HEADERS += \
 	../../src/GShader.h\
 	../../src/GTexture.h\
 	../../src/GTexture2D.h\
+	../../src/GTextureManager.h\
 	../../src/GWindow.h\
 	../../src/GX3DAPI.h\
 	../../src/GX3DAPIType.h\
@@ -81,6 +89,8 @@ HEADERS += \
 	../../src/GXGame.h\
 	../../src/GXMetal.h\
 	../../src/GXOpenGL.h\
+	../../src/com_gxengine_game_GAndroidActivity.h\
+	../../src/com_gxengine_game_GAndroidDaydream.h\
 #__HEADERS_END__
 
 

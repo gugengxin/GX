@@ -46,6 +46,31 @@ public:
         Formater& arg(guchar v,gint count=1);
         Formater& arg(gwchar v,gint count=1);
         
+        Formater& arg(const gchar* v, gint len = -1, gint count = 1);
+        Formater& arg(const guchar* v, gint len = -1, gint count = 1);
+        Formater& arg(const gwchar* v, gint len = -1, gint count = 1);
+        
+        Formater& arg(gchar preChar, gint preCount,
+                      gchar sufChar, gint sufCount,
+                      const gchar* v, gint len=-1, gint count=1);
+        Formater& arg(guchar preChar, gint preCount,
+                      guchar sufChar, gint sufCount,
+                      const guchar* v, gint len = -1, gint count = 1);
+        Formater& arg(gwchar preChar, gint preCount,
+                      gwchar sufChar, gint sufCount,
+                      const gwchar* v, gint len = -1, gint count = 1);
+        
+        Formater& arg(gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+        Formater& arg(guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+        Formater& arg(gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+        Formater& arg(guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+        Formater& arg(gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+        Formater& arg(guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+        Formater& arg(gfloat32 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
+        Formater& arg(gfloat64 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
+        Formater& arg(void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, gwchar fillChar = L' ');
+        
+        Formater& arg(GObject* v, gint count=1);
         
         void end();
     private:
@@ -54,11 +79,12 @@ public:
         gint m_CursorEnd;
     };
 public:
+    virtual guint getHash();
     virtual bool isEqual(GObject* obj);
+    virtual GString* description();
     
 public:
     gint getLength();
-    virtual guint getHash();
     guchar at(gint idx);
     void remove(gint idx, gint len);
     void clear();
@@ -70,108 +96,93 @@ public:
     const gtchar* pathString();
     
 public:
-    void set(gchar v, gint count=1);
-    void append(gchar v, gint count=1);
-    void insert(gint idx, gchar v, gint count=1);
-    void replace(gint idx, gint lenR, gchar v, gint count=1);
+    void setChar(gchar v, gint count=1);
+    void appendChar(gchar v, gint count=1);
+    void insertChar(gint idx, gchar v, gint count=1);
+    void replaceChar(gint idx, gint lenR, gchar v, gint count=1);
 
-	void set(guchar v, gint count = 1);
-	void append(guchar v, gint count = 1);
-	void insert(gint idx, guchar v, gint count = 1);
-	void replace(gint idx, gint lenR, guchar v, gint count = 1);
+	void setChar(guchar v, gint count = 1);
+	void appendChar(guchar v, gint count = 1);
+	void insertChar(gint idx, guchar v, gint count = 1);
+	void replaceChar(gint idx, gint lenR, guchar v, gint count = 1);
     
-    void set(gwchar v, gint count=1);
-    void append(gwchar v, gint count=1);
-    void insert(gint idx, gwchar v, gint count=1);
-    void replace(gint idx, gint lenR, gwchar v, gint count=1);
+    void setChar(gwchar v, gint count=1);
+    void appendChar(gwchar v, gint count=1);
+    void insertChar(gint idx, gwchar v, gint count=1);
+    void replaceChar(gint idx, gint lenR, gwchar v, gint count=1);
     
-    void set(const gchar* v, gint len = -1, gint count = 1);
-    void append(const gchar* v, gint len = -1, gint count = 1);
-    void insert(gint idx, const gchar* v, gint len = -1, gint count = 1);
-    void replace(gint idx, gint lenR, const gchar* v, gint len = -1, gint count = 1);
-    void replace(gint idx, gint lenR,
+    void setChars(const gchar* v, gint len = -1, gint count = 1);
+    void appendChars(const gchar* v, gint len = -1, gint count = 1);
+    void insertChars(gint idx, const gchar* v, gint len = -1, gint count = 1);
+    void replaceChars(gint idx, gint lenR, const gchar* v, gint len = -1, gint count = 1);
+    void replaceChars(gint idx, gint lenR,
                  gchar preChar, gint preCount,
                  gchar sufChar, gint sufCount,
                  const gchar* v, gint len=-1, gint count=1);
 
-	void set(const guchar* v, gint len = -1, gint count = 1);
-	void append(const guchar* v, gint len = -1, gint count = 1);
-	void insert(gint idx, const guchar* v, gint len = -1, gint count = 1);
-	void replace(gint idx, gint lenR, const guchar* v, gint len = -1, gint count = 1);
-	void replace(gint idx, gint lenR,
+	void setChars(const guchar* v, gint len = -1, gint count = 1);
+	void appendChars(const guchar* v, gint len = -1, gint count = 1);
+	void insertChars(gint idx, const guchar* v, gint len = -1, gint count = 1);
+	void replaceChars(gint idx, gint lenR, const guchar* v, gint len = -1, gint count = 1);
+	void replaceChars(gint idx, gint lenR,
 		guchar preChar, gint preCount,
 		guchar sufChar, gint sufCount,
 		const guchar* v, gint len = -1, gint count = 1);
     
-    void set(const gwchar* v, gint len = -1, gint count = 1);
-    void append(const gwchar* v, gint len = -1, gint count = 1);
-    void insert(gint idx, const gwchar* v, gint len = -1, gint count = 1);
-    void replace(gint idx, gint lenR, const gwchar* v, gint len = -1, gint count = 1);
-    void replace(gint idx, gint lenR,
+    void setChars(const gwchar* v, gint len = -1, gint count = 1);
+    void appendChars(const gwchar* v, gint len = -1, gint count = 1);
+    void insertChars(gint idx, const gwchar* v, gint len = -1, gint count = 1);
+    void replaceChars(gint idx, gint lenR, const gwchar* v, gint len = -1, gint count = 1);
+    void replaceChars(gint idx, gint lenR,
                  gwchar preChar, gint preCount,
                  gwchar sufChar, gint sufCount,
                  const gwchar* v, gint len = -1, gint count = 1);
     
-    void set(GString* v, gint count = 1);
-    void append(GString* v, gint count = 1);
-    void insert(gint idx, GString* v, gint count = 1);
-    void replace(gint idx, gint lenR, GString* v, gint count = 1);
+    void setString(GString* v, gint count = 1);
+    void appendString(GString* v, gint count = 1);
+    void insertString(gint idx, GString* v, gint count = 1);
+    void replaceString(gint idx, gint lenR, GString* v, gint count = 1);
     
 public:
-    void setInt16(gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void appendInt16(gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void insertInt16(gint idx, gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void replaceInt16(gint idx, gint lenR, gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void setNumber(gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void appendNumber(gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void insertNumber(gint idx, gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void replaceNumber(gint idx, gint lenR, gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
     
-    void setUint16(guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void appendUint16(guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void insertUint16(gint idx, guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void replaceUint16(gint idx, gint lenR, guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void setNumber(guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void appendNumber(guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void insertNumber(gint idx, guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void replaceNumber(gint idx, gint lenR, guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
     
-    void setInt32(gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void appendInt32(gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void insertInt32(gint idx, gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void replaceInt32(gint idx, gint lenR, gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void setNumber(gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void appendNumber(gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void insertNumber(gint idx, gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void replaceNumber(gint idx, gint lenR, gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
     
-    void setUint32(guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void appendUint32(guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void insertUint32(gint idx, guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void replaceUint32(gint idx, gint lenR, guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void setNumber(guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void appendNumber(guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void insertNumber(gint idx, guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void replaceNumber(gint idx, gint lenR, guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
     
-    void setInt64(gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void appendInt64(gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void insertInt64(gint idx, gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void replaceInt64(gint idx, gint lenR, gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void setNumber(gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void appendNumber(gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void insertNumber(gint idx, gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void replaceNumber(gint idx, gint lenR, gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
     
-    void setUint64(guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void appendUint64(guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void insertUint64(gint idx, guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void replaceUint64(gint idx, gint lenR, guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void setNumber(guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void appendNumber(guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void insertNumber(gint idx, guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    void replaceNumber(gint idx, gint lenR, guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
     
-    void setFloat32(gfloat32 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
-    void appendFloat32(gfloat32 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
-    void insertFloat32(gint idx, gfloat32 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
-    void replaceFloat32(gint idx, gint lenR, gfloat32 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
+    void setNumber(gfloat32 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
+    void appendNumber(gfloat32 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
+    void insertNumber(gint idx, gfloat32 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
+    void replaceNumber(gint idx, gint lenR, gfloat32 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
     
-    void setFloat64(gfloat64 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
-    void appendFloat64(gfloat64 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
-    void insertFloat64(gint idx, gfloat64 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
-    void replaceFloat64(gint idx, gint lenR, gfloat64 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
-    
-    void setInt(gint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void appendInt(gint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void insertInt(gint idx, gint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void replaceInt(gint idx, gint lenR, gint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    
-    void setUint(guint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void appendUint(guint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void insertUint(gint idx, guint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    void replaceUint(gint idx, gint lenR, guint v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
-    
-    void setFloat(gfloat v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
-    void appendFloat(gfloat v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
-    void insertFloat(gint idx, gfloat v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
-    void replaceFloat(gint idx, gint lenR, gfloat v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
+    void setNumber(gfloat64 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
+    void appendNumber(gfloat64 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
+    void insertNumber(gint idx, gfloat64 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
+    void replaceNumber(gint idx, gint lenR, gfloat64 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
     
     void setPtr(void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, gwchar fillChar = L' ');
     void appendPtr(void* v, GX::StringRadix radix = GX::SR_Hex, gint vsLen = 0, gwchar fillChar = L' ');
@@ -184,7 +195,7 @@ public:
     Formater replaceFormat(gint idx, gint lenR, const gchar* fmt, gint len = -1);
     
 public:
-	guchar pathSeparator();
+	static guchar pathSeparator();
 	bool firstIsSeparator();
     bool lastIsSeparator();
     void appendPathComponent(const gchar* component, gint len = -1);

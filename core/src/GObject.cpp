@@ -170,7 +170,7 @@ bool GObject::isEqual(GObject* obj)
 GString* GObject::description()
 {
     GString* res=GString::autoAlloc();
-    //res->format("%@").arg(0).end();
+    res->format("%@(%@)").arg(getClass()->getName()).arg(GX_CAST_R(void*, this)).end();
     return res;
 }
 

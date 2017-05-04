@@ -23,7 +23,7 @@ GBundle::~GBundle()
 GReader* GBundle::openReader(const gchar* fileName)
 {
 	GString str;
-	str.set(fileName);
+	str.setChars(fileName);
 	return openReader(&str);
 }
 
