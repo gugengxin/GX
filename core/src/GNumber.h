@@ -23,8 +23,45 @@ public:
 		Uint64,
 		Float32,
 		Float64,
-		Pointer,
 	} Type;
+    
+    inline Type getType() {
+        return m_Type;
+    }
+public:
+    void set(bool v);
+    void set(gint8 v);
+    void set(guint8 v);
+    void set(gint16 v);
+    void set(guint16 v);
+    void set(gint32 v);
+    void set(guint32 v);
+    void set(gint64 v);
+    void set(guint64 v);
+    void set(gfloat32 v);
+    void set(gfloat64 v);
+    
+    bool getBool();
+    gint8 getInt8();
+    guint8 getUint8();
+    gint16 getInt16();
+    guint16 getUint16();
+    gint32 getInt32();
+    guint32 getUint32();
+    gint64 getInt64();
+    guint64 getUint64();
+    gfloat32 getFloat32();
+    gfloat64 getFloat64();
+    
+public:
+    gint getInt();
+    guint getUint();
+    gfloat getFloat();
+    
+public:
+    virtual guint getHash();
+    virtual bool isEqual(GObject* obj);
+    virtual GString* description();
 private:
 	Type m_Type;
 	union {
@@ -39,7 +76,6 @@ private:
 		guint64 u64;
 		gfloat32 f32;
 		gfloat64 f64;
-		void*	ptr;
 	} m_Value;
 };
 
