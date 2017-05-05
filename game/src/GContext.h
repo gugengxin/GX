@@ -106,6 +106,7 @@ public:
 //Texture
 public:
     GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param);
+    GTexture2D* loadTexture2D(GDib* dib,GTexture2D::Parameter* param);
 private:
 	void addTextureNodeInMT(GTexture::Node* node);
 	void removeTextureNodeInMT(GTexture::Node* node);

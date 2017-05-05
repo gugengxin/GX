@@ -202,16 +202,22 @@ GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTe
 {
     GDib* dib=GDib::load(reader, suggestFT);
     if (dib) {
-        GTexture::Node* node=new GTexture::Node();
-        if(loadTexture2DNode(node, dib, param)) {
-            GTexture2D* res=GTexture2D::alloc();
-            res->config(node, dib, param);
-            GO::autorelease(res);
-            return res;
-        }
-        else {
-            delete node;
-        }
+        loadTexture2D(dib, param);
+    }
+    return NULL;
+}
+
+GTexture2D* GContext::loadTexture2D(GDib* dib,GTexture2D::Parameter* param)
+{
+    GTexture::Node* node=new GTexture::Node();
+    if(loadTexture2DNode(node, dib, param)) {
+        GTexture2D* res=GTexture2D::alloc();
+        res->config(node, dib, param);
+        GO::autorelease(res);
+        return res;
+    }
+    else {
+        delete node;
     }
     return NULL;
 }
