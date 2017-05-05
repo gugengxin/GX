@@ -8,6 +8,7 @@
 
 #include "GTextureManager.h"
 #include "GContext.h"
+#include "GWindow.h"
 
 
 GTextureManager* GTextureManager::shared(GContext* context)
@@ -25,16 +26,21 @@ GTextureManager::~GTextureManager()
     
 }
 
-GTexture2D* GTextureManager::load2D(GString* name,GString* exName)
+GTexture2D* GTextureManager::load2D(GString* name,GDib::FileType suggestFT,GTexture2D::Parameter* param)
 {
-    GTexture2D* res=NULL;
-    
-    GString* str=GString::alloc();
-    
-    str->format("%@");
-    
-    
-    GO::release(str);
+    GTexture2D* res=GX_CAST_R(GTexture2D*, findInMap(MapTex2D, name));
+    if (!res) {
+        GBundle* bundle=NULL;
+        GReader* reader=openReader(name, bundle);
+        if (reader) {
+            res=m_Context->loadTexture2D(reader, suggestFT, param);
+            closeReader(reader, bundle);
+            
+            if (res) {
+                addToMap(MapTex2D, name, res);
+            }
+        }
+    }
     return res;
 }
 

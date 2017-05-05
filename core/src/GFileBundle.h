@@ -23,6 +23,7 @@ class GFileBundle : public GBundle
 	GX_GOBJECT(GFileBundle);
 public:
 	bool open(const gtchar* path);
+    virtual bool isOpened();
 	virtual void close();
 
 	using GBundle::openReader;

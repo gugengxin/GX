@@ -19,14 +19,18 @@ GResourceManager::~GResourceManager()
     
 }
 
-void GResourceManager::addBundle(GBundle* v)
+bool GResourceManager::addBundle(GBundle* v)
 {
+    if (!v->isOpened()) {
+        return false;
+    }
     if (v==GAppBundle::main()) {
         m_MainBundle=GX_CAST_R(GAppBundle*, v);
     }
     else {
         m_Bundles.add(v);
     }
+    return true;
 }
 
 void GResourceManager::removeBundle(GBundle* v)
@@ -37,6 +41,59 @@ void GResourceManager::removeBundle(GBundle* v)
     else {
         m_Bundles.remove(v);
     }
+}
+
+bool GResourceManager::addFileBundle(const gtchar* path)
+{
+    bool res=false;
+    GFileBundle* bundle=GFileBundle::alloc();
+    if (bundle->open(path)) {
+        addBundle(bundle);
+        res=true;
+    }
+    GO::release(bundle);
+    return res;
+}
+
+bool GResourceManager::addZipBundle(const gtchar* path,bool createMap)
+{
+    bool res=false;
+    GZipBundle* bundle=GZipBundle::alloc();
+    if (bundle->open(path,createMap)) {
+        addBundle(bundle);
+        res=true;
+    }
+    GO::release(bundle);
+    return res;
+}
+
+GReader* GResourceManager::openReader(GString* fileName,GBundle*& bundleOut)
+{
+    GReader* res=NULL;
+    if (m_MainBundle) {
+        res=m_MainBundle->openReader(fileName);
+        if (res) {
+            bundleOut=m_MainBundle;
+            return res;
+        }
+    }
+    
+    gint count=m_Bundles.getCount();
+    for (gint i=0; i<count; ++i) {
+        GBundle* bundle=m_Bundles.get(i);
+        res=bundle->openReader(fileName);
+        if (res) {
+            bundleOut=bundle;
+            break;
+        }
+    }
+    
+    return res;
+}
+
+void GResourceManager::closeReader(GReader* reader,GBundle* bundle)
+{
+    bundle->closeReader(reader);
 }
 
 

@@ -24,7 +24,7 @@ protected:
     virtual bool create(GWindow* win);
     virtual void destroy();
     
-protected:
+public:
     inline GWindow* getWindow() const {
         return m_Window;
     }

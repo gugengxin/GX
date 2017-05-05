@@ -22,16 +22,20 @@ protected:
     GResourceManager();
     virtual ~GResourceManager();
 public:
-    void addBundle(GBundle* v);
+    bool addBundle(GBundle* v);
     void removeBundle(GBundle* v);
+public:
+    bool addFileBundle(const gtchar* path);
+    bool addZipBundle(const gtchar* path,bool createMap=true);
+protected:
+    GReader* openReader(GString* fileName,GBundle*& bundleOut);
+    void closeReader(GReader* reader,GBundle* bundle);
 public:
     
 protected:
     virtual GMap<GString, GObject>* getMap(gint index)=0;
     GObject* findInMap(gint index,GString* key);
     void addToMap(gint index,GString* key,GObject* obj);
-    
-    
 private:
     GAppBundle*     m_MainBundle;
     GArray<GBundle> m_Bundles;

@@ -24,7 +24,7 @@ private:
     GTextureManager(GContext* context);
     virtual ~GTextureManager();
 public:
-    GTexture2D* load2D(GString* name,GString* exName);
+    GTexture2D* load2D(GString* name,GDib::FileType suggestFT,GTexture2D::Parameter* param);
 protected:
     typedef enum _Map {
         MapTex2D,

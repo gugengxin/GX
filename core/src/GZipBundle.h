@@ -23,6 +23,7 @@ class GZipBundle : public GBundle
 	GX_GOBJECT(GZipBundle);
 public:
 	bool open(const gtchar* path,bool createMap=true);
+    virtual bool isOpened();
 	virtual void close();
 
 	using GBundle::openReader;

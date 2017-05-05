@@ -28,6 +28,11 @@ bool GFileBundle::open(const gtchar* path)
     return true;
 }
 
+bool GFileBundle::isOpened()
+{
+    return m_RootPath.getLength()>0;
+}
+
 void GFileBundle::close()
 {
 	m_RootPath.clear();

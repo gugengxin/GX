@@ -36,6 +36,11 @@ bool GZipBundle::open(const gtchar* path,bool createMap)
     return true;
 }
 
+bool GZipBundle::isOpened()
+{
+    return m_Reader!=NULL;
+}
+
 void GZipBundle::close()
 {
     m_Reader->close();

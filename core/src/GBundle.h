@@ -22,6 +22,7 @@ class GBundle : public GObject
 {
 	GX_VIRTUAL_GOBJECT(GBundle);
 public:
+    virtual bool isOpened()=0;
 	virtual void close()=0;
 
 	GReader* openReader(const gchar* fileName);
