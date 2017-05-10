@@ -2,7 +2,7 @@
 
 if [ "$1" = "" ] || [ "$2" = "" ] || [ "$3" = "" ]
 then
-	echo "Help: +component name +object-name +object-base-name"
+	echo "Help: +component-name +object-name +object-base-name"
 	exit
 fi
 

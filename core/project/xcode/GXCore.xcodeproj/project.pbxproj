@@ -175,6 +175,9 @@
 		CA530F0B1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */; };
 		CA530F0C1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */; };
 		CA530F0D1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */; };
+		CAF8F6011EC31A14009475DE /* GFontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF8F5FF1EC31A14009475DE /* GFontManager.cpp */; };
+		CAF8F6041EC321F9009475DE /* GFontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF8F5FF1EC31A14009475DE /* GFontManager.cpp */; };
+		CAF8F6051EC321F9009475DE /* GFontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF8F5FF1EC31A14009475DE /* GFontManager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -306,6 +309,8 @@
 		CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GResourceManager.cpp; sourceTree = "<group>"; };
 		CA530F0A1EADDF9E004DCFAB /* GResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GResourceManager.h; sourceTree = "<group>"; };
 		CA5BCA391EA26545006CF7DE /* GXCore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXCore.xcconfig; path = ../../product/xcode/GXCore.xcconfig; sourceTree = "<group>"; };
+		CAF8F5FF1EC31A14009475DE /* GFontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFontManager.cpp; sourceTree = "<group>"; };
+		CAF8F6001EC31A14009475DE /* GFontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFontManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -538,6 +543,8 @@
 				CA3A95B91E7A727B00CEFD8E /* GFileManager.cpp */,
 				CA530F0A1EADDF9E004DCFAB /* GResourceManager.h */,
 				CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */,
+				CAF8F6001EC31A14009475DE /* GFontManager.h */,
+				CAF8F5FF1EC31A14009475DE /* GFontManager.cpp */,
 			);
 			name = IO;
 			sourceTree = "<group>";
@@ -718,6 +725,7 @@
 				CA3A96981E7A727C00CEFD8E /* GOWHash.cpp in Sources */,
 				CA3A96901E7A727C00CEFD8E /* GNumber.cpp in Sources */,
 				CA3A961C1E7A727B00CEFD8E /* GAppBundle.cpp in Sources */,
+				CAF8F6011EC31A14009475DE /* GFontManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,6 +789,7 @@
 				CA3A96991E7A727C00CEFD8E /* GOWHash.cpp in Sources */,
 				CA3A96911E7A727C00CEFD8E /* GNumber.cpp in Sources */,
 				CA3A961D1E7A727B00CEFD8E /* GAppBundle.cpp in Sources */,
+				CAF8F6041EC321F9009475DE /* GFontManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -844,6 +853,7 @@
 				CA3A969A1E7A727C00CEFD8E /* GOWHash.cpp in Sources */,
 				CA3A96921E7A727C00CEFD8E /* GNumber.cpp in Sources */,
 				CA3A961E1E7A727B00CEFD8E /* GAppBundle.cpp in Sources */,
+				CAF8F6051EC321F9009475DE /* GFontManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
