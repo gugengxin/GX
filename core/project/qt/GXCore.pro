@@ -59,6 +59,7 @@ SOURCES += \
 	../../src/GFileManager.cpp\
 	../../src/GFileReader.cpp\
 	../../src/GFileWriter.cpp\
+	../../src/GFontManager.cpp\
 	#../../src/GJNI.cpp\
 	../../src/GJpeg.cpp\
 	../../src/GList.cpp\
@@ -122,6 +123,7 @@ HEADERS += \
 	../../src/GFileManager.h\
 	../../src/GFileReader.h\
 	../../src/GFileWriter.h\
+	../../src/GFontManager.h\
 	../../src/GJNI.h\
 	../../src/GJpeg.h\
 	../../src/GList.h\

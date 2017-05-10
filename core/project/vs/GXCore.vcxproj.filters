@@ -222,6 +222,9 @@
     <ClInclude Include="..\..\src\GList.h">
       <Filter>src\struct</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\GFontManager.h">
+      <Filter>src\IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GAction.cpp">
@@ -391,6 +394,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GList.cpp">
       <Filter>src\struct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFontManager.cpp">
+      <Filter>src\IO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

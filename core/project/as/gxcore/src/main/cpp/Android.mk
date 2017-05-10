@@ -27,7 +27,7 @@ LOCAL_CPPFLAGS	+= -fno-rtti
 LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
 LOCAL_EXPORT_CPPFLAGS := $(LOCAL_CPPFLAGS)
 LOCAL_WHOLE_STATIC_LIBRARIES := GXCoreAndroid
-LOCAL_STATIC_LIBRARIES	:= gx_zlib gx_libpng gx_libjpeg
+LOCAL_STATIC_LIBRARIES	:= gx_zlib gx_libpng gx_libjpeg gx_freetype
 #LOCAL_LDLIBS 	:=
 LOCAL_EXPORT_LDLIBS := -landroid -llog
 #__LOCAL_SRC_FILES_START__
@@ -52,6 +52,7 @@ LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GFileBundle.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GFileManager.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GFileReader.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GFileWriter.cpp
+LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GFontManager.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GJpeg.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GList.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GLog.cpp
@@ -92,5 +93,6 @@ include $(BUILD_STATIC_LIBRARY)
 $(call import-module,external/zlib/lib/ard)
 $(call import-module,external/libpng/lib/ard)
 $(call import-module,external/libjpeg/lib/ard)
+$(call import-module,external/freetype/lib/ard)
 
 
