@@ -65,12 +65,16 @@ void Game::eventStart()
     data->setOffset(0);
     data->setStride(sizeof(md[0]));
     
+    tex=context.loadTexture2D(GS::chars("lena_rgb.jpg"), GDib::JPEG, NULL);
+    
+    /*
     GReader* reader=GAppBundle::main()->openReader("lena_rgb.jpg");
     if (reader) {
         tex=context.loadTexture2D(reader, GDib::JPEG, NULL);
         GO::retain(tex);
         GAppBundle::main()->closeReader(reader);
     }
+    //*/
     
     if (fb->renderCheck()) {
         fb->setBackgroundColor(0, 1, 0, 1);

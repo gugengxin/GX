@@ -15,17 +15,17 @@
 #include "GReader.h"
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
-#include "GTextureManager.h"
+#include "GResourceManager.h"
+#include "GString.h"
 
 #include "GXGObject.h"
 
-class GContext : public GX_CONTEXT_BASE
+class GContext : public GX_CONTEXT_BASE, public GResourceManager
 {
     friend class GX_CONTEXT_BASE;
     friend class GWindow;
     friend class GTexture;
     friend class GFrameBuffer;
-    friend class GTextureManager;
 private:
 	enum ShaderID {
 		SRID_Graphics = 0,
@@ -93,12 +93,20 @@ private:
 private:
     virtual bool create(GWindow* win);
     virtual void destroy();
-
 #if defined(GX_OS_ANDROID)
 private:
 	virtual void androidDestroy();
 	virtual void androidRecreate(GWindow* win);
 #endif
+//Resource Manager
+private:
+    typedef enum _Map {
+        MapTex2D,
+        MapCount,
+    } Map;
+    virtual GMap<GString, GObject>* getMap(gint index);
+private:
+    GMap<GString,GObject> m_Maps[MapCount];
 //Shader
 public:
 	GSRGraphics* getSRGraphics(GSRGraphics::ID srID);
@@ -107,6 +115,7 @@ public:
 public:
     GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param);
     GTexture2D* loadTexture2D(GDib* dib,GTexture2D::Parameter* param);
+    GTexture2D* loadTexture2D(GString* name,GDib::FileType suggestFT,GTexture2D::Parameter* param);
 private:
 	void addTextureNodeInMT(GTexture::Node* node);
 	void removeTextureNodeInMT(GTexture::Node* node);
@@ -127,8 +136,6 @@ private:
 	GShader*                        m_Shaders[SRIDCount];
 	GDataList<GTexture::Handle>     m_Textures;
     GDataList<GFrameBuffer::Handle> m_FrameBuffers;
-private:
-    GTextureManager m_TextureManager;
 };
 
 #include "GXGObjectUD.h"

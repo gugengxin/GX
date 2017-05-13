@@ -111,7 +111,7 @@ GContext::FBNodeUnloadObj::~FBNodeUnloadObj()
 
 
 //不用在这里初始化
-GContext::GContext() : m_TextureManager(this)
+GContext::GContext()
 {
 }
 //不用在这里反初始化
@@ -175,6 +175,11 @@ void GContext::androidRecreate(GWindow* win)
 }
 #endif
 
+GMap<GString, GObject>* GContext::getMap(gint index)
+{
+    return &m_Maps[index];
+}
+
 GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)
 {
     //GX_LOG_W(PrioINFO,"GContext","getSRGraphics");
@@ -202,7 +207,7 @@ GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTe
 {
     GDib* dib=GDib::load(reader, suggestFT);
     if (dib) {
-        loadTexture2D(dib, param);
+        return loadTexture2D(dib, param);
     }
     return NULL;
 }
@@ -220,6 +225,24 @@ GTexture2D* GContext::loadTexture2D(GDib* dib,GTexture2D::Parameter* param)
         delete node;
     }
     return NULL;
+}
+
+GTexture2D* GContext::loadTexture2D(GString* name,GDib::FileType suggestFT,GTexture2D::Parameter* param)
+{
+    GTexture2D* res=GX_CAST_R(GTexture2D*, findInMap(MapTex2D, name));
+    if (!res) {
+        GBundle* bundle=NULL;
+        GReader* reader=openReader(name, bundle);
+        if (reader) {
+            res=loadTexture2D(reader, suggestFT, param);
+            closeReader(reader, bundle);
+            
+            if (res) {
+                addToMap(MapTex2D, name, res);
+            }
+        }
+    }
+    return res;
 }
 
 void GContext::addTextureNodeInMT(GTexture::Node* node)

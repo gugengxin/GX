@@ -79,7 +79,6 @@
 		CAFE76F11EB50A3600E43016 /* GAndroidActivity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAFE76E41EB50A3600E43016 /* GAndroidActivity.cpp */; };
 		CAFE76F21EB50A3600E43016 /* GAndroidDaydream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAFE76E61EB50A3600E43016 /* GAndroidDaydream.cpp */; };
 		CAFE76F31EB50A3600E43016 /* GAndroidEntrance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAFE76E81EB50A3600E43016 /* GAndroidEntrance.cpp */; };
-		CAFE76F41EB50A3600E43016 /* GTextureManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAFE76EF1EB50A3600E43016 /* GTextureManager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,8 +175,6 @@
 		CAFE76EC1EB50A3600E43016 /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
 		CAFE76ED1EB50A3600E43016 /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
 		CAFE76EE1EB50A3600E43016 /* wglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wglew.h; sourceTree = "<group>"; };
-		CAFE76EF1EB50A3600E43016 /* GTextureManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GTextureManager.cpp; sourceTree = "<group>"; };
-		CAFE76F01EB50A3600E43016 /* GTextureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTextureManager.h; sourceTree = "<group>"; };
 		CAFE76F51EB5189400E43016 /* GXCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GXCore.xcodeproj; path = ../../../core/project/xcode/GXCore.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -261,8 +258,6 @@
 		CA4CD5441D508D3F008005CF /* texture */ = {
 			isa = PBXGroup;
 			children = (
-				CAFE76F01EB50A3600E43016 /* GTextureManager.h */,
-				CAFE76EF1EB50A3600E43016 /* GTextureManager.cpp */,
 				CAC708AB1D13CDE900B98028 /* GTexture.h */,
 				CAC708AA1D13CDE900B98028 /* GTexture.cpp */,
 				CAC708B01D13CDFE00B98028 /* GTexture2D.h */,
@@ -504,7 +499,6 @@
 				CABB5CD31CE0E40500D5B648 /* GXOpenGL.cpp in Sources */,
 				CA3A7EAC1DED656800197FCB /* GBaseContext.cpp in Sources */,
 				CABB5CCB1CE0E40500D5B648 /* GD3DContext.cpp in Sources */,
-				CAFE76F41EB50A3600E43016 /* GTextureManager.cpp in Sources */,
 				CABB5CD21CE0E40500D5B648 /* GXDirectX.cpp in Sources */,
 				CAFE76F31EB50A3600E43016 /* GAndroidEntrance.cpp in Sources */,
 				CABB3FB51CFE133000A7367C /* GDataBuffer.cpp in Sources */,

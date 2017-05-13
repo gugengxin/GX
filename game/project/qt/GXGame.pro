@@ -45,7 +45,6 @@ SOURCES += \
 	../../src/GShader.cpp\
 	../../src/GTexture.cpp\
 	../../src/GTexture2D.cpp\
-	../../src/GTextureManager.cpp\
 	../../src/GWindow.cpp\
 	#../../src/GXDirectX.cpp\
 	#../../src/GXMetal.cpp\
@@ -80,7 +79,6 @@ HEADERS += \
 	../../src/GShader.h\
 	../../src/GTexture.h\
 	../../src/GTexture2D.h\
-	../../src/GTextureManager.h\
 	../../src/GWindow.h\
 	../../src/GX3DAPI.h\
 	../../src/GX3DAPIType.h\

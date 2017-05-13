@@ -540,7 +540,6 @@ namespace GX
 
 
 
-
 GString::Formater::Formater(GString* str, gint cursor, gint cursorEnd)
 {
     m_String = str;
@@ -777,6 +776,76 @@ void GString::Formater::end()
 
 
 GX_GOBJECT_IMPLEMENT(GString, GObject);
+
+
+GString* GString::chars(const gchar* str, gint len)
+{
+    GString* res=GString::autoAlloc();
+    res->setChars(str,len);
+    return res;
+}
+GString* GString::chars(const guchar* str, gint len)
+{
+    GString* res=GString::autoAlloc();
+    res->setChars(str,len);
+    return res;
+}
+GString* GString::chars(const gwchar* str, gint len)
+{
+    GString* res=GString::autoAlloc();
+    res->setChars(str,len);
+    return res;
+}
+
+GString* GString::number(gint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    GString* res=GString::autoAlloc();
+    res->setNumber(v,radix,vsLen,fillChar);
+    return res;
+}
+GString* GString::number(guint16 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    GString* res=GString::autoAlloc();
+    res->setNumber(v,radix,vsLen,fillChar);
+    return res;
+}
+GString* GString::number(gint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    GString* res=GString::autoAlloc();
+    res->setNumber(v,radix,vsLen,fillChar);
+    return res;
+}
+GString* GString::number(guint32 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    GString* res=GString::autoAlloc();
+    res->setNumber(v,radix,vsLen,fillChar);
+    return res;
+}
+GString* GString::number(gint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    GString* res=GString::autoAlloc();
+    res->setNumber(v,radix,vsLen,fillChar);
+    return res;
+}
+GString* GString::number(guint64 v, GX::StringRadix radix, gint vsLen, gwchar fillChar)
+{
+    GString* res=GString::autoAlloc();
+    res->setNumber(v,radix,vsLen,fillChar);
+    return res;
+}
+GString* GString::number(gfloat32 v, gint precision, gint vsLen, gwchar fillChar)
+{
+    GString* res=GString::autoAlloc();
+    res->setNumber(v,precision,vsLen,fillChar);
+    return res;
+}
+GString* GString::number(gfloat64 v, gint precision, gint vsLen, gwchar fillChar)
+{
+    GString* res=GString::autoAlloc();
+    res->setNumber(v,precision,vsLen,fillChar);
+    return res;
+}
+
 
 GString::GString()
 {

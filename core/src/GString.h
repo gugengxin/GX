@@ -21,10 +21,10 @@
 // Down can't include other h file
 
 class GString : public GObject, public GSerialize, public GUnserialize {
-    friend class GZipBundle;
+    friend class GBundle;
     friend class GFileBundle;
+    friend class GZipBundle;
     friend class GAppBundle;
-	friend class GBundle;
     friend class GZipReader;
     GX_GOBJECT(GString);
 public:
@@ -78,6 +78,18 @@ public:
         gint m_Cursor;
         gint m_CursorEnd;
     };
+public:
+    static GString* chars(const gchar* str, gint len=-1);
+    static GString* chars(const guchar* str, gint len=-1);
+    static GString* chars(const gwchar* str, gint len=-1);
+    static GString* number(gint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    static GString* number(guint16 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    static GString* number(gint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    static GString* number(guint32 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    static GString* number(gint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    static GString* number(guint64 v, GX::StringRadix radix = GX::SR_Decimal, gint vsLen = 0, gwchar fillChar = L' ');
+    static GString* number(gfloat32 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
+    static GString* number(gfloat64 v, gint precision = 6, gint vsLen = 0, gwchar fillChar = L' ');
 public:
     virtual guint getHash();
     virtual bool isEqual(GObject* obj);
@@ -239,6 +251,8 @@ private:
     GX::Data            m_OutBuf;
     GX::StringEncoding  m_OutBufSE;
 };
+
+typedef GString GS;
 
 // Up can't include other h file
 #include "GXGObjectUD.h"

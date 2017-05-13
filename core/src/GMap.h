@@ -25,7 +25,7 @@ public:
 template <class K,class O>
 class GMap : public GMapBase {
 	friend class GNoticeCenter;
-    friend class GTextureManager;
+    friend class GContext;
     friend class GFontManager;
     GX_GOBJECT(GMap);
 private:
