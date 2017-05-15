@@ -7,6 +7,9 @@
     <Filter Include="src\glew">
       <UniqueIdentifier>{4df46faf-0767-4919-b733-6fea9e6e1000}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\unuse">
+      <UniqueIdentifier>{7ba16c4b-56af-443a-8699-9025876bb37e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GBaseContext.cpp">
@@ -77,6 +80,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\glew.c">
       <Filter>src\glew</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GAndroidActivity.cpp">
+      <Filter>src\unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GAndroidDaydream.cpp">
+      <Filter>src\unuse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GAndroidEntrance.cpp">
+      <Filter>src\unuse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +181,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GL\wglew.h">
       <Filter>src\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\com_gxengine_game_GAndroidActivity.h">
+      <Filter>src\unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\com_gxengine_game_GAndroidDaydream.h">
+      <Filter>src\unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GAndroidActivity.h">
+      <Filter>src\unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GAndroidDaydream.h">
+      <Filter>src\unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GAndroidEntrance.h">
+      <Filter>src\unuse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

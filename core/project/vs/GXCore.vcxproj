@@ -43,6 +43,8 @@
     <ClInclude Include="..\..\src\GFileReader.h" />
     <ClInclude Include="..\..\src\GFileWriter.h" />
     <ClInclude Include="..\..\src\GFontManager.h" />
+    <ClInclude Include="..\..\src\GFT.h" />
+    <ClInclude Include="..\..\src\GGeometry.h" />
     <ClInclude Include="..\..\src\GJNI.h" />
     <ClInclude Include="..\..\src\GJpeg.h" />
     <ClInclude Include="..\..\src\GList.h" />
@@ -112,6 +114,8 @@
     <ClCompile Include="..\..\src\GFileReader.cpp" />
     <ClCompile Include="..\..\src\GFileWriter.cpp" />
     <ClCompile Include="..\..\src\GFontManager.cpp" />
+    <ClCompile Include="..\..\src\GFT.cpp" />
+    <ClCompile Include="..\..\src\GGeometry.cpp" />
     <ClCompile Include="..\..\src\GJNI.cpp" />
     <ClCompile Include="..\..\src\GJpeg.cpp" />
     <ClCompile Include="..\..\src\GList.cpp" />

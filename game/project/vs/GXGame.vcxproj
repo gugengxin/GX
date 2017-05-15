@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\GAndroidActivity.cpp" />
+    <ClCompile Include="..\..\src\GAndroidDaydream.cpp" />
+    <ClCompile Include="..\..\src\GAndroidEntrance.cpp" />
     <ClCompile Include="..\..\src\GBaseContext.cpp" />
     <ClCompile Include="..\..\src\GBuffer.cpp" />
     <ClCompile Include="..\..\src\GCanvas.cpp" />
@@ -44,6 +47,11 @@
     <ClCompile Include="..\..\src\GXOpenGL.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\com_gxengine_game_GAndroidActivity.h" />
+    <ClInclude Include="..\..\src\com_gxengine_game_GAndroidDaydream.h" />
+    <ClInclude Include="..\..\src\GAndroidActivity.h" />
+    <ClInclude Include="..\..\src\GAndroidDaydream.h" />
+    <ClInclude Include="..\..\src\GAndroidEntrance.h" />
     <ClInclude Include="..\..\src\GBaseContext.h" />
     <ClInclude Include="..\..\src\GBuffer.h" />
     <ClInclude Include="..\..\src\GCanvas.h" />

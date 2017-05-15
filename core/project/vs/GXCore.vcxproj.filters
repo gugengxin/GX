@@ -225,6 +225,12 @@
     <ClInclude Include="..\..\src\GFontManager.h">
       <Filter>src\IO</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\GFT.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GGeometry.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GAction.cpp">
@@ -397,6 +403,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GFontManager.cpp">
       <Filter>src\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFT.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GGeometry.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

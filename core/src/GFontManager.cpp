@@ -24,6 +24,8 @@
 #elif defined(GX_OS_MACOSX)
 #import <Cocoa/Cocoa.h>
 #endif
+#elif defined(GX_OS_WINDOWS)
+#include <Windows.h>
 #endif
 
 
@@ -179,6 +181,9 @@ static GData* _createSystemFontData(GString* name)
     return res;
 }
 
+#elif defined(GX_OS_WINDOWS)
+
+
 #endif
 
 
@@ -218,6 +223,8 @@ GFontManager::GFontManager()
         GString* key=GS::chars([str UTF8String]);
         m_SystemFontNames.set(key, key);
     }
+#elif defined(GX_OS_WINDOWS)
+	//::EnumFontFamilies
 #endif
     
     FT_Init_FreeType(GX_CAST_R(FT_Library*, &m_FTLibrary));
