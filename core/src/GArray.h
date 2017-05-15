@@ -18,6 +18,7 @@ class GArray : public GArrayBase {
 	friend class GRunLoop;
 	friend class GNCObserver;
     friend class GResourceManager;
+    friend class GFT;
 	GX_GOBJECT(GArray);
 public:
 	gint getCount() const {

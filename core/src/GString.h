@@ -104,6 +104,7 @@ public:
     void cutOff(gint len);
 public:
     const gchar* utf8String();
+    const guchar* utf16String();
     const gwchar* unicodeString();
     const gtchar* pathString();
     

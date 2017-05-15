@@ -928,6 +928,10 @@ const gchar* GString::utf8String()
 {
     return GX_CAST_R(const gchar*, getCString(GX::SE_Utf8));
 }
+const guchar* GString::utf16String()
+{
+    return GX_CAST_R(const guchar*, getCString(GX::SE_Utf16));
+}
 const gwchar* GString::unicodeString()
 {
     return GX_CAST_R(const gwchar*, getCString(GX::SE_Unicode));

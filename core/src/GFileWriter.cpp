@@ -7,8 +7,9 @@
 //
 
 #include "GFileWriter.h"
-#include "GXGObject.h"
 #include "GXFILE.h"
+
+#include "GXGObject.h"
 
 GX_GOBJECT_IMPLEMENT(GFileWriter, GWriter);
 

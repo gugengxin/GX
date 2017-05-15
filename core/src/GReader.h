@@ -12,8 +12,8 @@
 #include "GXPrefix.h"
 #include "GObject.h"
 
-
 #include "GXGObject.h"
+class GData;
 
 class GReader : public GObject {
     GX_VIRTUAL_GOBJECT(GReader);
@@ -25,6 +25,8 @@ public:
     virtual gint read(void* buf,guint len)=0;
     virtual bool skip(guint len)=0;
     virtual gint getBytes()=0;
+    
+    GData* readAllToData();
 public:
     virtual bool canRollback()=0;
     virtual bool rollback(guint len) {

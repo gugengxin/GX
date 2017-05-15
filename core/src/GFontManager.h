@@ -11,6 +11,8 @@
 
 #include "GXPrefix.h"
 #include "GResourceManager.h"
+#include "GFT.h"
+
 
 
 class GFontManager : public GResourceManager
@@ -21,14 +23,19 @@ private:
     GFontManager();
     virtual ~GFontManager();
 public:
+    GFT::Font* loadFTFont(GString* name, gint size, gint outlineSize);
+    
+protected:
     typedef enum _Map {
         MapFT,
         MapCount,
     } Map;
     virtual GMap<GString, GObject>* getMap(gint index);
 private:
+    GMap<GString, GObject> m_Maps[MapCount];
+    GMap<GString, GObject> m_SystemFontNames;
     void* m_FTLibrary;
-    GMap<GString,GObject> m_Maps[MapCount];
+    GMap<GString, GData> m_FTDataMap;
 };
 
 #endif /* GFontManager_h */
