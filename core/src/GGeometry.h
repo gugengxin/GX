@@ -13,7 +13,7 @@
 #include "GXMath.h"
 
 template <typename T>
-struct GPoint {
+class GPoint {
     T x,y;
     
     GPoint() : x(0),y(0) {}
@@ -30,18 +30,8 @@ struct GPoint {
     }
 };
 
-
-typedef GPoint<float> GPointF;
-typedef GPoint<short> GPointH;
-typedef GPoint<unsigned short> GPointUH;
-typedef GPoint<int> GPointN;
-
-extern GPointF GPointFZero;
-extern GPointH GPointHZero;
-extern GPointN GPointNZero;
-
 template <typename T>
-struct GSize {
+class GSize {
     GSize() : width(0), height(0){}
     GSize(T w, T h) : width(w), height(h) {}
     
@@ -72,19 +62,9 @@ struct GSize {
     T height;
 };
 
-typedef struct GSize<float>			GSizeF;
-typedef struct GSize<short>			GSizeH;
-typedef struct GSize<unsigned short>	GSizeUH;
-typedef struct GSize<int>				GSizeN;
-
-extern GSizeF GSizeFZero;
-extern GSizeH GSizeHZero;
-extern GSizeUH GSizeUHZero;
-extern GSizeN GSizeNZero;
-
 
 template <typename T>
-struct GRect {
+class GRect {
     
     GRect() : origin(0,0),size(0,0) {}
     GRect(GPoint<T> o,GSize<T> s) : origin(o),size(s) {}
@@ -200,22 +180,14 @@ struct GRect {
     }
     
     
-    struct GPoint<T> origin;
-    struct GSize<T>  size;
+    GPoint<T> origin;
+    GSize<T>  size;
 };
 
-typedef struct GRect<float> GRectF;
-typedef struct GRect<short> GRectH;
-typedef struct GRect<unsigned short> GRectUH;
-typedef struct GRect<int> GRectN;
-
-extern GRectF   GRectFZero;
-extern GRectH   GRectHZero;
-extern GRectUH  GRectUHZero;
-extern GRectN   GRectNZero;
+typedef GRect<gint32> GRectN;
 
 template <typename T>
-struct GEdge {
+class GEdge {
     GEdge() : left(0), right(0), top(0), bottom(0) {}
     GEdge(T l,T r,T t,T b) : left(l), right(r), top(t), bottom(b) {}
     
@@ -224,11 +196,6 @@ struct GEdge {
     T top;
     T bottom;
 };
-
-typedef struct GEdge<float>           GEdgeF;
-typedef struct GEdge<short>           GEdgeH;
-typedef struct GEdge<unsigned short>  GEdgeUH;
-typedef struct GEdge<int>             GEdgeN;
 
 //Funs
 template <typename T1, typename T2>

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA28FED71ECA997A002508DE /* GFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA28FED51ECA997A002508DE /* GFont.cpp */; };
+		CA39A7391ECADE900097C831 /* GFTFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA39A7371ECADE900097C831 /* GFTFont.cpp */; };
+		CA39A73A1ECADE900097C831 /* GFTFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA39A7371ECADE900097C831 /* GFTFont.cpp */; };
+		CA39A73B1ECADE900097C831 /* GFTFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA39A7371ECADE900097C831 /* GFTFont.cpp */; };
+		CA39A73C1ECADE970097C831 /* GFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA28FED51ECA997A002508DE /* GFont.cpp */; };
+		CA39A73D1ECADE970097C831 /* GFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA28FED51ECA997A002508DE /* GFont.cpp */; };
 		CA3A960C1E7A727B00CEFD8E /* GAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A958F1E7A727B00CEFD8E /* GAction.cpp */; };
 		CA3A960D1E7A727B00CEFD8E /* GAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A958F1E7A727B00CEFD8E /* GAction.cpp */; };
 		CA3A960E1E7A727B00CEFD8E /* GAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A958F1E7A727B00CEFD8E /* GAction.cpp */; };
@@ -176,9 +182,6 @@
 		CA530F0B1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */; };
 		CA530F0C1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */; };
 		CA530F0D1EADDF9E004DCFAB /* GResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */; };
-		CA7858871EC4B77D00FB208C /* GFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7858851EC4B77D00FB208C /* GFT.cpp */; };
-		CA7858881EC4B77D00FB208C /* GFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7858851EC4B77D00FB208C /* GFT.cpp */; };
-		CA7858891EC4B77D00FB208C /* GFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA7858851EC4B77D00FB208C /* GFT.cpp */; };
 		CAF8F6011EC31A14009475DE /* GFontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF8F5FF1EC31A14009475DE /* GFontManager.cpp */; };
 		CAF8F6041EC321F9009475DE /* GFontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF8F5FF1EC31A14009475DE /* GFontManager.cpp */; };
 		CAF8F6051EC321F9009475DE /* GFontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAF8F5FF1EC31A14009475DE /* GFontManager.cpp */; };
@@ -186,6 +189,10 @@
 
 /* Begin PBXFileReference section */
 		CA027B1A1E7ACCB300146D1A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		CA28FED51ECA997A002508DE /* GFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFont.cpp; sourceTree = "<group>"; };
+		CA28FED61ECA997A002508DE /* GFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFont.h; sourceTree = "<group>"; };
+		CA39A7371ECADE900097C831 /* GFTFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFTFont.cpp; sourceTree = "<group>"; };
+		CA39A7381ECADE900097C831 /* GFTFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFTFont.h; sourceTree = "<group>"; };
 		CA3A956A1E7A617F00CEFD8E /* GXCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3A957B1E7A631900CEFD8E /* GXCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA3A95881E7A638C00CEFD8E /* GXCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = GXCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -315,8 +322,6 @@
 		CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GResourceManager.cpp; sourceTree = "<group>"; };
 		CA530F0A1EADDF9E004DCFAB /* GResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GResourceManager.h; sourceTree = "<group>"; };
 		CA5BCA391EA26545006CF7DE /* GXCore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXCore.xcconfig; path = ../../product/xcode/GXCore.xcconfig; sourceTree = "<group>"; };
-		CA7858851EC4B77D00FB208C /* GFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFT.cpp; sourceTree = "<group>"; };
-		CA7858861EC4B77D00FB208C /* GFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFT.h; sourceTree = "<group>"; };
 		CAF8F5FF1EC31A14009475DE /* GFontManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GFontManager.cpp; sourceTree = "<group>"; };
 		CAF8F6001EC31A14009475DE /* GFontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFontManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -346,6 +351,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CA28FED41ECA992A002508DE /* font */ = {
+			isa = PBXGroup;
+			children = (
+				CA28FED61ECA997A002508DE /* GFont.h */,
+				CA28FED51ECA997A002508DE /* GFont.cpp */,
+				CA39A7381ECADE900097C831 /* GFTFont.h */,
+				CA39A7371ECADE900097C831 /* GFTFont.cpp */,
+				CAF8F6001EC31A14009475DE /* GFontManager.h */,
+				CAF8F5FF1EC31A14009475DE /* GFontManager.cpp */,
+			);
+			name = font;
+			sourceTree = "<group>";
+		};
 		CA3A95611E7A617F00CEFD8E = {
 			isa = PBXGroup;
 			children = (
@@ -376,6 +394,7 @@
 				CA3A96FA1E7A736B00CEFD8E /* unuse */,
 				CA3A97001E7A76AC00CEFD8E /* bundle */,
 				CA3A97011E7A76E000CEFD8E /* IO */,
+				CA28FED41ECA992A002508DE /* font */,
 				CA3A959A1E7A727B00CEFD8E /* GApplication.h */,
 				CA3A95991E7A727B00CEFD8E /* GApplication.cpp */,
 				CA3A95E71E7A727B00CEFD8E /* GSystem.cpp */,
@@ -425,8 +444,8 @@
 		CA3A96FC1E7A743100CEFD8E /* struct */ = {
 			isa = PBXGroup;
 			children = (
-				CA441CC51EC548D1004B15EC /* GGeometry.cpp */,
 				CA441CC61EC548D1004B15EC /* GGeometry.h */,
+				CA441CC51EC548D1004B15EC /* GGeometry.cpp */,
 				CA3A95D61E7A727B00CEFD8E /* GOWHash.h */,
 				CA3A95D51E7A727B00CEFD8E /* GOWHash.cpp */,
 				CA3A959B1E7A727B00CEFD8E /* GArray.cpp */,
@@ -485,12 +504,12 @@
 		CA3A96FE1E7A755600CEFD8E /* runloop */ = {
 			isa = PBXGroup;
 			children = (
-				CA3A958F1E7A727B00CEFD8E /* GAction.cpp */,
 				CA3A95901E7A727B00CEFD8E /* GAction.h */,
-				CA3A95CD1E7A727B00CEFD8E /* GNotice.cpp */,
+				CA3A958F1E7A727B00CEFD8E /* GAction.cpp */,
 				CA3A95CE1E7A727B00CEFD8E /* GNotice.h */,
-				CA3A95CF1E7A727B00CEFD8E /* GNoticeCenter.cpp */,
+				CA3A95CD1E7A727B00CEFD8E /* GNotice.cpp */,
 				CA3A95D01E7A727B00CEFD8E /* GNoticeCenter.h */,
+				CA3A95CF1E7A727B00CEFD8E /* GNoticeCenter.cpp */,
 				CA3A95E11E7A727B00CEFD8E /* GRunLoop.cpp */,
 				CA3A95E21E7A727B00CEFD8E /* GRunLoop.h */,
 			);
@@ -553,10 +572,6 @@
 				CA3A95B91E7A727B00CEFD8E /* GFileManager.cpp */,
 				CA530F0A1EADDF9E004DCFAB /* GResourceManager.h */,
 				CA530F091EADDF9E004DCFAB /* GResourceManager.cpp */,
-				CAF8F6001EC31A14009475DE /* GFontManager.h */,
-				CAF8F5FF1EC31A14009475DE /* GFontManager.cpp */,
-				CA7858861EC4B77D00FB208C /* GFT.h */,
-				CA7858851EC4B77D00FB208C /* GFT.cpp */,
 			);
 			name = IO;
 			sourceTree = "<group>";
@@ -693,6 +708,7 @@
 				CA3A96701E7A727B00CEFD8E /* GJpeg.cpp in Sources */,
 				CA3A96881E7A727C00CEFD8E /* GNotice.cpp in Sources */,
 				CA3A96E81E7A727C00CEFD8E /* GXPthread.cpp in Sources */,
+				CA28FED71ECA997A002508DE /* GFont.cpp in Sources */,
 				CA3A96D41E7A727C00CEFD8E /* GXCWnd.cpp in Sources */,
 				CA3A96BC1E7A727C00CEFD8E /* GSystem.cpp in Sources */,
 				CA3A96F11E7A727C00CEFD8E /* GZipReader.cpp in Sources */,
@@ -717,7 +733,7 @@
 				CA3A96941E7A727C00CEFD8E /* GObject.cpp in Sources */,
 				CA3A96A41E7A727C00CEFD8E /* GPtr.cpp in Sources */,
 				CA3A969C1E7A727C00CEFD8E /* GPieceData.cpp in Sources */,
-				CA7858871EC4B77D00FB208C /* GFT.cpp in Sources */,
+				CA39A7391ECADE900097C831 /* GFTFont.cpp in Sources */,
 				CA3A960C1E7A727B00CEFD8E /* GAction.cpp in Sources */,
 				CA3A964C1E7A727B00CEFD8E /* GDataReader.cpp in Sources */,
 				CA3A967C1E7A727B00CEFD8E /* GMap.cpp in Sources */,
@@ -759,6 +775,7 @@
 				CA3A96891E7A727C00CEFD8E /* GNotice.cpp in Sources */,
 				CA3A96E91E7A727C00CEFD8E /* GXPthread.cpp in Sources */,
 				CA3A96D51E7A727C00CEFD8E /* GXCWnd.cpp in Sources */,
+				CA39A73C1ECADE970097C831 /* GFont.cpp in Sources */,
 				CA3A96BD1E7A727C00CEFD8E /* GSystem.cpp in Sources */,
 				CA3A96F21E7A727C00CEFD8E /* GZipReader.cpp in Sources */,
 				CA3A96411E7A727B00CEFD8E /* GData.cpp in Sources */,
@@ -782,7 +799,6 @@
 				CA3A96951E7A727C00CEFD8E /* GObject.cpp in Sources */,
 				CA3A96A51E7A727C00CEFD8E /* GPtr.cpp in Sources */,
 				CA3A969D1E7A727C00CEFD8E /* GPieceData.cpp in Sources */,
-				CA7858881EC4B77D00FB208C /* GFT.cpp in Sources */,
 				CA3A960D1E7A727B00CEFD8E /* GAction.cpp in Sources */,
 				CA3A964D1E7A727B00CEFD8E /* GDataReader.cpp in Sources */,
 				CA3A967D1E7A727B00CEFD8E /* GMap.cpp in Sources */,
@@ -796,6 +812,7 @@
 				CA3A96251E7A727B00CEFD8E /* GArray.cpp in Sources */,
 				CA3A96751E7A727B00CEFD8E /* GList.cpp in Sources */,
 				CA3A96351E7A727B00CEFD8E /* GCoder.cpp in Sources */,
+				CA39A73A1ECADE900097C831 /* GFTFont.cpp in Sources */,
 				CA3A96CD1E7A727C00CEFD8E /* GWriter.cpp in Sources */,
 				CA3A96851E7A727B00CEFD8E /* GMutex.cpp in Sources */,
 				CA3A96F61E7A727C00CEFD8E /* GZipWriter.cpp in Sources */,
@@ -824,6 +841,7 @@
 				CA3A968A1E7A727C00CEFD8E /* GNotice.cpp in Sources */,
 				CA3A96EA1E7A727C00CEFD8E /* GXPthread.cpp in Sources */,
 				CA3A96D61E7A727C00CEFD8E /* GXCWnd.cpp in Sources */,
+				CA39A73D1ECADE970097C831 /* GFont.cpp in Sources */,
 				CA3A96BE1E7A727C00CEFD8E /* GSystem.cpp in Sources */,
 				CA3A96F31E7A727C00CEFD8E /* GZipReader.cpp in Sources */,
 				CA3A96421E7A727B00CEFD8E /* GData.cpp in Sources */,
@@ -847,7 +865,6 @@
 				CA3A96961E7A727C00CEFD8E /* GObject.cpp in Sources */,
 				CA3A96A61E7A727C00CEFD8E /* GPtr.cpp in Sources */,
 				CA3A969E1E7A727C00CEFD8E /* GPieceData.cpp in Sources */,
-				CA7858891EC4B77D00FB208C /* GFT.cpp in Sources */,
 				CA3A960E1E7A727B00CEFD8E /* GAction.cpp in Sources */,
 				CA3A964E1E7A727B00CEFD8E /* GDataReader.cpp in Sources */,
 				CA3A967E1E7A727B00CEFD8E /* GMap.cpp in Sources */,
@@ -861,6 +878,7 @@
 				CA3A96261E7A727B00CEFD8E /* GArray.cpp in Sources */,
 				CA3A96761E7A727B00CEFD8E /* GList.cpp in Sources */,
 				CA3A96361E7A727B00CEFD8E /* GCoder.cpp in Sources */,
+				CA39A73B1ECADE900097C831 /* GFTFont.cpp in Sources */,
 				CA3A96CE1E7A727C00CEFD8E /* GWriter.cpp in Sources */,
 				CA3A96861E7A727B00CEFD8E /* GMutex.cpp in Sources */,
 				CA3A96F71E7A727C00CEFD8E /* GZipWriter.cpp in Sources */,

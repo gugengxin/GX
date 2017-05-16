@@ -16,9 +16,9 @@ class GArrayBase : public GObject
 template <class T>
 class GArray : public GArrayBase {
 	friend class GRunLoop;
-	friend class GNCObserver;
+	friend class GNoticeCenter;
     friend class GResourceManager;
-    friend class GFT;
+    friend class GFTFont;
 	GX_GOBJECT(GArray);
 public:
 	gint getCount() const {

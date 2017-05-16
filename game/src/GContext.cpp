@@ -180,6 +180,11 @@ GMap<GString, GObject>* GContext::getMap(gint index)
     return &m_Maps[index];
 }
 
+void GContext::didReceivedMemoryWarning()
+{
+    //TODO
+}
+
 GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)
 {
     //GX_LOG_W(PrioINFO,"GContext","getSRGraphics");

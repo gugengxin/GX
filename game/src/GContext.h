@@ -104,7 +104,12 @@ private:
         MapTex2D,
         MapCount,
     } Map;
+    virtual gint getMapCount() {
+        return MapCount;
+    }
     virtual GMap<GString, GObject>* getMap(gint index);
+protected:
+    virtual void didReceivedMemoryWarning();
 private:
     GMap<GString,GObject> m_Maps[MapCount];
 //Shader

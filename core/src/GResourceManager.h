@@ -33,9 +33,14 @@ protected:
 public:
     
 protected:
+    virtual gint getMapCount()=0;
     virtual GMap<GString, GObject>* getMap(gint index)=0;
     GObject* findInMap(gint index,GString* key);
     void addToMap(gint index,GString* key,GObject* obj);
+private:
+    void eventReceivedMemoryWarning(GObject* obj);
+protected:
+    virtual void didReceivedMemoryWarning()=0;
 private:
     GAppBundle*     m_MainBundle;
     GArray<GBundle> m_Bundles;

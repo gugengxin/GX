@@ -1,12 +1,13 @@
 ﻿//
-//  GFT.cpp
+//  GFTFont.cpp
 //  GX
 //
 //  Created by GuGengxin.
 //  Copyright by gxengine.com
 //
 
-#include "GFT.h"
+#include "GFTFont.h"
+//Down include other h file
 #if __llvm__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdocumentation"
@@ -16,37 +17,44 @@
 #if __llvm__
 #pragma clang diagnostic pop
 #endif
-
-
+//Up include other h file
 #include "GXGObject.h"
 
-GX_GOBJECT_IMPLEMENT(GFT::Glyph, GObject);
 
-GFT::Glyph::Glyph()
+GX_GOBJECT_IMPLEMENT(GFTFont::Glyph, GFont::Glyph);
+
+GFTFont::Glyph::Glyph()
 {
     
 }
 
-GFT::Glyph::~Glyph()
+GFTFont::Glyph::~Glyph()
 {
     
 }
 
 
-GX_GOBJECT_IMPLEMENT(GFT::Font, GObject);
+GX_GOBJECT_IMPLEMENT(GFTFont, GFont);
 
-GFT::Font::Font()
+GFTFont::GFTFont()
 {
     m_Data=NULL;
     m_Face=NULL;
     m_Stroker=NULL;
-    m_Size=0;
     m_OLSize=0;
+    //m_GlyphCache;
 }
 
-GFT::Font::~Font()
+GFTFont::~GFTFont()
 {
     GO::release(m_Data);
+}
+
+bool GFTFont::create(GData* data,gint32 size,gint32 outlineSize)
+{
+    
+    
+    return false;
 }
 
 

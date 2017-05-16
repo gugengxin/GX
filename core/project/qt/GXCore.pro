@@ -55,11 +55,14 @@ SOURCES += \
 	../../src/GDataWriter.cpp\
 	../../src/GDib.cpp\
 	../../src/GError.cpp\
+	../../src/GFTFont.cpp\
 	../../src/GFileBundle.cpp\
 	../../src/GFileManager.cpp\
 	../../src/GFileReader.cpp\
 	../../src/GFileWriter.cpp\
+	../../src/GFont.cpp\
 	../../src/GFontManager.cpp\
+	../../src/GGeometry.cpp\
 	#../../src/GJNI.cpp\
 	../../src/GJpeg.cpp\
 	../../src/GList.cpp\
@@ -119,11 +122,14 @@ HEADERS += \
 	../../src/GDataWriter.h\
 	../../src/GDib.h\
 	../../src/GError.h\
+	../../src/GFTFont.h\
 	../../src/GFileBundle.h\
 	../../src/GFileManager.h\
 	../../src/GFileReader.h\
 	../../src/GFileWriter.h\
+	../../src/GFont.h\
 	../../src/GFontManager.h\
+	../../src/GGeometry.h\
 	../../src/GJNI.h\
 	../../src/GJpeg.h\
 	../../src/GList.h\

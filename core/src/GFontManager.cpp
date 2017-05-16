@@ -1,4 +1,4 @@
-//
+﻿//
 //  GFontManager.cpp
 //  GX
 //
@@ -225,6 +225,8 @@ GFontManager::GFontManager()
     }
 #elif defined(GX_OS_WINDOWS)
 	//::EnumFontFamilies
+    //::GetFontData
+    //::GetTextMetrics tmPitchAndFamily&TMPF_TRUETYPE
 #endif
     
     FT_Init_FreeType(GX_CAST_R(FT_Library*, &m_FTLibrary));
@@ -240,7 +242,12 @@ GMap<GString, GObject>* GFontManager::getMap(gint index)
     return &m_Maps[index];
 }
 
-GFT::Font* GFontManager::loadFTFont(GString* name, gint size, gint outlineSize)
+void GFontManager::didReceivedMemoryWarning()
+{
+    m_FTDataMap.removeAll();
+}
+
+GFTFont* GFontManager::loadFTFont(GString* name, gint32 size, gint32 outlineSize)
 {
     if (size<=0) {
         size=12;
@@ -251,7 +258,7 @@ GFT::Font* GFontManager::loadFTFont(GString* name, gint size, gint outlineSize)
     GString* key=GString::alloc();
     key->format("%@_%@_%@").arg(name).arg(size).arg(outlineSize).end();
     
-    GFT::Font* res=GX_CAST_R(GFT::Font*, findInMap(MapFT, key));
+    GFTFont* res=GX_CAST_R(GFTFont*, findInMap(MapFT, key));
     if (!res) {
         GData* data=m_FTDataMap.get(name);
         if (!data) {

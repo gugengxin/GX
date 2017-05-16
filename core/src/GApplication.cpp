@@ -20,6 +20,7 @@
 #include "GThread.h"
 #include "GLog.h"
 #include "GSystem.h"
+#include "GNoticeCenter.h"
 
 
 #if defined(GX_OS_APPLE)
@@ -202,6 +203,7 @@ void GApplication::destroyWinMsgWnd()
 
 #include "GXGObject.h"
 
+const GString* const memoryWarningNotification=GS::chars("appMemoryWarningNotification");
 
 GX_GOBJECT_IMPLEMENT(GApplication::Delegate, GObject);
 
@@ -333,4 +335,5 @@ void GApplication::eventWillTerminate()
 void GApplication::eventReceivedMemoryWarning()
 {
     m_Delegate->appReceivedMemoryWarning(this);
+    GNoticeCenter::current()->postNotice((GObject*)memoryWarningNotification, NULL);
 }

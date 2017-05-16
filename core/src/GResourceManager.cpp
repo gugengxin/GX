@@ -7,16 +7,22 @@
 //
 
 #include "GResourceManager.h"
+#include "GNoticeCenter.h"
+#include "GApplication.h"
 
 
 GResourceManager::GResourceManager()
 {
     m_MainBundle=GAppBundle::main();
+    
+    GNoticeCenter::current()->addObserver((GObject*)GApplication::memoryWarningNotification,
+                                          GX_CAST_R(GObject*, this),
+                                          GX_CAST_R(GX::Selector, &GResourceManager::eventReceivedMemoryWarning));
 }
 
 GResourceManager::~GResourceManager()
 {
-    
+    GNoticeCenter::current()->removeObserver(GX_CAST_R(GObject*, this));
 }
 
 bool GResourceManager::addBundle(GBundle* v)
@@ -107,4 +113,12 @@ void GResourceManager::addToMap(gint index,GString* key,GObject* obj)
     getMap(index)->set(key, obj);
 }
 
+void GResourceManager::eventReceivedMemoryWarning(GObject* obj)
+{
+    gint count=getMapCount();
+    for (gint i=0; i<count; i++) {
+        getMap(i)->removeAll();
+    }
+    didReceivedMemoryWarning();
+}
 

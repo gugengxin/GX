@@ -11,6 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GDataArray.h"
+#include "GString.h"
 #if defined(GX_OS_ANDROID)
 #include <android/input.h>
 #include <android/native_activity.h>
@@ -31,6 +32,8 @@ class GApplication
 #if defined(GX_OS_QT)
         Q_OBJECT
 #endif
+public:
+    static const GString* const memoryWarningNotification;
 public:
     class Delegate : public GObject {
         GX_GOBJECT(Delegate);

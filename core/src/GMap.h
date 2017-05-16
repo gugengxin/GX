@@ -155,7 +155,7 @@ public:
             m_ObjArray.set(i, NULL);
             
             while (p) {
-                Node* pTemp=p->next;
+                Node* pTemp=p->getNext();
                 delete p;
                 p=pTemp;
             }
