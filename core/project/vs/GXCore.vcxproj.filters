@@ -19,6 +19,9 @@
     <Filter Include="src\thread">
       <UniqueIdentifier>{6bfc0f4d-c9c6-4060-8cdc-63ddea4a0e16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\font">
+      <UniqueIdentifier>{78fc1b8d-3ef2-4141-afc6-0823f3f1a60f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GAction.h">
@@ -222,14 +225,17 @@
     <ClInclude Include="..\..\src\GList.h">
       <Filter>src\struct</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GFontManager.h">
-      <Filter>src\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GFT.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GGeometry.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFont.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFTFont.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GFontManager.h">
+      <Filter>src\font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -401,14 +407,17 @@
     <ClCompile Include="..\..\src\GList.cpp">
       <Filter>src\struct</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GFontManager.cpp">
-      <Filter>src\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GFT.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GGeometry.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFont.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFTFont.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GFontManager.cpp">
+      <Filter>src\font</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -4,6 +4,11 @@
 
 GX_GOBJECT_IMPLEMENT(GNoticeCenter::Observer, GObject);
 
+GNoticeCenter* GNoticeCenter::current()
+{
+	return GThread::current()->getNoticeCenter();
+}
+
 GNoticeCenter::Observer::Observer()
 {
 	m_Key = NULL;

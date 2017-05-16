@@ -68,10 +68,6 @@ private:
     static void keyDestroy(void* p);
 	static void* detchHelper(void*);
 	static void* createHelper(void*);
-	static void* detchHelperObj(void*);
-	static void* detchHelperFun(void*);
-	static void* createHelperObj(void*);
-	static void* createHelperFun(void*);
     
     GThread();
     ~GThread();
