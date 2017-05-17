@@ -282,7 +282,14 @@ GFTFont* GFontManager::loadFTFont(GString* name, gint32 size, gint32 outlineSize
         }
         
         if (data && data->getBytes()>0) {
-            //create FT Font
+            res=GFTFont::alloc();
+            if(res->create(data, size, outlineSize)) {
+                GO::autorelease(res);
+            }
+            else {
+                GO::release(res);
+                res=NULL;
+            }
         }
     }
     

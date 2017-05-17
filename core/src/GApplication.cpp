@@ -203,7 +203,7 @@ void GApplication::destroyWinMsgWnd()
 
 #include "GXGObject.h"
 
-const GString* const GApplication::memoryWarningNotification=GS::chars("appMemoryWarningNotification");
+const GString* const GApplication::memoryWarningNotification=GO::retain(GS::chars("appMemoryWarningNotification"));
 
 GX_GOBJECT_IMPLEMENT(GApplication::Delegate, GObject);
 

@@ -24,6 +24,9 @@ private:
     GFontManager();
     virtual ~GFontManager();
 public:
+    void* getFTLibrary() {
+        return m_FTLibrary;
+    }
     GFTFont* loadFTFont(GString* name, gint32 size, gint32 outlineSize);
     
 protected:

@@ -86,6 +86,7 @@ SOURCES += \
 	../../src/GString.cpp\
 	../../src/GSystem.cpp\
 	../../src/GThread.cpp\
+	../../src/GTypist.cpp\
 	../../src/GUUID.cpp\
 	../../src/GVector.cpp\
 	../../src/GWriter.cpp\
@@ -153,6 +154,7 @@ HEADERS += \
 	../../src/GString.h\
 	../../src/GSystem.h\
 	../../src/GThread.h\
+	../../src/GTypist.h\
 	../../src/GUUID.h\
 	../../src/GVector.h\
 	../../src/GWriter.h\

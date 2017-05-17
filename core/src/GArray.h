@@ -138,6 +138,19 @@ public:
         GO::release(GX_CAST_R(T**, m_Data.getPtr())[dc]);
         return changeCount(dc);
     }
+    bool removeLast(gint count) {
+        gint dc=getCount();
+        if (dc<=0) {
+            return true;
+        }
+        if (dc<count) {
+            count=dc;
+        }
+        for (gint i=dc-count; i<dc; ++i) {
+            GO::release(GX_CAST_R(T**, m_Data.getPtr())[i]);
+        }
+        return changeCount(dc-count);
+    }
 
 	void removeAll() {
 		for (gint i = 0; i < getCount(); i++) {
@@ -145,6 +158,32 @@ public:
 		}
 		changeCount(0);
 	}
+    
+    bool move(gint fromIdx,gint toIdx) {
+        gint count=getCount();
+        if (fromIdx<0 || fromIdx>=count) {
+            return false;
+        }
+        if (toIdx<0) {
+            toIdx=0;
+        }
+        else if(toIdx>=count) {
+            toIdx=count-1;
+        }
+        if (fromIdx==toIdx) {
+            return true;
+        }
+        
+        T* obj=((T**)m_Data.getPtr())[fromIdx];
+        if (fromIdx<toIdx) {
+            memmove((void*)&(((T**)m_Data.getPtr())[fromIdx]),(const void*)&(((T**)m_Data.getPtr())[fromIdx+1]),(toIdx-fromIdx)*sizeof(T*));
+        }
+        else {
+            memmove((void*)&(((T**)m_Data.getPtr())[toIdx+1]),(const void*)&(((T**)m_Data.getPtr())[toIdx]),(fromIdx-toIdx)*sizeof(T*));
+        }
+        ((T**)m_Data.getPtr())[toIdx]=obj;
+        return true;
+    }
     
 
 protected:

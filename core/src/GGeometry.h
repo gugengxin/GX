@@ -14,6 +14,7 @@
 
 template <typename T>
 class GPoint {
+public:
     T x,y;
     
     GPoint() : x(0),y(0) {}
@@ -32,6 +33,7 @@ class GPoint {
 
 template <typename T>
 class GSize {
+public:
     GSize() : width(0), height(0){}
     GSize(T w, T h) : width(w), height(h) {}
     
@@ -65,14 +67,14 @@ class GSize {
 
 template <typename T>
 class GRect {
-    
+public:
     GRect() : origin(0,0),size(0,0) {}
     GRect(GPoint<T> o,GSize<T> s) : origin(o),size(s) {}
     GRect(T x,T y,T w, T h) : origin(x,y),size(w,h) {}
     
     inline void set(T x,T y,T w, T h) {
-        origin.Set(x,y);
-        size.Set(w,h);
+        origin.set(x,y);
+        size.set(w,h);
     }
     inline void set(GPoint<T> o,GSize<T> s) {
         origin=o;
@@ -188,6 +190,7 @@ typedef GRect<gint32> GRectN;
 
 template <typename T>
 class GEdge {
+public:
     GEdge() : left(0), right(0), top(0), bottom(0) {}
     GEdge(T l,T r,T t,T b) : left(l), right(r), top(t), bottom(b) {}
     

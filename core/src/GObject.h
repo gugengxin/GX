@@ -22,11 +22,17 @@ class GString;
 
 class GObject {
 public:
-	static void retain(GObject* obj);
-	static void release(GObject* obj);
-    static void autorelease(GObject* obj);
+    template <class T> static T* retain(T* obj) {
+        return GX_CAST_R(T*, gretain(obj));
+    }
+    static void release(GObject* obj);
+    template <class T> static T* autorelease(T* obj) {
+        return GX_CAST_R(T*, gautorelease(obj));
+    }
 	static gint32 refCount(GObject* obj);
 protected:
+    static GObject* gretain(GObject* obj);
+    static GObject* gautorelease(GObject* obj);
 	static void* gmalloc(size_t size);
 	static void gfree(void* p);
 
@@ -54,6 +60,12 @@ public:
 };
 
 typedef GObject GO;
+
+
+#define GX_OBJECT_SET(name,value) GO::retain(value);GO::release(name);name=value
+#define GX_MEMBER_GET(t,m) inline t* get##m() const {	return m_##m; }
+#define GX_MEMBER_SET(t,m) inline void set##m(t* v) { GX_OBJECT_SET(m_##m,v); }
+#define GX_MEMBER_GS(t,m) GX_MEMBER_GET(t,m);GX_MEMBER_SET(t,m)
 
 
 

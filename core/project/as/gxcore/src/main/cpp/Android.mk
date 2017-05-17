@@ -78,6 +78,7 @@ LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GSerialize.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GString.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GSystem.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GThread.cpp
+LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GTypist.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GUUID.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GVector.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GWriter.cpp

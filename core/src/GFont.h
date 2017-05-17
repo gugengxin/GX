@@ -51,6 +51,16 @@ public:
     virtual gint32 getKerningX(guint32 index,guint32 next)=0;
     virtual guint32 getGlyphCount()=0;
     virtual Glyph* getGlyph(guint32 code)=0;
+    
+    inline gint32 getSize() {
+        return m_Size;
+    }
+protected:
+    inline void setSize(gint32 v) {
+        m_Size=v;
+    }
+private:
+    gint32 m_Size;
 };
 
 // Up can't include other h file

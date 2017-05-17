@@ -34,43 +34,22 @@ static inline void _ObjExDataFina(_ObjExData* om)
     GX_UNUSED(om)
 }
 
-
-
-void GObject::retain(GObject* obj)
-{
-	if (obj) {
-		__ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
-        
-        pthread_once(&key_once,keyCreate);
-        pthread_mutex_lock(&g_Mutex);
-        
-		++p->refCount;
-        
-        pthread_mutex_unlock(&g_Mutex);
-	}
-}
 void GObject::release(GObject* obj)
 {
-	if (obj) {
-		__ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
+    if (obj) {
+        __ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
         
         pthread_once(&key_once,keyCreate);
         pthread_mutex_lock(&g_Mutex);
-		
+        
         --p->refCount;
-		
+        
         pthread_mutex_unlock(&g_Mutex);
         
         if (p->refCount <= 0) {
             obj->uninit();
-			delete obj;
-		}
-	}
-}
-void GObject::autorelease(GObject* obj)
-{
-    if (obj) {
-        GThread::current()->pushARObj(obj);
+            delete obj;
+        }
     }
 }
 
@@ -81,6 +60,29 @@ gint32 GObject::refCount(GObject* obj)
 		return p->refCount;
 	}
 	return 0;
+}
+
+GObject* GObject::gretain(GObject* obj)
+{
+    if (obj) {
+        __ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
+        
+        pthread_once(&key_once,keyCreate);
+        pthread_mutex_lock(&g_Mutex);
+        
+        ++p->refCount;
+        
+        pthread_mutex_unlock(&g_Mutex);
+    }
+    return obj;
+}
+
+GObject* GObject::gautorelease(GObject* obj)
+{
+    if (obj) {
+        GThread::current()->pushARObj(obj);
+    }
+    return obj;
 }
 
 void* GObject::gmalloc(size_t size)
