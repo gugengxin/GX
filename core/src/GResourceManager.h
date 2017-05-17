@@ -15,6 +15,7 @@
 #include "GAppBundle.h"
 #include "GMap.h"
 #include "GString.h"
+#include "GNotice.h"
 
 class GResourceManager
 {
@@ -38,7 +39,7 @@ protected:
     GObject* findInMap(gint index,GString* key);
     void addToMap(gint index,GString* key,GObject* obj);
 private:
-    void eventReceivedMemoryWarning(GObject* obj);
+    void eventReceivedMemoryWarning(GNotice* obj);
 protected:
     virtual void didReceivedMemoryWarning()=0;
 private:

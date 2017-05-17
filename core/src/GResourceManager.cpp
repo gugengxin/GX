@@ -113,7 +113,7 @@ void GResourceManager::addToMap(gint index,GString* key,GObject* obj)
     getMap(index)->set(key, obj);
 }
 
-void GResourceManager::eventReceivedMemoryWarning(GObject* obj)
+void GResourceManager::eventReceivedMemoryWarning(GNotice* obj)
 {
     gint count=getMapCount();
     for (gint i=0; i<count; i++) {

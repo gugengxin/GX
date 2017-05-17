@@ -39,7 +39,7 @@ public:
         m_Target->eventWillTerminate();
     }
     inline void AppDidReceiveMemoryWarning() {
-        
+        m_Target->eventReceivedMemoryWarning();
     }
 private:
     GApplication* m_Target;
