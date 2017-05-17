@@ -284,6 +284,7 @@ GFTFont* GFontManager::loadFTFont(GString* name, gint32 size, gint32 outlineSize
         if (data && data->getBytes()>0) {
             res=GFTFont::alloc();
             if(res->create(data, size, outlineSize)) {
+				addToMap(MapFT, key, res);
                 GO::autorelease(res);
             }
             else {

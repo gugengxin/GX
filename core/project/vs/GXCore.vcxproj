@@ -69,6 +69,7 @@
     <ClInclude Include="..\..\src\GString.h" />
     <ClInclude Include="..\..\src\GSystem.h" />
     <ClInclude Include="..\..\src\GThread.h" />
+    <ClInclude Include="..\..\src\GTypist.h" />
     <ClInclude Include="..\..\src\GUUID.h" />
     <ClInclude Include="..\..\src\GVector.h" />
     <ClInclude Include="..\..\src\GWriter.h" />
@@ -141,6 +142,7 @@
     <ClCompile Include="..\..\src\GString.cpp" />
     <ClCompile Include="..\..\src\GSystem.cpp" />
     <ClCompile Include="..\..\src\GThread.cpp" />
+    <ClCompile Include="..\..\src\GTypist.cpp" />
     <ClCompile Include="..\..\src\GUUID.cpp" />
     <ClCompile Include="..\..\src\GVector.cpp" />
     <ClCompile Include="..\..\src\GWriter.cpp" />

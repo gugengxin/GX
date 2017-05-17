@@ -64,6 +64,8 @@ public:
     T height;
 };
 
+typedef GSize<float> GSizeF;
+
 
 template <typename T>
 class GRect {

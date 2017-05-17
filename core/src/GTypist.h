@@ -12,11 +12,16 @@
 #include "GXPrefix.h"
 #include "GString.h"
 #include "GFont.h"
+#include "GGeometry.h"
 
 
 class GTypist {
 public:
-    
+	class Layout {
+
+	};
+public:
+	static GSizeF sizeOfString(GString* str, GFont* font);
 };
 
 #endif /* GTypist_h */

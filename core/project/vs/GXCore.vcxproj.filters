@@ -237,6 +237,9 @@
     <ClInclude Include="..\..\src\GFontManager.h">
       <Filter>src\font</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\GTypist.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GAction.cpp">
@@ -417,6 +420,9 @@
       <Filter>src\font</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GFontManager.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GTypist.cpp">
       <Filter>src\font</Filter>
     </ClCompile>
   </ItemGroup>
