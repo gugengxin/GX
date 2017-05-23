@@ -15,7 +15,7 @@ set GX_TE=%GX_ROOT%\bin\gx_te.exe
 set SRC_ROOT=%LIBRARY_ROOT%\src
 set BUILD_ROOT=%PROJECT_ROOT%\build
 
-call %GX_ROOT%\bin\cmake.bat
+call %GX_ROOT%\bin\cmake_.bat
 call %GX_ROOT%\bin\vc.bat
 
 if exist %BUILD_ROOT% (
