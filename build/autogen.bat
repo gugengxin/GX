@@ -8,6 +8,9 @@ call %GX_ROOT%\tool\cmd\build\build_all.bat
 call %GX_ROOT%\external\freetype\project\vs\build.bat
 call %GX_ROOT%\external\freetype\project\android\build.bat
 
+call %GX_ROOT%\external\harfbuzz\project\vs\build.bat
+call %GX_ROOT%\external\harfbuzz\project\android\build.bat
+
 call %GX_ROOT%\external\libjpeg\project\vs\build.bat
 call %GX_ROOT%\external\libjpeg\project\android\build.bat
 

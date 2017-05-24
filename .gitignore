@@ -42,3 +42,5 @@ external/openal/lib
 external/pthread-win32/lib/
 external/pthread-win32/include/
 external/pthread-win32/pthread-win32/
+external/harfbuzz/include
+external/harfbuzz/lib

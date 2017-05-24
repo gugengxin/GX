@@ -19,6 +19,9 @@ XBuild ${GX_ROOT}/tool/cmd/build/build_all.sh
 XBuild ${GX_ROOT}/external/freetype/project/xcode/build.sh
 XBuild ${GX_ROOT}/external/freetype/project/android/build.sh
 
+XBuild ${GX_ROOT}/external/harfbuzz/project/xcode/build.sh
+XBuild ${GX_ROOT}/external/harfbuzz/project/android/build.sh
+
 XBuild ${GX_ROOT}/external/libjpeg/project/xcode/build.sh
 XBuild ${GX_ROOT}/external/libjpeg/project/android/build.sh
 
