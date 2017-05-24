@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Setup CMake environment"
+echo "Setup CMake(V3.7 or higher) environment"
 
 command -v cmake >/dev/null 2>&1 || {
 	echo "Please input CMake path: "

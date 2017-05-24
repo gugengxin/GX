@@ -1,6 +1,6 @@
 @echo off
 
-echo Setup CMake environment
+echo Setup CMake(V3.7 or higher) environment
 
 call :CMD_EXIST cmake.exe || ( 
 	set /p GX_CMAKE_ROOT=Please input CMake path: 
