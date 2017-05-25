@@ -16,6 +16,7 @@
 #include FT_FREETYPE_H
 #include FT_ADVANCES_H
 #include FT_STROKER_H
+#include FT_OUTLINE_H
 #if __llvm__
 #pragma clang diagnostic pop
 #endif
@@ -57,6 +58,15 @@ GFTFont::Glyph::~Glyph()
     if (m_Glyph) {
         FT_Done_Glyph(M_GLYPH());
     }
+}
+
+gint32 GFTFont::Glyph::getWidth()
+{
+	return m_Metrics.width;
+}
+gint32 GFTFont::Glyph::getHeight()
+{
+	return m_Metrics.height;
 }
 
 gint32 GFTFont::Glyph::getHoriBearingX()
@@ -101,6 +111,9 @@ bool GFTFont::Glyph::load(GFTFont* font,guint32 index)
     }
     
     if (font->hasOutline() && M_GLYPH()->format==FT_GLYPH_FORMAT_OUTLINE) {
+		//FT_Bitmap
+		//face->glyph->outline.n_points
+
         FT_Glyph glyphOL=glyph;
         if(FT_Glyph_StrokeBorder(&glyphOL, (FT_Stroker)font->m_Stroker, 0, 0)) {
             FT_Done_Glyph(glyphOL);
@@ -239,9 +252,20 @@ bool GFTFont::hasKerning()
 gint32 GFTFont::getKerningX(guint32 index,guint32 next)
 {
     FT_Vector delta;
-    FT_Get_Kerning( M_FACE(), index, next, ft_kerning_default, &delta );
+    FT_Get_Kerning( M_FACE(), index, next, FT_KERNING_DEFAULT, &delta );
     return GX_CAST_S(gint32,(delta.x));
 }
+
+bool GFTFont::hasOutline()
+{
+	return m_Stroker != NULL;
+}
+
+gint32 GFTFont::getOutlineSize()
+{
+	return m_OLSize;
+}
+
 
 guint32 GFTFont::getIndex(guint32 code)
 {

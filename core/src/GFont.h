@@ -28,6 +28,8 @@ public:
             return m_Index;
         }
     public:
+		virtual gint32 getWidth() = 0;
+		virtual gint32 getHeight() = 0;
         virtual gint32 getHoriBearingX()=0;
         virtual gint32 getHoriBearingY()=0;
         virtual gint32 getVertBearingX()=0;
@@ -50,6 +52,8 @@ public:
     virtual gint32 getAdvanceV(guint32 index)=0;
     virtual bool hasKerning()=0;
     virtual gint32 getKerningX(guint32 index,guint32 next)=0;
+	virtual bool hasOutline() = 0;
+	virtual gint32 getOutlineSize() = 0;
 public:
     virtual guint32 getIndex(guint32 code)=0;
     virtual guint32 getVariantIndex(guint32 code,guint32 variation_selector)=0;

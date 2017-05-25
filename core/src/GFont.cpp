@@ -178,7 +178,83 @@ hb_gx_get_glyph_v_origin (hb_font_t *font HB_UNUSED,
     return true;
 }
 
+static hb_position_t
+hb_gx_get_glyph_h_kerning(hb_font_t *font,
+	void *font_data,
+	hb_codepoint_t left_glyph,
+	hb_codepoint_t right_glyph,
+	void *user_data HB_UNUSED)
+{
+	const hb_gx_font_t *gx_font = (const hb_gx_font_t *)font_data;
+	GFont* gf = gx_font->font;
 
+	return gf->getKerningX(left_glyph, right_glyph);
+}
+
+static hb_bool_t
+hb_gx_get_glyph_extents(hb_font_t *font HB_UNUSED,
+	void *font_data,
+	hb_codepoint_t glyph,
+	hb_glyph_extents_t *extents,
+	void *user_data HB_UNUSED)
+{
+	const hb_gx_font_t *gx_font = (const hb_gx_font_t *)font_data;
+	GFont* gf = gx_font->font;
+
+	GFont::Glyph* gh = gf->getGlyph(glyph);
+	if (!gh) {
+		return false;
+	}
+
+	extents->x_bearing = gh->getHoriBearingX();
+	extents->y_bearing = gh->getHoriBearingY();
+	extents->width = gh->getWidth();
+	extents->height = -gh->getHeight();
+	if (font->x_scale < 0)
+	{
+		extents->x_bearing = -extents->x_bearing;
+		extents->width = -extents->width;
+	}
+	if (font->y_scale < 0)
+	{
+		extents->y_bearing = -extents->y_bearing;
+		extents->height = -extents->height;
+	}
+	return true;
+}
+
+static hb_bool_t
+hb_gx_get_glyph_contour_point(hb_font_t *font HB_UNUSED,
+	void *font_data,
+	hb_codepoint_t glyph,
+	unsigned int point_index,
+	hb_position_t *x,
+	hb_position_t *y,
+	void *user_data HB_UNUSED)
+{
+	const hb_gx_font_t *gx_font = (const hb_gx_font_t *)font_data;
+	GFont* gf = gx_font->font;
+
+	if (!gf->hasOutline()) {
+		return false;
+	}
+
+	GFont::Glyph* gh = gf->getGlyph(glyph);
+	if (!gh) {
+		return false;
+	}
+
+	//if (unlikely(ft_face->glyph->format != FT_GLYPH_FORMAT_OUTLINE))
+	//	return false;
+
+	//if (unlikely(point_index >= (unsigned int)ft_face->glyph->outline.n_points))
+	//	return false;
+
+	//*x = ft_face->glyph->outline.points[point_index].x;
+	//*y = ft_face->glyph->outline.points[point_index].y;
+
+	return true;
+}
 ////////////////////////////////
 
 
@@ -203,10 +279,10 @@ retry:
         hb_font_funcs_set_glyph_v_advance_func (funcs, hb_gx_get_glyph_v_advance, NULL, NULL);
         //hb_font_funcs_set_glyph_h_origin_func (funcs, hb_ft_get_glyph_h_origin, NULL, NULL);
         hb_font_funcs_set_glyph_v_origin_func (funcs, hb_gx_get_glyph_v_origin, NULL, NULL);
-//        hb_font_funcs_set_glyph_h_kerning_func (funcs, hb_ft_get_glyph_h_kerning, NULL, NULL);
-//        //hb_font_funcs_set_glyph_v_kerning_func (funcs, hb_ft_get_glyph_v_kerning, NULL, NULL);
-//        hb_font_funcs_set_glyph_extents_func (funcs, hb_ft_get_glyph_extents, NULL, NULL);
-//        hb_font_funcs_set_glyph_contour_point_func (funcs, hb_ft_get_glyph_contour_point, NULL, NULL);
+        hb_font_funcs_set_glyph_h_kerning_func (funcs, hb_gx_get_glyph_h_kerning, NULL, NULL);
+        //hb_font_funcs_set_glyph_v_kerning_func (funcs, hb_ft_get_glyph_v_kerning, NULL, NULL);
+        hb_font_funcs_set_glyph_extents_func (funcs, hb_gx_get_glyph_extents, NULL, NULL);
+        hb_font_funcs_set_glyph_contour_point_func (funcs, hb_gx_get_glyph_contour_point, NULL, NULL);
 //        hb_font_funcs_set_glyph_name_func (funcs, hb_ft_get_glyph_name, NULL, NULL);
 //        hb_font_funcs_set_glyph_from_name_func (funcs, hb_ft_get_glyph_from_name, NULL, NULL);
 

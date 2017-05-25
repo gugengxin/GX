@@ -13,8 +13,8 @@
       <AdditionalIncludeDirectories>$(GXRoot)\core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(GXRoot)\core\product\vs\lib\win\vc\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\pthread-win32\lib\win\vc\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\zlib\lib\win\vc\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\libpng\lib\win\vc\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\libjpeg\lib\win\vc\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\freetype\lib\win\vc\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GXCore.lib;pthread_dll.lib;zlib.lib;libpng.lib;libjpeg.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(GXRoot)\core\product\vs\lib\win\vc\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\pthread-win32\lib\win\vc\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\zlib\lib\win\vc\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\libpng\lib\win\vc\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\libjpeg\lib\win\vc\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\freetype\lib\win\vc\$(PlatformTarget)\$(Configuration);$(GXRoot)\external\harfbuzz\lib\win\vc\$(PlatformTarget)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GXCore.lib;pthread_dll.lib;zlib.lib;libpng.lib;libjpeg.lib;freetype.lib;harfbuzz;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>

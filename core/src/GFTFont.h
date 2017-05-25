@@ -26,6 +26,8 @@ public:
         friend class GFTFont;
         GX_GOBJECT(Glyph);
     public:
+		virtual gint32 getWidth();
+		virtual gint32 getHeight();
         virtual gint32 getHoriBearingX();
         virtual gint32 getHoriBearingY();
         virtual gint32 getVertBearingX();
@@ -72,7 +74,9 @@ public:
     virtual gint32 getAdvanceV(guint32 index);
     virtual bool hasKerning();
     virtual gint32 getKerningX(guint32 index,guint32 next);
-    
+	virtual bool hasOutline();
+	virtual gint32 getOutlineSize();
+public:
     virtual guint32 getIndex(guint32 code);
     virtual guint32 getVariantIndex(guint32 code,guint32 variantSelector);
     virtual guint32 getGlyphCount();
@@ -80,12 +84,6 @@ public:
 public:
     inline void* getFace() const {
         return m_Face;
-    }
-    inline bool hasOutline() {
-        return m_Stroker!=NULL;
-    }
-    inline gint32 getOutlineSize() {
-        return m_OLSize;
     }
 private:
     GData*          m_Data;
