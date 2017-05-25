@@ -39,6 +39,7 @@ if exist %INCLUDE_DIR% (
 mkdir %INCLUDE_DIR%
 
 copy /y %SRC_ROOT%\src\*.h %INCLUDE_DIR%
+copy /y %SRC_ROOT%\src\*.hh %INCLUDE_DIR%
 
 
 goto :EOF

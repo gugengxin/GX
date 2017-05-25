@@ -59,6 +59,7 @@ mkdir -p ${INCLUDE_DIR}
 
 cd ${SRC_ROOT}/src
 find . -name "*.h" -depth 1 -exec cp {} ${INCLUDE_DIR}/{} \;
+find . -name "*.hh" -depth 1 -exec cp {} ${INCLUDE_DIR}/{} \;
 
 
 

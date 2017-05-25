@@ -24,33 +24,37 @@ public:
     class Glyph : public GObject {
         GX_VIRTUAL_GOBJECT(Glyph);
     public:
-        guint32 getCode() {
-            return m_Code;
-        }
         guint32 getIndex() {
             return m_Index;
         }
-        virtual gint32 getAdvanceX()=0;
-        virtual GRectN getCBox()=0;
+    public:
+        virtual gint32 getHoriBearingX()=0;
+        virtual gint32 getHoriBearingY()=0;
+        virtual gint32 getVertBearingX()=0;
+        virtual gint32 getVertBearingY()=0;
         
     protected:
-        void setCode(guint32 v) {
-            m_Code=v;
-        }
         void setIndex(guint32 v) {
             m_Index=v;
         }
     private:
-        guint32 m_Code;
         guint32 m_Index;
     };
 public:
+    virtual gint32 getScaleX()=0;
+    virtual gint32 getScaleY()=0;
     virtual gint32 getHeight()=0;
     virtual gint32 getAscender()=0;
+    virtual gint32 getDescender()=0;
+    virtual gint32 getAdvanceH(guint32 index)=0;
+    virtual gint32 getAdvanceV(guint32 index)=0;
     virtual bool hasKerning()=0;
     virtual gint32 getKerningX(guint32 index,guint32 next)=0;
+public:
+    virtual guint32 getIndex(guint32 code)=0;
+    virtual guint32 getVariantIndex(guint32 code,guint32 variation_selector)=0;
     virtual guint32 getGlyphCount()=0;
-    virtual Glyph* getGlyph(guint32 code)=0;
+    virtual Glyph* getGlyph(guint32 index)=0;
     
     inline gint32 getSize() {
         return m_Size;

@@ -14,6 +14,7 @@
 #endif
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include FT_ADVANCES_H
 #include FT_STROKER_H
 #if __llvm__
 #pragma clang diagnostic pop
@@ -24,47 +25,76 @@
 
 
 
-
+#define M_LOAD_FLAGS() (FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT | FT_LOAD_NO_BITMAP)
 #define M_GLYPH()   ((FT_Glyph)m_Glyph)
 #define M_OLGLYPH() ((FT_Glyph)m_OLGlyph)
-#define M_OLDATA() ((OLData*)m_OLData)
-typedef struct _OLData {
-    FT_Bitmap bitmap;
-} OLData;
+//#define M_OLDATA() ((OLData*)m_OLData)
+//
+//typedef struct _OLData {
+//    FT_Bitmap bitmap;
+//} OLData;
 
 GX_GOBJECT_IMPLEMENT(GFTFont::Glyph, GFont::Glyph);
 
 GFTFont::Glyph::Glyph()
 {
     m_UseNumber=0;
+    memset(&m_Metrics, 0, sizeof(m_Metrics));
     m_Glyph=NULL;
     m_OLGlyph=NULL;
     m_OLSize=0;
-    m_OLData=NULL;
-    m_CBox.set(0, 0, -1, 0);
+    //m_OLData=NULL;
 }
 
 GFTFont::Glyph::~Glyph()
 {
+//    if (m_OLData) {
+//        free(m_OLData);
+//    }
     if (m_OLGlyph) {
         FT_Done_Glyph(M_OLGLYPH());
-    }
-    if (m_OLData) {
-        free(m_OLData);
     }
     if (m_Glyph) {
         FT_Done_Glyph(M_GLYPH());
     }
 }
 
-bool GFTFont::Glyph::load(GFTFont* font,guint32 code)
+gint32 GFTFont::Glyph::getHoriBearingX()
+{
+    return m_Metrics.horiBearingX;
+}
+gint32 GFTFont::Glyph::getHoriBearingY()
+{
+    return m_Metrics.horiBearingY;
+}
+gint32 GFTFont::Glyph::getVertBearingX()
+{
+    return m_Metrics.vertBearingX;
+}
+gint32 GFTFont::Glyph::getVertBearingY()
+{
+    return m_Metrics.vertBearingY;
+}
+
+bool GFTFont::Glyph::load(GFTFont* font,guint32 index)
 {
     FT_Face face=(FT_Face)font->getFace();
     
-    setIndex(FT_Get_Char_Index( face, (FT_ULong)code ));
-    if(FT_Load_Glyph( face, getIndex(), FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT | FT_LOAD_NO_BITMAP )) {
+    setIndex(index);
+    if(FT_Load_Glyph( face, getIndex(), M_LOAD_FLAGS() )) {
         return false;
     }
+    
+    FT_Glyph_Metrics& metrics=face->glyph->metrics;
+    m_Metrics.width=GX_CAST_S(gint32,metrics.width);
+    m_Metrics.height=GX_CAST_S(gint32,metrics.height);
+    m_Metrics.horiBearingX=GX_CAST_S(gint32,metrics.horiBearingX);
+    m_Metrics.horiBearingY=GX_CAST_S(gint32,metrics.horiBearingY);
+    //m_Metrics.horiAdvance=GX_CAST_S(gint32,metrics.horiAdvance);
+    m_Metrics.vertBearingX=GX_CAST_S(gint32,metrics.vertBearingX);
+    m_Metrics.vertBearingY=GX_CAST_S(gint32,metrics.vertBearingY);
+    //m_Metrics.vertAdvance=GX_CAST_S(gint32,metrics.vertAdvance);
+    
     FT_Glyph glyph=NULL;
     if (FT_Get_Glyph( face->glyph, &glyph )) {
         return false;
@@ -161,13 +191,46 @@ bool GFTFont::create(GData* data,gint32 size,gint32 outlineSize)
     return true;
 }
 
+gint32 GFTFont::getScaleX()
+{
+    return (gint32) (((guint64) M_FACE()->size->metrics.x_scale * (guint64) M_FACE()->units_per_EM + (1u<<15)) >> 16);
+}
+gint32 GFTFont::getScaleY()
+{
+    return (gint32) (((guint64) M_FACE()->size->metrics.y_scale * (guint64) M_FACE()->units_per_EM + (1u<<15)) >> 16);
+}
+
 gint32 GFTFont::getHeight()
 {
-    return GX_CAST_S(gint32, (M_FACE()->size->metrics.height>>6)+m_OLSize*2);
+    return GX_CAST_S(gint32, (M_FACE()->size->metrics.height)+((m_OLSize*2)<<6));
 }
 gint32 GFTFont::getAscender()
 {
-    return GX_CAST_S(gint32, (M_FACE()->size->metrics.ascender>>6)+m_OLSize);
+    return GX_CAST_S(gint32, (M_FACE()->size->metrics.ascender)+(m_OLSize<<6));
+}
+gint32 GFTFont::getDescender()
+{
+    return GX_CAST_S(gint32, (M_FACE()->size->metrics.descender)+(m_OLSize<<6));
+}
+gint32 GFTFont::getAdvanceH(guint32 index)
+{
+    FT_Fixed v=0;
+    
+    if(FT_Get_Advance(M_FACE(),index,M_LOAD_FLAGS(),&v)) {
+        return 0;
+    }
+    
+    return GX_CAST_S(gint32, v);
+}
+gint32 GFTFont::getAdvanceV(guint32 index)
+{
+    FT_Fixed v=0;
+    
+    if(FT_Get_Advance(M_FACE(),index,M_LOAD_FLAGS()|FT_LOAD_VERTICAL_LAYOUT,&v)) {
+        return 0;
+    }
+    
+    return GX_CAST_S(gint32, v);
 }
 bool GFTFont::hasKerning()
 {
@@ -177,17 +240,26 @@ gint32 GFTFont::getKerningX(guint32 index,guint32 next)
 {
     FT_Vector delta;
     FT_Get_Kerning( M_FACE(), index, next, ft_kerning_default, &delta );
-    return GX_CAST_S(gint32,(delta.x >> 6));
+    return GX_CAST_S(gint32,(delta.x));
+}
+
+guint32 GFTFont::getIndex(guint32 code)
+{
+    return FT_Get_Char_Index(M_FACE(), code);
+}
+guint32 GFTFont::getVariantIndex(guint32 code,guint32 variantSelector)
+{
+    return FT_Face_GetCharVariantIndex(M_FACE(), code, variantSelector);
 }
 guint32 GFTFont::getGlyphCount()
 {
     return (guint32)M_FACE()->num_glyphs;
 }
-GFont::Glyph* GFTFont::getGlyph(guint32 code)
+GFont::Glyph* GFTFont::getGlyph(guint32 index)
 {
     for (gint i=0; i<m_GlyphCache.getCount(); i++) {
         Glyph* obj=GX_CAST_R(Glyph*, m_GlyphCache.get(i));
-        if (obj->getCode()==code) {
+        if (obj->getIndex()==index) {
             obj->addUseNumber(1);
             gint j=i-1;
             for (; j>=0; j--) {
@@ -202,7 +274,7 @@ GFont::Glyph* GFTFont::getGlyph(guint32 code)
     }
     
     Glyph* res=Glyph::alloc();
-    if (res->load(this, code)) {
+    if (res->load(this, index)) {
         res->addUseNumber(1);
         
         if (m_GlyphCache.getCount()>M_FTGLYPH_CACHE_COUNT) {
