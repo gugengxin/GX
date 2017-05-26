@@ -32,6 +32,9 @@ public:
         virtual gint32 getHoriBearingY();
         virtual gint32 getVertBearingX();
         virtual gint32 getVertBearingY();
+		virtual guint32 getOutlinePointCount();
+		virtual gint32 getOutlinePointX(guint32 index);
+		virtual gint32 getOutlinePointY(guint32 index);
     private:
         inline gint getUseNumber() {
             return m_UseNumber;
@@ -55,7 +58,6 @@ public:
             gint32  vertBearingY;
             //gint32  vertAdvance;
         } m_Metrics;
-        
     private:
         void*  m_Glyph;
         void*  m_Outline;
@@ -79,6 +81,8 @@ public:
     virtual guint32 getVariantIndex(guint32 code,guint32 variantSelector);
     virtual guint32 getGlyphCount();
     virtual GFont::Glyph* getGlyph(guint32 index);
+	virtual bool getGlyphName(guint32 index, char* name, guint32 size);
+	virtual bool getGlyphNameIndex(guint32* idxOut, const char *name, gint32 len);
 public:
     inline void* getFace() const {
         return m_Face;

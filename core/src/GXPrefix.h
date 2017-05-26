@@ -11,6 +11,11 @@
 
 
 #include "GXTypes.h"
+#if defined(GX_OS_ANDROID)
+#include <jni.h>
+#elif defined(GX_OS_WINDOWS)
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -18,11 +23,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
-#if defined(GX_OS_ANDROID)
-#include <jni.h>
-#elif defined(GX_OS_QT)
-
-#endif
 
 #ifndef va_copy
 #ifdef __va_copy

@@ -125,6 +125,28 @@ gint32 GFTFont::Glyph::getVertBearingY()
     return m_Metrics.vertBearingY;
 }
 
+guint32 GFTFont::Glyph::getOutlinePointCount()
+{
+	if (m_Outline) {
+		return GX_CAST_S(guint32, GX_CAST_R(Outline*, m_Outline)->outline.n_points);
+	}
+	return 0;
+}
+gint32 GFTFont::Glyph::getOutlinePointX(guint32 index)
+{
+	if (m_Outline) {
+		return GX_CAST_S(gint32 , GX_CAST_R(Outline*, m_Outline)->outline.points[index].x);
+	}
+	return 0;
+}
+gint32 GFTFont::Glyph::getOutlinePointY(guint32 index)
+{
+	if (m_Outline) {
+		return GX_CAST_S(gint32, GX_CAST_R(Outline*, m_Outline)->outline.points[index].y);
+	}
+	return 0;
+}
+
 bool GFTFont::Glyph::load(GFTFont* font,guint32 index)
 {
     FT_Face face=(FT_Face)font->getFace();
@@ -359,6 +381,39 @@ GFont::Glyph* GFTFont::getGlyph(guint32 index)
         res=NULL;
     }
     return res;
+}
+
+bool GFTFont::getGlyphName(guint32 index, char* name, guint32 size)
+{
+	bool ret = !FT_Get_Glyph_Name(M_FACE(), index, name, size);
+	if (ret && (size && !*name))
+		ret = false;
+	return ret;
+}
+
+bool GFTFont::getGlyphNameIndex(guint32* idxOut, const char *name, gint32 len)
+{
+	if (len < 0)
+		*idxOut = FT_Get_Name_Index(M_FACE(), (FT_String *)name);
+	else {
+		/* Make a nul-terminated version. */
+		char buf[128];
+		len = len<((int)sizeof(buf)-1)?len: ((int)sizeof(buf) - 1);
+		strncpy(buf, name, len);
+		buf[len] = '\0';
+		*idxOut = FT_Get_Name_Index(M_FACE(), buf);
+	}
+
+	if (*idxOut == 0)
+	{
+		/* Check whether the given name was actually the name of glyph 0. */
+		char buf[128];
+		if (!FT_Get_Glyph_Name(M_FACE(), 0, buf, sizeof(buf)) &&
+			len < 0 ? !strcmp(buf, name) : !strncmp(buf, name, len))
+			return true;
+	}
+
+	return *idxOut != 0;
 }
 
 

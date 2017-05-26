@@ -18,6 +18,10 @@
 #pragma clang diagnostic ignored "-Wdocumentation"
 #pragma clang diagnostic ignored "-Wshorten-64-to-32"
 #endif
+#ifdef _MSC_VER
+# pragma warning(disable:4244)
+# pragma warning(disable:4267)
+#endif
 #include <hb.h>
 #include <hb-font-private.hh>
 #if __clang__
@@ -250,16 +254,39 @@ hb_gx_get_glyph_contour_point(hb_font_t *font HB_UNUSED,
 		return false;
 	}
 
-	//if (unlikely(ft_face->glyph->format != FT_GLYPH_FORMAT_OUTLINE))
-	//	return false;
+	if (point_index >= gh->getOutlinePointCount())
+		return false;
 
-	//if (unlikely(point_index >= (unsigned int)ft_face->glyph->outline.n_points))
-	//	return false;
-
-	//*x = ft_face->glyph->outline.points[point_index].x;
-	//*y = ft_face->glyph->outline.points[point_index].y;
+	*x = gh->getOutlinePointX(point_index);
+	*y = gh->getOutlinePointY(point_index);
 
 	return true;
+}
+
+static hb_bool_t
+hb_gx_get_glyph_name(hb_font_t *font HB_UNUSED,
+	void *font_data,
+	hb_codepoint_t glyph,
+	char *name, unsigned int size,
+	void *user_data HB_UNUSED)
+{
+	const hb_gx_font_t *gx_font = (const hb_gx_font_t *)font_data;
+	GFont* gf = gx_font->font;
+
+	return gf->getGlyphName(glyph, name, size);
+}
+
+static hb_bool_t
+hb_gx_get_glyph_from_name(hb_font_t *font HB_UNUSED,
+	void *font_data,
+	const char *name, int len, /* -1 means nul-terminated */
+	hb_codepoint_t *glyph,
+	void *user_data HB_UNUSED)
+{
+	const hb_gx_font_t *gx_font = (const hb_gx_font_t *)font_data;
+	GFont* gf = gx_font->font;
+
+	return gf->getGlyphNameIndex(glyph, name, len);
 }
 ////////////////////////////////
 
@@ -289,8 +316,8 @@ retry:
         //hb_font_funcs_set_glyph_v_kerning_func (funcs, hb_ft_get_glyph_v_kerning, NULL, NULL);
         hb_font_funcs_set_glyph_extents_func (funcs, hb_gx_get_glyph_extents, NULL, NULL);
         hb_font_funcs_set_glyph_contour_point_func (funcs, hb_gx_get_glyph_contour_point, NULL, NULL);
-//        hb_font_funcs_set_glyph_name_func (funcs, hb_ft_get_glyph_name, NULL, NULL);
-//        hb_font_funcs_set_glyph_from_name_func (funcs, hb_ft_get_glyph_from_name, NULL, NULL);
+        hb_font_funcs_set_glyph_name_func (funcs, hb_gx_get_glyph_name, NULL, NULL);
+        hb_font_funcs_set_glyph_from_name_func (funcs, hb_gx_get_glyph_from_name, NULL, NULL);
 
         hb_font_funcs_make_immutable (funcs);
         

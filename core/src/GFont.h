@@ -34,6 +34,9 @@ public:
         virtual gint32 getHoriBearingY()=0;
         virtual gint32 getVertBearingX()=0;
         virtual gint32 getVertBearingY()=0;
+		virtual guint32 getOutlinePointCount() = 0;
+		virtual gint32 getOutlinePointX(guint32 index) = 0;
+		virtual gint32 getOutlinePointY(guint32 index) = 0;
         
     protected:
         void setIndex(guint32 v) {
@@ -66,7 +69,9 @@ public:
     virtual guint32 getVariantIndex(guint32 code,guint32 variation_selector)=0;
     virtual guint32 getGlyphCount()=0;
     virtual Glyph* getGlyph(guint32 index)=0;
-    
+	virtual bool getGlyphName(guint32 index, char* name, guint32 size) = 0;
+	virtual bool getGlyphNameIndex(guint32* idxOut, const char *name, gint32 len) = 0;
+public:
     inline gint32 getSize() {
         return m_Size;
     }
