@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright © 2015  Mozilla Foundation.
  * Copyright © 2015  Google, Inc.
  *

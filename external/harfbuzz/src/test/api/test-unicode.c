@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright © 2011  Codethink Limited
  * Copyright © 2011  Google, Inc.
  *

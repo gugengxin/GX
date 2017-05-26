@@ -1,4 +1,4 @@
-#include "hb-fuzzer.hh"
+﻿#include "hb-fuzzer.hh"
 
 #include <hb-ot.h>
 #include <string.h>

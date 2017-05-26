@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright © 2010  Behdad Esfahbod
  * Copyright © 2011,2012  Google, Inc.
  *

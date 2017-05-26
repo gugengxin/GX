@@ -1,4 +1,4 @@
-
+﻿
 #line 1 "../../src/hb-ot-shape-complex-myanmar-machine.rl"
 /*
  * Copyright © 2011,2012  Google, Inc.

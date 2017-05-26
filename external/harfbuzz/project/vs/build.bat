@@ -31,7 +31,7 @@ msbuild harfbuzz.vcxproj /t:Rebuild /p:Configuration=Release,OutDir=..\..\..\lib
 popd
 rd /s/q %PROJECT_ROOT%\build
 
-set INCLUDE_DIR=%LIBRARY_ROOT%\include
+set INCLUDE_DIR=%LIBRARY_ROOT%\include\
 
 if exist %INCLUDE_DIR% (
 	rd /s/q %INCLUDE_DIR%

@@ -1,4 +1,4 @@
-#include "hb-fuzzer.hh"
+﻿#include "hb-fuzzer.hh"
 
 #include <iostream>
 #include <iterator>

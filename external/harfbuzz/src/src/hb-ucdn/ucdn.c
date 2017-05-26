@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2012 Grigori Goronzy <greg@kinoho.net>
  *
  * Permission to use, copy, modify, and/or distribute this software for any

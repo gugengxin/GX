@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright © 2012,2013  Google, Inc.
  *
  *  This is part of HarfBuzz, a text shaping library.

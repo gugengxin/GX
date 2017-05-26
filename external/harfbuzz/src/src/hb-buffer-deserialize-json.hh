@@ -1,4 +1,4 @@
-
+﻿
 #line 1 "hb-buffer-deserialize-json.rl"
 /*
  * Copyright © 2013  Google, Inc.

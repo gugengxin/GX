@@ -1,4 +1,4 @@
-
+﻿
 #line 1 "hb-ot-shape-complex-use-machine.rl"
 /*
  * Copyright © 2015  Mozilla Foundation.

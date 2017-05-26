@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright © 2011  Martin Hosken
  * Copyright © 2011  SIL International
  * Copyright © 2011,2012  Google, Inc.
