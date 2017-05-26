@@ -13,10 +13,16 @@
 #include "GXGObject.h"
 
 
-
+#if __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdocumentation"
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#endif
 #include <hb.h>
 #include <hb-font-private.hh>
-
+#if __clang__
+#pragma clang diagnostic pop
+#endif
 
 struct hb_gx_font_t
 {
@@ -318,6 +324,7 @@ GX_GOBJECT_IMPLEMENT(GFont::Glyph, GObject);
 
 GFont::Glyph::Glyph()
 {
+    m_Font=NULL;
     m_Index=0u;
 }
 

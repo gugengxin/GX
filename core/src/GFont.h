@@ -39,7 +39,14 @@ public:
         void setIndex(guint32 v) {
             m_Index=v;
         }
+        inline GFont* getFont() const {
+            return m_Font;
+        }
+        inline void setFont(GFont* v) {
+            m_Font=v;
+        }
     private:
+        GFont*  m_Font;
         guint32 m_Index;
     };
 public:

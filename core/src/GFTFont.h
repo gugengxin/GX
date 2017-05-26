@@ -58,9 +58,7 @@ public:
         
     private:
         void*  m_Glyph;
-        void*  m_OLGlyph;
-        gint32 m_OLSize;
-        //void*  m_OLData;
+        void*  m_Outline;
     };
 public:
     bool create(GData* data,gint32 size,gint32 outlineSize);

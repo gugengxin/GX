@@ -8,16 +8,16 @@
 
 #include "GFTFont.h"
 //Down include other h file
-#if __llvm__
+#if __clang__
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored"-Wdocumentation"
+#pragma clang diagnostic ignored "-Wdocumentation"
 #endif
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_ADVANCES_H
 #include FT_STROKER_H
 #include FT_OUTLINE_H
-#if __llvm__
+#if __clang__
 #pragma clang diagnostic pop
 #endif
 #include "GFontManager.h"
@@ -28,12 +28,56 @@
 
 #define M_LOAD_FLAGS() (FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT | FT_LOAD_NO_BITMAP)
 #define M_GLYPH()   ((FT_Glyph)m_Glyph)
-#define M_OLGLYPH() ((FT_Glyph)m_OLGlyph)
-//#define M_OLDATA() ((OLData*)m_OLData)
-//
-//typedef struct _OLData {
-//    FT_Bitmap bitmap;
-//} OLData;
+
+typedef struct _Outline {
+    FT_Glyph   glyph;
+    FT_Outline outline;
+} Outline;
+
+static Outline* _OLNew(FT_GlyphSlot gs,FT_Glyph gh)
+{
+    FT_Outline& ol=gs->outline;
+    Outline* res=GX_CAST_R(Outline*, malloc(sizeof(Outline) + ol.n_points*(sizeof(FT_Vector)+sizeof(char)) + ol.n_contours*sizeof(short)));
+    res->glyph=gh;
+    /*
+    typedef struct  FT_Outline_
+    {
+        short       n_contours;      
+        short       n_points;        
+        
+        FT_Vector*  points;          
+        char*       tags;            
+        short*      contours;        
+        
+        int         flags;
+        
+    } FT_Outline;
+    //*/
+    res->outline.n_contours=ol.n_contours;
+    res->outline.n_points=ol.n_points;
+    res->outline.points=GX_CAST_R(FT_Vector*, GX_CAST_R(guchar*, res)+sizeof(Outline));
+    memcpy(res->outline.points, ol.points, ol.n_points*sizeof(FT_Vector));
+    res->outline.tags=GX_CAST_R(char*, GX_CAST_R(guchar*, res)+sizeof(Outline)+ol.n_points*sizeof(FT_Vector));
+    memcpy(res->outline.tags, ol.tags, ol.n_points*sizeof(char));
+    res->outline.contours=GX_CAST_R(short*, GX_CAST_R(guchar*, res)+ol.n_points*(sizeof(FT_Vector)+sizeof(char)));
+    memcpy(res->outline.contours, ol.contours, ol.n_contours*sizeof(short));
+    res->outline.flags=ol.flags&(~FT_OUTLINE_OWNER);
+    return res;
+}
+
+static void _OLDone(Outline* ol)
+{
+    if (ol->glyph) {
+        FT_Done_Glyph(ol->glyph);
+    }
+    free(ol);
+}
+
+
+
+
+
+
 
 GX_GOBJECT_IMPLEMENT(GFTFont::Glyph, GFont::Glyph);
 
@@ -42,18 +86,13 @@ GFTFont::Glyph::Glyph()
     m_UseNumber=0;
     memset(&m_Metrics, 0, sizeof(m_Metrics));
     m_Glyph=NULL;
-    m_OLGlyph=NULL;
-    m_OLSize=0;
-    //m_OLData=NULL;
+    m_Outline=NULL;
 }
 
 GFTFont::Glyph::~Glyph()
 {
-//    if (m_OLData) {
-//        free(m_OLData);
-//    }
-    if (m_OLGlyph) {
-        FT_Done_Glyph(M_OLGLYPH());
+    if (m_Outline) {
+        _OLDone(GX_CAST_R(Outline*, m_Outline));
     }
     if (m_Glyph) {
         FT_Done_Glyph(M_GLYPH());
@@ -89,9 +128,16 @@ gint32 GFTFont::Glyph::getVertBearingY()
 bool GFTFont::Glyph::load(GFTFont* font,guint32 index)
 {
     FT_Face face=(FT_Face)font->getFace();
+    if(FT_Load_Glyph( face, index, M_LOAD_FLAGS() )) {
+        return false;
+    }
     
-    setIndex(index);
-    if(FT_Load_Glyph( face, getIndex(), M_LOAD_FLAGS() )) {
+    FT_Glyph glyph=NULL;
+    if (FT_Get_Glyph( face->glyph, &glyph )) {
+        return false;
+    }
+    
+    if (font->hasOutline() && glyph->format!=FT_GLYPH_FORMAT_OUTLINE) {
         return false;
     }
     
@@ -105,33 +151,26 @@ bool GFTFont::Glyph::load(GFTFont* font,guint32 index)
     m_Metrics.vertBearingY=GX_CAST_S(gint32,metrics.vertBearingY);
     //m_Metrics.vertAdvance=GX_CAST_S(gint32,metrics.vertAdvance);
     
-    FT_Glyph glyph=NULL;
-    if (FT_Get_Glyph( face->glyph, &glyph )) {
-        return false;
-    }
-    
-    if (font->hasOutline() && M_GLYPH()->format==FT_GLYPH_FORMAT_OUTLINE) {
-		//FT_Bitmap
-		//face->glyph->outline.n_points
-
+    Outline* ol=NULL;
+    if (font->hasOutline()) {
         FT_Glyph glyphOL=glyph;
         if(FT_Glyph_StrokeBorder(&glyphOL, (FT_Stroker)font->m_Stroker, 0, 0)) {
-            FT_Done_Glyph(glyphOL);
+            FT_Done_Glyph(glyph);
             return false;
         }
         if (glyphOL->format!=FT_GLYPH_FORMAT_OUTLINE) {
+            FT_Done_Glyph(glyph);
             FT_Done_Glyph(glyphOL);
             return false;
         }
-        m_OLGlyph=glyphOL;
-        m_OLSize=font->getOutlineSize();
-    }
-    else {
-        m_OLGlyph=NULL;
-        m_OLSize=0;
+        
+        ol=_OLNew(face->glyph,glyphOL);
     }
     
+    setFont(font);
+    setIndex(index);
     m_Glyph=glyph;
+    m_Outline=ol;
     return true;
 }
 
