@@ -44,3 +44,4 @@ external/pthread-win32/include/
 external/pthread-win32/pthread-win32/
 external/harfbuzz/include
 external/harfbuzz/lib
+external/harfbuzz/project/vs/build/

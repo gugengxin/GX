@@ -231,6 +231,7 @@ GApplication::Delegate* GApplication::sharedDelegate()
 
 void GApplication::main(int argc, char *argv[], const char* delegateClassName)
 {
+	GX_LOG_W(PrioDEBUG, "GApplication", "main");
     GThread::current()->setMain();
     GApplication* app=shared();
     app->m_Delegate=GX_CAST_R(GApplication::Delegate*,GClass::allocObject(delegateClassName));

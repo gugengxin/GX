@@ -293,9 +293,18 @@ hb_gx_get_glyph_from_name(hb_font_t *font HB_UNUSED,
 
 static hb_font_funcs_t *static_ft_funcs = NULL;
 
+static char g_BlobData[4];
+
 static hb_font_t* hb_gx_font_create(GFont* gf)
 {
-    hb_font_t* font=hb_font_create(hb_face_get_empty());
+	hb_blob_t *blob = hb_blob_create(g_BlobData,
+		(unsigned int)sizeof(g_BlobData),
+		HB_MEMORY_MODE_READONLY,
+		NULL, NULL);
+	hb_face_t* face = hb_face_create(blob, 0);
+	hb_blob_destroy(blob);
+    hb_font_t* font=hb_font_create(face);
+	hb_face_destroy(face);
     
 retry:
     hb_font_funcs_t *funcs = (hb_font_funcs_t *) hb_atomic_ptr_get (&static_ft_funcs);
@@ -365,11 +374,17 @@ GX_GOBJECT_IMPLEMENT(GFont, GObject);
 
 GFont::GFont()
 {
-	
+	m_HBFont = NULL;
 }
 
 GFont::~GFont()
 {
+	if (m_HBFont) {
+		hb_gx_font_destroy(GX_CAST_R(hb_font_t*, m_HBFont));
+	}
 }
 
-
+void GFont::create()
+{
+	m_HBFont = hb_gx_font_create(this);
+}

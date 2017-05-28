@@ -239,12 +239,12 @@ bool GFTFont::create(GData* data,gint32 size,gint32 outlineSize)
         return false;
     }
     
-    if (FT_Select_Charmap(M_FACE(), FT_ENCODING_UNICODE)) {
+    if (FT_Select_Charmap(ftFace, FT_ENCODING_UNICODE)) {
         FT_Done_Face(ftFace);
         return false;
     }
     
-    if (FT_Set_Char_Size(M_FACE(), size<<6, size<<6, 72, 72)) {
+    if (FT_Set_Char_Size(ftFace, size<<6, size<<6, 72, 72)) {
         FT_Done_Face(ftFace);
         return false;
     }
@@ -261,7 +261,7 @@ bool GFTFont::create(GData* data,gint32 size,gint32 outlineSize)
     GX_OBJECT_SET(m_Data, data);
     m_OLSize=outlineSize;
     m_Face=ftFace;
-    
+	GFont::create();
     return true;
 }
 

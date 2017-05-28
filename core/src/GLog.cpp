@@ -9,6 +9,7 @@
 #include <locale.h>
 
 static FILE* fpDebugOut = NULL;
+static FILE* fpErrorOut = NULL;
 static FILE* fpDebugIn = NULL;
 static bool _ConsoleInit()
 {
@@ -31,6 +32,7 @@ static bool _ConsoleInit()
 	SetCurrentConsoleFontEx(toScreen, FALSE, &font);
 
 	_tfreopen_s(&fpDebugOut, _T("CONOUT$"), _T("w"), stdout);
+	_tfreopen_s(&fpErrorOut, _T("CONOUT$"), _T("w"), stderr);
 	_tfreopen_s(&fpDebugIn, _T("CONIN$"), _T("r"), stdin);
 	return true;
 }

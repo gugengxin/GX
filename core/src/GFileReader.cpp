@@ -9,6 +9,7 @@
 #include "GFileReader.h"
 #include "GXGObject.h"
 #include "GXFILE.h"
+#include "GLog.h"
 
 GX_GOBJECT_IMPLEMENT(GFileReader, GReader);
 
@@ -81,11 +82,13 @@ gint GFileReader::getLength()
 {
     if (m_Length<0) {
         gint cur=GX::ftell(m_FILE);
-        if(GX::fseek(m_FILE, 0, SEEK_END)) {
+        if(!GX::fseek(m_FILE, 0, SEEK_END)) {
+			GX_LOG_P1(PrioDEBUG, "GFileReader", "getLength fseek error: %s", strerror(errno));
             return -1;
         }
         m_Length=GX::ftell(m_FILE);
-        if(GX::fseek(m_FILE, cur, SEEK_SET)) {
+        if(!GX::fseek(m_FILE, cur, SEEK_SET)) {
+			m_Length = -1;
             return -1;
         }
     }

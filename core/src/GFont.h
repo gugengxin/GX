@@ -19,6 +19,7 @@
 
 class GFont : public GObject
 {
+	friend class GTypist;
 	GX_VIRTUAL_GOBJECT(GFont);
 public:
     class Glyph : public GObject {
@@ -52,6 +53,8 @@ public:
         GFont*  m_Font;
         guint32 m_Index;
     };
+protected:
+	void create();
 public:
     virtual gint32 getScaleX()=0;
     virtual gint32 getScaleY()=0;
@@ -79,8 +82,12 @@ protected:
     inline void setSize(gint32 v) {
         m_Size=v;
     }
+	void* getHBFont() {
+		return m_HBFont;
+	}
 private:
     gint32 m_Size;
+	void*  m_HBFont;
 };
 
 // Up can't include other h file

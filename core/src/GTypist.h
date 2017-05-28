@@ -15,13 +15,20 @@
 #include "GGeometry.h"
 
 
-class GTypist {
-public:
-	class Layout {
 
-	};
+#include "GXGObject.h"
+
+class GTypist : GObject {
+	GX_PRIVATE_GOBJECT(GTypist);
 public:
-	static GSizeF sizeOfString(GString* str, GFont* font);
+	static GTypist* singleLine(GString* str,GFont* font);
+private:
+	bool create(GString* str, GFont* font);
+private:
+	GFont* m_Font;
+	void* m_HBBuffer;
 };
+
+#include "GXGObjectUD.h"
 
 #endif /* GTypist_h */

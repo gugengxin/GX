@@ -39,6 +39,22 @@ avis:\
         return res;\
     }
 
+#define GX_PRIVATE_GOBJECT_DECLARE(cls,vis,avis) \
+GX_GOBJECT_DECLARE_BASE(cls,vis)\
+avis:\
+	friend class GObject;\
+    static cls* alloc() {\
+        cls* res=new cls();\
+        res->init();\
+        return res;\
+	}\
+    static cls* autoAlloc() {\
+        cls* res=alloc();\
+        GObject::autorelease(res);\
+        return res;\
+    }
+
+
 #define GX_VIRTUAL_GOBJECT_DECLARE(cls,vis,avis) \
 GX_GOBJECT_DECLARE_BASE(cls,vis)\
 avis:\
@@ -52,7 +68,7 @@ avis:\
 
 #define GX_GOBJECT(cls)          GX_GOBJECT_DECLARE(cls,protected,public)
 #define GX_FINAL_GOBJECT(cls)    GX_GOBJECT_DECLARE(cls,private,public)
-#define GX_PRIVATE_GOBJECT(cls)  GX_GOBJECT_DECLARE(cls,private,private)
+#define GX_PRIVATE_GOBJECT(cls)  GX_PRIVATE_GOBJECT_DECLARE(cls,private,private)
 #define GX_VIRTUAL_GOBJECT(cls)  GX_VIRTUAL_GOBJECT_DECLARE(cls,protected,public)
 
 #define GX_GOBJECT_IMPLEMENT(cls,pc) \
