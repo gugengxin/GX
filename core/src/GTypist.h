@@ -22,11 +22,12 @@ class GTypist : GObject {
 	GX_PRIVATE_GOBJECT(GTypist);
 public:
 	static GTypist* singleLine(GString* str,GFont* font);
+public:
+	void reset(GString* str, GFont* font);
 private:
-	bool create(GString* str, GFont* font);
-private:
-	GFont* m_Font;
-	void* m_HBBuffer;
+	GFont*	m_Font;
+	void*	m_HBBuffer;
+	GSize<int>	m_Size;
 };
 
 #include "GXGObjectUD.h"

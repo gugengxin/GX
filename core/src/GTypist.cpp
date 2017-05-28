@@ -41,14 +41,14 @@ GTypist::~GTypist()
 GTypist * GTypist::singleLine(GString * str, GFont * font)
 {
 	GTypist* res = GTypist::alloc();
-	if (!res->create(str, font)) {
+	if (!res->reset(str, font)) {
 		GO::release(res);
 		return NULL;
 	}
 	return GO::autorelease(res);
 }
 
-bool GTypist::create(GString * str, GFont * font)
+void GTypist::reset(GString * str, GFont * font)
 {
 	hb_font_t* hb_font = GX_CAST_R(hb_font_t*, font->getHBFont());
 
@@ -59,13 +59,13 @@ bool GTypist::create(GString * str, GFont * font)
 
 	hb_shape(hb_font, hb_buffer, NULL, 0);
 
-	
-	/* Get glyph information and positions out of the buffer. */
+	/*
+	//* Get glyph information and positions out of the buffer.
 	unsigned int len = hb_buffer_get_length(hb_buffer);
 	hb_glyph_info_t *info = hb_buffer_get_glyph_infos(hb_buffer, NULL);
 	hb_glyph_position_t *pos = hb_buffer_get_glyph_positions(hb_buffer, NULL);
 
-	/* Print them out as is. */
+	//* Print them out as is.
 	printf("Raw buffer contents:\n");
 	for (unsigned int i = 0; i < len; i++)
 	{
@@ -84,7 +84,7 @@ bool GTypist::create(GString * str, GFont * font)
 	}
 
 	printf("Converted to absolute positions:\n");
-	/* And converted to absolute positions. */
+	// And converted to absolute positions.
 	{
 		double current_x = 0;
 		double current_y = 0;
@@ -106,8 +106,12 @@ bool GTypist::create(GString * str, GFont * font)
 			current_y += pos[i].y_advance / 64.;
 		}
 	}
-
+	//*/
 	GX_OBJECT_SET(m_Font, font);
+	if (m_HBBuffer) {
+		hb_buffer_destroy(M_HB_BUF());
+	}
 	m_HBBuffer = hb_buffer;
-	return true;
+
+
 }

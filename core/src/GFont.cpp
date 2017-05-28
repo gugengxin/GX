@@ -293,16 +293,9 @@ hb_gx_get_glyph_from_name(hb_font_t *font HB_UNUSED,
 
 static hb_font_funcs_t *static_ft_funcs = NULL;
 
-static char g_BlobData[4];
-
 static hb_font_t* hb_gx_font_create(GFont* gf)
 {
-	hb_blob_t *blob = hb_blob_create(g_BlobData,
-		(unsigned int)sizeof(g_BlobData),
-		HB_MEMORY_MODE_READONLY,
-		NULL, NULL);
-	hb_face_t* face = hb_face_create(blob, 0);
-	hb_blob_destroy(blob);
+	hb_face_t* face = hb_face_create(hb_blob_get_empty(), 0);
     hb_font_t* font=hb_font_create(face);
 	hb_face_destroy(face);
     
