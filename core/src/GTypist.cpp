@@ -38,34 +38,24 @@ GTypist::~GTypist()
 	GO::release(m_Font);
 }
 
-GTypist * GTypist::singleLine(GString * str, GFont * font)
-{
-	GTypist* res = GTypist::alloc();
-	if (!res->reset(str, font)) {
-		GO::release(res);
-		return NULL;
-	}
-	return GO::autorelease(res);
-}
-
-void GTypist::reset(GString * str, GFont * font)
+void GTypist::singleLine(GString * str, GFont * font)
 {
 	hb_font_t* hb_font = GX_CAST_R(hb_font_t*, font->getHBFont());
 
 	hb_buffer_t *hb_buffer;
 	hb_buffer = hb_buffer_create();
-	hb_buffer_add_utf16(hb_buffer, str->utf16String(), str->getLength(), 0, -1);
+	hb_buffer_add_utf16(hb_buffer, str->utf16String(), (int)str->getLength(), 0, -1);
 	hb_buffer_guess_segment_properties(hb_buffer);
 
 	hb_shape(hb_font, hb_buffer, NULL, 0);
 
-	/*
-	//* Get glyph information and positions out of the buffer.
+	//*
+	// Get glyph information and positions out of the buffer.
 	unsigned int len = hb_buffer_get_length(hb_buffer);
 	hb_glyph_info_t *info = hb_buffer_get_glyph_infos(hb_buffer, NULL);
 	hb_glyph_position_t *pos = hb_buffer_get_glyph_positions(hb_buffer, NULL);
 
-	//* Print them out as is.
+	// Print them out as is.
 	printf("Raw buffer contents:\n");
 	for (unsigned int i = 0; i < len; i++)
 	{
@@ -76,11 +66,11 @@ void GTypist::reset(GString * str, GFont * font)
 		double x_offset = pos[i].x_offset / 64.;
 		double y_offset = pos[i].y_offset / 64.;
 
-		char glyphname[32];
-		hb_font_get_glyph_name(hb_font, gid, glyphname, sizeof(glyphname));
+		//char glyphname[32];
+		//hb_font_get_glyph_name(hb_font, gid, glyphname, sizeof(glyphname));
 
-		printf("glyph='%s'	cluster=%d	advance=(%g,%g)	offset=(%g,%g)\n",
-			glyphname, cluster, x_advance, y_advance, x_offset, y_offset);
+		printf("gid=%d	cluster=%d	advance=(%g,%g)	offset=(%g,%g)\n",
+			gid, cluster, x_advance, y_advance, x_offset, y_offset);
 	}
 
 	printf("Converted to absolute positions:\n");
@@ -96,11 +86,11 @@ void GTypist::reset(GString * str, GFont * font)
 			double y_position = current_y + pos[i].y_offset / 64.;
 
 
-			char glyphname[32];
-			hb_font_get_glyph_name(hb_font, gid, glyphname, sizeof(glyphname));
+			//char glyphname[32];
+			//hb_font_get_glyph_name(hb_font, gid, glyphname, sizeof(glyphname));
 
-			printf("glyph='%s'	cluster=%d	position=(%g,%g)\n",
-				glyphname, cluster, x_position, y_position);
+			printf("gid=%d	cluster=%d	position=(%g,%g)\n",
+				gid, cluster, x_position, y_position);
 
 			current_x += pos[i].x_advance / 64.;
 			current_y += pos[i].y_advance / 64.;

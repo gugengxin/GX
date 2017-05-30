@@ -60,7 +60,8 @@ cd build
 mkdir mac
 cd mac
 
-cmake -GNinja -D"HB_HAVE_CORETEXT=FALSE" ${SRC_ROOT}
+export 
+cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/mac.toolchain.cmake" -D"HB_HAVE_CORETEXT=FALSE" ${SRC_ROOT}
 ninja -C .
 
 #输出文件

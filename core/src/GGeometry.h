@@ -65,6 +65,7 @@ public:
 };
 
 typedef GSize<float> GSizeF;
+typedef GSize<gint32> GSizeN;
 
 
 template <typename T>

@@ -99,8 +99,8 @@ void Game::eventStart()
 
 	//*
 	GFont* font = GFontManager::shared()->loadFTFont(GS::chars("STXINWEI.ttf"), 12, 0);
-	GTypist* typist = GTypist::singleLine(GS::chars("谷更新"), font);
-	GO::release(font);
+	GTypist* typist = GTypist::autoAlloc();
+    typist->singleLine(GS::chars("谷更新 欢迎你！！！Welcome!!!"), font);
 	//*/
 }
 

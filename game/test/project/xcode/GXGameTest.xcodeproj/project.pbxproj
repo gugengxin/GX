@@ -27,6 +27,9 @@
 		CA9C16A11CC5E94D00204303 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16A01CC5E94D00204303 /* AppDelegate.mm */; };
 		CA9C16A41CC5E94D00204303 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16A31CC5E94D00204303 /* main.m */; };
 		CA9C16A61CC5E94D00204303 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA9C16A51CC5E94D00204303 /* Assets.xcassets */; };
+		CACCBB071EDC826600535D58 /* STXINWEI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CACCBB061EDC826600535D58 /* STXINWEI.ttf */; };
+		CACCBB081EDC826600535D58 /* STXINWEI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CACCBB061EDC826600535D58 /* STXINWEI.ttf */; };
+		CACCBB091EDC826600535D58 /* STXINWEI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CACCBB061EDC826600535D58 /* STXINWEI.ttf */; };
 		CACEDED31EA75E470010BC1E /* GXCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEC51EA75CF90010BC1E /* GXCore.a */; };
 		CACEDED41EA75E470010BC1E /* GXGame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEB91EA75CE80010BC1E /* GXGame.a */; };
 		CACEDED51EA75E4F0010BC1E /* GXCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEC71EA75CF90010BC1E /* GXCore.a */; };
@@ -107,6 +110,7 @@
 		CA9C16A51CC5E94D00204303 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA9C16AA1CC5E94D00204303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA9C16BF1CC5FDCB00204303 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		CACCBB061EDC826600535D58 /* STXINWEI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = STXINWEI.ttf; sourceTree = "<group>"; };
 		CACEDEB21EA75CE80010BC1E /* GXGame.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GXGame.xcodeproj; path = ../../../project/xcode/GXGame.xcodeproj; sourceTree = "<group>"; };
 		CACEDEBE1EA75CF80010BC1E /* GXCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GXCore.xcodeproj; path = ../../../../core/project/xcode/GXCore.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,6 +161,7 @@
 		CA75BAD11D830D4400236109 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				CACCBB061EDC826600535D58 /* STXINWEI.ttf */,
 				CA75BAD21D830D4400236109 /* lena_rgb.jpg */,
 			);
 			name = assets;
@@ -437,6 +442,7 @@
 				CA9C163D1CC5DFE200204303 /* Assets.xcassets in Resources */,
 				CA75BAD31D830D4400236109 /* lena_rgb.jpg in Resources */,
 				CA1F60CA1CD99A6500C6307B /* LaunchScreen.storyboard in Resources */,
+				CACCBB071EDC826600535D58 /* STXINWEI.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +452,7 @@
 			files = (
 				CA9C16941CC5E7D800204303 /* Assets.xcassets in Resources */,
 				CA75BAD41D830D4400236109 /* lena_rgb.jpg in Resources */,
+				CACCBB081EDC826600535D58 /* STXINWEI.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +463,7 @@
 				CA9C16A61CC5E94D00204303 /* Assets.xcassets in Resources */,
 				CA75BAD51D830D4400236109 /* lena_rgb.jpg in Resources */,
 				CA1F60B81CD9894600C6307B /* MainMenu.xib in Resources */,
+				CACCBB091EDC826600535D58 /* STXINWEI.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

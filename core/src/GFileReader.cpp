@@ -83,7 +83,6 @@ gint GFileReader::getLength()
     if (m_Length<0) {
         gint cur=GX::ftell(m_FILE);
         if(!GX::fseek(m_FILE, 0, SEEK_END)) {
-			GX_LOG_P1(PrioDEBUG, "GFileReader", "getLength fseek error: %s", strerror(errno));
             return -1;
         }
         m_Length=GX::ftell(m_FILE);
