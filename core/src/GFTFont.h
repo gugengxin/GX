@@ -49,11 +49,9 @@ public:
         struct Metrics {
             gint32  width;
             gint32  height;
-            
             gint32  horiBearingX;
             gint32  horiBearingY;
             //gint32  horiAdvance;
-            
             gint32  vertBearingX;
             gint32  vertBearingY;
             //gint32  vertAdvance;

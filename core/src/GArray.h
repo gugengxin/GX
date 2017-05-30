@@ -19,6 +19,7 @@ class GArray : public GArrayBase {
 	friend class GNoticeCenter;
     friend class GResourceManager;
     friend class GFTFont;
+    friend class GTypist;
 	GX_GOBJECT(GArray);
 public:
 	gint getCount() const {

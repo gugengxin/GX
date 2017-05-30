@@ -189,6 +189,7 @@ public:
     GSize<T>  size;
 };
 
+typedef GRect<float> GRectF;
 typedef GRect<gint32> GRectN;
 
 template <typename T>
