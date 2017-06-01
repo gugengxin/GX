@@ -47,7 +47,7 @@ void GObject::release(GObject* obj)
         pthread_mutex_unlock(&g_Mutex);
         
         if (p->refCount <= 0) {
-            obj->uninit();
+            obj->dealloc();
             delete obj;
         }
     }
@@ -136,7 +136,7 @@ void GObject::init()
 {
     
 }
-void GObject::uninit()
+void GObject::dealloc()
 {
     //不能做事情，因为引擎内部类没有调用init
 }

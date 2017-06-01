@@ -14,10 +14,10 @@ void AppDge::init()
     
 }
 
-void AppDge::uninit()
+void AppDge::dealloc()
 {
     
-    GApplication::Delegate::uninit();
+    GApplication::Delegate::dealloc();
 }
 
 void AppDge::appDidFinishLaunching(GApplication* application,int argc, char *argv[])

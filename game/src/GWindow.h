@@ -79,6 +79,9 @@ private:
     void startGame(const char* gameClassName);
     void stopGame();
 public:
+    inline GGame* getGame() const {
+        return m_Game;
+    }
 	inline void* getOSWindow() {
 #if defined(GX_OS_WINDOWS)
 		return m_OSWin.getHWND();

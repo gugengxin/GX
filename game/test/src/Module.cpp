@@ -12,16 +12,15 @@
 GX_OBJECT_IMPLEMENT(Module, GObject);
 
 
-void Module::init()
+Module* Module::initWithGame(Game* game,GContext& context)
 {
-    GObject::init();
-    
+    return this;
 }
 
-void Module::uninit()
+void Module::dealloc()
 {
     
-    GObject::uninit();
+    GObject::dealloc();
 }
 
 void Module::idle()

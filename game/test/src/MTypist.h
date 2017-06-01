@@ -14,6 +14,7 @@
 class MTypist : public Module {
     GX_OBJECT(MTypist);
 public:
+    virtual Module* initWithGame(Game* game,GContext& context);
     virtual void idle();
     virtual void render3D(GCanvas* canvas,GContext& context);
     virtual void render2D(GCanvas* canvas,GContext& context);

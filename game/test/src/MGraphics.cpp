@@ -10,9 +10,10 @@
 
 GX_OBJECT_IMPLEMENT(MGraphics, Module);
 
-void MGraphics::init()
+Module* MGraphics::initWithGame(Game* game,GContext& context)
 {
-    Module::init();
+    Module::initWithGame(game,context);
+    
     m_Data = GDataBuffer::alloc();
     typedef struct {
         GVector3 pos;
@@ -33,12 +34,14 @@ void MGraphics::init()
     m_Data->unmap();
     m_Data->setOffset(0);
     m_Data->setStride(sizeof(md[0]));
+    
+    return this;
 }
 
-void MGraphics::uninit()
+void MGraphics::dealloc()
 {
     GO::release(m_Data);
-    Module::uninit();
+    Module::dealloc();
 }
 
 void MGraphics::idle()

@@ -26,21 +26,22 @@ public:
         return GX_CAST_R(T*, gretain(obj));
     }
     static void release(GObject* obj);
+	static gint32 refCount(GObject* obj);
+    
     template <class T> static T* autorelease(T* obj) {
         return GX_CAST_R(T*, gautorelease(obj));
     }
-	static gint32 refCount(GObject* obj);
 protected:
     static GObject* gretain(GObject* obj);
     static GObject* gautorelease(GObject* obj);
 	static void* gmalloc(size_t size);
 	static void gfree(void* p);
-
+protected:
     GObject();
     virtual ~GObject();
 
     virtual void init();
-    virtual void uninit();
+    virtual void dealloc();
 public:
     static GClass   gclass;
     virtual GClass* getClass();

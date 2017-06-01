@@ -11,10 +11,12 @@
 
 #include "GXGame.h"
 
+class Game;
 
 class Module : public GObject {
     GX_VIRTUAL_OBJECT(Module);
 public:
+    virtual Module* initWithGame(Game* game,GContext& context);
     virtual void idle();
     virtual void render3D(GCanvas* canvas,GContext& context);
     virtual void render2D(GCanvas* canvas,GContext& context);

@@ -9,7 +9,7 @@
 #include "Module.h"
 
 class Game : public GGame {
-    GX_OBJECT(Game);
+    GX_OBJECT_DIT(Game);
 protected:
     virtual void eventStart();
     virtual void eventStop();

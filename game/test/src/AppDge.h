@@ -3,7 +3,7 @@
 
 class AppDge : public GApplication::Delegate 
 {
-    GX_OBJECT(AppDge);
+    GX_OBJECT_DIT(AppDge);
 public:
 	static AppDge* shared();
 public:

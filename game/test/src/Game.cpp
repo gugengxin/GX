@@ -14,10 +14,10 @@ void Game::init()
     m_Modules=GArray<Module>::alloc();
 }
 
-void Game::uninit()
+void Game::dealloc()
 {
     GO::release(m_Modules);
-    GGame::uninit();
+    GGame::dealloc();
 }
 
 void Game::eventStart()
@@ -26,15 +26,9 @@ void Game::eventStart()
     
     getWindow()->getCanvas()->setBackgroundColor(1, 0, 1, 1);
     
-//    {
-//        MGraphics* m=MGraphics::autoAlloc();
-//        m_Modules->add(m);
-//    }
-    
-    {
-        MTypist* m=MTypist::autoAlloc();
-        m_Modules->add(m);
-    }
+    GContext& context=getWindow()->getContext();
+    m_Modules->add(MGraphics::autoAlloc()->initWithGame(this, context));
+    //m_Modules->add(MTypist::autoAlloc()->initWithGame(this, context));
     
 //#if M_TEST == M_TEST_GRAPHICS
 //    
