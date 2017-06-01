@@ -6,6 +6,7 @@
 #define AS_GAME_H
 
 #include "GXGame.h"
+#include "Module.h"
 
 class Game : public GGame {
     GX_OBJECT(Game);
@@ -16,7 +17,7 @@ public:
     virtual void idle();
     virtual void render(GCanvas* canvas);
 private:
-
+    GArray<Module>* m_Modules;
 };
 
 

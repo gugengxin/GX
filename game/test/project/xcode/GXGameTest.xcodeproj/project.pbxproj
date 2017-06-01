@@ -27,6 +27,15 @@
 		CA9C16A11CC5E94D00204303 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16A01CC5E94D00204303 /* AppDelegate.mm */; };
 		CA9C16A41CC5E94D00204303 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9C16A31CC5E94D00204303 /* main.m */; };
 		CA9C16A61CC5E94D00204303 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA9C16A51CC5E94D00204303 /* Assets.xcassets */; };
+		CABBD1081EDFB29C009B3C71 /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABBD1061EDFB29C009B3C71 /* Module.cpp */; };
+		CABBD1091EDFB29C009B3C71 /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABBD1061EDFB29C009B3C71 /* Module.cpp */; };
+		CABBD10A1EDFB29C009B3C71 /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABBD1061EDFB29C009B3C71 /* Module.cpp */; };
+		CABBD1131EDFB4EF009B3C71 /* MGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABBD1111EDFB4EE009B3C71 /* MGraphics.cpp */; };
+		CABBD1141EDFB4EF009B3C71 /* MGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABBD1111EDFB4EE009B3C71 /* MGraphics.cpp */; };
+		CABBD1151EDFB4EF009B3C71 /* MGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABBD1111EDFB4EE009B3C71 /* MGraphics.cpp */; };
+		CABBD1181EDFB96B009B3C71 /* MTypist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABBD1161EDFB96B009B3C71 /* MTypist.cpp */; };
+		CABBD1191EDFB96B009B3C71 /* MTypist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABBD1161EDFB96B009B3C71 /* MTypist.cpp */; };
+		CABBD11A1EDFB96B009B3C71 /* MTypist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CABBD1161EDFB96B009B3C71 /* MTypist.cpp */; };
 		CACCBB071EDC826600535D58 /* STXINWEI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CACCBB061EDC826600535D58 /* STXINWEI.ttf */; };
 		CACCBB081EDC826600535D58 /* STXINWEI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CACCBB061EDC826600535D58 /* STXINWEI.ttf */; };
 		CACCBB091EDC826600535D58 /* STXINWEI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CACCBB061EDC826600535D58 /* STXINWEI.ttf */; };
@@ -110,6 +119,12 @@
 		CA9C16A51CC5E94D00204303 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA9C16AA1CC5E94D00204303 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA9C16BF1CC5FDCB00204303 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		CABBD1061EDFB29C009B3C71 /* Module.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Module.cpp; sourceTree = "<group>"; };
+		CABBD1071EDFB29C009B3C71 /* Module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Module.h; sourceTree = "<group>"; };
+		CABBD1111EDFB4EE009B3C71 /* MGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MGraphics.cpp; sourceTree = "<group>"; };
+		CABBD1121EDFB4EF009B3C71 /* MGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGraphics.h; sourceTree = "<group>"; };
+		CABBD1161EDFB96B009B3C71 /* MTypist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MTypist.cpp; sourceTree = "<group>"; };
+		CABBD1171EDFB96B009B3C71 /* MTypist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTypist.h; sourceTree = "<group>"; };
 		CACCBB061EDC826600535D58 /* STXINWEI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = STXINWEI.ttf; sourceTree = "<group>"; };
 		CACEDEB21EA75CE80010BC1E /* GXGame.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GXGame.xcodeproj; path = ../../../project/xcode/GXGame.xcodeproj; sourceTree = "<group>"; };
 		CACEDEBE1EA75CF80010BC1E /* GXCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GXCore.xcodeproj; path = ../../../../core/project/xcode/GXCore.xcodeproj; sourceTree = "<group>"; };
@@ -153,6 +168,12 @@
 				CA1F60A91CD984BB00C6307B /* AppDge.cpp */,
 				CA80D1ED1E0A525D001E57AF /* Game.h */,
 				CA80D1EC1E0A525D001E57AF /* Game.cpp */,
+				CABBD1071EDFB29C009B3C71 /* Module.h */,
+				CABBD1061EDFB29C009B3C71 /* Module.cpp */,
+				CABBD1121EDFB4EF009B3C71 /* MGraphics.h */,
+				CABBD1111EDFB4EE009B3C71 /* MGraphics.cpp */,
+				CABBD1171EDFB96B009B3C71 /* MTypist.h */,
+				CABBD1161EDFB96B009B3C71 /* MTypist.cpp */,
 			);
 			name = src;
 			path = ../../src;
@@ -474,9 +495,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CABBD1181EDFB96B009B3C71 /* MTypist.cpp in Sources */,
 				CA9C16351CC5DFE200204303 /* AppDelegate.mm in Sources */,
 				CA9C16321CC5DFE200204303 /* main.m in Sources */,
+				CABBD1081EDFB29C009B3C71 /* Module.cpp in Sources */,
 				CA1F60AB1CD984BB00C6307B /* AppDge.cpp in Sources */,
+				CABBD1131EDFB4EF009B3C71 /* MGraphics.cpp in Sources */,
 				CA80D1EE1E0A525D001E57AF /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,9 +509,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CABBD1191EDFB96B009B3C71 /* MTypist.cpp in Sources */,
 				CA9C168C1CC5E7D800204303 /* AppDelegate.mm in Sources */,
 				CA9C16891CC5E7D800204303 /* main.m in Sources */,
+				CABBD1091EDFB29C009B3C71 /* Module.cpp in Sources */,
 				CA1F60AC1CD984BB00C6307B /* AppDge.cpp in Sources */,
+				CABBD1141EDFB4EF009B3C71 /* MGraphics.cpp in Sources */,
 				CA80D1EF1E0A525D001E57AF /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,9 +523,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CABBD11A1EDFB96B009B3C71 /* MTypist.cpp in Sources */,
 				CA9C16A41CC5E94D00204303 /* main.m in Sources */,
 				CA9C16A11CC5E94D00204303 /* AppDelegate.mm in Sources */,
+				CABBD10A1EDFB29C009B3C71 /* Module.cpp in Sources */,
 				CA1F60AD1CD984BB00C6307B /* AppDge.cpp in Sources */,
+				CABBD1151EDFB4EF009B3C71 /* MGraphics.cpp in Sources */,
 				CA80D1F01E0A525D001E57AF /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
