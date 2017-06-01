@@ -85,6 +85,19 @@ void GTypist::Word::create(GString* str, gint start, gint len, GFont* font)
     m_HBBuffer = hb_buffer;
 }
 
+void* GTypist::Word::getHBInfo()
+{
+    return hb_buffer_get_glyph_infos (GX_CAST_R(hb_buffer_t*, m_HBBuffer), NULL);
+}
+void* GTypist::Word::getHBPosition()
+{
+    return hb_buffer_get_glyph_positions (GX_CAST_R(hb_buffer_t*, m_HBBuffer), NULL);
+}
+
+gint GTypist::Word::getLength()
+{
+    return GX_CAST_S(gint, m_Length);
+}
 void GTypist::Word::setX(float v)
 {
     m_Frame.origin.x=v;
@@ -109,6 +122,23 @@ float GTypist::Word::getHeight() const
 {
     return m_Frame.size.height;
 }
+
+
+GX_GOBJECT_IMPLEMENT(GTypist::Paint, GObject);
+
+GTypist::Paint::Paint()
+{
+    m_Color.set(0xFF, 0xFF, 0xFF, 0xFF);
+    m_OLColor.set(0, 0, 0, 0xFF);
+    m_BlendMode=BlendModeDefault;
+}
+
+GTypist::Paint::~Paint()
+{
+    
+}
+
+
 
 #define M_HB_BUF() GX_CAST_R(hb_buffer_t*,m_HBBuffer)
 
@@ -144,4 +174,30 @@ void GTypist::setSingleLine(GString * str, GFont * font)
     
     m_Words.add(wd);
     GO::release(wd);
+}
+
+bool GTypist::print(Paper* paper,GPointF pos,const Paint* paint)
+{
+    if (!paper->isFontAvailable(m_Font)) {
+        return false;
+    }
+    
+    for (gint i=0; i<m_Words.getCount(); i++) {
+        Word* wd=m_Words.get(i);
+        
+        hb_glyph_info_t *infoHB = GX_CAST_R(hb_glyph_info_t*, wd->getHBInfo());
+        hb_glyph_position_t *posHB = GX_CAST_R(hb_glyph_position_t*, wd->getHBPosition());
+        
+        GPointF curPos(pos.x+wd->getX(),pos.y+wd->getY());
+        for (gint j=0; j<wd->getLength(); j++) {
+            GFont::Glyph* glyph=m_Font->getGlyph(infoHB[j].codepoint);
+            
+            paper->printGlyph(glyph, GPointF::make(curPos.x+posHB[j].x_offset/64.0f, curPos.y+posHB[j].y_offset/64.0f),paint);
+            
+            curPos.x+=posHB[j].x_advance/64.0f;
+            curPos.y+=posHB[j].y_advance/64.0f;
+        }
+    }
+    
+    return true;
 }

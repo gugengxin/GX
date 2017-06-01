@@ -15,7 +15,7 @@ public:
 		b = blue;
 		a = alpha;
 	}
-	void set(float red, float green, float blue, float alpha);
+	void setFloat(float red, float green, float blue, float alpha);
 
 	guint8 r, g, b, a;
 };
@@ -24,7 +24,7 @@ class GColor4F
 {
 public:
 	GColor4F();
-
+    GColor4F(float red, float green, float blue, float alpha);
 	
 	inline void set(float red, float green, float blue, float alpha) {
 		r = red;
@@ -32,7 +32,7 @@ public:
 		b = blue;
 		a = alpha;
 	}
-	void set(guint8 red, guint8 green, guint8 blue, guint8 alpha);
+	void setUChar(guint8 red, guint8 green, guint8 blue, guint8 alpha);
 
 	float r, g, b, a;
 };

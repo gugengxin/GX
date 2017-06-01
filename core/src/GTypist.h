@@ -14,7 +14,7 @@
 #include "GString.h"
 #include "GFont.h"
 #include "GGeometry.h"
-
+#include "GColor.h"
 
 
 #include "GXGObject.h"
@@ -22,10 +22,16 @@
 class GTypist : public GObject {
 	GX_GOBJECT(GTypist);
 public:
+    class Paint;
+    
     class Paper {
+        friend class GTypist;
     public:
         Paper();
         virtual ~Paper();
+    protected:
+        virtual bool isFontAvailable(GFont* font)=0;
+        virtual void printGlyph(GFont::Glyph* glyph,GPointF pos,const Paint* paint)=0;
     };
     
     class Word : public GObject {
@@ -33,7 +39,10 @@ public:
         GX_GOBJECT(Word);
     private:
         void create(GString* str, gint start, gint len, GFont* font);
+        void* getHBInfo();
+        void* getHBPosition();
     public:
+        gint getLength();
         void setX(float v);
         float getX() const;
         void setY(float v);
@@ -47,8 +56,42 @@ public:
         void* m_HBBuffer;
         GRectF m_Frame;
     };
+    
+    enum BlendMode {
+        BlendModeDefault,
+        BlendModeSaD1sa,
+    };
+    
+    class Paint : public GObject {
+        GX_GOBJECT(Paint);
+    public:
+        const GColor4& getColor() const {
+            return m_Color;
+        }
+        void setColor(guint8 r,guint8 g,guint8 b,guint8 a) {
+            m_Color.set(r, g, b, a);
+        }
+        const GColor4& getOutlineColor() const {
+            return m_OLColor;
+        }
+        void setOutlineColor(guint8 r,guint8 g,guint8 b,guint8 a) {
+            m_OLColor.set(r, g, b, a);
+        }
+        BlendMode getBlendMode() const {
+            return m_BlendMode;
+        }
+        void setBlendMode(BlendMode v) {
+            m_BlendMode=v;
+        }
+    private:
+        GColor4     m_Color;
+        GColor4     m_OLColor;
+        BlendMode   m_BlendMode;
+    };
 public:
 	void setSingleLine(GString* str, GFont* font);
+public:
+    bool print(Paper* paper,GPointF pos,const Paint* paint);
 private:
     
 private:

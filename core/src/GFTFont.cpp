@@ -27,56 +27,55 @@
 
 
 #define M_LOAD_FLAGS() (FT_LOAD_DEFAULT | FT_LOAD_NO_HINTING | FT_LOAD_NO_AUTOHINT | FT_LOAD_NO_BITMAP)
-#define M_GLYPH()   ((FT_Glyph)m_Glyph)
+#define M_GLYPH()   GX_CAST_R(FT_Glyph,m_Glyph)
+#define M_OLGLYPH() GX_CAST_R(FT_OutlineGlyph,m_OLGlyph)
 
-typedef struct _Outline {
-    FT_Glyph   glyph;
-    FT_Outline outline;
-} Outline;
-
-static Outline* _OLNew(FT_GlyphSlot gs,FT_Glyph gh)
-{
-    FT_Outline& ol=gs->outline;
-    Outline* res=GX_CAST_R(Outline*, malloc(sizeof(Outline) + ol.n_points*(sizeof(FT_Vector)+sizeof(char)) + ol.n_contours*sizeof(short)));
-    res->glyph=gh;
-    /*
-    typedef struct  FT_Outline_
-    {
-        short       n_contours;      
-        short       n_points;        
-        
-        FT_Vector*  points;          
-        char*       tags;            
-        short*      contours;        
-        
-        int         flags;
-        
-    } FT_Outline;
-    //*/
-    res->outline.n_contours=ol.n_contours;
-    res->outline.n_points=ol.n_points;
-    res->outline.points=GX_CAST_R(FT_Vector*, GX_CAST_R(guchar*, res)+sizeof(Outline));
-    memcpy(res->outline.points, ol.points, ol.n_points*sizeof(FT_Vector));
-    res->outline.tags=GX_CAST_R(char*, GX_CAST_R(guchar*, res)+sizeof(Outline)+ol.n_points*sizeof(FT_Vector));
-    memcpy(res->outline.tags, ol.tags, ol.n_points*sizeof(char));
-    res->outline.contours=GX_CAST_R(short*, GX_CAST_R(guchar*, res)+ol.n_points*(sizeof(FT_Vector)+sizeof(char)));
-    memcpy(res->outline.contours, ol.contours, ol.n_contours*sizeof(short));
-    res->outline.flags=ol.flags&(~FT_OUTLINE_OWNER);
-    return res;
-}
-
-static void _OLDone(Outline* ol)
-{
-    if (ol->glyph) {
-        FT_Done_Glyph(ol->glyph);
-    }
-    free(ol);
-}
-
-
-
-
-
+//typedef struct _Outline {
+//    FT_Glyph   glyph;
+//    GDib*      dib;
+//    FT_Outline outline;
+//} Outline;
+//
+//static Outline* _OLNew(FT_GlyphSlot gs,FT_Glyph gh)
+//{
+//    FT_Outline& ol=gs->outline;
+//    Outline* res=GX_CAST_R(Outline*, malloc(sizeof(Outline) + ol.n_points*(sizeof(FT_Vector)+sizeof(char)) + ol.n_contours*sizeof(short)));
+//    res->glyph=gh;
+//    res->dib=NULL;
+//    /*
+//    typedef struct  FT_Outline_
+//    {
+//        short       n_contours;      
+//        short       n_points;        
+//        
+//        FT_Vector*  points;          
+//        char*       tags;            
+//        short*      contours;        
+//        
+//        int         flags;
+//        
+//    } FT_Outline;
+//    //*/
+//    res->outline.n_contours=ol.n_contours;
+//    res->outline.n_points=ol.n_points;
+//    res->outline.points=GX_CAST_R(FT_Vector*, GX_CAST_R(guchar*, res)+sizeof(Outline));
+//    memcpy(res->outline.points, ol.points, ol.n_points*sizeof(FT_Vector));
+//    res->outline.tags=GX_CAST_R(char*, GX_CAST_R(guchar*, res)+sizeof(Outline)+ol.n_points*sizeof(FT_Vector));
+//    memcpy(res->outline.tags, ol.tags, ol.n_points*sizeof(char));
+//    res->outline.contours=GX_CAST_R(short*, GX_CAST_R(guchar*, res)+ol.n_points*(sizeof(FT_Vector)+sizeof(char)));
+//    memcpy(res->outline.contours, ol.contours, ol.n_contours*sizeof(short));
+//    res->outline.flags=ol.flags&(~FT_OUTLINE_OWNER);
+//    return res;
+//}
+//
+//static void _OLDone(Outline* ol)
+//{
+//    GO::release(ol->dib);
+//    if (ol->glyph) {
+//        FT_Done_Glyph(ol->glyph);
+//    }
+//    free(ol);
+//}
 
 
 GX_GOBJECT_IMPLEMENT(GFTFont::Glyph, GFont::Glyph);
@@ -86,14 +85,18 @@ GFTFont::Glyph::Glyph()
     m_UseNumber=0;
     memset(&m_Metrics, 0, sizeof(m_Metrics));
     m_Glyph=NULL;
-    m_Outline=NULL;
+    m_GlyphDib=NULL;
+    m_OLGlyph=NULL;
+    m_OLGlyphDib=NULL;
 }
 
 GFTFont::Glyph::~Glyph()
 {
-    if (m_Outline) {
-        _OLDone(GX_CAST_R(Outline*, m_Outline));
+    GO::release(m_OLGlyphDib);
+    if (m_OLGlyph) {
+        FT_Done_Glyph(GX_CAST_R(FT_Glyph, m_OLGlyph));
     }
+    GO::release(m_GlyphDib);
     if (m_Glyph) {
         FT_Done_Glyph(M_GLYPH());
     }
@@ -127,22 +130,22 @@ gint32 GFTFont::Glyph::getVertBearingY()
 
 guint32 GFTFont::Glyph::getOutlinePointCount()
 {
-	if (m_Outline) {
-		return GX_CAST_S(guint32, GX_CAST_R(Outline*, m_Outline)->outline.n_points);
+	if (m_OLGlyph) {
+		return GX_CAST_S(guint32, M_OLGLYPH()->outline.n_points);
 	}
 	return 0;
 }
 gint32 GFTFont::Glyph::getOutlinePointX(guint32 index)
 {
-	if (m_Outline) {
-		return GX_CAST_S(gint32 , GX_CAST_R(Outline*, m_Outline)->outline.points[index].x);
+	if (m_OLGlyph) {
+		return GX_CAST_S(gint32 , M_OLGLYPH()->outline.points[index].x);
 	}
 	return 0;
 }
 gint32 GFTFont::Glyph::getOutlinePointY(guint32 index)
 {
-	if (m_Outline) {
-		return GX_CAST_S(gint32, GX_CAST_R(Outline*, m_Outline)->outline.points[index].y);
+	if (m_OLGlyph) {
+		return GX_CAST_S(gint32, M_OLGLYPH()->outline.points[index].y);
 	}
 	return 0;
 }
@@ -173,9 +176,9 @@ bool GFTFont::Glyph::load(GFTFont* font,guint32 index)
     m_Metrics.vertBearingY=GX_CAST_S(gint32,metrics.vertBearingY);
     //m_Metrics.vertAdvance=GX_CAST_S(gint32,metrics.vertAdvance);
     
-    Outline* ol=NULL;
+    FT_Glyph glyphOL=NULL;
     if (font->hasOutline()) {
-        FT_Glyph glyphOL=glyph;
+        glyphOL=glyph;
         if(FT_Glyph_StrokeBorder(&glyphOL, (FT_Stroker)font->m_Stroker, 0, 0)) {
             FT_Done_Glyph(glyph);
             return false;
@@ -185,21 +188,94 @@ bool GFTFont::Glyph::load(GFTFont* font,guint32 index)
             FT_Done_Glyph(glyphOL);
             return false;
         }
-        
-        ol=_OLNew(face->glyph,glyphOL);
     }
     
     setFont(font);
     setIndex(index);
     m_Glyph=glyph;
-    m_Outline=ol;
+    GO::release(m_GlyphDib);
+    m_GlyphDib=NULL;
+    m_OLGlyph=glyphOL;
+    GO::release(m_OLGlyphDib);
+    m_OLGlyphDib=NULL;
     return true;
+}
+
+void GFTFont::Glyph::render()
+{
+    if (m_OLGlyph) {
+        FT_BBox bbox;
+        FT_Outline *outline = &M_OLGLYPH()->outline;
+        FT_Glyph_Get_CBox(GX_CAST_R(FT_Glyph, m_OLGlyph),FT_GLYPH_BBOX_GRIDFIT,&bbox);
+        int width = GX_CAST_S(int, (bbox.xMax - bbox.xMin)>>6);
+        int rows = GX_CAST_S(int, (bbox.yMax - bbox.yMin)>>6);
+        
+        
+        GDib* dib=GDib::alloc();
+        dib->setWidth(width);
+        dib->setHeight(rows);
+        dib->setPixelFormat(GX::PixelFormatA8);
+        dib->setStride(width);
+        dib->changeDataBytes(width*rows*1);
+        
+        FT_Bitmap bmp;
+        bmp.buffer = GX_CAST_R(unsigned char*, dib->getDataPtr());
+        bmp.width = width;
+        bmp.rows = rows;
+        bmp.pitch = width;
+        bmp.pixel_mode = FT_PIXEL_MODE_GRAY;
+        bmp.num_grays = 256;
+        
+        FT_Raster_Params params;
+        memset(&params, 0, sizeof (params));
+        params.source = outline;
+        params.target = &bmp;
+        params.flags = FT_RASTER_FLAG_AA;
+        FT_Outline_Translate(outline,-bbox.xMin,-bbox.yMin);
+        
+        if(FT_Outline_Render(GX_CAST_R(FT_Library, GFontManager::shared()->getFTLibrary()), outline, &params)) {
+            GO::release(dib);
+            return;
+        }
+        
+        GO::release(m_OLGlyphDib);
+        m_OLGlyphDib=dib;
+    }
+    
+    
+    if(FT_Glyph_To_Bitmap((FT_Glyph*)&m_Glyph, FT_RENDER_MODE_NORMAL, NULL, 1)==0) {
+        GDib* dib=GDib::alloc();
+        FT_Bitmap& bmp=GX_CAST_R(FT_BitmapGlyph, m_Glyph)->bitmap;
+        
+        dib->setWidth(bmp.width);
+        dib->setHeight(bmp.rows);
+        dib->setPixelFormat(GX::PixelFormatA8);
+        dib->setStride(bmp.pitch);
+        dib->setStaticData(bmp.buffer, bmp.pitch*bmp.rows);
+        
+        GO::release(m_GlyphDib);
+        m_GlyphDib=dib;
+    }
+}
+
+GDib* GFTFont::Glyph::getDib()
+{
+    if (!m_GlyphDib) {
+        render();
+    }
+    return m_GlyphDib;
+}
+GDib* GFTFont::Glyph::getOutlineDib()
+{
+    if (m_OLGlyph && !m_GlyphDib) {
+        render();
+    }
+    return m_OLGlyphDib;
 }
 
 
 #undef M_GLYPH
 #undef M_OLGLYPH
-#undef M_OLDATA
 
 #define M_FTGLYPH_CACHE_COUNT 256
 #define M_FACE()    ((FT_Face)m_Face)

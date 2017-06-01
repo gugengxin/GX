@@ -13,13 +13,14 @@
 #include "GObject.h"
 #include "GXPixel.h"
 #include "GXData.h"
+#include "GTypist.h"
 
 
 #include "GXGObject.h"
 // Down can't include other h file
 class GReader;
 
-class GDib : public GObject
+class GDib : public GObject, public GTypist::Paper
 {
 	GX_GOBJECT(GDib);
 public:
@@ -35,36 +36,40 @@ public:
     
 	static GDib* convert(GDib* dib, GX::PixelFormat pfTo);
 public:
-    inline GX::PixelFormat getPixelFormat() {
+    inline GX::PixelFormat getPixelFormat() const {
         return m_PixelFormat;
     }
     void setPixelFormat(GX::PixelFormat v) {
         m_PixelFormat=v;
     }
-    inline gint32 getWidth() {
+    inline gint32 getWidth() const {
         return m_Width;
     }
     void setWidth(gint32 v) {
         m_Width=v;
     }
-    inline gint32 getHeight() {
+    inline gint32 getHeight() const {
         return m_Height;
     }
     void setHeight(gint32 v) {
         m_Height=v;
     }
-    inline gint32 getStride() {
+    inline gint32 getStride() const {
         return m_Stride;
     }
     void setStride(gint32 v) {
         m_Stride=v;
     }
-    
-    bool changeDataBytes(guint bytes);
-    inline void* getDataPtr() {
+    inline void* getDataPtr() const {
         return m_Data.getPtr();
     }
-
+    bool changeDataBytes(guint bytes);
+    void setStaticData(const void* data, guint bytes);
+    
+    
+protected:
+    virtual bool isFontAvailable(GFont* font);
+    virtual void printGlyph(GFont::Glyph* glyph,GPointF pos,const GTypist::Paint* paint);
 private:
     GX::PixelFormat m_PixelFormat;
     gint32          m_Width;

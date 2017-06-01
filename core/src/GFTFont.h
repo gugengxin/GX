@@ -12,7 +12,7 @@
 #include "GXPrefix.h"
 #include "GFont.h"
 #include "GData.h"
-
+#include "GDib.h"
 
 #include "GXGObject.h"
 // Down can't include other h file
@@ -43,6 +43,10 @@ public:
             m_UseNumber+=step;
         }
         bool load(GFTFont* font,guint32 index);
+        void render();
+    public:
+        GDib* getDib();
+        GDib* getOutlineDib();
     private:
         gint   m_UseNumber;
     private:
@@ -58,7 +62,9 @@ public:
         } m_Metrics;
     private:
         void*  m_Glyph;
-        void*  m_Outline;
+        GDib*  m_GlyphDib;
+        void*  m_OLGlyph;
+        GDib*  m_OLGlyphDib;
     };
 public:
     bool create(GData* data,gint32 size,gint32 outlineSize);

@@ -11,6 +11,7 @@
 #include "GRBReader.h"
 #include "GPng.h"
 #include "GJpeg.h"
+#include "GFTFont.h"
 //Up include other h file
 #include "GXGObject.h"
 
@@ -634,4 +635,153 @@ bool GDib::changeDataBytes(guint bytes)
     return m_Data.changeBytes(bytes);
 }
 
+void GDib::setStaticData(const void* data, guint bytes)
+{
+    m_Data.setStatic(data, bytes);
+}
+
+
+bool GDib::isFontAvailable(GFont* font)
+{
+    return font->isKindOfClass(GFTFont::gclass);
+}
+
+typedef enum __DrawState {
+    _DrawStateText,
+    _DrawStateOL,
+    _DrawStateOLText,
+} _DrawState;
+
+static void _DrawFTDib(GDib* context,_DrawState ds,GDib* dib,gint32 x,gint32 y,const GTypist::Paint* paint)
+{
+    GX_ASSERT(dib->getPixelFormat()==GX::PixelFormatA8);
+    
+    if (x>=context->getWidth() || x+dib->getWidth()<=0 || y>=context->getHeight() || y+dib->getHeight()<=0) {
+        return;
+    }
+    
+    
+    gint32 rowWide=x+dib->getWidth() > context->getWidth() ? context->getWidth()-x:dib->getWidth();
+    gint32 rowNum=y+dib->getHeight() > context->getHeight()? context->getHeight()-y:dib->getHeight();
+    gint32 sx=0,sy=0;
+    if (x<0) {
+        rowWide+=x;
+        sx=-x;
+        x=0;
+    }
+    if (y<0) {
+        rowNum+=y;
+        sy=-y;
+        y=0;
+    }
+    gint32 srcPitch=dib->getStride();
+    guchar* srcData=((guchar*)dib->getDataPtr())+sy*srcPitch+sx*GX_PIXEL_FORMAT_SIZE(dib->getPixelFormat());
+    gint32 dstPitch=context->getStride();
+    guchar* dstData=((guchar*)context->getDataPtr())+y*dstPitch+x*GX_PIXEL_FORMAT_SIZE(context->getPixelFormat());
+    
+    switch (context->getPixelFormat()) {
+        case GX::PixelFormatA8:
+        {
+            for (gint32 j=0; j<rowNum; j++) {
+                memcpy(dstData, srcData, rowWide);
+                srcData+=srcPitch;
+                dstData+=dstPitch;
+            }
+        }
+            break;
+        case GX::PixelFormatRGBA8888:
+        {
+            GColor4 clr;
+            GTypist::BlendMode bm;
+            if (ds>=_DrawStateOL) {
+                if (ds==_DrawStateOL) {
+                    clr=paint->getOutlineColor();
+                    bm=paint->getBlendMode();
+                }
+                else {
+                    clr=paint->getColor();
+                    bm=GTypist::BlendModeSaD1sa;
+                }
+            }
+            else {
+                clr=paint->getColor();
+                bm=paint->getBlendMode();
+            }
+            
+            switch (bm) {
+                case GTypist::BlendModeDefault:
+                default:
+                {
+                    guint8 a;
+                    for (gint32 j=0; j<rowNum; j++) {
+                        for (gint32 i=0; i<rowWide; i++) {
+                            a=(guint8)(clr.a*(gint32)srcData[i]/0xFF);
+                            if (a>0) {
+                                dstData[i*4+0]=clr.r;
+                                dstData[i*4+1]=clr.g;
+                                dstData[i*4+2]=clr.b;
+                                dstData[i*4+3]=a;
+                            }
+                        }
+                        srcData+=srcPitch;
+                        dstData+=dstPitch;
+                    }
+                }
+                    break;
+                case GTypist::BlendModeSaD1sa:
+                {
+                    float r,g,b,a,sa,da;
+                    for (gint32 j=0; j<rowNum; j++) {
+                        for (gint32 i=0; i<rowWide; i++) {
+                            
+                            sa=(float)clr.a*(float)srcData[i]/255.0f;
+                            da=(float)dstData[i*4+3];
+                            
+                            r=(float)clr.r;
+                            r=dstData[i*4+0]+(r-dstData[i*4+0])*sa/255.0f;
+                            
+                            g=(float)clr.g;
+                            g=dstData[i*4+1]+(g-dstData[i*4+1])*sa/255.0f;
+                            
+                            b=(float)clr.b;
+                            b=dstData[i*4+2]+(b-dstData[i*4+2])*sa/255.0f;
+                            
+                            a=sa+da;
+                            if (a>255.0f) {
+                                a=255.0f;
+                            }
+                            
+                            dstData[i*4+0]=(guint8)(r);
+                            dstData[i*4+1]=(guint8)(g);
+                            dstData[i*4+2]=(guint8)(b);
+                            dstData[i*4+3]=(guint8)(a);
+                        }
+                        srcData+=srcPitch;
+                        dstData+=dstPitch;
+                    }
+                }
+                    break;
+            }
+            
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+void GDib::printGlyph(GFont::Glyph* glyph,GPointF pos,const GTypist::Paint* paint)
+{
+    GFTFont::Glyph* ghFT=GX_CAST_R(GFTFont::Glyph*, glyph);
+    
+    GDib* dib=ghFT->getDib();
+    GDib* dibOL=ghFT->getOutlineDib();
+    if (dibOL) {
+        _DrawFTDib(this, _DrawStateOL, dibOL, GX::round(pos.x), GX::round(pos.y), paint);
+        _DrawFTDib(this, _DrawStateOLText, dib, GX::round(pos.x), GX::round(pos.y), paint);
+    }
+    else {
+        _DrawFTDib(this, _DrawStateText, dib, GX::round(pos.x), GX::round(pos.y), paint);
+    }
+}
 

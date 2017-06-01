@@ -15,6 +15,10 @@
 template <typename T>
 class GPoint {
 public:
+    static GPoint make(T xx, T yy) {
+        return GPoint(xx,yy);
+    }
+public:
     T x,y;
     
     GPoint() : x(0),y(0) {}
@@ -30,6 +34,8 @@ public:
                             (float(y)-float(other.y))*(float(y)-float(other.y)));
     }
 };
+
+typedef GPoint<float> GPointF;
 
 template <typename T>
 class GSize {
