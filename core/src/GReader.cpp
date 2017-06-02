@@ -45,7 +45,7 @@ GData* GReader::readAllToData()
         
     }
     else {
-        guchar buf[1024*4];
+        guint8 buf[1024*4];
         while (hasData()) {
             gint len=read(buf, sizeof(buf));
             if (len>0) {
