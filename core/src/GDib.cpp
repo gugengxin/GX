@@ -632,12 +632,31 @@ GDib::~GDib()
 
 bool GDib::changeDataBytes(guint bytes)
 {
-    return m_Data.changeBytes(bytes);
+    if(m_Data.changeBytes(bytes)) {
+        m_Data.zeroSelf();
+    }
+    return false;
 }
 
 void GDib::setStaticData(const void* data, guint bytes)
 {
     m_Data.setStatic(data, bytes);
+}
+
+void GDib::changeData(GX::PixelFormat pf,gint32 w,gint32 h,gint32 stride)
+{
+    m_PixelFormat=pf;
+    m_Width=w;
+    m_Height=h;
+    m_Stride=stride;
+    if(m_Data.changeBytes(stride*h)) {
+        m_Data.zeroSelf();
+    }
+}
+
+void GDib::changeData(GX::PixelFormat pf,gint32 w,gint32 h)
+{
+    changeData(pf, w, h, w*GX_PIXEL_FORMAT_SIZE(pf));
 }
 
 
@@ -675,9 +694,9 @@ static void _DrawFTDib(GDib* context,_DrawState ds,GDib* dib,gint32 x,gint32 y,c
         y=0;
     }
     gint32 srcPitch=dib->getStride();
-    guchar* srcData=((guchar*)dib->getDataPtr())+sy*srcPitch+sx*GX_PIXEL_FORMAT_SIZE(dib->getPixelFormat());
+    guint8* srcData=(guint8*)dib->getDataPtr(sx,sy);
     gint32 dstPitch=context->getStride();
-    guchar* dstData=((guchar*)context->getDataPtr())+y*dstPitch+x*GX_PIXEL_FORMAT_SIZE(context->getPixelFormat());
+    guint8* dstData=(guint8*)context->getDataPtr(x,y);
     
     switch (context->getPixelFormat()) {
         case GX::PixelFormatA8:
@@ -715,7 +734,7 @@ static void _DrawFTDib(GDib* context,_DrawState ds,GDib* dib,gint32 x,gint32 y,c
                     guint8 a;
                     for (gint32 j=0; j<rowNum; j++) {
                         for (gint32 i=0; i<rowWide; i++) {
-                            a=(guint8)(clr.a*(gint32)srcData[i]/0xFF);
+                            a=(guint8)(clr.a*(gint32)(srcData[i])/0xFF);
                             if (a>0) {
                                 dstData[i*4+0]=clr.r;
                                 dstData[i*4+1]=clr.g;
@@ -777,8 +796,9 @@ void GDib::printGlyph(GFont::Glyph* glyph,GPointF pos,const GTypist::Paint* pain
     GDib* dib=ghFT->getDib();
     GDib* dibOL=ghFT->getOutlineDib();
     if (dibOL) {
+        float olSize=ghFT->getOutlineSize()/64.0f;
         _DrawFTDib(this, _DrawStateOL, dibOL, GX::round(pos.x), GX::round(pos.y), paint);
-        _DrawFTDib(this, _DrawStateOLText, dib, GX::round(pos.x), GX::round(pos.y), paint);
+        _DrawFTDib(this, _DrawStateOLText, dib, GX::round(pos.x+olSize), GX::round(pos.y+olSize), paint);
     }
     else {
         _DrawFTDib(this, _DrawStateText, dib, GX::round(pos.x), GX::round(pos.y), paint);

@@ -160,6 +160,35 @@ hb_gx_get_glyph_v_advance (hb_font_t *font HB_UNUSED,
 }
 
 static hb_bool_t
+hb_gx_get_glyph_h_origin (hb_font_t *font HB_UNUSED,
+                          void *font_data,
+                          hb_codepoint_t glyph,
+                          hb_position_t *x,
+                          hb_position_t *y,
+                          void *user_data HB_UNUSED)
+{
+    const hb_gx_font_t *gx_font = (const hb_gx_font_t *) font_data;
+    GFont* gf=gx_font->font;
+    
+    GFont::Glyph* gh=gf->getGlyph(glyph);
+    if (!gh) {
+        return false;
+    }
+    
+    /* Note: FreeType's vertical metrics grows downward while other FreeType coordinates
+     * have a Y growing upward.  Hence the extra negation. */
+    *x = 0;//gh->getHoriBearingX();
+    *y = gh->getHoriBearingY();
+    
+    if (font->x_scale < 0)
+        *x = -*x;
+    if (font->y_scale < 0)
+        *y = -*y;
+    
+    return true;
+}
+
+static hb_bool_t
 hb_gx_get_glyph_v_origin (hb_font_t *font HB_UNUSED,
                           void *font_data,
                           hb_codepoint_t glyph,
@@ -312,7 +341,7 @@ retry:
         hb_font_funcs_set_variation_glyph_func (funcs, hb_gx_get_variation_glyph, NULL, NULL);
         hb_font_funcs_set_glyph_h_advance_func (funcs, hb_gx_get_glyph_h_advance, NULL, NULL);
         hb_font_funcs_set_glyph_v_advance_func (funcs, hb_gx_get_glyph_v_advance, NULL, NULL);
-        //hb_font_funcs_set_glyph_h_origin_func (funcs, hb_ft_get_glyph_h_origin, NULL, NULL);
+        hb_font_funcs_set_glyph_h_origin_func (funcs, hb_gx_get_glyph_h_origin, NULL, NULL);
         hb_font_funcs_set_glyph_v_origin_func (funcs, hb_gx_get_glyph_v_origin, NULL, NULL);
         hb_font_funcs_set_glyph_h_kerning_func (funcs, hb_gx_get_glyph_h_kerning, NULL, NULL);
         //hb_font_funcs_set_glyph_v_kerning_func (funcs, hb_ft_get_glyph_v_kerning, NULL, NULL);

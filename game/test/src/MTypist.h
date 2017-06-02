@@ -20,6 +20,7 @@ public:
     virtual void render2D(GCanvas* canvas,GContext& context);
 private:
     GDataBuffer* m_Data;
+    GTexture2D* m_Tex2D;
 };
 
 #endif /* MTypist_h */

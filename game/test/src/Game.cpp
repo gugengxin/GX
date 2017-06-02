@@ -27,8 +27,8 @@ void Game::eventStart()
     getWindow()->getCanvas()->setBackgroundColor(1, 0, 1, 1);
     
     GContext& context=getWindow()->getContext();
-    m_Modules->add(MGraphics::autoAlloc()->initWithGame(this, context));
-    //m_Modules->add(MTypist::autoAlloc()->initWithGame(this, context));
+    //m_Modules->add(MGraphics::autoAlloc()->initWithGame(this, context));
+    m_Modules->add(MTypist::autoAlloc()->initWithGame(this, context));
     
 //#if M_TEST == M_TEST_GRAPHICS
 //    

@@ -35,11 +35,27 @@ Module* MTypist::initWithGame(Game* game,GContext& context)
     m_Data->setOffset(0);
     m_Data->setStride(sizeof(md[0]));
     
+    
+    GDib* dib=GDib::autoAlloc();
+    dib->changeData(GX::PixelFormatRGBA8888, 512, 512);
+    
+    GFont* font=GFontManager::shared()->loadFTFont(GS::chars("STXINWEI.ttf"), 50, 2);
+    GTypist* typist=GTypist::autoAlloc();
+    typist->setSingleLine(GS::chars("谷更新 欢迎你 ！！！Welcome!!! abcdefghijklmnopqrstuvwxyz "), font);
+    GTypist::Paint* paint=GTypist::Paint::autoAlloc();
+    paint->setColor(0, 0xFF, 0, 0xFF);
+    paint->setOutlineColor(0xFF, 0, 0, 0xFF);
+    
+    typist->print(dib, GPointF::make(0, 0), paint);
+    
+    m_Tex2D=GO::retain(context.loadTexture2D(dib, NULL));
+    
     return this;
 }
 
 void MTypist::dealloc()
 {
+    GO::release(m_Tex2D);
     GO::release(m_Data);
     Module::dealloc();
 }
@@ -50,7 +66,8 @@ void MTypist::idle()
 }
 void MTypist::render3D(GCanvas* canvas,GContext& context)
 {
-    
+    GSRTexture2D* shader=context.getSRTexture2D(false, true, GSRTexture2D::MM_None);
+    shader->draw(canvas, m_Data, GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
 }
 void MTypist::render2D(GCanvas* canvas,GContext& context)
 {

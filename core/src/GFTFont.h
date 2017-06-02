@@ -32,6 +32,7 @@ public:
         virtual gint32 getHoriBearingY();
         virtual gint32 getVertBearingX();
         virtual gint32 getVertBearingY();
+        virtual gint32 getOutlineSize();
 		virtual guint32 getOutlinePointCount();
 		virtual gint32 getOutlinePointX(guint32 index);
 		virtual gint32 getOutlinePointY(guint32 index);

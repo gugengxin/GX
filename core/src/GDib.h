@@ -26,11 +26,8 @@ class GDib : public GObject, public GTypist::Paper
 public:
     typedef enum _FileType {
         Unsupport=-1,
-        
         PNG=0,
         JPEG,
-        
-        
     } FileType;
     static GDib* load(GReader* reader,FileType suggestFT);
     
@@ -63,9 +60,14 @@ public:
     inline void* getDataPtr() const {
         return m_Data.getPtr();
     }
+    inline void* getDataPtr(gint32 x,gint32 y) {
+        return GX_CAST_R(guint8*, m_Data.getPtr())+y*m_Stride+x*GX_PIXEL_FORMAT_SIZE(m_PixelFormat);
+    }
     bool changeDataBytes(guint bytes);
     void setStaticData(const void* data, guint bytes);
     
+    void changeData(GX::PixelFormat pf,gint32 w,gint32 h,gint32 stride);
+    void changeData(GX::PixelFormat pf,gint32 w,gint32 h);
     
 protected:
     virtual bool isFontAvailable(GFont* font);

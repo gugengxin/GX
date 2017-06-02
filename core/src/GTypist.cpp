@@ -188,9 +188,11 @@ bool GTypist::print(Paper* paper,GPointF pos,const Paint* paint)
         hb_glyph_info_t *infoHB = GX_CAST_R(hb_glyph_info_t*, wd->getHBInfo());
         hb_glyph_position_t *posHB = GX_CAST_R(hb_glyph_position_t*, wd->getHBPosition());
         
-        GPointF curPos(pos.x+wd->getX(),pos.y+wd->getY());
+        GPointF curPos(pos.x+wd->getX(),pos.y+wd->getY()+m_Font->getAscender()/64.0f);
         for (gint j=0; j<wd->getLength(); j++) {
             GFont::Glyph* glyph=m_Font->getGlyph(infoHB[j].codepoint);
+            
+            printf("%f %f\n",posHB[j].x_offset/64.0f,posHB[j].y_offset/64.0f);
             
             paper->printGlyph(glyph, GPointF::make(curPos.x+posHB[j].x_offset/64.0f, curPos.y+posHB[j].y_offset/64.0f),paint);
             
