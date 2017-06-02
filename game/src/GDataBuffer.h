@@ -48,21 +48,26 @@ private:
 
 class GDataBuffer : public GObject, public GDataBufferBase, public GIBuffer
 {
+    friend class GImage;
 	GX_GOBJECT(GDataBuffer);
 public:
-	inline void setOffset(guint16 v) {
-		m_Offset = v;
+	inline void setOffset(guint v) {
+		m_Offset = GX_CAST_S(guint16, v);
 	}
-	inline void setStride(guint16 v) {
-		m_Stride = v;
+	inline void setStride(guint v) {
+		m_Stride = GX_CAST_S(guint16, v);
 	}
 
-	virtual guint getOffset() {
+	virtual guint getOffset() const {
 		return m_Offset;
 	}
-	virtual guint getStride() {
+	virtual guint getStride() const {
 		return m_Stride;
 	}
+    
+    bool changeCount(guint offset,guint stride,guint count);
+    bool changeCount(guint count);
+    
 #ifdef GX_OPENGL
 	virtual void readyUse() {
 	}
@@ -103,7 +108,7 @@ public:
 	inline void setFormat(guint v) {
 		m_Format = v;
 	}
-	virtual guint getFormat() {
+	virtual guint getFormat() const {
 		return m_Format;
 	}
 #ifdef GX_OPENGL

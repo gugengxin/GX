@@ -17,5 +17,17 @@
 #include "GXMetal.h"
 
 
+namespace GX {
+    typedef enum _DMode {
+        DModePoints,
+        DModeLines,
+        DModeLineStrip,
+        DModeTriangles,
+        DModeTriangleStrip,
+    } DMode;
+    
+    gint dmodeToDrawMode(DMode dmode);
+}
+
 
 #endif /* GX3DAPI_h */

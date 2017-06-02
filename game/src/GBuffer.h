@@ -15,8 +15,8 @@
 class GIBuffer
 {
 public:
-	virtual guint getOffset() = 0;
-	virtual guint getStride() = 0;
+	virtual guint getOffset() const = 0;
+	virtual guint getStride() const = 0;
 #ifdef GX_OPENGL
 	virtual void readyUse() = 0;
 	virtual const GLvoid * getData() = 0;
@@ -36,7 +36,7 @@ public:
 class GIIndexBuffer
 {
 public:
-	virtual guint getFormat() = 0;
+	virtual guint getFormat() const = 0;
 #ifdef GX_OPENGL
 	virtual void readyUse() = 0;
 	virtual const GLvoid * getData() = 0;

@@ -29,6 +29,12 @@
 		CA446E401D67E36F002E77DF /* GXMetal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA446E3D1D67E36F002E77DF /* GXMetal.cpp */; };
 		CA446E411D67E36F002E77DF /* GXMetal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA446E3D1D67E36F002E77DF /* GXMetal.cpp */; };
 		CA6793B01DAFFACB00854B5E /* GFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */; };
+		CA8A38BE1EE1219E00BBEBE7 /* GImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8A38BC1EE1219E00BBEBE7 /* GImage.cpp */; };
+		CA8A38BF1EE1219E00BBEBE7 /* GImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8A38BC1EE1219E00BBEBE7 /* GImage.cpp */; };
+		CA8A38C01EE1219E00BBEBE7 /* GImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8A38BC1EE1219E00BBEBE7 /* GImage.cpp */; };
+		CA8A38C51EE195D700BBEBE7 /* GX3DAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8A38C41EE195D700BBEBE7 /* GX3DAPI.cpp */; };
+		CA8A38C61EE195D700BBEBE7 /* GX3DAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8A38C41EE195D700BBEBE7 /* GX3DAPI.cpp */; };
+		CA8A38C71EE195D700BBEBE7 /* GX3DAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA8A38C41EE195D700BBEBE7 /* GX3DAPI.cpp */; };
 		CABB3F941CFE06EB00A7367C /* GOShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB21CF9E6300092C472 /* GOShader.cpp */; };
 		CABB3F951CFE06EB00A7367C /* GDShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DAA1CF9E6300092C472 /* GDShader.cpp */; };
 		CABB3F961CFE06EB00A7367C /* GShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB41CF9E6300092C472 /* GShader.cpp */; };
@@ -130,6 +136,9 @@
 		CA5BCA431EA27E1E006CF7DE /* GXCore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = GXCore.xcconfig; path = ../../../core/product/xcode/GXCore.xcconfig; sourceTree = "<group>"; };
 		CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GFrameBuffer.cpp; sourceTree = "<group>"; };
 		CA6793AF1DAFFACB00854B5E /* GFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFrameBuffer.h; sourceTree = "<group>"; };
+		CA8A38BC1EE1219E00BBEBE7 /* GImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GImage.cpp; sourceTree = "<group>"; };
+		CA8A38BD1EE1219E00BBEBE7 /* GImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GImage.h; sourceTree = "<group>"; };
+		CA8A38C41EE195D700BBEBE7 /* GX3DAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GX3DAPI.cpp; sourceTree = "<group>"; };
 		CA9C16C91CC6079000204303 /* GXGame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXGame.h; sourceTree = "<group>"; };
 		CABB3FAE1CFE12D000A7367C /* GBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GBuffer.cpp; sourceTree = "<group>"; };
 		CABB3FAF1CFE12D000A7367C /* GBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBuffer.h; sourceTree = "<group>"; };
@@ -250,6 +259,7 @@
 				CA446E3E1D67E36F002E77DF /* GXMetal.h */,
 				CA446E3D1D67E36F002E77DF /* GXMetal.cpp */,
 				CA26E07B1DC64CD4003AF801 /* GX3DAPI.h */,
+				CA8A38C41EE195D700BBEBE7 /* GX3DAPI.cpp */,
 				CACEDED91EA760F40010BC1E /* GX3DAPIType.h */,
 			);
 			name = 3DAPI;
@@ -262,6 +272,8 @@
 				CAC708AA1D13CDE900B98028 /* GTexture.cpp */,
 				CAC708B01D13CDFE00B98028 /* GTexture2D.h */,
 				CAC708AF1D13CDFE00B98028 /* GTexture2D.cpp */,
+				CA8A38BD1EE1219E00BBEBE7 /* GImage.h */,
+				CA8A38BC1EE1219E00BBEBE7 /* GImage.cpp */,
 			);
 			name = texture;
 			sourceTree = "<group>";
@@ -507,11 +519,13 @@
 				CA3A7EAF1DED66BF00197FCB /* GCanvas.cpp in Sources */,
 				CADB5DBA1CF9E6300092C472 /* GDShader.cpp in Sources */,
 				CAFE76F21EB50A3600E43016 /* GAndroidDaydream.cpp in Sources */,
+				CA8A38C51EE195D700BBEBE7 /* GX3DAPI.cpp in Sources */,
 				CAFE76F11EB50A3600E43016 /* GAndroidActivity.cpp in Sources */,
 				CACC51221D70A364007D6B79 /* GMShader.cpp in Sources */,
 				CAC708B11D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CADB5DBD1CF9E6300092C472 /* GShader.cpp in Sources */,
 				CABB5CD11CE0E40500D5B648 /* GOGLContext.cpp in Sources */,
+				CA8A38BE1EE1219E00BBEBE7 /* GImage.cpp in Sources */,
 				CA1AD2771CD87CA900CEA1DC /* GWindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,6 +539,7 @@
 				CA3090961CFD1C53000B8DF2 /* GSRGraphics.cpp in Sources */,
 				CAE303C01CE563CB00F15C74 /* GXDirectX.cpp in Sources */,
 				CAE303C11CE563CB00F15C74 /* GXOpenGL.cpp in Sources */,
+				CA8A38C61EE195D700BBEBE7 /* GX3DAPI.cpp in Sources */,
 				CA446E401D67E36F002E77DF /* GXMetal.cpp in Sources */,
 				CABB3F9C1CFE06EC00A7367C /* GDShader.cpp in Sources */,
 				CAE303BD1CE563CB00F15C74 /* GContext.cpp in Sources */,
@@ -533,6 +548,7 @@
 				CAD4C7841D577E9300F01C06 /* GSRTexture2D.cpp in Sources */,
 				CAE303BE1CE563CB00F15C74 /* GD3DContext.cpp in Sources */,
 				CABB3F9D1CFE06EC00A7367C /* GShader.cpp in Sources */,
+				CA8A38BF1EE1219E00BBEBE7 /* GImage.cpp in Sources */,
 				CA04FDE81CE4557E00C9B596 /* glew.c in Sources */,
 				CABB3F9B1CFE06EC00A7367C /* GOShader.cpp in Sources */,
 				CAFDCDE51E0B6E5E00D22117 /* GGame.cpp in Sources */,
@@ -555,6 +571,7 @@
 				CA3090971CFD1C54000B8DF2 /* GSRGraphics.cpp in Sources */,
 				CAE303CA1CE563CB00F15C74 /* GXDirectX.cpp in Sources */,
 				CAE303CB1CE563CB00F15C74 /* GXOpenGL.cpp in Sources */,
+				CA8A38C71EE195D700BBEBE7 /* GX3DAPI.cpp in Sources */,
 				CA446E411D67E36F002E77DF /* GXMetal.cpp in Sources */,
 				CABB3F951CFE06EB00A7367C /* GDShader.cpp in Sources */,
 				CAE303C71CE563CB00F15C74 /* GContext.cpp in Sources */,
@@ -563,6 +580,7 @@
 				CAD4C7851D577E9300F01C06 /* GSRTexture2D.cpp in Sources */,
 				CAE303C81CE563CB00F15C74 /* GD3DContext.cpp in Sources */,
 				CABB3F961CFE06EB00A7367C /* GShader.cpp in Sources */,
+				CA8A38C01EE1219E00BBEBE7 /* GImage.cpp in Sources */,
 				CA04FDE91CE4557E00C9B596 /* glew.c in Sources */,
 				CABB3F941CFE06EB00A7367C /* GOShader.cpp in Sources */,
 				CAFDCDE61E0B6E5E00D22117 /* GGame.cpp in Sources */,

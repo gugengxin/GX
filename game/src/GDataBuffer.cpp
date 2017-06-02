@@ -147,6 +147,18 @@ GDataBuffer::~GDataBuffer()
 
 }
 
+bool GDataBuffer::changeCount(guint offset,guint stride,guint count)
+{
+    m_Offset=GX_CAST_S(guint, offset);
+    m_Stride=GX_CAST_S(guint, stride);
+    
+    return changeBytes(count*m_Stride);
+}
+bool GDataBuffer::changeCount(guint count)
+{
+    return changeBytes(count*m_Stride);
+}
+
 
 
 

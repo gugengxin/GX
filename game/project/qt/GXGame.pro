@@ -36,6 +36,7 @@ SOURCES += \
 	../../src/GDataBuffer.cpp\
 	../../src/GFrameBuffer.cpp\
 	../../src/GGame.cpp\
+	../../src/GImage.cpp\
 	#../../src/GMShader.cpp\
 	#../../src/GMTLContext.cpp\
 	../../src/GOGLContext.cpp\
@@ -46,6 +47,7 @@ SOURCES += \
 	../../src/GTexture.cpp\
 	../../src/GTexture2D.cpp\
 	../../src/GWindow.cpp\
+	../../src/GX3DAPI.cpp\
 	#../../src/GXDirectX.cpp\
 	#../../src/GXMetal.cpp\
 	../../src/GXOpenGL.cpp\
@@ -66,6 +68,7 @@ HEADERS += \
 	../../src/GDataBuffer.h\
 	../../src/GFrameBuffer.h\
 	../../src/GGame.h\
+	../../src/GImage.h\
 	../../src/GL/eglew.h\
 	../../src/GL/glew.h\
 	../../src/GL/glxew.h\
