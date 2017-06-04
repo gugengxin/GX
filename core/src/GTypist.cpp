@@ -73,7 +73,7 @@ void GTypist::Word::create(GString* str, gint start, gint len, GFont* font)
     unsigned int count = hb_buffer_get_length(hb_buffer);
     hb_glyph_position_t *pos = hb_buffer_get_glyph_positions(hb_buffer, NULL);
     
-    m_Frame.set(0, 0, 0, font->getHeight());
+    m_Frame.set(0, 0, 0.0f, GX_CAST_S(float, font->getHeight()));
     for (unsigned int i = 0; i < count; i++)
     {
         m_Frame.size.width+=pos[i].x_advance / 64.0f;

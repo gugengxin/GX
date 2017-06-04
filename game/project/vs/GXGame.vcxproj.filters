@@ -90,6 +90,12 @@
     <ClCompile Include="..\..\src\GAndroidEntrance.cpp">
       <Filter>src\unuse</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GImage.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GX3DAPI.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GBaseContext.h">
@@ -196,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GAndroidEntrance.h">
       <Filter>src\unuse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GImage.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

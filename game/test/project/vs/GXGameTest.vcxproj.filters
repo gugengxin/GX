@@ -39,6 +39,15 @@
     <ClInclude Include="..\..\src\Game.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\MGraphics.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Module.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\MTypist.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -51,6 +60,15 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Game.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\MGraphics.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Module.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\MTypist.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

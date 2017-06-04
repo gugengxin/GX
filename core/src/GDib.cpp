@@ -797,11 +797,11 @@ void GDib::printGlyph(GFont::Glyph* glyph,GPointF pos,const GTypist::Paint* pain
     GDib* dibOL=ghFT->getOutlineDib();
     if (dibOL) {
         float olSize=ghFT->getOutlineSize()/64.0f;
-        _DrawFTDib(this, _DrawStateOL, dibOL, GX::round(pos.x), GX::round(pos.y), paint);
-        _DrawFTDib(this, _DrawStateOLText, dib, GX::round(pos.x+olSize), GX::round(pos.y+olSize), paint);
+        _DrawFTDib(this, _DrawStateOL, dibOL, (gint32)GX::round(pos.x), (gint32)GX::round(pos.y), paint);
+        _DrawFTDib(this, _DrawStateOLText, dib, (gint32)GX::round(pos.x+olSize), (gint32)GX::round(pos.y+olSize), paint);
     }
     else {
-        _DrawFTDib(this, _DrawStateText, dib, GX::round(pos.x), GX::round(pos.y), paint);
+        _DrawFTDib(this, _DrawStateText, dib, (gint32)GX::round(pos.x), (gint32)GX::round(pos.y), paint);
     }
 }
 
