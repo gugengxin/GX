@@ -10,6 +10,7 @@
 #define GBaseContext_h
 
 #include "GXPrefix.h"
+#include "GX3DAPI.h"
 
 #include "GXGObject.h"
 // Down can't include other h file
@@ -25,11 +26,12 @@ protected:
     virtual void destroy();
     
 public:
-    inline GWindow* getWindow() const {
-        return m_Window;
-    }
+	GWindow* getWindow() const;
+	GX::DCullFace getCullFace() const;
+	virtual void setCullFace(GX::DCullFace v);
 private:
     GWindow* m_Window;
+	GX::DCullFace m_DCullFace;
 };
 
 // Up can't include other h file

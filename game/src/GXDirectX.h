@@ -15,6 +15,15 @@
 
 namespace GX {
 	ID3D10Device* d3dDevice();
+
+	class D3DRasterizerStater {
+	public:
+		D3DRasterizerStater();
+		virtual ~D3DRasterizerStater();
+
+	private:
+		ID3D10RasterizerState*	m_RasterStates[_DCullFaceCount];
+	};
 }
 
 #define GX_POINTS			D3D10_PRIMITIVE_TOPOLOGY_POINTLIST

@@ -16,17 +16,9 @@
 #include "GXDirectX.h"
 #include "GXMetal.h"
 
-
 namespace GX {
-    typedef enum _DMode {
-        DModePoints,
-        DModeLines,
-        DModeLineStrip,
-        DModeTriangles,
-        DModeTriangleStrip,
-    } DMode;
-    
-    gint dmodeToDrawMode(DMode dmode);
+    gint DToplogyToDrawMode(DToplogy dt);
+	DToplogy DToplogyFromDrawMode(gint mode);
 }
 
 

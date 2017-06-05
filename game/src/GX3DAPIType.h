@@ -41,4 +41,30 @@
 
 #endif
 
+
+
+
+//////////////////////////////////////////
+
+namespace GX {
+	typedef enum _DToplogy {
+		DToplogyUnknown = -1,
+		DToplogyPoints = 0,
+		DToplogyLines,
+		DToplogyLineStrip,
+		DToplogyTriangles,
+		DToplogyTriangleStrip,
+	} DToplogy;
+
+	typedef enum _DCullFace {
+		DCullFaceNone,
+		DCullFaceFront,
+		DCullFaceBack,
+		///////////////
+		_DCullFaceCount,
+	} DCullFace;
+}
+
+
+
 #endif /* GX3DAPIType_h */

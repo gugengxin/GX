@@ -20,6 +20,21 @@ namespace GX {
 		}
 		return g_D3DDevice;
 	}
+
+
+	D3DRasterizerStater::D3DRasterizerStater()
+	{
+		memset(m_RasterStates, 0, sizeof(m_RasterStates));
+	}
+
+	D3DRasterizerStater::~D3DRasterizerStater()
+	{
+		for (gint i = 0; i < _DCullFaceCount; i++) {
+			if (m_RasterStates[i]) {
+				m_RasterStates[i]->Release();
+			}
+		}
+	}
 }
 
 

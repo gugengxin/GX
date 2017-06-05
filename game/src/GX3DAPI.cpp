@@ -18,10 +18,19 @@ static gint g_DrawModes[]={
 
 namespace GX {
     
-    gint dmodeToDrawMode(DMode dmode)
+    gint DToplogyToDrawMode(DToplogy dt)
     {
-        return g_DrawModes[dmode];
+        return g_DrawModes[dt];
     }
+	DToplogy DToplogyFromDrawMode(gint mode)
+	{
+		for (size_t i = 0; i < sizeof(g_DrawModes)/sizeof(g_DrawModes[0]); i++) {
+			if (mode == g_DrawModes[i]) {
+				return GX_CAST_S(DToplogy, i);
+			}
+		}
+		return DToplogyUnknown;
+	}
 }
 
 
