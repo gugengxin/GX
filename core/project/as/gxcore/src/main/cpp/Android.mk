@@ -27,7 +27,7 @@ LOCAL_CPPFLAGS	+= -fno-rtti
 LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
 LOCAL_EXPORT_CPPFLAGS := $(LOCAL_CPPFLAGS)
 LOCAL_WHOLE_STATIC_LIBRARIES := GXCoreAndroid
-LOCAL_STATIC_LIBRARIES	:= gx_zlib gx_libpng gx_libjpeg gx_freetype
+LOCAL_STATIC_LIBRARIES	:= gx_zlib gx_libpng gx_libjpeg gx_freetype gx_harfbuzz
 #LOCAL_LDLIBS 	:=
 LOCAL_EXPORT_LDLIBS := -landroid -llog
 #__LOCAL_SRC_FILES_START__
@@ -98,5 +98,6 @@ $(call import-module,external/zlib/lib/ard)
 $(call import-module,external/libpng/lib/ard)
 $(call import-module,external/libjpeg/lib/ard)
 $(call import-module,external/freetype/lib/ard)
+$(call import-module,external/harfbuzz/lib/ard)
 
 

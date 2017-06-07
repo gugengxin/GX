@@ -59,7 +59,7 @@ GString *GAndroidApp::getCacheDirAbsolutePath(JNIEnv *jniEnv)
     const char *cstr = jniEnv->GetStringUTFChars(str, NULL);
     if (cstr) {
         res = GString::autoAlloc();
-        res->set(cstr);
+        res->setChars(cstr);
         jniEnv->ReleaseStringUTFChars(str, cstr);
     }
     jniEnv->DeleteLocalRef(str);
@@ -79,7 +79,7 @@ GString *GAndroidApp::getPackageCodePath(JNIEnv *jniEnv)
     const char *cstr = jniEnv->GetStringUTFChars(str, NULL);
     if (cstr) {
         res = GString::autoAlloc();
-        res->set(cstr);
+        res->setChars(cstr);
         jniEnv->ReleaseStringUTFChars(str, cstr);
     }
     jniEnv->DeleteLocalRef(str);
