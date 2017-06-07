@@ -205,6 +205,50 @@ namespace GX {
     }
     
     
+    
+    
+    
+    OpenGLCullFacer::OpenGLCullFacer()
+    {
+        
+    }
+    
+    OpenGLCullFacer::~OpenGLCullFacer()
+    {
+        
+    }
+    
+    void OpenGLCullFacer::setCullFace(DCullFace v)
+    {
+        DCullFacer::setCullFace(v);
+        
+        openGLCFUpdate();
+    }
+    
+    bool OpenGLCullFacer::openGLCFNeedReverse()
+    {
+        return false;
+    }
+    
+    void OpenGLCullFacer::openGLCFUpdate()
+    {
+        switch (getCullFace()) {
+            case DCullFaceNone:
+                GX_glDisable(GL_CULL_FACE);
+                break;
+            case DCullFaceFront:
+                GX_glEnable(GL_CULL_FACE);
+                GX_glCullFace(openGLCFNeedReverse()?GL_BACK:GL_FRONT);
+                break;
+            case DCullFaceBack:
+                GX_glEnable(GL_CULL_FACE);
+                GX_glCullFace(openGLCFNeedReverse()?GL_FRONT:GL_BACK);
+                break;
+            default:
+                break;
+        }
+    }
+    
 }
 
 

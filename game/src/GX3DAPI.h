@@ -1,4 +1,4 @@
-﻿//
+//
 //  GX3DAPI.h
 //  GX
 //
@@ -18,7 +18,7 @@
 #include "GXMetal.h"
 
 #if defined(GX_OPENGL)
-
+#define GX_3D_CULLFACER GX::OpenGLCullFacer
 #elif defined(GX_DIRECTX)
 
 #elif defined(GX_METAL)
@@ -27,11 +27,8 @@
 
 namespace GX {
     
-
-    
     gint DToplogyToDrawMode(DToplogy dt);
 	DToplogy DToplogyFromDrawMode(gint mode);
-    
     
 }
 

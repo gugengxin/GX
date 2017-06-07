@@ -103,6 +103,7 @@ GFrameBuffer::GFrameBuffer()
     m_PreViewport[1]=0;
     m_PreViewport[2]=0;
     m_PreViewport[3]=0;
+    m_PreCullFace=GX::DCullFaceNone;
 #elif defined(GX_DIRECTX)
 	m_PreName=NULL;
 	m_PreDepthName=NULL;
@@ -173,6 +174,15 @@ void GFrameBuffer::config(Node* node)
     setNode(node);
 }
 
+#if defined(GX_OPENGL)
+
+bool GFrameBuffer::openGLCFNeedReverse()
+{
+    return true;
+}
+
+#elif defined(GX_METAL)
+
 void* GFrameBuffer::getRenderEncoder()
 {
     return m_RenderEncoder;
@@ -182,6 +192,8 @@ void* GFrameBuffer::metalCFNeedRenderEncoder()
 {
     return m_RenderEncoder;
 }
+
+#endif
 
 bool GFrameBuffer::renderCheck()
 {
@@ -199,11 +211,15 @@ void GFrameBuffer::renderBegin()
     
     GX_glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&m_PreBindName);
     GX_glGetIntegerv(GL_VIEWPORT, m_PreViewport);
+    m_PreCullFace=m_Node->getContext()->getCullFace();
+    
     GX_glBindFramebuffer(GL_FRAMEBUFFER, m_Node->getData().getName());
     
     const GColor4F& bgdClr=getBackgroundColor();
     GX_glClearColor(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
     GX_glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    
+    openGLCFUpdate();
     
 #elif defined(GX_DIRECTX)
 	ID3D10Device* device = GX::d3dDevice();
@@ -281,6 +297,7 @@ void GFrameBuffer::setViewport(float x, float y, float w, float h, float scale)
 void GFrameBuffer::renderEnd()
 {
 #if defined(GX_OPENGL)
+    m_Node->getContext()->setCullFace(m_PreCullFace);
     GX_glBindFramebuffer(GL_FRAMEBUFFER, m_PreBindName);
     GX_glViewport(m_PreViewport[0], m_PreViewport[1], m_PreViewport[2], m_PreViewport[3]);
 #elif defined(GX_DIRECTX)

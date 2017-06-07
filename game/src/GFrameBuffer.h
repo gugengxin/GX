@@ -151,7 +151,10 @@ private:
         m_Node=v;
     }
     void config(Node* node);
-#if defined(GX_METAL)
+#if defined(GX_OPENGL)
+protected:
+    virtual bool openGLCFNeedReverse();
+#elif defined(GX_METAL)
 public:
     virtual void* getRenderEncoder();
 protected:
@@ -163,6 +166,7 @@ private:
 #if defined(GX_OPENGL)
     GLuint  m_PreBindName;
     GLint   m_PreViewport[4];
+    GX::DCullFace m_PreCullFace;
 #elif defined(GX_DIRECTX)
 	ID3D10RenderTargetView*		m_PreName;
 	ID3D10DepthStencilView*		m_PreDepthName;

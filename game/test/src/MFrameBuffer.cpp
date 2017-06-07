@@ -68,9 +68,15 @@ void MFrameBuffer::prepareTex2D(GContext& context)
             GTexture2D* tex=context.loadTexture2D(GS::chars("lena_rgb.jpg"), GDib::JPEG, NULL);
             
             m_FB->renderBegin();
+            m_FB->setViewport(0, 0, m_FB->getWidth(), m_FB->getHeight(), 1.0f);
+            
             m_FB->enable2D(m_FB->getWidth(), m_FB->getHeight());
             m_FB->translate(m_FB->getWidth()*0.5f, m_FB->getHeight()*0.5f, 0.0f);
-            m_FB->setCullFace(GX::DCullFaceNone);
+            
+            //m_FB->enable3D(m_FB->getWidth(), m_FB->getHeight(), GX_PI / 3, 0.1f, 1000.0f);
+            //m_FB->lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+            
+            m_FB->setCullFace(GX::DCullFaceBack);
             
             GSRTexture2D* shader=context.getSRTexture2D(false, false, GSRTexture2D::MM_None);
             shader->draw(m_FB, m_Data, GSRTexture2D::IT_Float_Float, tex, GX_TRIANGLE_STRIP, 0, 4, NULL);

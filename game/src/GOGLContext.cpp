@@ -475,6 +475,8 @@ void GOGLContext::renderBegin()
     const GColor4F& bgdClr=getWindow()->getBackgroundColor();
 	GX_glClearColor(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
 	GX_glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    
+    openGLCFUpdate();
 }
 
 void GOGLContext::setViewport(float x, float y, float w, float h, float scale)

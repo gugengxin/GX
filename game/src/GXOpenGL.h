@@ -391,6 +391,20 @@ namespace GX {
     
     void openGLPushContext(const OGLContext& ctt);
     void openGLPopContext();
+    
+    
+    
+    class OpenGLCullFacer : public DCullFacer {
+    public:
+        OpenGLCullFacer();
+        virtual ~OpenGLCullFacer();
+        
+        virtual void setCullFace(DCullFace v);
+    protected:
+        virtual bool openGLCFNeedReverse();
+    protected:
+        void openGLCFUpdate();
+    };
 }
 
 
