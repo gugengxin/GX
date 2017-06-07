@@ -173,6 +173,16 @@ void GFrameBuffer::config(Node* node)
     setNode(node);
 }
 
+void* GFrameBuffer::getRenderEncoder()
+{
+    return m_RenderEncoder;
+}
+
+void* GFrameBuffer::metalCFNeedRenderEncoder()
+{
+    return m_RenderEncoder;
+}
+
 bool GFrameBuffer::renderCheck()
 {
     if (!m_Node) {
@@ -237,6 +247,8 @@ void GFrameBuffer::renderBegin()
 #if defined(GX_DEBUG)
     [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) pushDebugGroup:@"GFrameBuffer"];
 #endif
+    
+    metalCFUpdate(m_RenderEncoder);
 #endif
 }
 

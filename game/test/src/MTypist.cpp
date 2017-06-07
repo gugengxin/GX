@@ -50,6 +50,7 @@ Module* MTypist::initWithGame(Game* game,GContext& context)
     
     m_Tex2D=GO::retain(context.loadTexture2D(dib, NULL));
     
+    m_Angle=0.0f;
     return this;
 }
 
@@ -62,12 +63,18 @@ void MTypist::dealloc()
 
 void MTypist::idle()
 {
-    
+    m_Angle+=0.2f/(GX_PI*2);
 }
 void MTypist::render3D(GCanvas* canvas,GContext& context)
 {
+    canvas->pushMatrix();
+    
+    canvas->rotateY(m_Angle);
+    
     GSRTexture2D* shader=context.getSRTexture2D(false, true, GSRTexture2D::MM_None);
     shader->draw(canvas, m_Data, GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
+    
+    canvas->popMatrix();
 }
 void MTypist::render2D(GCanvas* canvas,GContext& context)
 {

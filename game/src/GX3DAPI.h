@@ -11,14 +11,28 @@
 
 
 #include "GX3DAPIType.h"
+#include "GX3DAPIPre.h"
 
 #include "GXOpenGL.h"
 #include "GXDirectX.h"
 #include "GXMetal.h"
 
+#if defined(GX_OPENGL)
+
+#elif defined(GX_DIRECTX)
+
+#elif defined(GX_METAL)
+#define GX_3D_CULLFACER GX::MetalCullFacer
+#endif
+
 namespace GX {
+    
+
+    
     gint DToplogyToDrawMode(DToplogy dt);
 	DToplogy DToplogyFromDrawMode(gint mode);
+    
+    
 }
 
 

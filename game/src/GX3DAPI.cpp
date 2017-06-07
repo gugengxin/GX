@@ -31,6 +31,28 @@ namespace GX {
 		}
 		return DToplogyUnknown;
 	}
+    
+    
+    
+    DCullFacer::DCullFacer()
+    {
+        m_Value=DCullFaceBack;
+    }
+    
+    DCullFacer::~DCullFacer()
+    {
+        
+    }
+    
+    DCullFace DCullFacer::getCullFace() const
+    {
+        return m_Value;
+    }
+    void DCullFacer::setCullFace(DCullFace v)
+    {
+        m_Value = v;
+    }
+    
 }
 
 

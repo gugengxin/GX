@@ -114,6 +114,8 @@ void GMTLContext::renderBegin()
 #if defined(GX_DEBUG)
     [M_RENDER_ENCODER() pushDebugGroup:@"GMTLContext"];
 #endif
+    
+    metalCFUpdate(m_RenderEncoder);
 }
 void GMTLContext::setViewport(float x, float y, float w, float h, float scale)
 {
@@ -141,6 +143,11 @@ void GMTLContext::renderEnd()
     m_CommandBuffer=NULL;
     
     clearDrawable();
+}
+
+void* GMTLContext::metalCFNeedRenderEncoder()
+{
+    return m_RenderEncoder;
 }
 
 void GMTLContext::makeCurrent()

@@ -21,6 +21,36 @@ namespace GX {
         }
         return g_Device;
     }
+    
+    
+    MetalCullFacer::MetalCullFacer()
+    {
+        
+    }
+    
+    MetalCullFacer::~MetalCullFacer()
+    {
+        
+    }
+    
+    void MetalCullFacer::setCullFace(DCullFace v)
+    {
+        DCullFacer::setCullFace(v);
+        
+        id<MTLRenderCommandEncoder> rce=GX_CAST_R(id<MTLRenderCommandEncoder>, metalCFNeedRenderEncoder());
+        
+        if (rce) {
+            [rce setCullMode:(MTLCullMode)v];
+            [rce setFrontFacingWinding:MTLWindingCounterClockwise];
+        }
+    }
+    
+    void MetalCullFacer::metalCFUpdate(void* rce)
+    {
+        [GX_CAST_R(id<MTLRenderCommandEncoder>, rce) setCullMode:(MTLCullMode)getCullFace()];
+        [GX_CAST_R(id<MTLRenderCommandEncoder>, rce) setFrontFacingWinding:MTLWindingCounterClockwise];
+    }
+    
 }
 
 

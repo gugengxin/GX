@@ -634,6 +634,7 @@ bool GDib::changeDataBytes(guint bytes)
 {
     if(m_Data.changeBytes(bytes)) {
         m_Data.zeroSelf();
+        return true;
     }
     return false;
 }

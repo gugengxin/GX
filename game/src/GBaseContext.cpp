@@ -13,7 +13,6 @@
 GBaseContext::GBaseContext()
 {
     m_Window=NULL;
-	m_DCullFace = GX::DCullFaceBack;
 }
 
 GBaseContext::~GBaseContext()
@@ -33,14 +32,5 @@ void GBaseContext::destroy()
 GWindow* GBaseContext::getWindow() const
 {
 	return m_Window;
-}
-
-GX::DCullFace GBaseContext::getCullFace() const
-{
-	return m_DCullFace;
-}
-void GBaseContext::setCullFace(GX::DCullFace v)
-{
-	m_DCullFace = v;
 }
 

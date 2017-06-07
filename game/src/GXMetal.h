@@ -12,6 +12,7 @@
 #include "GXPrefix.h"
 #include "GX3DAPIType.h"
 #if defined(GX_METAL)
+#include "GX3DAPIPre.h"
 
 #ifdef __OBJC__
 #import <Metal/Metal.h>
@@ -39,6 +40,21 @@ namespace GX {
 #define GX_WARP_REPEAT          2
 #define GX_WARP_MIRRORED        3
 #define GX_WARP_CLAMP           0
+
+
+namespace GX {
+    class MetalCullFacer : public DCullFacer {
+    public:
+        MetalCullFacer();
+        virtual ~MetalCullFacer();
+        
+        virtual void setCullFace(DCullFace v);
+    protected:
+        virtual void* metalCFNeedRenderEncoder()=0;
+        void metalCFUpdate(void* rce);
+    };
+}
+
 
 #endif
 

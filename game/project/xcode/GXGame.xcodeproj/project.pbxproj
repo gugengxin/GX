@@ -119,6 +119,7 @@
 		CA07A2471EA1BCAE00F21A88 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GWindow.cpp; sourceTree = "<group>"; };
 		CA1AD2761CD87CA900CEA1DC /* GWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWindow.h; sourceTree = "<group>"; };
+		CA2002CB1EE6D414003F87D0 /* GX3DAPIPre.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GX3DAPIPre.h; sourceTree = "<group>"; };
 		CA26E07A1DC64BBD003AF801 /* GXContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXContext.h; sourceTree = "<group>"; };
 		CA26E07B1DC64CD4003AF801 /* GX3DAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GX3DAPI.h; sourceTree = "<group>"; };
 		CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GSRGraphics.cpp; sourceTree = "<group>"; };
@@ -258,9 +259,10 @@
 				CABB5CC81CE0E40500D5B648 /* GXOpenGL.cpp */,
 				CA446E3E1D67E36F002E77DF /* GXMetal.h */,
 				CA446E3D1D67E36F002E77DF /* GXMetal.cpp */,
+				CACEDED91EA760F40010BC1E /* GX3DAPIType.h */,
+				CA2002CB1EE6D414003F87D0 /* GX3DAPIPre.h */,
 				CA26E07B1DC64CD4003AF801 /* GX3DAPI.h */,
 				CA8A38C41EE195D700BBEBE7 /* GX3DAPI.cpp */,
-				CACEDED91EA760F40010BC1E /* GX3DAPIType.h */,
 			);
 			name = 3DAPI;
 			sourceTree = "<group>";
@@ -317,7 +319,6 @@
 		CAA2D4DF1DBAFBB4007E53C8 /* context */ = {
 			isa = PBXGroup;
 			children = (
-				CA26E07A1DC64BBD003AF801 /* GXContext.h */,
 				CA3A7EAB1DED656800197FCB /* GBaseContext.h */,
 				CA3A7EAA1DED656800197FCB /* GBaseContext.cpp */,
 				CABB5CC51CE0E40500D5B648 /* GOGLContext.h */,
@@ -326,6 +327,7 @@
 				CABB5CB81CE0E40500D5B648 /* GD3DContext.cpp */,
 				CA446E391D67DFD5002E77DF /* GMTLContext.h */,
 				CA446E381D67DFD5002E77DF /* GMTLContext.cpp */,
+				CA26E07A1DC64BBD003AF801 /* GXContext.h */,
 				CABB5CB71CE0E40500D5B648 /* GContext.h */,
 				CABB5CB61CE0E40500D5B648 /* GContext.cpp */,
 			);

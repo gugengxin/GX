@@ -23,7 +23,7 @@
 class GContext;
 class GTexture;
 
-class GFrameBuffer : public GCanvas
+class GFrameBuffer : public GCanvas, public GX_3D_CULLFACER
 {
     friend class GContext;
 	GX_PRIVATE_GOBJECT(GFrameBuffer);
@@ -144,7 +144,7 @@ public:
     void renderEnd();
 
 private:
-    inline Node* getNode() {
+    inline Node* getNode() const {
         return m_Node;
     }
     inline void setNode(Node* v) {
@@ -153,9 +153,9 @@ private:
     void config(Node* node);
 #if defined(GX_METAL)
 public:
-    virtual void* getRenderEncoder() {
-        return m_RenderEncoder;
-    }
+    virtual void* getRenderEncoder();
+protected:
+    virtual void* metalCFNeedRenderEncoder();
 #endif
 private:
     Node* m_Node;

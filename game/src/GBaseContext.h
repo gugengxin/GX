@@ -24,14 +24,10 @@ protected:
 protected:
     virtual bool create(GWindow* win);
     virtual void destroy();
-    
 public:
 	GWindow* getWindow() const;
-	GX::DCullFace getCullFace() const;
-	virtual void setCullFace(GX::DCullFace v);
 private:
     GWindow* m_Window;
-	GX::DCullFace m_DCullFace;
 };
 
 // Up can't include other h file

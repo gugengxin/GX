@@ -45,6 +45,9 @@
 		CACEDED61EA75E4F0010BC1E /* GXGame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEBB1EA75CE80010BC1E /* GXGame.a */; };
 		CACEDED71EA75E550010BC1E /* GXCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEC91EA75CF90010BC1E /* GXCore.a */; };
 		CACEDED81EA75E550010BC1E /* GXGame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CACEDEBD1EA75CE80010BC1E /* GXGame.a */; };
+		CAD970551EE7A38C000B600D /* MFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD970531EE7A38C000B600D /* MFrameBuffer.cpp */; };
+		CAD970561EE7A38C000B600D /* MFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD970531EE7A38C000B600D /* MFrameBuffer.cpp */; };
+		CAD970571EE7A38C000B600D /* MFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAD970531EE7A38C000B600D /* MFrameBuffer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +131,8 @@
 		CACCBB061EDC826600535D58 /* STXINWEI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = STXINWEI.ttf; sourceTree = "<group>"; };
 		CACEDEB21EA75CE80010BC1E /* GXGame.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GXGame.xcodeproj; path = ../../../project/xcode/GXGame.xcodeproj; sourceTree = "<group>"; };
 		CACEDEBE1EA75CF80010BC1E /* GXCore.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GXCore.xcodeproj; path = ../../../../core/project/xcode/GXCore.xcodeproj; sourceTree = "<group>"; };
+		CAD970531EE7A38C000B600D /* MFrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MFrameBuffer.cpp; sourceTree = "<group>"; };
+		CAD970541EE7A38C000B600D /* MFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFrameBuffer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +179,8 @@
 				CABBD1111EDFB4EE009B3C71 /* MGraphics.cpp */,
 				CABBD1171EDFB96B009B3C71 /* MTypist.h */,
 				CABBD1161EDFB96B009B3C71 /* MTypist.cpp */,
+				CAD970541EE7A38C000B600D /* MFrameBuffer.h */,
+				CAD970531EE7A38C000B600D /* MFrameBuffer.cpp */,
 			);
 			name = src;
 			path = ../../src;
@@ -496,6 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CABBD1181EDFB96B009B3C71 /* MTypist.cpp in Sources */,
+				CAD970551EE7A38C000B600D /* MFrameBuffer.cpp in Sources */,
 				CA9C16351CC5DFE200204303 /* AppDelegate.mm in Sources */,
 				CA9C16321CC5DFE200204303 /* main.m in Sources */,
 				CABBD1081EDFB29C009B3C71 /* Module.cpp in Sources */,
@@ -510,6 +518,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CABBD1191EDFB96B009B3C71 /* MTypist.cpp in Sources */,
+				CAD970561EE7A38C000B600D /* MFrameBuffer.cpp in Sources */,
 				CA9C168C1CC5E7D800204303 /* AppDelegate.mm in Sources */,
 				CA9C16891CC5E7D800204303 /* main.m in Sources */,
 				CABBD1091EDFB29C009B3C71 /* Module.cpp in Sources */,
@@ -524,6 +533,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CABBD11A1EDFB96B009B3C71 /* MTypist.cpp in Sources */,
+				CAD970571EE7A38C000B600D /* MFrameBuffer.cpp in Sources */,
 				CA9C16A41CC5E94D00204303 /* main.m in Sources */,
 				CA9C16A11CC5E94D00204303 /* AppDelegate.mm in Sources */,
 				CABBD10A1EDFB29C009B3C71 /* Module.cpp in Sources */,

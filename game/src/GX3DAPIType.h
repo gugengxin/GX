@@ -14,7 +14,7 @@
 #ifndef GX_OPENGL
 #if defined(GX_OS_QT) \
 || defined(GX_OS_ANDROID) \
- || defined(GX_OS_APPLE)  \
+// || defined(GX_OS_APPLE)  \
 /* || defined(GX_OS_WINDOWS) */ \
 
 #define GX_OPENGL
@@ -40,31 +40,6 @@
 #endif
 
 #endif
-
-
-
-
-//////////////////////////////////////////
-
-namespace GX {
-	typedef enum _DToplogy {
-		DToplogyUnknown = -1,
-		DToplogyPoints = 0,
-		DToplogyLines,
-		DToplogyLineStrip,
-		DToplogyTriangles,
-		DToplogyTriangleStrip,
-	} DToplogy;
-
-	typedef enum _DCullFace {
-		DCullFaceNone,
-		DCullFaceFront,
-		DCullFaceBack,
-		///////////////
-		_DCullFaceCount,
-	} DCullFace;
-}
-
 
 
 #endif /* GX3DAPIType_h */

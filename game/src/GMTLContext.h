@@ -17,7 +17,7 @@
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
 
-class GMTLContext : public GBaseContext {
+class GMTLContext : public GBaseContext, public GX::MetalCullFacer {
     friend class GMShader;
 protected:
     GMTLContext();
@@ -33,6 +33,10 @@ protected:
     void renderBegin();
     void setViewport(float x, float y, float w, float h, float scale);
     void renderEnd();
+    
+protected:
+    virtual void* metalCFNeedRenderEncoder();
+    
 protected:
     void makeCurrent();
     void makeClear();
