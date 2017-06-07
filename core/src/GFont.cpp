@@ -218,7 +218,7 @@ hb_gx_get_glyph_v_origin (hb_font_t *font HB_UNUSED,
 }
 
 static hb_position_t
-hb_gx_get_glyph_h_kerning(hb_font_t *font,
+hb_gx_get_glyph_h_kerning(hb_font_t *font HB_UNUSED,
 	void *font_data,
 	hb_codepoint_t left_glyph,
 	hb_codepoint_t right_glyph,

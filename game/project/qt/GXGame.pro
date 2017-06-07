@@ -84,6 +84,7 @@ HEADERS += \
 	../../src/GTexture2D.h\
 	../../src/GWindow.h\
 	../../src/GX3DAPI.h\
+	../../src/GX3DAPIPre.h\
 	../../src/GX3DAPIType.h\
 	../../src/GXContext.h\
 	../../src/GXDirectX.h\

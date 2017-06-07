@@ -76,7 +76,7 @@ void MTypist::render3D(GCanvas* canvas,GContext& context)
     
     canvas->popMatrix();
 }
-void MTypist::render2D(GCanvas* canvas,GContext& context)
+void MTypist::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 {
     
 }

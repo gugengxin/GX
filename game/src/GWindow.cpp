@@ -451,6 +451,11 @@ _GQWindow::~_GQWindow()
     m_Delegate->eventDestroy();
 }
 
+void _GQWindow::resizeEvent(QResizeEvent *)
+{
+    m_Delegate->eventResize();
+}
+
 
 #endif
 

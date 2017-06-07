@@ -196,6 +196,10 @@ win32 {
 else:macx {
     INCLUDEPATH += $$PWD/../../../external/libjpeg/include/mac
 }
+#freetype
+INCLUDEPATH += $$PWD/../../../external/freetype/include
+#harfbuzz
+INCLUDEPATH += $$PWD/../../../external/harfbuzz/include
 
 
 

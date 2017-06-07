@@ -54,7 +54,7 @@ void MGraphics::render3D(GCanvas* canvas,GContext& context)
     canvas->setColorMul(1, 1, 1, 1.0f);
     graph->draw(canvas, m_Data, GSRGraphics::IT_Float, GX_TRIANGLE_STRIP, 0, 4);
 }
-void MGraphics::render2D(GCanvas* canvas,GContext& context)
+void MGraphics::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 {
     
 }

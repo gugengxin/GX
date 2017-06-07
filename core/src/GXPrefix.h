@@ -58,6 +58,12 @@
 #define GX_UNUSED(x)
 #endif
 
+#if __GNUC__ >= 4
+#define GX_UNUSE	__attribute__((unused))
+#else
+#define GX_UNUSE
+#endif
+
 #ifdef _WIN32
 #define ZLIB_WINAPI
 #endif

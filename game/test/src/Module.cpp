@@ -12,7 +12,7 @@
 GX_OBJECT_IMPLEMENT(Module, GObject);
 
 
-Module* Module::initWithGame(Game* game,GContext& context)
+Module* Module::initWithGame(Game* game GX_UNUSE,GContext& context GX_UNUSE)
 {
     return this;
 }
@@ -27,11 +27,11 @@ void Module::idle()
 {
     
 }
-void Module::render3D(GCanvas* canvas,GContext& context)
+void Module::render3D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 {
     
 }
-void Module::render2D(GCanvas* canvas,GContext& context)
+void Module::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 {
     
 }

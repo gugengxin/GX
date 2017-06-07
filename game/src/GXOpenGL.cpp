@@ -232,6 +232,9 @@ namespace GX {
     
     void OpenGLCullFacer::openGLCFUpdate()
     {
+        if(g_CttStack.isEmpty()) {
+            return;
+        }
         switch (getCullFace()) {
             case DCullFaceNone:
                 GX_glDisable(GL_CULL_FACE);

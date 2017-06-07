@@ -34,6 +34,7 @@ public:
         m_Delegate=v;
     }
 protected:
+    virtual void resizeEvent(QResizeEvent *);
 private:
     GWindow* m_Delegate;
 };

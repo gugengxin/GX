@@ -103,7 +103,7 @@ void MFrameBuffer::render3D(GCanvas* canvas,GContext& context)
     
     canvas->popMatrix();
 }
-void MFrameBuffer::render2D(GCanvas* canvas,GContext& context)
+void MFrameBuffer::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 {
     
 }

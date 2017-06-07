@@ -210,6 +210,10 @@ public:
     T bottom;
 };
 
+extern GPointF GPointFZero;
+extern GSizeF GSizeFZero;
+extern GRectF GRectFZero;
+
 //Funs
 template <typename T1, typename T2>
 GPoint<T1> GPointChange(GPoint<T2> v) {

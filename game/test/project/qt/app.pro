@@ -27,18 +27,26 @@ TEMPLATE = app
 SOURCES += main.cpp\
         MainWindow.cpp \
     ../../src/AppDge.cpp \
-    ../../src/Game.cpp
+    ../../src/Game.cpp \
+    ../../src/Module.cpp \
+    ../../src/MGraphics.cpp \
+    ../../src/MFrameBuffer.cpp \
+    ../../src/MTypist.cpp \
 
 HEADERS  += MainWindow.h \
     ../../src/AppDge.h \
-    ../../src/Game.h
+    ../../src/Game.h \
+    ../../src/Module.h \
+    ../../src/MGraphics.h \
+    ../../src/MFrameBuffer.h \
+    ../../src/MTypist.h \
 
 FORMS    += MainWindow.ui
 
 INCLUDEPATH += $$PWD/../../src
 DEPENDPATH += $$PWD/../../src
 
-APP_RES_FILES.files = $$PWD/../../assets/lena_rgb.jpg
+APP_RES_FILES.files = $$files($$PWD/../../assets/*.*)
 APP_RES_FILES.path = Contents/Resources
 
 QMAKE_BUNDLE_DATA += APP_RES_FILES
