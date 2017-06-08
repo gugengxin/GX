@@ -13,7 +13,7 @@ popd
 set SRC_ROOT=%LIBRARY_ROOT%\src
 
 call %GX_ROOT%\bin\cmake_.bat
-call %GX_ROOT%\bin\ninja.bat
+call %GX_ROOT%\bin\ninja_.bat
 call %GX_ROOT%\bin\ndk.bat
 
 

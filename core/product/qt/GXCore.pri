@@ -18,12 +18,16 @@ win32 {
         LIBS += -L$$GX_ROOT/external/zlib/lib/win/vc/x64/debug/ -lzlib
         LIBS += -L$$GX_ROOT/external/libpng/lib/win/vc/x64/debug/ -llibpng
         LIBS += -L$$GX_ROOT/external/libjpeg/lib/win/vc/x64/debug/ -llibjpeg
+        LIBS += -L$$GX_ROOT/external/freetype/lib/win/vc/x64/debug/ -lfreetype
+        LIBS += -L$$GX_ROOT/external/harfbuzz/lib/win/vc/x64/debug/ -lharfbuzz
     }
     release {
         LIBS += -L$$GX_ROOT/external/pthread-win32/lib/win/vc/x64/release/ -lpthread_dll
         LIBS += -L$$GX_ROOT/external/zlib/lib/win/vc/x64/release/ -lzlib
         LIBS += -L$$GX_ROOT/external/libpng/lib/win/vc/x64/release/ -llibpng
         LIBS += -L$$GX_ROOT/external/libjpeg/lib/win/vc/x64/release/ -llibjpeg
+        LIBS += -L$$GX_ROOT/external/freetype/lib/win/vc/x64/release/ -lfreetype
+        LIBS += -L$$GX_ROOT/external/harfbuzz/lib/win/vc/x64/release/ -lharfbuzz
     }
 }
 else:macx {
