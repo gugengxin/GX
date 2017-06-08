@@ -28,13 +28,13 @@ class GContext : public GX_CONTEXT_BASE, public GResourceManager
     friend class GFrameBuffer;
 private:
 	enum ShaderID {
-		SRID_Graphics = 0,
-		SRID_GraphicsEnd = SRID_Graphics + GSRGraphics::IDCount - 1,
+		SRIDGraphics = 0,
+		SRIDGraphicsEnd = SRIDGraphics + GSRGraphics::IDCount - 1,
 
-        SRID_Texture2D,
-        SRID_Texture2DEnd= SRID_Texture2D+ GSRTexture2D::MMCount*2*2 - 1,
+        SRIDTexture2D,
+        SRIDTexture2DEnd= SRIDTexture2D+ GSRTexture2D::MMCount*2*2 - 1,
 
-		SRIDCount,
+		_SRIDCount,
 	};
     
     class NodeLoadObj : public GObject {
@@ -138,7 +138,7 @@ private:
     void unloadFrameBufferNode(GFrameBuffer::Node* node);
 	static void unloadFrameBufferNodeInMT(GObject* obj);
 private:
-	GShader*                        m_Shaders[SRIDCount];
+	GShader*                        m_Shaders[_SRIDCount];
 	GDataList<GTexture::Handle>     m_Textures;
     GDataList<GFrameBuffer::Handle> m_FrameBuffers;
 };

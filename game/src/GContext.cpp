@@ -151,7 +151,7 @@ void GContext::destroy()
             p=pTemp;
         }
     }
-    for (gint i = 0; i < SRIDCount; i++) {
+    for (gint i = 0; i < _SRIDCount; i++) {
         readyShader();
         delete m_Shaders[i];
         m_Shaders[i]=NULL;
@@ -188,23 +188,23 @@ void GContext::didReceivedMemoryWarning()
 GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)
 {
     //GX_LOG_W(PrioINFO,"GContext","getSRGraphics");
-	if (!m_Shaders[SRID_Graphics + srID]) {
+	if (!m_Shaders[SRIDGraphics + srID]) {
         readyShader();
-        m_Shaders[SRID_Graphics + srID] = new GSRGraphics(this,srID);
+        m_Shaders[SRIDGraphics + srID] = new GSRGraphics(this,srID);
         doneShader();
 	}
-	return (GSRGraphics*)m_Shaders[SRID_Graphics + srID];
+	return (GSRGraphics*)m_Shaders[SRIDGraphics + srID];
 }
 
 GSRTexture2D* GContext::getSRTexture2D(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm)
 {
     gint idx=(alphaOnly*2+colorMul)*GSRTexture2D::MMCount+mm;
-    if (!m_Shaders[SRID_Texture2D+idx]) {
+    if (!m_Shaders[SRIDTexture2D+idx]) {
         readyShader();
-        m_Shaders[SRID_Texture2D + idx] = new GSRTexture2D(this,alphaOnly,colorMul,mm);
+        m_Shaders[SRIDTexture2D + idx] = new GSRTexture2D(this,alphaOnly,colorMul,mm);
         doneShader();
     }
-    return (GSRTexture2D*)m_Shaders[SRID_Texture2D + idx];
+    return (GSRTexture2D*)m_Shaders[SRIDTexture2D + idx];
 }
 
 

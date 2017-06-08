@@ -50,6 +50,9 @@ Module* MTypist::initWithGame(Game* game,GContext& context)
     
     m_Tex2D=GO::retain(context.loadTexture2D(dib, NULL));
     
+    context.setCullFace(GX::DCullFaceBack);
+    context.setBlend(GX::DBlendSsaAddD1msa);
+    
     m_Angle=0.0f;
     return this;
 }

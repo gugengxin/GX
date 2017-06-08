@@ -52,7 +52,7 @@ private:\
     virtual void** getUBuffers() {\
         return m_UniformBuffers;\
     }\
-    void* m_PipelineStates[MPS];\
+    void* m_PipelineStates[MPS*GX::_DBlendCount];\
     void* m_UniformBuffers[MUB]
 
 #define GX_SHADER_INPUT_INIT() \

@@ -23,6 +23,7 @@
 #define GX_3D_CULLFACER GX::Direct3DCullFacer
 #elif defined(GX_METAL)
 #define GX_3D_CULLFACER GX::MetalCullFacer
+#define GX_3D_BLENDER GX::MetalBlender
 #endif
 
 namespace GX {

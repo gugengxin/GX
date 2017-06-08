@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA0113A71EE9A6CD00836A56 /* png-0029.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0113A61EE9A6CD00836A56 /* png-0029.png */; };
+		CA0113A81EE9A6CD00836A56 /* png-0029.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0113A61EE9A6CD00836A56 /* png-0029.png */; };
+		CA0113A91EE9A6CD00836A56 /* png-0029.png in Resources */ = {isa = PBXBuildFile; fileRef = CA0113A61EE9A6CD00836A56 /* png-0029.png */; };
 		CA1F60AB1CD984BB00C6307B /* AppDge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A91CD984BB00C6307B /* AppDge.cpp */; };
 		CA1F60AC1CD984BB00C6307B /* AppDge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A91CD984BB00C6307B /* AppDge.cpp */; };
 		CA1F60AD1CD984BB00C6307B /* AppDge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A91CD984BB00C6307B /* AppDge.cpp */; };
@@ -96,6 +99,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA0113A61EE9A6CD00836A56 /* png-0029.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "png-0029.png"; sourceTree = "<group>"; };
 		CA1F60A91CD984BB00C6307B /* AppDge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDge.cpp; sourceTree = "<group>"; };
 		CA1F60AA1CD984BB00C6307B /* AppDge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDge.h; sourceTree = "<group>"; };
 		CA1F60B51CD9894600C6307B /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
@@ -189,6 +193,7 @@
 		CA75BAD11D830D4400236109 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				CA0113A61EE9A6CD00836A56 /* png-0029.png */,
 				CACCBB061EDC826600535D58 /* STXINWEI.ttf */,
 				CA75BAD21D830D4400236109 /* lena_rgb.jpg */,
 			);
@@ -467,6 +472,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA0113A71EE9A6CD00836A56 /* png-0029.png in Resources */,
 				CA9C163D1CC5DFE200204303 /* Assets.xcassets in Resources */,
 				CA75BAD31D830D4400236109 /* lena_rgb.jpg in Resources */,
 				CA1F60CA1CD99A6500C6307B /* LaunchScreen.storyboard in Resources */,
@@ -478,6 +484,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA0113A81EE9A6CD00836A56 /* png-0029.png in Resources */,
 				CA9C16941CC5E7D800204303 /* Assets.xcassets in Resources */,
 				CA75BAD41D830D4400236109 /* lena_rgb.jpg in Resources */,
 				CACCBB081EDC826600535D58 /* STXINWEI.ttf in Resources */,
@@ -488,6 +495,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA0113A91EE9A6CD00836A56 /* png-0029.png in Resources */,
 				CA9C16A61CC5E94D00204303 /* Assets.xcassets in Resources */,
 				CA75BAD51D830D4400236109 /* lena_rgb.jpg in Resources */,
 				CA1F60B81CD9894600C6307B /* MainMenu.xib in Resources */,

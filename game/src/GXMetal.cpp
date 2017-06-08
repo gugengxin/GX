@@ -22,6 +22,7 @@ namespace GX {
         return g_Device;
     }
     
+    ////////////////////////////////////////////////////////////////////////////
     
     MetalCullFacer::MetalCullFacer()
     {
@@ -51,6 +52,24 @@ namespace GX {
         [GX_CAST_R(id<MTLRenderCommandEncoder>, rce) setFrontFacingWinding:MTLWindingCounterClockwise];
     }
     
+    ////////////////////////////////////////////////////////////////////////////
+    
+    MetalBlender::MetalBlender()
+    {
+        
+    }
+    
+    MetalBlender::~MetalBlender()
+    {
+        
+    }
+    
+//    void MetalBlender::setBlend(DBlend v)
+//    {
+//        DBlender::setBlend(v);
+//        
+//        
+//    }
 }
 
 

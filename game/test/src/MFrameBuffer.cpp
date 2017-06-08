@@ -46,6 +46,7 @@ Module* MFrameBuffer::initWithGame(Game* game,GContext& context)
     m_Angle=0.0f;
     
     context.setCullFace(GX::DCullFaceBack);
+    context.setBlend(GX::DBlendNone);
     return this;
 }
 
@@ -66,6 +67,7 @@ void MFrameBuffer::prepareTex2D(GContext& context)
         if (m_FB->renderCheck()) {
             
             GTexture2D* tex=context.loadTexture2D(GS::chars("lena_rgb.jpg"), GDib::JPEG, NULL);
+            GTexture2D* tex1=context.loadTexture2D(GS::chars("png-0029.png"), GDib::PNG, NULL);
             
             m_FB->renderBegin();
             m_FB->setViewport(0, 0, m_FB->getWidth(), m_FB->getHeight(), 1.0f);
@@ -77,9 +79,13 @@ void MFrameBuffer::prepareTex2D(GContext& context)
             //m_FB->lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
             
             m_FB->setCullFace(GX::DCullFaceBack);
+            m_FB->setBlend(GX::DBlendNone);
             
             GSRTexture2D* shader=context.getSRTexture2D(false, false, GSRTexture2D::MM_None);
             shader->draw(m_FB, m_Data, GSRTexture2D::IT_Float_Float, tex, GX_TRIANGLE_STRIP, 0, 4, NULL);
+            
+            m_FB->setBlend(GX::DBlendSsaAddD1msa);
+            shader->draw(m_FB, m_Data, GSRTexture2D::IT_Float_Float, tex1, GX_TRIANGLE_STRIP, 0, 4, NULL);
             
             m_FB->renderEnd();
         }

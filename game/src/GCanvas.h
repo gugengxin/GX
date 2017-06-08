@@ -73,7 +73,8 @@ public:
     virtual void setBackgroundColor(float r,float g,float b,float a) =0;
 #if defined(GX_METAL)
 public:
-    virtual void* getRenderEncoder()=0;
+    virtual void* metalRenderEncoder()=0;
+    virtual gint metalBlendIndex()=0;
 #endif
 protected:
 	typedef enum _Matrix {

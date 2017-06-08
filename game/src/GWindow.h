@@ -63,7 +63,8 @@ private:
         
 #if defined(GX_METAL)
     public:
-        virtual void* getRenderEncoder();
+        virtual void* metalRenderEncoder();
+        virtual gint metalBlendIndex();
 #endif
     private:
         inline void setWindow(GWindow* v) {

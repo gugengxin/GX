@@ -23,7 +23,7 @@
 class GContext;
 class GTexture;
 
-class GFrameBuffer : public GCanvas, public GX_3D_CULLFACER
+class GFrameBuffer : public GCanvas, public GX_3D_CULLFACER, public GX_3D_BLENDER
 {
     friend class GContext;
 	GX_PRIVATE_GOBJECT(GFrameBuffer);
@@ -155,7 +155,8 @@ protected:
 	virtual bool direct3DCFNeedMultisampleEnabled();
 #elif defined(GX_METAL)
 public:
-    virtual void* getRenderEncoder();
+    virtual void* metalRenderEncoder();
+    virtual gint metalBlendIndex();
 protected:
     virtual void* metalCFNeedRenderEncoder();
 #endif

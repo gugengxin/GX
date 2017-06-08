@@ -75,12 +75,41 @@ bool GMShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
         for (gint i=0; i<getPLStateCount(); i++) {
             deployPLState(i, pipelineStateDescriptor);
             
-            error = nil;
-            id <MTLRenderPipelineState> ps = [[device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&error] retain];
-            if(!ps) {
-                NSLog(@">> ERROR: Failed Aquiring pipeline state: %@", error);
+            MTLRenderPipelineColorAttachmentDescriptor* cad=pipelineStateDescriptor.colorAttachments[0];
+            cad.sourceAlphaBlendFactor=MTLBlendFactorOne;
+            cad.destinationAlphaBlendFactor=MTLBlendFactorOne;
+            
+            {
+                cad.blendingEnabled=NO;
+                error = nil;
+                id <MTLRenderPipelineState> ps = [[device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&error] retain];
+                if(!ps) {
+                    NSLog(@"ERROR: Failed Aquiring pipeline state: %@", error);
+                }
+                getPLStates()[i*GX::_DBlendCount+GX::DBlendNone]=ps;
             }
-            getPLStates()[i]=ps;
+            {
+                cad.blendingEnabled=YES;
+                cad.sourceRGBBlendFactor=MTLBlendFactorSourceAlpha;
+                cad.destinationRGBBlendFactor=MTLBlendFactorOneMinusSourceAlpha;
+                error = nil;
+                id <MTLRenderPipelineState> ps = [[device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&error] retain];
+                if(!ps) {
+                    NSLog(@"ERROR: Failed Aquiring pipeline state: %@", error);
+                }
+                getPLStates()[i*GX::_DBlendCount+GX::DBlendSsaAddD1msa]=ps;
+            }
+            {
+                cad.blendingEnabled=YES;
+                cad.sourceRGBBlendFactor=MTLBlendFactorOne;
+                cad.destinationRGBBlendFactor=MTLBlendFactorOne;
+                error = nil;
+                id <MTLRenderPipelineState> ps = [[device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor error:&error] retain];
+                if(!ps) {
+                    NSLog(@"ERROR: Failed Aquiring pipeline state: %@", error);
+                }
+                getPLStates()[i*GX::_DBlendCount+GX::DBlendS1AddD1]=ps;
+            }
         }
         
         createUniformBuffer(device);

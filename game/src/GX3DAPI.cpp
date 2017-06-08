@@ -32,7 +32,7 @@ namespace GX {
 		return DToplogyUnknown;
 	}
     
-    
+    //////////////////////////////////////////////////////////////////////////////
     
     DCullFacer::DCullFacer()
     {
@@ -51,6 +51,27 @@ namespace GX {
     void DCullFacer::setCullFace(DCullFace v)
     {
         m_Value = v;
+    }
+    
+    //////////////////////////////////////////////////////////////////////////////
+    
+    DBlender::DBlender()
+    {
+        m_Value=DBlendNone;
+    }
+    
+    DBlender::~DBlender()
+    {
+        
+    }
+    
+    DBlend DBlender::getBlend() const
+    {
+        return m_Value;
+    }
+    void DBlender::setBlend(DBlend v)
+    {
+        m_Value=v;
     }
     
 }

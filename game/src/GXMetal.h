@@ -53,6 +53,14 @@ namespace GX {
         virtual void* metalCFNeedRenderEncoder()=0;
         void metalCFUpdate(void* rce);
     };
+    
+    class MetalBlender : public DBlender {
+    public:
+        MetalBlender();
+        virtual ~MetalBlender();
+        
+        //virtual void setBlend(DBlend v);
+    };
 }
 
 

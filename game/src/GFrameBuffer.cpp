@@ -190,9 +190,14 @@ bool GFrameBuffer::direct3DCFNeedMultisampleEnabled()
 
 #elif defined(GX_METAL)
 
-void* GFrameBuffer::getRenderEncoder()
+void* GFrameBuffer::metalRenderEncoder()
 {
     return m_RenderEncoder;
+}
+
+gint GFrameBuffer::metalBlendIndex()
+{
+    return GX_CAST_S(gint, getBlend());
 }
 
 void* GFrameBuffer::metalCFNeedRenderEncoder()

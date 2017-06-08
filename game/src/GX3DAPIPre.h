@@ -1,4 +1,4 @@
-﻿//
+//
 //  GX3DAPIPre.h
 //  GXGame
 //
@@ -31,17 +31,36 @@ namespace GX {
         _DCullFaceCount,
     } DCullFace;
     
+    typedef enum _DBlend {
+        DBlendNone,
+        DBlendSsaAddD1msa,
+        DBlendS1AddD1,
+        ////////////////
+        _DBlendCount,
+    } DBlend;
+    
     
     class DCullFacer {
-    public:
+    protected:
         DCullFacer();
         virtual ~DCullFacer();
-        
+    public:
         DCullFace getCullFace() const;
         virtual void setCullFace(DCullFace v);
         
     private:
         DCullFace m_Value;
+    };
+    
+    class DBlender {
+    protected:
+        DBlender();
+        virtual ~DBlender();
+    public:
+        DBlend getBlend() const;
+        virtual void setBlend(DBlend v);
+    private:
+        DBlend m_Value;
     };
 }
 

@@ -458,9 +458,9 @@ void GSRTexture2D::draw(GCanvas* canvas,
     
 #elif defined(GX_METAL)
     
-    id<MTLRenderCommandEncoder>rce=GX_CAST_R(id<MTLRenderCommandEncoder>, canvas->getRenderEncoder());
+    id<MTLRenderCommandEncoder>rce=GX_CAST_R(id<MTLRenderCommandEncoder>, canvas->metalRenderEncoder());
     
-    [rce setRenderPipelineState:GX_CAST_R(id<MTLRenderPipelineState>,getPLStates()[inputType])];
+    [rce setRenderPipelineState:GX_CAST_R(id<MTLRenderPipelineState>,getPLStates()[inputType*GX::_DBlendCount+canvas->metalBlendIndex()])];
     
     [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, buffer->getBuffer()) offset:buffer->getOffset() atIndex:0];
     
