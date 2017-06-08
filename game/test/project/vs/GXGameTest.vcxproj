@@ -183,6 +183,7 @@ xcopy /i /e /y ..\..\assets assets</Command>
   <ItemGroup>
     <ClInclude Include="..\..\src\AppDge.h" />
     <ClInclude Include="..\..\src\Game.h" />
+    <ClInclude Include="..\..\src\MFrameBuffer.h" />
     <ClInclude Include="..\..\src\MGraphics.h" />
     <ClInclude Include="..\..\src\Module.h" />
     <ClInclude Include="..\..\src\MTypist.h" />
@@ -194,6 +195,7 @@ xcopy /i /e /y ..\..\assets assets</Command>
   <ItemGroup>
     <ClCompile Include="..\..\src\AppDge.cpp" />
     <ClCompile Include="..\..\src\Game.cpp" />
+    <ClCompile Include="..\..\src\MFrameBuffer.cpp" />
     <ClCompile Include="..\..\src\MGraphics.cpp" />
     <ClCompile Include="..\..\src\Module.cpp" />
     <ClCompile Include="..\..\src\MTypist.cpp" />
