@@ -22,7 +22,7 @@ bool GD3DContext::create(GWindow* win)
 	if (!GBaseContext::create(win)) {
 		return false;
 	}
-	ID3D10Device* device = GX::d3dDevice();
+	ID3D10Device* device = GX::direct3DDevice();
 	UINT width = (UINT)getWindow()->getWidth();
 	UINT height = (UINT)getWindow()->getHeight();
 
@@ -147,25 +147,6 @@ bool GD3DContext::create(GWindow* win)
 	//	}
 	//}
 
-	// rasterizer state
-	D3D10_RASTERIZER_DESC desc;
-	ZeroMemory(&desc, sizeof(desc));
-
-	desc.FillMode = D3D10_FILL_SOLID;
-	desc.CullMode = D3D10_CULL_BACK;
-	desc.FrontCounterClockwise = TRUE;
-	desc.DepthBias = 0;
-	desc.DepthBiasClamp = 0.0f;
-	desc.SlopeScaledDepthBias = 0.0f;
-	desc.DepthClipEnable = TRUE;
-	desc.ScissorEnable = FALSE;
-	desc.MultisampleEnable = (m_Samples>1);
-	desc.AntialiasedLineEnable = FALSE;
-
-	if (S_OK != device->CreateRasterizerState(&desc, &m_RasterState))
-		return false;
-
-
 	//深度设置
 	D3D10_DEPTH_STENCIL_DESC dsDesc;
 	dsDesc.DepthEnable = false;                      //启用深度测试
@@ -201,10 +182,6 @@ void GD3DContext::destroy()
 		m_DepthStencilState->Release();
 		m_DepthStencilState = NULL;
 	}
-	if (m_RasterState) {
-		m_RasterState->Release();
-		m_RasterState = NULL;
-	}
 	if (m_DepthStencilView) {
 		m_DepthStencilView->Release();
 		m_DepthStencilView = NULL;
@@ -222,7 +199,7 @@ void GD3DContext::destroy()
 
 bool GD3DContext::createView(UINT width,UINT height)
 {
-	ID3D10Device* device = GX::d3dDevice();
+	ID3D10Device* device = GX::direct3DDevice();
 	HRESULT result;
 	// `取出第一个display buffer`
 	ID3D10Texture2D *pBuffer = NULL;
@@ -295,13 +272,13 @@ bool GD3DContext::renderCheck()
 
 void GD3DContext::renderBegin()
 {
-	ID3D10Device* device = GX::d3dDevice();
+	ID3D10Device* device = GX::direct3DDevice();
     // 设置深度模版状态，使其生效
     device->OMSetDepthStencilState(m_DepthStencilState, 1);
     // 绑定渲染目标视图和深度缓冲到渲染管线.
     device->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
     //设置光栅化状态，使其生效
-    device->RSSetState(m_RasterState);
+	direct3DCFUpdate();
 
 	const GColor4F& bgdClr=getWindow()->getBackgroundColor();
 	const FLOAT color[] = { bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a };
@@ -318,16 +295,21 @@ void GD3DContext::setViewport(float x, float y, float w, float h, float scale)
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 
-	GX::d3dDevice()->RSSetViewports(1, &viewport);
+	GX::direct3DDevice()->RSSetViewports(1, &viewport);
 }
 void GD3DContext::renderEnd()
 {
 	m_SwapChain->Present(0,0);
 
-    ID3D10Device* device = GX::d3dDevice();
+    ID3D10Device* device = GX::direct3DDevice();
     device->RSSetState(NULL);
     device->OMSetRenderTargets(0, NULL, NULL);
     device->OMSetDepthStencilState(NULL, 1);
+}
+
+bool GD3DContext::direct3DCFNeedMultisampleEnabled()
+{
+	return m_Samples > 1;
 }
 
 
@@ -473,7 +455,7 @@ void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
 
 		ID3D10Texture2D* pTex2D = NULL;
 
-		ID3D10Device* device = GX::d3dDevice();
+		ID3D10Device* device = GX::direct3DDevice();
 
 		HRESULT hr;
 		if (dibData) {
@@ -560,10 +542,9 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 
 	ID3D10RenderTargetView* outRTView = NULL;
 	ID3D10DepthStencilView* outDSView = NULL;
-	ID3D10RasterizerState*	outRasterState = NULL;
 	ID3D10DepthStencilState* outDepthStencilState = NULL;
 
-	ID3D10Device* device = GX::d3dDevice();
+	ID3D10Device* device = GX::direct3DDevice();
 	// 分配RGBA动态贴图
 	ID3D10ShaderResourceView* pTextureView = nodeObj.texTarget->getNode()->getData().getName();
 	ID3D10Texture2D* pTex2D = NULL;
@@ -597,23 +578,6 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 
 		pDSTex2D->Release();
 	}
-	{// Rasterizer state对象
-		D3D10_RASTERIZER_DESC descRS;
-		ZeroMemory(&descRS, sizeof(descRS));
-
-		descRS.FillMode = D3D10_FILL_SOLID;
-		descRS.CullMode = D3D10_CULL_BACK;
-		descRS.FrontCounterClockwise = TRUE;
-		descRS.DepthBias = 0;
-		descRS.DepthBiasClamp = 0.0f;
-		descRS.SlopeScaledDepthBias = 0.0f;
-		descRS.DepthClipEnable = TRUE;
-		descRS.ScissorEnable = FALSE;
-		descRS.MultisampleEnable = FALSE;
-		descRS.AntialiasedLineEnable = FALSE;
-
-		device->CreateRasterizerState(&descRS, &outRasterState);
-	}
 	if (nodeObj.use == GFrameBuffer::UseFor3D) {
 		//深度设置
 		D3D10_DEPTH_STENCIL_DESC dsDesc;
@@ -643,7 +607,6 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 	
 	handle.m_Name = outRTView;
 	handle.m_DepthName = outDSView;
-	handle.m_RasterState = outRasterState;
 	handle.m_DepthStencilState = outDepthStencilState;
 	
 
@@ -669,8 +632,8 @@ void GD3DContext::unloadFrameBufferNodeForContext(GFrameBuffer::Node* node)
 			handle.m_DepthName->Release();
 			handle.m_DepthName = NULL;
 		}
-		handle.m_RasterState->Release();
-		handle.m_RasterState = NULL;
+		handle.m_DepthStencilState->Release();
+		handle.m_DepthStencilState = NULL;
 
 		doneFrameBuffer();
 

@@ -20,7 +20,7 @@
 #if defined(GX_OPENGL)
 #define GX_3D_CULLFACER GX::OpenGLCullFacer
 #elif defined(GX_DIRECTX)
-
+#define GX_3D_CULLFACER GX::Direct3DCullFacer
 #elif defined(GX_METAL)
 #define GX_3D_CULLFACER GX::MetalCullFacer
 #endif

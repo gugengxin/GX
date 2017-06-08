@@ -39,7 +39,7 @@ bool GDataBufferBase::changeBytes(guint toSize)
 #ifdef GX_OPENGL
 	return m_Data.changeBytes(toSize);
 #elif defined(GX_DIRECTX)
-	ID3D10Device* device = GX::d3dDevice();
+	ID3D10Device* device = GX::direct3DDevice();
 
 	ID3D10Buffer* bufNew;
 

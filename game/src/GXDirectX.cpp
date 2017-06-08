@@ -8,7 +8,7 @@
 namespace GX {
 	static ID3D10Device* g_D3DDevice = NULL;
 
-	ID3D10Device* d3dDevice()
+	ID3D10Device* direct3DDevice()
 	{
 		if (!g_D3DDevice) {
 			UINT createDeviceFlags = 0;
@@ -22,12 +22,12 @@ namespace GX {
 	}
 
 
-	D3DRasterizerStater::D3DRasterizerStater()
+	Direct3DCullFacer::Direct3DCullFacer()
 	{
 		memset(m_RasterStates, 0, sizeof(m_RasterStates));
 	}
 
-	D3DRasterizerStater::~D3DRasterizerStater()
+	Direct3DCullFacer::~Direct3DCullFacer()
 	{
 		for (gint i = 0; i < _DCullFaceCount; i++) {
 			if (m_RasterStates[i]) {
@@ -35,6 +35,36 @@ namespace GX {
 			}
 		}
 	}
+
+	void Direct3DCullFacer::setCullFace(DCullFace v)
+	{
+		DCullFacer::setCullFace(v);
+
+		direct3DCFUpdate();
+	}
+
+	void Direct3DCullFacer::direct3DCFUpdate()
+	{
+		DCullFace cf = getCullFace();
+
+		D3D10_RASTERIZER_DESC desc;
+		ZeroMemory(&desc, sizeof(desc));
+
+		desc.FillMode = D3D10_FILL_SOLID;
+		desc.CullMode = GX_CAST_S(D3D10_CULL_MODE, cf +1);
+		desc.FrontCounterClockwise = TRUE;
+		desc.DepthBias = 0;
+		desc.DepthBiasClamp = 0.0f;
+		desc.SlopeScaledDepthBias = 0.0f;
+		desc.DepthClipEnable = TRUE;
+		desc.ScissorEnable = FALSE;
+		desc.MultisampleEnable = direct3DCFNeedMultisampleEnabled();
+		desc.AntialiasedLineEnable = FALSE;
+
+		GX_ASSERT(S_OK == direct3DDevice()->CreateRasterizerState(&desc, &m_RasterStates[cf]));
+		g_D3DDevice->RSSetState(m_RasterStates[cf]);
+	}
+
 }
 
 

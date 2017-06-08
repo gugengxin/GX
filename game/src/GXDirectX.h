@@ -14,19 +14,6 @@
 #pragma comment(lib, "d3d10.lib")
 #pragma comment(lib, "D3DCompiler.lib")
 
-namespace GX {
-	ID3D10Device* d3dDevice();
-
-	class D3DRasterizerStater {
-	public:
-		D3DRasterizerStater();
-		virtual ~D3DRasterizerStater();
-
-	private:
-		ID3D10RasterizerState*	m_RasterStates[_DCullFaceCount];
-	};
-}
-
 #define GX_POINTS			D3D10_PRIMITIVE_TOPOLOGY_POINTLIST
 #define GX_LINES			D3D10_PRIMITIVE_TOPOLOGY_LINELIST
 #define GX_LINE_STRIP		D3D10_PRIMITIVE_TOPOLOGY_LINESTRIP
@@ -44,6 +31,28 @@ namespace GX {
 #define GX_WARP_REPEAT		D3D10_TEXTURE_ADDRESS_WRAP
 #define GX_WARP_MIRRORED	D3D10_TEXTURE_ADDRESS_MIRROR
 #define GX_WARP_CLAMP		D3D10_TEXTURE_ADDRESS_CLAMP
+
+
+
+namespace GX {
+	ID3D10Device* direct3DDevice();
+
+	class Direct3DCullFacer : public DCullFacer {
+	public:
+		Direct3DCullFacer();
+		virtual ~Direct3DCullFacer();
+
+		virtual void setCullFace(DCullFace v);
+
+	protected:
+		virtual bool direct3DCFNeedMultisampleEnabled() = 0;
+		void direct3DCFUpdate();
+
+	private:
+		ID3D10RasterizerState*	m_RasterStates[_DCullFaceCount];
+	};
+}
+
 
 #endif
 #endif //AS_GXDIRECTX_H

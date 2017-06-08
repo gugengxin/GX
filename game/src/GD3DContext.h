@@ -13,7 +13,7 @@
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
 
-class GD3DContext : public GBaseContext {
+class GD3DContext : public GBaseContext, public GX::Direct3DCullFacer {
 protected:
     GD3DContext();
     virtual ~GD3DContext();
@@ -28,6 +28,8 @@ protected:
 	void renderEnd();
 private:
 	bool createView(UINT width, UINT height);
+protected:
+	virtual bool direct3DCFNeedMultisampleEnabled();
 protected:
 	void makeCurrent();
 	void makeClear();
@@ -54,7 +56,6 @@ private:
 	IDXGISwapChain*			m_SwapChain;
 	ID3D10RenderTargetView* m_RenderTargetView;
 	ID3D10DepthStencilView* m_DepthStencilView;
-	ID3D10RasterizerState*	m_RasterState;
 	ID3D10DepthStencilState* m_DepthStencilState;
 };
 

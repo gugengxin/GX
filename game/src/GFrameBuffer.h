@@ -62,9 +62,6 @@ public:
         }
 #if defined(GX_OPENGL)
 #elif defined(GX_DIRECTX)
-		inline ID3D10RasterizerState*	getRasterState() const {
-			return m_RasterState;
-		}
 		inline ID3D10DepthStencilState* getDepthStencilState() const {
 			return m_DepthStencilState;
 		}
@@ -78,7 +75,6 @@ public:
         DepthName m_DepthName;
 #if defined(GX_OPENGL)
 #elif defined(GX_DIRECTX)
-		ID3D10RasterizerState*	m_RasterState; 
 		ID3D10DepthStencilState* m_DepthStencilState;
 #elif defined(GX_METAL)
         void* m_StencilTex;
@@ -154,6 +150,9 @@ private:
 #if defined(GX_OPENGL)
 protected:
     virtual bool openGLCFNeedReverse();
+#elif defined(GX_DIRECTX)
+protected:
+	virtual bool direct3DCFNeedMultisampleEnabled();
 #elif defined(GX_METAL)
 public:
     virtual void* getRenderEncoder();

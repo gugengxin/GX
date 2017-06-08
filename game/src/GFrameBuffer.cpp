@@ -25,7 +25,7 @@ GFrameBuffer::Handle::Handle()
 #elif defined(GX_DIRECTX)
     m_Name=NULL;
     m_DepthName=NULL;
-    m_RasterState=NULL;
+	m_DepthStencilState = NULL;
 #elif defined(GX_METAL)
     m_Name=NULL;
     m_DepthName=NULL;
@@ -181,6 +181,13 @@ bool GFrameBuffer::openGLCFNeedReverse()
     return true;
 }
 
+#elif defined(GX_DIRECTX)
+
+bool GFrameBuffer::direct3DCFNeedMultisampleEnabled()
+{
+	return false;
+}
+
 #elif defined(GX_METAL)
 
 void* GFrameBuffer::getRenderEncoder()
@@ -222,7 +229,7 @@ void GFrameBuffer::renderBegin()
     openGLCFUpdate();
     
 #elif defined(GX_DIRECTX)
-	ID3D10Device* device = GX::d3dDevice();
+	ID3D10Device* device = GX::direct3DDevice();
 
 	device->OMGetRenderTargets(1, &m_PreName, &m_PreDepthName);
 	device->OMGetDepthStencilState(&m_PreDepthStencilState,NULL);
@@ -238,7 +245,7 @@ void GFrameBuffer::renderBegin()
 	
 	device->OMSetRenderTargets(1, &rtv, dsv);
 	//设置光栅化状态，使其生效
-	device->RSSetState(m_Node->getData().getRasterState());
+	direct3DCFUpdate();
 
 	const GColor4F& bgdClr = getBackgroundColor();
 	const FLOAT color[] = { bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a };
@@ -281,7 +288,7 @@ void GFrameBuffer::setViewport(float x, float y, float w, float h, float scale)
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 
-	GX::d3dDevice()->RSSetViewports(1, &viewport);
+	GX::direct3DDevice()->RSSetViewports(1, &viewport);
 #elif defined(GX_METAL)
     MTLViewport vt;
     vt.originX=x*scale;
@@ -301,7 +308,7 @@ void GFrameBuffer::renderEnd()
     GX_glBindFramebuffer(GL_FRAMEBUFFER, m_PreBindName);
     GX_glViewport(m_PreViewport[0], m_PreViewport[1], m_PreViewport[2], m_PreViewport[3]);
 #elif defined(GX_DIRECTX)
-	ID3D10Device* device = GX::d3dDevice();
+	ID3D10Device* device = GX::direct3DDevice();
 	device->OMSetRenderTargets(1, &m_PreName, m_PreDepthName);
 	if (m_PreName) {
 		m_PreName->Release();

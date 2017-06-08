@@ -79,6 +79,7 @@
     <ClInclude Include="..\..\src\GTexture2D.h" />
     <ClInclude Include="..\..\src\GWindow.h" />
     <ClInclude Include="..\..\src\GX3DAPI.h" />
+    <ClInclude Include="..\..\src\GX3DAPIPre.h" />
     <ClInclude Include="..\..\src\GX3DAPIType.h" />
     <ClInclude Include="..\..\src\GXContext.h" />
     <ClInclude Include="..\..\src\GXDirectX.h" />
