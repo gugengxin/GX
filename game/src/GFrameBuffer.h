@@ -171,8 +171,11 @@ private:
 #elif defined(GX_DIRECTX)
 	ID3D10RenderTargetView*		m_PreName;
 	ID3D10DepthStencilView*		m_PreDepthName;
-	ID3D10RasterizerState*		m_PreRasterState;
 	ID3D10DepthStencilState*	m_PreDepthStencilState;
+	ID3D10RasterizerState*		m_PreRasterState;
+	ID3D10BlendState*			m_PreBlendState;
+	FLOAT						m_PreBlendFacotr[4];
+	UINT						m_PreBlendMask;
 	D3D10_VIEWPORT				m_PreViewport;
 #elif defined(GX_METAL)
     void* m_CommandBuffer;

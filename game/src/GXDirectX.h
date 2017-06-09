@@ -51,6 +51,16 @@ namespace GX {
 	private:
 		ID3D10RasterizerState*	m_RasterStates[_DCullFaceCount];
 	};
+
+	class Direct3DBlender : public DBlender {
+	public:
+		Direct3DBlender();
+		virtual ~Direct3DBlender();
+
+		virtual void setBlend(DBlend v);
+	protected:
+		void direct3DBDUpdate();
+	};
 }
 
 

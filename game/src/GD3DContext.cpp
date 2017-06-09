@@ -279,6 +279,7 @@ void GD3DContext::renderBegin()
     device->OMSetRenderTargets(1, &m_RenderTargetView, m_DepthStencilView);
     //设置光栅化状态，使其生效
 	direct3DCFUpdate();
+	direct3DBDUpdate();
 
 	const GColor4F& bgdClr=getWindow()->getBackgroundColor();
 	const FLOAT color[] = { bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a };
@@ -302,6 +303,11 @@ void GD3DContext::renderEnd()
 	m_SwapChain->Present(0,0);
 
     ID3D10Device* device = GX::direct3DDevice();
+	{
+		const FLOAT factor[4] = { 0.0f,0.0f,0.0f,0.0f };
+		UINT mask = 0xFFFFFFFF;
+		device->OMSetBlendState(NULL, factor, mask);
+	}
     device->RSSetState(NULL);
     device->OMSetRenderTargets(0, NULL, NULL);
     device->OMSetDepthStencilState(NULL, 1);

@@ -13,7 +13,7 @@
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
 
-class GD3DContext : public GBaseContext, public GX::Direct3DCullFacer {
+class GD3DContext : public GBaseContext, public GX::Direct3DCullFacer, public GX::Direct3DBlender {
 protected:
     GD3DContext();
     virtual ~GD3DContext();

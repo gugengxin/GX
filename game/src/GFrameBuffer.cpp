@@ -108,8 +108,14 @@ GFrameBuffer::GFrameBuffer()
 #elif defined(GX_DIRECTX)
 	m_PreName=NULL;
 	m_PreDepthName=NULL;
-	m_PreRasterState=NULL;
 	m_PreDepthStencilState=NULL;
+	m_PreRasterState = NULL;
+	m_PreBlendState=NULL;
+	m_PreBlendFacotr[0] = 0.0f;
+	m_PreBlendFacotr[1] = 0.0f;
+	m_PreBlendFacotr[2] = 0.0f;
+	m_PreBlendFacotr[3] = 0.0f;
+	m_PreBlendMask=0xFFFFFFFF;
 	//m_PreViewport;
 #elif defined(GX_METAL)
     m_CommandBuffer=NULL;
@@ -243,6 +249,7 @@ void GFrameBuffer::renderBegin()
 	device->OMGetRenderTargets(1, &m_PreName, &m_PreDepthName);
 	device->OMGetDepthStencilState(&m_PreDepthStencilState,NULL);
 	device->RSGetState(&m_PreRasterState);
+	device->OMGetBlendState(&m_PreBlendState, m_PreBlendFacotr, &m_PreBlendMask);
 	UINT numVP = 1;
 	device->RSGetViewports(&numVP, &m_PreViewport);
 
@@ -255,6 +262,7 @@ void GFrameBuffer::renderBegin()
 	device->OMSetRenderTargets(1, &rtv, dsv);
 	//设置光栅化状态，使其生效
 	direct3DCFUpdate();
+	direct3DBDUpdate();
 
 	const GColor4F& bgdClr = getBackgroundColor();
 	const FLOAT color[] = { bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a };
@@ -334,6 +342,10 @@ void GFrameBuffer::renderEnd()
 	device->RSSetState(m_PreRasterState);
 	if (m_PreRasterState) {
 		m_PreRasterState->Release();
+	}
+	device->OMSetBlendState(m_PreBlendState, m_PreBlendFacotr, m_PreBlendMask);
+	if (m_PreBlendState) {
+		m_PreBlendState->Release();
 	}
 	device->RSSetViewports(1, &m_PreViewport);
 #elif defined(GX_METAL)
