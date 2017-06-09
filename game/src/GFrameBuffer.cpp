@@ -104,6 +104,7 @@ GFrameBuffer::GFrameBuffer()
     m_PreViewport[2]=0;
     m_PreViewport[3]=0;
     m_PreCullFace=GX::DCullFaceNone;
+    m_PreBlend=GX::DBlendNone;
 #elif defined(GX_DIRECTX)
 	m_PreName=NULL;
 	m_PreDepthName=NULL;
@@ -217,13 +218,15 @@ bool GFrameBuffer::renderCheck()
 
 void GFrameBuffer::renderBegin()
 {
-    m_Node->getContext()->makeCurrent();
+    GContext* context=m_Node->getContext();
+    context->makeCurrent();
     
 #if defined(GX_OPENGL)
     
     GX_glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&m_PreBindName);
     GX_glGetIntegerv(GL_VIEWPORT, m_PreViewport);
-    m_PreCullFace=m_Node->getContext()->getCullFace();
+    m_PreCullFace=context->getCullFace();
+    m_PreBlend=context->getBlend();
     
     GX_glBindFramebuffer(GL_FRAMEBUFFER, m_Node->getData().getName());
     
@@ -232,6 +235,7 @@ void GFrameBuffer::renderBegin()
     GX_glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     
     openGLCFUpdate();
+    openGLBDUpdate();
     
 #elif defined(GX_DIRECTX)
 	ID3D10Device* device = GX::direct3DDevice();
@@ -308,8 +312,10 @@ void GFrameBuffer::setViewport(float x, float y, float w, float h, float scale)
 
 void GFrameBuffer::renderEnd()
 {
+    GContext* context=m_Node->getContext();
 #if defined(GX_OPENGL)
-    m_Node->getContext()->setCullFace(m_PreCullFace);
+    context->setCullFace(m_PreCullFace);
+    context->setBlend(m_PreBlend);
     GX_glBindFramebuffer(GL_FRAMEBUFFER, m_PreBindName);
     GX_glViewport(m_PreViewport[0], m_PreViewport[1], m_PreViewport[2], m_PreViewport[3]);
 #elif defined(GX_DIRECTX)
@@ -343,6 +349,6 @@ void GFrameBuffer::renderEnd()
     [GX_CAST_R(id, m_CommandBuffer) release];
     m_CommandBuffer=NULL;
 #endif
-    m_Node->getContext()->makeClear();
+    context->makeClear();
 }
 

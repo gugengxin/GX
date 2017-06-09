@@ -20,7 +20,7 @@
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
 
-class GOGLContext : public GBaseContext, public GX::OpenGLCullFacer
+class GOGLContext : public GBaseContext, public GX::OpenGLCullFacer, public GX::OpenGLBlender
 #if defined(GX_OS_QT)
         , public QOpenGLFunctions
 #endif

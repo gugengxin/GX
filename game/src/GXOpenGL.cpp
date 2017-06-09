@@ -205,7 +205,7 @@ namespace GX {
     }
     
     
-    
+    //////////////////////////////////////////////////////////////////////////
     
     
     OpenGLCullFacer::OpenGLCullFacer()
@@ -246,6 +246,49 @@ namespace GX {
             case DCullFaceBack:
                 GX_glEnable(GL_CULL_FACE);
                 GX_glCullFace(openGLCFNeedReverse()?GL_FRONT:GL_BACK);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    
+    //////////////////////////////////////////////////////////////////////////
+    
+    
+    OpenGLBlender::OpenGLBlender()
+    {
+        
+    }
+    OpenGLBlender::~OpenGLBlender()
+    {
+        
+    }
+    
+    void OpenGLBlender::setBlend(DBlend v)
+    {
+        DBlender::setBlend(v);
+        
+        openGLBDUpdate();
+    }
+    
+    void OpenGLBlender::openGLBDUpdate()
+    {
+        if(g_CttStack.isEmpty()) {
+            return;
+        }
+        
+        switch (getBlend()) {
+            case DBlendNone:
+                GX_glDisable(GL_BLEND);
+                break;
+            case DBlendSsaAddD1msa:
+                GX_glEnable(GL_BLEND);
+                GX_glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+                break;
+            case DBlendS1AddD1:
+                GX_glEnable(GL_BLEND);
+                GX_glBlendFunc(GL_ONE,GL_ONE);
                 break;
             default:
                 break;

@@ -405,6 +405,17 @@ namespace GX {
     protected:
         void openGLCFUpdate();
     };
+    
+    class OpenGLBlender : public DBlender {
+    public:
+        OpenGLBlender();
+        virtual ~OpenGLBlender();
+        
+        virtual void setBlend(DBlend v);
+        
+    protected:
+        void openGLBDUpdate();
+    };
 }
 
 

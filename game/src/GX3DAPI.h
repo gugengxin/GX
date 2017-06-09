@@ -1,4 +1,4 @@
-﻿//
+//
 //  GX3DAPI.h
 //  GX
 //
@@ -18,12 +18,14 @@
 #include "GXMetal.h"
 
 #if defined(GX_OPENGL)
-#define GX_3D_CULLFACER GX::OpenGLCullFacer
+#define GX_3D_CULL_FACER    GX::OpenGLCullFacer
+#define GX_3D_BLENDER       GX::OpenGLBlender
 #elif defined(GX_DIRECTX)
-#define GX_3D_CULLFACER GX::Direct3DCullFacer
+#define GX_3D_CULL_FACER    GX::Direct3DCullFacer
+#define GX_3D_BLENDER       GX::Direct3DBlender
 #elif defined(GX_METAL)
-#define GX_3D_CULLFACER GX::MetalCullFacer
-#define GX_3D_BLENDER GX::MetalBlender
+#define GX_3D_CULL_FACER    GX::MetalCullFacer
+#define GX_3D_BLENDER       GX::MetalBlender
 #endif
 
 namespace GX {

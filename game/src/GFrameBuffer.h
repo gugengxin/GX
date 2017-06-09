@@ -23,7 +23,7 @@
 class GContext;
 class GTexture;
 
-class GFrameBuffer : public GCanvas, public GX_3D_CULLFACER, public GX_3D_BLENDER
+class GFrameBuffer : public GCanvas, public GX_3D_CULL_FACER, public GX_3D_BLENDER
 {
     friend class GContext;
 	GX_PRIVATE_GOBJECT(GFrameBuffer);
@@ -167,6 +167,7 @@ private:
     GLuint  m_PreBindName;
     GLint   m_PreViewport[4];
     GX::DCullFace m_PreCullFace;
+    GX::DBlend    m_PreBlend;
 #elif defined(GX_DIRECTX)
 	ID3D10RenderTargetView*		m_PreName;
 	ID3D10DepthStencilView*		m_PreDepthName;
