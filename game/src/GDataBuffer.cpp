@@ -39,7 +39,7 @@ guint GDataBufferBase::getBytes()
 #if defined(GX_OPENGL)
     return m_Data.getBytes();
 #elif defined(GX_DIRECTX)
-    return
+	return m_DataBytes;
 #elif defined(GX_METAL)
     return [GX_CAST_R(id<MTLBuffer>, m_Buffer) length];
 #endif

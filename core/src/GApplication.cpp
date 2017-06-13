@@ -14,6 +14,8 @@
 #elif defined(GX_OS_WINDOWS)
 #include <Mmsystem.h>
 #pragma comment(lib, "Winmm.lib")
+#include <ShellScalingApi.h>
+#pragma comment(lib, "Shcore.lib")
 #elif defined(GX_OS_ANDROID)
 
 #endif
@@ -312,6 +314,7 @@ void GApplication::eventDidFinishLaunching(int argc, char *argv[])
 #if defined(GX_OS_APPLE)
     [GX_CAST_R(_AppHelper*, m_Helper) start];
 #elif defined(GX_OS_WINDOWS)
+	::SetProcessDpiAwareness(PROCESS_PER_MONITOR_DPI_AWARE);
     createWinMsgWndAndStart();
 #elif defined(GX_OS_QT)
     connect(&m_Timer,SIGNAL(timeout()),this,SLOT(idle()));

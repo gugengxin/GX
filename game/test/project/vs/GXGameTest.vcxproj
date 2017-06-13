@@ -185,6 +185,7 @@ xcopy /i /e /y ..\..\assets assets</Command>
     <ClInclude Include="..\..\src\Game.h" />
     <ClInclude Include="..\..\src\MFrameBuffer.h" />
     <ClInclude Include="..\..\src\MGraphics.h" />
+    <ClInclude Include="..\..\src\MImage.h" />
     <ClInclude Include="..\..\src\Module.h" />
     <ClInclude Include="..\..\src\MTypist.h" />
     <ClInclude Include="GXGameTest.h" />
@@ -197,6 +198,7 @@ xcopy /i /e /y ..\..\assets assets</Command>
     <ClCompile Include="..\..\src\Game.cpp" />
     <ClCompile Include="..\..\src\MFrameBuffer.cpp" />
     <ClCompile Include="..\..\src\MGraphics.cpp" />
+    <ClCompile Include="..\..\src\MImage.cpp" />
     <ClCompile Include="..\..\src\Module.cpp" />
     <ClCompile Include="..\..\src\MTypist.cpp" />
     <ClCompile Include="GXGameTest.cpp" />

@@ -51,6 +51,9 @@
     <ClInclude Include="..\..\src\MFrameBuffer.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\MImage.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -75,6 +78,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\MFrameBuffer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\MImage.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

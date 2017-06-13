@@ -99,6 +99,12 @@
     <ClCompile Include="..\..\src\GX3DAPI.cpp">
       <Filter>src\context</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GGraphBase.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GGraphics.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GBaseContext.h">
@@ -211,6 +217,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GX3DAPIPre.h">
       <Filter>src\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GGraphBase.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GGraphics.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

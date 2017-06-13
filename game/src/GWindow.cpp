@@ -86,6 +86,21 @@ static WNDPROC SetWindowProc(HWND hWnd, WNDPROC proc)
 #endif
 }
 
+static float GetWindowScale(HWND hWnd)
+{
+	HDC hdc = ::GetDC(hWnd);
+	if (hdc)
+	{
+		int dpiX = ::GetDeviceCaps(hdc, LOGPIXELSX);//每英寸逻辑像素数 水平
+		//int dpiY = ::GetDeviceCaps(hdc, LOGPIXELSY);
+		//每英寸逻辑像素数 垂直       
+		::ReleaseDC(hWnd, hdc);
+
+		return dpiX / 96.0f;
+	}
+	return 1.0f;
+}
+
 LRESULT CALLBACK GWindow::wndProcP(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	GWindow* win = GetWindowFromHWND(hWnd);
@@ -499,7 +514,10 @@ GWindow::GWindow(void* osWinP)
 	SetWindowToHWND(GX_CAST_R(HWND, m_OSWinP), this);
 
 	::ShowWindow(m_OSWin.getHWND(), SW_SHOW);
-	UpdateWindow(m_OSWin.getHWND());
+	::UpdateWindow(m_OSWin.getHWND());
+
+	m_OSWinScale = GetWindowScale(m_OSWin.getHWND());
+
 #elif defined(GX_OS_IPHONE)
 	m_OSWin = [[_ContextView alloc] initWithDelegate:this frame : GX_CAST_R(UIView*, osWinP).bounds];
 	m_OSWinCtrler = [[_ContextViewController alloc] initWithDelegate:this view : GX_CAST_R(_ContextView*, m_OSWin)];
@@ -603,7 +621,7 @@ float GWindow::getWidth()
 #if defined(GX_OS_WINDOWS)
 	RECT rc;
 	::GetClientRect(m_OSWin.getHWND(), &rc);
-	return GX_CAST_S(float,rc.right - rc.left);
+	return GX_CAST_S(float,rc.right - rc.left) / m_OSWinScale;
 #elif defined(GX_OS_IPHONE)
     return (float)GX_CAST_R(UIView*, m_OSWin).bounds.size.width;
 #elif defined(GX_OS_MACOSX)
@@ -619,7 +637,7 @@ float GWindow::getHeight()
 #if defined(GX_OS_WINDOWS)
 	RECT rc;
 	::GetClientRect(m_OSWin.getHWND(), &rc);
-	return GX_CAST_S(float, rc.bottom - rc.top);
+	return GX_CAST_S(float, rc.bottom - rc.top) / m_OSWinScale;
 #elif defined(GX_OS_IPHONE)
     return (float)GX_CAST_R(UIView*, m_OSWin).bounds.size.height;
 #elif defined(GX_OS_MACOSX)
@@ -633,7 +651,7 @@ float GWindow::getHeight()
 float GWindow::getScale()
 {
 #if defined(GX_OS_WINDOWS)
-	return 1.0f;
+	return m_OSWinScale;
 #elif defined(GX_OS_IPHONE)
     return (float)GX_CAST_R(UIView*, m_OSWin).contentScaleFactor;
 #elif defined(GX_OS_MACOSX)

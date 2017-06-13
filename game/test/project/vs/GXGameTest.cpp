@@ -27,6 +27,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
+	GApplication::main(0, NULL, "AppDge");
+
     // TODO: 在此放置代码。
 
     // 初始化全局字符串
@@ -42,7 +44,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GXGAMETEST));
 
-	GApplication::main(0, NULL, "AppDge");
+	
 	GWindow::main(g_HWnd, "Game");
 
     MSG msg;

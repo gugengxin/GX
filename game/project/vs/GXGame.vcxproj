@@ -31,6 +31,8 @@
     <ClCompile Include="..\..\src\GDShader.cpp" />
     <ClCompile Include="..\..\src\GFrameBuffer.cpp" />
     <ClCompile Include="..\..\src\GGame.cpp" />
+    <ClCompile Include="..\..\src\GGraphBase.cpp" />
+    <ClCompile Include="..\..\src\GGraphics.cpp" />
     <ClCompile Include="..\..\src\GImage.cpp" />
     <ClCompile Include="..\..\src\glew.c" />
     <ClCompile Include="..\..\src\GMShader.cpp" />
@@ -63,6 +65,8 @@
     <ClInclude Include="..\..\src\GDShader.h" />
     <ClInclude Include="..\..\src\GFrameBuffer.h" />
     <ClInclude Include="..\..\src\GGame.h" />
+    <ClInclude Include="..\..\src\GGraphBase.h" />
+    <ClInclude Include="..\..\src\GGraphics.h" />
     <ClInclude Include="..\..\src\GImage.h" />
     <ClInclude Include="..\..\src\GL\eglew.h" />
     <ClInclude Include="..\..\src\GL\glew.h" />

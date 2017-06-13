@@ -132,6 +132,7 @@ private:
 
 	GX::CWnd m_OSWin;
 	WNDPROC m_WndProcP;
+	float m_OSWinScale;
 #elif defined(GX_OS_APPLE)
     friend class _WindowBridge;
 #if defined(GX_METAL)
