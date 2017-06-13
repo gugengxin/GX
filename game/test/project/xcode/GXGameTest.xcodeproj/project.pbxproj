@@ -15,6 +15,9 @@
 		CA1F60AD1CD984BB00C6307B /* AppDge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A91CD984BB00C6307B /* AppDge.cpp */; };
 		CA1F60B81CD9894600C6307B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA1F60B51CD9894600C6307B /* MainMenu.xib */; };
 		CA1F60CA1CD99A6500C6307B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA1F60C91CD99A6500C6307B /* LaunchScreen.storyboard */; };
+		CA24E8FD1EEEE3AB004FD7AC /* MImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8FB1EEEE3AB004FD7AC /* MImage.cpp */; };
+		CA24E8FE1EEEE3AB004FD7AC /* MImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8FB1EEEE3AB004FD7AC /* MImage.cpp */; };
+		CA24E8FF1EEEE3AB004FD7AC /* MImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8FB1EEEE3AB004FD7AC /* MImage.cpp */; };
 		CA75BAD31D830D4400236109 /* lena_rgb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA75BAD21D830D4400236109 /* lena_rgb.jpg */; };
 		CA75BAD41D830D4400236109 /* lena_rgb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA75BAD21D830D4400236109 /* lena_rgb.jpg */; };
 		CA75BAD51D830D4400236109 /* lena_rgb.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CA75BAD21D830D4400236109 /* lena_rgb.jpg */; };
@@ -104,6 +107,8 @@
 		CA1F60AA1CD984BB00C6307B /* AppDge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDge.h; sourceTree = "<group>"; };
 		CA1F60B51CD9894600C6307B /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		CA1F60C91CD99A6500C6307B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CA24E8FB1EEEE3AB004FD7AC /* MImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MImage.cpp; sourceTree = "<group>"; };
+		CA24E8FC1EEEE3AB004FD7AC /* MImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MImage.h; sourceTree = "<group>"; };
 		CA75BAD21D830D4400236109 /* lena_rgb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lena_rgb.jpg; sourceTree = "<group>"; };
 		CA80D1EC1E0A525D001E57AF /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		CA80D1ED1E0A525D001E57AF /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
@@ -185,6 +190,8 @@
 				CABBD1161EDFB96B009B3C71 /* MTypist.cpp */,
 				CAD970541EE7A38C000B600D /* MFrameBuffer.h */,
 				CAD970531EE7A38C000B600D /* MFrameBuffer.cpp */,
+				CA24E8FC1EEEE3AB004FD7AC /* MImage.h */,
+				CA24E8FB1EEEE3AB004FD7AC /* MImage.cpp */,
 			);
 			name = src;
 			path = ../../src;
@@ -515,6 +522,7 @@
 				CA9C16351CC5DFE200204303 /* AppDelegate.mm in Sources */,
 				CA9C16321CC5DFE200204303 /* main.m in Sources */,
 				CABBD1081EDFB29C009B3C71 /* Module.cpp in Sources */,
+				CA24E8FD1EEEE3AB004FD7AC /* MImage.cpp in Sources */,
 				CA1F60AB1CD984BB00C6307B /* AppDge.cpp in Sources */,
 				CABBD1131EDFB4EF009B3C71 /* MGraphics.cpp in Sources */,
 				CA80D1EE1E0A525D001E57AF /* Game.cpp in Sources */,
@@ -530,6 +538,7 @@
 				CA9C168C1CC5E7D800204303 /* AppDelegate.mm in Sources */,
 				CA9C16891CC5E7D800204303 /* main.m in Sources */,
 				CABBD1091EDFB29C009B3C71 /* Module.cpp in Sources */,
+				CA24E8FE1EEEE3AB004FD7AC /* MImage.cpp in Sources */,
 				CA1F60AC1CD984BB00C6307B /* AppDge.cpp in Sources */,
 				CABBD1141EDFB4EF009B3C71 /* MGraphics.cpp in Sources */,
 				CA80D1EF1E0A525D001E57AF /* Game.cpp in Sources */,
@@ -545,6 +554,7 @@
 				CA9C16A41CC5E94D00204303 /* main.m in Sources */,
 				CA9C16A11CC5E94D00204303 /* AppDelegate.mm in Sources */,
 				CABBD10A1EDFB29C009B3C71 /* Module.cpp in Sources */,
+				CA24E8FF1EEEE3AB004FD7AC /* MImage.cpp in Sources */,
 				CA1F60AD1CD984BB00C6307B /* AppDge.cpp in Sources */,
 				CABBD1151EDFB4EF009B3C71 /* MGraphics.cpp in Sources */,
 				CA80D1F01E0A525D001E57AF /* Game.cpp in Sources */,

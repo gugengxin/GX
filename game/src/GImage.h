@@ -12,16 +12,17 @@
 #include "GXPrefix.h"
 #include "GX3DAPI.h"
 #include "GObject.h"
-#include "GDataBuffer.h"
+#include "GGraphBase.h"
 #include "GTexture2D.h"
 #include "GVector.h"
+#include "GCanvas.h"
 
 
 
 #include "GXGObject.h"
 // Down can't include other h file
 
-class GImage : public GObject
+class GImage : public GGraphBase
 {
 	GX_GOBJECT(GImage);
 protected:
@@ -32,13 +33,7 @@ protected:
         GVector2 texcoord;
     };
 #pragma pack()
-protected:
-    guint getDataStride();
-    void setDataStride(guint v);
-    void* mapData(gint index);
-    void unmapData();
 public:
-    bool changeDataCount(guint count);
     GVector2 getPosition(gint index);
     void setPosition(gint index,const GVector2 v);
     void setPosition(gint index,float x, float y);
@@ -47,11 +42,17 @@ public:
     void setTexcoord(gint index,float x, float y);
     void setDataPT(gint index,GVector2 pos,GVector2 tc);
     void setDataPT(gint index,float posX,float posY,float tcX,float tcY);
-
-    
-
+    GTexture2D* getTexture() const;
+    void setTexture(GTexture2D* tex);
+    float getScale() const;
+    void setScale(float v);
+    gint getMode() const;
+    void setMode(gint v);
+    GX::DToplogy getToplogy() const;
+    void setToplogy(GX::DToplogy v);
+public:
+    void draw(GContext& context,GCanvas* canvas);
 private:
-    GDataBuffer m_DataBuf;
     GTexture2D* m_Tex2D;
     float       m_Scale;
     gint        m_Mode;

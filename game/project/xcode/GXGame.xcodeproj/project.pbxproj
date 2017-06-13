@@ -13,6 +13,12 @@
 		CA1AD2771CD87CA900CEA1DC /* GWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */; };
 		CA1AD2781CD87CA900CEA1DC /* GWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */; };
 		CA1AD2791CD87CA900CEA1DC /* GWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */; };
+		CA24E8F31EEEC178004FD7AC /* GGraphBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8F11EEEC178004FD7AC /* GGraphBase.cpp */; };
+		CA24E8F41EEEC294004FD7AC /* GGraphBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8F11EEEC178004FD7AC /* GGraphBase.cpp */; };
+		CA24E8F51EEEC294004FD7AC /* GGraphBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8F11EEEC178004FD7AC /* GGraphBase.cpp */; };
+		CA24E8F81EEEC3BD004FD7AC /* GGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8F61EEEC3BD004FD7AC /* GGraphics.cpp */; };
+		CA24E8F91EEEC3BD004FD7AC /* GGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8F61EEEC3BD004FD7AC /* GGraphics.cpp */; };
+		CA24E8FA1EEEC3BD004FD7AC /* GGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8F61EEEC3BD004FD7AC /* GGraphics.cpp */; };
 		CA3090951CFD1C46000B8DF2 /* GSRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */; };
 		CA3090961CFD1C53000B8DF2 /* GSRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */; };
 		CA3090971CFD1C54000B8DF2 /* GSRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */; };
@@ -120,6 +126,10 @@
 		CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GWindow.cpp; sourceTree = "<group>"; };
 		CA1AD2761CD87CA900CEA1DC /* GWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWindow.h; sourceTree = "<group>"; };
 		CA2002CB1EE6D414003F87D0 /* GX3DAPIPre.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GX3DAPIPre.h; sourceTree = "<group>"; };
+		CA24E8F11EEEC178004FD7AC /* GGraphBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GGraphBase.cpp; sourceTree = "<group>"; };
+		CA24E8F21EEEC178004FD7AC /* GGraphBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GGraphBase.h; sourceTree = "<group>"; };
+		CA24E8F61EEEC3BD004FD7AC /* GGraphics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GGraphics.cpp; sourceTree = "<group>"; };
+		CA24E8F71EEEC3BD004FD7AC /* GGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GGraphics.h; sourceTree = "<group>"; };
 		CA26E07A1DC64BBD003AF801 /* GXContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXContext.h; sourceTree = "<group>"; };
 		CA26E07B1DC64CD4003AF801 /* GX3DAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GX3DAPI.h; sourceTree = "<group>"; };
 		CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GSRGraphics.cpp; sourceTree = "<group>"; };
@@ -250,6 +260,19 @@
 			name = Unuse;
 			sourceTree = "<group>";
 		};
+		CA24E8ED1EEEB84A004FD7AC /* obj */ = {
+			isa = PBXGroup;
+			children = (
+				CA24E8F21EEEC178004FD7AC /* GGraphBase.h */,
+				CA24E8F11EEEC178004FD7AC /* GGraphBase.cpp */,
+				CA24E8F71EEEC3BD004FD7AC /* GGraphics.h */,
+				CA24E8F61EEEC3BD004FD7AC /* GGraphics.cpp */,
+				CA8A38BD1EE1219E00BBEBE7 /* GImage.h */,
+				CA8A38BC1EE1219E00BBEBE7 /* GImage.cpp */,
+			);
+			name = obj;
+			sourceTree = "<group>";
+		};
 		CA26E07C1DC64D89003AF801 /* 3DAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,8 +297,6 @@
 				CAC708AA1D13CDE900B98028 /* GTexture.cpp */,
 				CAC708B01D13CDFE00B98028 /* GTexture2D.h */,
 				CAC708AF1D13CDFE00B98028 /* GTexture2D.cpp */,
-				CA8A38BD1EE1219E00BBEBE7 /* GImage.h */,
-				CA8A38BC1EE1219E00BBEBE7 /* GImage.cpp */,
 			);
 			name = texture;
 			sourceTree = "<group>";
@@ -298,6 +319,7 @@
 				CAA2D4DF1DBAFBB4007E53C8 /* context */,
 				CADB5DC01CF9E6A30092C472 /* shader */,
 				CA4CD5441D508D3F008005CF /* texture */,
+				CA24E8ED1EEEB84A004FD7AC /* obj */,
 				CA1AD2761CD87CA900CEA1DC /* GWindow.h */,
 				CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */,
 				CA3A7EAE1DED66BF00197FCB /* GCanvas.h */,
@@ -501,6 +523,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA24E8F81EEEC3BD004FD7AC /* GGraphics.cpp in Sources */,
 				CADB5DBC1CF9E6300092C472 /* GOShader.cpp in Sources */,
 				CA6793B01DAFFACB00854B5E /* GFrameBuffer.cpp in Sources */,
 				CA446E3F1D67E36F002E77DF /* GXMetal.cpp in Sources */,
@@ -527,6 +550,7 @@
 				CAC708B11D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CADB5DBD1CF9E6300092C472 /* GShader.cpp in Sources */,
 				CABB5CD11CE0E40500D5B648 /* GOGLContext.cpp in Sources */,
+				CA24E8F31EEEC178004FD7AC /* GGraphBase.cpp in Sources */,
 				CA8A38BE1EE1219E00BBEBE7 /* GImage.cpp in Sources */,
 				CA1AD2771CD87CA900CEA1DC /* GWindow.cpp in Sources */,
 			);
@@ -545,10 +569,12 @@
 				CA446E401D67E36F002E77DF /* GXMetal.cpp in Sources */,
 				CABB3F9C1CFE06EC00A7367C /* GDShader.cpp in Sources */,
 				CAE303BD1CE563CB00F15C74 /* GContext.cpp in Sources */,
+				CA24E8F91EEEC3BD004FD7AC /* GGraphics.cpp in Sources */,
 				CAC708AD1D13CDE900B98028 /* GTexture.cpp in Sources */,
 				CA3A7EB01DED66C400197FCB /* GCanvas.cpp in Sources */,
 				CAD4C7841D577E9300F01C06 /* GSRTexture2D.cpp in Sources */,
 				CAE303BE1CE563CB00F15C74 /* GD3DContext.cpp in Sources */,
+				CA24E8F41EEEC294004FD7AC /* GGraphBase.cpp in Sources */,
 				CABB3F9D1CFE06EC00A7367C /* GShader.cpp in Sources */,
 				CA8A38BF1EE1219E00BBEBE7 /* GImage.cpp in Sources */,
 				CA04FDE81CE4557E00C9B596 /* glew.c in Sources */,
@@ -577,10 +603,12 @@
 				CA446E411D67E36F002E77DF /* GXMetal.cpp in Sources */,
 				CABB3F951CFE06EB00A7367C /* GDShader.cpp in Sources */,
 				CAE303C71CE563CB00F15C74 /* GContext.cpp in Sources */,
+				CA24E8FA1EEEC3BD004FD7AC /* GGraphics.cpp in Sources */,
 				CAC708AE1D13CDE900B98028 /* GTexture.cpp in Sources */,
 				CA3A7EB11DED66C400197FCB /* GCanvas.cpp in Sources */,
 				CAD4C7851D577E9300F01C06 /* GSRTexture2D.cpp in Sources */,
 				CAE303C81CE563CB00F15C74 /* GD3DContext.cpp in Sources */,
+				CA24E8F51EEEC294004FD7AC /* GGraphBase.cpp in Sources */,
 				CABB3F961CFE06EB00A7367C /* GShader.cpp in Sources */,
 				CA8A38C01EE1219E00BBEBE7 /* GImage.cpp in Sources */,
 				CA04FDE91CE4557E00C9B596 /* glew.c in Sources */,

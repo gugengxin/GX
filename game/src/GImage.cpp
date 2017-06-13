@@ -8,44 +8,24 @@
 
 #include "GImage.h"
 //Down include other h file
-
+#include "GSRTexture2D.h"
+#include "GContext.h"
 //Up include other h file
 #include "GXGObject.h"
 
-GX_GOBJECT_IMPLEMENT(GImage, GObject);
+GX_GOBJECT_IMPLEMENT(GImage, GGraphBase);
 
 GImage::GImage()
 {
-    m_Tex2D=NULL;
     setDataStride(sizeof(Data));
+    m_Tex2D=NULL;
+    m_Scale=1.0f;
+    m_Mode=GX_TRIANGLE_STRIP;
 }
 
 GImage::~GImage()
 {
     GO::release(m_Tex2D);
-}
-
-guint GImage::getDataStride()
-{
-    return GX_CAST_S(guint, m_DataBuf.getStride());
-}
-void GImage::setDataStride(guint v)
-{
-    m_DataBuf.setStride(GX_CAST_S(guint16, v));
-}
-
-void* GImage::mapData(gint index)
-{
-    return GX_CAST_R(guint8*, m_DataBuf.map())+index*m_DataBuf.getStride();
-}
-void GImage::unmapData()
-{
-    m_DataBuf.unmap();
-}
-
-bool GImage::changeDataCount(guint count)
-{
-    return m_DataBuf.changeCount(count);
 }
 
 GVector2 GImage::getPosition(gint index)
@@ -103,3 +83,41 @@ void GImage::setDataPT(gint index,float posX,float posY,float tcX,float tcY)
     unmapData();
 }
 
+GTexture2D* GImage::getTexture() const
+{
+    return m_Tex2D;
+}
+void GImage::setTexture(GTexture2D* tex)
+{
+    GX_OBJECT_SET(m_Tex2D, tex);
+}
+
+float GImage::getScale() const
+{
+    return m_Scale;
+}
+void GImage::setScale(float v)
+{
+    m_Scale=v;
+}
+gint GImage::getMode() const
+{
+    return m_Mode;
+}
+void GImage::setMode(gint v)
+{
+    m_Mode=v;
+}
+GX::DToplogy GImage::getToplogy() const
+{
+    return GX::DToplogyFromDrawMode(m_Mode);
+}
+void GImage::setToplogy(GX::DToplogy v)
+{
+    m_Mode=GX::DToplogyToDrawMode(v);
+}
+
+void GImage::draw(GContext& context,GCanvas* canvas)
+{
+    context.getSRTexture2D(false, false, GSRTexture2D::MM_None)->draw(canvas, getDataBuffer(), GSRTexture2D::IT_Float_Float, m_Tex2D, m_Mode, 0, getDataCount(), NULL);
+}

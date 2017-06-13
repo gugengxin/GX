@@ -16,6 +16,7 @@
 #include "GGame.h"
 
 #include "GDataBuffer.h"
+#include "GImage.h"
 
 
 #endif /* GX_h */

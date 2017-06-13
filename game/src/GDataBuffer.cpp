@@ -34,6 +34,17 @@ GDataBufferBase::~GDataBufferBase()
 #endif
 }
 
+guint GDataBufferBase::getBytes()
+{
+#if defined(GX_OPENGL)
+    return m_Data.getBytes();
+#elif defined(GX_DIRECTX)
+    return
+#elif defined(GX_METAL)
+    return [GX_CAST_R(id<MTLBuffer>, m_Buffer) length];
+#endif
+}
+
 bool GDataBufferBase::changeBytes(guint toSize)
 {
 #ifdef GX_OPENGL
@@ -147,14 +158,19 @@ GDataBuffer::~GDataBuffer()
 
 }
 
-bool GDataBuffer::changeCount(guint offset,guint stride,guint count)
+gint GDataBuffer::getCount()
+{
+    return GX_CAST_S(gint, getBytes()/m_Stride);
+}
+
+bool GDataBuffer::changeCount(guint offset,guint stride,gint count)
 {
     m_Offset=GX_CAST_S(guint16, offset);
     m_Stride=GX_CAST_S(guint16, stride);
     
     return changeBytes(count*m_Stride);
 }
-bool GDataBuffer::changeCount(guint count)
+bool GDataBuffer::changeCount(gint count)
 {
     return changeBytes(count*m_Stride);
 }

@@ -24,6 +24,7 @@ protected:
 	GDataBufferBase();
 	~GDataBufferBase();
 public:
+    guint getBytes();
 	bool changeBytes(guint toSize);
 	bool changeBytesIfNeed(guint toSize);
 	void freeSelf();
@@ -48,7 +49,7 @@ private:
 
 class GDataBuffer : public GObject, public GDataBufferBase, public GIBuffer
 {
-    friend class GImage;
+    friend class GGraphBase;
 	GX_GOBJECT(GDataBuffer);
 public:
 	inline void setOffset(guint v) {
@@ -65,8 +66,9 @@ public:
 		return m_Stride;
 	}
     
-    bool changeCount(guint offset,guint stride,guint count);
-    bool changeCount(guint count);
+    gint getCount();
+    bool changeCount(guint offset,guint stride,gint count);
+    bool changeCount(gint count);
     
 #ifdef GX_OPENGL
 	virtual void readyUse() {
