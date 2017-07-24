@@ -517,8 +517,8 @@
 				CA3A95CD1E7A727B00CEFD8E /* GNotice.cpp */,
 				CA3A95D01E7A727B00CEFD8E /* GNoticeCenter.h */,
 				CA3A95CF1E7A727B00CEFD8E /* GNoticeCenter.cpp */,
-				CA3A95E11E7A727B00CEFD8E /* GRunLoop.cpp */,
 				CA3A95E21E7A727B00CEFD8E /* GRunLoop.h */,
+				CA3A95E11E7A727B00CEFD8E /* GRunLoop.cpp */,
 			);
 			name = runloop;
 			sourceTree = "<group>";

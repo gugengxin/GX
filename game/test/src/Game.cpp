@@ -6,6 +6,7 @@
 #include "MGraphics.h"
 #include "MFrameBuffer.h"
 #include "MTypist.h"
+#include "MImage.h"
 
 GX_OBJECT_IMPLEMENT(Game,GGame);
 
@@ -29,8 +30,9 @@ void Game::eventStart()
     
     GContext& context=getWindow()->getContext();
     //m_Modules->add(MGraphics::autoAlloc()->initWithGame(this, context));
-    m_Modules->add(MFrameBuffer::autoAlloc()->initWithGame(this, context));
+    //m_Modules->add(MFrameBuffer::autoAlloc()->initWithGame(this, context));
     //m_Modules->add(MTypist::autoAlloc()->initWithGame(this, context));
+    m_Modules->add(MImage::autoAlloc()->initWithGame(this, context));
     
 //#if M_TEST == M_TEST_GRAPHICS
 //    

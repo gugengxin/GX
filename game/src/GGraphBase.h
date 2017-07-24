@@ -21,7 +21,7 @@
 class GGraphBase : public GObject
 {
 	GX_GOBJECT(GGraphBase);
-public:
+protected:
     guint getDataStride();
     void setDataStride(guint v);
     void* mapData();

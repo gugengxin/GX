@@ -11,6 +11,56 @@
 
 #include "GXPrefix.h"
 #include "GX3DAPI.h"
+#include "GObject.h"
+#if defined(GX_OPENGL)
+#include "GXData.h"
+#elif defined(GX_DIRECTX)
+
+#elif defined(GX_METAL)
+
+#endif
+
+
+
+
+
+#include "GXGObject.h"
+// Down can't include other h file
+
+class GBuffer : public GObject {
+    GX_GOBJECT(GBuffer);
+public:
+    
+    
+private:
+#if defined(GX_OPENGL)
+    
+#elif defined(GX_DIRECTX)
+    virtual UINT getBindFlags() = 0;
+#endif
+private:
+#if defined(GX_OPENGL)
+    GX::Data m_Data;
+#elif defined(GX_DIRECTX)
+    ID3D10Buffer* m_Buffer;
+    guint		  m_DataBytes;
+#elif defined(GX_METAL)
+    void* m_Buffer;
+#endif
+};
+
+
+// Up can't include other h file
+#include "GXGObjectUD.h"
+
+
+
+
+
+
+
+
+
 
 class GIBuffer
 {
@@ -48,6 +98,11 @@ public:
     virtual void* getBuffer() = 0;
 #endif
 };
+
+
+
+
+
 
 
 #endif /* GBuffer_h */
