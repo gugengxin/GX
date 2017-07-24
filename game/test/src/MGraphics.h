@@ -21,7 +21,7 @@ public:
     virtual void render3D(GCanvas* canvas,GContext& context);
     virtual void render2D(GCanvas* canvas,GContext& context);
 private:
-    GDataBuffer* m_Data;
+    GBuffer* m_Data;
 };
 
 

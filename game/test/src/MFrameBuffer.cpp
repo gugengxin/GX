@@ -8,6 +8,12 @@
 
 #include "MFrameBuffer.h"
 
+#pragma pack(1)
+typedef struct _MFrameBufferData {
+	GVector3 pos;
+	GVector2 tc;
+} MFrameBufferData;
+#pragma pack()
 
 GX_OBJECT_IMPLEMENT(MFrameBuffer, Module);
 
@@ -15,12 +21,9 @@ Module* MFrameBuffer::initWithGame(Game* game,GContext& context)
 {
     Module::initWithGame(game,context);
     
-    m_Data = GDataBuffer::alloc();
-    typedef struct {
-        GVector3 pos;
-        GVector2 tc;
-    } MD;
-    MD md[4];
+    m_Data = GBuffer::alloc();
+    
+	MFrameBufferData md[4];
     md[0].pos.set(-100.0f, -100.0f, 0.0f);
     md[1].pos.set(100.0f, -100.0f, 0.0f);
     md[2].pos.set(-100.0f, 100.0f, 0.0f);
@@ -29,12 +32,8 @@ Module* MFrameBuffer::initWithGame(Game* game,GContext& context)
     md[1].tc.set(1.0f, 1.0f);
     md[2].tc.set(0.0f, 0.0f);
     md[3].tc.set(1.0f, 0.0f);
-    m_Data->changeBytes(sizeof(md));
-    void* p = m_Data->map();
-    memcpy(p, &md[0], sizeof(md));
-    m_Data->unmap();
-    m_Data->setOffset(0);
-    m_Data->setStride(sizeof(md[0]));
+
+	m_Data->create(sizeof(md), GBuffer::UsageDefault, &md);
     
     
 
@@ -82,10 +81,10 @@ void MFrameBuffer::prepareTex2D(GContext& context)
             m_FB->setBlend(GX::DBlendNone);
             
             GSRTexture2D* shader=context.getSRTexture2D(false, false, GSRTexture2D::MM_None);
-            shader->draw(m_FB, m_Data, GSRTexture2D::IT_Float_Float, tex, GX_TRIANGLE_STRIP, 0, 4, NULL);
+            shader->draw(m_FB, m_Data, 0, sizeof(MFrameBufferData), GSRTexture2D::IT_Float_Float, tex, GX_TRIANGLE_STRIP, 0, 4, NULL);
             
             m_FB->setBlend(GX::DBlendSsaAddD1msa);
-            shader->draw(m_FB, m_Data, GSRTexture2D::IT_Float_Float, tex1, GX_TRIANGLE_STRIP, 0, 4, NULL);
+            shader->draw(m_FB, m_Data, 0, sizeof(MFrameBufferData), GSRTexture2D::IT_Float_Float, tex1, GX_TRIANGLE_STRIP, 0, 4, NULL);
             
             m_FB->renderEnd();
         }
@@ -105,7 +104,7 @@ void MFrameBuffer::render3D(GCanvas* canvas,GContext& context)
     canvas->rotateY(m_Angle);
     
     GSRTexture2D* shader=context.getSRTexture2D(false, true, GSRTexture2D::MM_None);
-    shader->draw(canvas, m_Data, GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
+    shader->draw(canvas, m_Data, 0, sizeof(MFrameBufferData), GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
     
     canvas->popMatrix();
 }

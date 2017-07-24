@@ -682,7 +682,6 @@ void GWindow::idle()
 
 
 #include "GXMath.h"
-#include "GDataBuffer.h"
 #include "GVector.h"
 #include "GAppBundle.h"
 

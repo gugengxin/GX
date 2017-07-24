@@ -13,36 +13,18 @@
     <Filter Include="src\context">
       <UniqueIdentifier>{44c79e99-2c2e-40f9-acc7-db7601f61583}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\obj">
+      <UniqueIdentifier>{e1d56523-488b-4cdb-930b-7b00d754976e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\shader">
+      <UniqueIdentifier>{471cafce-19c8-40e2-b920-eb29aca12a90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\buffer">
+      <UniqueIdentifier>{0299fb03-aca0-446c-b3c5-58df8196d46a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\GBaseContext.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GBuffer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GDataBuffer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GDShader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GGame.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GMShader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GOShader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GShader.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GSRGraphics.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GSRTexture2D.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GTexture.cpp">
@@ -65,9 +47,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\GAndroidEntrance.cpp">
       <Filter>src\unuse</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GImage.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GCanvas.cpp">
       <Filter>src\context</Filter>
@@ -99,42 +78,36 @@
     <ClCompile Include="..\..\src\GX3DAPI.cpp">
       <Filter>src\context</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GGraphBase.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\src\GBaseContext.cpp">
+      <Filter>src\context</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GGraphics.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="..\..\src\GSRGraphics.cpp">
+      <Filter>src\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GSRTexture2D.cpp">
+      <Filter>src\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GShader.cpp">
+      <Filter>src\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GOShader.cpp">
+      <Filter>src\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GMShader.cpp">
+      <Filter>src\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GDShader.cpp">
+      <Filter>src\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GBuffer.cpp">
+      <Filter>src\buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GIndexBuffer.cpp">
+      <Filter>src\buffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\GBaseContext.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GBuffer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GDataBuffer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GDShader.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\GGame.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GMShader.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GOShader.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GShader.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GSRGraphics.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GSRTexture2D.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GTexture.h">
@@ -144,9 +117,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GWindow.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GXContext.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GXGame.h">
@@ -178,9 +148,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GAndroidEntrance.h">
       <Filter>src\unuse</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GImage.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GCanvas.h">
       <Filter>src\context</Filter>
@@ -218,19 +185,43 @@
     <ClInclude Include="..\..\src\GX3DAPIPre.h">
       <Filter>src\context</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GGraphBase.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\src\GBaseContext.h">
+      <Filter>src\context</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\GGraphics.h">
-      <Filter>src</Filter>
+    <ClInclude Include="..\..\src\GShader.h">
+      <Filter>src\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GSRGraphics.h">
+      <Filter>src\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GSRTexture2D.h">
+      <Filter>src\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GOShader.h">
+      <Filter>src\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GMShader.h">
+      <Filter>src\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GDShader.h">
+      <Filter>src\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GXContext.h">
+      <Filter>src\context</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GBuffer.h">
+      <Filter>src\buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GIndexBuffer.h">
+      <Filter>src\buffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\GSRGraphics.gxsl">
-      <Filter>src</Filter>
+      <Filter>src\shader</Filter>
     </None>
     <None Include="..\..\src\GSRTexture2D.gxsl">
-      <Filter>src</Filter>
+      <Filter>src\shader</Filter>
     </None>
   </ItemGroup>
 </Project>

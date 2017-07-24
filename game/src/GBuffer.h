@@ -28,6 +28,9 @@
 // Down can't include other h file
 
 class GBuffer : public GObject {
+#if defined(GX_DIRECTX)
+	friend class GDShader;
+#endif
     GX_GOBJECT(GBuffer);
 public:
 	typedef enum _Usage {
@@ -36,14 +39,45 @@ public:
 		UsageDynamic,	//GPU R & CPU W
 		UsageStaging,	//GPU RW & CPU RW
 	} Usage;
+
+	class Writer {
+		friend class GBuffer;
+	private:
+		Writer(GBuffer* buffer);
+		~Writer();
+	private:
+		void start(guint offset);
+	public:
+		Writer& write(const void* data, guint bytes);
+		void end();
+	private:
+		GBuffer* m_Buffer;
+		void*	 m_MapData;	
+	};
 public:
 	bool create(guint toSize,Usage usage,const void* pInitData);
 	void destroy();
-private:
-#if defined(GX_OPENGL)
-    
+	Writer wirter(guint offset=0);
+protected:
+	void* map();
+	void unmap();
+#ifdef GX_OPENGL
+	virtual void readyUse() = 0;
+	virtual const GLvoid * getData() = 0;
+	virtual void doneUse() = 0;
+
+	inline const GLvoid* getData(gint offset) {
+		return (const GLvoid*)(((guint8*)getData()) + getOffset() + offset);
+	}
 #elif defined(GX_DIRECTX)
-    virtual UINT getBindFlags() = 0;
+	ID3D10Buffer** getBufferPtr();
+	ID3D10Buffer*  getBuffer();
+#elif defined(GX_METAL)
+	virtual void* getBuffer() = 0;
+#endif
+private:
+#if defined(GX_DIRECTX)
+    virtual UINT getBindFlags();
 #endif
 private:
 #if defined(GX_OPENGL)
@@ -58,57 +92,5 @@ private:
 
 // Up can't include other h file
 #include "GXGObjectUD.h"
-
-
-
-
-
-
-
-
-
-
-class GIBuffer
-{
-public:
-	virtual guint getOffset() const = 0;
-	virtual guint getStride() const = 0;
-#ifdef GX_OPENGL
-	virtual void readyUse() = 0;
-	virtual const GLvoid * getData() = 0;
-	virtual void doneUse() = 0;
-
-	inline const GLvoid* getData(gint offset) {
-		return (const GLvoid*)(((guint8*)getData()) + getOffset() + offset);
-	}
-#elif defined(GX_DIRECTX)
-	virtual ID3D10Buffer** getBufferPtr() = 0;
-	virtual ID3D10Buffer*  getBuffer() = 0;
-#elif defined(GX_METAL)
-    virtual void* getBuffer() = 0;
-#endif
-};
-
-class GIIndexBuffer
-{
-public:
-	virtual guint getFormat() const = 0;
-#ifdef GX_OPENGL
-	virtual void readyUse() = 0;
-	virtual const GLvoid * getData() = 0;
-	virtual void doneUse() = 0;
-#elif defined(GX_DIRECTX)
-	virtual ID3D10Buffer** getBufferPtr() = 0;
-	virtual ID3D10Buffer*  getBuffer() = 0;
-#elif defined(GX_DIRECTX)
-    virtual void* getBuffer() = 0;
-#endif
-};
-
-
-
-
-
-
 
 #endif /* GBuffer_h */

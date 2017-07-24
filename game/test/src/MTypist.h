@@ -20,7 +20,7 @@ public:
     virtual void render2D(GCanvas* canvas,GContext& context);
 private:
     float m_Angle;
-    GDataBuffer* m_Data;
+    GBuffer* m_Data;
     GTexture2D* m_Tex2D;
 };
 

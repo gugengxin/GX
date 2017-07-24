@@ -44,11 +44,12 @@ public:
         return (MaskMode)getIndex2();
     }
     
-    void draw(GCanvas* canvas,
-              GIBuffer* buffer,InputType inputType,
-              GTexture2D* texBase,
-              gint mode,gint first,gint count,
-              GTexture2D* texMask);
+	void draw(GCanvas* canvas,
+		GBuffer* buffer, guint bufOffset, guint bufStride,
+		InputType inputType,
+		GTexture2D* texBase,
+		gint mode, gint first, gint count,
+		GTexture2D* texMask);
 
 private:
     GSRTexture2D(GContext* ctx,bool alphaOnly,bool colorMul,MaskMode mm);

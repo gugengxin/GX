@@ -250,7 +250,7 @@ void GSRGraphics::createUniformBuffer(void* device)
 #endif
 
 
-void GSRGraphics::draw(GCanvas* canvas, GIBuffer* buffer, InputType inputType, gint mode, gint first, gint count)
+void GSRGraphics::draw(GCanvas* canvas, GBuffer* buffer, guint bufOffset, guint bufStride, InputType inputType, gint mode, gint first, gint count)
 {
 #if defined(GX_OPENGL)
     
@@ -273,9 +273,9 @@ void GSRGraphics::draw(GCanvas* canvas, GIBuffer* buffer, InputType inputType, g
 
 	ID3D10Device* device = GX::direct3DDevice();
 
-	UINT offset = (UINT)buffer->getOffset();
-	UINT stride = (UINT)buffer->getStride();
-	device->IASetVertexBuffers(0, 1, buffer->getBufferPtr(), &stride, &offset);
+	UINT offset = (UINT)bufOffset;
+	UINT stride = (UINT)bufStride;
+	IASetVertexBuffers(device, 0, 1, buffer, &offset, &stride);
 	device->IASetPrimitiveTopology((D3D10_PRIMITIVE_TOPOLOGY)mode);
 	device->IASetInputLayout(m_Layouts[inputType]);
 

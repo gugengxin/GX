@@ -6,6 +6,7 @@
 #if defined(GX_DIRECTX)
 #include "GShader.h"
 #include "GXDirectX.h"
+#include "GBuffer.h"
 
 
 class GDShader : public GShader
@@ -19,6 +20,7 @@ protected:
 	bool load(const gchar* srcVS, const gchar* srcFP, const Macro* macro);
 	bool setInputLayout(gint idx, ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength, D3D10_INPUT_ELEMENT_DESC* elements, UINT numElements);
 	bool setConstantBuffer(gint idx, ID3D10Device* device, const D3D10_BUFFER_DESC *pDesc, const D3D10_SUBRESOURCE_DATA *pInitialData);
+	void IASetVertexBuffers(ID3D10Device* device, UINT startSlot, UINT numBuffers, GBuffer* buffer, const UINT *pOffsets, const UINT *pStrides);
 
 	inline ID3D10VertexShader* getVertexShader() {
 		return m_VertexShader;

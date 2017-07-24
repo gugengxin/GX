@@ -11,7 +11,6 @@
 
 #include "GXGObject.h"
 
-
 GX_GOBJECT_IMPLEMENT(GBuffer, GObject);
 
 GBuffer::GBuffer()
@@ -56,14 +55,12 @@ bool GBuffer::create(guint toSize, Usage usage, const void* pInitData)
 			return false;
 		}
 		bd.Usage = D3D10_USAGE_DEFAULT;
-		bd.CPUAccessFlags = 0;
 		break;
 	case UsageImmutable:
 		if (!pInitData) {
 			return false;
 		}
 		bd.Usage = D3D10_USAGE_IMMUTABLE;
-		bd.CPUAccessFlags = 0;
 		break;
 	case UsageDynamic:
 		bd.Usage = D3D10_USAGE_DYNAMIC;
@@ -106,4 +103,93 @@ void GBuffer::destroy()
 #elif defined(GX_METAL)
 
 #endif
+}
+
+GBuffer::Writer GBuffer::wirter(guint offset)
+{
+	Writer res(this);
+	res.start(offset);
+	return res;
+}
+
+void * GBuffer::map()
+{
+#ifdef GX_OPENGL
+	return m_Data.getPtr();
+#elif defined(GX_DIRECTX)
+	if (m_Buffer) {
+		void* res = NULL;
+		if (SUCCEEDED(m_Buffer->Map(D3D10_MAP_WRITE_DISCARD, 0, &res))) {
+			return res;
+		}
+	}
+	return NULL;
+#elif defined(GX_METAL)
+	return[GX_CAST_R(id<MTLBuffer>, m_Buffer) contents];
+#endif
+}
+
+void GBuffer::unmap()
+{
+#ifdef GX_OPENGL
+
+#elif defined(GX_DIRECTX)
+	if (m_Buffer) {
+		m_Buffer->Unmap();
+	}
+#elif defined(GX_METAL)
+
+#endif
+}
+
+
+
+#if defined(GX_DIRECTX)
+
+ID3D10Buffer** GBuffer::getBufferPtr()
+{
+	return &m_Buffer;
+}
+ID3D10Buffer*  GBuffer::getBuffer()
+{
+	return m_Buffer;
+}
+
+UINT GBuffer::getBindFlags()
+{
+	return D3D10_BIND_VERTEX_BUFFER;
+}
+#endif
+
+
+
+GBuffer::Writer::Writer(GBuffer* buffer)
+{
+	m_Buffer = buffer;
+	m_MapData = NULL;
+}
+
+GBuffer::Writer::~Writer()
+{
+	if (m_MapData) {
+		end();
+	}
+}
+
+void GBuffer::Writer::start(guint offset)
+{
+	m_MapData = GX_CAST_R(guint8*, m_Buffer->map())+offset;
+}
+
+GBuffer::Writer& GBuffer::Writer::write(const void * data, guint bytes)
+{
+	memcpy(m_MapData, data, bytes);
+	m_MapData= GX_CAST_R(guint8*, m_MapData) + bytes;
+	return *this;
+}
+
+void GBuffer::Writer::end()
+{
+	m_Buffer->unmap();
+	m_MapData = NULL;
 }

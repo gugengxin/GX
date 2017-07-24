@@ -21,7 +21,7 @@ public:
     virtual void render3D(GCanvas* canvas,GContext& context);
     virtual void render2D(GCanvas* canvas,GContext& context);
 private:
-    GImage* m_Image;
+    //GImage* m_Image;
 };
 
 #endif /* MImage_h */

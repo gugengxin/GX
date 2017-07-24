@@ -32,10 +32,10 @@ public:
         friend class GString;
     private:
         Formater(GString* str, gint cursor, gint cursorEnd);
-        inline GString* getString() {
+        inline GString* getString() const {
             return m_String;
         }
-        inline gint getCursor() {
+        inline gint getCursor() const {
             return m_Cursor;
         }
         bool moveCursor();

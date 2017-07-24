@@ -15,8 +15,8 @@ Module* MImage::initWithGame(Game* game,GContext& context)
 {
     Module::initWithGame(game,context);
     
-    m_Image=GImage::alloc();
-    m_Image->setTexture(context.loadTexture2D(GS::chars("png-0029.png"), GDib::PNG, NULL));
+    //m_Image=GImage::alloc();
+    //m_Image->setTexture(context.loadTexture2D(GS::chars("png-0029.png"), GDib::PNG, NULL));
 //    m_Image->changeDataCount(4);
 //    m_Image->setDataPT(0, GVector2(-100.0f,100.0f), GVector2());
 //    md[0].pos.set(-100.0f, -100.0f, 0.0f);
@@ -34,7 +34,7 @@ Module* MImage::initWithGame(Game* game,GContext& context)
 
 void MImage::dealloc()
 {
-    GO::release(m_Image);
+    //GO::release(m_Image);
     Module::dealloc();
 }
 
@@ -46,7 +46,7 @@ void MImage::render3D(GCanvas* canvas,GContext& context)
 {
     canvas->pushMatrix();
     
-    m_Image->draw(context, canvas);
+    //m_Image->draw(context, canvas);
     
     canvas->popMatrix();
 }

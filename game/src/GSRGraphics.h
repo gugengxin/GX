@@ -23,7 +23,7 @@ public:
 		IT_Float,
 	} InputType;
 public:
-	void draw(GCanvas* canvas, GIBuffer* buffer, InputType inputType, gint mode, gint first, gint count);
+	void draw(GCanvas* canvas, GBuffer* buffer, guint bufOffset, guint bufStride, InputType inputType, gint mode, gint first, gint count);
 
 private:
 	GSRGraphics(GContext* ctx,ID srID);

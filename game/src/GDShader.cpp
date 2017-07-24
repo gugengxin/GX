@@ -134,6 +134,11 @@ bool GDShader::setConstantBuffer(gint idx, ID3D10Device* device, const D3D10_BUF
 	return true;
 }
 
+void GDShader::IASetVertexBuffers(ID3D10Device * device, UINT startSlot, UINT numBuffers, GBuffer * buffer, const UINT * pOffsets, const UINT * pStrides)
+{
+	device->IASetVertexBuffers(startSlot, numBuffers, buffer->getBufferPtr(), pStrides, pOffsets);
+}
+
 
 
 #endif

@@ -373,10 +373,11 @@ void GSRTexture2D::createUniformBuffer(void* device)
 
 
 void GSRTexture2D::draw(GCanvas* canvas,
-                        GIBuffer* buffer,GSRTexture2D::InputType inputType,
-                        GTexture2D* texBase,
-                        gint mode,gint first,gint count,
-                        GTexture2D* texMask)
+	GBuffer* buffer, guint bufOffset, guint bufStride,
+	InputType inputType,
+	GTexture2D* texBase,
+	gint mode, gint first, gint count,
+	GTexture2D* texMask)
 {
 #if defined(GX_OPENGL)
 
@@ -418,9 +419,9 @@ void GSRTexture2D::draw(GCanvas* canvas,
 
 	ID3D10Device* device = GX::direct3DDevice();
 
-	UINT offset = (UINT)buffer->getOffset();
-	UINT stride = (UINT)buffer->getStride();
-	device->IASetVertexBuffers(0, 1, buffer->getBufferPtr(), &stride, &offset);
+	UINT offset = (UINT)bufOffset;
+	UINT stride = (UINT)bufStride;
+	IASetVertexBuffers(device, 0, 1, buffer, &offset, &stride);
 	device->IASetPrimitiveTopology((D3D10_PRIMITIVE_TOPOLOGY)mode);
 	device->IASetInputLayout(m_Layouts[inputType]);
 

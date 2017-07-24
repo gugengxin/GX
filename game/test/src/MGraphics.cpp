@@ -8,18 +8,22 @@
 
 #include "MGraphics.h"
 
+#pragma pack(1)
+typedef struct _MGraphicsData {
+	GVector3 pos;
+	GColor4 clr;
+} MGraphicsData;
+#pragma pack()
+
 GX_OBJECT_IMPLEMENT(MGraphics, Module);
 
 Module* MGraphics::initWithGame(Game* game,GContext& context)
 {
     Module::initWithGame(game,context);
     
-    m_Data = GDataBuffer::alloc();
-    typedef struct {
-        GVector3 pos;
-        GColor4 clr;
-    } MD;
-    MD md[4];
+    m_Data = GBuffer::alloc();
+    
+	MGraphicsData md[4];
     md[0].pos.set(-100.0f, -100.0f, 0.0f);
     md[1].pos.set(100.0f, -100.0f, 0.0f);
     md[2].pos.set(-100.0f, 100.0f, 0.0f);
@@ -28,12 +32,8 @@ Module* MGraphics::initWithGame(Game* game,GContext& context)
     md[1].clr.set(0, 0xFF, 0, 0xFF);
     md[2].clr.set(0, 0, 0xFF, 0xFF);
     md[3].clr.set(0xFF, 0xFF, 0xFF, 0xFF);
-    m_Data->changeBytes(sizeof(md));
-    void* p = m_Data->map();
-    memcpy(p, &md[0], sizeof(md));
-    m_Data->unmap();
-    m_Data->setOffset(0);
-    m_Data->setStride(sizeof(md[0]));
+    
+	m_Data->create(sizeof(md), GBuffer::UsageDefault, &md);
     
     return this;
 }
@@ -52,7 +52,7 @@ void MGraphics::render3D(GCanvas* canvas,GContext& context)
 {
     GSRGraphics* graph = context.getSRGraphics(GSRGraphics::ID_CAndCM);
     canvas->setColorMul(1, 1, 1, 1.0f);
-    graph->draw(canvas, m_Data, GSRGraphics::IT_Float, GX_TRIANGLE_STRIP, 0, 4);
+    graph->draw(canvas, m_Data, 0, sizeof(MGraphicsData), GSRGraphics::IT_Float, GX_TRIANGLE_STRIP, 0, 4);
 }
 void MGraphics::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 {

@@ -22,7 +22,7 @@ private:
     void prepareTex2D(GContext& context);
 private:
     float m_Angle;
-    GDataBuffer* m_Data;
+    GBuffer* m_Data;
     GTexture2D* m_Tex2D;
     GFrameBuffer* m_FB;
 };

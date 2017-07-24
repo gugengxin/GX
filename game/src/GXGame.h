@@ -15,8 +15,7 @@
 #include "GWindow.h"
 #include "GGame.h"
 
-#include "GDataBuffer.h"
-#include "GImage.h"
+#include "GBuffer.h"
 
 
 #endif /* GX_h */

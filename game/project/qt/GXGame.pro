@@ -33,10 +33,9 @@ SOURCES += \
 	../../src/GContext.cpp\
 	#../../src/GD3DContext.cpp\
 	#../../src/GDShader.cpp\
-	../../src/GDataBuffer.cpp\
 	../../src/GFrameBuffer.cpp\
 	../../src/GGame.cpp\
-	../../src/GImage.cpp\
+	../../src/GIndexBuffer.cpp\
 	#../../src/GMShader.cpp\
 	#../../src/GMTLContext.cpp\
 	../../src/GOGLContext.cpp\
@@ -65,10 +64,9 @@ HEADERS += \
 	../../src/GContext.h\
 	../../src/GD3DContext.h\
 	../../src/GDShader.h\
-	../../src/GDataBuffer.h\
 	../../src/GFrameBuffer.h\
 	../../src/GGame.h\
-	../../src/GImage.h\
+	../../src/GIndexBuffer.h\
 	../../src/GL/eglew.h\
 	../../src/GL/glew.h\
 	../../src/GL/glxew.h\
