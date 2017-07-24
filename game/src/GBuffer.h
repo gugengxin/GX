@@ -30,8 +30,15 @@
 class GBuffer : public GObject {
     GX_GOBJECT(GBuffer);
 public:
-    
-    
+	typedef enum _Usage {
+		UsageDefault,	//GPU RW
+		UsageImmutable,	//GPU R
+		UsageDynamic,	//GPU R & CPU W
+		UsageStaging,	//GPU RW & CPU RW
+	} Usage;
+public:
+	bool create(guint toSize,Usage usage,const void* pInitData);
+	void destroy();
 private:
 #if defined(GX_OPENGL)
     
@@ -43,7 +50,6 @@ private:
     GX::Data m_Data;
 #elif defined(GX_DIRECTX)
     ID3D10Buffer* m_Buffer;
-    guint		  m_DataBytes;
 #elif defined(GX_METAL)
     void* m_Buffer;
 #endif
