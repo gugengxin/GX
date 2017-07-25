@@ -58,6 +58,15 @@ private:
 #if defined(GX_OPENGL)
     virtual void bindAttribLocations();
     virtual void bindUniformLocations();
+    
+    typedef void(*InputBeginFunction)(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm, GBuffer* buffer, guint offset, guint stride);
+    typedef void(*InputEndFunction)(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm);
+    static void _InputBFunFloat_UShort(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm, GBuffer* buffer, guint offset, guint stride);
+    static void _InputEFunFloat_UShort(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm);
+    static void _InputBFunFloat_Float(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm, GBuffer* buffer, guint offset, guint stride);
+    static void _InputEFunFloat_Float(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm);
+    static InputBeginFunction g_InputBFuns[];
+    static InputEndFunction g_InputEFuns[];
 #elif defined(GX_DIRECTX)
     virtual bool createInputLayout(ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength);
     virtual bool createConstantBuffer(ID3D10Device* device);

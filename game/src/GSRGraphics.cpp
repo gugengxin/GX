@@ -104,24 +104,21 @@ void GSRGraphics::bindUniformLocations()
 }
 
 
-typedef void(*InputBeginFunction)(gint idx, GIBuffer* buffer);
-typedef void(*InputEndFunction)(gint idx);
-
-static void _InputBFunFloat(gint idx, GIBuffer* buffer)
+void GSRGraphics::_InputBFunFloat(gint idx, GBuffer* buffer, guint offset, guint stride)
 {
-	buffer->readyUse();
+    readyUseBuffer(buffer);
 
     GX_glEnableVertexAttribArray(A_position);
-    GX_glVertexAttribPointer(A_position, 3, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(0));
+    GX_glVertexAttribPointer(A_position, 3, GL_FLOAT, GL_FALSE, (GLsizei)stride, getBufferData(buffer, offset));
 
 	if (idx != GSRGraphics::ID_ColorMul) {
         GX_glEnableVertexAttribArray(A_color);
-        GX_glVertexAttribPointer(A_color, 4, GL_UNSIGNED_BYTE, GL_TRUE, (GLsizei)buffer->getStride(), buffer->getData(3 * sizeof(float)));
+        GX_glVertexAttribPointer(A_color, 4, GL_UNSIGNED_BYTE, GL_TRUE, (GLsizei)stride, getBufferData(buffer, offset+3 * sizeof(float)));
 	}
 
-	buffer->doneUse();
+    doneUseBuffer(buffer);
 }
-static void _InputEFunFloat(gint idx)
+void GSRGraphics::_InputEFunFloat(gint idx)
 {
     GX_glDisableVertexAttribArray(A_position);
 	if (idx != GSRGraphics::ID_ColorMul) {
@@ -129,10 +126,10 @@ static void _InputEFunFloat(gint idx)
 	}
 }
 
-static InputBeginFunction g_InputBFuns[] = {
+GSRGraphics::InputBeginFunction GSRGraphics::g_InputBFuns[] = {
 	_InputBFunFloat,
 };
-static InputEndFunction g_InputEFuns[] = {
+GSRGraphics::InputEndFunction GSRGraphics::g_InputEFuns[] = {
 	_InputEFunFloat,
 };
 
@@ -256,7 +253,7 @@ void GSRGraphics::draw(GCanvas* canvas, GBuffer* buffer, guint bufOffset, guint 
     
     useProgram();
     
-    g_InputBFuns[inputType](getIndex0(), buffer);
+    g_InputBFuns[inputType](getIndex0(), buffer, bufOffset, bufStride);
     
     setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)canvas->updateMVPMatrix());
 
@@ -309,7 +306,7 @@ void GSRGraphics::draw(GCanvas* canvas, GBuffer* buffer, guint bufOffset, guint 
     
     [rce setRenderPipelineState:GX_CAST_R(id<MTLRenderPipelineState>,getPLStates()[inputType*GX::_DBlendCount+canvas->metalBlendIndex()])];
     
-    [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, buffer->getBuffer()) offset:buffer->getOffset() atIndex:0];
+    setVertexBuffer(rce, buffer, bufOffset, 0);
     
     void* pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) contents];
     const float* mvp = canvas->updateMVPMatrix();

@@ -32,6 +32,13 @@ private:
 #if defined(GX_OPENGL)
 	virtual void bindAttribLocations();
 	virtual void bindUniformLocations();
+    
+    typedef void(*InputBeginFunction)(gint idx, GBuffer* buffer, guint offset, guint stride);
+    typedef void(*InputEndFunction)(gint idx);
+    static void _InputBFunFloat(gint idx, GBuffer* buffer, guint offset, guint stride);
+    static void _InputEFunFloat(gint idx);
+    static InputBeginFunction g_InputBFuns[];
+    static InputEndFunction g_InputEFuns[];
 #elif defined(GX_DIRECTX)
     virtual bool createInputLayout(ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength);
     virtual bool createConstantBuffer(ID3D10Device* device);

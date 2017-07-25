@@ -151,29 +151,26 @@ void GSRTexture2D::bindUniformLocations()
 }
 
 
-typedef void(*InputBeginFunction)(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm, GIBuffer* buffer);
-typedef void(*InputEndFunction)(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm);
-
-static void _InputBFunFloat_UShort(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm, GIBuffer* buffer)
+void GSRTexture2D::_InputBFunFloat_UShort(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm, GBuffer* buffer, guint offset, guint stride)
 {
     GX_UNUSED(alphaOnly);
     GX_UNUSED(colorMul);
 
-    buffer->readyUse();
+    readyUseBuffer(buffer);
 
     GX_glEnableVertexAttribArray(A_position);
-    GX_glVertexAttribPointer(A_position, 3, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(0));
+    GX_glVertexAttribPointer(A_position, 3, GL_FLOAT, GL_FALSE, (GLsizei)stride, getBufferData(buffer, offset));
     GX_glEnableVertexAttribArray(A_texCoord);
-    GX_glVertexAttribPointer(A_texCoord, 2, GL_UNSIGNED_SHORT, GL_TRUE, (GLsizei)buffer->getStride(), buffer->getData(3*sizeof(float)));
+    GX_glVertexAttribPointer(A_texCoord, 2, GL_UNSIGNED_SHORT, GL_TRUE, (GLsizei)stride, getBufferData(buffer, offset+3*sizeof(float)));
 
     if (mm!=GSRTexture2D::MM_None) {
         GX_glEnableVertexAttribArray(A_texCoordMask);
-        GX_glVertexAttribPointer(A_texCoordMask, 2, GL_UNSIGNED_SHORT, GL_TRUE, (GLsizei)buffer->getStride(), buffer->getData(3*sizeof(float)+2*sizeof(unsigned short)));
+        GX_glVertexAttribPointer(A_texCoordMask, 2, GL_UNSIGNED_SHORT, GL_TRUE, (GLsizei)stride, getBufferData(buffer, offset+3*sizeof(float)+2*sizeof(unsigned short)));
     }
 
-    buffer->doneUse();
+    doneUseBuffer(buffer);
 }
-static void _InputEFunFloat_UShort(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm)
+void GSRTexture2D::_InputEFunFloat_UShort(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm)
 {
     GX_UNUSED(alphaOnly);
     GX_UNUSED(colorMul);
@@ -185,26 +182,26 @@ static void _InputEFunFloat_UShort(bool alphaOnly,bool colorMul,GSRTexture2D::Ma
     }
 }
 
-static void _InputBFunFloat_Float(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm, GIBuffer* buffer)
+void GSRTexture2D::_InputBFunFloat_Float(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm, GBuffer* buffer, guint offset, guint stride)
 {
     GX_UNUSED(alphaOnly);
     GX_UNUSED(colorMul);
 
-    buffer->readyUse();
+    readyUseBuffer(buffer);
 
     GX_glEnableVertexAttribArray(A_position);
-    GX_glVertexAttribPointer(A_position, 3, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(0));
+    GX_glVertexAttribPointer(A_position, 3, GL_FLOAT, GL_FALSE, (GLsizei)stride, getBufferData(buffer, offset));
     GX_glEnableVertexAttribArray(A_texCoord);
-    GX_glVertexAttribPointer(A_texCoord, 2, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(3*sizeof(float)));
+    GX_glVertexAttribPointer(A_texCoord, 2, GL_FLOAT, GL_FALSE, (GLsizei)stride, getBufferData(buffer, offset+3*sizeof(float)));
 
     if (mm!=GSRTexture2D::MM_None) {
         GX_glEnableVertexAttribArray(A_texCoordMask);
-        GX_glVertexAttribPointer(A_texCoordMask, 2, GL_FLOAT, GL_FALSE, (GLsizei)buffer->getStride(), buffer->getData(3*sizeof(float)+2*sizeof(float)));
+        GX_glVertexAttribPointer(A_texCoordMask, 2, GL_FLOAT, GL_FALSE, (GLsizei)stride, getBufferData(buffer, offset+3*sizeof(float)+2*sizeof(float)));
     }
 
-    buffer->doneUse();
+    doneUseBuffer(buffer);
 }
-static void _InputEFunFloat_Float(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm)
+void GSRTexture2D::_InputEFunFloat_Float(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm)
 {
     GX_UNUSED(alphaOnly);
     GX_UNUSED(colorMul);
@@ -216,11 +213,11 @@ static void _InputEFunFloat_Float(bool alphaOnly,bool colorMul,GSRTexture2D::Mas
     }
 }
 
-static InputBeginFunction g_InputBFuns[] = {
+GSRTexture2D::InputBeginFunction GSRTexture2D::g_InputBFuns[] = {
     _InputBFunFloat_UShort,
     _InputBFunFloat_Float,
 };
-static InputEndFunction g_InputEFuns[] = {
+GSRTexture2D::InputEndFunction GSRTexture2D::g_InputEFuns[] = {
     _InputEFunFloat_UShort,
     _InputEFunFloat_Float,
 };
@@ -383,7 +380,7 @@ void GSRTexture2D::draw(GCanvas* canvas,
 
     useProgram();
 
-    g_InputBFuns[inputType](isAlphaOnly(),isColorMul(),getMaskMode(), buffer);
+    g_InputBFuns[inputType](isAlphaOnly(),isColorMul(),getMaskMode(), buffer, bufOffset, bufStride);
 
     setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)canvas->updateMVPMatrix());
     if (isColorMul()) {
@@ -463,7 +460,7 @@ void GSRTexture2D::draw(GCanvas* canvas,
     
     [rce setRenderPipelineState:GX_CAST_R(id<MTLRenderPipelineState>,getPLStates()[inputType*GX::_DBlendCount+canvas->metalBlendIndex()])];
     
-    [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, buffer->getBuffer()) offset:buffer->getOffset() atIndex:0];
+    setVertexBuffer(rce, buffer, bufOffset, 0);
     
     void* pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) contents];
     const float* mvp = canvas->updateMVPMatrix();

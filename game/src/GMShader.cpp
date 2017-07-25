@@ -139,5 +139,12 @@ void GMShader::setFragmentTexture(void* rce,GTexture* tex,guint idx)
                                                                  atIndex:idx];
 }
 
+void GMShader::setVertexBuffer(void* rce,GBuffer* buffer,guint offset,guint index)
+{
+    [GX_CAST_R(id<MTLRenderCommandEncoder>, rce) setVertexBuffer:GX_CAST_R(id<MTLBuffer>, buffer->getBuffer())
+                                                          offset:offset
+                                                         atIndex:index];
+}
+
 
 #endif

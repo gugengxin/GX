@@ -28,8 +28,12 @@
 // Down can't include other h file
 
 class GBuffer : public GObject {
-#if defined(GX_DIRECTX)
+#if defined(GX_OPENGL)
+    friend class GOShader;
+#elif defined(GX_DIRECTX)
 	friend class GDShader;
+#elif defined(GX_METAL)
+    friend class GMShader;
 #endif
     GX_GOBJECT(GBuffer);
 public:
@@ -62,18 +66,18 @@ protected:
 	void* map();
 	void unmap();
 #ifdef GX_OPENGL
-	virtual void readyUse() = 0;
-	virtual const GLvoid * getData() = 0;
-	virtual void doneUse() = 0;
+	void readyUse();
+	const GLvoid * getData();
+	void doneUse();
 
-	inline const GLvoid* getData(gint offset) {
-		return (const GLvoid*)(((guint8*)getData()) + getOffset() + offset);
+	inline const GLvoid* getData(guint offset) {
+        return GX_CAST_R(guint8*,GX_CAST_C(GLvoid*, getData()))+offset;
 	}
 #elif defined(GX_DIRECTX)
 	ID3D10Buffer** getBufferPtr();
 	ID3D10Buffer*  getBuffer();
 #elif defined(GX_METAL)
-	virtual void* getBuffer() = 0;
+	void* getBuffer();
 #endif
 private:
 #if defined(GX_DIRECTX)

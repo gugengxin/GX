@@ -14,6 +14,7 @@
 #if defined(GX_METAL)
 #include "GXMetal.h"
 #include "GShader.h"
+#include "GBuffer.h"
 
 class GTexture;
 
@@ -24,17 +25,16 @@ protected:
     virtual ~GMShader();
 public:
     bool load(const gchar* srcVS, const gchar* srcFP, const Macro* macro);
-    
-protected:
-    bool setUniformBuffer(gint idx,void* device,guint bufLen);
-    void setFragmentTexture(void* rce,GTexture* tex,guint idx);
 private:
     virtual gint getPLStateCount() = 0;
     virtual void** getPLStates() = 0;
     virtual void** getUBuffers() = 0;
     virtual void deployPLState(gint inputType,void* plStateDescriptor) = 0;
     virtual void createUniformBuffer(void* device) = 0;
-
+protected:
+    bool setUniformBuffer(gint idx,void* device,guint bufLen);
+    void setFragmentTexture(void* rce,GTexture* tex,guint idx);
+    void setVertexBuffer(void* rce,GBuffer* buffer,guint offset,guint index);
 private:
     void* m_Library;
 };

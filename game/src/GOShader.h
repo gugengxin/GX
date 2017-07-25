@@ -7,6 +7,7 @@
 #if defined(GX_OPENGL)
 #include "GShader.h"
 #include "GXOpenGL.h"
+#include "GBuffer.h"
 
 
 class GOShader : public GShader
@@ -16,7 +17,7 @@ protected:
 	virtual ~GOShader();
 
 	bool load(const gchar* srcVS, const gchar* srcFP, const Macro* macro);
-
+protected:
 	inline void setAttribLocation(GLuint index, const GLchar* name) {
         GX_glBindAttribLocation(m_Program, index, name);
 	}
@@ -87,6 +88,11 @@ protected:
 	inline void setUniformMatrix4fv(int index, GLsizei count, GLboolean transpose, const GLfloat* value) {
         GX_glUniformMatrix4fv(getUs()[index], count, transpose, value);
 	}
+    
+    static void readyUseBuffer(GBuffer* buffer);
+    static const GLvoid* getBufferData(GBuffer* buffer,guint offset);
+    static void doneUseBuffer(GBuffer* buffer);
+    
 private:
 	virtual GLint* getUs() = 0;
 	virtual void  bindAttribLocations() = 0;

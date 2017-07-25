@@ -1,4 +1,4 @@
-﻿//
+//
 //  GBuffer.cpp
 //  GX
 //
@@ -20,7 +20,7 @@ GBuffer::GBuffer()
 #elif defined(GX_DIRECTX)
 	m_Buffer = NULL;
 #elif defined(GX_METAL)
-
+    m_Buffer = NULL;
 #endif
 }
 
@@ -33,14 +33,20 @@ GBuffer::~GBuffer()
 		m_Buffer->Release();
 	}
 #elif defined(GX_METAL)
-
+    [GX_CAST_R(id,m_Buffer) release];
 #endif
 }
 
 bool GBuffer::create(guint toSize, Usage usage, const void* pInitData)
 {
 #ifdef GX_OPENGL
-
+    if (m_Data.changeBytes(toSize)) {
+        if (pInitData) {
+            memcpy(m_Data.getPtr(), pInitData, toSize);
+        }
+        return true;
+    }
+    return false;
 #elif defined(GX_DIRECTX)
 	ID3D10Device* device = GX::direct3DDevice();
 
@@ -87,6 +93,38 @@ bool GBuffer::create(guint toSize, Usage usage, const void* pInitData)
 	m_Buffer = bufNew;
 	return true;
 #elif defined(GX_METAL)
+    
+    MTLResourceOptions ro=0;
+    switch (usage)
+    {
+        case UsageDefault:
+        case UsageImmutable:
+        default:
+            if (!pInitData) {
+                return false;
+            }
+            ro=MTLResourceCPUCacheModeDefaultCache;
+            break;
+        case UsageDynamic:
+            ro=MTLResourceCPUCacheModeWriteCombined;
+            break;
+        case UsageStaging:
+            break;
+    }
+    
+    id<MTLBuffer> bufNew;
+    if (pInitData) {
+        bufNew=[GX::metalDevice() newBufferWithBytes:pInitData length:toSize options:ro];
+    }
+    else {
+        bufNew=[GX::metalDevice() newBufferWithLength:toSize options:ro];
+    }
+    if (!bufNew) {
+        return false;
+    }
+    [GX_CAST_R(id<MTLBuffer>, m_Buffer) release];
+    m_Buffer=[bufNew retain];
+    return true;
 
 #endif
 }
@@ -94,14 +132,15 @@ bool GBuffer::create(guint toSize, Usage usage, const void* pInitData)
 void GBuffer::destroy()
 {
 #ifdef GX_OPENGL
-
+    m_Data.freeSelf();
 #elif defined(GX_DIRECTX)
 	if (m_Buffer) {
 		m_Buffer->Release();
 		m_Buffer = NULL;
 	}
 #elif defined(GX_METAL)
-
+    [GX_CAST_R(id,m_Buffer) release];
+    m_Buffer = NULL;
 #endif
 }
 
@@ -112,7 +151,7 @@ GBuffer::Writer GBuffer::wirter(guint offset)
 	return res;
 }
 
-void * GBuffer::map()
+void* GBuffer::map()
 {
 #ifdef GX_OPENGL
 	return m_Data.getPtr();
@@ -143,8 +182,22 @@ void GBuffer::unmap()
 }
 
 
+#if defined(GX_OPENGL)
 
-#if defined(GX_DIRECTX)
+void GBuffer::readyUse()
+{
+    
+}
+const GLvoid * GBuffer::getData()
+{
+    return m_Data.getPtr();
+}
+void GBuffer::doneUse()
+{
+    
+}
+
+#elif defined(GX_DIRECTX)
 
 ID3D10Buffer** GBuffer::getBufferPtr()
 {
@@ -159,6 +212,14 @@ UINT GBuffer::getBindFlags()
 {
 	return D3D10_BIND_VERTEX_BUFFER;
 }
+
+#elif defined(GX_METAL)
+
+void* GBuffer::getBuffer()
+{
+    return m_Buffer;
+}
+
 #endif
 
 

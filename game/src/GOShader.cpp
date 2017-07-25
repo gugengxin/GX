@@ -183,6 +183,19 @@ bool GOShader::validateProgram(GLuint prog)
 	return true;
 }
 
+void GOShader::readyUseBuffer(GBuffer* buffer)
+{
+    buffer->readyUse();
+}
+const GLvoid* GOShader::getBufferData(GBuffer* buffer,guint offset)
+{
+    return buffer->getData(offset);
+}
+void GOShader::doneUseBuffer(GBuffer* buffer)
+{
+    buffer->doneUse();
+}
+
 
 
 #endif
