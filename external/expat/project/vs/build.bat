@@ -32,7 +32,7 @@ call %GX_ROOT%\bin\vc.bat
 :BUILD_X86
 mkdir %PROJECT_ROOT%\build
 pushd %PROJECT_ROOT%\build
-cmake -G"Visual Studio 14 2015" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_CPP_FLAGS="-DXML_UNICODE" %SRC_ROOT%
+cmake -G"Visual Studio 14 2015" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_CXX_FLAGS="-DXML_UNICODE" %SRC_ROOT%
 %GX_TE% -i expat.vcxproj -o expat.vcxproj -rs "<AssemblerListingLocation>Debug/</AssemblerListingLocation>" -rd "<AssemblerListingLocation>Debug/</AssemblerListingLocation><ProgramDataBaseFileName>$(OutDir)$(TargetName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>"
 msbuild expat.vcxproj /t:Rebuild /p:Configuration=Debug,OutDir=..\..\..\lib\win\vc\x86\Debug\
 msbuild expat.vcxproj /t:Rebuild /p:Configuration=Release,OutDir=..\..\..\lib\win\vc\x86\Release\
@@ -43,7 +43,7 @@ rd /s/q %PROJECT_ROOT%\build
 :BUILD_X64
 mkdir %PROJECT_ROOT%\build
 pushd %PROJECT_ROOT%\build
-cmake -G"Visual Studio 14 2015 Win64" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_CPP_FLAGS="-DXML_UNICODE" %SRC_ROOT%
+cmake -G"Visual Studio 14 2015 Win64" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_CXX_FLAGS="-DXML_UNICODE" %SRC_ROOT%
 %GX_TE% -i expat.vcxproj -o expat.vcxproj -rs "<AssemblerListingLocation>Debug/</AssemblerListingLocation>" -rd "<AssemblerListingLocation>Debug/</AssemblerListingLocation><ProgramDataBaseFileName>$(OutDir)$(TargetName)_vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>"
 msbuild expat.vcxproj /t:Rebuild /p:Configuration=Debug,OutDir=..\..\..\lib\win\vc\x64\Debug\
 msbuild expat.vcxproj /t:Rebuild /p:Configuration=Release,OutDir=..\..\..\lib\win\vc\x64\Release\

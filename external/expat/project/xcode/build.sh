@@ -22,13 +22,13 @@ cd ios
 
 mkdir device
 cd device
-cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/ios.toolchain.cmake" -DIOS_PLATFORM="OS" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CPP_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
+cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/ios.toolchain.cmake" -DIOS_PLATFORM="OS" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CXX_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
 ninja -C .
 
 cd ..
 mkdir simulator
 cd simulator
-cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/ios.toolchain.cmake" -DIOS_PLATFORM="SIMULATOR" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CPP_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
+cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/ios.toolchain.cmake" -DIOS_PLATFORM="SIMULATOR" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CXX_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
 mv expat_config.h expat_config.old.h
 cp ../device/expat_config.h .
 ninja -C .
@@ -36,7 +36,7 @@ ninja -C .
 cd ..
 mkdir simulator64
 cd simulator64
-cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/ios.toolchain.cmake" -DIOS_PLATFORM="SIMULATOR64" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CPP_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
+cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/ios.toolchain.cmake" -DIOS_PLATFORM="SIMULATOR64" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CXX_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
 mv expat_config.h expat_config.old.h
 cp ../device/expat_config.h .
 ninja -C .
@@ -49,13 +49,13 @@ cd atv
 
 mkdir device
 cd device
-cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/appletv.toolchain.cmake" -DTVOS_PLATFORM="OS" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CPP_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
+cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/appletv.toolchain.cmake" -DTVOS_PLATFORM="OS" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CXX_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
 ninja -C .
 
 cd ..
 mkdir simulator
 cd simulator
-cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/appletv.toolchain.cmake" -DTVOS_PLATFORM="SIMULATOR" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CPP_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
+cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/appletv.toolchain.cmake" -DTVOS_PLATFORM="SIMULATOR" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CXX_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
 ninja -C .
 
 cd $PROJECT_ROOT
@@ -64,7 +64,7 @@ cd build
 mkdir mac
 cd mac
 
-cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/mac.toolchain.cmake" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CPP_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
+cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/mac.toolchain.cmake" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CXX_FLAGS="-DXML_UNICODE" ${SRC_ROOT}
 ninja -C .
 
 #输出文件
