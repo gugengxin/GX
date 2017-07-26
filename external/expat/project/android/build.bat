@@ -23,7 +23,15 @@ if exist %OUTPUT_DIR% (
 )
 mkdir %OUTPUT_DIR%
 
-set TARGET_NAME=harfbuzz
+set INCLUDE_DIR=%LIBRARY_ROOT%\include
+set OUTPUT_H_DIR=%INCLUDE_DIR%\ard
+if exist %OUTPUT_H_DIR% (
+	rd /s/q %OUTPUT_H_DIR%
+)
+mkdir %OUTPUT_H_DIR%
+
+
+set TARGET_NAME=expat
 
 if exist "%PROJECT_ROOT%\build" (
 	rd /s/q %PROJECT_ROOT%\build
@@ -49,10 +57,12 @@ for %%i in ( "armeabi","armeabi-v7a","arm64-v8a","x86","x86_64","mips","mips64" 
 	
 	mkdir !ARCH_ABI!
 	pushd !ARCH_ABI!
-	cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=%GX_ROOT%\bin\android.toolchain.cmake" -D"CMAKE_ANDROID_NDK=%ANDROID_NDK_ROOT_FOR_CMAKE%" -D"CMAKE_ANDROID_ARCH_ABI=!ARCH_ABI!" -D"CMAKE_SYSTEM_VERSION=!API_LEVEL!" -D"HB_HAVE_FREETYPE=FALSE" -D"HB_HAVE_GLIB=FALSE" %SRC_ROOT%
+	cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=%GX_ROOT%\bin\android.toolchain.cmake" -D"CMAKE_ANDROID_NDK=%ANDROID_NDK_ROOT_FOR_CMAKE%" -D"CMAKE_ANDROID_ARCH_ABI=!ARCH_ABI!" -D"CMAKE_SYSTEM_VERSION=!API_LEVEL!" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" -DCMAKE_CPP_FLAGS="-DXML_UNICODE" %SRC_ROOT%
 	ninja -C .
 	mkdir %OUTPUT_DIR%\!ARCH_ABI!
 	move lib%TARGET_NAME%.a %OUTPUT_DIR%\!ARCH_ABI!\lib%TARGET_NAME%.a
+	mkdir %OUTPUT_H_DIR%\!ARCH_ABI!
+	move expat_config.h %OUTPUT_H_DIR%\!ARCH_ABI!
 	popd
 	
 	endlocal
@@ -61,17 +71,9 @@ for %%i in ( "armeabi","armeabi-v7a","arm64-v8a","x86","x86_64","mips","mips64" 
 popd
 
 copy /y %PROJECT_ROOT%\libAndroid.mk %OUTPUT_DIR%\Android.mk
+copy /y %SRC_ROOT%\lib\expat.h %INCLUDE_DIR%
+copy /y %SRC_ROOT%\lib\expat_external.h %INCLUDE_DIR%
 
 rd /s/q %PROJECT_ROOT%\build
-
-set INCLUDE_DIR=%LIBRARY_ROOT%\include
-
-if exist %INCLUDE_DIR% (
-	rd /s/q %INCLUDE_DIR%
-)
-mkdir %INCLUDE_DIR%
-
-copy /y %SRC_ROOT%\src\*.h %INCLUDE_DIR%
-copy /y %SRC_ROOT%\src\*.hh %INCLUDE_DIR%
 
 goto :EOF

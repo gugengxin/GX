@@ -25,7 +25,7 @@ check_function_exists("mmap" HAVE_MMAP)
 check_include_files("stdlib.h;stdarg.h;string.h;float.h" STDC_HEADERS)
 
 if(IOS)
-	set(WORDS_BIGENDIAN TRUE)
+	set(WORDS_BIGENDIAN FALSE)
 else()
 	test_big_endian(WORDS_BIGENDIAN)
 endif()
