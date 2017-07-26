@@ -16,6 +16,9 @@ function XBuild {
 
 XBuild ${GX_ROOT}/tool/cmd/build/build_all.sh
 
+XBuild ${GX_ROOT}/external/expat/project/xcode/build.sh
+XBuild ${GX_ROOT}/external/expat/project/android/build.sh
+
 XBuild ${GX_ROOT}/external/freetype/project/xcode/build.sh
 XBuild ${GX_ROOT}/external/freetype/project/android/build.sh
 

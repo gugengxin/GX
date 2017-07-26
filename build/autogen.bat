@@ -5,6 +5,9 @@ popd
 
 call %GX_ROOT%\tool\cmd\build\build_all.bat
 
+call %GX_ROOT%\external\expat\project\vs\build.bat
+call %GX_ROOT%\external\expat\project\android\build.bat
+
 call %GX_ROOT%\external\freetype\project\vs\build.bat
 call %GX_ROOT%\external\freetype\project\android\build.bat
 

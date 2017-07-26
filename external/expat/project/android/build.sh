@@ -21,7 +21,16 @@ rm -rf $OUTPUT_DIR
 fi
 mkdir -p $OUTPUT_DIR
 
-TARGET_NAME=harfbuzz
+INCLUDE_DIR=$LIBRARY_ROOT/include
+OUTPUT_H_DIR=$INCLUDE_DIR/ard
+if [ -d $OUTPUT_H_DIR ] 
+then
+rm -rf $OUTPUT_H_DIR
+fi
+mkdir -p $OUTPUT_H_DIR
+
+
+TARGET_NAME=expat
 
 mkdir build
 cd build
@@ -38,28 +47,25 @@ do
 	fi
 	mkdir ${ARCH_ABI}
 	cd ${ARCH_ABI}
-	cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/android.toolchain.cmake" -D"CMAKE_ANDROID_NDK=${ANDROID_NDK_ROOT}" -D"CMAKE_ANDROID_ARCH_ABI=${ARCH_ABI}" -D"CMAKE_SYSTEM_VERSION=${API_LEVEL}" -D"HB_HAVE_FREETYPE=FALSE" -D"HB_HAVE_GLIB=FALSE" ${SRC_ROOT}
+	cmake -GNinja -D"CMAKE_TOOLCHAIN_FILE=${GX_ROOT}/bin/android.toolchain.cmake" -D"CMAKE_ANDROID_NDK=${ANDROID_NDK_ROOT}" -D"CMAKE_ANDROID_ARCH_ABI=${ARCH_ABI}" -D"CMAKE_SYSTEM_VERSION=${API_LEVEL}" -DBUILD_examples=FALSE -DBUILD_shared=FALSE -DBUILD_tests=FALSE -DBUILD_tools=FALSE -DCMAKE_C_FLAGS="-DHAVE_ARC4RANDOM_BUF" ${SRC_ROOT}
 	ninja -C .
 	mkdir -p $OUTPUT_DIR/${ARCH_ABI}
 	mv lib${TARGET_NAME}.a $OUTPUT_DIR/${ARCH_ABI}/lib${TARGET_NAME}.a
+	mkdir -p $OUTPUT_H_DIR/${ARCH_ABI}
+	mv expat_config.h $OUTPUT_H_DIR/${ARCH_ABI}
 	cd ..
 done
 
 cp $PROJECT_ROOT/libAndroid.mk $OUTPUT_DIR/Android.mk
 
+cp ${SRC_ROOT}/lib/expat.h $INCLUDE_DIR
+cp ${SRC_ROOT}/lib/expat_external.h $INCLUDE_DIR
+
+
 cd $PROJECT_ROOT
 rm -rf build
 
-INCLUDE_DIR=${LIBRARY_ROOT}/include
-if [ -d ${INCLUDE_DIR} ] 
-then
-rm -rf ${INCLUDE_DIR}
-fi
-mkdir -p ${INCLUDE_DIR}
 
-cd ${SRC_ROOT}/src
-find . -name "*.h" -depth 1 -exec cp {} ${INCLUDE_DIR}/{} \;
-find . -name "*.hh" -depth 1 -exec cp {} ${INCLUDE_DIR}/{} \;
 
 
 
