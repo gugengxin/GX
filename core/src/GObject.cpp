@@ -20,6 +20,19 @@ static void keyCreate()
     pthread_mutex_init(&g_Mutex, NULL);
 }
 
+static inline void keyLock()
+{
+    pthread_once(&key_once,keyCreate);
+    pthread_mutex_lock(&g_Mutex);
+}
+
+static inline void keyUnlock()
+{
+    pthread_mutex_unlock(&g_Mutex);
+}
+
+///////////////////////////////////////
+
 typedef struct __ObjExData {
 	gint32 refCount;
 } _ObjExData;
@@ -39,14 +52,20 @@ void GObject::release(GObject* obj)
     if (obj) {
         __ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
         
-        pthread_once(&key_once,keyCreate);
-        pthread_mutex_lock(&g_Mutex);
+        bool alreadyZero=false;
         
-        --p->refCount;
+        keyLock();
         
-        pthread_mutex_unlock(&g_Mutex);
+        if (p->refCount>0) {
+            --p->refCount;
+        }
+        else {
+            alreadyZero=true;
+        }
         
-        if (p->refCount <= 0) {
+        keyUnlock();
+        
+        if (p->refCount <= 0 && !alreadyZero) {
             obj->dealloc();
             delete obj;
         }
@@ -67,12 +86,11 @@ GObject* GObject::gretain(GObject* obj)
     if (obj) {
         __ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
         
-        pthread_once(&key_once,keyCreate);
-        pthread_mutex_lock(&g_Mutex);
+        keyLock();
         
         ++p->refCount;
         
-        pthread_mutex_unlock(&g_Mutex);
+        keyUnlock();
     }
     return obj;
 }
