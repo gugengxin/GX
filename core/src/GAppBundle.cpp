@@ -12,13 +12,13 @@
 
 #if defined(GX_OS_IPHONE)
 #include <CoreFoundation/CoreFoundation.h>
-#elif defined(GX_OS_MACOSX) || defined(GX_OS_QT_MACOSX)
+#elif defined(GX_OS_SERIES_MACOSX)
 #include <CoreFoundation/CoreFoundation.h>
 #define M_RESOURCE_DIR_NAME "Contents/Resources"
 #elif defined(GX_OS_ANDROID)
 #include "GAndroidApp.h"
 #define M_RESOURCE_DIR_NAME "assets"
-#elif defined(GX_OS_WINDOWS) || defined(GX_OS_QT_WINDOWS)
+#elif defined(GX_OS_SERIES_WINDOWS)
 #include <Windows.h>
 #define M_RESOURCE_DIR_NAME "assets"
 #endif

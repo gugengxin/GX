@@ -16,8 +16,8 @@
 #include "GXGObject.h"
 
 static bool (*g_CheckFuns[])(GReader*)={
-    GPng::check,
-    GJpeg::check,
+    GPng::checkHeader,
+    GJpeg::checkHeader,
 };
 static GDib* (*g_ReadFuns[])(GReader*)={
     GPng::read,

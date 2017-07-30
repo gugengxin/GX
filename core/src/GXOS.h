@@ -76,6 +76,14 @@
 
 #endif
 
+
+#if defined(GX_OS_MACOSX) || defined(GX_OS_QT_MACOSX)
+#define GX_OS_SERIES_MACOSX
+#elif defined(GX_OS_QT_WINDOWS) || defined(GX_OS_WINDOWS)
+#define GX_OS_SERIES_WINDOWS
+#endif
+
+
 #define GX_LITTLE_ENDIAN 1234
 #define GX_BIG_ENDIAN 4321
 #define GX_BYTE_ORDER GX_LITTLE_ENDIAN

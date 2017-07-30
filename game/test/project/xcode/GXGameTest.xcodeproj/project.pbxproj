@@ -15,6 +15,12 @@
 		CA1F60AD1CD984BB00C6307B /* AppDge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA1F60A91CD984BB00C6307B /* AppDge.cpp */; };
 		CA1F60B81CD9894600C6307B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA1F60B51CD9894600C6307B /* MainMenu.xib */; };
 		CA1F60CA1CD99A6500C6307B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA1F60C91CD99A6500C6307B /* LaunchScreen.storyboard */; };
+		CA217B391F2C812900E6FBE8 /* fallback_fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA217B371F2C812900E6FBE8 /* fallback_fonts.xml */; };
+		CA217B3A1F2C812900E6FBE8 /* fallback_fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA217B371F2C812900E6FBE8 /* fallback_fonts.xml */; };
+		CA217B3B1F2C812900E6FBE8 /* fallback_fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA217B371F2C812900E6FBE8 /* fallback_fonts.xml */; };
+		CA217B3C1F2C812900E6FBE8 /* system_fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA217B381F2C812900E6FBE8 /* system_fonts.xml */; };
+		CA217B3D1F2C812900E6FBE8 /* system_fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA217B381F2C812900E6FBE8 /* system_fonts.xml */; };
+		CA217B3E1F2C812900E6FBE8 /* system_fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = CA217B381F2C812900E6FBE8 /* system_fonts.xml */; };
 		CA24E8FD1EEEE3AB004FD7AC /* MImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8FB1EEEE3AB004FD7AC /* MImage.cpp */; };
 		CA24E8FE1EEEE3AB004FD7AC /* MImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8FB1EEEE3AB004FD7AC /* MImage.cpp */; };
 		CA24E8FF1EEEE3AB004FD7AC /* MImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA24E8FB1EEEE3AB004FD7AC /* MImage.cpp */; };
@@ -107,6 +113,8 @@
 		CA1F60AA1CD984BB00C6307B /* AppDge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDge.h; sourceTree = "<group>"; };
 		CA1F60B51CD9894600C6307B /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		CA1F60C91CD99A6500C6307B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CA217B371F2C812900E6FBE8 /* fallback_fonts.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fallback_fonts.xml; sourceTree = "<group>"; };
+		CA217B381F2C812900E6FBE8 /* system_fonts.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = system_fonts.xml; sourceTree = "<group>"; };
 		CA24E8FB1EEEE3AB004FD7AC /* MImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MImage.cpp; sourceTree = "<group>"; };
 		CA24E8FC1EEEE3AB004FD7AC /* MImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MImage.h; sourceTree = "<group>"; };
 		CA75BAD21D830D4400236109 /* lena_rgb.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lena_rgb.jpg; sourceTree = "<group>"; };
@@ -200,6 +208,8 @@
 		CA75BAD11D830D4400236109 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				CA217B371F2C812900E6FBE8 /* fallback_fonts.xml */,
+				CA217B381F2C812900E6FBE8 /* system_fonts.xml */,
 				CA0113A61EE9A6CD00836A56 /* png-0029.png */,
 				CACCBB061EDC826600535D58 /* STXINWEI.ttf */,
 				CA75BAD21D830D4400236109 /* lena_rgb.jpg */,
@@ -481,6 +491,8 @@
 			files = (
 				CA0113A71EE9A6CD00836A56 /* png-0029.png in Resources */,
 				CA9C163D1CC5DFE200204303 /* Assets.xcassets in Resources */,
+				CA217B391F2C812900E6FBE8 /* fallback_fonts.xml in Resources */,
+				CA217B3C1F2C812900E6FBE8 /* system_fonts.xml in Resources */,
 				CA75BAD31D830D4400236109 /* lena_rgb.jpg in Resources */,
 				CA1F60CA1CD99A6500C6307B /* LaunchScreen.storyboard in Resources */,
 				CACCBB071EDC826600535D58 /* STXINWEI.ttf in Resources */,
@@ -493,6 +505,8 @@
 			files = (
 				CA0113A81EE9A6CD00836A56 /* png-0029.png in Resources */,
 				CA9C16941CC5E7D800204303 /* Assets.xcassets in Resources */,
+				CA217B3A1F2C812900E6FBE8 /* fallback_fonts.xml in Resources */,
+				CA217B3D1F2C812900E6FBE8 /* system_fonts.xml in Resources */,
 				CA75BAD41D830D4400236109 /* lena_rgb.jpg in Resources */,
 				CACCBB081EDC826600535D58 /* STXINWEI.ttf in Resources */,
 			);
@@ -504,6 +518,8 @@
 			files = (
 				CA0113A91EE9A6CD00836A56 /* png-0029.png in Resources */,
 				CA9C16A61CC5E94D00204303 /* Assets.xcassets in Resources */,
+				CA217B3B1F2C812900E6FBE8 /* fallback_fonts.xml in Resources */,
+				CA217B3E1F2C812900E6FBE8 /* system_fonts.xml in Resources */,
 				CA75BAD51D830D4400236109 /* lena_rgb.jpg in Resources */,
 				CA1F60B81CD9894600C6307B /* MainMenu.xib in Resources */,
 				CACCBB091EDC826600535D58 /* STXINWEI.ttf in Resources */,

@@ -15,7 +15,7 @@
 class GJpeg
 {
 public:
-	static bool check(GReader* reader);
+	static bool checkHeader(GReader* reader);
 	static GDib* read(GReader* reader);
 };
 

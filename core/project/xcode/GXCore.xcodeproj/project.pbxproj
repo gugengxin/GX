@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA217B341F2C299E00E6FBE8 /* GXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA217B321F2C299E00E6FBE8 /* GXML.cpp */; };
+		CA217B351F2C299E00E6FBE8 /* GXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA217B321F2C299E00E6FBE8 /* GXML.cpp */; };
+		CA217B361F2C299E00E6FBE8 /* GXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA217B321F2C299E00E6FBE8 /* GXML.cpp */; };
 		CA28FED71ECA997A002508DE /* GFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA28FED51ECA997A002508DE /* GFont.cpp */; };
 		CA306EF31ECC2C05003B24BC /* GTypist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA306EF11ECC2C05003B24BC /* GTypist.cpp */; };
 		CA306EF41ECC2C05003B24BC /* GTypist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA306EF11ECC2C05003B24BC /* GTypist.cpp */; };
@@ -192,6 +195,8 @@
 
 /* Begin PBXFileReference section */
 		CA027B1A1E7ACCB300146D1A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		CA217B321F2C299E00E6FBE8 /* GXML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GXML.cpp; sourceTree = "<group>"; };
+		CA217B331F2C299E00E6FBE8 /* GXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXML.h; sourceTree = "<group>"; };
 		CA28FED51ECA997A002508DE /* GFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GFont.cpp; sourceTree = "<group>"; };
 		CA28FED61ECA997A002508DE /* GFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GFont.h; sourceTree = "<group>"; };
 		CA306EF11ECC2C05003B24BC /* GTypist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GTypist.cpp; sourceTree = "<group>"; };
@@ -463,12 +468,12 @@
 				CA3A95F51E7A727B00CEFD8E /* GXData.cpp */,
 				CA3A95AA1E7A727B00CEFD8E /* GData.h */,
 				CA3A95A91E7A727B00CEFD8E /* GData.cpp */,
-				CA3A95AB1E7A727B00CEFD8E /* GDataArray.cpp */,
 				CA3A95AC1E7A727B00CEFD8E /* GDataArray.h */,
-				CA3A95AD1E7A727B00CEFD8E /* GDataList.cpp */,
+				CA3A95AB1E7A727B00CEFD8E /* GDataArray.cpp */,
 				CA3A95AE1E7A727B00CEFD8E /* GDataList.h */,
-				CA3A95C31E7A727B00CEFD8E /* GList.cpp */,
+				CA3A95AD1E7A727B00CEFD8E /* GDataList.cpp */,
 				CA3A95C41E7A727B00CEFD8E /* GList.h */,
+				CA3A95C31E7A727B00CEFD8E /* GList.cpp */,
 				CA3A95C81E7A727B00CEFD8E /* GMap.h */,
 				CA3A95C71E7A727B00CEFD8E /* GMap.cpp */,
 				CA3A95C91E7A727B00CEFD8E /* GMatrix.cpp */,
@@ -556,6 +561,8 @@
 			isa = PBXGroup;
 			children = (
 				CAFE76E11EB4ED9600E43016 /* Coder */,
+				CA217B331F2C299E00E6FBE8 /* GXML.h */,
+				CA217B321F2C299E00E6FBE8 /* GXML.cpp */,
 				CA3A95F81E7A727B00CEFD8E /* GXFILE.h */,
 				CA3A96061E7A727B00CEFD8E /* GZipReader.cpp */,
 				CA3A96071E7A727B00CEFD8E /* GZipReader.h */,
@@ -726,6 +733,7 @@
 				CA3A96AC1E7A727C00CEFD8E /* GReader.cpp in Sources */,
 				CA3A96641E7A727B00CEFD8E /* GFileReader.cpp in Sources */,
 				CA3A96C01E7A727C00CEFD8E /* GThread.cpp in Sources */,
+				CA217B341F2C299E00E6FBE8 /* GXML.cpp in Sources */,
 				CA3A96A01E7A727C00CEFD8E /* GPng.cpp in Sources */,
 				CA3A96301E7A727B00CEFD8E /* GClass.cpp in Sources */,
 				CA3A96B01E7A727C00CEFD8E /* GRunLoop.cpp in Sources */,
@@ -815,6 +823,7 @@
 				CA3A965D1E7A727B00CEFD8E /* GFileBundle.cpp in Sources */,
 				CA3A968D1E7A727C00CEFD8E /* GNoticeCenter.cpp in Sources */,
 				CA3A96D91E7A727C00CEFD8E /* GXData.cpp in Sources */,
+				CA217B351F2C299E00E6FBE8 /* GXML.cpp in Sources */,
 				CA4D74B31E9FD1640048CA04 /* GAndroidApp.cpp in Sources */,
 				CA3A96611E7A727B00CEFD8E /* GFileManager.cpp in Sources */,
 				CA3A96251E7A727B00CEFD8E /* GArray.cpp in Sources */,
@@ -882,6 +891,7 @@
 				CA3A965E1E7A727B00CEFD8E /* GFileBundle.cpp in Sources */,
 				CA3A968E1E7A727C00CEFD8E /* GNoticeCenter.cpp in Sources */,
 				CA3A96DA1E7A727C00CEFD8E /* GXData.cpp in Sources */,
+				CA217B361F2C299E00E6FBE8 /* GXML.cpp in Sources */,
 				CA4D74B41E9FD1640048CA04 /* GAndroidApp.cpp in Sources */,
 				CA3A96621E7A727B00CEFD8E /* GFileManager.cpp in Sources */,
 				CA3A96261E7A727B00CEFD8E /* GArray.cpp in Sources */,

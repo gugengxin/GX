@@ -7,16 +7,39 @@
 //
 
 #include "GList.h"
+
+
 #include "GXGObject.h"
 
-GX_GOBJECT_IMPLEMENT(GListBase, GObject);
+GX_GOBJECT_IMPLEMENT(GList::Node, GObject);
 
-GListBase::GListBase()
+GList::Node::Node()
 {
     
 }
 
-GListBase::~GListBase()
+GList::Node::~Node()
 {
     
+}
+
+
+
+
+
+GX_GOBJECT_IMPLEMENT(GList, GObject);
+
+GList::GList()
+{
+    m_Node=NULL;
+    m_NodeLast=NULL;
+}
+GList::~GList()
+{
+    Node* p=m_Node;
+    while (p) {
+        Node* next=p->getNext();
+        delete p;
+        p=next;
+    }
 }

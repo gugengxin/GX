@@ -34,6 +34,10 @@
 #include "GZipBundle.h"
 #include "GAppBundle.h"
 
+#include "GPng.h"
+#include "GJpeg.h"
+#include "GXML.h"
+
 #include "GFont.h"
 #include "GFTFont.h"
 #include "GFontManager.h"

@@ -33,7 +33,7 @@ static bool _cmpHeader(unsigned char* header)
 	return false;
 }
 
-bool GJpeg::check(GReader* reader)
+bool GJpeg::checkHeader(GReader* reader)
 {
 	unsigned char header[11];
 	if (reader->read(header, sizeof(header)) == sizeof(header)) {

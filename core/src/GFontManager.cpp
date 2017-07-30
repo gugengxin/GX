@@ -223,6 +223,8 @@ GFontManager::GFontManager()
         GString* key=GS::chars([str UTF8String]);
         m_SystemFontNames.set(key, key);
     }
+#elif defined(GX_OS_ANDROID)
+    
 #elif defined(GX_OS_WINDOWS)
 	//::EnumFontFamilies
     //::GetFontData

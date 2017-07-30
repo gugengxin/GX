@@ -24,7 +24,7 @@ static void _reader_png_read_data(png_structp pPng, png_bytep data, png_size_t l
 		png_error(pPng, "Read Error");
 }
 
-bool GPng::check(GReader* reader)
+bool GPng::checkHeader(GReader* reader)
 {
 	unsigned char header[PNG_SIG_BYTES];
 	if (reader->read(header, sizeof(header)) == sizeof(header)) {

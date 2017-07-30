@@ -27,7 +27,7 @@ LOCAL_CPPFLAGS	+= -fno-rtti
 LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
 LOCAL_EXPORT_CPPFLAGS := $(LOCAL_CPPFLAGS)
 LOCAL_WHOLE_STATIC_LIBRARIES := GXCoreAndroid
-LOCAL_STATIC_LIBRARIES	:= gx_zlib gx_libpng gx_libjpeg gx_freetype gx_harfbuzz
+LOCAL_STATIC_LIBRARIES	:= gx_zlib gx_libpng gx_libjpeg gx_freetype gx_harfbuzz gx_expat
 #LOCAL_LDLIBS 	:=
 LOCAL_EXPORT_LDLIBS := -landroid -llog
 #__LOCAL_SRC_FILES_START__
@@ -85,6 +85,7 @@ LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GWriter.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GXCWnd.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GXCoder.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GXData.cpp
+LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GXML.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GXMath.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GXPthread.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/core/src/GZipBundle.cpp
@@ -99,5 +100,6 @@ $(call import-module,external/libpng/lib/ard)
 $(call import-module,external/libjpeg/lib/ard)
 $(call import-module,external/freetype/lib/ard)
 $(call import-module,external/harfbuzz/lib/ard)
+$(call import-module,external/expat/lib/ard)
 
 
