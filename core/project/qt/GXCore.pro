@@ -93,6 +93,7 @@ SOURCES += \
 	#../../src/GXCWnd.cpp\
 	../../src/GXCoder.cpp\
 	../../src/GXData.cpp\
+	../../src/GXML.cpp\
 	../../src/GXMath.cpp\
 	../../src/GZipBundle.cpp\
 	../../src/GZipReader.cpp\
@@ -166,6 +167,7 @@ HEADERS += \
 	../../src/GXFILE.h\
 	../../src/GXGObject.h\
 	../../src/GXGObjectUD.h\
+	../../src/GXML.h\
 	../../src/GXMath.h\
 	../../src/GXOS.h\
 	../../src/GXObject.h\

@@ -35,6 +35,9 @@
 		CA918C261F26BBE10088EF6E /* GIndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA918C241F26BBE10088EF6E /* GIndexBuffer.cpp */; };
 		CA918C271F26BBE10088EF6E /* GIndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA918C241F26BBE10088EF6E /* GIndexBuffer.cpp */; };
 		CA918C281F26BBE10088EF6E /* GIndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA918C241F26BBE10088EF6E /* GIndexBuffer.cpp */; };
+		CAB635D31F2DBB7400448B50 /* GTex2DFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAB635D11F2DBB7400448B50 /* GTex2DFont.cpp */; };
+		CAB635D41F2DBB7400448B50 /* GTex2DFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAB635D11F2DBB7400448B50 /* GTex2DFont.cpp */; };
+		CAB635D51F2DBB7400448B50 /* GTex2DFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CAB635D11F2DBB7400448B50 /* GTex2DFont.cpp */; };
 		CABB3F941CFE06EB00A7367C /* GOShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB21CF9E6300092C472 /* GOShader.cpp */; };
 		CABB3F951CFE06EB00A7367C /* GDShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DAA1CF9E6300092C472 /* GDShader.cpp */; };
 		CABB3F961CFE06EB00A7367C /* GShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CADB5DB41CF9E6300092C472 /* GShader.cpp */; };
@@ -138,6 +141,8 @@
 		CA918C241F26BBE10088EF6E /* GIndexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GIndexBuffer.cpp; sourceTree = "<group>"; };
 		CA918C251F26BBE10088EF6E /* GIndexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GIndexBuffer.h; sourceTree = "<group>"; };
 		CA9C16C91CC6079000204303 /* GXGame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GXGame.h; sourceTree = "<group>"; };
+		CAB635D11F2DBB7400448B50 /* GTex2DFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GTex2DFont.cpp; sourceTree = "<group>"; };
+		CAB635D21F2DBB7400448B50 /* GTex2DFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTex2DFont.h; sourceTree = "<group>"; };
 		CABB3FAE1CFE12D000A7367C /* GBuffer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GBuffer.cpp; sourceTree = "<group>"; };
 		CABB3FAF1CFE12D000A7367C /* GBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBuffer.h; sourceTree = "<group>"; };
 		CABB5CB61CE0E40500D5B648 /* GContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GContext.cpp; sourceTree = "<group>"; };
@@ -245,11 +250,13 @@
 			name = Unuse;
 			sourceTree = "<group>";
 		};
-		CA24E8ED1EEEB84A004FD7AC /* obj */ = {
+		CA24E8ED1EEEB84A004FD7AC /* font */ = {
 			isa = PBXGroup;
 			children = (
+				CAB635D21F2DBB7400448B50 /* GTex2DFont.h */,
+				CAB635D11F2DBB7400448B50 /* GTex2DFont.cpp */,
 			);
-			name = obj;
+			name = font;
 			sourceTree = "<group>";
 		};
 		CA26E07C1DC64D89003AF801 /* 3DAPI */ = {
@@ -298,7 +305,7 @@
 				CAA2D4DF1DBAFBB4007E53C8 /* context */,
 				CADB5DC01CF9E6A30092C472 /* shader */,
 				CA4CD5441D508D3F008005CF /* texture */,
-				CA24E8ED1EEEB84A004FD7AC /* obj */,
+				CA24E8ED1EEEB84A004FD7AC /* font */,
 				CA1AD2761CD87CA900CEA1DC /* GWindow.h */,
 				CA1AD2751CD87CA900CEA1DC /* GWindow.cpp */,
 				CA3A7EAE1DED66BF00197FCB /* GCanvas.h */,
@@ -502,6 +509,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAB635D31F2DBB7400448B50 /* GTex2DFont.cpp in Sources */,
 				CADB5DBC1CF9E6300092C472 /* GOShader.cpp in Sources */,
 				CA6793B01DAFFACB00854B5E /* GFrameBuffer.cpp in Sources */,
 				CA446E3F1D67E36F002E77DF /* GXMetal.cpp in Sources */,
@@ -540,6 +548,7 @@
 				CAE303BF1CE563CB00F15C74 /* GOGLContext.cpp in Sources */,
 				CA918C271F26BBE10088EF6E /* GIndexBuffer.cpp in Sources */,
 				CA3090961CFD1C53000B8DF2 /* GSRGraphics.cpp in Sources */,
+				CAB635D41F2DBB7400448B50 /* GTex2DFont.cpp in Sources */,
 				CAE303C01CE563CB00F15C74 /* GXDirectX.cpp in Sources */,
 				CAE303C11CE563CB00F15C74 /* GXOpenGL.cpp in Sources */,
 				CA8A38C61EE195D700BBEBE7 /* GX3DAPI.cpp in Sources */,
@@ -571,6 +580,7 @@
 				CAE303C91CE563CB00F15C74 /* GOGLContext.cpp in Sources */,
 				CA918C281F26BBE10088EF6E /* GIndexBuffer.cpp in Sources */,
 				CA3090971CFD1C54000B8DF2 /* GSRGraphics.cpp in Sources */,
+				CAB635D51F2DBB7400448B50 /* GTex2DFont.cpp in Sources */,
 				CAE303CA1CE563CB00F15C74 /* GXDirectX.cpp in Sources */,
 				CAE303CB1CE563CB00F15C74 /* GXOpenGL.cpp in Sources */,
 				CA8A38C71EE195D700BBEBE7 /* GX3DAPI.cpp in Sources */,

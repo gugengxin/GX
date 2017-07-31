@@ -443,7 +443,7 @@ GFont::Glyph* GFTFont::getGlyph(guint32 index)
         res->addUseNumber(1);
         
         if (m_GlyphCache.getCount()>M_FTGLYPH_CACHE_COUNT) {
-            m_GlyphCache.removeLast(M_FTGLYPH_CACHE_COUNT-32);
+            m_GlyphCache.removeLast(M_FTGLYPH_CACHE_COUNT/2);
         }
         
         gint j=m_GlyphCache.getCount()-1;
@@ -454,7 +454,7 @@ GFont::Glyph* GFTFont::getGlyph(guint32 index)
             }
         }
         m_GlyphCache.insert(j+1, res);
-        GO::release(res);
+        GO::autorelease(res);
     }
     else {
         GO::release(res);

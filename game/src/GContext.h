@@ -17,6 +17,7 @@
 #include "GFrameBuffer.h"
 #include "GResourceManager.h"
 #include "GString.h"
+#include "GTex2DFont.h"
 
 #include "GXGObject.h"
 
@@ -102,6 +103,7 @@ private:
 private:
     typedef enum _Map {
         MapTex2D,
+        MapTex2DFont,
         MapCount,
     } Map;
     virtual gint getMapCount() {
@@ -137,6 +139,9 @@ private:
 	bool loadFrameBufferNode(GFrameBuffer::Node* node, GTexture* texTarget, GFrameBuffer::Use use);
     void unloadFrameBufferNode(GFrameBuffer::Node* node);
 	static void unloadFrameBufferNodeInMT(GObject* obj);
+//Tex2DFont
+public:
+    GTex2DFont* loadTex2DFont(GString* name, gint32 size, gint32 outlineSize);
 private:
 	GShader*                        m_Shaders[_SRIDCount];
 	GDataList<GTexture::Handle>     m_Textures;

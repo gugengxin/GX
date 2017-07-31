@@ -66,15 +66,15 @@ public:
     virtual gint32 getAdvanceV(guint32 index)=0;
     virtual bool hasKerning()=0;
     virtual gint32 getKerningX(guint32 index,guint32 next)=0;
-	virtual bool hasOutline() = 0;
-	virtual gint32 getOutlineSize() = 0;
+	virtual bool hasOutline()=0;
+	virtual gint32 getOutlineSize()=0;
 public:
     virtual guint32 getIndex(guint32 code)=0;
     virtual guint32 getVariantIndex(guint32 code,guint32 variation_selector)=0;
     virtual guint32 getGlyphCount()=0;
     virtual Glyph* getGlyph(guint32 index)=0;
-	virtual bool getGlyphName(guint32 index, char* name, guint32 size) = 0;
-	virtual bool getGlyphNameIndex(guint32* idxOut, const char *name, gint32 len) = 0;
+	virtual bool getGlyphName(guint32 index, char* name, guint32 size)=0;
+	virtual bool getGlyphNameIndex(guint32* idxOut, const char *name, gint32 len)=0;
 public:
     inline gint32 getSize() {
         return m_Size;

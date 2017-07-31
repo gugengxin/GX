@@ -24,7 +24,7 @@ class GFTFont : public GFont
 public:
     class Glyph : public GFont::Glyph {
         friend class GFTFont;
-        GX_GOBJECT(Glyph);
+        GX_PRIVATE_GOBJECT(Glyph);
     public:
 		virtual gint32 getWidth();
 		virtual gint32 getHeight();
