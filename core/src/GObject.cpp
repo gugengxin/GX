@@ -52,20 +52,16 @@ void GObject::release(GObject* obj)
     if (obj) {
         __ObjExData* p = GX_CAST_R(__ObjExData*, obj) - 1;
         
-        bool alreadyZero=false;
-        
         keyLock();
         
-        if (p->refCount>0) {
-            --p->refCount;
-        }
-        else {
-            alreadyZero=true;
+        gint32 rc=p->refCount-1;
+        if (rc>=0) {
+            p->refCount=rc;
         }
         
         keyUnlock();
         
-        if (p->refCount <= 0 && !alreadyZero) {
+        if (rc == 0) {
             obj->dealloc();
             delete obj;
         }
