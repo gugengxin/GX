@@ -1,4 +1,4 @@
-﻿//
+//
 //  GX3DAPIType.h
 //  GXGame
 //

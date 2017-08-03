@@ -64,7 +64,7 @@ protected:
     void unloadFrameBufferNodeForContext(GFrameBuffer::Node* node);
 
 private:
-    GX::OGLContext m_Context;
+    GX::OpenGLContext m_Context;
 
 #if defined(GX_OS_IPHONE)
     gint32   m_BackingWidth;

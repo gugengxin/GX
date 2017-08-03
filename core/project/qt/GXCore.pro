@@ -202,6 +202,13 @@ else:macx {
 INCLUDEPATH += $$PWD/../../../external/freetype/include
 #harfbuzz
 INCLUDEPATH += $$PWD/../../../external/harfbuzz/include
-
+#expat
+INCLUDEPATH += $$PWD/../../../external/expat/include
+win32 {
+    INCLUDEPATH += $$PWD/../../../external/expat/include/win
+}
+else:macx {
+    INCLUDEPATH += $$PWD/../../../external/expat/include/mac
+}
 
 

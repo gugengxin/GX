@@ -53,7 +53,10 @@ namespace GX
 #elif defined(GX_OS_QT)
 #include <QtOpenGL>
 namespace GX {
-    QOpenGLFunctions* openGLFuns();
+    inline QOpenGLFunctions* openGLFuns()
+    {
+        return QOpenGLContext::currentContext()->functions();
+    }
 }
 #endif
 
@@ -368,11 +371,30 @@ namespace GX {
 #define GX_WARP_CLAMP		GL_CLAMP_TO_EDGE
 
 namespace GX {
-    class OGLContext {
+    class OpenGLContext {
     public:
-        OGLContext();
+        OpenGLContext();
+        OpenGLContext(
+#if defined(GX_OS_WINDOWS)
+        HDC   DC_,
+        HGLRC context_
+#elif defined(GX_OS_APPLE)
+        void* context_
+#elif defined(GX_OS_ANDROID)
+        EGLDisplay display_,
+        EGLSurface surface_,
+        EGLContext context_
+#elif defined(GX_OS_QT)
+        QSurface*       surface_,
+        QOpenGLContext* context_
+#endif
+        );
         
         bool isValid();
+        bool isCurrent();
+        static bool currentIsNone();
+        void makeCurrent();
+        void makeClear();
     public:
 #if defined(GX_OS_WINDOWS)
         HDC   DC;
@@ -387,12 +409,22 @@ namespace GX {
         QSurface*       surface;
         QOpenGLContext* context;
 #endif
+    private:
+#if defined(GX_OS_WINDOWS)
+        HDC   _DC;
+        HGLRC _context;
+#elif defined(GX_OS_APPLE)
+        void* _context;
+#elif defined(GX_OS_ANDROID)
+        EGLDisplay _display;
+        EGLSurface _surfaceD;
+        EGLSurface _surfaceR;
+        EGLContext _context;
+#elif defined(GX_OS_QT)
+        QSurface*       _surface;
+        QOpenGLContext* _context;
+#endif
     };
-    
-    void openGLPushContext(const OGLContext& ctt);
-    void openGLPopContext();
-    
-    
     
     class OpenGLCullFacer : public DCullFacer {
     public:

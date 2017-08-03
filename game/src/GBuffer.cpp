@@ -40,6 +40,7 @@ GBuffer::~GBuffer()
 bool GBuffer::create(guint toSize, Usage usage, const void* pInitData)
 {
 #ifdef GX_OPENGL
+    GX_UNUSED(usage);
     if (m_Data.changeBytes(toSize)) {
         if (pInitData) {
             memcpy(m_Data.getPtr(), pInitData, toSize);

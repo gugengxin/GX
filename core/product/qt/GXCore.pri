@@ -37,6 +37,7 @@ else:macx {
     LIBS += -L$$GX_ROOT/external/libjpeg/lib/mac/ -llibjpeg
     LIBS += -L$$GX_ROOT/external/freetype/lib/mac/ -lfreetype
     LIBS += -L$$GX_ROOT/external/harfbuzz/lib/mac/ -lharfbuzz
+    LIBS += -L$$GX_ROOT/external/expat/lib/mac/ -lexpat
 }
 #dlls
 win32{

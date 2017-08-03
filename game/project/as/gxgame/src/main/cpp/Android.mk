@@ -48,6 +48,7 @@ LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/game/src/GOShader.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/game/src/GSRGraphics.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/game/src/GSRTexture2D.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/game/src/GShader.cpp
+LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/game/src/GTex2DFont.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/game/src/GTexture.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/game/src/GTexture2D.cpp
 LOCAL_SRC_FILES += $(ENGINE_PATH_FROM_SRC)/game/src/GWindow.cpp

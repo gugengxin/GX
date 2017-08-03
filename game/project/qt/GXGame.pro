@@ -28,7 +28,7 @@ SOURCES += \
 	#../../src/GAndroidDaydream.cpp\
 	#../../src/GAndroidEntrance.cpp\
 	../../src/GBaseContext.cpp\
-	#../../src/GBuffer.cpp\
+	../../src/GBuffer.cpp\
 	../../src/GCanvas.cpp\
 	../../src/GContext.cpp\
 	#../../src/GD3DContext.cpp\
@@ -43,6 +43,7 @@ SOURCES += \
 	../../src/GSRGraphics.cpp\
 	../../src/GSRTexture2D.cpp\
 	../../src/GShader.cpp\
+	../../src/GTex2DFont.cpp\
 	../../src/GTexture.cpp\
 	../../src/GTexture2D.cpp\
 	../../src/GWindow.cpp\
@@ -78,6 +79,7 @@ HEADERS += \
 	../../src/GSRGraphics.h\
 	../../src/GSRTexture2D.h\
 	../../src/GShader.h\
+	../../src/GTex2DFont.h\
 	../../src/GTexture.h\
 	../../src/GTexture2D.h\
 	../../src/GWindow.h\
