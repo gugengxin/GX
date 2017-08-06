@@ -15,6 +15,25 @@
 
 #define M_OS_WND(p) GX_CAST_R(HWND,p)
 
+static GX::CWnd g_CtxMainWnd;
+static GX::CWnd g_CtxLoadWnd;
+
+static LRESULT GLWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	return ::DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+static void CreateGLWnd(GX::CWnd& wnd)
+{
+	WNDCLASS wndClass;
+	memset(&wndClass, 0, sizeof(wndClass));
+	wndClass.lpfnWndProc = (WNDPROC)GLWndProc;
+	wndClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC | CS_DBLCLKS;
+
+	RECT rc = { 0, 0, 1, 1 };
+	wnd.create(wndClass, WS_OVERLAPPEDWINDOW, WS_EX_APPWINDOW, rc, NULL);
+}
+
 static void ConfigDC(HDC dc)
 {
 	GApplication::Delegate* dge = GApplication::sharedDelegate();
@@ -54,6 +73,7 @@ static void ConfigDC(HDC dc)
 
 	SetPixelFormat(dc, pixelFormat, &pfd);
 }
+
 
 #elif defined(GX_OS_IPHONE)
 #import <UIKit/UIKit.h>
@@ -167,12 +187,34 @@ static void CreateDC()
 
 static GX::OpenGLContext g_CtxMain;
 
+static GX::OpenGLContext g_CtxLoad;
+static GThread::Holder* g_CtxLoadTH=NULL;
+static void CtxLoadFun(GObject*)
+{
+	while (g_CtxLoadTH)
+	{
+		GRunLoop::current()->run();
+		GThread::sleep(10);
+	}
+}
+
 void GOGLContext::initialize()
 {
-    
-    
-    
-    
+#if defined(GX_OS_WINDOWS)
+	GX_ASSERT(GX::openGLEWInit());
+
+	CreateGLWnd(g_CtxMainWnd);
+	g_CtxMain.DC = ::GetDC(g_CtxMainWnd.getHWND());
+	ConfigDC(g_CtxMain.DC);
+	g_CtxMain.context = ::wglCreateContext(g_CtxMain.DC);
+
+	CreateGLWnd(g_CtxLoadWnd);
+	g_CtxLoad.DC = ::GetDC(g_CtxLoadWnd.getHWND());
+	ConfigDC(g_CtxLoad.DC);
+	g_CtxLoad.context = ::wglCreateContext(g_CtxLoad.DC);
+#endif
+	g_CtxLoadTH = GThread::create(CtxLoadFun, NULL, true);
+	GO::retain(g_CtxLoadTH);
 }
 
 //不用在这里初始化
@@ -186,12 +228,6 @@ GOGLContext::~GOGLContext()
 //在这里初始化
 bool GOGLContext::create(GWindow* win)
 {
-#if defined(GX_OS_WINDOWS)
-	static bool g_GLEWInited = GX::openGLEWInit();
-	if(!g_GLEWInited) {
-		return false;
-	}
-#endif
     if (!GBaseContext::create(win)) {
         return false;
     }
@@ -201,10 +237,7 @@ bool GOGLContext::create(GWindow* win)
 	ConfigDC(m_Context.DC);
 	m_Context.context = ::wglCreateContext(m_Context.DC);
     //shared
-    GWindow* aw = GWindow::first();
-	if (aw && aw != getWindow()) {
-		wglShareLists(((GOGLContext*)&aw->m_Context)->m_Context.context, m_Context.context);
-    }
+	wglShareLists(g_CtxMain.context, m_Context.context);
 #elif defined(GX_OS_IPHONE)
     EAGLSharegroup* group=nil;
     //shared

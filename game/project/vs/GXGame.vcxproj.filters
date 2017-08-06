@@ -105,6 +105,9 @@
     <ClCompile Include="..\..\src\GIndexBuffer.cpp">
       <Filter>src\buffer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GTex2DFont.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GGame.h">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\GIndexBuffer.h">
       <Filter>src\buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GTex2DFont.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

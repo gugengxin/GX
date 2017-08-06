@@ -174,7 +174,7 @@ namespace GX {
     bool OpenGLContext::isCurrent()
     {
 #if defined(GX_OS_WINDOWS)
-        return context==wglGetCurrentContent();
+        return context== wglGetCurrentContext();
 #elif defined(GX_OS_IPHONE)
         return context==[EAGLContext currentContext];
 #elif defined(GX_OS_MACOSX)
@@ -189,7 +189,7 @@ namespace GX {
     bool OpenGLContext::currentIsNone()
     {
 #if defined(GX_OS_WINDOWS)
-        return NULL==wglGetCurrentContent();
+        return NULL== wglGetCurrentContext();
 #elif defined(GX_OS_IPHONE)
         return nil==[EAGLContext currentContext];
 #elif defined(GX_OS_MACOSX)
@@ -205,7 +205,7 @@ namespace GX {
     {
 #if defined(GX_OS_WINDOWS)
         _DC=wglGetCurrentDC();
-        _context=wglGetCurrentContent();
+        _context= wglGetCurrentContext();
         wglMakeCurrent(DC, context);
 #elif defined(GX_OS_IPHONE)
         _context=[EAGLContext currentContext];

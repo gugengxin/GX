@@ -39,6 +39,7 @@
     <ClCompile Include="..\..\src\GShader.cpp" />
     <ClCompile Include="..\..\src\GSRGraphics.cpp" />
     <ClCompile Include="..\..\src\GSRTexture2D.cpp" />
+    <ClCompile Include="..\..\src\GTex2DFont.cpp" />
     <ClCompile Include="..\..\src\GTexture.cpp" />
     <ClCompile Include="..\..\src\GTexture2D.cpp" />
     <ClCompile Include="..\..\src\GWindow.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="..\..\src\GShader.h" />
     <ClInclude Include="..\..\src\GSRGraphics.h" />
     <ClInclude Include="..\..\src\GSRTexture2D.h" />
+    <ClInclude Include="..\..\src\GTex2DFont.h" />
     <ClInclude Include="..\..\src\GTexture.h" />
     <ClInclude Include="..\..\src\GTexture2D.h" />
     <ClInclude Include="..\..\src\GWindow.h" />
