@@ -24,6 +24,12 @@
 #define M_RENDER_ENCODER()      GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder)
 #define M_DEPTH_STENCIL_STATE() GX_CAST_R(id<MTLDepthStencilState>, m_DepthStencilState)
 
+
+void GMTLContext::initialize()
+{
+    
+}
+
 //不用在这里初始化
 GMTLContext::GMTLContext()
 {

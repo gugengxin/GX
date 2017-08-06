@@ -26,6 +26,8 @@ class GOGLContext : public GBaseContext, public GX::OpenGLCullFacer, public GX::
 #endif
 {
 protected:
+    static void initialize();
+protected:
     GOGLContext();
     virtual ~GOGLContext();
 protected:

@@ -20,6 +20,8 @@
 class GMTLContext : public GBaseContext, public GX::MetalCullFacer, public GX::MetalBlender {
     friend class GMShader;
 protected:
+    static void initialize();
+protected:
     GMTLContext();
     virtual ~GMTLContext();
 protected:

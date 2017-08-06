@@ -87,7 +87,8 @@ private:
         GFrameBuffer::Node* nodeOut;
     };
 
-
+private:
+    static void initialize();
 private:
     GContext();
 	virtual ~GContext();

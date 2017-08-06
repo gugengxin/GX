@@ -108,7 +108,12 @@ GContext::FBNodeUnloadObj::~FBNodeUnloadObj()
 
 
 
-
+void GContext::initialize()
+{
+    GX_CONTEXT_BASE::initialize();
+    
+    
+}
 
 
 //不用在这里初始化

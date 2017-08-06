@@ -165,8 +165,15 @@ static void CreateDC()
 
 #endif
 
-//Up include other h file
-#include "GXGObject.h"
+static GX::OpenGLContext g_CtxMain;
+
+void GOGLContext::initialize()
+{
+    
+    
+    
+    
+}
 
 //不用在这里初始化
 GOGLContext::GOGLContext()

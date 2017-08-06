@@ -15,6 +15,8 @@
 
 class GD3DContext : public GBaseContext, public GX::Direct3DCullFacer, public GX::Direct3DBlender {
 protected:
+    static void initialize();
+protected:
     GD3DContext();
     virtual ~GD3DContext();
 protected:

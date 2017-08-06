@@ -7,6 +7,12 @@
 #include "GWindow.h"
 #include "GApplication.h"
 
+
+void GD3DContext::initialize()
+{
+    
+}
+
 //不用在这里初始化
 GD3DContext::GD3DContext()
 {

@@ -1,4 +1,4 @@
-﻿//
+//
 //  GWindow.cpp
 //  GX
 //
@@ -480,6 +480,15 @@ void _GQWindow::resizeEvent(QResizeEvent *)
 
 GWindow* GWindow::main(void* osWinP,const char* gameClassName)
 {
+    static bool g_init=false;
+    if (!g_init) {
+        g_init=true;
+        GContext::initialize();
+    }
+    
+    if (!gameClassName) {
+        return NULL;
+    }
     GWindow* win=new GWindow(osWinP);
     GApplication::shared()->addComponent(win);
     win->startGame(gameClassName);
