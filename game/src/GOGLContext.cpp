@@ -131,56 +131,54 @@ static NSOpenGLPixelFormat* CreatePF()
 
 #elif defined(GX_OS_ANDROID)
 
+static EGLDisplay   g_Display=NULL;
 static EGLConfig 	g_Config=NULL;
-static GX::OpenGLContext g_Context;
 
 static void CreateDC()
 {
-	if(g_Context.display==EGL_NO_DISPLAY) {
-		GApplication::Delegate* appDge=GApplication::sharedDelegate();
-		EGLint depth = (EGLint)appDge->windowsSuggestedDepth();
-		EGLint stencil = (EGLint)appDge->windowsSuggestedStencil();
-		EGLint samples = (EGLint)appDge->windowsSuggestedSamples();
+    GApplication::Delegate* appDge=GApplication::sharedDelegate();
+    EGLint depth = (EGLint)appDge->windowsSuggestedDepth();
+    EGLint stencil = (EGLint)appDge->windowsSuggestedStencil();
+    EGLint samples = (EGLint)appDge->windowsSuggestedSamples();
 
-		{
-			EGLint attribs[] = {
-				EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-				EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
-				EGL_BLUE_SIZE, 8,
-				EGL_GREEN_SIZE, 8,
-				EGL_RED_SIZE, 8,
-				EGL_ALPHA_SIZE, 8,
-				EGL_DEPTH_SIZE, depth,
-				EGL_STENCIL_SIZE, stencil,
-				EGL_SAMPLES, samples,
-				EGL_NONE };
-			EGLint numConfigs;
-            g_Context.display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
-			eglInitialize(g_Context.display, 0, 0);
+    {
+        EGLint attribs[] = {
+                EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+                EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+                EGL_BLUE_SIZE, 8,
+                EGL_GREEN_SIZE, 8,
+                EGL_RED_SIZE, 8,
+                EGL_ALPHA_SIZE, 8,
+                EGL_DEPTH_SIZE, depth,
+                EGL_STENCIL_SIZE, stencil,
+                EGL_SAMPLES, samples,
+                EGL_NONE };
+        EGLint numConfigs;
+        g_Display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+        eglInitialize(g_Display, 0, 0);
 
-			if(!eglChooseConfig(g_Context.display, attribs, &g_Config, 1, &numConfigs) || numConfigs==0) {
-				EGLint attChanged[][6] = {
-					{ EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, stencil,EGL_SAMPLES, samples, },
-					{ EGL_DEPTH_SIZE, depth,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, samples, },
-					{ EGL_DEPTH_SIZE, depth,EGL_STENCIL_SIZE, stencil,EGL_SAMPLES, 0, },
+        if(!eglChooseConfig(g_Display, attribs, &g_Config, 1, &numConfigs) || numConfigs==0) {
+            EGLint attChanged[][6] = {
+                    { EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, stencil,EGL_SAMPLES, samples, },
+                    { EGL_DEPTH_SIZE, depth,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, samples, },
+                    { EGL_DEPTH_SIZE, depth,EGL_STENCIL_SIZE, stencil,EGL_SAMPLES, 0, },
 
-					{ EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, samples, },
-					{ EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, stencil,EGL_SAMPLES, 0, },
-					{ EGL_DEPTH_SIZE, depth,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, 0, },
+                    { EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, samples, },
+                    { EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, stencil,EGL_SAMPLES, 0, },
+                    { EGL_DEPTH_SIZE, depth,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, 0, },
 
-					{ EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, 0, },
-				};
-				for(int i=0;i<sizeof(attChanged)/sizeof(attChanged[0]);++i) {
-					for(int j=0;j<6;j++) {
-						attribs[sizeof(attribs)/sizeof(attribs[0])-1-6+j]=attChanged[i][j];
-					}
-					if(eglChooseConfig(g_Context.display, attribs, &g_Config, 1, &numConfigs) && numConfigs) {
-						break;
-					}
-				}
-			}
-		}
-	}
+                    { EGL_DEPTH_SIZE, 0,EGL_STENCIL_SIZE, 0,EGL_SAMPLES, 0, },
+            };
+            for(int i=0;i<sizeof(attChanged)/sizeof(attChanged[0]);++i) {
+                for(int j=0;j<6;j++) {
+                    attribs[sizeof(attribs)/sizeof(attribs[0])-1-6+j]=attChanged[i][j];
+                }
+                if(eglChooseConfig(g_Display, attribs, &g_Config, 1, &numConfigs) && numConfigs) {
+                    break;
+                }
+            }
+        }
+    }
 }
 
 #elif defined(GX_OS_QT)
@@ -234,6 +232,26 @@ void GOGLContext::initialize()
                                                  shareContext:nil];
     g_CtxLoad.context=[[NSOpenGLContext alloc] initWithFormat:pixelFormat
                                                  shareContext:GX_CAST_R(NSOpenGLContext*, g_CtxMain.context)];
+#elif defined(GX_OS_ANDROID)
+    CreateDC();
+
+    const EGLint attribs_surface[] = {
+            EGL_WIDTH, 1,
+            EGL_HEIGHT,1,
+            EGL_NONE
+    };
+    const EGLint attribs_context[] = {
+            EGL_CONTEXT_CLIENT_VERSION, 2,
+            EGL_NONE
+    };
+    g_CtxMain.display=g_Display;
+    g_CtxMain.surface=eglCreatePbufferSurface(g_CtxMain.display,g_Config,attribs_surface);
+    g_CtxMain.context=eglCreateContext(g_CtxMain.display,g_Config,EGL_NO_CONTEXT,attribs_context);
+
+    g_CtxLoad.display=g_Display;
+    g_CtxLoad.surface=eglCreatePbufferSurface(g_CtxLoad.display,g_Config,attribs_surface);
+    g_CtxLoad.context=eglCreateContext(g_CtxLoad.display,g_Config,g_CtxMain.context,attribs_context);
+
 #elif defined(GX_OS_QT)
     g_CtxMain.surface=new QOffscreenSurface();
     GX_CAST_S(QOffscreenSurface*,g_CtxMain.surface)->create();
@@ -341,7 +359,7 @@ bool GOGLContext::create(GWindow* win)
 #elif defined(GX_OS_ANDROID)
 	CreateDC();
 
-    m_Context.display=g_Context.display;
+    m_Context.display=g_CtxMain.display;
 
 	EGLint format;
 	eglGetConfigAttrib(m_Context.display, g_Config, EGL_NATIVE_VISUAL_ID, &format);
@@ -353,19 +371,8 @@ bool GOGLContext::create(GWindow* win)
 			EGL_CONTEXT_CLIENT_VERSION, 2,
 			EGL_NONE
 	};
-	EGLContext shared = g_Context.context;
-	if (shared == EGL_NO_CONTEXT) {
-		GWindow *aw = GWindow::first();
-		if (aw && aw != getWindow()) {
-			shared = GX_CAST_R(EGLContext, GX_CAST_R(GOGLContext * , &aw->m_Context)->m_Context.context);
-		}
-	}
-	m_Context.context = eglCreateContext(m_Context.display, g_Config, shared, attribs_context);
+	m_Context.context = eglCreateContext(m_Context.display, g_Config, g_CtxMain.context, attribs_context);
 
-	if (g_Context.surface==EGL_NO_SURFACE) {
-        g_Context.surface = m_Context.surface;
-        g_Context.context = m_Context.context;
-	}
 #elif defined(GX_OS_QT)
     m_Context.surface=getWindow()->m_OSWin;
     m_Context.context=new QOpenGLContext();
@@ -423,15 +430,11 @@ void GOGLContext::destroy()
     m_Context.context=NULL;
 #elif defined(GX_OS_ANDROID)
 	if(m_Context.context!=EGL_NO_CONTEXT) {
-		if(m_Context.context!=g_Context.context) {
-			eglDestroyContext(m_Context.display, m_Context.context);
-		}
+        eglDestroyContext(m_Context.display, m_Context.context);
 		m_Context.context=EGL_NO_CONTEXT;
 	}
 	if(m_Context.surface!=EGL_NO_SURFACE) {
-		if(m_Context.surface!=g_Context.surface) {
-			eglDestroySurface(m_Context.display, m_Context.surface);
-		}
+        eglDestroySurface(m_Context.display, m_Context.surface);
         m_Context.surface=EGL_NO_SURFACE;
 	}
 #elif defined(GX_OS_QT)
@@ -500,15 +503,8 @@ bool GOGLContext::resize(gfloat32 width,gfloat32 height)
     return true;
 #elif defined(GX_OS_ANDROID)
 	if (m_Context.surface != EGL_NO_SURFACE) {
-		if(m_Context.surface==g_Context.surface) {
-			eglDestroySurface(m_Context.display, m_Context.surface);
-            m_Context.surface = eglCreateWindowSurface(m_Context.display, g_Config, getWindow()->m_OSWin, NULL);
-			g_Context.surface=m_Context.surface;
-		}
-		else {
-			eglDestroySurface(m_Context.display, m_Context.surface);
-            m_Context.surface = eglCreateWindowSurface(m_Context.display, g_Config, getWindow()->m_OSWin, NULL);
-		}
+        eglDestroySurface(m_Context.display, m_Context.surface);
+        m_Context.surface = eglCreateWindowSurface(m_Context.display, g_Config, getWindow()->m_OSWin, NULL);
 	}
 	return true;
 #elif defined(GX_OS_QT)
@@ -594,56 +590,30 @@ void GOGLContext::makeClear()
 
 void GOGLContext::readyShader()
 {
-#if defined(GX_OS_ANDROID)
-    g_Context.makeCurrent();
-#else
-    makeCurrent();
-#endif
+    g_CtxMain.makeCurrent();
 }
 
 void GOGLContext::doneShader()
 {
-#if defined(GX_OS_ANDROID)
-    g_Context.makeClear();
-#else
-    makeClear();
-#endif
+    g_CtxMain.makeClear();
 }
 
 void GOGLContext::readyTexture()
 {
-#if defined(GX_OS_ANDROID)
-    g_Context.makeCurrent();
-#else
-    //makeCurrent();
     g_CtxMain.makeCurrent();
-#endif
 }
 void GOGLContext::doneTexture()
 {
-#if defined(GX_OS_ANDROID)
-    g_Context.makeClear();
-#else
-    //makeClear();
     g_CtxMain.makeClear();
-#endif
 }
 
 void GOGLContext::readyFrameBuffer()
 {
-#if defined(GX_OS_ANDROID)
-    g_Context.makeCurrent();
-#else
     makeCurrent();
-#endif
 }
 void GOGLContext::doneFrameBuffer()
 {
-#if defined(GX_OS_ANDROID)
-    g_Context.makeClear();
-#else
     makeClear();
-#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
