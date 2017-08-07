@@ -183,6 +183,10 @@ static void CreateDC()
 	}
 }
 
+#elif defined(GX_OS_QT)
+#include <QOffscreenSurface>
+static QThread* g_CtxLoadQTD=NULL;
+static GCondition* g_CtxLoadCond=NULL;
 #endif
 
 static GX::OpenGLContext g_CtxMain;
@@ -191,13 +195,18 @@ static GX::OpenGLContext g_CtxLoad;
 static GThread::Holder* g_CtxLoadTH=NULL;
 static void CtxLoadFun(GObject*)
 {
-	g_CtxLoad.makeCurrent();
+#if defined(GX_OS_QT)
+    g_CtxLoadQTD=QThread::currentThread();
+    g_CtxLoadCond->wait();
+    GO::release(g_CtxLoadCond);
+#endif
+    g_CtxLoad.makeCurrent();
 	while (g_CtxLoadTH)
 	{
 		GRunLoop::current()->run();
 		GThread::sleep(10);
 	}
-	g_CtxLoad.makeClear();
+    g_CtxLoad.makeClear();
 }
 
 void GOGLContext::initialize()
@@ -225,9 +234,35 @@ void GOGLContext::initialize()
                                                  shareContext:nil];
     g_CtxLoad.context=[[NSOpenGLContext alloc] initWithFormat:pixelFormat
                                                  shareContext:GX_CAST_R(NSOpenGLContext*, g_CtxMain.context)];
+#elif defined(GX_OS_QT)
+    g_CtxMain.surface=new QOffscreenSurface();
+    GX_CAST_S(QOffscreenSurface*,g_CtxMain.surface)->create();
+    g_CtxMain.context=new QOpenGLContext();
+    g_CtxMain.context->setFormat(GX_CAST_S(QOffscreenSurface*,g_CtxMain.surface)->format());
+    GX_ASSERT(g_CtxMain.context->create());
+    GX_ASSERT(!g_CtxMain.context->isOpenGLES());
+    g_CtxMain.makeCurrent();
+    g_CtxMain.context->functions()->initializeOpenGLFunctions();
+    g_CtxMain.makeClear();
+
+    g_CtxLoad.surface=new QOffscreenSurface();
+    GX_CAST_S(QOffscreenSurface*,g_CtxLoad.surface)->create();
+    g_CtxLoad.context=new QOpenGLContext();
+    g_CtxLoad.context->setShareContext(g_CtxMain.context);
+    g_CtxLoad.context->setFormat(GX_CAST_S(QOffscreenSurface*,g_CtxLoad.surface)->format());
+    GX_ASSERT(g_CtxLoad.context->create());
+    g_CtxLoad.makeCurrent();
+    g_CtxLoad.context->functions()->initializeOpenGLFunctions();
+    g_CtxLoad.makeClear();
+
+    g_CtxLoadCond=GCondition::alloc();
 #endif
 	g_CtxLoadTH = GThread::create(CtxLoadFun, NULL, true);
 	GO::retain(g_CtxLoadTH);
+#if defined(GX_OS_QT)
+    g_CtxLoad.context->moveToThread(g_CtxLoadQTD);
+    g_CtxLoadCond->signal();;
+#endif
 }
 
 //不用在这里初始化
@@ -335,17 +370,13 @@ bool GOGLContext::create(GWindow* win)
     m_Context.surface=getWindow()->m_OSWin;
     m_Context.context=new QOpenGLContext();
     m_Context.context->setFormat(getWindow()->m_OSWin->format());
-    GWindow *aw = GWindow::first();
-    if (aw && aw != getWindow()) {
-        m_Context.context->setShareContext(GX_CAST_R(GOGLContext* , &aw->m_Context)->m_Context.context);
-    }
+    m_Context.context->setShareContext(g_CtxMain.context);
     if(!m_Context.context->create()) {
         return false;
     }
-    GX_ASSERT(!m_Context.context->isOpenGLES());
-    m_Context.context->makeCurrent(getWindow()->m_OSWin);
+    m_Context.makeCurrent();
     initializeOpenGLFunctions();
-    m_Context.context->doneCurrent();
+    m_Context.makeClear();
 #endif
 	return true;
 }
