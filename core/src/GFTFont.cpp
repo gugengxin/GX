@@ -298,6 +298,7 @@ GFTFont::GFTFont()
 
 GFTFont::~GFTFont()
 {
+	m_GlyphCache.removeAll();
     if (m_Stroker) {
         FT_Stroker_Done(M_STROKER());
     }

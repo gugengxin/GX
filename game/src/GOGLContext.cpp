@@ -191,11 +191,13 @@ static GX::OpenGLContext g_CtxLoad;
 static GThread::Holder* g_CtxLoadTH=NULL;
 static void CtxLoadFun(GObject*)
 {
+	g_CtxLoad.makeCurrent();
 	while (g_CtxLoadTH)
 	{
 		GRunLoop::current()->run();
 		GThread::sleep(10);
 	}
+	g_CtxLoad.makeClear();
 }
 
 void GOGLContext::initialize()

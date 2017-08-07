@@ -236,7 +236,11 @@ GFontManager::GFontManager()
 
 GFontManager::~GFontManager()
 {
-    FT_Done_FreeType(M_FT_LIBRARY());
+	for (gint i = 0; i < MapCount; i++) {
+		m_Maps[i].removeAll();
+	}
+	//因为释放Library后会将相关的FT对象都释放，而持有FT的对象因为引用计数的存在，有可能会在此之后释放，而造成crash
+	//FT_Done_FreeType(M_FT_LIBRARY());
 }
 
 GMap<GString, GObject>* GFontManager::getMap(gint index)
