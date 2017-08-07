@@ -399,7 +399,7 @@
 					CA9C162C1CC5DFE200204303 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = YS4H72RSCW;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					CA9C16841CC5E7D800204303 = {
 						CreatedOnToolsVersion = 7.3;
@@ -681,12 +681,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = YS4H72RSCW;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXGameTest;
-				PROVISIONING_PROFILE = "db714bbc-f207-4e03-898b-d94818c00ef1";
-				PROVISIONING_PROFILE_SPECIFIER = CommonDEV;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -695,12 +696,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = YS4H72RSCW;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gxengine.GXGameTest;
-				PROVISIONING_PROFILE = "db714bbc-f207-4e03-898b-d94818c00ef1";
-				PROVISIONING_PROFILE_SPECIFIER = CommonDEV;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

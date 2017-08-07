@@ -213,7 +213,18 @@ void GOGLContext::initialize()
 	CreateGLWnd(g_CtxLoadWnd);
 	g_CtxLoad.DC = ::GetDC(g_CtxLoadWnd.getHWND());
 	ConfigDC(g_CtxLoad.DC);
-	g_CtxLoad.context = ::wglCreateContext(g_CtxLoad.DC);
+    g_CtxLoad.context = ::wglCreateContext(g_CtxLoad.DC);
+#elif defined(GX_OS_IPHONE)
+    g_CtxMain.context=[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+                                            sharegroup:nil];
+    g_CtxLoad.context=[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+                                            sharegroup:GX_CAST_R(EAGLContext*, g_CtxMain.context).sharegroup];
+#elif defined(GX_OS_MACOSX)
+    NSOpenGLPixelFormat* pixelFormat=CreatePF();
+    g_CtxMain.context=[[NSOpenGLContext alloc] initWithFormat:pixelFormat
+                                                 shareContext:nil];
+    g_CtxLoad.context=[[NSOpenGLContext alloc] initWithFormat:pixelFormat
+                                                 shareContext:GX_CAST_R(NSOpenGLContext*, g_CtxMain.context)];
 #endif
 	g_CtxLoadTH = GThread::create(CtxLoadFun, NULL, true);
 	GO::retain(g_CtxLoadTH);
@@ -238,18 +249,12 @@ bool GOGLContext::create(GWindow* win)
     m_Context.DC = ::GetDC(M_OS_WND(getWindow()->getOSWindow()));
 	ConfigDC(m_Context.DC);
 	m_Context.context = ::wglCreateContext(m_Context.DC);
-    //shared
 	wglShareLists(g_CtxMain.context, m_Context.context);
 #elif defined(GX_OS_IPHONE)
-    EAGLSharegroup* group=nil;
-    //shared
-    GWindow* aw = GWindow::first();
-    if (aw && aw != getWindow()) {
-        group=GX_CAST_R(EAGLContext*, GX_CAST_R(GOGLContext*, &aw->m_Context)->m_Context.context).sharegroup;
-    }
-    m_Context.context=[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:group];
+    m_Context.context=[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+                                            sharegroup:GX_CAST_R(EAGLContext*, g_CtxMain.context).sharegroup];
+    //Create FBO
     [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*, m_Context.context)];
-    
     GLuint oldFB,oldRB;
     GX_glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&oldFB);
     GX_glGetIntegerv(GL_RENDERBUFFER_BINDING, (GLint*)&oldRB);
@@ -294,20 +299,8 @@ bool GOGLContext::create(GWindow* win)
     resize(0, 0);
 
 #elif defined(GX_OS_MACOSX)
-    NSOpenGLPixelFormat *pixelFormat=nil;
-    NSOpenGLContext* shared=nil;
-    //shared
-    GWindow* aw = GWindow::first();
-    if (aw && aw != getWindow()) {
-        shared=GX_CAST_R(NSOpenGLContext*, GX_CAST_R(GOGLContext*, &aw->m_Context)->m_Context.context);
-        pixelFormat=shared.pixelFormat;
-    }
-    else {
-        pixelFormat=CreatePF();
-        shared=nil;
-    }
-    
-    m_Context.context=[[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:shared];
+    m_Context.context=[[NSOpenGLContext alloc] initWithFormat:GX_CAST_R(NSOpenGLContext*, g_CtxMain.context).pixelFormat
+                                                 shareContext:GX_CAST_R(NSOpenGLContext*, g_CtxMain.context)];
     [GX_CAST_R(NSOpenGLContext*, m_Context.context) setView:GX_CAST_R(NSView*, getWindow()->getOSWindow())];
     [GX_CAST_R(NSOpenGLContext*, m_Context.context) update];
 #elif defined(GX_OS_ANDROID)
@@ -591,7 +584,8 @@ void GOGLContext::readyTexture()
 #if defined(GX_OS_ANDROID)
     g_Context.makeCurrent();
 #else
-    makeCurrent();
+    //makeCurrent();
+    g_CtxMain.makeCurrent();
 #endif
 }
 void GOGLContext::doneTexture()
@@ -599,7 +593,8 @@ void GOGLContext::doneTexture()
 #if defined(GX_OS_ANDROID)
     g_Context.makeClear();
 #else
-    makeClear();
+    //makeClear();
+    g_CtxMain.makeClear();
 #endif
 }
 
