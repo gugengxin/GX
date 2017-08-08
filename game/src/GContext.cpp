@@ -131,7 +131,6 @@ bool GContext::create(GWindow *win)
     if(!GX_CONTEXT_BASE::create(win)) {
         return false;
     }
-    memset(m_Shaders, 0, sizeof(m_Shaders));
     //GX_LOG_W(PrioINFO,"GContext","create");
     return true;
 }
@@ -156,12 +155,6 @@ void GContext::destroy()
             m_Textures.remove(p,false);
             p=pTemp;
         }
-    }
-    for (gint i = 0; i < _SRIDCount; i++) {
-        readyShader();
-        delete m_Shaders[i];
-        m_Shaders[i]=NULL;
-        doneShader();
     }
     GX_CONTEXT_BASE::destroy();
 }
@@ -190,29 +183,6 @@ void GContext::didReceivedMemoryWarning()
 {
     //TODO
 }
-
-GSRGraphics* GContext::getSRGraphics(GSRGraphics::ID srID)
-{
-    //GX_LOG_W(PrioINFO,"GContext","getSRGraphics");
-	if (!m_Shaders[SRIDGraphics + srID]) {
-        readyShader();
-        m_Shaders[SRIDGraphics + srID] = new GSRGraphics(this,srID);
-        doneShader();
-	}
-	return (GSRGraphics*)m_Shaders[SRIDGraphics + srID];
-}
-
-GSRTexture2D* GContext::getSRTexture2D(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm)
-{
-    gint idx=(alphaOnly*2+colorMul)*GSRTexture2D::MMCount+mm;
-    if (!m_Shaders[SRIDTexture2D+idx]) {
-        readyShader();
-        m_Shaders[SRIDTexture2D + idx] = new GSRTexture2D(this,alphaOnly,colorMul,mm);
-        doneShader();
-    }
-    return (GSRTexture2D*)m_Shaders[SRIDTexture2D + idx];
-}
-
 
 GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param)
 {

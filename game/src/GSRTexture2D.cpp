@@ -79,9 +79,21 @@ fp {
 *///GX_SL
 
 
+GSRTexture2D* GSRTexture2D::shared(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm)
+{
+    static GSRTexture2D* g_Shaders[2][2][MMCount]={NULL};
+    
+    if (!g_Shaders[alphaOnly][colorMul][mm]) {
+        ready();
+        g_Shaders[alphaOnly][colorMul][mm] = new GSRTexture2D(alphaOnly,colorMul,mm);
+        done();
+    }
+    return g_Shaders[alphaOnly][colorMul][mm];
+}
 
-GSRTexture2D::GSRTexture2D(GContext* ctx,bool alphaOnly,bool colorMul,MaskMode mm)
-: GShaderBase(ctx, (guint8)alphaOnly,(guint8)colorMul,(guint8)mm, 0)
+
+GSRTexture2D::GSRTexture2D(bool alphaOnly,bool colorMul,MaskMode mm)
+: GShaderBase((guint8)alphaOnly,(guint8)colorMul,(guint8)mm, 0)
 {
     GX_SHADER_INPUT_INIT();
     static Macro g_Macros[] = {

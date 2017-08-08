@@ -10,8 +10,6 @@
 #include "GD3DContext.h"
 #include "GMTLContext.h"
 #include "GXContext.h"
-#include "GSRGraphics.h"
-#include "GSRTexture2D.h"
 #include "GReader.h"
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
@@ -28,16 +26,6 @@ class GContext : public GX_CONTEXT_BASE, public GResourceManager
     friend class GTexture;
     friend class GFrameBuffer;
 private:
-	enum ShaderID {
-		SRIDGraphics = 0,
-		SRIDGraphicsEnd = SRIDGraphics + GSRGraphics::IDCount - 1,
-
-        SRIDTexture2D,
-        SRIDTexture2DEnd= SRIDTexture2D+ GSRTexture2D::MMCount*2*2 - 1,
-
-		_SRIDCount,
-	};
-    
     class NodeLoadObj : public GObject {
         GX_GOBJECT(NodeLoadObj);
     public:
@@ -115,10 +103,6 @@ protected:
     virtual void didReceivedMemoryWarning();
 private:
     GMap<GString,GObject> m_Maps[MapCount];
-//Shader
-public:
-	GSRGraphics* getSRGraphics(GSRGraphics::ID srID);
-    GSRTexture2D* getSRTexture2D(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm);
 //Texture
 public:
     GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param);
@@ -144,7 +128,6 @@ private:
 public:
     GTex2DFont* loadTex2DFont(GString* name, gint32 size, gint32 outlineSize);
 private:
-	GShader*                        m_Shaders[_SRIDCount];
 	GDataList<GTexture::Handle>     m_Textures;
     GDataList<GFrameBuffer::Handle> m_FrameBuffers;
 };

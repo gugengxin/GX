@@ -25,6 +25,7 @@ class GOGLContext : public GBaseContext, public GX::OpenGLCullFacer, public GX::
         , public QOpenGLFunctions
 #endif
 {
+    friend class GOShader;
 protected:
     static void initialize();
 protected:
@@ -50,8 +51,8 @@ protected:
 	void makeCurrent();
 	void makeClear();
 protected:
-    void readyShader();
-    void doneShader();
+    static void readyShader();
+    static void doneShader();
 	void readyTexture();
 	void doneTexture();
     void readyFrameBuffer();

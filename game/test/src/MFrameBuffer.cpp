@@ -80,7 +80,7 @@ void MFrameBuffer::prepareTex2D(GContext& context)
             m_FB->setCullFace(GX::DCullFaceBack);
             m_FB->setBlend(GX::DBlendNone);
             
-            GSRTexture2D* shader=context.getSRTexture2D(false, false, GSRTexture2D::MM_None);
+            GSRTexture2D* shader=GSRTexture2D::shared(false, false, GSRTexture2D::MM_None);
             shader->draw(m_FB, m_Data, 0, sizeof(MFrameBufferData), GSRTexture2D::IT_Float_Float, tex, GX_TRIANGLE_STRIP, 0, 4, NULL);
             
             m_FB->setBlend(GX::DBlendSsaAddD1msa);
@@ -103,7 +103,7 @@ void MFrameBuffer::render3D(GCanvas* canvas,GContext& context)
     
     canvas->rotateY(m_Angle);
     
-    GSRTexture2D* shader=context.getSRTexture2D(false, true, GSRTexture2D::MM_None);
+    GSRTexture2D* shader=GSRTexture2D::shared(false, true, GSRTexture2D::MM_None);
     shader->draw(canvas, m_Data, 0, sizeof(MFrameBufferData), GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
     
     canvas->popMatrix();

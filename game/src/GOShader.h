@@ -13,7 +13,10 @@
 class GOShader : public GShader
 {
 protected:
-	GOShader(GContext* ctx,guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
+    static void ready();
+    static void done();
+protected:
+	GOShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
 	virtual ~GOShader();
 
 	bool load(const gchar* srcVS, const gchar* srcFP, const Macro* macro);

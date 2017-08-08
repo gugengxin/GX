@@ -10,12 +10,24 @@
 #if defined(GX_METAL)
 #include "GContext.h"
 #import <QuartzCore/QuartzCore.h>
+#include "GMTLContext.h"
 
 #define M_LIBRARY()         GX_CAST_R(id<MTLLibrary>,m_Library)
 #define M_PIPELINE_STATE()  GX_CAST_R(id<MTLRenderPipelineState>,m_PipelineState)
 
-GMShader::GMShader(GContext* ctx,guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
-GShader(ctx,idxA,idxB,idxC,idxD)
+
+void GMShader::ready()
+{
+    GMTLContext::readyShader();
+}
+
+void GMShader::done()
+{
+    GMTLContext::doneShader();
+}
+
+GMShader::GMShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
+GShader(idxA,idxB,idxC,idxD)
 {
     m_Library=NULL;
 }
@@ -28,7 +40,7 @@ GMShader::~GMShader()
 
 bool GMShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
 {
-    id<MTLDevice> device=GX_CAST_R(id<MTLDevice>, getContext()->getDevice());
+    id<MTLDevice> device=GX::metalDevice();
     
     NSString* strSrc=[[NSString alloc] initWithUTF8String:srcVS];
     MTLCompileOptions* co=[[MTLCompileOptions alloc] init];
@@ -60,17 +72,15 @@ bool GMShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
         if(!fragmentProgram)
             NSLog(@">> ERROR: Couldn't load fragment function from default library");
         
-        CAMetalLayer* winLr=GX_CAST_R(CAMetalLayer*, getContext()->getMetalLayer());
-        
-        MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
+        MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[[MTLRenderPipelineDescriptor alloc] init] autorelease];
         
         pipelineStateDescriptor.label                           = @"GMShader";
-        pipelineStateDescriptor.sampleCount                     = getContext()->getSampleCount();
+        pipelineStateDescriptor.sampleCount                     = GMTLContext::sampleCount();
         pipelineStateDescriptor.vertexFunction                  = vertexProgram;
         pipelineStateDescriptor.fragmentFunction                = fragmentProgram;
-        pipelineStateDescriptor.colorAttachments[0].pixelFormat = winLr.pixelFormat;
-        pipelineStateDescriptor.depthAttachmentPixelFormat      = (MTLPixelFormat)getContext()->getDepthPixelFormat();
-        pipelineStateDescriptor.stencilAttachmentPixelFormat    = (MTLPixelFormat)getContext()->getStencilPixelFormat();
+        pipelineStateDescriptor.colorAttachments[0].pixelFormat = (MTLPixelFormat)GMTLContext::layerPixelFormat();
+        pipelineStateDescriptor.depthAttachmentPixelFormat      = (MTLPixelFormat)GMTLContext::depthPixelFormat();
+        pipelineStateDescriptor.stencilAttachmentPixelFormat    = (MTLPixelFormat)GMTLContext::stencilPixelFormat();
         
         for (gint i=0; i<getPLStateCount(); i++) {
             deployPLState(i, pipelineStateDescriptor);

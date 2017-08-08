@@ -2,10 +2,21 @@
 #if defined(GX_OPENGL)
 #include "GLog.h"
 #include "GString.h"
+#include "GOGLContext.h"
 
 
-GOShader::GOShader(GContext* ctx,guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
-GShader(ctx,idxA,idxB,idxC,idxD)
+void GOShader::ready()
+{
+    GOGLContext::readyShader();
+}
+
+void GOShader::done()
+{
+    GOGLContext::doneShader();
+}
+
+GOShader::GOShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
+GShader(idxA,idxB,idxC,idxD)
 {
     m_Program=0;
 }

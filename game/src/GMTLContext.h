@@ -21,6 +21,11 @@ class GMTLContext : public GBaseContext, public GX::MetalCullFacer, public GX::M
     friend class GMShader;
 protected:
     static void initialize();
+public:
+    static guint layerPixelFormat();
+    static guint depthPixelFormat();
+    static guint stencilPixelFormat();
+    static guint sampleCount();
 protected:
     GMTLContext();
     virtual ~GMTLContext();
@@ -43,8 +48,8 @@ protected:
     void makeCurrent();
     void makeClear();
 protected:
-    void readyShader();
-    void doneShader();
+    static void readyShader();
+    static void doneShader();
     void readyTexture();
     void doneTexture();
     void readyFrameBuffer();
@@ -58,16 +63,6 @@ protected:
     static void loadFrameBufferNodeInMT(GObject* obj);
     void unloadFrameBufferNodeForContext(GFrameBuffer::Node* node);
 protected:
-    inline guint getDepthPixelFormat() {
-        return m_DepthPixelFormat;
-    }
-    inline guint getStencilPixelFormat() {
-        return m_StencilPixelFormat;
-    }
-    inline guint getSampleCount() {
-        return m_SampleCount;
-    }
-    
     void* getDevice();
     void* getMetalLayer();
     void* currentDrawable();
@@ -80,10 +75,6 @@ protected:
     
     
 private:
-    guint m_DepthPixelFormat;
-    guint m_StencilPixelFormat;
-    guint m_SampleCount;
-    
     void* m_DepthTex;
     void* m_StencilTex;
     void* m_MsaaTex;

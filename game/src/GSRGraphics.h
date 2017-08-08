@@ -10,7 +10,6 @@
 
 class GSRGraphics : public GShaderBase
 {
-	friend class GContext;
 public:
 	typedef enum _ID {
 		ID_ColorMul=0,
@@ -23,10 +22,12 @@ public:
 		IT_Float,
 	} InputType;
 public:
+    static GSRGraphics* shared(ID srID);
+public:
 	void draw(GCanvas* canvas, GBuffer* buffer, guint bufOffset, guint bufStride, InputType inputType, gint mode, gint first, gint count);
 
 private:
-	GSRGraphics(GContext* ctx,ID srID);
+	GSRGraphics(ID srID);
 	virtual ~GSRGraphics();
 
 #if defined(GX_OPENGL)

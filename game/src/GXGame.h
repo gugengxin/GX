@@ -12,6 +12,9 @@
 
 #include "GXCore.h"
 
+#include "GSRGraphics.h"
+#include "GSRTexture2D.h"
+
 #include "GWindow.h"
 #include "GGame.h"
 

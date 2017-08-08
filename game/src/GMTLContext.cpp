@@ -25,9 +25,37 @@
 #define M_DEPTH_STENCIL_STATE() GX_CAST_R(id<MTLDepthStencilState>, m_DepthStencilState)
 
 
+static guint g_DepthPixelFormat=MTLPixelFormatInvalid;
+static guint g_StencilPixelFormat=MTLPixelFormatInvalid;
+static guint g_SampleCount=0;
+
 void GMTLContext::initialize()
 {
-    
+    GApplication::Delegate* appDge=GApplication::sharedDelegate();
+    g_DepthPixelFormat=appDge->windowsSuggestedDepth()>0?MTLPixelFormatDepth32Float:MTLPixelFormatInvalid;
+    g_StencilPixelFormat=appDge->windowsSuggestedStencil()>0?MTLPixelFormatStencil8:MTLPixelFormatInvalid;
+    g_SampleCount=appDge->windowsSuggestedSamples()>1?appDge->windowsSuggestedSamples():1;
+    if (g_DepthPixelFormat!=MTLPixelFormatInvalid && g_StencilPixelFormat!=MTLPixelFormatInvalid) {
+        g_DepthPixelFormat=MTLPixelFormatDepth32Float_Stencil8;
+        g_StencilPixelFormat=g_DepthPixelFormat;
+    }
+}
+
+guint GMTLContext::layerPixelFormat()
+{
+    return MTLPixelFormatBGRA8Unorm;
+}
+guint GMTLContext::depthPixelFormat()
+{
+    return g_DepthPixelFormat;
+}
+guint GMTLContext::stencilPixelFormat()
+{
+    return g_StencilPixelFormat;
+}
+guint GMTLContext::sampleCount()
+{
+    return g_SampleCount;
 }
 
 //不用在这里初始化
@@ -47,15 +75,6 @@ bool GMTLContext::create(GWindow* win)
     
     id <MTLDevice> device=M_METAL_LAYER().device;
     
-    GApplication::Delegate* appDge=GApplication::sharedDelegate();
-    m_DepthPixelFormat=appDge->windowsSuggestedDepth()>0?MTLPixelFormatDepth32Float:MTLPixelFormatInvalid;
-    m_StencilPixelFormat=appDge->windowsSuggestedStencil()>0?MTLPixelFormatStencil8:MTLPixelFormatInvalid;
-    m_SampleCount=appDge->windowsSuggestedSamples()>1?appDge->windowsSuggestedSamples():1;
-    if (m_DepthPixelFormat!=MTLPixelFormatInvalid && m_StencilPixelFormat!=MTLPixelFormatInvalid) {
-        m_DepthPixelFormat=MTLPixelFormatDepth32Float_Stencil8;
-        m_StencilPixelFormat=m_DepthPixelFormat;
-    }
-    
     m_DepthTex=NULL;
     m_StencilTex=NULL;
     m_MsaaTex=NULL;
@@ -64,7 +83,7 @@ bool GMTLContext::create(GWindow* win)
     
     m_CommandQueue=[[device newCommandQueue] retain];
     
-    if (m_DepthPixelFormat!=MTLPixelFormatInvalid || m_StencilPixelFormat!=MTLPixelFormatInvalid) {
+    if (g_DepthPixelFormat!=MTLPixelFormatInvalid || g_StencilPixelFormat!=MTLPixelFormatInvalid) {
         MTLDepthStencilDescriptor *dsStateDesc = [[MTLDepthStencilDescriptor alloc] init];
         dsStateDesc.depthCompareFunction = MTLCompareFunctionAlways;
         dsStateDesc.depthWriteEnabled = YES;
@@ -228,11 +247,11 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
     colorAttachment.clearColor = MTLClearColorMake(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
     
     // if sample count is greater than 1, render into using MSAA, then resolve into our color texture
-    if(m_SampleCount > 1)
+    if(g_SampleCount > 1)
     {
         BOOL doUpdate =( M_MSAATEX().width       != M_TEXTURE().width  )
         ||  ( M_MSAATEX().height      != M_TEXTURE().height )
-        ||  ( M_MSAATEX().sampleCount != m_SampleCount   );
+        ||  ( M_MSAATEX().sampleCount != g_SampleCount   );
         
         if(!M_MSAATEX() || (M_MSAATEX() && doUpdate))
         {
@@ -246,7 +265,7 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
             
             // sample count was specified to the view by the renderer.
             // this must match the sample count given to any pipeline state using this render pass descriptor
-            desc.sampleCount = m_SampleCount;
+            desc.sampleCount = g_SampleCount;
             
             if ([desc respondsToSelector:@selector(setUsage:)]) {
                 desc.usage=MTLTextureUsageRenderTarget;
@@ -272,10 +291,10 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
     
     // Now create the depth and stencil attachments
     
-    if (m_DepthPixelFormat != MTLPixelFormatInvalid && m_StencilPixelFormat != MTLPixelFormatInvalid) {
+    if (g_DepthPixelFormat != MTLPixelFormatInvalid && g_StencilPixelFormat != MTLPixelFormatInvalid) {
         BOOL doUpdate = ( M_DEPTHTEX().width       != M_TEXTURE().width  )
         ||  ( M_DEPTHTEX().height      != M_TEXTURE().height )
-        ||  ( M_DEPTHTEX().sampleCount != m_SampleCount   );
+        ||  ( M_DEPTHTEX().sampleCount != g_SampleCount   );
         
         if(!M_DEPTHTEX() || doUpdate)
         {
@@ -283,13 +302,13 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
             [M_STENCILTEX() release];
             //  If we need a depth texture and don't have one, or if the depth texture we have is the wrong size
             //  Then allocate one of the proper size
-            MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat: (MTLPixelFormat)m_DepthPixelFormat
+            MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat: (MTLPixelFormat)g_DepthPixelFormat
                                                                                             width: M_TEXTURE().width
                                                                                            height: M_TEXTURE().height
                                                                                         mipmapped: NO];
             
-            desc.textureType = (m_SampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
-            desc.sampleCount = m_SampleCount;
+            desc.textureType = (g_SampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
+            desc.sampleCount = g_SampleCount;
             if ([desc respondsToSelector:@selector(setUsage:)]) {
                 desc.usage = MTLTextureUsageUnknown;
                 desc.storageMode = MTLStorageModePrivate;
@@ -310,23 +329,23 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
             stencilAttachment.clearStencil = 0;
         }
     }
-    else  if(m_DepthPixelFormat != MTLPixelFormatInvalid) {
+    else  if(g_DepthPixelFormat != MTLPixelFormatInvalid) {
         BOOL doUpdate = ( M_DEPTHTEX().width       != M_TEXTURE().width  )
         ||  ( M_DEPTHTEX().height      != M_TEXTURE().height )
-        ||  ( M_DEPTHTEX().sampleCount != m_SampleCount   );
+        ||  ( M_DEPTHTEX().sampleCount != g_SampleCount   );
         
         if(!M_DEPTHTEX() || doUpdate)
         {
             [M_DEPTHTEX() release];
             //  If we need a depth texture and don't have one, or if the depth texture we have is the wrong size
             //  Then allocate one of the proper size
-            MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat: (MTLPixelFormat)m_DepthPixelFormat
+            MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat: (MTLPixelFormat)g_DepthPixelFormat
                                                                                             width: M_TEXTURE().width
                                                                                            height: M_TEXTURE().height
                                                                                         mipmapped: NO];
             
-            desc.textureType = (m_SampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
-            desc.sampleCount = m_SampleCount;
+            desc.textureType = (g_SampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
+            desc.sampleCount = g_SampleCount;
             if ([desc respondsToSelector:@selector(setUsage:)]) {
                 desc.usage = MTLTextureUsageUnknown;
                 desc.storageMode = MTLStorageModePrivate;
@@ -340,23 +359,23 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
             depthAttachment.clearDepth = 1.0;
         }
     } // depth
-    else if(m_StencilPixelFormat != MTLPixelFormatInvalid) {
+    else if(g_StencilPixelFormat != MTLPixelFormatInvalid) {
         BOOL doUpdate = ( M_STENCILTEX().width       != M_TEXTURE().width  )
         ||  ( M_STENCILTEX().height      != M_TEXTURE().height )
-        ||  ( M_STENCILTEX().sampleCount != m_SampleCount   );
+        ||  ( M_STENCILTEX().sampleCount != g_SampleCount   );
         
         if(!M_STENCILTEX() || doUpdate)
         {
             [M_STENCILTEX() release];
             //  If we need a stencil texture and don't have one, or if the depth texture we have is the wrong size
             //  Then allocate one of the proper size
-            MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat: (MTLPixelFormat)m_StencilPixelFormat
+            MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat: (MTLPixelFormat)g_StencilPixelFormat
                                                                                             width: M_TEXTURE().width
                                                                                            height: M_TEXTURE().height
                                                                                         mipmapped: NO];
             
-            desc.textureType = (m_SampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
-            desc.sampleCount = m_SampleCount;
+            desc.textureType = (g_SampleCount > 1) ? MTLTextureType2DMultisample : MTLTextureType2D;
+            desc.sampleCount = g_SampleCount;
 #if defined(GX_OS_IPHONE)
             if ([[[UIDevice currentDevice] systemVersion] floatValue]>=9.0) {
 #endif
@@ -630,8 +649,8 @@ void GMTLContext::loadFrameBufferNodeInMT(GObject* obj)
     colorAttachment.clearColor = MTLClearColorMake(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
     colorAttachment.storeAction = MTLStoreActionStore;
     
-    MTLPixelFormat dpFmt=(MTLPixelFormat)nodeObj.context->getDepthPixelFormat();
-    MTLPixelFormat spFmt=(MTLPixelFormat)nodeObj.context->getStencilPixelFormat();
+    MTLPixelFormat dpFmt=(MTLPixelFormat)g_DepthPixelFormat;
+    MTLPixelFormat spFmt=(MTLPixelFormat)g_StencilPixelFormat;
     if (dpFmt!=MTLPixelFormatInvalid && spFmt!=MTLPixelFormatInvalid) {
         
         MTLTextureDescriptor* desc = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:dpFmt

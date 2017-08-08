@@ -19,7 +19,6 @@
 
 
 class GSRTexture2D : public GShaderBase {
-    friend class GContext;
 public:
     typedef enum _MaskMode {
         MM_None=0,
@@ -31,7 +30,9 @@ public:
         IT_Float_UShort,
         IT_Float_Float,
     } InputType;
-    
+public:
+    static GSRTexture2D* shared(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm);
+public:
     inline bool isAlphaOnly() {
         return getIndex0()!=0;
     }
@@ -52,7 +53,7 @@ public:
 		GTexture2D* texMask);
 
 private:
-    GSRTexture2D(GContext* ctx,bool alphaOnly,bool colorMul,MaskMode mm);
+    GSRTexture2D(bool alphaOnly,bool colorMul,MaskMode mm);
     virtual ~GSRTexture2D();
 
 #if defined(GX_OPENGL)

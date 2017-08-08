@@ -53,7 +53,18 @@ fp {
 *///GX_SL
 
 
-GSRGraphics::GSRGraphics(GContext* ctx,ID srID) : GShaderBase(ctx,(guint8)srID, 0, 0, 0)
+GSRGraphics* GSRGraphics::shared(ID srID)
+{
+    static GSRGraphics* g_Shaders[IDCount]={NULL};
+    if (!g_Shaders[srID]) {
+        ready();
+        g_Shaders[srID] = new GSRGraphics(srID);
+        done();
+    }
+    return g_Shaders[srID];
+}
+
+GSRGraphics::GSRGraphics(ID srID) : GShaderBase((guint8)srID, 0, 0, 0)
 {
 	GX_SHADER_INPUT_INIT();
 

@@ -19,9 +19,11 @@
 class GTexture;
 
 class GMShader : public GShader {
-
 protected:
-    GMShader(GContext* ctx,guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
+    static void ready();
+    static void done();
+protected:
+    GMShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
     virtual ~GMShader();
 public:
     bool load(const gchar* srcVS, const gchar* srcFP, const Macro* macro);

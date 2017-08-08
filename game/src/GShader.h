@@ -4,8 +4,6 @@
 
 #include "GXPrefix.h"
 
-class GContext;
-
 class GShader
 {
 	friend class GContext;
@@ -16,7 +14,7 @@ protected:
 		const gchar* definition;
 	} Macro;
 protected:
-	GShader(GContext* ctx,guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
+	GShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
 	virtual ~GShader();
 
 	inline guint8 getIndex0() {
@@ -43,13 +41,8 @@ protected:
 	inline guint8 getIndexD() {
 		return m_Index[3];
 	}
-    
-    inline GContext* getContext() {
-        return m_Context;
-    }
 
 private:
-    GContext*   m_Context;
     guint8      m_Index[4];
 };
 
