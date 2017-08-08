@@ -2,9 +2,21 @@
 #if defined(GX_DIRECTX)
 #include <D3Dcompiler.h>
 #include "GLog.h"
+#include "GD3DContext.h"
 
-GDShader::GDShader(GContext* ctx,guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
-GShader(ctx,idxA,idxB,idxC,idxD)
+
+void GDShader::ready()
+{
+	GD3DContext::readyShader();
+}
+
+void GDShader::done()
+{
+	GD3DContext::doneShader();
+}
+
+GDShader::GDShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD) :
+GShader(idxA,idxB,idxC,idxD)
 {
 	m_PixelShader = NULL;
 	m_VertexShader = NULL;

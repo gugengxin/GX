@@ -14,6 +14,7 @@
 #include "GFrameBuffer.h"
 
 class GD3DContext : public GBaseContext, public GX::Direct3DCullFacer, public GX::Direct3DBlender {
+	friend class GDShader;
 protected:
     static void initialize();
 protected:
@@ -36,8 +37,8 @@ protected:
 	void makeCurrent();
 	void makeClear();
 protected:
-	void readyShader();
-	void doneShader();
+	static void readyShader();
+	static void doneShader();
 	void readyTexture();
 	void doneTexture();
 	void readyFrameBuffer();

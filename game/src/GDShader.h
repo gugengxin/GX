@@ -12,9 +12,10 @@
 class GDShader : public GShader
 {
 protected:
-	
+	static void ready();
+	static void done();
 protected:
-	GDShader(GContext* ctx,guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
+	GDShader(guint8 idxA, guint8 idxB, guint8 idxC, guint8 idxD);
 	virtual ~GDShader();
 
 	bool load(const gchar* srcVS, const gchar* srcFP, const Macro* macro);
