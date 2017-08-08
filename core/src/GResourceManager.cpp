@@ -34,7 +34,9 @@ bool GResourceManager::addBundle(GBundle* v)
         m_MainBundle=GX_CAST_R(GAppBundle*, v);
     }
     else {
+        m_Mutex.lock();
         m_Bundles.add(v);
+        m_Mutex.unlock();
     }
     return true;
 }
@@ -45,7 +47,9 @@ void GResourceManager::removeBundle(GBundle* v)
         m_MainBundle=NULL;
     }
     else {
+        m_Mutex.lock();
         m_Bundles.remove(v);
+        m_Mutex.unlock();
     }
 }
 
@@ -84,6 +88,7 @@ GReader* GResourceManager::openReader(GString* fileName,GBundle*& bundleOut)
         }
     }
     
+    m_Mutex.lock();
     gint count=m_Bundles.getCount();
     for (gint i=0; i<count; ++i) {
         GBundle* bundle=m_Bundles.get(i);
@@ -93,6 +98,7 @@ GReader* GResourceManager::openReader(GString* fileName,GBundle*& bundleOut)
             break;
         }
     }
+    m_Mutex.unlock();
     
     return res;
 }
@@ -105,20 +111,28 @@ void GResourceManager::closeReader(GReader* reader,GBundle* bundle)
 
 GObject* GResourceManager::findInMap(gint index,GString* key)
 {
-    return getMap(index)->get(key);
+    m_Mutex.lock();
+    GObject* res=getMap(index)->get(key);
+    m_Mutex.unlock();
+    return res;
 }
 
 void GResourceManager::addToMap(gint index,GString* key,GObject* obj)
 {
+    m_Mutex.lock();
     getMap(index)->set(key, obj);
+    m_Mutex.unlock();
 }
 
-void GResourceManager::eventReceivedMemoryWarning(GNotice* obj GX_UNUSE)
+void GResourceManager::eventReceivedMemoryWarning(GNotice* obj)
 {
+    GX_UNUSED(obj);
+    m_Mutex.lock();
     gint count=getMapCount();
     for (gint i=0; i<count; i++) {
         getMap(i)->removeAll();
     }
+    m_Mutex.unlock();
     didReceivedMemoryWarning();
 }
 

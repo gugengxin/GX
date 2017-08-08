@@ -16,6 +16,7 @@
 #include "GMap.h"
 #include "GString.h"
 #include "GNotice.h"
+#include "GMutex.h"
 
 class GResourceManager
 {
@@ -43,6 +44,7 @@ private:
 protected:
     virtual void didReceivedMemoryWarning()=0;
 private:
+    GMutex m_Mutex;
     GAppBundle*     m_MainBundle;
     GArray<GBundle> m_Bundles;
 };
