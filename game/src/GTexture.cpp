@@ -13,63 +13,82 @@
 
 GX_GOBJECT_IMPLEMENT(GTexture, GObject);
 
-GTexture::Handle::Handle()
-{
-#if defined(GX_OPENGL)
-    m_Name = 0;
-#elif defined(GX_DIRECTX)
-    m_Name = NULL;
-    m_SamplerState = NULL;
-#elif defined(GX_METAL)
-    m_Name=NULL;
-    m_SamplerState=NULL;
-#endif
-}
-
-GTexture::Handle::~Handle()
-{
-    
-}
-
-bool GTexture::Handle::isValid()
-{
-#if defined(GX_OPENGL)
-    return m_Name != 0;
-#elif defined(GX_DIRECTX) || defined(GX_METAL)
-    return m_Name != NULL;
-#endif
-}
-
-GTexture::Node::Node()
-{
-    m_Context=NULL;
-}
-
-GTexture::Node::~Node()
-{
-
-}
-
 GTexture::GTexture()
 {
-    m_Node=NULL;
+#if defined(GX_OPENGL)
+	m_TextureID = 0;
+#elif defined(GX_DIRECTX)
+	m_ShaderResView = NULL;
+	m_SamplerState = NULL;
+#elif defined(GX_METAL)
+	m_Texture = NULL;
+	m_SamplerState = NULL;
+#endif
 }
 
 GTexture::~GTexture()
 {
-    if (m_Node && m_Node->getContext()) {
-        m_Node->getContext()->unloadTextureNode(m_Node);
-    }
+#if defined(GX_OPENGL)
+#error
+#elif defined(GX_DIRECTX)
+	if (m_ShaderResView) {
+		m_ShaderResView->Release();
+	}
+	if (m_SamplerState) {
+		m_SamplerState->Release();
+	}
+#elif defined(GX_METAL)
+#error
+#endif
 }
 
-GTexture::Name GTexture::getName()
+bool GTexture::isValid()
 {
-    if (m_Node) {
-        return m_Node->getData().getName();
-    }
 #if defined(GX_OPENGL)
-    return 0;
-#else
-    return NULL;
+	return m_TextureID!=0u;
+#elif defined(GX_DIRECTX)
+	return m_ShaderResView != NULL;
+#elif defined(GX_METAL)
+	return m_Texture!=NULL;
+#endif
+}
+
+void GTexture::create(
+#if defined(GX_OPENGL)
+	GLuint texID
+#elif defined(GX_DIRECTX)
+	ID3D10ShaderResourceView* shaderResView, ID3D10SamplerState* samplerState
+#elif defined(GX_METAL)
+	void* texture, void* samplerState
+#endif
+)
+{
+#if defined(GX_OPENGL)
+#error
+#elif defined(GX_DIRECTX)
+	m_ShaderResView = shaderResView;
+	m_ShaderResView->AddRef();
+	m_SamplerState = samplerState;
+	m_SamplerState->AddRef();
+#elif defined(GX_METAL)
+#error
+#endif
+}
+
+void GTexture::destroy()
+{
+#if defined(GX_OPENGL)
+#error
+#elif defined(GX_DIRECTX)
+	if (m_ShaderResView) {
+		m_ShaderResView->Release();
+		m_ShaderResView = NULL;
+	}
+	if (m_SamplerState) {
+		m_SamplerState->Release();
+		m_SamplerState = NULL;
+	}
+#elif defined(GX_METAL)
+#error
 #endif
 }

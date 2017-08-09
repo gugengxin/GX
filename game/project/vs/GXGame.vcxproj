@@ -30,6 +30,7 @@
     <ClCompile Include="..\..\src\GDShader.cpp" />
     <ClCompile Include="..\..\src\GFrameBuffer.cpp" />
     <ClCompile Include="..\..\src\GGame.cpp" />
+    <ClCompile Include="..\..\src\GGameResManager.cpp" />
     <ClCompile Include="..\..\src\GIndexBuffer.cpp" />
     <ClCompile Include="..\..\src\glew.c" />
     <ClCompile Include="..\..\src\GMShader.cpp" />
@@ -41,7 +42,9 @@
     <ClCompile Include="..\..\src\GSRTexture2D.cpp" />
     <ClCompile Include="..\..\src\GTex2DFont.cpp" />
     <ClCompile Include="..\..\src\GTexture.cpp" />
+    <ClCompile Include="..\..\src\GTexture1D.cpp" />
     <ClCompile Include="..\..\src\GTexture2D.cpp" />
+    <ClCompile Include="..\..\src\GTextureCube.cpp" />
     <ClCompile Include="..\..\src\GWindow.cpp" />
     <ClCompile Include="..\..\src\GX3DAPI.cpp" />
     <ClCompile Include="..\..\src\GXDirectX.cpp" />
@@ -62,6 +65,7 @@
     <ClInclude Include="..\..\src\GDShader.h" />
     <ClInclude Include="..\..\src\GFrameBuffer.h" />
     <ClInclude Include="..\..\src\GGame.h" />
+    <ClInclude Include="..\..\src\GGameResManager.h" />
     <ClInclude Include="..\..\src\GIndexBuffer.h" />
     <ClInclude Include="..\..\src\GL\eglew.h" />
     <ClInclude Include="..\..\src\GL\glew.h" />
@@ -76,7 +80,9 @@
     <ClInclude Include="..\..\src\GSRTexture2D.h" />
     <ClInclude Include="..\..\src\GTex2DFont.h" />
     <ClInclude Include="..\..\src\GTexture.h" />
+    <ClInclude Include="..\..\src\GTexture1D.h" />
     <ClInclude Include="..\..\src\GTexture2D.h" />
+    <ClInclude Include="..\..\src\GTextureCube.h" />
     <ClInclude Include="..\..\src\GWindow.h" />
     <ClInclude Include="..\..\src\GX3DAPI.h" />
     <ClInclude Include="..\..\src\GX3DAPIPre.h" />

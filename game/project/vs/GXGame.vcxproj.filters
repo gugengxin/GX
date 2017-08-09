@@ -108,6 +108,15 @@
     <ClCompile Include="..\..\src\GTex2DFont.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GGameResManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GTexture1D.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GTextureCube.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GGame.h">
@@ -219,6 +228,15 @@
       <Filter>src\buffer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GTex2DFont.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GGameResManager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GTexture1D.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GTextureCube.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

@@ -35,6 +35,7 @@ SOURCES += \
 	#../../src/GDShader.cpp\
 	../../src/GFrameBuffer.cpp\
 	../../src/GGame.cpp\
+	../../src/GGameResManager.cpp\
 	../../src/GIndexBuffer.cpp\
 	#../../src/GMShader.cpp\
 	#../../src/GMTLContext.cpp\
@@ -45,7 +46,9 @@ SOURCES += \
 	../../src/GShader.cpp\
 	../../src/GTex2DFont.cpp\
 	../../src/GTexture.cpp\
+	../../src/GTexture1D.cpp\
 	../../src/GTexture2D.cpp\
+	../../src/GTextureCube.cpp\
 	../../src/GWindow.cpp\
 	../../src/GX3DAPI.cpp\
 	#../../src/GXDirectX.cpp\
@@ -67,6 +70,7 @@ HEADERS += \
 	../../src/GDShader.h\
 	../../src/GFrameBuffer.h\
 	../../src/GGame.h\
+	../../src/GGameResManager.h\
 	../../src/GIndexBuffer.h\
 	../../src/GL/eglew.h\
 	../../src/GL/glew.h\
@@ -81,7 +85,9 @@ HEADERS += \
 	../../src/GShader.h\
 	../../src/GTex2DFont.h\
 	../../src/GTexture.h\
+	../../src/GTexture1D.h\
 	../../src/GTexture2D.h\
+	../../src/GTextureCube.h\
 	../../src/GWindow.h\
 	../../src/GX3DAPI.h\
 	../../src/GX3DAPIPre.h\
