@@ -23,7 +23,6 @@ class GContext : public GX_CONTEXT_BASE, public GResourceManager
 {
     friend class GX_CONTEXT_BASE;
     friend class GWindow;
-    friend class GTexture;
     friend class GFrameBuffer;
 private:
     class NodeLoadObj : public GObject {
@@ -35,30 +34,6 @@ private:
         GX_GOBJECT(NodeUnloadObj);
     public:
         GContext* context;
-    };
-
-    class T2DNodeLoadObjBase : public NodeLoadObj {
-        GX_GOBJECT(T2DNodeLoadObjBase);
-    public:
-        GTexture2D::Parameter* param;
-        GTexture2D::Node* nodeOut;
-    };
-    class T2DNodeLoadObj : public T2DNodeLoadObjBase {
-        GX_GOBJECT(T2DNodeLoadObj);
-    public:
-        GDib* dib;
-    };
-    class T2DNodeLoadCreateObj : public T2DNodeLoadObjBase {
-		GX_GOBJECT(T2DNodeLoadCreateObj);
-    public:
-		GX::PixelFormat pixelFormat;
-		gint32          width;
-		gint32          height;
-    };
-    class T2DNodeUnloadObj : public NodeUnloadObj {
-        GX_GOBJECT(T2DNodeUnloadObj);
-    public:
-        GTexture2D::Node* nodeOut;
     };
 
     class FBNodeLoadObj : public NodeLoadObj {
@@ -103,18 +78,6 @@ protected:
     virtual void didReceivedMemoryWarning();
 private:
     GMap<GString,GObject> m_Maps[MapCount];
-//Texture
-public:
-    GTexture2D* loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param);
-    GTexture2D* loadTexture2D(GDib* dib,GTexture2D::Parameter* param);
-    GTexture2D* loadTexture2D(GString* name,GDib::FileType suggestFT,GTexture2D::Parameter* param);
-private:
-	void addTextureNodeInMT(GTexture::Node* node);
-	void removeTextureNodeInMT(GTexture::Node* node);
-	bool loadTexture2DNode(GTexture::Node* node, GDib* dib, GTexture2D::Parameter* param);
-	bool loadTexture2DNode(GTexture::Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param);
-	void unloadTextureNode(GTexture::Node* node);
-	static void unloadTextureNodeInMT(GObject* obj);
 //FrameBuffer
 public:
     GFrameBuffer* loadFrameBuffer(gint32 width, gint32 height, GTexture2D::Parameter* param, GFrameBuffer::Use use);
@@ -128,7 +91,6 @@ private:
 public:
     GTex2DFont* loadTex2DFont(GString* name, gint32 size, gint32 outlineSize);
 private:
-	GDataList<GTexture::Handle>     m_Textures;
     GDataList<GFrameBuffer::Handle> m_FrameBuffers;
 };
 

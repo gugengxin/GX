@@ -453,12 +453,12 @@ void GSRTexture2D::draw(GCanvas* canvas,
 		device->PSSetConstantBuffers(0, 1, &cbToMapped);
 	}
 
-	device->PSSetShaderResources(0, 1, texBase->getNode()->getData().getNamePtr());
-	device->PSSetSamplers(0, 1, texBase->getNode()->getData().getSamplerStatePtr());
+	PSSetShaderResources(device, 0, 1, texBase);
+	PSSetSamplers(device, 0, 1, texBase);
 
 	if (getMaskMode()!=MM_None) {
-		device->PSSetShaderResources(1, 1, texMask->getNode()->getData().getNamePtr());
-		device->PSSetSamplers(1, 1, texMask->getNode()->getData().getSamplerStatePtr());
+		PSSetShaderResources(device, 1, 1, texMask);
+		PSSetSamplers(device, 1, 1, texMask);
 	}
 
 	device->VSSetShader(getVertexShader());

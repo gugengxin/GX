@@ -48,7 +48,7 @@ Module* MTypist::initWithGame(Game* game,GContext& context)
     
     typist->print(dib, GPointF::make(0, 0), paint);
     
-    m_Tex2D=GO::retain(context.loadTexture2D(dib, NULL));
+    m_Tex2D=GO::retain(GTexture2D::autoCreate(dib,NULL));
     
     context.setCullFace(GX::DCullFaceBack);
     context.setBlend(GX::DBlendSsaAddD1msa);

@@ -21,7 +21,15 @@ class GTexture1D : public GTexture
 {
 	GX_GOBJECT(GTexture1D);
 public:
-
+	virtual gint32 getWidth() {
+		return 0;
+	}
+	virtual gint32 getHeight() {
+		return 0;
+	}
+	virtual gint32 getDepth() {
+		return 0;
+	}
 private:
 
 };

@@ -15,10 +15,13 @@
 #include "GSRGraphics.h"
 #include "GSRTexture2D.h"
 
+#include "GBuffer.h"
+#include "GTexture2D.h"
+#include "GFrameBuffer.h"
+
+#include "GGameResManager.h"
+
 #include "GWindow.h"
 #include "GGame.h"
-
-#include "GBuffer.h"
-
 
 #endif /* GX_h */

@@ -338,12 +338,6 @@ void GD3DContext::readyShader()
 void GD3DContext::doneShader()
 {
 }
-void GD3DContext::readyTexture()
-{
-}
-void GD3DContext::doneTexture()
-{
-}
 void GD3DContext::readyFrameBuffer()
 {
 }
@@ -351,195 +345,10 @@ void GD3DContext::doneFrameBuffer()
 {
 }
 
-GDib* GD3DContext::loadTexture2DNodeReadyDib(GDib* dib)
-{
-	if (dib) {
-		switch (dib->getPixelFormat()) {
-		case GX::PixelFormatA8:
-		case GX::PixelFormatBGR565:
-		case GX::PixelFormatBGRA4444:
-		case GX::PixelFormatBGRA5551:
-		case GX::PixelFormatRGBA8888:
-		case GX::PixelFormatBGRA8888:
-			return dib;
-		case GX::PixelFormatRGB565:
-			return GDib::convert(dib, GX::PixelFormatBGR565);
-		case GX::PixelFormatRGBA4444:
-			return GDib::convert(dib, GX::PixelFormatBGRA4444);
-		case GX::PixelFormatRGBA5551:
-			return GDib::convert(dib, GX::PixelFormatBGRA5551);
-		case GX::PixelFormatRGB888:
-			return GDib::convert(dib, GX::PixelFormatRGBA8888);
-		default:
-			break;
-		}
-	}
-	return NULL;
-}
-
 GX::PixelFormat GD3DContext::getPixelFormatForFB() const
 {
     return GX::PixelFormatRGBA8888;
 }
-
-void GD3DContext::loadTexture2DNodeInMT(GObject* obj)
-{
-	GContext::T2DNodeLoadObjBase& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObjBase*, obj);
-	GTexture::Handle& handle = nodeObj.nodeOut->getData();
-
-	nodeObj.context->readyTexture();
-
-	GX::PixelFormat pf;
-	gint32 w, h, s;
-	void* dibData;
-
-	if (obj->isKindOfClass(GContext::T2DNodeLoadCreateObj::gclass)) {
-		pf = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->pixelFormat;
-		w = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->width;
-		h = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->height;
-		s = 0;
-		dibData = NULL;
-	}
-	else {
-		GDib*& dib = GX_CAST_R(GContext::T2DNodeLoadObj*, obj)->dib;
-		pf = dib->getPixelFormat();
-		w = dib->getWidth();
-		h = dib->getHeight();
-		s = dib->getStride();
-		dibData = dib->getDataPtr();
-	}
-
-	D3D10_TEXTURE2D_DESC desc = { 0 };
-	switch (pf)
-	{
-	case GX::PixelFormatA8:
-	{
-		desc.Format = DXGI_FORMAT_A8_UNORM;
-	}
-	break;
-	case GX::PixelFormatBGR565:
-	{
-		desc.Format = DXGI_FORMAT_B5G6R5_UNORM;
-	}
-	break;
-	case GX::PixelFormatBGRA4444:
-	{
-		desc.Format = DXGI_FORMAT_B4G4R4A4_UNORM;
-	}
-	break;
-	case GX::PixelFormatBGRA5551:
-	{
-		desc.Format = DXGI_FORMAT_B5G5R5A1_UNORM;
-	}
-	break;
-	case GX::PixelFormatRGBA8888:
-	{
-		desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	}
-	break;
-	case GX::PixelFormatBGRA8888:
-	{
-		desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-	}
-	break;
-	default:
-		break;
-	}
-	if (desc.Format!=0) {
-		desc.Width = w;
-		desc.Height = h;
-		desc.MipLevels = 1;
-		desc.ArraySize = 1;
-		if (dibData) {
-			desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
-			desc.Usage = D3D10_USAGE_IMMUTABLE;
-		}
-		else {//没有Dib数据，代表是为FrameBuffer创建
-			desc.BindFlags = D3D10_BIND_RENDER_TARGET | D3D10_BIND_SHADER_RESOURCE;
-			desc.Usage = D3D10_USAGE_DEFAULT;
-		}
-		desc.SampleDesc.Count = 1;
-		desc.SampleDesc.Quality = 0;
-		desc.CPUAccessFlags = 0;
-		desc.MiscFlags = 0;
-
-		D3D10_SUBRESOURCE_DATA data = { 0 };
-
-		ID3D10Texture2D* pTex2D = NULL;
-
-		ID3D10Device* device = GX::direct3DDevice();
-
-		HRESULT hr;
-		if (dibData) {
-			D3D10_SUBRESOURCE_DATA initialData;
-			initialData.pSysMem = dibData;
-			initialData.SysMemPitch = s;
-			initialData.SysMemSlicePitch = 0;
-			hr = device->CreateTexture2D(&desc, &initialData, &pTex2D);
-		}
-		else {
-			hr = device->CreateTexture2D(&desc, NULL, &pTex2D);
-		}
-		if (SUCCEEDED(hr)) {
-			hr=device->CreateShaderResourceView(pTex2D, NULL, &handle.m_Name);
-			pTex2D->Release();
-
-			if (SUCCEEDED(hr)) {
-				D3D10_SAMPLER_DESC samplerDesc;
-				if (nodeObj.param) {
-					samplerDesc.Filter = (D3D10_FILTER)nodeObj.param->filter;
-					samplerDesc.AddressU = (D3D10_TEXTURE_ADDRESS_MODE)nodeObj.param->wrapU;
-					samplerDesc.AddressV = (D3D10_TEXTURE_ADDRESS_MODE)nodeObj.param->wrapV;
-				}
-				else {
-					samplerDesc.Filter = D3D10_FILTER_MIN_MAG_MIP_LINEAR;
-					samplerDesc.AddressU = D3D10_TEXTURE_ADDRESS_CLAMP;
-					samplerDesc.AddressV = D3D10_TEXTURE_ADDRESS_CLAMP;
-				}
-				samplerDesc.AddressW = samplerDesc.AddressV;
-				samplerDesc.MipLODBias = 0.0f;
-				samplerDesc.MaxAnisotropy = 1;
-				samplerDesc.ComparisonFunc = D3D10_COMPARISON_ALWAYS;
-				samplerDesc.BorderColor[0] = 0;
-				samplerDesc.BorderColor[1] = 0;
-				samplerDesc.BorderColor[2] = 0;
-				samplerDesc.BorderColor[3] = 0;
-				samplerDesc.MinLOD = 0;
-				samplerDesc.MaxLOD = D3D10_FLOAT32_MAX;
-				hr=device->CreateSamplerState(&samplerDesc, &handle.m_SamplerState);
-				if (FAILED(hr)) {
-					handle.m_Name->Release();
-					handle.m_Name = NULL;
-				}
-			}
-		}
-	}
-	
-	nodeObj.context->doneTexture();
-
-	if (handle.isValid()) {
-		nodeObj.nodeOut->m_Context = nodeObj.context;
-		nodeObj.nodeOut->m_Context->addTextureNodeInMT(nodeObj.nodeOut);
-	}
-}
-void GD3DContext::unloadTextureNodeForContext(GTexture::Node* node)
-{
-	if (node->isValid()) {
-		GTexture::Handle& handle = node->getData();
-
-		readyTexture();
-
-		handle.m_Name->Release();
-		handle.m_Name = NULL;
-		handle.m_SamplerState->Release();
-		handle.m_SamplerState = NULL;
-
-		doneTexture();
-
-		node->m_Context = NULL;
-	}
-}
-
 
 void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 {
@@ -558,7 +367,7 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 
 	ID3D10Device* device = GX::direct3DDevice();
 	// 分配RGBA动态贴图
-	ID3D10ShaderResourceView* pTextureView = nodeObj.texTarget->getNode()->getData().getName();
+	ID3D10ShaderResourceView* pTextureView = nodeObj.texTarget->getShaderResView();
 	ID3D10Texture2D* pTex2D = NULL;
 	pTextureView->GetResource((ID3D10Resource**)&pTex2D);
 	D3D10_TEXTURE2D_DESC dstex;
@@ -570,6 +379,7 @@ void GD3DContext::loadFrameBufferNodeInMT(GObject* obj)
 	descRT.Texture2D.MipSlice = 0;
 	// for rendertarget
 	device->CreateRenderTargetView(pTex2D, &descRT, &outRTView);
+	pTex2D->Release();
 
 	if (nodeObj.use==GFrameBuffer::UseFor3D) {// 分配DepthStencil动态贴图
 		ID3D10Texture2D* pDSTex2D = NULL;

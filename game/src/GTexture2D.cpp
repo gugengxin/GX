@@ -25,21 +25,212 @@ GTexture2D::~GTexture2D()
 
 }
 
-void GTexture2D::config(Node* node, GDib* dib, Parameter* param)
+GTexture2D * GTexture2D::autoCreate(GReader * reader, GDib::FileType suggestFT, GTexture2D::Parameter * param)
 {
-    GX_UNUSED(param);
-
-    setNode(node);
-    m_Width=dib->getWidth();
-    m_Height=dib->getHeight();
+	GTexture2D* res = GTexture2D::alloc();
+	if (res->create(reader, suggestFT, param)) {
+		GO::autorelease(res);
+	}
+	else {
+		GO::release(res);
+		res = NULL;
+	}
+	return res;
 }
 
-void GTexture2D::config(Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, Parameter* param)
+GTexture2D * GTexture2D::autoCreate(GDib * dib, Parameter * param)
 {
-	GX_UNUSED(pixelFormat);
-	GX_UNUSED(param);
+	GTexture2D* res = GTexture2D::alloc();
+	if (res->create(dib, param)) {
+		GO::autorelease(res);
+	}
+	else {
+		GO::release(res);
+		res = NULL;
+	}
+	return res;
+}
 
-	setNode(node);
-	m_Width = width;
-	m_Height = height;
+GTexture2D * GTexture2D::autoCreate(GX::PixelFormat pixelFormat, gint32 width, gint32 height, Parameter * param)
+{
+	GTexture2D* res = GTexture2D::alloc();
+	if (res->create(pixelFormat, width, height, param)) {
+		GO::autorelease(res);
+	}
+	else {
+		GO::release(res);
+		res = NULL;
+	}
+	return res;
+}
+
+bool GTexture2D::create(GReader* reader, GDib::FileType suggestFT, GTexture2D::Parameter* param)
+{
+	GDib* dib = GDib::load(reader, suggestFT);
+	if (dib) {
+		return create(dib, param);
+	}
+	return false;
+}
+
+bool GTexture2D::create(GDib* dib, Parameter* param)
+{
+	dib = prepareDib(dib);
+	if (!dib) {
+		return false;
+	}
+	return create(dib->getDataPtr(), dib->getPixelFormat(), dib->getWidth(), dib->getHeight(), dib->getStride(), param);
+}
+bool GTexture2D::create(GX::PixelFormat pixelFormat, gint32 width, gint32 height, Parameter* param)
+{
+	return create(NULL, pixelFormat, width, height, 0, param);
+}
+void GTexture2D::destroy()
+{
+
+	GTexture::destroy();
+}
+
+GDib* GTexture2D::prepareDib(GDib* dib)
+{
+	if (dib) {
+#if defined(GX_OPENGL)
+#error
+#elif defined(GX_DIRECTX)
+		switch (dib->getPixelFormat()) {
+		case GX::PixelFormatA8:
+		case GX::PixelFormatBGR565:
+		case GX::PixelFormatBGRA4444:
+		case GX::PixelFormatBGRA5551:
+		case GX::PixelFormatRGBA8888:
+		case GX::PixelFormatBGRA8888:
+			return dib;
+		case GX::PixelFormatRGB565:
+			return GDib::convert(dib, GX::PixelFormatBGR565);
+		case GX::PixelFormatRGBA4444:
+			return GDib::convert(dib, GX::PixelFormatBGRA4444);
+		case GX::PixelFormatRGBA5551:
+			return GDib::convert(dib, GX::PixelFormatBGRA5551);
+		case GX::PixelFormatRGB888:
+			return GDib::convert(dib, GX::PixelFormatRGBA8888);
+		default:
+			break;
+		}
+#elif defined(GX_METAL)
+#error
+#endif
+	}
+	return NULL;
+}
+
+bool GTexture2D::create(const void * dibData, GX::PixelFormat pf, gint32 w, gint32 h, gint32 s, Parameter * param)
+{
+#if defined(GX_OPENGL)
+
+#elif defined(GX_DIRECTX)
+	ID3D10Device* device = GX::direct3DDevice();
+
+	D3D10_TEXTURE2D_DESC desc = { 0 };
+	switch (pf)
+	{
+	case GX::PixelFormatA8:
+		desc.Format = DXGI_FORMAT_A8_UNORM;
+		break;
+	case GX::PixelFormatBGR565:
+		desc.Format = DXGI_FORMAT_B5G6R5_UNORM;
+		break;
+	case GX::PixelFormatBGRA4444:
+		desc.Format = DXGI_FORMAT_B4G4R4A4_UNORM;
+		break;
+	case GX::PixelFormatBGRA5551:
+		desc.Format = DXGI_FORMAT_B5G5R5A1_UNORM;
+		break;
+	case GX::PixelFormatRGBA8888:
+		desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		break;
+	case GX::PixelFormatBGRA8888:
+		desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+		break;
+	default:
+		break;
+	}
+	if (desc.Format != 0) {
+		desc.Width = w;
+		desc.Height = h;
+		desc.MipLevels = 1;
+		desc.ArraySize = 1;
+		if (dibData) {
+			desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
+			desc.Usage = D3D10_USAGE_IMMUTABLE;
+		}
+		else {//没有Dib数据，代表是为FrameBuffer创建
+			desc.BindFlags = D3D10_BIND_RENDER_TARGET | D3D10_BIND_SHADER_RESOURCE;
+			desc.Usage = D3D10_USAGE_DEFAULT;
+		}
+		desc.SampleDesc.Count = 1;
+		desc.SampleDesc.Quality = 0;
+		desc.CPUAccessFlags = 0;
+		desc.MiscFlags = 0;
+
+		ID3D10Texture2D* pTex2D = NULL;
+		HRESULT hr;
+		if (dibData) {
+			D3D10_SUBRESOURCE_DATA initialData;
+			initialData.pSysMem = dibData;
+			initialData.SysMemPitch = s;
+			initialData.SysMemSlicePitch = 0;
+			hr = device->CreateTexture2D(&desc, &initialData, &pTex2D);
+		}
+		else {
+			hr = device->CreateTexture2D(&desc, NULL, &pTex2D);
+		}
+		if (SUCCEEDED(hr)) {
+			ID3D10ShaderResourceView* resSRV = NULL;
+			hr = device->CreateShaderResourceView(pTex2D, NULL, &resSRV);
+			pTex2D->Release();
+
+			if (SUCCEEDED(hr)) {
+				ID3D10SamplerState* resSS=NULL;
+				D3D10_SAMPLER_DESC samplerDesc;
+				if (param) {
+					samplerDesc.Filter = (D3D10_FILTER)param->filter;
+					samplerDesc.AddressU = (D3D10_TEXTURE_ADDRESS_MODE)param->wrapU;
+					samplerDesc.AddressV = (D3D10_TEXTURE_ADDRESS_MODE)param->wrapV;
+				}
+				else {
+					samplerDesc.Filter = D3D10_FILTER_MIN_MAG_MIP_LINEAR;
+					samplerDesc.AddressU = D3D10_TEXTURE_ADDRESS_CLAMP;
+					samplerDesc.AddressV = D3D10_TEXTURE_ADDRESS_CLAMP;
+				}
+				samplerDesc.AddressW = samplerDesc.AddressV;
+				samplerDesc.MipLODBias = 0.0f;
+				samplerDesc.MaxAnisotropy = 1;
+				samplerDesc.ComparisonFunc = D3D10_COMPARISON_ALWAYS;
+				samplerDesc.BorderColor[0] = 0;
+				samplerDesc.BorderColor[1] = 0;
+				samplerDesc.BorderColor[2] = 0;
+				samplerDesc.BorderColor[3] = 0;
+				samplerDesc.MinLOD = 0;
+				samplerDesc.MaxLOD = D3D10_FLOAT32_MAX;
+				hr = device->CreateSamplerState(&samplerDesc, &resSS);
+				if (SUCCEEDED(hr)) {
+					GTexture::create(resSRV, resSS);
+					resSRV->Release();
+					resSS->Release();
+					m_Width = w;
+					m_Height = h;
+					return true;
+				}
+				else {
+					resSRV->Release();
+				}
+			}
+		}
+	}
+
+	return false;
+
+#elif defined(GX_METAL)
+
+#endif
 }

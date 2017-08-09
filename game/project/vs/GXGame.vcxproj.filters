@@ -22,15 +22,12 @@
     <Filter Include="src\buffer">
       <UniqueIdentifier>{0299fb03-aca0-446c-b3c5-58df8196d46a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\texture">
+      <UniqueIdentifier>{959219ef-f111-4e68-a717-8766913d2f9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GGame.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GTexture.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\GTexture2D.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GWindow.cpp">
@@ -111,21 +108,21 @@
     <ClCompile Include="..\..\src\GGameResManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\GTexture.cpp">
+      <Filter>src\texture</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\GTexture1D.cpp">
-      <Filter>src</Filter>
+      <Filter>src\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\GTexture2D.cpp">
+      <Filter>src\texture</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\GTextureCube.cpp">
-      <Filter>src</Filter>
+      <Filter>src\texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\GGame.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GTexture.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GTexture2D.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GWindow.h">
@@ -233,11 +230,17 @@
     <ClInclude Include="..\..\src\GGameResManager.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\GTexture.h">
+      <Filter>src\texture</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\GTexture1D.h">
-      <Filter>src</Filter>
+      <Filter>src\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\GTexture2D.h">
+      <Filter>src\texture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GTextureCube.h">
-      <Filter>src</Filter>
+      <Filter>src\texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

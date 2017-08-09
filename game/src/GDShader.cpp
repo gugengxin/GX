@@ -151,6 +151,16 @@ void GDShader::IASetVertexBuffers(ID3D10Device * device, UINT startSlot, UINT nu
 	device->IASetVertexBuffers(startSlot, numBuffers, buffer->getBufferPtr(), pStrides, pOffsets);
 }
 
+void GDShader::PSSetShaderResources(ID3D10Device * device, UINT StartSlot, UINT NumViews, GTexture* texture)
+{
+	device->PSSetShaderResources(StartSlot, NumViews, texture->getShaderResViewPtr());
+}
+
+void GDShader::PSSetSamplers(ID3D10Device * device, UINT StartSlot, UINT NumSamplers, GTexture * texture)
+{
+	device->PSSetSamplers(StartSlot, NumSamplers, texture->getSamplerStatePtr());
+}
+
 
 
 #endif

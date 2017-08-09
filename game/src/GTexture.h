@@ -17,6 +17,14 @@
 #include "GXGObject.h"
 
 class GTexture : public GObject {
+#if defined(GX_OPENGL)
+	friend class GOShader;
+#elif defined(GX_DIRECTX)
+	friend class GDShader;
+	friend class GD3DContext;
+#elif defined(GX_METAL)
+	friend class GMShader;
+#endif
     GX_VIRTUAL_GOBJECT(GTexture);
 public:
 	bool isValid();
@@ -39,10 +47,16 @@ protected:
 #if defined(GX_OPENGL)
 
 #elif defined(GX_DIRECTX)
-	inline ID3D10ShaderResourceView** getShaderResViewPtr() {
+	inline ID3D10ShaderResourceView* getShaderResView() const {
+		return m_ShaderResView;
+	}
+	inline ID3D10ShaderResourceView*const* getShaderResViewPtr() const {
 		return &m_ShaderResView;
 	}
-	inline ID3D10SamplerState** getSamplerStatePtr() {
+	inline ID3D10SamplerState* getSamplerState() const {
+		return m_SamplerState;
+	}
+	inline ID3D10SamplerState*const* getSamplerStatePtr() const {
 		return &m_SamplerState;
 	}
 #elif defined(GX_METAL)

@@ -62,11 +62,12 @@ void MFrameBuffer::prepareTex2D(GContext& context)
     if (!m_FB) {
         m_FB=GO::retain(context.loadFrameBuffer(200, 200, NULL, GFrameBuffer::UseFor3D));
         m_Tex2D=GO::retain(GX_CAST_R(GTexture2D*, m_FB->getTexture()));
+		m_FB->setBackgroundColor(0, 1, 0, 1);
         
         if (m_FB->renderCheck()) {
             
-            GTexture2D* tex=context.loadTexture2D(GS::chars("lena_rgb.jpg"), GDib::JPEG, NULL);
-            GTexture2D* tex1=context.loadTexture2D(GS::chars("png-0029.png"), GDib::PNG, NULL);
+            GTexture2D* tex=GGameResManager::shared()->loadTexture2D(GS::chars("lena_rgb.jpg"), GDib::JPEG, NULL);
+            GTexture2D* tex1= GGameResManager::shared()->loadTexture2D(GS::chars("png-0029.png"), GDib::PNG, NULL);
             
             m_FB->renderBegin();
             m_FB->setViewport(0, 0, m_FB->getWidth(), m_FB->getHeight(), 1.0f);
@@ -77,7 +78,7 @@ void MFrameBuffer::prepareTex2D(GContext& context)
             //m_FB->enable3D(m_FB->getWidth(), m_FB->getHeight(), GX_PI / 3, 0.1f, 1000.0f);
             //m_FB->lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
             
-            m_FB->setCullFace(GX::DCullFaceBack);
+            m_FB->setCullFace(GX::DCullFaceNone);
             m_FB->setBlend(GX::DBlendNone);
             
             GSRTexture2D* shader=GSRTexture2D::shared(false, false, GSRTexture2D::MM_None);

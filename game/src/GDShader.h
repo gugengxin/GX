@@ -7,6 +7,7 @@
 #include "GShader.h"
 #include "GXDirectX.h"
 #include "GBuffer.h"
+#include "GTexture.h"
 
 
 class GDShader : public GShader
@@ -22,6 +23,8 @@ protected:
 	bool setInputLayout(gint idx, ID3D10Device* device, const void *pShaderBytecodeWithInputSignature, SIZE_T BytecodeLength, D3D10_INPUT_ELEMENT_DESC* elements, UINT numElements);
 	bool setConstantBuffer(gint idx, ID3D10Device* device, const D3D10_BUFFER_DESC *pDesc, const D3D10_SUBRESOURCE_DATA *pInitialData);
 	void IASetVertexBuffers(ID3D10Device* device, UINT startSlot, UINT numBuffers, GBuffer* buffer, const UINT *pOffsets, const UINT *pStrides);
+	void PSSetShaderResources(ID3D10Device* device, UINT StartSlot, UINT NumViews, GTexture* texture);
+	void PSSetSamplers(ID3D10Device* device, UINT StartSlot, UINT NumSamplers, GTexture* texture);
 
 	inline ID3D10VertexShader* getVertexShader() {
 		return m_VertexShader;

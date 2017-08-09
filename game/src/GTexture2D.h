@@ -17,8 +17,7 @@
 #include "GXGObject.h"
 
 class GTexture2D : public GTexture {
-    friend class GContext;
-    GX_PRIVATE_GOBJECT(GTexture2D);
+    GX_GOBJECT(GTexture2D);
 public:
 	class Parameter {
 	public:
@@ -27,7 +26,10 @@ public:
 		gint32 wrapV;
 	};
 public:
-
+	static GTexture2D* autoCreate(GReader* reader, GDib::FileType suggestFT, GTexture2D::Parameter* param);
+	static GTexture2D* autoCreate(GDib* dib, Parameter* param);
+	static GTexture2D* autoCreate(GX::PixelFormat pixelFormat, gint32 width, gint32 height, Parameter* param);
+public:
     virtual gint32 getWidth() {
         return m_Width;
     }
@@ -37,13 +39,13 @@ public:
     virtual gint32 getDepth() {
         return 0;
     }
-    
-    
-    
-private:
-    void config(Node* node, GDib* dib, Parameter* param);
-	void config(Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, Parameter* param);
-    
+	bool create(GReader* reader, GDib::FileType suggestFT, GTexture2D::Parameter* param);
+	bool create(GDib* dib, Parameter* param);
+	bool create(GX::PixelFormat pixelFormat, gint32 width, gint32 height, Parameter* param);
+	virtual void destroy();
+protected:
+	GDib* prepareDib(GDib* dib);
+	bool create(const void * dibData, GX::PixelFormat pf, gint32 w, gint32 h, gint32 s, Parameter * param);
 private:
     gint32 m_Width;
     gint32 m_Height;

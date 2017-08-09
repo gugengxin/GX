@@ -10,20 +10,33 @@
 #define GGameResManager_h
 
 #include "GXPrefix.h"
-#include "GObject.h"
+#include "GX3DAPIType.h"
+#include "GResourceManager.h"
+#include "GMap.h"
+#include "GTexture2D.h"
 
-
-
-#include "GXGObject.h"
-// Down can't include other h file
-
-class GGameResManager : public GObject
+class GGameResManager : public GResourceManager
 {
-	GX_GOBJECT(GGameResManager);
 public:
-
+	static GGameResManager* shared();
 private:
-
+	GGameResManager();
+	virtual ~GGameResManager();
+public:
+	GTexture2D* loadTexture2D(GString* name, GDib::FileType suggestFT, GTexture2D::Parameter* param);
+protected:
+	typedef enum _Map {
+		MapTex2D,
+		MapCount,
+	} Map;
+	virtual gint getMapCount() {
+		return MapCount;
+	}
+	virtual GMap<GString, GObject>* getMap(gint index); 
+protected:
+	virtual void didReceivedMemoryWarning();
+private:
+	GMap<GString, GObject> m_Maps[MapCount];
 };
 
 // Up can't include other h file

@@ -32,57 +32,6 @@ GContext::NodeUnloadObj::~NodeUnloadObj()
 }
 
 
-
-
-GX_GOBJECT_IMPLEMENT(GContext::T2DNodeLoadObjBase, NodeLoadObj);
-
-GContext::T2DNodeLoadObjBase::T2DNodeLoadObjBase()
-{
-    param=NULL;
-    nodeOut=NULL;
-}
-GContext::T2DNodeLoadObjBase::~T2DNodeLoadObjBase()
-{
-
-}
-
-GX_GOBJECT_IMPLEMENT(GContext::T2DNodeLoadObj, T2DNodeLoadObjBase);
-
-GContext::T2DNodeLoadObj::T2DNodeLoadObj()
-{
-    dib=NULL;
-}
-GContext::T2DNodeLoadObj::~T2DNodeLoadObj()
-{
-
-}
-
-GX_GOBJECT_IMPLEMENT(GContext::T2DNodeLoadCreateObj, T2DNodeLoadObjBase);
-
-GContext::T2DNodeLoadCreateObj::T2DNodeLoadCreateObj()
-{
-    
-}
-GContext::T2DNodeLoadCreateObj::~T2DNodeLoadCreateObj()
-{
-
-}
-
-GX_GOBJECT_IMPLEMENT(GContext::T2DNodeUnloadObj, NodeUnloadObj);
-
-GContext::T2DNodeUnloadObj::T2DNodeUnloadObj()
-{
-    nodeOut=NULL;
-}
-GContext::T2DNodeUnloadObj::~T2DNodeUnloadObj()
-{
-}
-
-
-
-
-
-
 GX_GOBJECT_IMPLEMENT(GContext::FBNodeLoadObj, NodeLoadObj);
 
 GContext::FBNodeLoadObj::FBNodeLoadObj()
@@ -147,15 +96,6 @@ void GContext::destroy()
             p=pTemp;
         }
     }
-    {
-        GTexture::Node* p=GX_CAST_R(GTexture::Node*, m_Textures.last());
-        while (p) {
-            GTexture::Node* pTemp=GX_CAST_R(GTexture::Node*, p->getPrev());
-            unloadTextureNodeForContext(p);
-            m_Textures.remove(p,false);
-            p=pTemp;
-        }
-    }
     GX_CONTEXT_BASE::destroy();
 }
 
@@ -184,152 +124,24 @@ void GContext::didReceivedMemoryWarning()
     //TODO
 }
 
-GTexture2D* GContext::loadTexture2D(GReader* reader,GDib::FileType suggestFT,GTexture2D::Parameter* param)
-{
-    GDib* dib=GDib::load(reader, suggestFT);
-    if (dib) {
-        return loadTexture2D(dib, param);
-    }
-    return NULL;
-}
-
-GTexture2D* GContext::loadTexture2D(GDib* dib,GTexture2D::Parameter* param)
-{
-    GTexture::Node* node=new GTexture::Node();
-    if(loadTexture2DNode(node, dib, param)) {
-        GTexture2D* res=GTexture2D::alloc();
-        res->config(node, dib, param);
-        GO::autorelease(res);
-        return res;
-    }
-    else {
-        delete node;
-    }
-    return NULL;
-}
-
-GTexture2D* GContext::loadTexture2D(GString* name,GDib::FileType suggestFT,GTexture2D::Parameter* param)
-{
-    GTexture2D* res=GX_CAST_R(GTexture2D*, findInMap(MapTex2D, name));
-    if (!res) {
-        GBundle* bundle=NULL;
-        GReader* reader=openReader(name, bundle);
-        if (reader) {
-            res=loadTexture2D(reader, suggestFT, param);
-            closeReader(reader, bundle);
-            
-            if (res) {
-                addToMap(MapTex2D, name, res);
-            }
-        }
-    }
-    return res;
-}
-
-void GContext::addTextureNodeInMT(GTexture::Node* node)
-{
-	m_Textures.add(node);
-}
-
-void GContext::removeTextureNodeInMT(GTexture::Node* node)
-{
-	m_Textures.remove(node, false);
-}
-
-bool GContext::loadTexture2DNode(GTexture::Node* node, GDib* dib, GTexture2D::Parameter* param)
-{
-	dib = loadTexture2DNodeReadyDib(dib);
-	if (!dib) {
-		return false;
-	}
-	T2DNodeLoadObj* obj = T2DNodeLoadObj::alloc();
-	obj->context = this;
-	obj->dib = dib;
-	obj->param = param;
-	obj->nodeOut = node;
-	if (GThread::current()->isMain()) {
-		loadTexture2DNodeInMT(obj);
-	}
-	else {
-		GThread::current()->getRunLoop()->perform(loadTexture2DNodeInMT, obj, 0, true);
-	}
-	GO::release(obj);
-
-	return node->isValid();
-}
-
-bool GContext::loadTexture2DNode(GTexture::Node* node, GX::PixelFormat pixelFormat, gint32 width, gint32 height, GTexture2D::Parameter* param)
-{
-	T2DNodeLoadCreateObj* obj=T2DNodeLoadCreateObj::alloc();
-	obj->context = this;
-	obj->pixelFormat = pixelFormat;
-	obj->width = width;
-	obj->height = height;
-	obj->param = param;
-	obj->nodeOut = node;
-	if (GThread::current()->isMain()) {
-		loadTexture2DNodeInMT(obj);
-	}
-	else {
-		GThread::current()->getRunLoop()->perform(loadTexture2DNodeInMT, obj, 0, true);
-	}
-	GO::release(obj);
-
-	return node->isValid();
-}
-
-void GContext::unloadTextureNode(GTexture::Node* node)
-{
-	T2DNodeUnloadObj* obj = T2DNodeUnloadObj::alloc();
-	obj->context = this;
-	obj->nodeOut = node;
-
-	if (GThread::current()->isMain()) {
-		unloadTextureNodeInMT(obj);
-	}
-	else {
-		GThread::current()->getRunLoop()->perform(unloadTextureNodeInMT, obj, 0, true);
-	}
-
-	GO::release(obj);
-}
-
-void GContext::unloadTextureNodeInMT(GObject* obj)
-{
-	GContext::T2DNodeUnloadObj& nodeObj = *GX_CAST_R(GContext::T2DNodeUnloadObj*, obj);
-
-	nodeObj.context->unloadTextureNodeForContext(nodeObj.nodeOut);
-
-	nodeObj.context->removeTextureNodeInMT(nodeObj.nodeOut);
-}
-
 GFrameBuffer* GContext::loadFrameBuffer(gint32 width, gint32 height, GTexture2D::Parameter* param, GFrameBuffer::Use use)
 {
-    GTexture2D* texTarget=NULL;
-    {
-        GTexture::Node* node = new GTexture::Node();
-        GX::PixelFormat pixelFormat=getPixelFormatForFB();
-        if (loadTexture2DNode(node, pixelFormat, width, height, param)) {
-            texTarget = GTexture2D::alloc();
-            texTarget->config(node, pixelFormat, width, height, param);
-            GO::autorelease(texTarget);
-        }
-        else {
-            delete node;
-            return NULL;
-        }
+	GFrameBuffer* res = NULL;
+    GTexture2D* texTarget= GTexture2D::alloc();
+	if(texTarget->create(getPixelFormatForFB(),width,height,param)) {
+		GFrameBuffer::Node* node = new GFrameBuffer::Node();
+		if (loadFrameBufferNode(node, texTarget, use)) {
+			res = GFrameBuffer::alloc();
+			res->config(node);
+			GO::autorelease(res);
+			return res;
+		}
+		else {
+			delete node;
+		}
     }
-    GFrameBuffer::Node* node = new GFrameBuffer::Node();
-    if (loadFrameBufferNode(node, texTarget, use)) {
-        GFrameBuffer* res = GFrameBuffer::alloc();
-        res->config(node);
-        GO::autorelease(res);
-        return res;
-    }
-    else {
-        delete node;
-    }
-    return NULL;
+	GO::release(texTarget);
+    return res;
 }
 
 

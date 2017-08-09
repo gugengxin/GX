@@ -27,6 +27,7 @@ class GMap : public GMapBase {
 	friend class GNoticeCenter;
     friend class GContext;
     friend class GFontManager;
+	friend class GGameResManager;
     GX_GOBJECT(GMap);
 private:
     class Node {
