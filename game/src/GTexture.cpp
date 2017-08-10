@@ -38,7 +38,8 @@ GTexture::~GTexture()
 		m_SamplerState->Release();
 	}
 #elif defined(GX_METAL)
-#error
+    [GX_CAST_R(id, m_Texture) release];
+    [GX_CAST_R(id, m_SamplerState) release];
 #endif
 }
 
@@ -71,7 +72,8 @@ void GTexture::create(
 	m_SamplerState = samplerState;
 	m_SamplerState->AddRef();
 #elif defined(GX_METAL)
-#error
+    m_Texture=[GX_CAST_R(id, texture) retain];
+    m_SamplerState=[GX_CAST_R(id, samplerState) retain];
 #endif
 }
 
@@ -89,6 +91,9 @@ void GTexture::destroy()
 		m_SamplerState = NULL;
 	}
 #elif defined(GX_METAL)
-#error
+    [GX_CAST_R(id, m_Texture) release];
+    m_Texture=NULL;
+    [GX_CAST_R(id, m_SamplerState) release];
+    m_SamplerState=NULL;
 #endif
 }

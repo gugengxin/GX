@@ -50,16 +50,10 @@ protected:
 protected:
     static void readyShader();
     static void doneShader();
-    void readyTexture();
-    void doneTexture();
     void readyFrameBuffer();
     void doneFrameBuffer();
 protected:
-    GDib* loadTexture2DNodeReadyDib(GDib* dib);
     GX::PixelFormat getPixelFormatForFB() const;
-    static void loadTexture2DNodeInMT(GObject* obj);
-    void unloadTextureNodeForContext(GTexture::Node* node);
-protected:
     static void loadFrameBufferNodeInMT(GObject* obj);
     void unloadFrameBufferNodeForContext(GFrameBuffer::Node* node);
 protected:

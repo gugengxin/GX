@@ -24,6 +24,7 @@ class GTexture : public GObject {
 	friend class GD3DContext;
 #elif defined(GX_METAL)
 	friend class GMShader;
+    friend class GMTLContext;
 #endif
     GX_VIRTUAL_GOBJECT(GTexture);
 public:
@@ -60,7 +61,10 @@ protected:
 		return &m_SamplerState;
 	}
 #elif defined(GX_METAL)
-	inline void* getSamplerState() {
+    inline void* getTexture() const {
+        return m_Texture;
+    }
+	inline void* getSamplerState() const {
 		return m_SamplerState;
 	}
 #endif

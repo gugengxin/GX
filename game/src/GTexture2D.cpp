@@ -117,7 +117,44 @@ GDib* GTexture2D::prepareDib(GDib* dib)
 			break;
 		}
 #elif defined(GX_METAL)
-#error
+#if defined(GX_OS_IPHONE)
+        switch (dib->getPixelFormat()) {
+            case GX::PixelFormatA8:
+            case GX::PixelFormatRGB565:
+            case GX::PixelFormatRGBA4444:
+            case GX::PixelFormatRGBA5551:
+            case GX::PixelFormatRGBA8888:
+            case GX::PixelFormatBGRA8888:
+                return dib;
+            case GX::PixelFormatBGR565:
+                return GDib::convert(dib, GX::PixelFormatRGB565);
+            case GX::PixelFormatBGRA4444:
+                return GDib::convert(dib, GX::PixelFormatRGBA4444);
+            case GX::PixelFormatBGRA5551:
+                return GDib::convert(dib, GX::PixelFormatRGBA5551);
+            case GX::PixelFormatRGB888:
+                return GDib::convert(dib, GX::PixelFormatRGBA8888);
+            default:
+                break;
+        }
+#elif defined(GX_OS_MACOSX)
+        switch (dib->getPixelFormat()) {
+            case GX::PixelFormatA8:
+            case GX::PixelFormatRGBA8888:
+            case GX::PixelFormatBGRA8888:
+                return dib;
+            case GX::PixelFormatRGB565:
+            case GX::PixelFormatBGR565:
+            case GX::PixelFormatRGBA4444:
+            case GX::PixelFormatBGRA4444:
+            case GX::PixelFormatRGBA5551:
+            case GX::PixelFormatBGRA5551:
+            case GX::PixelFormatRGB888:
+                return GDib::convert(dib, GX::PixelFormatRGBA8888);
+            default:
+                break;
+        }
+#endif
 #endif
 	}
 	return NULL;
@@ -231,6 +268,103 @@ bool GTexture2D::create(const void * dibData, GX::PixelFormat pf, gint32 w, gint
 	return false;
 
 #elif defined(GX_METAL)
-
+    
+    MTLPixelFormat mpf=MTLPixelFormatInvalid;
+    
+    switch (pf)
+    {
+        case GX::PixelFormatA8:
+            mpf=MTLPixelFormatA8Unorm;
+            break;
+#if defined(GX_OS_IPHONE)
+        case GX::PixelFormatRGB565:
+            mpf=MTLPixelFormatB5G6R5Unorm;
+            break;
+        case GX::PixelFormatRGBA4444:
+            mpf=MTLPixelFormatABGR4Unorm;
+            break;
+        case GX::PixelFormatRGBA5551:
+            mpf=MTLPixelFormatA1BGR5Unorm;
+            break;
+#endif
+        case GX::PixelFormatRGBA8888:
+            mpf=MTLPixelFormatRGBA8Unorm;
+            break;
+        case GX::PixelFormatBGRA8888:
+            mpf=MTLPixelFormatBGRA8Unorm;
+            break;
+        default:
+            break;
+    }
+    
+    if (mpf!=MTLPixelFormatInvalid) {
+        id <MTLDevice> device=GX::metalDevice();
+        
+        MTLTextureDescriptor* texDesc=[MTLTextureDescriptor texture2DDescriptorWithPixelFormat:mpf width:w height:h mipmapped:NO];
+        
+        if (!dibData && [texDesc respondsToSelector:@selector(setUsage:)]) {
+            texDesc.usage=MTLTextureUsageShaderRead|MTLTextureUsageRenderTarget;
+            texDesc.storageMode = MTLStorageModePrivate;
+        }
+        
+        id<MTLTexture> tex=[device newTextureWithDescriptor:texDesc];
+        if (tex) {
+            if (dibData) {
+                MTLRegion region = MTLRegionMake2D(0, 0, w, h);
+                [tex replaceRegion:region mipmapLevel:0 withBytes:dibData bytesPerRow:s];
+            }
+            
+            MTLSamplerDescriptor* sprDesc=[[MTLSamplerDescriptor alloc] init];
+            if (param) {
+                switch (param->filter) {
+                    case GX_FILTER_MIN_MAG_POINT:
+                    {
+                        sprDesc.minFilter=MTLSamplerMinMagFilterNearest;
+                        sprDesc.magFilter=MTLSamplerMinMagFilterNearest;
+                    }
+                        break;
+                    case GX_FILTER_MIN_POINT_MAG_LINEAR:
+                    {
+                        sprDesc.minFilter=MTLSamplerMinMagFilterNearest;
+                        sprDesc.magFilter=MTLSamplerMinMagFilterLinear;
+                    }
+                        break;
+                    case GX_FILTER_MIN_LINEAR_MAG_POINT:
+                    {
+                        sprDesc.minFilter=MTLSamplerMinMagFilterLinear;
+                        sprDesc.magFilter=MTLSamplerMinMagFilterNearest;
+                    }
+                        break;
+                    default:
+                    case GX_FILTER_MIN_MAG_LINEAR:
+                    {
+                        sprDesc.minFilter=MTLSamplerMinMagFilterLinear;
+                        sprDesc.magFilter=MTLSamplerMinMagFilterLinear;
+                    }
+                        break;
+                }
+                sprDesc.sAddressMode=(MTLSamplerAddressMode)param->wrapU;
+                sprDesc.tAddressMode=(MTLSamplerAddressMode)param->wrapV;
+            }
+            else {
+                sprDesc.minFilter=MTLSamplerMinMagFilterLinear;
+                sprDesc.magFilter=MTLSamplerMinMagFilterLinear;
+                sprDesc.sAddressMode=MTLSamplerAddressModeClampToEdge;
+                sprDesc.tAddressMode=MTLSamplerAddressModeClampToEdge;
+            }
+            id <MTLSamplerState> spr=[device newSamplerStateWithDescriptor:sprDesc];
+            [sprDesc release];
+            
+            if (spr) {
+                GTexture::create(tex, spr);
+                m_Width = w;
+                m_Height = h;
+                return true;
+            }
+        }
+    }
+    
+    return false;
+    
 #endif
 }

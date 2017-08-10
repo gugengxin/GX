@@ -16,6 +16,15 @@
 		CA3090951CFD1C46000B8DF2 /* GSRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */; };
 		CA3090961CFD1C53000B8DF2 /* GSRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */; };
 		CA3090971CFD1C54000B8DF2 /* GSRGraphics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */; };
+		CA38F3E11F3CB277009F795D /* GGameResManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA38F3D61F3CB277009F795D /* GGameResManager.cpp */; };
+		CA38F3E21F3CB277009F795D /* GTexture1D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA38F3DD1F3CB277009F795D /* GTexture1D.cpp */; };
+		CA38F3E31F3CB277009F795D /* GTextureCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA38F3DF1F3CB277009F795D /* GTextureCube.cpp */; };
+		CA38F3E71F3CB65D009F795D /* GTexture1D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA38F3DD1F3CB277009F795D /* GTexture1D.cpp */; };
+		CA38F3E81F3CB65D009F795D /* GTextureCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA38F3DF1F3CB277009F795D /* GTextureCube.cpp */; };
+		CA38F3E91F3CB65D009F795D /* GGameResManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA38F3D61F3CB277009F795D /* GGameResManager.cpp */; };
+		CA38F3EA1F3CB65D009F795D /* GTexture1D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA38F3DD1F3CB277009F795D /* GTexture1D.cpp */; };
+		CA38F3EB1F3CB65D009F795D /* GTextureCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA38F3DF1F3CB277009F795D /* GTextureCube.cpp */; };
+		CA38F3EC1F3CB65D009F795D /* GGameResManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA38F3D61F3CB277009F795D /* GGameResManager.cpp */; };
 		CA3A7EAC1DED656800197FCB /* GBaseContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A7EAA1DED656800197FCB /* GBaseContext.cpp */; };
 		CA3A7EAF1DED66BF00197FCB /* GCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A7EAD1DED66BF00197FCB /* GCanvas.cpp */; };
 		CA3A7EB01DED66C400197FCB /* GCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA3A7EAD1DED66BF00197FCB /* GCanvas.cpp */; };
@@ -125,6 +134,16 @@
 		CA3090911CFD1C46000B8DF2 /* GSRGraphics.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GSRGraphics.cpp; sourceTree = "<group>"; };
 		CA3090921CFD1C46000B8DF2 /* GSRGraphics.gxsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GSRGraphics.gxsl; sourceTree = "<group>"; };
 		CA3090931CFD1C46000B8DF2 /* GSRGraphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSRGraphics.h; sourceTree = "<group>"; };
+		CA38F3D61F3CB277009F795D /* GGameResManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GGameResManager.cpp; sourceTree = "<group>"; };
+		CA38F3D71F3CB277009F795D /* GGameResManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GGameResManager.h; sourceTree = "<group>"; };
+		CA38F3D91F3CB277009F795D /* eglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eglew.h; sourceTree = "<group>"; };
+		CA38F3DA1F3CB277009F795D /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
+		CA38F3DB1F3CB277009F795D /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
+		CA38F3DC1F3CB277009F795D /* wglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wglew.h; sourceTree = "<group>"; };
+		CA38F3DD1F3CB277009F795D /* GTexture1D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GTexture1D.cpp; sourceTree = "<group>"; };
+		CA38F3DE1F3CB277009F795D /* GTexture1D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTexture1D.h; sourceTree = "<group>"; };
+		CA38F3DF1F3CB277009F795D /* GTextureCube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GTextureCube.cpp; sourceTree = "<group>"; };
+		CA38F3E01F3CB277009F795D /* GTextureCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTextureCube.h; sourceTree = "<group>"; };
 		CA3A7EAA1DED656800197FCB /* GBaseContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GBaseContext.cpp; sourceTree = "<group>"; };
 		CA3A7EAB1DED656800197FCB /* GBaseContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBaseContext.h; sourceTree = "<group>"; };
 		CA3A7EAD1DED66BF00197FCB /* GCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GCanvas.cpp; sourceTree = "<group>"; };
@@ -157,9 +176,9 @@
 		CABB5CC91CE0E40500D5B648 /* GXOpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXOpenGL.h; sourceTree = "<group>"; };
 		CAC293331E0A4409004519D8 /* GGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GGame.cpp; sourceTree = "<group>"; };
 		CAC293341E0A4409004519D8 /* GGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GGame.h; sourceTree = "<group>"; };
-		CAC708AA1D13CDE900B98028 /* GTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GTexture.cpp; sourceTree = "<group>"; };
+		CAC708AA1D13CDE900B98028 /* GTexture.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GTexture.cpp; sourceTree = "<group>"; };
 		CAC708AB1D13CDE900B98028 /* GTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTexture.h; sourceTree = "<group>"; };
-		CAC708AF1D13CDFE00B98028 /* GTexture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GTexture2D.cpp; sourceTree = "<group>"; };
+		CAC708AF1D13CDFE00B98028 /* GTexture2D.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GTexture2D.cpp; sourceTree = "<group>"; };
 		CAC708B01D13CDFE00B98028 /* GTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTexture2D.h; sourceTree = "<group>"; };
 		CACC51201D70A364007D6B79 /* GMShader.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GMShader.cpp; sourceTree = "<group>"; };
 		CACC51211D70A364007D6B79 /* GMShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMShader.h; sourceTree = "<group>"; };
@@ -276,6 +295,17 @@
 			name = 3DAPI;
 			sourceTree = "<group>";
 		};
+		CA38F3D81F3CB277009F795D /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				CA38F3D91F3CB277009F795D /* eglew.h */,
+				CA38F3DA1F3CB277009F795D /* glew.h */,
+				CA38F3DB1F3CB277009F795D /* glxew.h */,
+				CA38F3DC1F3CB277009F795D /* wglew.h */,
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
 		CA4CD5441D508D3F008005CF /* texture */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +313,10 @@
 				CAC708AA1D13CDE900B98028 /* GTexture.cpp */,
 				CAC708B01D13CDFE00B98028 /* GTexture2D.h */,
 				CAC708AF1D13CDFE00B98028 /* GTexture2D.cpp */,
+				CA38F3DD1F3CB277009F795D /* GTexture1D.cpp */,
+				CA38F3DE1F3CB277009F795D /* GTexture1D.h */,
+				CA38F3DF1F3CB277009F795D /* GTextureCube.cpp */,
+				CA38F3E01F3CB277009F795D /* GTextureCube.h */,
 			);
 			name = texture;
 			sourceTree = "<group>";
@@ -300,6 +334,7 @@
 		CA9C16C51CC5FF7500204303 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				CA38F3D81F3CB277009F795D /* GL */,
 				CA1F60CB1CD9ACA200C6307B /* Unuse */,
 				CA26E07C1DC64D89003AF801 /* 3DAPI */,
 				CAA2D4DF1DBAFBB4007E53C8 /* context */,
@@ -316,6 +351,8 @@
 				CA918C241F26BBE10088EF6E /* GIndexBuffer.cpp */,
 				CA6793AF1DAFFACB00854B5E /* GFrameBuffer.h */,
 				CA6793AE1DAFFACB00854B5E /* GFrameBuffer.cpp */,
+				CA38F3D61F3CB277009F795D /* GGameResManager.cpp */,
+				CA38F3D71F3CB277009F795D /* GGameResManager.h */,
 				CAC293341E0A4409004519D8 /* GGame.h */,
 				CAC293331E0A4409004519D8 /* GGame.cpp */,
 				CA9C16C91CC6079000204303 /* GXGame.h */,
@@ -511,15 +548,18 @@
 			files = (
 				CAB635D31F2DBB7400448B50 /* GTex2DFont.cpp in Sources */,
 				CADB5DBC1CF9E6300092C472 /* GOShader.cpp in Sources */,
+				CA38F3E21F3CB277009F795D /* GTexture1D.cpp in Sources */,
 				CA6793B01DAFFACB00854B5E /* GFrameBuffer.cpp in Sources */,
 				CA446E3F1D67E36F002E77DF /* GXMetal.cpp in Sources */,
 				CA04FDE71CE4557E00C9B596 /* glew.c in Sources */,
 				CABB5CCA1CE0E40500D5B648 /* GContext.cpp in Sources */,
 				CAC708AC1D13CDE900B98028 /* GTexture.cpp in Sources */,
+				CA38F3E11F3CB277009F795D /* GGameResManager.cpp in Sources */,
 				CAC2933A1E0A4409004519D8 /* GGame.cpp in Sources */,
 				CAD4C7831D577E9300F01C06 /* GSRTexture2D.cpp in Sources */,
 				CA3090951CFD1C46000B8DF2 /* GSRGraphics.cpp in Sources */,
 				CABB5CD31CE0E40500D5B648 /* GXOpenGL.cpp in Sources */,
+				CA38F3E31F3CB277009F795D /* GTextureCube.cpp in Sources */,
 				CA3A7EAC1DED656800197FCB /* GBaseContext.cpp in Sources */,
 				CABB5CCB1CE0E40500D5B648 /* GD3DContext.cpp in Sources */,
 				CABB5CD21CE0E40500D5B648 /* GXDirectX.cpp in Sources */,
@@ -554,6 +594,7 @@
 				CA8A38C61EE195D700BBEBE7 /* GX3DAPI.cpp in Sources */,
 				CA446E401D67E36F002E77DF /* GXMetal.cpp in Sources */,
 				CABB3F9C1CFE06EC00A7367C /* GDShader.cpp in Sources */,
+				CA38F3E71F3CB65D009F795D /* GTexture1D.cpp in Sources */,
 				CAE303BD1CE563CB00F15C74 /* GContext.cpp in Sources */,
 				CAC708AD1D13CDE900B98028 /* GTexture.cpp in Sources */,
 				CA3A7EB01DED66C400197FCB /* GCanvas.cpp in Sources */,
@@ -564,10 +605,12 @@
 				CABB3F9B1CFE06EC00A7367C /* GOShader.cpp in Sources */,
 				CAFDCDE51E0B6E5E00D22117 /* GGame.cpp in Sources */,
 				CA446E3B1D67DFD5002E77DF /* GMTLContext.cpp in Sources */,
+				CA38F3E81F3CB65D009F795D /* GTextureCube.cpp in Sources */,
 				CABB3FB11CFE12D000A7367C /* GBuffer.cpp in Sources */,
 				CACC51231D70A364007D6B79 /* GMShader.cpp in Sources */,
 				CAC708B21D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CA3A7EB21DED6E0A00197FCB /* GBaseContext.cpp in Sources */,
+				CA38F3E91F3CB65D009F795D /* GGameResManager.cpp in Sources */,
 				CA1AD2781CD87CA900CEA1DC /* GWindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -586,6 +629,7 @@
 				CA8A38C71EE195D700BBEBE7 /* GX3DAPI.cpp in Sources */,
 				CA446E411D67E36F002E77DF /* GXMetal.cpp in Sources */,
 				CABB3F951CFE06EB00A7367C /* GDShader.cpp in Sources */,
+				CA38F3EA1F3CB65D009F795D /* GTexture1D.cpp in Sources */,
 				CAE303C71CE563CB00F15C74 /* GContext.cpp in Sources */,
 				CAC708AE1D13CDE900B98028 /* GTexture.cpp in Sources */,
 				CA3A7EB11DED66C400197FCB /* GCanvas.cpp in Sources */,
@@ -596,10 +640,12 @@
 				CABB3F941CFE06EB00A7367C /* GOShader.cpp in Sources */,
 				CAFDCDE61E0B6E5E00D22117 /* GGame.cpp in Sources */,
 				CA446E3C1D67DFD5002E77DF /* GMTLContext.cpp in Sources */,
+				CA38F3EB1F3CB65D009F795D /* GTextureCube.cpp in Sources */,
 				CABB3FB21CFE12D000A7367C /* GBuffer.cpp in Sources */,
 				CACC51241D70A364007D6B79 /* GMShader.cpp in Sources */,
 				CAC708B31D13CDFE00B98028 /* GTexture2D.cpp in Sources */,
 				CA3A7EB31DED6E0B00197FCB /* GBaseContext.cpp in Sources */,
+				CA38F3EC1F3CB65D009F795D /* GGameResManager.cpp in Sources */,
 				CA1AD2791CD87CA900CEA1DC /* GWindow.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

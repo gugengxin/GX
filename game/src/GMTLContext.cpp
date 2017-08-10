@@ -188,12 +188,6 @@ void GMTLContext::readyShader()
 void GMTLContext::doneShader()
 {
 }
-void GMTLContext::readyTexture()
-{
-}
-void GMTLContext::doneTexture()
-{
-}
 void GMTLContext::readyFrameBuffer()
 {
 }
@@ -424,201 +418,9 @@ void* GMTLContext::getRenderEncoder()
     return m_RenderEncoder;
 }
 
-GDib* GMTLContext::loadTexture2DNodeReadyDib(GDib* dib)
-{
-    if (dib) {
-#if defined(GX_OS_IPHONE)
-        switch (dib->getPixelFormat()) {
-            case GX::PixelFormatA8:
-            case GX::PixelFormatRGB565:
-            case GX::PixelFormatRGBA4444:
-            case GX::PixelFormatRGBA5551:
-            case GX::PixelFormatRGBA8888:
-            case GX::PixelFormatBGRA8888:
-                return dib;
-            case GX::PixelFormatBGR565:
-                return GDib::convert(dib, GX::PixelFormatRGB565);
-            case GX::PixelFormatBGRA4444:
-                return GDib::convert(dib, GX::PixelFormatRGBA4444);
-            case GX::PixelFormatBGRA5551:
-                return GDib::convert(dib, GX::PixelFormatRGBA5551);
-            case GX::PixelFormatRGB888:
-                return GDib::convert(dib, GX::PixelFormatRGBA8888);
-            default:
-                break;
-        }
-#elif defined(GX_OS_MACOSX)
-        switch (dib->getPixelFormat()) {
-            case GX::PixelFormatA8:
-            case GX::PixelFormatRGBA8888:
-            case GX::PixelFormatBGRA8888:
-                return dib;
-            case GX::PixelFormatRGB565:
-            case GX::PixelFormatBGR565:
-            case GX::PixelFormatRGBA4444:
-            case GX::PixelFormatBGRA4444:
-            case GX::PixelFormatRGBA5551:
-            case GX::PixelFormatBGRA5551:
-            case GX::PixelFormatRGB888:
-                return GDib::convert(dib, GX::PixelFormatRGBA8888);
-            default:
-                break;
-        }
-#endif
-    }
-    return NULL;
-}
-
 GX::PixelFormat GMTLContext::getPixelFormatForFB() const
 {
     return M_METAL_LAYER().pixelFormat==MTLPixelFormatBGRA8Unorm?GX::PixelFormatBGRA8888:GX::PixelFormatRGBA8888;
-}
-
-void GMTLContext::loadTexture2DNodeInMT(GObject* obj)
-{
-    GContext::T2DNodeLoadObjBase& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObjBase*, obj);
-    GTexture::Handle& handle = nodeObj.nodeOut->getData();
-    
-    nodeObj.context->readyTexture();
-
-    GX::PixelFormat pf;
-    gint32 w, h, s;
-    void* data;
-
-    if (obj->isKindOfClass(GContext::T2DNodeLoadCreateObj::gclass)) {
-        pf = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->pixelFormat;
-        w = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->width;
-        h = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->height;
-        s = w*GX_PIXEL_FORMAT_SIZE(pf);
-        data = NULL;
-    }
-    else {
-        GDib*& dib = GX_CAST_R(GContext::T2DNodeLoadObj*, obj)->dib;
-        pf = dib->getPixelFormat();
-        w = dib->getWidth();
-        h = dib->getHeight();
-        s = dib->getStride();
-        data = dib->getDataPtr();
-    }
-    
-    
-    MTLPixelFormat mpf=MTLPixelFormatInvalid;
-    
-    switch (pf)
-    {
-        case GX::PixelFormatA8:
-            mpf=MTLPixelFormatA8Unorm;
-            break;
-#if defined(GX_OS_IPHONE)
-        case GX::PixelFormatRGB565:
-            mpf=MTLPixelFormatB5G6R5Unorm;
-            break;
-        case GX::PixelFormatRGBA4444:
-            mpf=MTLPixelFormatABGR4Unorm;
-            break;
-        case GX::PixelFormatRGBA5551:
-            mpf=MTLPixelFormatA1BGR5Unorm;
-            break;
-#endif
-        case GX::PixelFormatRGBA8888:
-            mpf=MTLPixelFormatRGBA8Unorm;
-            break;
-        case GX::PixelFormatBGRA8888:
-            mpf=MTLPixelFormatBGRA8Unorm;
-            break;
-        default:
-            break;
-    }
-    
-    if (mpf!=MTLPixelFormatInvalid) {
-        id <MTLDevice> device=GX_CAST_R(id <MTLDevice>,nodeObj.context->getDevice());
-        
-        MTLTextureDescriptor* texDesc=[MTLTextureDescriptor texture2DDescriptorWithPixelFormat:mpf width:w height:h mipmapped:NO];
-        
-        if (!data && [texDesc respondsToSelector:@selector(setUsage:)]) {
-            texDesc.usage=MTLTextureUsageShaderRead|MTLTextureUsageRenderTarget;
-            texDesc.storageMode = MTLStorageModePrivate;
-        }
-        
-        id<MTLTexture> tex=[device newTextureWithDescriptor:texDesc];
-        if (tex) {
-            if (data) {
-                MTLRegion region = MTLRegionMake2D(0, 0, w, h);
-                [tex replaceRegion:region mipmapLevel:0 withBytes:data bytesPerRow:s];
-            }
-
-            MTLSamplerDescriptor* sprDesc=[[MTLSamplerDescriptor alloc] init];
-            if (nodeObj.param) {
-                switch (nodeObj.param->filter) {
-                    case GX_FILTER_MIN_MAG_POINT:
-                    {
-                        sprDesc.minFilter=MTLSamplerMinMagFilterNearest;
-                        sprDesc.magFilter=MTLSamplerMinMagFilterNearest;
-                    }
-                        break;
-                    case GX_FILTER_MIN_POINT_MAG_LINEAR:
-                    {
-                        sprDesc.minFilter=MTLSamplerMinMagFilterNearest;
-                        sprDesc.magFilter=MTLSamplerMinMagFilterLinear;
-                    }
-                        break;
-                    case GX_FILTER_MIN_LINEAR_MAG_POINT:
-                    {
-                        sprDesc.minFilter=MTLSamplerMinMagFilterLinear;
-                        sprDesc.magFilter=MTLSamplerMinMagFilterNearest;
-                    }
-                        break;
-                    default:
-                    case GX_FILTER_MIN_MAG_LINEAR:
-                    {
-                        sprDesc.minFilter=MTLSamplerMinMagFilterLinear;
-                        sprDesc.magFilter=MTLSamplerMinMagFilterLinear;
-                    }
-                        break;
-                }
-                sprDesc.sAddressMode=(MTLSamplerAddressMode)nodeObj.param->wrapU;
-                sprDesc.tAddressMode=(MTLSamplerAddressMode)nodeObj.param->wrapV;
-            }
-            else {
-                sprDesc.minFilter=MTLSamplerMinMagFilterLinear;
-                sprDesc.magFilter=MTLSamplerMinMagFilterLinear;
-                sprDesc.sAddressMode=MTLSamplerAddressModeClampToEdge;
-                sprDesc.tAddressMode=MTLSamplerAddressModeClampToEdge;
-            }
-            id <MTLSamplerState> spr=[device newSamplerStateWithDescriptor:sprDesc];
-            [sprDesc release];
-            
-            if (spr) {
-                handle.m_Name=[tex retain];
-                handle.m_SamplerState=[spr retain];
-            }
-        }
-    }
-    
-    nodeObj.context->doneTexture();
-    
-    if (handle.isValid()) {
-        nodeObj.nodeOut->m_Context = nodeObj.context;
-        nodeObj.nodeOut->m_Context->addTextureNodeInMT(nodeObj.nodeOut);
-    }
-}
-
-void GMTLContext::unloadTextureNodeForContext(GTexture::Node* node)
-{
-    if (node->isValid()) {
-        GTexture::Handle& handle = node->getData();
-        
-        readyTexture();
-        
-        [GX_CAST_R(id, handle.m_Name) release];
-        handle.m_Name = NULL;
-        [GX_CAST_R(id, handle.m_SamplerState) release];
-        handle.m_SamplerState = NULL;
-        
-        doneTexture();
-        
-        node->m_Context=NULL;
-    }
 }
 
 void GMTLContext::loadFrameBufferNodeInMT(GObject* obj)
@@ -643,7 +445,7 @@ void GMTLContext::loadFrameBufferNodeInMT(GObject* obj)
     
     // create a color attachment every frame since we have to recreate the texture every frame
     MTLRenderPassColorAttachmentDescriptor *colorAttachment = rpdOut.colorAttachments[0];
-    colorAttachment.texture = (id<MTLTexture>)nodeObj.texTarget->getName();
+    colorAttachment.texture = (id<MTLTexture>)nodeObj.texTarget->getTexture();
     colorAttachment.loadAction = MTLLoadActionClear;
     GColor4F& bgdClr=nodeObj.nodeOut->m_BgdColor;
     colorAttachment.clearColor = MTLClearColorMake(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);

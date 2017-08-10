@@ -142,10 +142,9 @@ bool GMShader::setUniformBuffer(gint idx,void* device,guint bufLen)
 
 void GMShader::setFragmentTexture(void* rce,GTexture* tex,guint idx)
 {
-    GTexture::Handle& handle=tex->getNode()->getData();
-    [GX_CAST_R(id<MTLRenderCommandEncoder>, rce) setFragmentTexture:GX_CAST_R(id<MTLTexture>,handle.getName())
+    [GX_CAST_R(id<MTLRenderCommandEncoder>, rce) setFragmentTexture:GX_CAST_R(id<MTLTexture>,tex->getTexture())
                                                             atIndex:idx];
-    [GX_CAST_R(id<MTLRenderCommandEncoder>, rce) setFragmentSamplerState:GX_CAST_R(id<MTLSamplerState>,handle.getSamplerState())
+    [GX_CAST_R(id<MTLRenderCommandEncoder>, rce) setFragmentSamplerState:GX_CAST_R(id<MTLSamplerState>,tex->getSamplerState())
                                                                  atIndex:idx];
 }
 
