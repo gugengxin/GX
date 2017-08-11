@@ -8,8 +8,22 @@
 
 #include "GTexture.h"
 #include "GContext.h"
+#if defined(GX_OPENGL)
+#include "GOGLContext.h"
+#include "GNumber.h"
+#endif
 
 #include "GXGObject.h"
+
+#if defined(GX_OPENGL)
+
+static void _DestroyTexture(GObject* obj)
+{
+    GLuint texId=GX_CAST_R(GNumber*, obj)->getUint32();
+    GX_glDeleteTextures(1,&texId);
+}
+
+#endif
 
 GX_GOBJECT_IMPLEMENT(GTexture, GObject);
 
@@ -29,7 +43,12 @@ GTexture::GTexture()
 GTexture::~GTexture()
 {
 #if defined(GX_OPENGL)
-#error
+    if (m_TextureID) {
+        GNumber* texIDObj=GNumber::alloc();
+        texIDObj->set(m_TextureID);
+        GOGLContext::chooseThreadToRun(_DestroyTexture, texIDObj, false);
+        GO::release(texIDObj);
+    }
 #elif defined(GX_DIRECTX)
 	if (m_ShaderResView) {
 		m_ShaderResView->Release();
@@ -65,7 +84,7 @@ void GTexture::create(
 )
 {
 #if defined(GX_OPENGL)
-#error
+    m_TextureID=texID;
 #elif defined(GX_DIRECTX)
 	m_ShaderResView = shaderResView;
 	m_ShaderResView->AddRef();
@@ -80,7 +99,13 @@ void GTexture::create(
 void GTexture::destroy()
 {
 #if defined(GX_OPENGL)
-#error
+    if (m_TextureID) {
+        GNumber* texIDObj=GNumber::alloc();
+        texIDObj->set(m_TextureID);
+        GOGLContext::chooseThreadToRun(_DestroyTexture, texIDObj, false);
+        GO::release(texIDObj);
+        m_TextureID = 0;
+    }
 #elif defined(GX_DIRECTX)
 	if (m_ShaderResView) {
 		m_ShaderResView->Release();

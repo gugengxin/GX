@@ -7,9 +7,146 @@
 //
 
 #include "GTexture2D.h"
-
+#if defined(GX_OPENGL)
+#include "GOGLContext.h"
+#endif
 
 #include "GXGObject.h"
+
+#if defined(GX_OPENGL)
+
+class _Texture2DCreater : public GObject {
+    GX_GOBJECT(_Texture2DCreater);
+public:
+    const void * dibData;
+    GX::PixelFormat pf;
+    gint32 w;
+    gint32 h;
+    gint32 s;
+    GTexture2D::Parameter * param;
+public:
+    GLuint result;
+};
+
+GX_GOBJECT_IMPLEMENT(_Texture2DCreater, GObject);
+
+_Texture2DCreater::_Texture2DCreater()
+{
+    dibData=NULL;
+    pf=NULL;
+    w=0;
+    h=0;
+    s=0;
+    param=NULL;
+    
+    result=0;
+}
+
+_Texture2DCreater::~_Texture2DCreater()
+{
+    
+}
+
+static void _CreateTexture2D(GObject* obj)
+{
+    _Texture2DCreater* cr=GX_CAST_R(_Texture2DCreater*, obj);
+    
+    GX_glGenTextures(1, &cr->result);
+    
+    if (cr->result != 0) {
+        
+        GLuint oldTex;
+        GX_glGetIntegerv(GL_TEXTURE_BINDING_2D,(GLint *)&oldTex);
+        GX_glBindTexture(GL_TEXTURE_2D, cr->result);
+        
+        if (cr->param) {
+            switch (cr->param->filter) {
+                case GX_FILTER_MIN_MAG_POINT:
+                {
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+                }
+                    break;
+                case GX_FILTER_MIN_POINT_MAG_LINEAR:
+                {
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+                }
+                    break;
+                case GX_FILTER_MIN_LINEAR_MAG_POINT:
+                {
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+                }
+                    break;
+                default:
+                case GX_FILTER_MIN_MAG_LINEAR:
+                {
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+                }
+                    break;
+            }
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, cr->param->wrapU );
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, cr->param->wrapV );
+        }
+        else {
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+        }
+        
+        if (cr->w%4==0) {
+            GX_glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+        }
+        else {
+            GX_glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        }
+        
+        switch(cr->pf) {
+            case GX::PixelFormatRGBA8888:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, cr->w,cr->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, cr->dibData);
+            }
+                break;
+            case GX::PixelFormatRGB888:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  cr->w,cr->h, 0, GL_RGB, GL_UNSIGNED_BYTE, cr->dibData);
+            }
+                break;
+            case GX::PixelFormatRGB565:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  cr->w,cr->h, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, cr->dibData);
+            }
+                break;
+            case GX::PixelFormatRGBA4444:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  cr->w,cr->h, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, cr->dibData);
+            }
+                break;
+            case GX::PixelFormatRGBA5551:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  cr->w,cr->h, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, cr->dibData);
+            }
+                break;
+            case GX::PixelFormatA8:
+            {
+                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, cr->w,cr->h, 0, GL_ALPHA, GL_UNSIGNED_BYTE, cr->dibData);
+            }
+                break;
+            default:
+                break;
+        }
+        
+        GX_glBindTexture(GL_TEXTURE_2D, oldTex);
+    }
+    
+}
+
+#endif
+
+
 
 GX_GOBJECT_IMPLEMENT(GTexture2D, GTexture);
 
@@ -22,7 +159,7 @@ GTexture2D::GTexture2D()
 
 GTexture2D::~GTexture2D()
 {
-
+    
 }
 
 GTexture2D * GTexture2D::autoCreate(GReader * reader, GDib::FileType suggestFT, GTexture2D::Parameter * param)
@@ -87,7 +224,8 @@ bool GTexture2D::create(GX::PixelFormat pixelFormat, gint32 width, gint32 height
 }
 void GTexture2D::destroy()
 {
-
+    m_Width=0;
+    m_Height=0;
 	GTexture::destroy();
 }
 
@@ -95,7 +233,41 @@ GDib* GTexture2D::prepareDib(GDib* dib)
 {
 	if (dib) {
 #if defined(GX_OPENGL)
-#error
+        switch (dib->getPixelFormat()) {
+            case GX::PixelFormatA8:
+            case GX::PixelFormatRGB565:
+            case GX::PixelFormatRGBA4444:
+            case GX::PixelFormatRGBA5551:
+            case GX::PixelFormatRGB888:
+            case GX::PixelFormatRGBA8888:
+            {
+                return dib;
+            }
+                break;
+            case GX::PixelFormatBGR565:
+            {
+                return GDib::convert(dib, GX::PixelFormatRGB565);
+            }
+                break;
+            case GX::PixelFormatBGRA4444:
+            {
+                return GDib::convert(dib, GX::PixelFormatRGBA4444);
+            }
+                break;
+            case GX::PixelFormatBGRA5551:
+            {
+                return GDib::convert(dib, GX::PixelFormatRGBA5551);
+            }
+                break;
+                break;
+            case GX::PixelFormatBGRA8888:
+            {
+                return GDib::convert(dib, GX::PixelFormatRGBA8888);
+            }
+                break;
+            default:
+                break;
+        }
 #elif defined(GX_DIRECTX)
 		switch (dib->getPixelFormat()) {
 		case GX::PixelFormatA8:
@@ -163,7 +335,26 @@ GDib* GTexture2D::prepareDib(GDib* dib)
 bool GTexture2D::create(const void * dibData, GX::PixelFormat pf, gint32 w, gint32 h, gint32 s, Parameter * param)
 {
 #if defined(GX_OPENGL)
+    
+    _Texture2DCreater* cr=_Texture2DCreater::alloc();
+    cr->dibData=dibData;
+    cr->pf=pf;
+    cr->w=w;
+    cr->h=h;
+    cr->s=s;
+    cr->param=param;
+    
+    GOGLContext::chooseThreadToRun(_CreateTexture2D, cr, true);
+    
+    bool res=cr->result!=0;
+    if (res) {
+        GTexture::create(cr->result);
+        m_Width=w;
+        m_Height=h;
+    }
 
+    GO::release(cr);
+    return res;
 #elif defined(GX_DIRECTX)
 	ID3D10Device* device = GX::direct3DDevice();
 

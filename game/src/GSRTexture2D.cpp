@@ -400,12 +400,12 @@ void GSRTexture2D::draw(GCanvas* canvas,
     }
 
     GX_glActiveTexture ( GL_TEXTURE0 );
-    GX_glBindTexture ( GL_TEXTURE_2D, texBase->getNode()->getData().getName() );
+    bindTexture( GL_TEXTURE_2D, texBase);
     setUniform1i ( U_texBase , 0 );
 
     if (getMaskMode()!=MM_None) {
         GX_glActiveTexture ( GL_TEXTURE1 );
-        GX_glBindTexture ( GL_TEXTURE_2D, texMask->getNode()->getData().getName() );
+        bindTexture( GL_TEXTURE_2D, texMask);
         setUniform1i ( U_texMask , 1 );
     }
 

@@ -226,6 +226,9 @@ void GOGLContext::initialize()
                                             sharegroup:nil];
     g_CtxLoad.context=[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
                                             sharegroup:GX_CAST_R(EAGLContext*, g_CtxMain.context).sharegroup];
+    if ([GX_CAST_R(EAGLContext*, g_CtxMain.context) respondsToSelector:@selector(setMultiThreaded:)]) {
+        [GX_CAST_R(EAGLContext*, g_CtxMain.context) setMultiThreaded:YES];
+    }
 #elif defined(GX_OS_MACOSX)
     NSOpenGLPixelFormat* pixelFormat=CreatePF();
     g_CtxMain.context=[[NSOpenGLContext alloc] initWithFormat:pixelFormat
@@ -598,13 +601,20 @@ void GOGLContext::doneShader()
     g_CtxMain.makeClear();
 }
 
-void GOGLContext::readyTexture()
+void GOGLContext::chooseThreadToRun(GX::Callback cbk, GObject* obj, bool waitUntilDone)
 {
-    g_CtxMain.makeCurrent();
-}
-void GOGLContext::doneTexture()
-{
-    g_CtxMain.makeClear();
+    GThread* curTd=GThread::current();
+    if (curTd->isMain()) {
+        g_CtxMain.makeCurrent();
+        cbk(obj);
+        g_CtxMain.makeClear();
+    }
+    else if(curTd==g_CtxLoadTH->getThread()) {
+        cbk(obj);
+    }
+    else {
+        curTd->getRunLoop()->perform(cbk, obj, 0, waitUntilDone);
+    }
 }
 
 void GOGLContext::readyFrameBuffer()
@@ -618,205 +628,10 @@ void GOGLContext::doneFrameBuffer()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-GDib* GOGLContext::loadTexture2DNodeReadyDib(GDib* dib)
-{
-    if (dib) {
-        switch (dib->getPixelFormat()) {
-            case GX::PixelFormatA8:
-            case GX::PixelFormatRGB565:
-            case GX::PixelFormatRGBA4444:
-            case GX::PixelFormatRGBA5551:
-            case GX::PixelFormatRGB888:
-            case GX::PixelFormatRGBA8888:
-            {
-                return dib;
-            }
-                break;
-            case GX::PixelFormatBGR565:
-            {
-                return GDib::convert(dib, GX::PixelFormatRGB565);
-            }
-                break;
-            case GX::PixelFormatBGRA4444:
-            {
-                return GDib::convert(dib, GX::PixelFormatRGBA4444);
-            }
-                break;
-            case GX::PixelFormatBGRA5551:
-            {
-                return GDib::convert(dib, GX::PixelFormatRGBA5551);
-            }
-                break;
-                break;
-            case GX::PixelFormatBGRA8888:
-            {
-                return GDib::convert(dib, GX::PixelFormatRGBA8888);
-            }
-                break;
-            default:
-                break;
-        }
-    }
-	return NULL;
-}
-
 GX::PixelFormat GOGLContext::getPixelFormatForFB() const
 {
     return GX::PixelFormatRGBA8888;
 }
-
-void GOGLContext::loadTexture2DNodeInMT(GObject* obj)
-{
-	GContext::T2DNodeLoadObjBase& nodeObj = *GX_CAST_R(GContext::T2DNodeLoadObjBase*, obj);
-    GTexture::Handle& handle = nodeObj.nodeOut->getData();
-    
-    nodeObj.context->readyTexture();
-    
-	GX_glGenTextures(1, &handle.m_Name);
-    
-	if (handle.m_Name != 0) {
-
-		GX::PixelFormat pf;
-		gint32 w, h;
-		void* data;
-
-		if (obj->isKindOfClass(GContext::T2DNodeLoadCreateObj::gclass)) {
-			pf = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->pixelFormat;
-			w = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->width;
-			h = GX_CAST_R(GContext::T2DNodeLoadCreateObj*, obj)->height;
-			data = NULL;
-		}
-		else {
-			GDib*& dib = GX_CAST_R(GContext::T2DNodeLoadObj*, obj)->dib;
-			pf = dib->getPixelFormat();
-			w = dib->getWidth();
-			h = dib->getHeight();
-			data = dib->getDataPtr();
-		}
-
-        GLuint oldTex;
-        GX_glGetIntegerv(GL_TEXTURE_BINDING_2D,(GLint *)&oldTex);
-		GX_glBindTexture(GL_TEXTURE_2D, handle.m_Name);
-        
-        if (nodeObj.param) {
-            switch (nodeObj.param->filter) {
-                case GX_FILTER_MIN_MAG_POINT:
-                {
-                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-                }
-                    break;
-                case GX_FILTER_MIN_POINT_MAG_LINEAR:
-                {
-                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-                }
-                    break;
-                case GX_FILTER_MIN_LINEAR_MAG_POINT:
-                {
-                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-                }
-                    break;
-                default:
-                case GX_FILTER_MIN_MAG_LINEAR:
-                {
-                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-                    GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-                }
-                    break;
-            }
-            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, nodeObj.param->wrapU );
-            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, nodeObj.param->wrapV );
-        }
-        else {
-            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-            GX_glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-        }
-        
-        if (w%4==0) {
-            GX_glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-        }
-        else {
-            GX_glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        }
-        
-        bool bTF=true;
-        
-        switch(pf) {
-            case GX::PixelFormatRGBA8888:
-            {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, w,h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-            }
-                break;
-            case GX::PixelFormatRGB888:
-            {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  w,h, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-            }
-                break;
-            case GX::PixelFormatRGB565:
-            {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB,  w,h, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
-            }
-                break;
-            case GX::PixelFormatRGBA4444:
-            {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  w,h, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
-            }
-                break;
-            case GX::PixelFormatRGBA5551:
-            {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA,  w,h, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
-            }
-                break;
-            case GX::PixelFormatA8:
-            {
-                GX_glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, w,h, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
-            }
-                break;
-            default:
-            {
-                bTF=false;
-            }
-                break;
-        }
-        
-        GX_glBindTexture(GL_TEXTURE_2D, oldTex);
-        
-        if (!bTF) {
-			GX_glDeleteTextures(1, &handle.m_Name);
-			handle.m_Name = 0;
-        }
-    }
-    
-    nodeObj.context->doneTexture();
-
-    if (handle.isValid()) {
-        nodeObj.nodeOut->m_Context=nodeObj.context;
-        nodeObj.nodeOut->m_Context->addTextureNodeInMT(nodeObj.nodeOut);
-    }
-}
-
-void GOGLContext::unloadTextureNodeForContext(GTexture::Node* node)
-{
-	if (node->isValid()) {
-
-		GTexture::Handle& handle = node->getData();
-		readyTexture();
-		GX_glDeleteTextures(1, &handle.m_Name);
-		handle.m_Name = 0;
-		doneTexture();
-
-		node->m_Context = NULL;
-	}
-
-}
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 void GOGLContext::loadFrameBufferNodeInMT(GObject* obj)
 {
@@ -844,7 +659,7 @@ void GOGLContext::loadFrameBufferNodeInMT(GObject* obj)
             GLuint oldFB;
             GX_glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&oldFB);
             GX_glBindFramebuffer(GL_FRAMEBUFFER, handle.m_Name);
-            GX_glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D, nodeObj.texTarget->getNode()->getData().getName(), 0);
+            GX_glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D, nodeObj.texTarget->getTextureID(), 0);
             if (nodeObj.use==GFrameBuffer::UseFor3D) {
                 GLuint oldRB;
                 GX_glGetIntegerv(GL_RENDERBUFFER_BINDING, (GLint*)&oldRB);

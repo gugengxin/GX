@@ -19,6 +19,7 @@
 #include "GDataArray.h"
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
+#include "GAction.h"
 
 class GOGLContext : public GBaseContext, public GX::OpenGLCullFacer, public GX::OpenGLBlender
 #if defined(GX_OS_QT)
@@ -26,6 +27,8 @@ class GOGLContext : public GBaseContext, public GX::OpenGLCullFacer, public GX::
 #endif
 {
     friend class GOShader;
+    friend class GTexture;
+    friend class GTexture2D;
 protected:
     static void initialize();
 protected:
@@ -53,16 +56,11 @@ protected:
 protected:
     static void readyShader();
     static void doneShader();
-	void readyTexture();
-	void doneTexture();
+    static void chooseThreadToRun(GX::Callback cbk, GObject* obj, bool waitUntilDone);
     void readyFrameBuffer();
     void doneFrameBuffer();
 protected:
-	GDib* loadTexture2DNodeReadyDib(GDib* dib);
     GX::PixelFormat getPixelFormatForFB() const;
-	static void loadTexture2DNodeInMT(GObject* obj);
-	void unloadTextureNodeForContext(GTexture::Node* node);
-protected:
     static void loadFrameBufferNodeInMT(GObject* obj);
     void unloadFrameBufferNodeForContext(GFrameBuffer::Node* node);
 

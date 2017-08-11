@@ -313,10 +313,10 @@
 				CAC708AA1D13CDE900B98028 /* GTexture.cpp */,
 				CAC708B01D13CDFE00B98028 /* GTexture2D.h */,
 				CAC708AF1D13CDFE00B98028 /* GTexture2D.cpp */,
-				CA38F3DD1F3CB277009F795D /* GTexture1D.cpp */,
 				CA38F3DE1F3CB277009F795D /* GTexture1D.h */,
-				CA38F3DF1F3CB277009F795D /* GTextureCube.cpp */,
+				CA38F3DD1F3CB277009F795D /* GTexture1D.cpp */,
 				CA38F3E01F3CB277009F795D /* GTextureCube.h */,
+				CA38F3DF1F3CB277009F795D /* GTextureCube.cpp */,
 			);
 			name = texture;
 			sourceTree = "<group>";

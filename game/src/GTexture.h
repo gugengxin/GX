@@ -19,6 +19,7 @@
 class GTexture : public GObject {
 #if defined(GX_OPENGL)
 	friend class GOShader;
+    friend class GOGLContext;
 #elif defined(GX_DIRECTX)
 	friend class GDShader;
 	friend class GD3DContext;
@@ -46,7 +47,9 @@ public:
 	virtual void destroy();
 protected:
 #if defined(GX_OPENGL)
-
+    inline GLuint getTextureID() const {
+        return m_TextureID;
+    }
 #elif defined(GX_DIRECTX)
 	inline ID3D10ShaderResourceView* getShaderResView() const {
 		return m_ShaderResView;

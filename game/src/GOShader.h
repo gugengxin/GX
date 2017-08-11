@@ -8,6 +8,7 @@
 #include "GShader.h"
 #include "GXOpenGL.h"
 #include "GBuffer.h"
+#include "GTexture.h"
 
 
 class GOShader : public GShader
@@ -91,6 +92,10 @@ protected:
 	inline void setUniformMatrix4fv(int index, GLsizei count, GLboolean transpose, const GLfloat* value) {
         GX_glUniformMatrix4fv(getUs()[index], count, transpose, value);
 	}
+    
+    inline void bindTexture(GLenum target, GTexture* texture) {
+        GX_glBindTexture( target, texture->getTextureID() );
+    }
     
     static void readyUseBuffer(GBuffer* buffer);
     static const GLvoid* getBufferData(GBuffer* buffer,guint offset);
