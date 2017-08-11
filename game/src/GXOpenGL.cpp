@@ -237,7 +237,7 @@ namespace GX {
         _DC=NULL;
         _context=NULL;
 #elif defined(GX_OS_IPHONE)
-        [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*,context)];
+        [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*,_context)];
         _context=NULL;
 #elif defined(GX_OS_MACOSX)
         if (_context) {
