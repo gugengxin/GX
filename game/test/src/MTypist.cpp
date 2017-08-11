@@ -70,6 +70,7 @@ void MTypist::idle()
 }
 void MTypist::render3D(GCanvas* canvas,GContext& context)
 {
+    GX_UNUSED(context);
     canvas->pushMatrix();
     
     canvas->rotateY(m_Angle);

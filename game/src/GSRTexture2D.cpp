@@ -81,7 +81,7 @@ fp {
 
 GSRTexture2D* GSRTexture2D::shared(bool alphaOnly,bool colorMul,GSRTexture2D::MaskMode mm)
 {
-    static GSRTexture2D* g_Shaders[2][2][MMCount]={NULL};
+    static GSRTexture2D* g_Shaders[2][2][MMCount]={{{NULL,},},};
     
     if (!g_Shaders[alphaOnly][colorMul][mm]) {
         ready();

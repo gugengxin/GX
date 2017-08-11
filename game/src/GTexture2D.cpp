@@ -33,7 +33,7 @@ GX_GOBJECT_IMPLEMENT(_Texture2DCreater, GObject);
 _Texture2DCreater::_Texture2DCreater()
 {
     dibData=NULL;
-    pf=NULL;
+    pf=GX::PixelFormatUnknown;
     w=0;
     h=0;
     s=0;
