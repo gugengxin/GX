@@ -18,7 +18,6 @@ GX_GOBJECT_IMPLEMENT(GTex2DFont::Glyph, GFont::Glyph);
 GTex2DFont::Glyph::Glyph()
 {
     m_UseNumber=0;
-    m_Context=NULL;
     m_FTGlyph=NULL;
     m_Tex2D=NULL;
     m_OLTex2D=NULL;
@@ -72,10 +71,9 @@ gint32 GTex2DFont::Glyph::getOutlinePointY(guint32 index)
     return m_FTGlyph->getOutlinePointY(index);
 }
 
-void GTex2DFont::Glyph::load(GTex2DFont* font,GContext* context,GFTFont::Glyph* ftGlyph)
+void GTex2DFont::Glyph::load(GTex2DFont* font,GFTFont::Glyph* ftGlyph)
 {
     GX_UNUSED(font);
-    m_Context=context;
     GX_OBJECT_SET(m_FTGlyph, ftGlyph);
 }
 
@@ -88,7 +86,6 @@ GX_GOBJECT_IMPLEMENT(GTex2DFont, GFont);
 GTex2DFont::GTex2DFont()
 {
     m_FTFont=NULL;
-    m_Context=NULL;
 }
 
 GTex2DFont::~GTex2DFont()
@@ -96,12 +93,11 @@ GTex2DFont::~GTex2DFont()
     GO::release(m_FTFont);
 }
 
-void GTex2DFont::create(GFTFont* ftFont,GContext* context)
+void GTex2DFont::create(GFTFont* ftFont)
 {
     GFont::create();
     
     GX_OBJECT_SET(m_FTFont, ftFont);
-    m_Context=context;
 }
 
 gint32 GTex2DFont::getScaleX()
@@ -182,7 +178,7 @@ GFont::Glyph* GTex2DFont::getGlyph(guint32 index)
     
     if (ftGlyph) {
         Glyph* res=Glyph::alloc();
-        res->load(this, m_Context, ftGlyph);
+        res->load(this, ftGlyph);
         res->addUseNumber(1);
         
         if (m_GlyphCache.getCount()>M_GLYPH_CACHE_COUNT) {

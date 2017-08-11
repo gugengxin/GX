@@ -18,12 +18,9 @@
 #include "GXGObject.h"
 // Down can't include other h file
 
-class GContext;
-
 class GTex2DFont : public GFont
 {
-    friend class GContext;
-    GX_PRIVATE_GOBJECT(GTex2DFont);
+    GX_GOBJECT(GTex2DFont);
 public:
     class Glyph : public GFont::Glyph {
         friend class GTex2DFont;
@@ -40,7 +37,7 @@ public:
         virtual gint32 getOutlinePointX(guint32 index);
         virtual gint32 getOutlinePointY(guint32 index);
     private:
-        void load(GTex2DFont* font,GContext* context,GFTFont::Glyph* ftGlyph);
+        void load(GTex2DFont* font,GFTFont::Glyph* ftGlyph);
         inline gint getUseNumber() {
             return m_UseNumber;
         }
@@ -50,13 +47,12 @@ public:
     private:
         gint   m_UseNumber;
     private:
-        GContext* m_Context;
         GFTFont::Glyph* m_FTGlyph;
         GTexture2D* m_Tex2D;
         GTexture2D* m_OLTex2D;
     };
-private:
-    void create(GFTFont* ftFont,GContext* context);
+public:
+    void create(GFTFont* ftFont);
 public:
     virtual gint32 getScaleX();
     virtual gint32 getScaleY();
@@ -78,7 +74,6 @@ public:
     virtual bool getGlyphNameIndex(guint32* idxOut, const char *name, gint32 len);
 private:
     GFTFont*  m_FTFont;
-    GContext* m_Context;
     GArray<Glyph> m_GlyphCache;
 };
 

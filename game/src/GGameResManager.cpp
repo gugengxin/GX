@@ -7,6 +7,7 @@
 //
 
 #include "GGameResManager.h"
+#include "GFontManager.h"
 
 GGameResManager * GGameResManager::shared()
 {
@@ -45,6 +46,32 @@ GTexture2D* GGameResManager::loadTexture2D(GString* name, GDib::FileType suggest
 		}
 	}
 	return res;
+}
+
+GTex2DFont* GGameResManager::loadTex2DFont(GString* name, gint32 size, gint32 outlineSize)
+{
+    if (size<=0) {
+        size=12;
+    }
+    if (outlineSize<0) {
+        outlineSize=0;
+    }
+    GString* key=GString::alloc();
+    key->format("%@_%@_%@").arg(name).arg(size).arg(outlineSize).end();
+    
+    GTex2DFont* res=GX_CAST_R(GTex2DFont*, findInMap(MapTex2DFont, key));
+    if (!res) {
+        GFTFont* ftFont=GFontManager::shared()->loadFTFont(name, size, outlineSize);
+        if (ftFont) {
+            res=GTex2DFont::alloc();
+            res->create(ftFont);
+            addToMap(MapTex2DFont, key, res);
+            GO::autorelease(res);
+        }
+    }
+    
+    GO::release(key);
+    return res;
 }
 
 GMap<GString, GObject>* GGameResManager::getMap(gint index)

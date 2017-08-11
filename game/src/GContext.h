@@ -13,13 +13,12 @@
 #include "GReader.h"
 #include "GTexture2D.h"
 #include "GFrameBuffer.h"
-#include "GResourceManager.h"
 #include "GString.h"
 #include "GTex2DFont.h"
 
 #include "GXGObject.h"
 
-class GContext : public GX_CONTEXT_BASE, public GResourceManager
+class GContext : public GX_CONTEXT_BASE
 {
     friend class GX_CONTEXT_BASE;
     friend class GWindow;
@@ -63,21 +62,6 @@ private:
 	virtual void androidDestroy();
 	virtual void androidRecreate(GWindow* win);
 #endif
-//Resource Manager
-private:
-    typedef enum _Map {
-        MapTex2D,
-        MapTex2DFont,
-        MapCount,
-    } Map;
-    virtual gint getMapCount() {
-        return MapCount;
-    }
-    virtual GMap<GString, GObject>* getMap(gint index);
-protected:
-    virtual void didReceivedMemoryWarning();
-private:
-    GMap<GString,GObject> m_Maps[MapCount];
 //FrameBuffer
 public:
     GFrameBuffer* loadFrameBuffer(gint32 width, gint32 height, GTexture2D::Parameter* param, GFrameBuffer::Use use);
@@ -87,9 +71,6 @@ private:
 	bool loadFrameBufferNode(GFrameBuffer::Node* node, GTexture* texTarget, GFrameBuffer::Use use);
     void unloadFrameBufferNode(GFrameBuffer::Node* node);
 	static void unloadFrameBufferNodeInMT(GObject* obj);
-//Tex2DFont
-public:
-    GTex2DFont* loadTex2DFont(GString* name, gint32 size, gint32 outlineSize);
 private:
     GDataList<GFrameBuffer::Handle> m_FrameBuffers;
 };

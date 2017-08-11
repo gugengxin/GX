@@ -5,7 +5,6 @@
 #include "GContext.h"
 #include "GLog.h"
 #include "GThread.h"
-#include "GFontManager.h"
 
 
 #include "GXGObject.h"
@@ -114,16 +113,6 @@ void GContext::androidRecreate(GWindow* win)
 }
 #endif
 
-GMap<GString, GObject>* GContext::getMap(gint index)
-{
-    return &m_Maps[index];
-}
-
-void GContext::didReceivedMemoryWarning()
-{
-    //TODO
-}
-
 GFrameBuffer* GContext::loadFrameBuffer(gint32 width, gint32 height, GTexture2D::Parameter* param, GFrameBuffer::Use use)
 {
 	GFrameBuffer* res = NULL;
@@ -199,33 +188,6 @@ void GContext::unloadFrameBufferNodeInMT(GObject* obj)
 	nodeObj.context->unloadFrameBufferNodeForContext(nodeObj.nodeOut);
 
 	nodeObj.context->removeFrameBufferNodeInMT(nodeObj.nodeOut);
-}
-
-
-GTex2DFont* GContext::loadTex2DFont(GString* name, gint32 size, gint32 outlineSize)
-{
-    if (size<=0) {
-        size=12;
-    }
-    if (outlineSize<0) {
-        outlineSize=0;
-    }
-    GString* key=GString::alloc();
-    key->format("%@_%@_%@").arg(name).arg(size).arg(outlineSize).end();
-    
-    GTex2DFont* res=GX_CAST_R(GTex2DFont*, findInMap(MapTex2DFont, key));
-    if (!res) {
-        GFTFont* ftFont=GFontManager::shared()->loadFTFont(name, size, outlineSize);
-        if (ftFont) {
-            res=GTex2DFont::alloc();
-            res->create(ftFont, this);
-            addToMap(MapTex2DFont, key, res);
-            GO::autorelease(res);
-        }
-    }
-    
-    GO::release(key);
-    return res;
 }
 
 

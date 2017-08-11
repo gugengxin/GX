@@ -12,8 +12,8 @@
 #include "GXPrefix.h"
 #include "GX3DAPIType.h"
 #include "GResourceManager.h"
-#include "GMap.h"
 #include "GTexture2D.h"
+#include "GTex2DFont.h"
 
 class GGameResManager : public GResourceManager
 {
@@ -24,9 +24,11 @@ private:
 	virtual ~GGameResManager();
 public:
 	GTexture2D* loadTexture2D(GString* name, GDib::FileType suggestFT, GTexture2D::Parameter* param);
+    GTex2DFont* loadTex2DFont(GString* name, gint32 size, gint32 outlineSize);
 protected:
 	typedef enum _Map {
 		MapTex2D,
+        MapTex2DFont,
 		MapCount,
 	} Map;
 	virtual gint getMapCount() {
