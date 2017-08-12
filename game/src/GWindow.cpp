@@ -599,7 +599,9 @@ GWindow::~GWindow()
     [GX_CAST_R(id, m_OSWin) release];
     [GX_CAST_R(id, m_OSWinCtrler) release];
 #elif defined(GX_OS_ANDROID)
-	ANativeWindow_release(GX_CAST_R(ANativeWindow*,m_OSWin));
+    if(m_OSWin) {
+        ANativeWindow_release(GX_CAST_R(ANativeWindow*,m_OSWin));
+    }
 #elif defined(GX_OS_QT)
     //delete m_OSWin;
     //delete m_Container;
