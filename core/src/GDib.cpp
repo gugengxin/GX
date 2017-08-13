@@ -661,11 +661,6 @@ void GDib::changeData(GX::PixelFormat pf,gint32 w,gint32 h)
 }
 
 
-bool GDib::isFontAvailable(GFont* font)
-{
-    return font->isKindOfClass(GFTFont::gclass);
-}
-
 typedef enum __DrawState {
     _DrawStateText,
     _DrawStateOL,
@@ -699,7 +694,9 @@ static void _DrawFTDib(GDib* context,_DrawState ds,GDib* dib,gint32 x,gint32 y,c
     gint32 dstPitch=context->getStride();
     guint8* dstData=(guint8*)context->getDataPtr(x,y);
     
-    switch (context->getPixelFormat()) {
+    GX::PixelFormat pf=context->getPixelFormat();
+    
+    switch (pf) {
         case GX::PixelFormatA8:
         {
             for (gint32 j=0; j<rowNum; j++) {
@@ -790,8 +787,21 @@ static void _DrawFTDib(GDib* context,_DrawState ds,GDib* dib,gint32 x,gint32 y,c
     }
 }
 
-void GDib::printGlyph(GFont::Glyph* glyph,GPointF pos,const GTypist::Paint* paint)
+GTypist::Paper::PrintGlyphSelector GDib::printCheck(GFont* font)
 {
+    if (font->isKindOfClass(GFTFont::gclass)) {
+        return GX_CAST_R(GTypist::Paper::PrintGlyphSelector, &GDib::printFTFontGlyph);
+    }
+    return NULL;
+}
+void GDib::printBegin(GPointF pos)
+{
+    GX_UNUSED(pos);
+}
+void GDib::printFTFontGlyph(GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
+{
+    GX_UNUSED(offset);
+    
     GFTFont::Glyph* ghFT=GX_CAST_R(GFTFont::Glyph*, glyph);
     
     GDib* dib=ghFT->getDib();
@@ -805,4 +815,7 @@ void GDib::printGlyph(GFont::Glyph* glyph,GPointF pos,const GTypist::Paint* pain
         _DrawFTDib(this, _DrawStateText, dib, (gint32)GX::round(pos.x), (gint32)GX::round(pos.y), paint);
     }
 }
-
+void GDib::printEnd()
+{
+    
+}

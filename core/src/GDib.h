@@ -70,8 +70,10 @@ public:
     void changeData(GX::PixelFormat pf,gint32 w,gint32 h);
     
 protected:
-    virtual bool isFontAvailable(GFont* font);
-    virtual void printGlyph(GFont::Glyph* glyph,GPointF pos,const GTypist::Paint* paint);
+    virtual GTypist::Paper::PrintGlyphSelector printCheck(GFont* font);
+    virtual void printBegin(GPointF pos);
+    void printFTFontGlyph(GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint);
+    virtual void printEnd();
 private:
     GX::PixelFormat m_PixelFormat;
     gint32          m_Width;

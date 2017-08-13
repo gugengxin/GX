@@ -15,13 +15,15 @@
 #include "GMatrix.h"
 #include "GDataArray.h"
 #include "GColor.h"
+#include "GTypist.h"
+#include "GTex2DFont.h"
 
 
 
 #include "GXGObject.h"
 // Down can't include other h file
 
-class GCanvas : public GObject
+class GCanvas : public GObject, public GTypist::Paper
 {
 	GX_VIRTUAL_GOBJECT(GCanvas);    
 public:
@@ -90,6 +92,11 @@ protected:
 	inline GMatrix4& getMatrix(int idx) {
 		return m_Matrixs[idx];
 	}
+protected:
+    virtual GTypist::Paper::PrintGlyphSelector printCheck(GFont* font);
+    virtual void printBegin(GPointF pos);
+    void printTex2DFontGlyph(GTex2DFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint);
+    virtual void printEnd();
 private:
     GMatrix4 m_Matrixs[MatrixCount];
     GPDArray<GMatrix4> m_MatrixStack;

@@ -8,6 +8,7 @@
 
 #include "GCanvas.h"
 //Down include other h file
+#include "GTex2DFont.h"
 
 //Up include other h file
 #include "GXGObject.h"
@@ -97,4 +98,24 @@ const float* GCanvas::updateMVPMatrix()
     return m_Matrixs[MatrixMVP].m;
 }
 
+
+GTypist::Paper::PrintGlyphSelector GCanvas::printCheck(GFont* font)
+{
+    if (font->isKindOfClass(GFTFont::gclass)) {
+        return GX_CAST_R(GTypist::Paper::PrintGlyphSelector, &GCanvas::printTex2DFontGlyph);
+    }
+    return NULL;
+}
+void GCanvas::printBegin(GPointF pos)
+{
+    GX_UNUSED(pos);
+}
+void GCanvas::printTex2DFontGlyph(GTex2DFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
+{
+    
+}
+void GCanvas::printEnd()
+{
+    
+}
 

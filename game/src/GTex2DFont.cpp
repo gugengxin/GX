@@ -75,6 +75,10 @@ void GTex2DFont::Glyph::load(GTex2DFont* font,GFTFont::Glyph* ftGlyph)
 {
     GX_UNUSED(font);
     GX_OBJECT_SET(m_FTGlyph, ftGlyph);
+    GO::release(m_Tex2D);
+    m_Tex2D=NULL;
+    GO::release(m_OLTex2D);
+    m_OLTex2D=NULL;
 }
 
 

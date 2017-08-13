@@ -30,8 +30,11 @@ public:
         Paper();
         virtual ~Paper();
     protected:
-        virtual bool isFontAvailable(GFont* font)=0;
-        virtual void printGlyph(GFont::Glyph* glyph,GPointF pos,const Paint* paint)=0;
+        typedef void (Paper::*PrintGlyphSelector)(GFont::Glyph* glyph,GPointF pos,GPointF offset,const Paint* paint);
+        virtual PrintGlyphSelector printCheck(GFont* font)=0;
+        virtual void printBegin(GPointF pos)=0;
+        virtual void printEnd()=0;
+        
     };
     
     class Word : public GObject {

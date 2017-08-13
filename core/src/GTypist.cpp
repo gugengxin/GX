@@ -178,27 +178,35 @@ void GTypist::setSingleLine(GString * str, GFont * font)
 
 bool GTypist::print(Paper* paper,GPointF pos,const Paint* paint)
 {
-    if (!paper->isFontAvailable(m_Font)) {
+    Paper::PrintGlyphSelector pgs=paper->printCheck(m_Font);
+    if (!pgs) {
         return false;
     }
     
     for (gint i=0; i<m_Words.getCount(); i++) {
         Word* wd=m_Words.get(i);
         
+        
         hb_glyph_info_t *infoHB = GX_CAST_R(hb_glyph_info_t*, wd->getHBInfo());
         hb_glyph_position_t *posHB = GX_CAST_R(hb_glyph_position_t*, wd->getHBPosition());
         
         GPointF curPos(pos.x+wd->getX(),pos.y+wd->getY()+m_Font->getAscender()/64.0f);
+        GPointF offset;
+        
+        paper->printBegin(curPos);
+        
         for (gint j=0; j<wd->getLength(); j++) {
             GFont::Glyph* glyph=m_Font->getGlyph(infoHB[j].codepoint);
+            offset.x=posHB[j].x_advance/64.0f;
+            offset.y=posHB[j].y_advance/64.0f;
             
-            printf("%f %f\n",posHB[j].x_offset/64.0f,posHB[j].y_offset/64.0f);
+            (paper->*pgs)(glyph, GPointF::make(curPos.x+offset.x, curPos.y+offset.y), offset, paint);
             
-            paper->printGlyph(glyph, GPointF::make(curPos.x+posHB[j].x_offset/64.0f, curPos.y+posHB[j].y_offset/64.0f),paint);
-            
-            curPos.x+=posHB[j].x_advance/64.0f;
-            curPos.y+=posHB[j].y_advance/64.0f;
+            curPos.x+=offset.x;
+            curPos.y+=offset.y;
         }
+        
+        paper->printEnd();
     }
     
     return true;
