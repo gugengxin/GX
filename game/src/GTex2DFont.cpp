@@ -73,9 +73,10 @@ gint32 GTex2DFont::Glyph::getOutlinePointY(guint32 index)
     return m_FTGlyph->getOutlinePointY(index);
 }
 
-void GTex2DFont::Glyph::load(GTex2DFont* font,GFTFont::Glyph* ftGlyph)
+void GTex2DFont::Glyph::load(GTex2DFont* font, GFTFont::Glyph* ftGlyph, guint32 index)
 {
     setFont(font);
+	setIndex(index);
     GX_OBJECT_SET(m_FTGlyph, ftGlyph);
 }
 
@@ -88,7 +89,7 @@ void GTex2DFont::Glyph::render()
             
             float l=m_FTGlyph->getHoriBearingX()/64.0f;
             float r=(m_FTGlyph->getHoriBearingX()+m_FTGlyph->getWidth())/64.0f;
-            float t=m_FTGlyph->getHoriBearingY();
+            float t=m_FTGlyph->getHoriBearingY()/64.0f;
             float b=(m_FTGlyph->getHeight()-m_FTGlyph->getHoriBearingY())/64.0f;
 #pragma pack (1)
             struct {
@@ -235,7 +236,7 @@ GFont::Glyph* GTex2DFont::getGlyph(guint32 index)
     
     if (ftGlyph) {
         Glyph* res=Glyph::alloc();
-        res->load(this, ftGlyph);
+        res->load(this, ftGlyph, index);
         res->addUseNumber(1);
         
         if (m_GlyphCache.getCount()>M_GLYPH_CACHE_COUNT) {

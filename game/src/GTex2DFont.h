@@ -38,7 +38,7 @@ public:
         virtual gint32 getOutlinePointX(guint32 index);
         virtual gint32 getOutlinePointY(guint32 index);
     private:
-        void load(GTex2DFont* font,GFTFont::Glyph* ftGlyph);
+        void load(GTex2DFont* font, GFTFont::Glyph* ftGlyph, guint32 index);
         inline gint getUseNumber() {
             return m_UseNumber;
         }

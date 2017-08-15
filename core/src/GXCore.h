@@ -43,6 +43,7 @@
 #include "GFontManager.h"
 #include "GTypist.h"
 
+#include "GSystem.h"
 #include "GLog.h"
 #include "GError.h"
 #include "GApplication.h"
