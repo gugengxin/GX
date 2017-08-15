@@ -72,7 +72,7 @@ public:
 protected:
     virtual GTypist::Paper::PrintGlyphSelector printCheck(GFont* font);
     virtual void printBegin(GPointF pos);
-    void printFTFontGlyph(GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint);
+    static void printFTFontGlyph(GTypist::Paper* paper,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint);
     virtual void printEnd();
 private:
     GX::PixelFormat m_PixelFormat;

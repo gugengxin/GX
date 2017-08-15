@@ -9,6 +9,7 @@
 #include "GCanvas.h"
 //Down include other h file
 #include "GTex2DFont.h"
+#include "GSRTexture2D.h"
 
 //Up include other h file
 #include "GXGObject.h"
@@ -101,21 +102,36 @@ const float* GCanvas::updateMVPMatrix()
 
 GTypist::Paper::PrintGlyphSelector GCanvas::printCheck(GFont* font)
 {
-    if (font->isKindOfClass(GFTFont::gclass)) {
-        return GX_CAST_R(GTypist::Paper::PrintGlyphSelector, &GCanvas::printTex2DFontGlyph);
+    if (font->isKindOfClass(GTex2DFont::gclass)) {
+        return &printTex2DFontGlyph;
     }
     return NULL;
 }
+
 void GCanvas::printBegin(GPointF pos)
 {
-    GX_UNUSED(pos);
+    pushMatrix();
+    translate(pos.x, pos.y, 0.0f);
 }
-void GCanvas::printTex2DFontGlyph(GTex2DFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
+
+void GCanvas::printTex2DFontGlyph(GTypist::Paper* paper,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
 {
+    GCanvas* canvas=GX_CAST_S(GCanvas*, paper);
+    GTex2DFont::Glyph* realGH=GX_CAST_R(GTex2DFont::Glyph*, glyph);
     
+    GSRTexture2D::shared(true, true, GSRTexture2D::MM_None)->draw(canvas,
+                                                                  realGH->getBuffer(), 0, 16,
+                                                                  GSRTexture2D::IT_Float_UShort,
+                                                                  realGH->getTexture(),
+                                                                  GX_TRIANGLE_STRIP,
+                                                                  0, 4,
+                                                                  NULL);
+    
+    canvas->translate(offset.x, offset.y, 0.0f);
 }
+
 void GCanvas::printEnd()
 {
-    
+    popMatrix();
 }
 

@@ -13,6 +13,7 @@
 #include "GFont.h"
 #include "GFTFont.h"
 #include "GTexture2D.h"
+#include "GBuffer.h"
 
 
 #include "GXGObject.h"
@@ -44,10 +45,16 @@ public:
         inline void addUseNumber(gint step) {
             m_UseNumber+=step;
         }
+        void render();
+    public:
+        GBuffer* getBuffer();
+        GTexture2D* getTexture();
+        GTexture2D* getOLTexture();
     private:
         gint   m_UseNumber;
     private:
         GFTFont::Glyph* m_FTGlyph;
+        GBuffer* m_Buffer;
         GTexture2D* m_Tex2D;
         GTexture2D* m_OLTex2D;
     };

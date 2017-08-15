@@ -200,7 +200,7 @@ bool GTypist::print(Paper* paper,GPointF pos,const Paint* paint)
             offset.x=posHB[j].x_advance/64.0f;
             offset.y=posHB[j].y_advance/64.0f;
             
-            (paper->*pgs)(glyph, GPointF::make(curPos.x+offset.x, curPos.y+offset.y), offset, paint);
+            pgs(paper, glyph, GPointF::make(curPos.x+offset.x, curPos.y+offset.y), offset, paint);
             
             curPos.x+=offset.x;
             curPos.y+=offset.y;

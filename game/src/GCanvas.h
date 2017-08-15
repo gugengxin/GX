@@ -95,7 +95,7 @@ protected:
 protected:
     virtual GTypist::Paper::PrintGlyphSelector printCheck(GFont* font);
     virtual void printBegin(GPointF pos);
-    void printTex2DFontGlyph(GTex2DFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint);
+    static void printTex2DFontGlyph(GTypist::Paper* paper,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint);
     virtual void printEnd();
 private:
     GMatrix4 m_Matrixs[MatrixCount];

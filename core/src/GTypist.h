@@ -30,7 +30,7 @@ public:
         Paper();
         virtual ~Paper();
     protected:
-        typedef void (Paper::*PrintGlyphSelector)(GFont::Glyph* glyph,GPointF pos,GPointF offset,const Paint* paint);
+        typedef void (*PrintGlyphSelector)(Paper* paper,GFont::Glyph* glyph,GPointF pos,GPointF offset,const Paint* paint);
         virtual PrintGlyphSelector printCheck(GFont* font)=0;
         virtual void printBegin(GPointF pos)=0;
         virtual void printEnd()=0;

@@ -790,7 +790,7 @@ static void _DrawFTDib(GDib* context,_DrawState ds,GDib* dib,gint32 x,gint32 y,c
 GTypist::Paper::PrintGlyphSelector GDib::printCheck(GFont* font)
 {
     if (font->isKindOfClass(GFTFont::gclass)) {
-        return GX_CAST_R(GTypist::Paper::PrintGlyphSelector, &GDib::printFTFontGlyph);
+        return printFTFontGlyph;
     }
     return NULL;
 }
@@ -798,7 +798,7 @@ void GDib::printBegin(GPointF pos)
 {
     GX_UNUSED(pos);
 }
-void GDib::printFTFontGlyph(GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
+void GDib::printFTFontGlyph(GTypist::Paper* paper,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
 {
     GX_UNUSED(offset);
     
@@ -808,11 +808,11 @@ void GDib::printFTFontGlyph(GFont::Glyph* glyph,GPointF pos,GPointF offset,const
     GDib* dibOL=ghFT->getOutlineDib();
     if (dibOL) {
         float olSize=ghFT->getOutlineSize()/64.0f;
-        _DrawFTDib(this, _DrawStateOL, dibOL, (gint32)GX::round(pos.x), (gint32)GX::round(pos.y), paint);
-        _DrawFTDib(this, _DrawStateOLText, dib, (gint32)GX::round(pos.x+olSize), (gint32)GX::round(pos.y+olSize), paint);
+        _DrawFTDib(GX_CAST_S(GDib*, paper), _DrawStateOL, dibOL, (gint32)GX::round(pos.x), (gint32)GX::round(pos.y), paint);
+        _DrawFTDib(GX_CAST_S(GDib*, paper), _DrawStateOLText, dib, (gint32)GX::round(pos.x+olSize), (gint32)GX::round(pos.y+olSize), paint);
     }
     else {
-        _DrawFTDib(this, _DrawStateText, dib, (gint32)GX::round(pos.x), (gint32)GX::round(pos.y), paint);
+        _DrawFTDib(GX_CAST_S(GDib*, paper), _DrawStateText, dib, (gint32)GX::round(pos.x), (gint32)GX::round(pos.y), paint);
     }
 }
 void GDib::printEnd()

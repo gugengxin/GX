@@ -8,7 +8,7 @@
 
 #include "GTex2DFont.h"
 //Down include other h file
-
+#include "GVector.h"
 //Up include other h file
 #include "GXGObject.h"
 
@@ -21,11 +21,13 @@ GTex2DFont::Glyph::Glyph()
     m_FTGlyph=NULL;
     m_Tex2D=NULL;
     m_OLTex2D=NULL;
+    m_Buffer=NULL;
 }
 
 GTex2DFont::Glyph::~Glyph()
 {
     GO::release(m_FTGlyph);
+    GO::release(m_Buffer);
     GO::release(m_Tex2D);
     GO::release(m_OLTex2D);
 }
@@ -73,12 +75,64 @@ gint32 GTex2DFont::Glyph::getOutlinePointY(guint32 index)
 
 void GTex2DFont::Glyph::load(GTex2DFont* font,GFTFont::Glyph* ftGlyph)
 {
-    GX_UNUSED(font);
+    setFont(font);
     GX_OBJECT_SET(m_FTGlyph, ftGlyph);
-    GO::release(m_Tex2D);
-    m_Tex2D=NULL;
-    GO::release(m_OLTex2D);
-    m_OLTex2D=NULL;
+}
+
+void GTex2DFont::Glyph::render()
+{
+    if (!m_Buffer) {
+        m_Buffer=GBuffer::alloc();
+        
+        if (getFont()->getOutlineSize()<=0) {
+            
+            float l=m_FTGlyph->getHoriBearingX()/64.0f;
+            float r=(m_FTGlyph->getHoriBearingX()+m_FTGlyph->getWidth())/64.0f;
+            float t=m_FTGlyph->getHoriBearingY();
+            float b=(m_FTGlyph->getHeight()-m_FTGlyph->getHoriBearingY())/64.0f;
+#pragma pack (1)
+            struct {
+                float pos[3];
+                guint16 tc[2];
+            } data[]={
+                {{l,b,0.0f},{0,0xFFFF}},
+                {{r,b,0.0f},{0xFFFF,0xFFFF}},
+                {{l,t,0.0f},{0,0}},
+                {{r,t,0.0f},{0xFFFF,0}},
+            };
+#pragma pack ()
+            m_Buffer->create(sizeof(data), GBuffer::UsageImmutable, data);
+            
+            
+            m_Tex2D=GTexture2D::alloc();
+            m_Tex2D->create(m_FTGlyph->getDib(), NULL);
+        }
+        else {
+            
+        }
+    }
+}
+
+GBuffer* GTex2DFont::Glyph::getBuffer()
+{
+    if (!m_Buffer) {
+        render();
+    }
+    return m_Buffer;
+}
+GTexture2D* GTex2DFont::Glyph::getTexture()
+{
+    if (!m_Buffer) {
+        render();
+    }
+    return m_Tex2D;
+}
+GTexture2D* GTex2DFont::Glyph::getOLTexture()
+{
+    if (!m_Buffer) {
+        render();
+    }
+    return m_OLTex2D;
 }
 
 
@@ -99,9 +153,8 @@ GTex2DFont::~GTex2DFont()
 
 void GTex2DFont::create(GFTFont* ftFont)
 {
-    GFont::create();
-    
     GX_OBJECT_SET(m_FTFont, ftFont);
+    GFont::create();
 }
 
 gint32 GTex2DFont::getScaleX()

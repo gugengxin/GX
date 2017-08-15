@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA1A4D7B1F42899100EA25EB /* GGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA441CC51EC548D1004B15EC /* GGeometry.cpp */; };
+		CA1A4D7C1F42899200EA25EB /* GGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA441CC51EC548D1004B15EC /* GGeometry.cpp */; };
 		CA217B341F2C299E00E6FBE8 /* GXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA217B321F2C299E00E6FBE8 /* GXML.cpp */; };
 		CA217B351F2C299E00E6FBE8 /* GXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA217B321F2C299E00E6FBE8 /* GXML.cpp */; };
 		CA217B361F2C299E00E6FBE8 /* GXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CA217B321F2C299E00E6FBE8 /* GXML.cpp */; };
@@ -808,6 +810,7 @@
 				CA3A96D11E7A727C00CEFD8E /* GXCoder.cpp in Sources */,
 				CA3A96B91E7A727C00CEFD8E /* GString.cpp in Sources */,
 				CA3A962D1E7A727B00CEFD8E /* GBundle.cpp in Sources */,
+				CA1A4D7B1F42899100EA25EB /* GGeometry.cpp in Sources */,
 				CA3A96691E7A727B00CEFD8E /* GFileWriter.cpp in Sources */,
 				CA3A96211E7A727B00CEFD8E /* GApplication.cpp in Sources */,
 				CA3A966D1E7A727B00CEFD8E /* GJNI.cpp in Sources */,
@@ -876,6 +879,7 @@
 				CA3A96D21E7A727C00CEFD8E /* GXCoder.cpp in Sources */,
 				CA3A96BA1E7A727C00CEFD8E /* GString.cpp in Sources */,
 				CA3A962E1E7A727B00CEFD8E /* GBundle.cpp in Sources */,
+				CA1A4D7C1F42899200EA25EB /* GGeometry.cpp in Sources */,
 				CA3A966A1E7A727B00CEFD8E /* GFileWriter.cpp in Sources */,
 				CA3A96221E7A727B00CEFD8E /* GApplication.cpp in Sources */,
 				CA3A966E1E7A727B00CEFD8E /* GJNI.cpp in Sources */,

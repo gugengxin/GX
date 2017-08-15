@@ -22,6 +22,7 @@ private:
     float m_Angle;
     GBuffer* m_Data;
     GTexture2D* m_Tex2D;
+    GTypist* m_Typist;
 };
 
 #endif /* MTypist_h */
