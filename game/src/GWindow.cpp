@@ -483,6 +483,13 @@ GWindow* GWindow::main(void* osWinP,const char* gameClassName)
     static bool g_init=false;
     if (!g_init) {
         g_init=true;
+#if defined(GX_OPENGL)
+        GX_LOG_W(PrioDEBUG, "GWindow", "Use API OpenGL");
+#elif defined(GX_DIRECTX)
+        GX_LOG_W(PrioDEBUG, "GWindow", "Use API DirectX");
+#elif defined(GX_METAL)
+        GX_LOG_W(PrioDEBUG, "GWindow", "Use API Metal");
+#endif
         GContext::initialize();
     }
     

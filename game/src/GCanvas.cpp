@@ -118,7 +118,7 @@ void GCanvas::printTex2DFontGlyph(GTypist::Paper* paper,GFont::Glyph* glyph,GPoi
 {
     GCanvas* canvas=GX_CAST_S(GCanvas*, paper);
     GTex2DFont::Glyph* realGH=GX_CAST_R(GTex2DFont::Glyph*, glyph);
-    
+    canvas->setColorMul(0, 1, 0, 1);
     GSRTexture2D::shared(true, true, GSRTexture2D::MM_None)->draw(canvas,
                                                                   realGH->getBuffer(), 0, 16,
                                                                   GSRTexture2D::IT_Float_UShort,

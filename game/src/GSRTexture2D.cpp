@@ -57,10 +57,10 @@ fp {
 	main {
 #if MI_ALPHA
 #if MI_COLORMUL
-        lowp vec4 fragColor=lowp vec4(buffer.color_mul.rgb,tex2d(texture.texBase,bridge.b_texCoord).a*buffer.color_mul.a);
+        lowp vec4 fragColor=vec4(buffer.color_mul.rgb,tex2d(texture.texBase,bridge.b_texCoord).a*buffer.color_mul.a);
 #else
         lowp float texA=tex2d(texture.texBase,bridge.b_texCoord).a;
-        lowp vec4 fragColor=lowp vec4(texA,texA,texA,1.0);
+        lowp vec4 fragColor=vec4(texA,texA,texA,1.0);
 #end
 #else
 #if MI_COLORMUL
