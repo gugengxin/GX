@@ -85,8 +85,8 @@ void MTypist::render3D(GCanvas* canvas,GContext& context)
     
     canvas->rotateY(m_Angle);
     
-    GSRTexture2D* shader=GSRTexture2D::shared(false, true, GSRTexture2D::MM_None);
-    shader->draw(canvas, m_Data, 0, sizeof(MTypistData), GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
+    //GSRTexture2D* shader=GSRTexture2D::shared(false, true, GSRTexture2D::MM_None);
+    //shader->draw(canvas, m_Data, 0, sizeof(MTypistData), GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
     
     canvas->popMatrix();
 
@@ -97,12 +97,18 @@ void MTypist::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 	gint64 keyTime = GSystem::tickCountNS();
 
 	canvas->pushMatrix();
+	canvas->translate(100.0f, 0, 0);
+	GSRTexture2D* shader = GSRTexture2D::shared(false, true, GSRTexture2D::MM_None);
+	shader->draw(canvas, m_Data, 0, sizeof(MTypistData), GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
+	canvas->popMatrix();
 
+
+
+	canvas->pushMatrix();
 	GTypist::Paint* paint = GTypist::Paint::autoAlloc();
 	paint->setColor(0, 0xFF, 0, 0xFF);
 	paint->setOutlineColor(0xFF, 0, 0, 0xFF);
 	m_Typist->print(canvas, GPointFZero, paint);
-
 	canvas->popMatrix();
 
 	GX_LOG_P1(PrioDEBUG, "MTypist", "render2D %lld", GSystem::tickCountNS() - keyTime);

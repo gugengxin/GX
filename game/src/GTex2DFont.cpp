@@ -9,6 +9,7 @@
 #include "GTex2DFont.h"
 //Down include other h file
 #include "GVector.h"
+#include "GLog.h"
 //Up include other h file
 #include "GXGObject.h"
 
@@ -86,11 +87,17 @@ void GTex2DFont::Glyph::render()
         m_Buffer=GBuffer::alloc();
         
         if (getFont()->getOutlineSize()<=0) {
+
+			GX_LOG_P4(PrioDEBUG,"GTex2DFont::Glyph","render %f %f %f %f",
+				m_FTGlyph->getHoriBearingX() / 64.0f,
+				m_FTGlyph->getHoriBearingY() / 64.0f,
+				m_FTGlyph->getWidth()/64.0f,
+				m_FTGlyph->getHeight()/64.0f);
             
             float l=m_FTGlyph->getHoriBearingX()/64.0f;
             float r=(m_FTGlyph->getHoriBearingX()+m_FTGlyph->getWidth())/64.0f;
             float t=m_FTGlyph->getHoriBearingY()/64.0f;
-            float b=(m_FTGlyph->getHeight()-m_FTGlyph->getHoriBearingY())/64.0f;
+            float b=(m_FTGlyph->getHoriBearingY()-m_FTGlyph->getHeight())/64.0f;
 #pragma pack (1)
             struct {
                 float pos[3];

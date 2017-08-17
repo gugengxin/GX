@@ -190,7 +190,7 @@ bool GTypist::print(Paper* paper,GPointF pos,const Paint* paint)
         hb_glyph_info_t *infoHB = GX_CAST_R(hb_glyph_info_t*, wd->getHBInfo());
         hb_glyph_position_t *posHB = GX_CAST_R(hb_glyph_position_t*, wd->getHBPosition());
         
-        GPointF curPos(pos.x+wd->getX(),pos.y+wd->getY()+m_Font->getAscender()/64.0f);
+        GPointF curPos(pos.x+wd->getX(),pos.y+wd->getY()-m_Font->getDescender()/64.0f);
         GPointF offset;
         
         paper->printBegin(curPos);
