@@ -68,7 +68,7 @@ public:
         GDib*  m_OLGlyphDib;
     };
 public:
-    bool create(GData* data,gint32 size,gint32 outlineSize);
+    bool create(GData* data,float size,float outlineSize);
 public:
     virtual gint32 getScaleX();
     virtual gint32 getScaleY();

@@ -24,7 +24,7 @@ private:
 	virtual ~GGameResManager();
 public:
 	GTexture2D* loadTexture2D(GString* name, GDib::FileType suggestFT, GTexture2D::Parameter* param);
-    GTex2DFont* loadTex2DFont(GString* name, gint32 size, gint32 outlineSize);
+    GTex2DFont* loadTex2DFont(GString* name, gint32 size, gint32 outlineSize, float density);
 protected:
 	typedef enum _Map {
 		MapTex2D,

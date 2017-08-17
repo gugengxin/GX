@@ -33,9 +33,9 @@ float GWindow::Canvas::getHeight()
 {
     return m_Window->getHeight();
 }
-float GWindow::Canvas::getScale()
+float GWindow::Canvas::getDensity()
 {
-    return m_Window->getScale();
+    return m_Window->getDensity();
 }
 
 const GColor4F& GWindow::Canvas::getBackgroundColor() const
@@ -666,7 +666,7 @@ float GWindow::getHeight()
     return m_OSWin->height();
 #endif
 }
-float GWindow::getScale()
+float GWindow::getDensity()
 {
 #if defined(GX_OS_WINDOWS)
 	return m_OSWinScale;
@@ -707,7 +707,7 @@ void GWindow::render()
 {
     if(m_Context.renderCheck()) {
         m_Context.renderBegin();
-        m_Context.setViewport(0.0f, 0.0f, getWidth(), getHeight(), getScale());
+        m_Context.setViewport(0.0f, 0.0f, getWidth(), getHeight(), getDensity());
         m_Game->render(m_Canvas);
         m_Context.renderEnd();
     }
@@ -717,7 +717,7 @@ void GWindow::eventResize()
 {
     float nw=getWidth();
     float nh=getHeight();
-    float s=getScale();
+    float s=getDensity();
     
     if(m_Context.resize(nw*s, nh*s)) {
         render();

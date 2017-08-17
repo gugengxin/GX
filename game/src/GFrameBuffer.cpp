@@ -96,7 +96,7 @@ float GFrameBuffer::Node::getHeight()
 GFrameBuffer::GFrameBuffer()
 {
     m_Node=NULL;
-    m_Scale=1.0f;
+    m_Density=1.0f;
 #if defined(GX_OPENGL)
     m_PreBindName=0;
     m_PreViewport[0]=0;
@@ -156,15 +156,15 @@ void GFrameBuffer::enable3D(float width, float height, float fovy, float zNear, 
 
 float GFrameBuffer::getWidth()
 {
-    return m_Node->getWidth()/m_Scale;
+    return m_Node->getWidth()/m_Density;
 }
 float GFrameBuffer::getHeight()
 {
-    return m_Node->getHeight()/m_Scale;
+    return m_Node->getHeight()/m_Density;
 }
-float GFrameBuffer::getScale()
+float GFrameBuffer::getDensity()
 {
-    return m_Scale;
+    return m_Density;
 }
 
 const GColor4F& GFrameBuffer::getBackgroundColor() const

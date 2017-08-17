@@ -48,7 +48,7 @@ GTexture2D* GGameResManager::loadTexture2D(GString* name, GDib::FileType suggest
 	return res;
 }
 
-GTex2DFont* GGameResManager::loadTex2DFont(GString* name, gint32 size, gint32 outlineSize)
+GTex2DFont* GGameResManager::loadTex2DFont(GString* name, gint32 size, gint32 outlineSize, float density)
 {
     if (size<=0) {
         size=12;
@@ -57,14 +57,14 @@ GTex2DFont* GGameResManager::loadTex2DFont(GString* name, gint32 size, gint32 ou
         outlineSize=0;
     }
     GString* key=GString::alloc();
-    key->format("%@_%@_%@").arg(name).arg(size).arg(outlineSize).end();
+    key->format("%@_%@_%@_%@").arg(name).arg(size).arg(outlineSize).arg(density).end();
     
     GTex2DFont* res=GX_CAST_R(GTex2DFont*, findInMap(MapTex2DFont, key));
     if (!res) {
         GFTFont* ftFont=GFontManager::shared()->loadFTFont(name, size, outlineSize);
         if (ftFont) {
             res=GTex2DFont::alloc();
-            res->create(ftFont);
+            res->create(ftFont,density);
             addToMap(MapTex2DFont, key, res);
             GO::autorelease(res);
         }

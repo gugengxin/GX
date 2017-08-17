@@ -47,7 +47,7 @@ protected:
 
 	bool renderCheck();
 	void renderBegin();
-	void setViewport(float x, float y, float w, float h, float scale);
+	void setViewport(float x, float y, float w, float h, float density);
 	void renderEnd();
 
 protected:

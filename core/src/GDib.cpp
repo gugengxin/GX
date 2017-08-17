@@ -787,6 +787,11 @@ static void _DrawFTDib(GDib* context,_DrawState ds,GDib* dib,gint32 x,gint32 y,c
     }
 }
 
+bool GDib::isFlipped()
+{
+    return true;
+}
+
 GTypist::Paper::PrintGlyphSelector GDib::printCheck(GFont* font)
 {
     if (font->isKindOfClass(GFTFont::gclass)) {
@@ -794,13 +799,19 @@ GTypist::Paper::PrintGlyphSelector GDib::printCheck(GFont* font)
     }
     return NULL;
 }
-void GDib::printBegin(GPointF pos)
+void GDib::printBegin(GFont* font,GPointF pos)
 {
+    GX_UNUSED(font);
     GX_UNUSED(pos);
 }
-void GDib::printFTFontGlyph(GTypist::Paper* paper,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
+void GDib::printFTFontGlyph(GTypist::Paper* paper,GFont* font,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
 {
     GX_UNUSED(offset);
+    if (glyph->isBlank()) {
+        return;
+    }
+    
+    pos.y+=font->getAscender()/64.0f;
     
     GFTFont::Glyph* ghFT=GX_CAST_R(GFTFont::Glyph*, glyph);
     

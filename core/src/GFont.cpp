@@ -134,7 +134,7 @@ hb_gx_get_glyph_h_advance (hb_font_t *font HB_UNUSED,
     if (font->x_scale < 0)
         v = -v;
     
-    return (hb_position_t)((v + (1<<9)) >> 10);
+    return (hb_position_t)(v);
 }
 
 static hb_position_t
@@ -156,7 +156,7 @@ hb_gx_get_glyph_v_advance (hb_font_t *font HB_UNUSED,
     
     /* Note: FreeType's vertical metrics grows downward while other FreeType coordinates
      * have a Y growing upward.  Hence the extra negation. */
-    return (hb_position_t)((-v + (1<<9)) >> 10);
+    return (hb_position_t)(-v);
 }
 
 static hb_bool_t
@@ -396,6 +396,7 @@ GX_GOBJECT_IMPLEMENT(GFont, GObject);
 
 GFont::GFont()
 {
+    m_Size=0;
 	m_HBFont = NULL;
 }
 
@@ -406,7 +407,8 @@ GFont::~GFont()
 	}
 }
 
-void GFont::create()
+void GFont::create(gint32 size)
 {
+    m_Size=size;
 	m_HBFont = hb_gx_font_create(this);
 }

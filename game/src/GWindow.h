@@ -56,7 +56,7 @@ private:
     public:
         virtual float getWidth();
         virtual float getHeight();
-        virtual float getScale();
+        virtual float getDensity();
         
         virtual const GColor4F& getBackgroundColor() const;
         virtual void setBackgroundColor(float r,float g,float b,float a);
@@ -93,7 +93,7 @@ public:
 	}
     float getWidth();
     float getHeight();
-    float getScale();
+    float getDensity();
     const GColor4F& getBackgroundColor() const {
         return m_BgdColor;
     }

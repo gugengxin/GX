@@ -29,7 +29,7 @@ class GCanvas : public GObject, public GTypist::Paper
 public:
     virtual float getWidth()=0;
     virtual float getHeight()=0;
-    virtual float getScale()=0;
+    virtual float getDensity()=0;
     
     /// 矩阵开始2D模式
     virtual void enable2D(float width, float height);
@@ -70,6 +70,9 @@ public:
         return &m_ColorMul.r;
     }
     
+    void pushColorMul();
+    void popColorMul();
+    
 public:
     virtual const GColor4F& getBackgroundColor() const =0;
     virtual void setBackgroundColor(float r,float g,float b,float a) =0;
@@ -93,14 +96,16 @@ protected:
 		return m_Matrixs[idx];
 	}
 protected:
+    virtual bool isFlipped();
     virtual GTypist::Paper::PrintGlyphSelector printCheck(GFont* font);
-    virtual void printBegin(GPointF pos);
-    static void printTex2DFontGlyph(GTypist::Paper* paper,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint);
+    virtual void printBegin(GFont* font,GPointF pos);
+    static void printTex2DFontGlyph(GTypist::Paper* paper,GFont* font,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint);
     virtual void printEnd();
 private:
     GMatrix4 m_Matrixs[MatrixCount];
     GPDArray<GMatrix4> m_MatrixStack;
     GColor4F m_ColorMul;
+    GPDArray<GColor4F> m_ColorMulStack;
 };
 
 // Up can't include other h file

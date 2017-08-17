@@ -59,7 +59,7 @@ public:
         GTexture2D* m_OLTex2D;
     };
 public:
-    void create(GFTFont* ftFont);
+    void create(GFTFont* ftFont,float density);
 public:
     virtual gint32 getScaleX();
     virtual gint32 getScaleY();
@@ -81,6 +81,7 @@ public:
     virtual bool getGlyphNameIndex(guint32* idxOut, const char *name, gint32 len);
 private:
     GFTFont*  m_FTFont;
+    float   m_Density;
     GArray<Glyph> m_GlyphCache;
 };
 

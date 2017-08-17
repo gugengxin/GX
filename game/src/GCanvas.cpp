@@ -75,12 +75,11 @@ void GCanvas::scale(float x, float y, float z)
 }
 void GCanvas::pushMatrix()
 {
-    m_MatrixStack.add(m_Matrixs[MatrixModel]);
+    m_MatrixStack.push(m_Matrixs[MatrixModel]);
 }
 void GCanvas::popMatrix()
 {
-    m_Matrixs[MatrixModel] = m_MatrixStack.last();
-    m_MatrixStack.removeLast();
+    m_Matrixs[MatrixModel] = m_MatrixStack.pop();
 }
 
 const float* GCanvas::updateModelMatrix()
@@ -99,6 +98,20 @@ const float* GCanvas::updateMVPMatrix()
     return m_Matrixs[MatrixMVP].m;
 }
 
+void GCanvas::pushColorMul()
+{
+    m_ColorMulStack.push(m_ColorMul);
+}
+void GCanvas::popColorMul()
+{
+    m_ColorMul=m_ColorMulStack.pop();
+}
+
+
+bool GCanvas::isFlipped()
+{
+    return false;
+}
 
 GTypist::Paper::PrintGlyphSelector GCanvas::printCheck(GFont* font)
 {
@@ -108,30 +121,35 @@ GTypist::Paper::PrintGlyphSelector GCanvas::printCheck(GFont* font)
     return NULL;
 }
 
-void GCanvas::printBegin(GPointF pos)
+void GCanvas::printBegin(GFont* font,GPointF pos)
 {
     pushMatrix();
-    translate(pos.x, pos.y, 0.0f);
+    pushColorMul();
+    translate(0, getHeight(), 0);
+    translate(pos.x, -pos.y-font->getAscender()/64.0f, 0.0f);
 }
 
-void GCanvas::printTex2DFontGlyph(GTypist::Paper* paper,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
+void GCanvas::printTex2DFontGlyph(GTypist::Paper* paper,GFont* font,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
 {
     GCanvas* canvas=GX_CAST_S(GCanvas*, paper);
-    GTex2DFont::Glyph* realGH=GX_CAST_R(GTex2DFont::Glyph*, glyph);
-    canvas->setColorMul(0, 1, 0, 1);
-    GSRTexture2D::shared(true, true, GSRTexture2D::MM_None)->draw(canvas,
-                                                                  realGH->getBuffer(), 0, 16,
-                                                                  GSRTexture2D::IT_Float_UShort,
-                                                                  realGH->getTexture(),
-                                                                  GX_TRIANGLE_STRIP,
-                                                                  0, 4,
-                                                                  NULL);
+    canvas->translate(offset.x, -offset.y, 0.0f);
     
-    canvas->translate(offset.x, offset.y, 0.0f);
+    GTex2DFont::Glyph* realGH=GX_CAST_R(GTex2DFont::Glyph*, glyph);
+    if (!realGH->isBlank()) {
+        canvas->setColorMul(0, 1, 0, 1);
+        GSRTexture2D::shared(true, true, GSRTexture2D::MM_None)->draw(canvas,
+                                                                      realGH->getBuffer(), 0, sizeof(float)*3+sizeof(guint16)*2,
+                                                                      GSRTexture2D::IT_Float_UShort,
+                                                                      realGH->getTexture(),
+                                                                      GX_TRIANGLE_STRIP,
+                                                                      0, 4,
+                                                                      NULL);
+    }
 }
 
 void GCanvas::printEnd()
 {
+    popColorMul();
     popMatrix();
 }
 

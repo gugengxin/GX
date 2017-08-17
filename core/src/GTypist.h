@@ -30,9 +30,10 @@ public:
         Paper();
         virtual ~Paper();
     protected:
-        typedef void (*PrintGlyphSelector)(Paper* paper,GFont::Glyph* glyph,GPointF pos,GPointF offset,const Paint* paint);
+        typedef void (*PrintGlyphSelector)(Paper* paper,GFont* font,GFont::Glyph* glyph,GPointF pos,GPointF offset,const Paint* paint);
+        virtual bool isFlipped()=0;
         virtual PrintGlyphSelector printCheck(GFont* font)=0;
-        virtual void printBegin(GPointF pos)=0;
+        virtual void printBegin(GFont* font,GPointF pos)=0;
         virtual void printEnd()=0;
         
     };

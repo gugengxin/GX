@@ -190,17 +190,18 @@ bool GTypist::print(Paper* paper,GPointF pos,const Paint* paint)
         hb_glyph_info_t *infoHB = GX_CAST_R(hb_glyph_info_t*, wd->getHBInfo());
         hb_glyph_position_t *posHB = GX_CAST_R(hb_glyph_position_t*, wd->getHBPosition());
         
-        GPointF curPos(pos.x+wd->getX(),pos.y+wd->getY()-m_Font->getDescender()/64.0f);
+        GPointF curPos(pos.x+wd->getX(),pos.y+wd->getY());
         GPointF offset;
         
-        paper->printBegin(curPos);
+        paper->printBegin(m_Font,curPos);
         
         for (gint j=0; j<wd->getLength(); j++) {
             GFont::Glyph* glyph=m_Font->getGlyph(infoHB[j].codepoint);
+            
+            pgs(paper, m_Font, glyph, GPointF::make(curPos.x+posHB[j].x_offset/64.0f, curPos.y+posHB[j].y_offset/64.0f), offset, paint);
+            
             offset.x=posHB[j].x_advance/64.0f;
             offset.y=posHB[j].y_advance/64.0f;
-            
-            pgs(paper, glyph, GPointF::make(curPos.x+offset.x, curPos.y+offset.y), offset, paint);
             
             curPos.x+=offset.x;
             curPos.y+=offset.y;

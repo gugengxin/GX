@@ -334,6 +334,9 @@ GDib* GTexture2D::prepareDib(GDib* dib)
 
 bool GTexture2D::create(const void * dibData, GX::PixelFormat pf, gint32 w, gint32 h, gint32 s, Parameter * param)
 {
+    if (w<=0 || h<=0) {
+        return false;
+    }
 #if defined(GX_OPENGL)
     
     _Texture2DCreater* cr=_Texture2DCreater::alloc();

@@ -83,61 +83,59 @@ void GTex2DFont::Glyph::load(GTex2DFont* font, GFTFont::Glyph* ftGlyph, guint32 
 
 void GTex2DFont::Glyph::render()
 {
-    if (!m_Buffer) {
-        m_Buffer=GBuffer::alloc();
+    m_Buffer=GBuffer::alloc();
+    
+    if (getFont()->getOutlineSize()<=0) {
         
-        if (getFont()->getOutlineSize()<=0) {
-
-			GX_LOG_P4(PrioDEBUG,"GTex2DFont::Glyph","render %f %f %f %f",
-				m_FTGlyph->getHoriBearingX() / 64.0f,
-				m_FTGlyph->getHoriBearingY() / 64.0f,
-				m_FTGlyph->getWidth()/64.0f,
-				m_FTGlyph->getHeight()/64.0f);
-            
-            float l=m_FTGlyph->getHoriBearingX()/64.0f;
-            float r=(m_FTGlyph->getHoriBearingX()+m_FTGlyph->getWidth())/64.0f;
-            float t=m_FTGlyph->getHoriBearingY()/64.0f;
-            float b=(m_FTGlyph->getHoriBearingY()-m_FTGlyph->getHeight())/64.0f;
+        //			GX_LOG_P4(PrioDEBUG,"GTex2DFont::Glyph","render %f %f %f %f",
+        //				m_FTGlyph->getHoriBearingX() / 64.0f,
+        //				m_FTGlyph->getHoriBearingY() / 64.0f,
+        //				m_FTGlyph->getWidth()/64.0f,
+        //				m_FTGlyph->getHeight()/64.0f);
+        
+        float l=m_FTGlyph->getHoriBearingX()/64.0f;
+        float r=(m_FTGlyph->getHoriBearingX()+m_FTGlyph->getWidth())/64.0f;
+        float t=m_FTGlyph->getHoriBearingY()/64.0f;
+        float b=(m_FTGlyph->getHoriBearingY()-m_FTGlyph->getHeight())/64.0f;
 #pragma pack (1)
-            struct {
-                float pos[3];
-                guint16 tc[2];
-            } data[]={
-                {{l,b,0.0f},{0,0xFFFF}},
-                {{r,b,0.0f},{0xFFFF,0xFFFF}},
-                {{l,t,0.0f},{0,0}},
-                {{r,t,0.0f},{0xFFFF,0}},
-            };
+        struct {
+            float pos[3];
+            guint16 tc[2];
+        } data[]={
+            {{l,b,0.0f},{0,0xFFFF}},
+            {{r,b,0.0f},{0xFFFF,0xFFFF}},
+            {{l,t,0.0f},{0,0}},
+            {{r,t,0.0f},{0xFFFF,0}},
+        };
 #pragma pack ()
-            m_Buffer->create(sizeof(data), GBuffer::UsageImmutable, data);
-            
-            
-            m_Tex2D=GTexture2D::alloc();
-            m_Tex2D->create(m_FTGlyph->getDib(), NULL);
-        }
-        else {
-            
-        }
+        m_Buffer->create(sizeof(data), GBuffer::UsageImmutable, data);
+        
+        
+        m_Tex2D=GTexture2D::alloc();
+        m_Tex2D->create(m_FTGlyph->getDib(), NULL);
+    }
+    else {
+        
     }
 }
 
 GBuffer* GTex2DFont::Glyph::getBuffer()
 {
-    if (!m_Buffer) {
+    if (!m_Buffer && !isBlank()) {
         render();
     }
     return m_Buffer;
 }
 GTexture2D* GTex2DFont::Glyph::getTexture()
 {
-    if (!m_Buffer) {
+    if (!m_Buffer && !isBlank()) {
         render();
     }
     return m_Tex2D;
 }
 GTexture2D* GTex2DFont::Glyph::getOLTexture()
 {
-    if (!m_Buffer) {
+    if (!m_Buffer && !isBlank()) {
         render();
     }
     return m_OLTex2D;
@@ -152,6 +150,7 @@ GX_GOBJECT_IMPLEMENT(GTex2DFont, GFont);
 GTex2DFont::GTex2DFont()
 {
     m_FTFont=NULL;
+    m_Density=1.0f;
 }
 
 GTex2DFont::~GTex2DFont()
@@ -159,10 +158,11 @@ GTex2DFont::~GTex2DFont()
     GO::release(m_FTFont);
 }
 
-void GTex2DFont::create(GFTFont* ftFont)
+void GTex2DFont::create(GFTFont* ftFont,float density)
 {
     GX_OBJECT_SET(m_FTFont, ftFont);
-    GFont::create();
+    m_Density=density;
+    GFont::create(ftFont->getSize());
 }
 
 gint32 GTex2DFont::getScaleX()

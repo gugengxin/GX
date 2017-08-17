@@ -63,6 +63,9 @@ public:
     inline void* getDataPtr(gint32 x,gint32 y) {
         return GX_CAST_R(guint8*, m_Data.getPtr())+y*m_Stride+x*GX_PIXEL_FORMAT_SIZE(m_PixelFormat);
     }
+    inline guint getDataBytes() const {
+        return m_Data.getBytes();
+    }
     bool changeDataBytes(guint bytes);
     void setStaticData(const void* data, guint bytes);
     
@@ -70,9 +73,10 @@ public:
     void changeData(GX::PixelFormat pf,gint32 w,gint32 h);
     
 protected:
+    virtual bool isFlipped();
     virtual GTypist::Paper::PrintGlyphSelector printCheck(GFont* font);
-    virtual void printBegin(GPointF pos);
-    static void printFTFontGlyph(GTypist::Paper* paper,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint);
+    virtual void printBegin(GFont* font,GPointF pos);
+    static void printFTFontGlyph(GTypist::Paper* paper,GFont* font,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint);
     virtual void printEnd();
 private:
     GX::PixelFormat m_PixelFormat;

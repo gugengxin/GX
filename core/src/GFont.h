@@ -17,6 +17,7 @@
 #include "GXGObject.h"
 // Down can't include other h file
 
+//尺寸都是26.6
 class GFont : public GObject
 {
 	friend class GTypist;
@@ -27,6 +28,9 @@ public:
     public:
         guint32 getIndex() {
             return m_Index;
+        }
+        bool isBlank() {
+            return getWidth()<=0 || getHeight()<=0;
         }
     public:
 		virtual gint32 getWidth() = 0;
@@ -55,7 +59,7 @@ public:
         guint32 m_Index;
     };
 protected:
-	void create();
+	void create(gint32 size);
 public:
     virtual gint32 getScaleX()=0;
     virtual gint32 getScaleY()=0;
@@ -80,9 +84,6 @@ public:
         return m_Size;
     }
 protected:
-    inline void setSize(gint32 v) {
-        m_Size=v;
-    }
 	void* getHBFont() {
 		return m_HBFont;
 	}

@@ -171,8 +171,8 @@ bool GFTFont::Glyph::load(GFTFont* font,guint32 index)
     }
     
     FT_Glyph_Metrics& metrics=face->glyph->metrics;
-    m_Metrics.width=GX_CAST_S(gint32,metrics.width)+font->getOutlineSize()*2;
-    m_Metrics.height=GX_CAST_S(gint32,metrics.height)+font->getOutlineSize()*2;
+    m_Metrics.width=GX_CAST_S(gint32,metrics.width)+(font->getOutlineSize()<<1);
+    m_Metrics.height=GX_CAST_S(gint32,metrics.height)+(font->getOutlineSize()<<1);
     m_Metrics.horiBearingX=GX_CAST_S(gint32,metrics.horiBearingX)+font->getOutlineSize();
     m_Metrics.horiBearingY=GX_CAST_S(gint32,metrics.horiBearingY)+font->getOutlineSize();
     //m_Metrics.horiAdvance=GX_CAST_S(gint32,metrics.horiAdvance)+font->getOutlineSize()*2;
@@ -264,14 +264,14 @@ void GFTFont::Glyph::render()
 
 GDib* GFTFont::Glyph::getDib()
 {
-    if (!m_GlyphDib) {
+    if (!isBlank() && !m_GlyphDib) {
         render();
     }
     return m_GlyphDib;
 }
 GDib* GFTFont::Glyph::getOutlineDib()
 {
-    if (m_OLGlyph && !m_GlyphDib) {
+    if (!isBlank() && m_OLGlyph && !m_GlyphDib) {
         render();
     }
     return m_OLGlyphDib;
@@ -308,7 +308,7 @@ GFTFont::~GFTFont()
     GO::release(m_Data);
 }
 
-bool GFTFont::create(GData* data,gint32 size,gint32 outlineSize)
+bool GFTFont::create(GData* data,float size,float outlineSize)
 {
     FT_Library ftLib=GX_CAST_R(FT_Library, GFontManager::shared()->getFTLibrary());
     FT_Face ftFace=NULL;
@@ -325,24 +325,26 @@ bool GFTFont::create(GData* data,gint32 size,gint32 outlineSize)
         return false;
     }
     
-    if (FT_Set_Char_Size(ftFace, size<<6, size<<6, 72, 72)) {
+    FT_F26Dot6 realSize=GX_CAST_S(FT_F26Dot6, size*64.0f);
+    if (FT_Set_Char_Size(ftFace, realSize, realSize, 72, 72)) {
         FT_Done_Face(ftFace);
         return false;
     }
     
-    if (outlineSize>0) {
+    FT_Fixed realOLSize=0;
+    if (outlineSize>0.0f) {
+        realOLSize=GX_CAST_S(FT_Fixed, outlineSize*64.0f);
         if(FT_Stroker_New(ftLib, (FT_Stroker*)&m_Stroker)) {
             FT_Done_Face(ftFace);
             return false;
         }
-        FT_Stroker_Set(M_STROKER(), (FT_Fixed)(outlineSize<<6), FT_STROKER_LINECAP_ROUND, FT_STROKER_LINEJOIN_ROUND, 0);
+        FT_Stroker_Set(M_STROKER(), realOLSize, FT_STROKER_LINECAP_ROUND, FT_STROKER_LINEJOIN_ROUND, 0);
     }
     
-    setSize(size);
     GX_OBJECT_SET(m_Data, data);
-    m_OLSize=outlineSize;
+    m_OLSize=GX_CAST_S(gint32, realOLSize);
     m_Face=ftFace;
-	GFont::create();
+	GFont::create(GX_CAST_S(gint32, realSize));
     return true;
 }
 
@@ -357,15 +359,15 @@ gint32 GFTFont::getScaleY()
 
 gint32 GFTFont::getHeight()
 {
-    return GX_CAST_S(gint32, (M_FACE()->size->metrics.height)+(m_OLSize<<7));
+    return GX_CAST_S(gint32, (M_FACE()->size->metrics.height)+(m_OLSize<<1));
 }
 gint32 GFTFont::getAscender()
 {
-    return GX_CAST_S(gint32, (M_FACE()->size->metrics.ascender)+(m_OLSize<<6));
+    return GX_CAST_S(gint32, (M_FACE()->size->metrics.ascender)+(m_OLSize<<0));
 }
 gint32 GFTFont::getDescender()
 {
-    return GX_CAST_S(gint32, (M_FACE()->size->metrics.descender)+(m_OLSize<<6));
+    return GX_CAST_S(gint32, (M_FACE()->size->metrics.descender)+(m_OLSize<<0));
 }
 gint32 GFTFont::getAdvanceH(guint32 index)
 {
@@ -375,7 +377,9 @@ gint32 GFTFont::getAdvanceH(guint32 index)
         return 0;
     }
     
-    return GX_CAST_S(gint32, v)+(m_OLSize<<7);
+    v=((v + (1<<9)) >> 10);
+    
+    return GX_CAST_S(gint32, v)+(m_OLSize<<1);
 }
 gint32 GFTFont::getAdvanceV(guint32 index)
 {
@@ -385,7 +389,9 @@ gint32 GFTFont::getAdvanceV(guint32 index)
         return 0;
     }
     
-    return GX_CAST_S(gint32, v)+(m_OLSize<<7);
+    v=((v + (1<<9)) >> 10);
+    
+    return GX_CAST_S(gint32, v)+(m_OLSize<<1);
 }
 bool GFTFont::hasKerning()
 {
@@ -405,7 +411,7 @@ bool GFTFont::hasOutline()
 
 gint32 GFTFont::getOutlineSize()
 {
-	return m_OLSize<<6;
+	return m_OLSize<<0;
 }
 
 

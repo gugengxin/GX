@@ -129,7 +129,7 @@ public:
 
     virtual float getWidth();
     virtual float getHeight();
-    virtual float getScale();
+    virtual float getDensity();
     
     virtual const GColor4F& getBackgroundColor() const;
     virtual void setBackgroundColor(float r,float g,float b,float a);
@@ -162,7 +162,7 @@ protected:
 #endif
 private:
     Node* m_Node;
-    float m_Scale;
+    float m_Density;
 #if defined(GX_OPENGL)
     GLuint  m_PreBindName;
     GLint   m_PreViewport[4];

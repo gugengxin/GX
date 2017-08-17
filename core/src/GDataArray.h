@@ -172,6 +172,16 @@ public:
         m_Data.zeroSelf();
     }
     
+    inline bool push(const T& v) {
+        return add(v);
+    }
+    
+    T pop() {
+        T res=last();
+        removeLast();
+        return res;
+    }
+    
 protected:
 	inline bool changeCount(gint toCount) {
 		return m_Data.changeBytes(GX_CAST_S(guint,toCount)*GX_CAST_S(guint,sizeof(T)));

@@ -543,9 +543,9 @@ void GOGLContext::renderBegin()
     openGLBDUpdate();
 }
 
-void GOGLContext::setViewport(float x, float y, float w, float h, float scale)
+void GOGLContext::setViewport(float x, float y, float w, float h, float density)
 {
-	GX_glViewport((GLint)(x*scale), (GLint)(y*scale), (GLint)(w*scale), (GLint)(h*scale));
+	GX_glViewport((GLint)(x*density), (GLint)(y*density), (GLint)(w*density), (GLint)(h*density));
 }
 
 void GOGLContext::renderEnd()

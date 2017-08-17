@@ -130,7 +130,7 @@ void GMTLContext::renderBegin()
 {
     currentDrawable();
     
-    M_METAL_LAYER().drawableSize=CGSizeMake(getWindow()->getWidth()*getWindow()->getScale(), getWindow()->getHeight()*getWindow()->getScale());
+    M_METAL_LAYER().drawableSize=CGSizeMake(getWindow()->getWidth()*getWindow()->getDensity(), getWindow()->getHeight()*getWindow()->getDensity());
     m_CommandBuffer = [[M_COMMAND_QUEUE() commandBuffer] retain];
     m_RenderEncoder = [[M_COMMAND_BUFFER() renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, renderPassDescriptor())] retain];
     if (m_DepthStencilState) {
