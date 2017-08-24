@@ -155,10 +155,8 @@ protected:
 	virtual bool direct3DCFNeedMultisampleEnabled();
 #elif defined(GX_METAL)
 public:
-    virtual void* metalRenderEncoder();
+    virtual void* metalNewRCE();
     virtual gint metalBlendIndex();
-protected:
-    virtual void* metalCFNeedRenderEncoder();
 #endif
 private:
     Node* m_Node;
@@ -179,7 +177,7 @@ private:
 	D3D10_VIEWPORT				m_PreViewport;
 #elif defined(GX_METAL)
     void* m_CommandBuffer;
-    void* m_RenderEncoder;
+    GX::MetalViewport m_Viewport;
 #endif
 };
 

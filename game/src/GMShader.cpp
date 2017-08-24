@@ -122,8 +122,6 @@ bool GMShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
             }
         }
         
-        createUniformBuffer(device);
-        
         return true;
     }
     else {
@@ -131,13 +129,6 @@ bool GMShader::load(const gchar* srcVS, const gchar* srcFP, const Macro* macro)
     }
     
     return false;
-}
-
-bool GMShader::setUniformBuffer(gint idx,void* device,guint bufLen)
-{
-    getUBuffers()[idx]=[[GX_CAST_R(id<MTLDevice>,device) newBufferWithLength:bufLen options:0] retain];
-
-    return getUBuffers()[idx]!=nil;
 }
 
 void GMShader::setFragmentTexture(void* rce,GTexture* tex,guint idx)

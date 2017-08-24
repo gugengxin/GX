@@ -48,9 +48,9 @@ void GWindow::Canvas::setBackgroundColor(float r,float g,float b,float a)
 }
 
 #if defined(GX_METAL)
-void* GWindow::Canvas::metalRenderEncoder()
+void* GWindow::Canvas::metalNewRCE()
 {
-    return m_Window->getContext().getRenderEncoder();
+    return m_Window->getContext().newRenderCommandEncoder();
 }
 gint GWindow::Canvas::metalBlendIndex()
 {

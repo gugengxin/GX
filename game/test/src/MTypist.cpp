@@ -33,7 +33,7 @@ Module* MTypist::initWithGame(Game* game,GContext& context)
     md[2].tc.set(0.0f, 0.0f);
     md[3].tc.set(1.0f, 0.0f);
 
-	m_Data->create(sizeof(md), GBuffer::UsageDefault, &md);
+	m_Data->create(sizeof(md), GBuffer::UsageImmutable, &md);
     
     
     GDib* dib=GDib::autoAlloc();
@@ -56,7 +56,7 @@ Module* MTypist::initWithGame(Game* game,GContext& context)
     GTex2DFont* t2dFont=GTex2DFont::autoAlloc();
     t2dFont->create(font,context.getWindow()->getDensity());
     
-    m_Typist->setSingleLine(GS::chars("谷更新欢迎你  ！！！Welcome!!! abcdefghijklmnopqrstuvwxyz "), t2dFont);
+    m_Typist->setSingleLine(GS::chars("Welcome"), t2dFont);//!!! abcdefghijklmnopqrstuvwxyz 谷更新欢迎你  ！！！
     
     context.setCullFace(GX::DCullFaceBack);
     context.setBlend(GX::DBlendSsaAddD1msa);
@@ -97,6 +97,11 @@ void MTypist::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 {
 	//gint64 keyTime = GSystem::tickCountNS();
 
+    canvas->pushMatrix();
+    canvas->translate(200.0f, 200, 0);
+    GSRTexture2D* shader = GSRTexture2D::shared(false, true, GSRTexture2D::MM_None);
+    shader->draw(canvas, m_Data, 0, sizeof(MTypistData), GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
+    canvas->popMatrix();
 
 	canvas->pushMatrix();
 	GTypist::Paint* paint = GTypist::Paint::autoAlloc();
@@ -105,11 +110,7 @@ void MTypist::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 	m_Typist->print(canvas, GPointFZero, paint);
 	canvas->popMatrix();
     
-    canvas->pushMatrix();
-    canvas->translate(200.0f, 200, 0);
-    GSRTexture2D* shader = GSRTexture2D::shared(false, true, GSRTexture2D::MM_None);
-    shader->draw(canvas, m_Data, 0, sizeof(MTypistData), GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
-    canvas->popMatrix();
+    
 
 	//GX_LOG_P1(PrioDEBUG, "MTypist", "render2D %lld", GSystem::tickCountNS() - keyTime);
 }

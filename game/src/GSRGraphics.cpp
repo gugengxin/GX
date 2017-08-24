@@ -247,14 +247,6 @@ void GSRGraphics::deployPLState(gint inputType,void* plStateDescriptor)
 #undef M_PSD
 }
 
-void GSRGraphics::createUniformBuffer(void* device)
-{
-    setUniformBuffer(UB_mvp_mat, device, GX_MATRIX_SIZE);
-    if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
-        setUniformBuffer(UB_color_mul, device, sizeof(GColor4F));
-    }
-}
-
 #endif
 
 
@@ -313,23 +305,28 @@ void GSRGraphics::draw(GCanvas* canvas, GBuffer* buffer, guint bufOffset, guint 
     
 #elif defined(GX_METAL)
     
-    id<MTLRenderCommandEncoder>rce=GX_CAST_R(id<MTLRenderCommandEncoder>, canvas->metalRenderEncoder());
+    id<MTLRenderCommandEncoder>rce=GX_CAST_R(id<MTLRenderCommandEncoder>, canvas->metalNewRCE());
     
     [rce setRenderPipelineState:GX_CAST_R(id<MTLRenderPipelineState>,getPLStates()[inputType*GX::_DBlendCount+canvas->metalBlendIndex()])];
     
     setVertexBuffer(rce, buffer, bufOffset, 0);
     
-    void* pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) contents];
     const float* mvp = canvas->updateMVPMatrix();
-    ((GMatrix4*)mvp)->transpose();
-    memcpy(pMap, mvp, GX_MATRIX_SIZE);
-    [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) offset:0 atIndex:1];
+    
+    guint8 bufID[16]={0};
+    (*GX_CAST_R(guint32*, bufID))=canvas->getMPVMatrixID();
+    GX::MetalBufferCache::Buffer buf=GX::MetalBufferCache::shared()->requestBuffer(GX::MetalBufferCache::TypeMatrixMVP,bufID,GX_MATRIX_SIZE);
+    
+    ((GMatrix4*)mvp)->transposeCopyTo(GX_CAST_R(GMatrix4*,GX_CAST_R(guint8*, [GX_CAST_R(id<MTLBuffer>, buf.buffer) contents])+buf.offset));
+    [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, buf.buffer) offset:buf.offset atIndex:1];
 
     if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
-        pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) contents];
         const float* clrMul = canvas->updateColorMul();
-        memcpy(pMap, clrMul, sizeof(GColor4F));
-        [rce setFragmentBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) offset:0 atIndex:0];
+        memcpy(bufID, clrMul, sizeof(GColor4F));
+        buf=GX::MetalBufferCache::shared()->requestBuffer(GX::MetalBufferCache::TypeColorMul,bufID,sizeof(GColor4F));
+        
+        memcpy(GX_CAST_R(guint8*, [GX_CAST_R(id<MTLBuffer>, buf.buffer) contents])+buf.offset, clrMul, sizeof(GColor4F));
+        [rce setFragmentBuffer:GX_CAST_R(id<MTLBuffer>, buf.buffer) offset:buf.offset atIndex:0];
     }
     
     [rce drawPrimitives:(MTLPrimitiveType)mode vertexStart:(NSUInteger)first vertexCount:(NSUInteger)count];
@@ -341,5 +338,7 @@ void GSRGraphics::draw(GCanvas* canvas, GBuffer* buffer, guint bufOffset, guint 
         [rce setFragmentBuffer:nil offset:0 atIndex:0];
     }
     //*/
+    
+    [rce endEncoding];
 #endif
 }

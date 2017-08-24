@@ -30,11 +30,8 @@ public:
 private:
     virtual gint getPLStateCount() = 0;
     virtual void** getPLStates() = 0;
-    virtual void** getUBuffers() = 0;
     virtual void deployPLState(gint inputType,void* plStateDescriptor) = 0;
-    virtual void createUniformBuffer(void* device) = 0;
 protected:
-    bool setUniformBuffer(gint idx,void* device,guint bufLen);
     void setFragmentTexture(void* rce,GTexture* tex,guint idx);
     void setVertexBuffer(void* rce,GBuffer* buffer,guint offset,guint index);
 private:
@@ -43,7 +40,7 @@ private:
 
 typedef GMShader GShaderBase;
 
-#define GX_SHADER_INPUT(OU,DIL,DCB,MPS,MUB) \
+#define GX_SHADER_INPUT(OU,DIL,DCB,MPS) \
 private:\
     virtual gint getPLStateCount() {\
         return MPS;\
@@ -51,22 +48,14 @@ private:\
     virtual void** getPLStates() {\
         return m_PipelineStates;\
     }\
-    virtual void** getUBuffers() {\
-        return m_UniformBuffers;\
-    }\
-    void* m_PipelineStates[MPS*GX::_DBlendCount];\
-    void* m_UniformBuffers[MUB]
+    void* m_PipelineStates[MPS*GX::_DBlendCount]
 
 #define GX_SHADER_INPUT_INIT() \
-    memset(m_PipelineStates,0,sizeof(m_PipelineStates));\
-    memset(m_UniformBuffers,0,sizeof(m_UniformBuffers))
+    memset(m_PipelineStates,0,sizeof(m_PipelineStates))
 
 #define GX_SHADER_INPUT_FINA() \
     for(size_t i=0;i<sizeof(m_PipelineStates)/sizeof(m_PipelineStates[0]);i++) {\
 		[GX_CAST_R(id,m_PipelineStates[i]) release];\
-	}\
-    for(size_t i=0;i<sizeof(m_UniformBuffers)/sizeof(m_UniformBuffers[0]);i++) {\
-		[GX_CAST_R(id,m_UniformBuffers[i]) release];\
 	}
 
 #endif

@@ -10,6 +10,7 @@
 #include "GSRTexture2D.gxsl"
 #include "GContext.h"
 #include "GXMath.h"
+#include "GWindow.h"
 
 /*//GX_SL
 vs {
@@ -368,13 +369,6 @@ void GSRTexture2D::deployPLState(gint inputType,void* plStateDescriptor)
     }
 #undef M_PSD
 }
-void GSRTexture2D::createUniformBuffer(void* device)
-{
-    setUniformBuffer(UB_mvp_mat, device, GX_MATRIX_SIZE);
-    if (isColorMul()) {
-        setUniformBuffer(UB_color_mul, device, sizeof(GColor4F));
-    }
-}
 
 #endif
 
@@ -468,23 +462,28 @@ void GSRTexture2D::draw(GCanvas* canvas,
     
 #elif defined(GX_METAL)
     
-    id<MTLRenderCommandEncoder>rce=GX_CAST_R(id<MTLRenderCommandEncoder>, canvas->metalRenderEncoder());
+    id<MTLRenderCommandEncoder>rce=GX_CAST_R(id<MTLRenderCommandEncoder>, canvas->metalNewRCE());
     
     [rce setRenderPipelineState:GX_CAST_R(id<MTLRenderPipelineState>,getPLStates()[inputType*GX::_DBlendCount+canvas->metalBlendIndex()])];
     
     setVertexBuffer(rce, buffer, bufOffset, 0);
     
-    void* pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) contents];
     const float* mvp = canvas->updateMVPMatrix();
-    ((GMatrix4*)mvp)->transpose();
-    memcpy(pMap, mvp, GX_MATRIX_SIZE);
-    [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_mvp_mat]) offset:0 atIndex:1];
+
+    guint8 bufID[16]={0};
+    (*GX_CAST_R(guint32*, bufID))=canvas->getMPVMatrixID();
+    GX::MetalBufferCache::Buffer buf=GX::MetalBufferCache::shared()->requestBuffer(GX::MetalBufferCache::TypeMatrixMVP,bufID,GX_MATRIX_SIZE);
+    ((GMatrix4*)mvp)->transposeCopyTo(GX_CAST_R(GMatrix4*,GX_CAST_R(guint8*, [GX_CAST_R(id<MTLBuffer>, buf.buffer) contents])+buf.offset));
+    
+    [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, GX_CAST_R(id<MTLBuffer>, buf.buffer)) offset:buf.offset atIndex:1];
     
     if (isColorMul()) {
-        pMap=[GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) contents];
         const float* clrMul = canvas->updateColorMul();
-        memcpy(pMap, clrMul, sizeof(GColor4F));
-        [rce setFragmentBuffer:GX_CAST_R(id<MTLBuffer>, getUBuffers()[UB_color_mul]) offset:0 atIndex:0];
+        memcpy(bufID, clrMul, sizeof(GColor4F));
+        buf=GX::MetalBufferCache::shared()->requestBuffer(GX::MetalBufferCache::TypeColorMul,bufID,sizeof(GColor4F));
+        memcpy(GX_CAST_R(guint8*, [GX_CAST_R(id<MTLBuffer>, buf.buffer) contents])+buf.offset, clrMul, sizeof(GColor4F));
+        
+        [rce setFragmentBuffer:GX_CAST_R(id<MTLBuffer>, buf.buffer) offset:buf.offset atIndex:0];
     }
     
     setFragmentTexture(rce, texBase, 0);
@@ -493,6 +492,9 @@ void GSRTexture2D::draw(GCanvas* canvas,
     }
     
     [rce drawPrimitives:(MTLPrimitiveType)mode vertexStart:(NSUInteger)first vertexCount:(NSUInteger)count];
+    
+    [rce endEncoding];
+    
     
 #endif
 }

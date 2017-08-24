@@ -258,6 +258,11 @@ void GMatrix4::transpose()
 {
     GX::matrixTranspose(m, m);
 }
+void GMatrix4::transposeCopyTo(GMatrix4* pTo)
+{
+    GX::matrixTranspose(m, pTo->m);
+}
+
 void GMatrix4::translate(float tx, float ty, float tz)
 {
     GMatrix4 t;

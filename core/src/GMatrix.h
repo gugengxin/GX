@@ -34,6 +34,8 @@ public:
 		float upX, float upY, float upZ);
 
 	void transpose();
+    void transposeCopyTo(GMatrix4* pTo);
+    
 	void translate(float tx, float ty, float tz);
 	void scale(float sx, float sy, float sz);
 	void rotate(float rx, float ry, float rz, float radians);

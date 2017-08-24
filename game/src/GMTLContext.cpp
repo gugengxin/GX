@@ -21,7 +21,6 @@
 #define M_METAL_LAYER()         GX_CAST_R(CAMetalLayer*,getWindow()->getMetalLayer())
 #define M_COMMAND_QUEUE()       GX_CAST_R(id<MTLCommandQueue>, m_CommandQueue)
 #define M_COMMAND_BUFFER()      GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer)
-#define M_RENDER_ENCODER()      GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder)
 #define M_DEPTH_STENCIL_STATE() GX_CAST_R(id<MTLDepthStencilState>, m_DepthStencilState)
 
 
@@ -95,14 +94,12 @@ bool GMTLContext::create(GWindow* win)
     }
 
     m_CommandBuffer=NULL;
-    m_RenderEncoder=NULL;
     
     return true;
 }
 
 void GMTLContext::destroy()
 {
-    [GX_CAST_R(id, m_RenderEncoder) release];
     [GX_CAST_R(id, m_CommandBuffer) release];
 
     [GX_CAST_R(id, m_CommandQueue) release];
@@ -128,51 +125,47 @@ bool GMTLContext::renderCheck()
 }
 void GMTLContext::renderBegin()
 {
-    currentDrawable();
+    id <CAMetalDrawable> drawable = (id <CAMetalDrawable>)currentDrawable();
+    if(drawable) {
+        setupRenderPassDescriptor(drawable.texture);
+    }
+    
+    GX::MetalBufferCache::shared()->pushBuffer();
+    
+    //printf("renderBegin %d\n",(int)GX_CAST_R(MTLRenderPassDescriptor*, m_RenderPassDescriptor).colorAttachments[0].loadAction);
     
     M_METAL_LAYER().drawableSize=CGSizeMake(getWindow()->getWidth()*getWindow()->getDensity(), getWindow()->getHeight()*getWindow()->getDensity());
     m_CommandBuffer = [[M_COMMAND_QUEUE() commandBuffer] retain];
-    m_RenderEncoder = [[M_COMMAND_BUFFER() renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, renderPassDescriptor())] retain];
-    if (m_DepthStencilState) {
-        [M_RENDER_ENCODER() setDepthStencilState:M_DEPTH_STENCIL_STATE()];
-    }
-#if defined(GX_DEBUG)
-    [M_RENDER_ENCODER() pushDebugGroup:@"GMTLContext"];
-#endif
     
-    metalCFUpdate(m_RenderEncoder);
+    //clear
+    id<MTLRenderCommandEncoder> rce=[M_COMMAND_BUFFER() renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, m_RenderPassDescriptor)];
+    [rce endEncoding];
+    
+    GX_CAST_R(MTLRenderPassDescriptor*, m_RenderPassDescriptor).colorAttachments[0].loadAction=MTLLoadActionDontCare;
+    GX_CAST_R(MTLRenderPassDescriptor*, m_RenderPassDescriptor).depthAttachment.loadAction=MTLLoadActionDontCare;
+    GX_CAST_R(MTLRenderPassDescriptor*, m_RenderPassDescriptor).stencilAttachment.loadAction=MTLLoadActionDontCare;
 }
 void GMTLContext::setViewport(float x, float y, float w, float h, float scale)
 {
-    MTLViewport vt;
-    vt.originX=x*scale;
-    vt.originY=y*scale;
-    vt.width=w*scale;
-    vt.height=h*scale;
-    vt.znear=0;
-    vt.zfar=1;
-    [M_RENDER_ENCODER() setViewport:vt];
+    m_Viewport.originX=x*scale;
+    m_Viewport.originY=y*scale;
+    m_Viewport.width=w*scale;
+    m_Viewport.height=h*scale;
+    m_Viewport.znear=0;
+    m_Viewport.zfar=1;
 }
 void GMTLContext::renderEnd()
 {
-#if defined(GX_DEBUG)
-    [M_RENDER_ENCODER() popDebugGroup];
-#endif
-    [M_RENDER_ENCODER() endEncoding];
     [M_COMMAND_BUFFER() presentDrawable:(id<CAMetalDrawable>)currentDrawable()];
     [M_COMMAND_BUFFER() commit];
+    [M_COMMAND_BUFFER() waitUntilCompleted];
 
-    [M_RENDER_ENCODER() release];
-    m_RenderEncoder=NULL;
     [M_COMMAND_BUFFER() release];
     m_CommandBuffer=NULL;
     
+    GX::MetalBufferCache::shared()->popBuffer();
+    
     clearDrawable();
-}
-
-void* GMTLContext::metalCFNeedRenderEncoder()
-{
-    return m_RenderEncoder;
 }
 
 void GMTLContext::makeCurrent()
@@ -394,16 +387,6 @@ void GMTLContext::setupRenderPassDescriptor(void* texture)
 #undef M_STENCILTEX
 }
 
-void* GMTLContext::renderPassDescriptor()
-{
-    id <CAMetalDrawable> drawable = (id <CAMetalDrawable>)currentDrawable();
-    if(drawable) {
-        setupRenderPassDescriptor(drawable.texture);
-    }
-    
-    return m_RenderPassDescriptor;
-}
-
 void* GMTLContext::getCommandQueue()
 {
     return m_CommandQueue;
@@ -413,9 +396,15 @@ void* GMTLContext::getCommandBuffer()
 {
     return m_CommandBuffer;
 }
-void* GMTLContext::getRenderEncoder()
+void* GMTLContext::newRenderCommandEncoder()
 {
-    return m_RenderEncoder;
+    id <MTLRenderCommandEncoder> rce = [M_COMMAND_BUFFER() renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, m_RenderPassDescriptor)];
+    if (m_DepthStencilState) {
+        [rce setDepthStencilState:M_DEPTH_STENCIL_STATE()];
+    }
+    [rce setViewport:*(MTLViewport*)&m_Viewport];
+    applyToRCE(rce);
+    return rce;
 }
 
 GX::PixelFormat GMTLContext::getPixelFormatForFB() const

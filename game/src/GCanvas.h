@@ -60,6 +60,7 @@ public:
     const float* updateModelMatrix();
     const float* updateModelViewMatrix();
     const float* updateMVPMatrix();
+    guint32 getMPVMatrixID() const;
     
 public:
     void setColorMul(float r,float g,float b,float a) {
@@ -78,7 +79,7 @@ public:
     virtual void setBackgroundColor(float r,float g,float b,float a) =0;
 #if defined(GX_METAL)
 public:
-    virtual void* metalRenderEncoder()=0;
+    virtual void* metalNewRCE()=0;
     virtual gint metalBlendIndex()=0;
 #endif
 protected:
@@ -103,7 +104,9 @@ protected:
     virtual void printEnd();
 private:
     GMatrix4 m_Matrixs[MatrixCount];
+    guint32  m_MatrixID[MatrixCount*2];
     GPDArray<GMatrix4> m_MatrixStack;
+    
     GColor4F m_ColorMul;
     GPDArray<GColor4F> m_ColorMulStack;
 };

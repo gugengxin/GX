@@ -46,7 +46,7 @@ private:
 
 typedef GDShader GShaderBase;
 
-#define GX_SHADER_INPUT(OU,DIL,DCB,MPS,MUB) \
+#define GX_SHADER_INPUT(OU,DIL,DCB,MPS) \
 private:\
 	virtual ID3D10InputLayout** getILs() { return m_Layouts; }\
 	virtual ID3D10Buffer** getCBs() { return m_ConstBuffers; }\

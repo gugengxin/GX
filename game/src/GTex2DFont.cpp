@@ -113,6 +113,16 @@ void GTex2DFont::Glyph::render()
         
         m_Tex2D=GTexture2D::alloc();
         m_Tex2D->create(m_FTGlyph->getDib(), NULL);
+        
+//        printf("\n");
+//        guint8* p=(guint8*)m_FTGlyph->getDib()->getDataPtr();
+//        for (gint32 i=0; i<m_FTGlyph->getDib()->getHeight(); i++) {
+//            for (gint32 j=0; j<m_FTGlyph->getDib()->getWidth(); j++) {
+//                printf("0x%x ",p[j]);
+//            }
+//            printf("\n");
+//            p+=m_FTGlyph->getDib()->getStride();
+//        }
     }
     else {
         

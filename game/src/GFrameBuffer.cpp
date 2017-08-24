@@ -119,7 +119,6 @@ GFrameBuffer::GFrameBuffer()
 	//m_PreViewport;
 #elif defined(GX_METAL)
     m_CommandBuffer=NULL;
-    m_RenderEncoder=NULL;
 #endif
 }
 
@@ -197,19 +196,20 @@ bool GFrameBuffer::direct3DCFNeedMultisampleEnabled()
 
 #elif defined(GX_METAL)
 
-void* GFrameBuffer::metalRenderEncoder()
+void* GFrameBuffer::metalNewRCE()
 {
-    return m_RenderEncoder;
+    id<MTLRenderCommandEncoder> rce = [GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer) renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, m_Node->getData().getName())];
+    if (m_Node->getData().isEnableDepth()) {
+        [rce setDepthStencilState:GX_CAST_R(id<MTLDepthStencilState>, m_Node->getData().getDepthStencilState())];
+    }
+    [rce setViewport:*(MTLViewport*)&m_Viewport];
+    applyToRCE(rce);
+    return rce;
 }
 
 gint GFrameBuffer::metalBlendIndex()
 {
     return GX_CAST_S(gint, getBlend());
-}
-
-void* GFrameBuffer::metalCFNeedRenderEncoder()
-{
-    return m_RenderEncoder;
 }
 
 #endif
@@ -274,21 +274,25 @@ void GFrameBuffer::renderBegin()
 #define M_RENDER_ENCODER()      GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder)
 #define M_DEPTH_STENCIL_STATE() GX_CAST_R(id<MTLDepthStencilState>, m_DepthStencilState)
     
+    GX::MetalBufferCache::shared()->pushBuffer();
+    
     MTLRenderPassDescriptor* rpd=GX_CAST_R(MTLRenderPassDescriptor*, m_Node->getData().getName());
     MTLRenderPassColorAttachmentDescriptor *colorAttachment = rpd.colorAttachments[0];
     const GColor4F& bgdClr=m_Node->getBackgroundColor();
     colorAttachment.clearColor = MTLClearColorMake(bgdClr.r, bgdClr.g, bgdClr.b, bgdClr.a);
     
-    m_CommandBuffer=[[GX_CAST_R(id<MTLCommandQueue>, m_Node->getContext()->getCommandQueue()) commandBuffer] retain];
-    m_RenderEncoder = [[GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer) renderCommandEncoderWithDescriptor:GX_CAST_R(MTLRenderPassDescriptor*, m_Node->getData().getName())] retain];
-    if (m_Node->getData().isEnableDepth()) {
-        [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) setDepthStencilState:GX_CAST_R(id<MTLDepthStencilState>, m_Node->getData().getDepthStencilState())];
-    }
-#if defined(GX_DEBUG)
-    [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) pushDebugGroup:@"GFrameBuffer"];
-#endif
+    MTLLoadAction cla=rpd.colorAttachments[0].loadAction;
+    MTLLoadAction dla=rpd.depthAttachment.loadAction;
+    MTLLoadAction sla=rpd.stencilAttachment.loadAction;
     
-    metalCFUpdate(m_RenderEncoder);
+    m_CommandBuffer=[[GX_CAST_R(id<MTLCommandQueue>, m_Node->getContext()->getCommandQueue()) commandBuffer] retain];
+    //clear
+    id<MTLRenderCommandEncoder> rce=[M_COMMAND_BUFFER() renderCommandEncoderWithDescriptor:rpd];
+    [rce endEncoding];
+    
+    rpd.colorAttachments[0].loadAction=cla;
+    rpd.depthAttachment.loadAction=dla;
+    rpd.stencilAttachment.loadAction=sla;
 #endif
 }
 
@@ -307,14 +311,12 @@ void GFrameBuffer::setViewport(float x, float y, float w, float h, float scale)
 
 	GX::direct3DDevice()->RSSetViewports(1, &viewport);
 #elif defined(GX_METAL)
-    MTLViewport vt;
-    vt.originX=x*scale;
-    vt.originY=y*scale;
-    vt.width=w*scale;
-    vt.height=h*scale;
-    vt.znear=0;
-    vt.zfar=1;
-    [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) setViewport:vt];
+    m_Viewport.originX=x*scale;
+    m_Viewport.originY=y*scale;
+    m_Viewport.width=w*scale;
+    m_Viewport.height=h*scale;
+    m_Viewport.znear=0;
+    m_Viewport.zfar=1;
 #endif
 }
 
@@ -349,17 +351,13 @@ void GFrameBuffer::renderEnd()
 	}
 	device->RSSetViewports(1, &m_PreViewport);
 #elif defined(GX_METAL)
-#if defined(GX_DEBUG)
-    [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) popDebugGroup];
-#endif
-    [GX_CAST_R(id<MTLRenderCommandEncoder>, m_RenderEncoder) endEncoding];
     [GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer) commit];
     [GX_CAST_R(id<MTLCommandBuffer>, m_CommandBuffer) waitUntilCompleted];
     
-    [GX_CAST_R(id, m_RenderEncoder) release];
-    m_RenderEncoder=NULL;
     [GX_CAST_R(id, m_CommandBuffer) release];
     m_CommandBuffer=NULL;
+    
+    GX::MetalBufferCache::shared()->popBuffer();
 #endif
     context->makeClear();
 }

@@ -63,7 +63,7 @@ private:
         
 #if defined(GX_METAL)
     public:
-        virtual void* metalRenderEncoder();
+        virtual void* metalNewRCE();
         virtual gint metalBlendIndex();
 #endif
     private:

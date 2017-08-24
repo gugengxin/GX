@@ -118,8 +118,14 @@ void GThread::detch(GAction* action)
 }
 void* GThread::detchHelper(void* action)
 {
+#if defined(GX_OS_APPLE)
+    @autoreleasepool {
+#endif
 	GX_CAST_R(GAction*, action)->run();
 	GO::release(GX_CAST_R(GAction*, action));
+#if defined(GX_OS_APPLE)
+    }
+#endif
 	return NULL;
 }
 void GThread::detch(GObject* target, GX::Selector selector, GObject* obj)
@@ -156,9 +162,15 @@ GThread::Holder* GThread::create(GAction* action, bool waitRun)
 }
 void* GThread::createHelper(void* data)
 {
+#if defined(GX_OS_APPLE)
+    @autoreleasepool {
+#endif
 	GX_CAST_R(_HelperCreateData*, data)->setThread();
 	GX_CAST_R(_HelperCreateData*, data)->run();
 	delete GX_CAST_R(_HelperCreateData*, data);
+#if defined(GX_OS_APPLE)
+    }
+#endif
 	return NULL;
 }
 GThread::Holder* GThread::create(GObject* target, GX::Selector selector, GObject* obj, bool waitRun)

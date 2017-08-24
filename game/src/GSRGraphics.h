@@ -45,10 +45,9 @@ private:
     virtual bool createConstantBuffer(ID3D10Device* device);
 #elif defined(GX_METAL)
     virtual void deployPLState(gint inputType,void* plStateDescriptor);
-    virtual void createUniformBuffer(void* device);
 #endif
 
-	GX_SHADER_INPUT(2, 1, 2, 1, 2);
+	GX_SHADER_INPUT(2, 1, 2, 1);
 };
 
 #endif

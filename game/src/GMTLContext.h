@@ -42,9 +42,6 @@ protected:
     void renderEnd();
     
 protected:
-    virtual void* metalCFNeedRenderEncoder();
-    
-protected:
     void makeCurrent();
     void makeClear();
 protected:
@@ -62,10 +59,9 @@ protected:
     void* currentDrawable();
     void clearDrawable();
     void setupRenderPassDescriptor(void* texture);
-    void* renderPassDescriptor();
     void* getCommandQueue();
     void* getCommandBuffer();
-    void* getRenderEncoder();
+    void* newRenderCommandEncoder();
     
     
 private:
@@ -79,7 +75,7 @@ private:
     void* m_DepthStencilState;
     /////
     void* m_CommandBuffer;
-    void* m_RenderEncoder;
+    GX::MetalViewport m_Viewport;
 };
 
 #endif

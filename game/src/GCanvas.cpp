@@ -19,6 +19,7 @@ GX_GOBJECT_IMPLEMENT(GCanvas, GObject);
 GCanvas::GCanvas()
 {
 	m_ColorMul.set(1.0f, 1.0f, 1.0f, 1.0f);
+    memset(m_MatrixID, 0, sizeof(m_MatrixID));
 }
 
 GCanvas::~GCanvas()
@@ -28,50 +29,63 @@ GCanvas::~GCanvas()
 void GCanvas::enable2D(float width, float height)
 {
     m_Matrixs[MatrixView].setIdentity();
+    ++m_MatrixID[MatrixView*2+0];
     m_Matrixs[MatrixProjection].setOrthographic(0, width, 0, height, -1, 1);
+    ++m_MatrixID[MatrixProjection*2+0];
 }
 void GCanvas::enable3D(float width, float height, float fovy, float zNear, float zFar)
 {
     m_Matrixs[MatrixView].setIdentity();
+    ++m_MatrixID[MatrixView*2+0];
     m_Matrixs[MatrixProjection].setPerspective(fovy, width / height, zNear, zFar);
+    ++m_MatrixID[MatrixProjection*2+0];
 }
 
 void GCanvas::lookAt(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
     m_Matrixs[MatrixView].setLookAt(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+    ++m_MatrixID[MatrixView*2+0];
 }
 
 void GCanvas::loadIdentity()
 {
     m_Matrixs[MatrixModel].setIdentity();
+    ++m_MatrixID[MatrixModel*2+0];
 }
 void GCanvas::translate(float x, float y, float z)
 {
     m_Matrixs[MatrixModel].translate(x, y, z);
+    ++m_MatrixID[MatrixModel*2+0];
 }
 void GCanvas::rotate(float angle, float x, float y, float z)
 {
     m_Matrixs[MatrixModel].rotate(angle, x, y, z);
+    ++m_MatrixID[MatrixModel*2+0];
 }
 void GCanvas::rotateX(float angle)
 {
     m_Matrixs[MatrixModel].rotateX(angle);
+    ++m_MatrixID[MatrixModel*2+0];
 }
 void GCanvas::rotateY(float angle)
 {
     m_Matrixs[MatrixModel].rotateY(angle);
+    ++m_MatrixID[MatrixModel*2+0];
 }
 void GCanvas::rotateZ(float angle)
 {
     m_Matrixs[MatrixModel].rotateZ(angle);
+    ++m_MatrixID[MatrixModel*2+0];
 }
 void GCanvas::scale(float s)
 {
     m_Matrixs[MatrixModel].scale(s, s, s);
+    ++m_MatrixID[MatrixModel*2+0];
 }
 void GCanvas::scale(float x, float y, float z)
 {
     m_Matrixs[MatrixModel].scale(x, y, z);
+    ++m_MatrixID[MatrixModel*2+0];
 }
 void GCanvas::pushMatrix()
 {
@@ -84,18 +98,43 @@ void GCanvas::popMatrix()
 
 const float* GCanvas::updateModelMatrix()
 {
+    m_MatrixID[MatrixModel*2+1]=m_MatrixID[MatrixModel*2+0];
     return m_Matrixs[MatrixModel].m;
 }
 const float* GCanvas::updateModelViewMatrix()
 {
-    m_Matrixs[MatrixMV] = m_Matrixs[MatrixView] * m_Matrixs[MatrixModel];
+    if (m_MatrixID[MatrixModel*2+1]!=m_MatrixID[MatrixModel*2+0] ||
+        m_MatrixID[MatrixView*2+1]!=m_MatrixID[MatrixView*2+0]) {
+        m_MatrixID[MatrixModel*2+1]=m_MatrixID[MatrixModel*2+0];
+        m_MatrixID[MatrixView*2+1]=m_MatrixID[MatrixView*2+0];
+        
+        m_Matrixs[MatrixMV] = m_Matrixs[MatrixView] * m_Matrixs[MatrixModel];
+        ++m_MatrixID[MatrixMV*2+0];
+    }
     return m_Matrixs[MatrixMV].m;
 }
 const float* GCanvas::updateMVPMatrix()
 {
-    m_Matrixs[MatrixMV] = m_Matrixs[MatrixView] * m_Matrixs[MatrixModel];
-    m_Matrixs[MatrixMVP] = m_Matrixs[MatrixProjection] * m_Matrixs[MatrixMV];
+    if (m_MatrixID[MatrixModel*2+1]!=m_MatrixID[MatrixModel*2+0] ||
+        m_MatrixID[MatrixView*2+1]!=m_MatrixID[MatrixView*2+0] ||
+        m_MatrixID[MatrixProjection*2+1]!=m_MatrixID[MatrixProjection*2+0]) {
+        m_MatrixID[MatrixModel*2+1]=m_MatrixID[MatrixModel*2+0];
+        m_MatrixID[MatrixView*2+1]=m_MatrixID[MatrixView*2+0];
+        m_MatrixID[MatrixProjection*2+1]=m_MatrixID[MatrixProjection*2+0];
+        
+        m_Matrixs[MatrixMV] = m_Matrixs[MatrixView] * m_Matrixs[MatrixModel];
+        ++m_MatrixID[MatrixMV*2+0];
+        
+        m_Matrixs[MatrixMVP] = m_Matrixs[MatrixProjection] * m_Matrixs[MatrixMV];
+        ++m_MatrixID[MatrixMVP*2+0];
+    }
+    
     return m_Matrixs[MatrixMVP].m;
+}
+
+guint32 GCanvas::getMPVMatrixID() const
+{
+    return m_MatrixID[MatrixMVP*2+0];
 }
 
 void GCanvas::pushColorMul()

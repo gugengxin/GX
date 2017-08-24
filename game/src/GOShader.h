@@ -116,7 +116,7 @@ private:
 
 typedef GOShader GShaderBase;
 
-#define GX_SHADER_INPUT(OU,DIL,DCB,MPS,MUB) \
+#define GX_SHADER_INPUT(OU,DIL,DCB,MPS) \
 private:\
 	virtual GLint* getUs() { return (GLint*)&m_Uniforms; }\
 	GLint m_Uniforms[OU]

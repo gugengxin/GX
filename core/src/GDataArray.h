@@ -266,10 +266,11 @@ GPieceDataArray<T,N>::~GPieceDataArray()
 
 
 #if !defined(GX_OS_DESKTOP)
-#define GX_PDARRAY_N 8
+#define GX_PDARRAY_N 32
 #else
-#define GX_PDARRAY_N 16
+#define GX_PDARRAY_N 64
 #endif
+namespace GX { class MetalBufferCache; };
 
 template <typename T>
 class GPDArray : public GPieceDataArray<T, GX_PDARRAY_N> {
@@ -278,6 +279,7 @@ class GPDArray : public GPieceDataArray<T, GX_PDARRAY_N> {
     friend class GThread;
 	friend class GCanvas;
 	friend class GOGLContext;
+    friend class GX::MetalBufferCache;
     GX_GOBJECT(GPDArray);
 };
 

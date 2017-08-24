@@ -13,6 +13,7 @@
 #include "GX3DAPIType.h"
 #if defined(GX_METAL)
 #include "GX3DAPIPre.h"
+#include "GDataArray.h"
 
 #ifdef __OBJC__
 #import <Metal/Metal.h>
@@ -43,23 +44,79 @@ namespace GX {
 
 
 namespace GX {
+    class MetalViewport {
+    public:
+        MetalViewport();
+    public:
+        double originX;
+        double originY;
+        double width;
+        double height;
+        double znear;
+        double zfar;
+    };
+    
+    class MetalBufferCache {
+    public:
+        static MetalBufferCache* shared();
+    private:
+        MetalBufferCache();
+        ~MetalBufferCache();
+    public:
+        enum Type {
+            TypeMatrixMVP,
+            TypeColorMul,
+            
+            TypeCount,
+        };
+        class Buffer {
+        public:
+            Buffer(): buffer(NULL),offset(0) {}
+            void* buffer;
+            guint offset;
+        };
+        Buffer requestBuffer(Type type,guint8 ID[16],guint len);
+        void pushBuffer();
+        void popBuffer();
+    private:
+        class BufData {
+        public:
+            void* buffer;
+            guint length;
+        };
+        class BufPos {
+        public:
+            gint index;
+            guint offset;
+        };
+        class BufKey {
+        public:
+            bool enable;
+            BufPos pos;
+            guint8 ID[16];
+        };
+    private:
+        GPDArray<BufData>   m_BufDatas;
+        gint                m_BufIndex;
+        GPDArray<BufPos>    m_BufPoss;
+        BufKey              m_BufKeys[TypeCount];
+    };
+    
     class MetalCullFacer : public DCullFacer {
     public:
         MetalCullFacer();
         virtual ~MetalCullFacer();
         
         virtual void setCullFace(DCullFace v);
+        
     protected:
-        virtual void* metalCFNeedRenderEncoder()=0;
-        void metalCFUpdate(void* rce);
+        void applyToRCE(void* rce);
     };
     
     class MetalBlender : public DBlender {
     public:
         MetalBlender();
         virtual ~MetalBlender();
-        
-        //virtual void setBlend(DBlend v);
     };
 }
 

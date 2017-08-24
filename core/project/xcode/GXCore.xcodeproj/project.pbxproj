@@ -292,7 +292,7 @@
 		CA3A95E61E7A727B00CEFD8E /* GString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GString.h; sourceTree = "<group>"; };
 		CA3A95E71E7A727B00CEFD8E /* GSystem.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GSystem.cpp; sourceTree = "<group>"; };
 		CA3A95E81E7A727B00CEFD8E /* GSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSystem.h; sourceTree = "<group>"; };
-		CA3A95E91E7A727B00CEFD8E /* GThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GThread.cpp; sourceTree = "<group>"; };
+		CA3A95E91E7A727B00CEFD8E /* GThread.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GThread.cpp; sourceTree = "<group>"; };
 		CA3A95EA1E7A727B00CEFD8E /* GThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GThread.h; sourceTree = "<group>"; };
 		CA3A95EB1E7A727B00CEFD8E /* GUUID.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUUID.cpp; sourceTree = "<group>"; };
 		CA3A95EC1E7A727B00CEFD8E /* GUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUUID.h; sourceTree = "<group>"; };
