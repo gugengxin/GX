@@ -22,6 +22,8 @@ class GSRTexture2D : public GShaderBase {
 public:
     typedef enum _MaskMode {
         MM_None=0,
+        MM_SsaAddD1msa,
+        MM_S1AddD1,
         ///////
         MMCount,
     } MaskMode;

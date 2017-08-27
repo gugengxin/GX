@@ -18,7 +18,9 @@ GX_GOBJECT_IMPLEMENT(GCanvas, GObject);
 
 GCanvas::GCanvas()
 {
-	m_ColorMul.set(1.0f, 1.0f, 1.0f, 1.0f);
+    for (gint i=0; i<sizeof(m_ColorMul)/sizeof(m_ColorMul[0]); i++) {
+        m_ColorMul[i].set(1.0f, 1.0f, 1.0f, 1.0f);
+    }
     memset(m_MatrixID, 0, sizeof(m_MatrixID));
 }
 
@@ -132,18 +134,23 @@ const float* GCanvas::updateMVPMatrix()
     return m_Matrixs[MatrixMVP].m;
 }
 
-guint32 GCanvas::getMPVMatrixID() const
+guint32 GCanvas::getMVPMatrixID() const
 {
     return m_MatrixID[MatrixMVP*2+0];
 }
 
-void GCanvas::pushColorMul()
+gint GCanvas::getColorMulCount()
 {
-    m_ColorMulStack.push(m_ColorMul);
+    return sizeof(m_ColorMul)/sizeof(m_ColorMul[0]);
 }
-void GCanvas::popColorMul()
+
+void GCanvas::pushColorMul(gint index)
 {
-    m_ColorMul=m_ColorMulStack.pop();
+    m_ColorMulStack[index].push(m_ColorMul[index]);
+}
+void GCanvas::popColorMul(gint index)
+{
+    m_ColorMul[index]=m_ColorMulStack[index].pop();
 }
 
 
@@ -163,9 +170,11 @@ GTypist::Paper::PrintGlyphSelector GCanvas::printCheck(GFont* font)
 void GCanvas::printBegin(GFont* font,GPointF pos)
 {
     pushMatrix();
-    pushColorMul();
+    pushColorMul(0);
     translate(0, getHeight(), 0);
-    translate(pos.x, -pos.y-font->getAscender()/64.0f, 0.0f);
+    translate(pos.x, -pos.y, 0.0f);
+    scale(1.0f/font->getDensity());
+    translate(0.0f, -font->getAscender()/64.0f, 0.0f);
 }
 
 void GCanvas::printTex2DFontGlyph(GTypist::Paper* paper,GFont* font,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
@@ -175,7 +184,7 @@ void GCanvas::printTex2DFontGlyph(GTypist::Paper* paper,GFont* font,GFont::Glyph
     
     GTex2DFont::Glyph* realGH=GX_CAST_R(GTex2DFont::Glyph*, glyph);
     if (!realGH->isBlank()) {
-        canvas->setColorMul(0, 1, 0, 1);
+        canvas->setColorMul(0, 0, 1, 0, 1);
         GSRTexture2D::shared(true, true, GSRTexture2D::MM_None)->draw(canvas,
                                                                       realGH->getBuffer(), 0, sizeof(float)*3+sizeof(guint16)*2,
                                                                       GSRTexture2D::IT_Float_UShort,
@@ -188,7 +197,7 @@ void GCanvas::printTex2DFontGlyph(GTypist::Paper* paper,GFont* font,GFont::Glyph
 
 void GCanvas::printEnd()
 {
-    popColorMul();
+    popColorMul(0);
     popMatrix();
 }
 

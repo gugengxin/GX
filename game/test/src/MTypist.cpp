@@ -38,7 +38,6 @@ Module* MTypist::initWithGame(Game* game,GContext& context)
     
     GDib* dib=GDib::autoAlloc();
     dib->changeData(GX::PixelFormatRGBA8888, 200, 200);
-    memset(dib->getDataPtr(), 0xFF, dib->getDataBytes());
     
     GFTFont* font=GFontManager::shared()->loadFTFont(GS::chars("STXINWEI.ttf"), 50, 0);
     GTypist* typist=GTypist::autoAlloc();

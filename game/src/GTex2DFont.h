@@ -60,6 +60,7 @@ public:
     };
 public:
     void create(GFTFont* ftFont,float density);
+    virtual float getDensity() const;
 public:
     virtual gint32 getScaleX();
     virtual gint32 getScaleY();
@@ -72,7 +73,6 @@ public:
     virtual gint32 getKerningX(guint32 index,guint32 next);
     virtual bool hasOutline();
     virtual gint32 getOutlineSize();
-public:
     virtual guint32 getIndex(guint32 code);
     virtual guint32 getVariantIndex(guint32 code,guint32 variation_selector);
     virtual guint32 getGlyphCount();

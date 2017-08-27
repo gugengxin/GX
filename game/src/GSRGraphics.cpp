@@ -314,14 +314,14 @@ void GSRGraphics::draw(GCanvas* canvas, GBuffer* buffer, guint bufOffset, guint 
     const float* mvp = canvas->updateMVPMatrix();
     
     guint8 bufID[16]={0};
-    (*GX_CAST_R(guint32*, bufID))=canvas->getMPVMatrixID();
+    (*GX_CAST_R(guint32*, bufID))=canvas->getMVPMatrixID();
     GX::MetalBufferCache::Buffer buf=GX::MetalBufferCache::shared()->requestBuffer(GX::MetalBufferCache::TypeMatrixMVP,bufID,GX_MATRIX_SIZE);
     
     ((GMatrix4*)mvp)->transposeCopyTo(GX_CAST_R(GMatrix4*,GX_CAST_R(guint8*, [GX_CAST_R(id<MTLBuffer>, buf.buffer) contents])+buf.offset));
     [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, buf.buffer) offset:buf.offset atIndex:1];
 
     if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
-        const float* clrMul = canvas->updateColorMul();
+        const float* clrMul = canvas->updateColorMul(0);
         memcpy(bufID, clrMul, sizeof(GColor4F));
         buf=GX::MetalBufferCache::shared()->requestBuffer(GX::MetalBufferCache::TypeColorMul,bufID,sizeof(GColor4F));
         

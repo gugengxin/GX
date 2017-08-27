@@ -60,19 +60,18 @@ public:
     const float* updateModelMatrix();
     const float* updateModelViewMatrix();
     const float* updateMVPMatrix();
-    guint32 getMPVMatrixID() const;
+    guint32 getMVPMatrixID() const;
     
 public:
-    void setColorMul(float r,float g,float b,float a) {
-        m_ColorMul.set(r, g, b, a);
+    gint getColorMulCount();
+    void setColorMul(gint index,float r,float g,float b,float a) {
+        m_ColorMul[index].set(r, g, b, a);
     }
-    
-    const float* updateColorMul() {
-        return &m_ColorMul.r;
+    const float* updateColorMul(gint index) {
+        return &m_ColorMul[index].r;
     }
-    
-    void pushColorMul();
-    void popColorMul();
+    void pushColorMul(gint index);
+    void popColorMul(gint index);
     
 public:
     virtual const GColor4F& getBackgroundColor() const =0;
@@ -107,8 +106,8 @@ private:
     guint32  m_MatrixID[MatrixCount*2];
     GPDArray<GMatrix4> m_MatrixStack;
     
-    GColor4F m_ColorMul;
-    GPDArray<GColor4F> m_ColorMulStack;
+    GColor4F m_ColorMul[2];
+    GPDArray<GColor4F> m_ColorMulStack[2];
 };
 
 // Up can't include other h file

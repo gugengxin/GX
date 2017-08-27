@@ -348,6 +348,11 @@ bool GFTFont::create(GData* data,float size,float outlineSize)
     return true;
 }
 
+float GFTFont::getDensity() const
+{
+    return 1.0f;
+}
+
 gint32 GFTFont::getScaleX()
 {
     return (gint32) (((guint64) M_FACE()->size->metrics.x_scale * (guint64) M_FACE()->units_per_EM + (1u<<15)) >> 16);

@@ -52,7 +52,7 @@ void MGraphics::render3D(GCanvas* canvas,GContext& context)
 {
     GX_UNUSED(context);
     GSRGraphics* graph = GSRGraphics::shared(GSRGraphics::ID_CAndCM);
-    canvas->setColorMul(1, 1, 1, 1.0f);
+    canvas->setColorMul(0, 1, 1, 1, 1.0f);
     graph->draw(canvas, m_Data, 0, sizeof(MGraphicsData), GSRGraphics::IT_Float, GX_TRIANGLE_STRIP, 0, 4);
 }
 void MGraphics::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)

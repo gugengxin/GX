@@ -85,44 +85,28 @@ void GTex2DFont::Glyph::render()
 {
     m_Buffer=GBuffer::alloc();
     
-    if (getFont()->getOutlineSize()<=0) {
-        
-        //			GX_LOG_P4(PrioDEBUG,"GTex2DFont::Glyph","render %f %f %f %f",
-        //				m_FTGlyph->getHoriBearingX() / 64.0f,
-        //				m_FTGlyph->getHoriBearingY() / 64.0f,
-        //				m_FTGlyph->getWidth()/64.0f,
-        //				m_FTGlyph->getHeight()/64.0f);
-        
-        float l=m_FTGlyph->getHoriBearingX()/64.0f;
-        float r=(m_FTGlyph->getHoriBearingX()+m_FTGlyph->getWidth())/64.0f;
-        float t=m_FTGlyph->getHoriBearingY()/64.0f;
-        float b=(m_FTGlyph->getHoriBearingY()-m_FTGlyph->getHeight())/64.0f;
+    GTex2DFont* font=GX_CAST_R(GTex2DFont*, getFont());
+    float l=m_FTGlyph->getHoriBearingX()/64.0f;
+    float r=(m_FTGlyph->getHoriBearingX()+m_FTGlyph->getWidth())/64.0f;
+    float t=m_FTGlyph->getHoriBearingY()/64.0f;
+    float b=(m_FTGlyph->getHoriBearingY()-m_FTGlyph->getHeight())/64.0f;
 #pragma pack (1)
-        struct {
-            float pos[3];
-            guint16 tc[2];
-        } data[]={
-            {{l,b,0.0f},{0,0xFFFF}},
-            {{r,b,0.0f},{0xFFFF,0xFFFF}},
-            {{l,t,0.0f},{0,0}},
-            {{r,t,0.0f},{0xFFFF,0}},
-        };
+    struct {
+        float pos[3];
+        guint16 tc[2];
+    } data[]={
+        {{l,b,0.0f},{0,0xFFFF}},
+        {{r,b,0.0f},{0xFFFF,0xFFFF}},
+        {{l,t,0.0f},{0,0}},
+        {{r,t,0.0f},{0xFFFF,0}},
+    };
 #pragma pack ()
-        m_Buffer->create(sizeof(data), GBuffer::UsageImmutable, data);
-        
-        
+    m_Buffer->create(sizeof(data), GBuffer::UsageImmutable, data);
+    
+    
+    if (font->getOutlineSize()<=0) {
         m_Tex2D=GTexture2D::alloc();
         m_Tex2D->create(m_FTGlyph->getDib(), NULL);
-        
-//        printf("\n");
-//        guint8* p=(guint8*)m_FTGlyph->getDib()->getDataPtr();
-//        for (gint32 i=0; i<m_FTGlyph->getDib()->getHeight(); i++) {
-//            for (gint32 j=0; j<m_FTGlyph->getDib()->getWidth(); j++) {
-//                printf("0x%x ",p[j]);
-//            }
-//            printf("\n");
-//            p+=m_FTGlyph->getDib()->getStride();
-//        }
     }
     else {
         
@@ -172,7 +156,14 @@ void GTex2DFont::create(GFTFont* ftFont,float density)
 {
     GX_OBJECT_SET(m_FTFont, ftFont);
     m_Density=density;
+    if (m_Density<=0.0f) {
+        m_Density=1.0f;
+    }
     GFont::create(ftFont->getSize());
+}
+
+float GTex2DFont::getDensity() const {
+    return m_Density;
 }
 
 gint32 GTex2DFont::getScaleX()

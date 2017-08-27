@@ -69,6 +69,10 @@ public:
     };
 public:
     bool create(GData* data,float size,float outlineSize);
+    virtual float getDensity() const;
+    inline void* getFace() const {
+        return m_Face;
+    }
 public:
     virtual gint32 getScaleX();
     virtual gint32 getScaleY();
@@ -88,10 +92,6 @@ public:
     virtual GFont::Glyph* getGlyph(guint32 index);
 	virtual bool getGlyphName(guint32 index, char* name, guint32 size);
 	virtual bool getGlyphNameIndex(guint32* idxOut, const char *name, gint32 len);
-public:
-    inline void* getFace() const {
-        return m_Face;
-    }
 private:
     GData*          m_Data;
     void*           m_Face;

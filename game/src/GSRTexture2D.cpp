@@ -56,6 +56,26 @@ fp {
 #end
     }
 	main {
+#if MI_MASKMODE_NONE
+ 
+#if MI_ALPHA
+#if MI_COLORMUL
+        lowp vec4 fragColor=vec4(buffer.color_mul.rgb,tex2d(texture.texBase,bridge.b_texCoord).a*buffer.color_mul.a);
+#else
+        lowp float texA=tex2d(texture.texBase,bridge.b_texCoord).a;
+        lowp vec4 fragColor=vec4(texA,texA,texA,1.0);
+#end
+#else
+#if MI_COLORMUL
+        lowp vec4 fragColor=tex2d(texture.texBase,bridge.b_texCoord)*buffer.color_mul;
+#else
+        lowp vec4 fragColor=tex2d(texture.texBase,bridge.b_texCoord);
+#end
+#end
+        gx_FragColor=fragColor;
+ 
+#elif MI_MASKMODE_SSA_ADD_D1MSA
+ 
 #if MI_ALPHA
 #if MI_COLORMUL
         lowp vec4 fragColor=vec4(buffer.color_mul.rgb,tex2d(texture.texBase,bridge.b_texCoord).a*buffer.color_mul.a);
@@ -71,10 +91,9 @@ fp {
 #end
 #end
  
-#if MI_MASKMODE_NONE
-//#elif
+#elif MI_MASKMODE_S1_ADD_D1
 #end
-        gx_FragColor=fragColor;
+ 
 	}
 }
 *///GX_SL
@@ -101,6 +120,8 @@ GSRTexture2D::GSRTexture2D(bool alphaOnly,bool colorMul,MaskMode mm)
         { "MI_ALPHA", NULL },
         { "MI_COLORMUL", NULL },
         { "MI_MASKMODE_NONE", NULL },
+        { "MI_MASKMODE_SSA_ADD_D1MSA", NULL },
+        { "MI_MASKMODE_S1_ADD_D1", NULL },
     };
     Macro macros[] = { {NULL,NULL}, {NULL,NULL}, {NULL,NULL}, {NULL,NULL} };
     gint i=0;
@@ -471,14 +492,14 @@ void GSRTexture2D::draw(GCanvas* canvas,
     const float* mvp = canvas->updateMVPMatrix();
 
     guint8 bufID[16]={0};
-    (*GX_CAST_R(guint32*, bufID))=canvas->getMPVMatrixID();
+    (*GX_CAST_R(guint32*, bufID))=canvas->getMVPMatrixID();
     GX::MetalBufferCache::Buffer buf=GX::MetalBufferCache::shared()->requestBuffer(GX::MetalBufferCache::TypeMatrixMVP,bufID,GX_MATRIX_SIZE);
     ((GMatrix4*)mvp)->transposeCopyTo(GX_CAST_R(GMatrix4*,GX_CAST_R(guint8*, [GX_CAST_R(id<MTLBuffer>, buf.buffer) contents])+buf.offset));
     
     [rce setVertexBuffer:GX_CAST_R(id<MTLBuffer>, GX_CAST_R(id<MTLBuffer>, buf.buffer)) offset:buf.offset atIndex:1];
     
     if (isColorMul()) {
-        const float* clrMul = canvas->updateColorMul();
+        const float* clrMul = canvas->updateColorMul(0);
         memcpy(bufID, clrMul, sizeof(GColor4F));
         buf=GX::MetalBufferCache::shared()->requestBuffer(GX::MetalBufferCache::TypeColorMul,bufID,sizeof(GColor4F));
         memcpy(GX_CAST_R(guint8*, [GX_CAST_R(id<MTLBuffer>, buf.buffer) contents])+buf.offset, clrMul, sizeof(GColor4F));

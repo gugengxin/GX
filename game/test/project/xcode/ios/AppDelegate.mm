@@ -42,7 +42,7 @@
     NSLog(@"%s",__FUNCTION__);
     _window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [_window makeKeyAndVisible];
-    
+    CGContextSetBlendMode(<#CGContextRef  _Nullable c#>, <#CGBlendMode mode#>)
     GApplication::main(0,NULL,"AppDge");
     GWindow::main(_window, "Game");
     
