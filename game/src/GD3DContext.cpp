@@ -29,8 +29,8 @@ bool GD3DContext::create(GWindow* win)
 		return false;
 	}
 	ID3D10Device* device = GX::direct3DDevice();
-	UINT width = (UINT)(getWindow()->getWidth()*getWindow()->getScale());
-	UINT height = (UINT)(getWindow()->getHeight()*getWindow()->getScale());
+	UINT width = (UINT)(getWindow()->getWidth()*getWindow()->getDensity());
+	UINT height = (UINT)(getWindow()->getHeight()*getWindow()->getDensity());
 
 	m_Samples = (UINT)GApplication::sharedDelegate()->windowsSuggestedSamples();
 
