@@ -72,8 +72,8 @@ void MFrameBuffer::prepareTex2D(GContext& context)
             m_FB->renderBegin();
             m_FB->setViewport(0, 0, m_FB->getWidth(), m_FB->getHeight(), 1.0f);
             
-            m_FB->enable2D(m_FB->getWidth(), m_FB->getHeight());
-            m_FB->translate(m_FB->getWidth()*0.5f, m_FB->getHeight()*0.5f, 0.0f);
+            m_FB->enable2D(0, m_FB->getWidth(), m_FB->getHeight());
+            m_FB->translate(0, m_FB->getWidth()*0.5f, m_FB->getHeight()*0.5f, 0.0f);
             
             //m_FB->enable3D(m_FB->getWidth(), m_FB->getHeight(), GX_PI / 3, 0.1f, 1000.0f);
             //m_FB->lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
@@ -100,14 +100,14 @@ void MFrameBuffer::render3D(GCanvas* canvas,GContext& context)
 {
     prepareTex2D(context);
     
-    canvas->pushMatrix();
+    canvas->pushMatrix(0);
     
-    canvas->rotateY(m_Angle);
+    canvas->rotateY(0, m_Angle);
     
     GSRTexture2D* shader=GSRTexture2D::shared(false, true, GSRTexture2D::MM_None);
     shader->draw(canvas, m_Data, 0, sizeof(MFrameBufferData), GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
     
-    canvas->popMatrix();
+    canvas->popMatrix(0);
 }
 void MFrameBuffer::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 {

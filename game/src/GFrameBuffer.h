@@ -124,8 +124,8 @@ public:
     Name getName();
     GTexture* getTexture();
     
-	virtual void enable2D(float width, float height);
-	virtual void enable3D(float width, float height, float fovy, float zNear, float zFar);
+	virtual void enable2D(gint index, float width, float height);
+	virtual void enable3D(gint index, float width, float height, float fovy, float zNear, float zFar);
 
     virtual float getWidth();
     virtual float getHeight();

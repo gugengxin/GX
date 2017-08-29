@@ -32,35 +32,35 @@ public:
     virtual float getDensity()=0;
     
     /// 矩阵开始2D模式
-    virtual void enable2D(float width, float height);
+    virtual void enable2D(gint index, float width, float height);
     /// 矩阵开始3D模式
     /// @param fovy 单位为弧度
-	virtual void enable3D(float width, float height, float fovy, float zNear, float zFar);
+	virtual void enable3D(gint index, float width, float height, float fovy, float zNear, float zFar);
     /// 设置相机视图
-    void lookAt(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
+    void lookAt(gint index, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz);
     
     /// 重置当前矩阵为单位矩阵
-    void loadIdentity();
+    void loadIdentity(gint index);
     /// 移动当前矩阵
-    void translate(float x, float y, float z);
+    void translate(gint index, float x, float y, float z);
     /// 旋转当前矩阵
     /// @param angle 旋转角度,单位为弧度
-    void rotate(float angle, float x, float y, float z);
-    void rotateX(float angle);
-    void rotateY(float angle);
-    void rotateZ(float angle);
+    void rotate(gint index, float angle, float x, float y, float z);
+    void rotateX(gint index, float angle);
+    void rotateY(gint index, float angle);
+    void rotateZ(gint index, float angle);
     /// 缩放当前矩阵
-    void scale(float s);
-    void scale(float x, float y, float z);
+    void scale(gint index, float s);
+    void scale(gint index, float x, float y, float z);
     /// 保存当前矩阵，入栈
-    void pushMatrix();
+    void pushMatrix(gint index);
     /// 恢复保存的矩阵，出栈
-    void popMatrix();
+    void popMatrix(gint index);
     
-    const float* updateModelMatrix();
-    const float* updateModelViewMatrix();
-    const float* updateMVPMatrix();
-    guint32 getMVPMatrixID() const;
+    const float* updateModelMatrix(gint index);
+    const float* updateModelViewMatrix(gint index);
+    const float* updateMVPMatrix(gint index);
+    guint32 getMVPMatrixID(gint index) const;
     
 public:
     gint getColorMulCount();
@@ -92,8 +92,8 @@ protected:
 		///////////////////
 		MatrixCount,
 	} Matrix;
-	inline GMatrix4& getMatrix(int idx) {
-		return m_Matrixs[idx];
+	inline GMatrix4& getMatrix(gint index,Matrix mid) {
+		return m_Matrixs[index][mid];
 	}
 protected:
     virtual bool isFlipped();
@@ -102,9 +102,9 @@ protected:
     static void printTex2DFontGlyph(GTypist::Paper* paper,GFont* font,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint);
     virtual void printEnd();
 private:
-    GMatrix4 m_Matrixs[MatrixCount];
-    guint32  m_MatrixID[MatrixCount*2];
-    GPDArray<GMatrix4> m_MatrixStack;
+    GMatrix4 m_Matrixs[2][MatrixCount];
+    guint32  m_MatrixID[2][MatrixCount*2];
+    GPDArray<GMatrix4> m_MatrixStack[2];
     
     GColor4F m_ColorMul[2];
     GPDArray<GColor4F> m_ColorMulStack[2];

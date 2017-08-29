@@ -44,11 +44,11 @@ void MImage::idle()
 }
 void MImage::render3D(GCanvas* canvas,GContext& context)
 {
-    canvas->pushMatrix();
+    canvas->pushMatrix(0);
     
     //m_Image->draw(context, canvas);
     
-    canvas->popMatrix();
+    canvas->popMatrix(0);
 }
 void MImage::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 {

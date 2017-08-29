@@ -129,27 +129,27 @@ GFrameBuffer::~GFrameBuffer()
     }
 }
 
-void GFrameBuffer::enable2D(float width, float height)
+void GFrameBuffer::enable2D(gint index, float width, float height)
 {
-	GCanvas::enable2D(width, height);
+	GCanvas::enable2D(index, width, height);
 #if defined(GX_OPENGL)
     GMatrix4 m(1.0f,    0.0f,   0.0f,   0.0f,
                0.0f,    -1.0f,  0.0f,   0.0f,
                0.0f,    0.0f,   1.0f,   0.0f,
                0.0f,    height, 0.0f,   1.0f);
-    getMatrix(MatrixProjection).multiply(m);
+    getMatrix(index,MatrixProjection).multiply(m);
     /*
-    getMatrix(MatrixProjection).translate(0, height, 0.0f);
-	getMatrix(MatrixProjection).scale(1.0f, -1.0f, 1.0f);
+    getMatrix(index,MatrixProjection).translate(0, height, 0.0f);
+	getMatrix(index,MatrixProjection).scale(1.0f, -1.0f, 1.0f);
     //*/
     
 #endif
 }
-void GFrameBuffer::enable3D(float width, float height, float fovy, float zNear, float zFar)
+void GFrameBuffer::enable3D(gint index, float width, float height, float fovy, float zNear, float zFar)
 {
-	GCanvas::enable3D(width, height, fovy, zNear, zFar);
+	GCanvas::enable3D(index, width, height, fovy, zNear, zFar);
 #if defined(GX_OPENGL)
-	getMatrix(MatrixProjection).scale(1.0f, -1.0f, 1.0f);
+	getMatrix(index,MatrixProjection).scale(1.0f, -1.0f, 1.0f);
 #endif
 }
 

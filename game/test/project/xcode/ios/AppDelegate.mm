@@ -42,9 +42,62 @@
     NSLog(@"%s",__FUNCTION__);
     _window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [_window makeKeyAndVisible];
-    CGContextSetBlendMode(<#CGContextRef  _Nullable c#>, <#CGBlendMode mode#>)
     GApplication::main(0,NULL,"AppDge");
     GWindow::main(_window, "Game");
+    
+    /*
+    NSString* path=[[NSBundle mainBundle] pathForResource:@"png-0029.png" ofType:nil];
+    
+    for (gint count=100; count<=1000; count+=100) {
+        gint64 curTime=GSystem::tickCountNS();
+        
+        for (gint i=0;i<count;i++) {
+            UIImage* img=[[UIImage alloc] initWithContentsOfFile:path];
+            
+            [img release];
+        }
+        
+        gint keyTime0=GSystem::tickCountNS();
+        
+        for (gint i=0;i<count;i++) {
+            UIImage* img=[[UIImage alloc] initWithContentsOfFile:path];
+            
+            gint width=CGImageGetWidth(img.CGImage);
+            gint height=CGImageGetHeight(img.CGImage);
+            void* data=malloc(width*height*4);
+            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+            CGContextRef context = CGBitmapContextCreate(data, width, height, 8, width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+            CGColorSpaceRelease(colorSpace);
+            CGContextSetBlendMode(context, kCGBlendModeCopy);
+            CGContextDrawImage(context, CGRectMake(0, 0, width, height), img.CGImage);
+            CGContextRelease(context);
+            free(data);
+            
+            [img release];
+        }
+        
+        gint keyTime1=GSystem::tickCountNS();
+        
+        {
+            GAutoreleasePool pool;
+            for (gint i=0; i<count; i++) {
+                GFileReader* reader=GFileReader::alloc();
+                reader->open([path UTF8String]);
+                
+                GDib* data=GPng::read(reader);
+                
+                reader->close();
+                
+                GO::release(reader);
+            }
+        }
+        
+        gint keyTime2=GSystem::tickCountNS();
+        
+        printf("%15lld\t%15lld\t%15lld\n",keyTime0-curTime,keyTime1-keyTime0,keyTime2-keyTime1);
+    }
+    //*/
+    
     
     return YES;
 }

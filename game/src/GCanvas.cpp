@@ -28,115 +28,115 @@ GCanvas::~GCanvas()
 {
 }
 
-void GCanvas::enable2D(float width, float height)
+void GCanvas::enable2D(gint index, float width, float height)
 {
-    m_Matrixs[MatrixView].setIdentity();
-    ++m_MatrixID[MatrixView*2+0];
-    m_Matrixs[MatrixProjection].setOrthographic(0, width, 0, height, -1, 1);
-    ++m_MatrixID[MatrixProjection*2+0];
+    m_Matrixs[index][MatrixView].setIdentity();
+    ++m_MatrixID[index][MatrixView*2+0];
+    m_Matrixs[index][MatrixProjection].setOrthographic(0, width, 0, height, -1, 1);
+    ++m_MatrixID[index][MatrixProjection*2+0];
 }
-void GCanvas::enable3D(float width, float height, float fovy, float zNear, float zFar)
+void GCanvas::enable3D(gint index, float width, float height, float fovy, float zNear, float zFar)
 {
-    m_Matrixs[MatrixView].setIdentity();
-    ++m_MatrixID[MatrixView*2+0];
-    m_Matrixs[MatrixProjection].setPerspective(fovy, width / height, zNear, zFar);
-    ++m_MatrixID[MatrixProjection*2+0];
-}
-
-void GCanvas::lookAt(float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
-{
-    m_Matrixs[MatrixView].setLookAt(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
-    ++m_MatrixID[MatrixView*2+0];
+    m_Matrixs[index][MatrixView].setIdentity();
+    ++m_MatrixID[index][MatrixView*2+0];
+    m_Matrixs[index][MatrixProjection].setPerspective(fovy, width / height, zNear, zFar);
+    ++m_MatrixID[index][MatrixProjection*2+0];
 }
 
-void GCanvas::loadIdentity()
+void GCanvas::lookAt(gint index, float eyex, float eyey, float eyez, float centerx, float centery, float centerz, float upx, float upy, float upz)
 {
-    m_Matrixs[MatrixModel].setIdentity();
-    ++m_MatrixID[MatrixModel*2+0];
-}
-void GCanvas::translate(float x, float y, float z)
-{
-    m_Matrixs[MatrixModel].translate(x, y, z);
-    ++m_MatrixID[MatrixModel*2+0];
-}
-void GCanvas::rotate(float angle, float x, float y, float z)
-{
-    m_Matrixs[MatrixModel].rotate(angle, x, y, z);
-    ++m_MatrixID[MatrixModel*2+0];
-}
-void GCanvas::rotateX(float angle)
-{
-    m_Matrixs[MatrixModel].rotateX(angle);
-    ++m_MatrixID[MatrixModel*2+0];
-}
-void GCanvas::rotateY(float angle)
-{
-    m_Matrixs[MatrixModel].rotateY(angle);
-    ++m_MatrixID[MatrixModel*2+0];
-}
-void GCanvas::rotateZ(float angle)
-{
-    m_Matrixs[MatrixModel].rotateZ(angle);
-    ++m_MatrixID[MatrixModel*2+0];
-}
-void GCanvas::scale(float s)
-{
-    m_Matrixs[MatrixModel].scale(s, s, s);
-    ++m_MatrixID[MatrixModel*2+0];
-}
-void GCanvas::scale(float x, float y, float z)
-{
-    m_Matrixs[MatrixModel].scale(x, y, z);
-    ++m_MatrixID[MatrixModel*2+0];
-}
-void GCanvas::pushMatrix()
-{
-    m_MatrixStack.push(m_Matrixs[MatrixModel]);
-}
-void GCanvas::popMatrix()
-{
-    m_Matrixs[MatrixModel] = m_MatrixStack.pop();
+    m_Matrixs[index][MatrixView].setLookAt(eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz);
+    ++m_MatrixID[index][MatrixView*2+0];
 }
 
-const float* GCanvas::updateModelMatrix()
+void GCanvas::loadIdentity(gint index)
 {
-    m_MatrixID[MatrixModel*2+1]=m_MatrixID[MatrixModel*2+0];
-    return m_Matrixs[MatrixModel].m;
+    m_Matrixs[index][MatrixModel].setIdentity();
+    ++m_MatrixID[index][MatrixModel*2+0];
 }
-const float* GCanvas::updateModelViewMatrix()
+void GCanvas::translate(gint index, float x, float y, float z)
 {
-    if (m_MatrixID[MatrixModel*2+1]!=m_MatrixID[MatrixModel*2+0] ||
-        m_MatrixID[MatrixView*2+1]!=m_MatrixID[MatrixView*2+0]) {
-        m_MatrixID[MatrixModel*2+1]=m_MatrixID[MatrixModel*2+0];
-        m_MatrixID[MatrixView*2+1]=m_MatrixID[MatrixView*2+0];
+    m_Matrixs[index][MatrixModel].translate(x, y, z);
+    ++m_MatrixID[index][MatrixModel*2+0];
+}
+void GCanvas::rotate(gint index, float angle, float x, float y, float z)
+{
+    m_Matrixs[index][MatrixModel].rotate(angle, x, y, z);
+    ++m_MatrixID[index][MatrixModel*2+0];
+}
+void GCanvas::rotateX(gint index, float angle)
+{
+    m_Matrixs[index][MatrixModel].rotateX(angle);
+    ++m_MatrixID[index][MatrixModel*2+0];
+}
+void GCanvas::rotateY(gint index, float angle)
+{
+    m_Matrixs[index][MatrixModel].rotateY(angle);
+    ++m_MatrixID[index][MatrixModel*2+0];
+}
+void GCanvas::rotateZ(gint index, float angle)
+{
+    m_Matrixs[index][MatrixModel].rotateZ(angle);
+    ++m_MatrixID[index][MatrixModel*2+0];
+}
+void GCanvas::scale(gint index, float s)
+{
+    m_Matrixs[index][MatrixModel].scale(s, s, s);
+    ++m_MatrixID[index][MatrixModel*2+0];
+}
+void GCanvas::scale(gint index, float x, float y, float z)
+{
+    m_Matrixs[index][MatrixModel].scale(x, y, z);
+    ++m_MatrixID[index][MatrixModel*2+0];
+}
+void GCanvas::pushMatrix(gint index)
+{
+    m_MatrixStack[index].push(m_Matrixs[index][MatrixModel]);
+}
+void GCanvas::popMatrix(gint index)
+{
+    m_Matrixs[index][MatrixModel] = m_MatrixStack[index].pop();
+}
+
+const float* GCanvas::updateModelMatrix(gint index)
+{
+    m_MatrixID[index][MatrixModel*2+1]=m_MatrixID[index][MatrixModel*2+0];
+    return m_Matrixs[index][MatrixModel].m;
+}
+const float* GCanvas::updateModelViewMatrix(gint index)
+{
+    if (m_MatrixID[index][MatrixModel*2+1]!=m_MatrixID[index][MatrixModel*2+0] ||
+        m_MatrixID[index][MatrixView*2+1]!=m_MatrixID[index][MatrixView*2+0]) {
+        m_MatrixID[index][MatrixModel*2+1]=m_MatrixID[index][MatrixModel*2+0];
+        m_MatrixID[index][MatrixView*2+1]=m_MatrixID[index][MatrixView*2+0];
         
-        m_Matrixs[MatrixMV] = m_Matrixs[MatrixView] * m_Matrixs[MatrixModel];
-        ++m_MatrixID[MatrixMV*2+0];
+        m_Matrixs[index][MatrixMV] = m_Matrixs[index][MatrixView] * m_Matrixs[index][MatrixModel];
+        ++m_MatrixID[index][MatrixMV*2+0];
     }
-    return m_Matrixs[MatrixMV].m;
+    return m_Matrixs[index][MatrixMV].m;
 }
-const float* GCanvas::updateMVPMatrix()
+const float* GCanvas::updateMVPMatrix(gint index)
 {
-    if (m_MatrixID[MatrixModel*2+1]!=m_MatrixID[MatrixModel*2+0] ||
-        m_MatrixID[MatrixView*2+1]!=m_MatrixID[MatrixView*2+0] ||
-        m_MatrixID[MatrixProjection*2+1]!=m_MatrixID[MatrixProjection*2+0]) {
-        m_MatrixID[MatrixModel*2+1]=m_MatrixID[MatrixModel*2+0];
-        m_MatrixID[MatrixView*2+1]=m_MatrixID[MatrixView*2+0];
-        m_MatrixID[MatrixProjection*2+1]=m_MatrixID[MatrixProjection*2+0];
+    if (m_MatrixID[index][MatrixModel*2+1]!=m_MatrixID[index][MatrixModel*2+0] ||
+        m_MatrixID[index][MatrixView*2+1]!=m_MatrixID[index][MatrixView*2+0] ||
+        m_MatrixID[index][MatrixProjection*2+1]!=m_MatrixID[index][MatrixProjection*2+0]) {
+        m_MatrixID[index][MatrixModel*2+1]=m_MatrixID[index][MatrixModel*2+0];
+        m_MatrixID[index][MatrixView*2+1]=m_MatrixID[index][MatrixView*2+0];
+        m_MatrixID[index][MatrixProjection*2+1]=m_MatrixID[index][MatrixProjection*2+0];
         
-        m_Matrixs[MatrixMV] = m_Matrixs[MatrixView] * m_Matrixs[MatrixModel];
-        ++m_MatrixID[MatrixMV*2+0];
+        m_Matrixs[index][MatrixMV] = m_Matrixs[index][MatrixView] * m_Matrixs[index][MatrixModel];
+        ++m_MatrixID[index][MatrixMV*2+0];
         
-        m_Matrixs[MatrixMVP] = m_Matrixs[MatrixProjection] * m_Matrixs[MatrixMV];
-        ++m_MatrixID[MatrixMVP*2+0];
+        m_Matrixs[index][MatrixMVP] = m_Matrixs[index][MatrixProjection] * m_Matrixs[index][MatrixMV];
+        ++m_MatrixID[index][MatrixMVP*2+0];
     }
     
-    return m_Matrixs[MatrixMVP].m;
+    return m_Matrixs[index][MatrixMVP].m;
 }
 
-guint32 GCanvas::getMVPMatrixID() const
+guint32 GCanvas::getMVPMatrixID(gint index) const
 {
-    return m_MatrixID[MatrixMVP*2+0];
+    return m_MatrixID[index][MatrixMVP*2+0];
 }
 
 gint GCanvas::getColorMulCount()
@@ -169,18 +169,18 @@ GTypist::Paper::PrintGlyphSelector GCanvas::printCheck(GFont* font)
 
 void GCanvas::printBegin(GFont* font,GPointF pos)
 {
-    pushMatrix();
+    pushMatrix(0);
     pushColorMul(0);
-    translate(0, getHeight(), 0);
-    translate(pos.x, -pos.y, 0.0f);
-    scale(1.0f/font->getDensity());
-    translate(0.0f, -font->getAscender()/64.0f, 0.0f);
+    translate(0, 0, getHeight(), 0);
+    translate(0, pos.x, -pos.y, 0.0f);
+    scale(0, 1.0f/font->getDensity());
+    translate(0, 0.0f, -font->getAscender()/64.0f, 0.0f);
 }
 
 void GCanvas::printTex2DFontGlyph(GTypist::Paper* paper,GFont* font,GFont::Glyph* glyph,GPointF pos,GPointF offset,const GTypist::Paint* paint)
 {
     GCanvas* canvas=GX_CAST_S(GCanvas*, paper);
-    canvas->translate(offset.x, -offset.y, 0.0f);
+    canvas->translate(0, offset.x, -offset.y, 0.0f);
     
     GTex2DFont::Glyph* realGH=GX_CAST_R(GTex2DFont::Glyph*, glyph);
     if (!realGH->isBlank()) {
@@ -198,6 +198,6 @@ void GCanvas::printTex2DFontGlyph(GTypist::Paper* paper,GFont* font,GFont::Glyph
 void GCanvas::printEnd()
 {
     popColorMul(0);
-    popMatrix();
+    popMatrix(0);
 }
 

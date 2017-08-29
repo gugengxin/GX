@@ -409,9 +409,9 @@ void GSRTexture2D::draw(GCanvas* canvas,
 
     g_InputBFuns[inputType](isAlphaOnly(),isColorMul(),getMaskMode(), buffer, bufOffset, bufStride);
 
-    setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)canvas->updateMVPMatrix());
+    setUniformMatrix4fv(U_mvp_mat, 1, GL_FALSE, (const GLfloat*)canvas->updateMVPMatrix(0));
     if (isColorMul()) {
-        setUniform4fv(U_color_mul, 1, (const GLfloat*)canvas->updateColorMul());
+        setUniform4fv(U_color_mul, 1, (const GLfloat*)canvas->updateColorMul(0));
     }
 
     GX_glActiveTexture ( GL_TEXTURE0 );
@@ -489,10 +489,10 @@ void GSRTexture2D::draw(GCanvas* canvas,
     
     setVertexBuffer(rce, buffer, bufOffset, 0);
     
-    const float* mvp = canvas->updateMVPMatrix();
+    const float* mvp = canvas->updateMVPMatrix(0);
 
     guint8 bufID[16]={0};
-    (*GX_CAST_R(guint32*, bufID))=canvas->getMVPMatrixID();
+    (*GX_CAST_R(guint32*, bufID))=canvas->getMVPMatrixID(0);
     GX::MetalBufferCache::Buffer buf=GX::MetalBufferCache::shared()->requestBuffer(GX::MetalBufferCache::TypeMatrixMVP,bufID,GX_MATRIX_SIZE);
     ((GMatrix4*)mvp)->transposeCopyTo(GX_CAST_R(GMatrix4*,GX_CAST_R(guint8*, [GX_CAST_R(id<MTLBuffer>, buf.buffer) contents])+buf.offset));
     

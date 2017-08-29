@@ -66,15 +66,15 @@ void Game::render(GCanvas* canvas)
 {
     GContext& context=getWindow()->getContext();
     
-    canvas->enable3D(canvas->getWidth(), canvas->getHeight(), GX_PI / 3, 0.1f, 1000.0f);
-    canvas->lookAt(0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+    canvas->enable3D(0, canvas->getWidth(), canvas->getHeight(), GX_PI / 3, 0.1f, 1000.0f);
+    canvas->lookAt(0, 0.0f, 0.0f, 200.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
     
     
     for (gint i=0; i<m_Modules->getCount(); i++) {
         m_Modules->get(i)->render3D(canvas, context);
     }
     
-    canvas->enable2D(canvas->getWidth(), canvas->getHeight());
+    canvas->enable2D(0, canvas->getWidth(), canvas->getHeight());
     
     for (gint i=0; i<m_Modules->getCount(); i++) {
         m_Modules->get(i)->render2D(canvas, context);
