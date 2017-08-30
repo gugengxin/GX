@@ -33,19 +33,14 @@ bin/Qt5Core.dll
 bin/vcredist_x64.exe
 bin/gx_*
 
-external/zlib/lib/
-external/libpng/lib
-external/libjpeg/lib
-external/freetype/lib
-external/openal/include
-external/openal/lib
-external/pthread-win32/lib/
+external/*/lib/
+external/freetype/include/
+external/openal/include/
 external/pthread-win32/include/
 external/pthread-win32/pthread-win32/
-external/harfbuzz/include
-external/harfbuzz/lib
-external/expat/lib
-external/expat/include
+external/harfbuzz/include/
+external/expat/include/
+
 external/*/project/xcode/build/
 external/*/project/vs/build/
 external/*/project/android/build/
