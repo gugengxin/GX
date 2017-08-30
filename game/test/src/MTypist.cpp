@@ -23,11 +23,13 @@ Module* MTypist::initWithGame(Game* game,GContext& context)
     
     m_Data = GBuffer::alloc();
     
+    const int mdW=512,mdH=30;
+    
 	MTypistData md[4];
-    md[0].pos.set(-100.0f, -100.0f, 0.0f);
-    md[1].pos.set(100.0f, -100.0f, 0.0f);
-    md[2].pos.set(-100.0f, 100.0f, 0.0f);
-    md[3].pos.set(100.0f, 100.0f, 0.0f);
+    md[0].pos.set(0, 0, 0.0f);
+    md[1].pos.set(mdW, 0, 0.0f);
+    md[2].pos.set(0, mdH, 0.0f);
+    md[3].pos.set(mdW, mdH, 0.0f);
     md[0].tc.set(0.0f, 1.0f);
     md[1].tc.set(1.0f, 1.0f);
     md[2].tc.set(0.0f, 0.0f);
@@ -37,14 +39,14 @@ Module* MTypist::initWithGame(Game* game,GContext& context)
     
     
     GDib* dib=GDib::autoAlloc();
-    dib->changeData(GX::PixelFormatRGBA8888, 200, 200);
+    dib->changeData(GX::PixelFormatRGBA8888, mdW, mdH);
     
-    GFTFont* font=GFontManager::shared()->loadFTFont(GS::chars("STXINWEI.ttf"), 50, 0);
+    GFTFont* font=GFontManager::shared()->loadFTFont(GS::chars("STXINWEI.ttf"), 20, 4);
     GTypist* typist=GTypist::autoAlloc();
-    typist->setSingleLine(GS::chars("Welcome!!! abcdefghijklmnopqrstuvwxyz 谷更新欢迎你 ！！！"), font);
+    typist->setSingleLine(GS::chars("谷更新欢迎你 ！！！Welcome!!! abcdefghijklmnopqrstuvwxyz "), font);
     GTypist::Paint* paint=GTypist::Paint::autoAlloc();
-    paint->setColor(0, 0xFF, 0xFF, 0xFF);
-    paint->setOutlineColor(0xFF, 0, 0, 0xFF);
+    paint->setColor(0xFF, 0, 0xFF, 0xFF);
+    paint->setOutlineColor(0, 0xFF, 0, 0xFF);
     
     typist->print(dib, GPointF::make(0, 0), paint);
     
@@ -97,17 +99,17 @@ void MTypist::render2D(GCanvas* canvas GX_UNUSE,GContext& context GX_UNUSE)
 	//gint64 keyTime = GSystem::tickCountNS();
 
     canvas->pushMatrix(0);
-    canvas->translate(0, 200.0f, 200, 0);
+    canvas->translate(0, 0.0f, 0, 0);
     GSRTexture2D* shader = GSRTexture2D::shared(false, true, GSRTexture2D::MM_None);
     shader->draw(canvas, m_Data, 0, sizeof(MTypistData), GSRTexture2D::IT_Float_Float, m_Tex2D, GX_TRIANGLE_STRIP, 0, 4, NULL);
     canvas->popMatrix(0);
 
-	canvas->pushMatrix(0);
-	GTypist::Paint* paint = GTypist::Paint::autoAlloc();
-	paint->setColor(0, 0xFF, 0, 0xFF);
-	paint->setOutlineColor(0xFF, 0, 0, 0xFF);
-	m_Typist->print(canvas, GPointFZero, paint);
-	canvas->popMatrix(0);
+//	canvas->pushMatrix(0);
+//	GTypist::Paint* paint = GTypist::Paint::autoAlloc();
+//	paint->setColor(0, 0xFF, 0, 0xFF);
+//	paint->setOutlineColor(0xFF, 0, 0, 0xFF);
+//	m_Typist->print(canvas, GPointFZero, paint);
+//	canvas->popMatrix(0);
     
     
 
