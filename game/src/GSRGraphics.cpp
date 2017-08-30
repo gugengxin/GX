@@ -284,16 +284,15 @@ void GSRGraphics::draw(GCanvas* canvas, GBuffer* buffer, guint bufOffset, guint 
 
 	cbToMapped = m_ConstBuffers[CB_mvp_mat];
 	cbToMapped->Map(D3D10_MAP_WRITE_DISCARD, 0, &pMap);
-	const float* mvp = canvas->updateMVPMatrix();
-	((GMatrix4*)mvp)->transpose();
-	memcpy(pMap, mvp, GX_MATRIX_SIZE);
+	const float* mvp = canvas->updateMVPMatrix(0);
+	((GMatrix4*)mvp)->transposeCopyTo((GMatrix4*)pMap);
 	cbToMapped->Unmap();
 	device->VSSetConstantBuffers(0, 1, &cbToMapped);
 
     if (getIndex0() == ID_ColorMul || getIndex0() == ID_CAndCM) {
         cbToMapped = m_ConstBuffers[CB_color_mul];
         cbToMapped->Map(D3D10_MAP_WRITE_DISCARD, 0, &pMap);
-		memcpy(pMap, canvas->updateColorMul(), sizeof(GColor4F));
+		memcpy(pMap, canvas->updateColorMul(0), sizeof(GColor4F));
         cbToMapped->Unmap();
         device->PSSetConstantBuffers(0, 1, &cbToMapped);
     }
