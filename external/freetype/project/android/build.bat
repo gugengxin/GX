@@ -62,6 +62,15 @@ popd
 
 copy /y %PROJECT_ROOT%\libAndroid.mk %OUTPUT_DIR%\Android.mk
 
+set OUTPUT_H_DIR=%LIBRARY_ROOT%\include\ard
+if exist %OUTPUT_H_DIR% (
+	rd /s/q %OUTPUT_H_DIR%
+)
+mkdir %OUTPUT_H_DIR%
+xcopy /s /e %LIBRARY_ROOT%\src\include %OUTPUT_H_DIR%
+copy /y %PROJECT_ROOT%\build\armeabi\include\freetype\config\ftconfig.h %OUTPUT_H_DIR%\freetype\config
+copy /y %PROJECT_ROOT%\build\armeabi\include\freetype\config\ftoption.h %OUTPUT_H_DIR%\freetype\config
+
 rd /s/q %PROJECT_ROOT%\build
 
 goto :EOF
