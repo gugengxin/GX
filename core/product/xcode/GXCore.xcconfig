@@ -16,7 +16,7 @@ GX_EXTERNAL_LIBPNG_LIB = $(GX_ROOT)/external/libpng/lib/$(GX_OS_DIR_NAME)/liblib
 GX_EXTERNAL_LIBJPEG_INC = $(GX_ROOT)/external/libjpeg/include $(GX_ROOT)/external/libjpeg/include/$(GX_OS_DIR_NAME)
 GX_EXTERNAL_LIBJPEG_LIB = $(GX_ROOT)/external/libjpeg/lib/$(GX_OS_DIR_NAME)/liblibjpeg.a
 
-GX_EXTERNAL_FREETYPE_INC = $(GX_ROOT)/external/freetype/include
+GX_EXTERNAL_FREETYPE_INC = $(GX_ROOT)/external/freetype/include/$(GX_OS_DIR_NAME)
 GX_EXTERNAL_FREETYPE_LIB = $(GX_ROOT)/external/freetype/lib/$(GX_OS_DIR_NAME)/libfreetype.a
 
 GX_EXTERNAL_HARFBUZZ_INC = $(GX_ROOT)/external/harfbuzz/include
