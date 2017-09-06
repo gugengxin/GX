@@ -8,15 +8,6 @@
 
 #include "GFontManager.h"
 
-#if __llvm__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored"-Wdocumentation"
-#endif
-#include <ft2build.h>
-#include FT_FREETYPE_H
-#if __llvm__
-#pragma clang diagnostic pop
-#endif
 #if defined(GX_OS_APPLE)
 #import <CoreText/CoreText.h>
 #if defined(GX_OS_IPHONE)
@@ -26,6 +17,16 @@
 #endif
 #elif defined(GX_OS_WINDOWS)
 #include <Windows.h>
+#endif
+
+#if __llvm__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdocumentation"
+#endif
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#if __llvm__
+#pragma clang diagnostic pop
 #endif
 
 

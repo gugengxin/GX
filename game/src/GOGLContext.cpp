@@ -310,7 +310,8 @@ bool GOGLContext::create(GWindow* win)
     m_Context.context=[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
                                             sharegroup:GX_CAST_R(EAGLContext*, g_CtxMain.context).sharegroup];
     //Create FBO
-    [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*, m_Context.context)];
+    m_Context.makeCurrent();
+
     GLuint oldFB,oldRB;
     GX_glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&oldFB);
     GX_glGetIntegerv(GL_RENDERBUFFER_BINDING, (GLint*)&oldRB);
@@ -350,7 +351,8 @@ bool GOGLContext::create(GWindow* win)
     
     glBindRenderbuffer(GL_RENDERBUFFER, oldRB);
     glBindFramebuffer(GL_FRAMEBUFFER, oldFB);
-    [EAGLContext setCurrentContext:nil];
+
+    m_Context.makeClear();
     
     resize(0, 0);
 
@@ -466,7 +468,7 @@ bool GOGLContext::resize(gfloat32 width,gfloat32 height)
     if(m_BackingWidth>0 && m_BackingHeight>0 && width == m_BackingWidth && height == m_BackingHeight) {
         return true;
     }
-    [EAGLContext setCurrentContext:GX_CAST_R(EAGLContext*, m_Context.context)];
+    m_Context.makeCurrent();
     
     GLuint oldFB,oldRB;
     GX_glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&oldFB);
@@ -498,7 +500,8 @@ bool GOGLContext::resize(gfloat32 width,gfloat32 height)
     
     glBindRenderbuffer(GL_RENDERBUFFER, oldRB);
     glBindFramebuffer(GL_FRAMEBUFFER, oldFB);
-    [EAGLContext setCurrentContext:nil];
+
+    m_Context.makeClear();
     
     return res;
 #elif defined(GX_OS_MACOSX)
