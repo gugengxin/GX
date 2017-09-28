@@ -1,4 +1,4 @@
-﻿//
+//
 //  GData.cpp
 //  GX
 //
@@ -7,8 +7,7 @@
 //
 
 #include "GData.h"
-#include <stdlib.h>
-#include <memory.h>
+#include "GXMemory.h"
 
 #include "GXGObject.h"
 
@@ -52,7 +51,7 @@ bool GData::changeBytes(guint toSize)
         return false;
     }
 #endif
-    if (GX::galloc(m_Buffer, m_Bytes, toSize)) {
+    if (GX::grealloc(m_Buffer, m_Bytes, toSize)) {
         m_Bytes=toSize;
         return true;
     }

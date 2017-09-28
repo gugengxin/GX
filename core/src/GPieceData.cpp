@@ -1,4 +1,4 @@
-﻿//
+//
 //  GPieceData.cpp
 //  GX
 //
@@ -54,7 +54,7 @@ bool GPieceData::setPieceSize(guint32 v)
 	else {
 		guint32 toBCount = (guint32)((m_Bytes + v - 1) / v);
 		if (toBCount*v != m_PieceCount*m_PieceSize) {
-			if (!GX::galloc(m_Buffer, m_Bytes, toBCount*v)) {
+			if (!GX::grealloc(m_Buffer, m_Bytes, toBCount*v)) {
 				return false;
 			}
 		}
@@ -88,7 +88,7 @@ bool GPieceData::changeBytes(guint toSize)
 	}
 #endif
     if (toBCount > m_PieceCount || toBCount+1<m_PieceCount) {
-		if (!GX::galloc(m_Buffer, m_PieceSize*(guint)m_PieceCount, toSizeReal)) {
+		if (!GX::grealloc(m_Buffer, m_PieceSize*(guint)m_PieceCount, toSizeReal)) {
 			return false;
 		}
 	}
@@ -117,7 +117,7 @@ bool GPieceData::robOther(GData* other)
 			guint32 toBCount = (guint32)((m_Bytes + m_PieceSize - 1) / m_PieceSize);
 			guint toSizeReal = toBCount*(guint)m_PieceSize;
 			if (toSizeReal != m_Bytes) {
-				if (!GX::galloc(m_Buffer, m_Bytes, toSizeReal)) {
+				if (!GX::grealloc(m_Buffer, m_Bytes, toSizeReal)) {
 					return false;
 				}
 			}

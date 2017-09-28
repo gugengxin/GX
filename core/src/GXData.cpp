@@ -1,4 +1,4 @@
-﻿//
+//
 //  GXData.cpp
 //  GX
 //
@@ -11,34 +11,6 @@
 #include <string.h>
 
 namespace GX {
-
-	bool galloc(void*& buf, UNT size, UNT toSize)
-	{
-		if (toSize <= 0) {
-			if (buf) {
-				::free(buf);
-				buf = NULL;
-			}
-		}
-		else if (buf) {
-			if (size != toSize) {
-				void* p = ::realloc(buf, (size_t)toSize);
-				if (p) {
-					buf = p;
-				}
-				else {
-					return false;
-				}
-			}
-		}
-		else {
-			buf = ::malloc(toSize);
-			return buf != NULL;
-		}
-		return true;
-	}
-
-
 	Data::Data()
 	{
 		m_Buffer = NULL;
@@ -77,7 +49,7 @@ namespace GX {
 			return false;
 		}
 #endif
-		if (GX::galloc(m_Buffer, m_Bytes, toSize)) {
+		if (GX::grealloc(m_Buffer, m_Bytes, toSize)) {
 			m_Bytes = toSize;
 			return true;
 		}

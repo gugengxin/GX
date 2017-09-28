@@ -1,4 +1,4 @@
-﻿//
+//
 //  GXData.h
 //  GX
 //
@@ -10,11 +10,9 @@
 #define GXData_h
 
 #include "GXCoder.h"
+#include "GXMemory.h"
 
 namespace GX {
-
-	bool galloc(void*& buf, UNT size, UNT toSize);
-
 	class Data {
 		template <U32> friend class PieceData;
 	public:
@@ -85,7 +83,7 @@ namespace GX {
 			}
 #endif
 			if (toBCount > m_PieceCount || toBCount + 1<m_PieceCount) {
-				if (!GX::galloc(m_Buffer, PS*(UNT)m_PieceCount, toSizeReal)) {
+				if (!GX::grealloc(m_Buffer, PS*(UNT)m_PieceCount, toSizeReal)) {
 					return false;
 				}
 			}
@@ -107,6 +105,21 @@ namespace GX {
 #else
 #define GX_PIECE_DATA_PS_DEFAULT 256
 #endif
+
+    template <U32 BS>
+    class BlockData {
+    public:
+
+    private:
+
+    };
+
+
+
+
+
+
+
 }
 
 #endif /* GXData_h */
