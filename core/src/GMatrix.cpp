@@ -1,6 +1,7 @@
-﻿#include "GMatrix.h"
+#include "GMatrix.h"
 #include "GXMath.h"
 #include "GVector.h"
+#include "GXMemory.h"
 
 const GMatrix4 GMatrix4::Identity = GMatrix4(
 	1.0f, 0.0f, 0.0f, 0.0f,
@@ -44,7 +45,7 @@ GMatrix4::GMatrix4(float m11, float m12, float m13, float m14, float m21, float 
 
 GMatrix4::GMatrix4(const GMatrix4& copy)
 {
-	memcpy(m, copy.m, GX_MATRIX_SIZE);
+	GX::gmemcpy(m, copy.m, GX_MATRIX_SIZE);
 }
 
 void GMatrix4::set(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
@@ -71,11 +72,11 @@ void GMatrix4::set(float m11, float m12, float m13, float m14, float m21, float 
 
 void GMatrix4::setIdentity()
 {
-	memcpy(m, Identity.m, GX_MATRIX_SIZE);
+	GX::gmemcpy(m, Identity.m, GX_MATRIX_SIZE);
 }
 void GMatrix4::setTranslation(float xTranslation, float yTranslation, float zTranslation)
 {
-    memcpy(m, &Identity, GX_MATRIX_SIZE);
+    GX::gmemcpy(m, &Identity, GX_MATRIX_SIZE);
     
     m[12] = xTranslation;
     m[13] = yTranslation;
@@ -83,7 +84,7 @@ void GMatrix4::setTranslation(float xTranslation, float yTranslation, float zTra
 }
 void GMatrix4::setScale(float xScale, float yScale, float zScale)
 {
-    memcpy(m, &Identity, GX_MATRIX_SIZE);
+    GX::gmemcpy(m, &Identity, GX_MATRIX_SIZE);
     
     m[0] = xScale;
     m[5] = yScale;
@@ -148,7 +149,7 @@ void GMatrix4::setRotation(float axisX,float axisY,float axisZ, float radians)
 }
 void GMatrix4::setRotationX(float radians)
 {
-    memcpy(m, &Identity, GX_MATRIX_SIZE);
+    GX::gmemcpy(m, &Identity, GX_MATRIX_SIZE);
     
     float c;
     float s;
@@ -161,7 +162,7 @@ void GMatrix4::setRotationX(float radians)
 }
 void GMatrix4::setRotationY(float radians)
 {
-    memcpy(m, &Identity, GX_MATRIX_SIZE);
+    GX::gmemcpy(m, &Identity, GX_MATRIX_SIZE);
     
     float c;
     float s;
@@ -174,7 +175,7 @@ void GMatrix4::setRotationY(float radians)
 }
 void GMatrix4::setRotationZ(float radians)
 {
-    memcpy(m, &Identity, GX_MATRIX_SIZE);
+    GX::gmemcpy(m, &Identity, GX_MATRIX_SIZE);
     
     float c;
     float s;
@@ -192,7 +193,7 @@ void GMatrix4::setPerspective(float fieldOfView, float aspectRatio, float zNearP
 	float divisor = GX::tan(theta);
 	float factor = 1.0f / divisor;
 
-	memset(m, 0, GX_MATRIX_SIZE);
+	GX::gmemset(m, 0, GX_MATRIX_SIZE);
 
 	m[0] = (1.0f / aspectRatio) * factor;
 	m[5] = factor;
@@ -202,7 +203,7 @@ void GMatrix4::setPerspective(float fieldOfView, float aspectRatio, float zNearP
 }
 void GMatrix4::setOrthographic(float left, float right, float bottom, float top, float zNearPlane, float zFarPlane)
 {
-	memset(m, 0, GX_MATRIX_SIZE);
+	GX::gmemset(m, 0, GX_MATRIX_SIZE);
 	m[0] = 2 / (right - left);
 	m[5] = 2 / (top - bottom);
 	m[10] = 2 / (zNearPlane - zFarPlane);

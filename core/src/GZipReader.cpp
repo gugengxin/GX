@@ -1,4 +1,4 @@
-﻿//
+//
 //  GZipReader.cpp
 //  GX
 //
@@ -55,7 +55,7 @@ GZipReader::FileInfo::FileInfo()
 #if defined(GX_DEBUG)
 	GX_ASSERT(sizeof(m_Data) == sizeof(M_FILE_INFO));
 #endif
-	memset(&m_Data, 0, sizeof(m_Data));
+    GX::gmemset(&m_Data, 0, sizeof(m_Data));
 }
 
 GZipReader::FileInfo::~FileInfo()

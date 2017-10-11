@@ -1,4 +1,4 @@
-﻿//
+//
 //  GRBReader.h
 //  GX
 //
@@ -11,7 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GReader.h"
-#include "GXData.h"
+#include "GXPieceData.h"
 
 
 #include "GXGObject.h"
@@ -38,7 +38,7 @@ public:
 	virtual gint getLength();
 private:
     GReader*		m_Reader;
-	GX::PieceData<GX_PIECE_DATA_PS_DEFAULT>	m_Data;
+	GX::PieceData   m_Data;
 #if GX_PTR_32BIT
     guint			m_Cursor:31;
 #elif GX_PTR_64BIT

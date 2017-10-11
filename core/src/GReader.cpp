@@ -1,4 +1,4 @@
-﻿//
+//
 //  GReader.cpp
 //  GX
 //
@@ -51,7 +51,7 @@ GData* GReader::readAllToData()
             if (len>0) {
                 guint lenCur=res->getBytes();
                 if (res->changeBytes(lenCur+GX_CAST_S(guint,len))) {
-                    memcpy(res->getPtr(lenCur), buf, GX_CAST_S(size_t, len));
+                    GX::gmemcpy(res->getPtr(lenCur), buf, GX_CAST_S(size_t, len));
                 }
                 else {
                     break;

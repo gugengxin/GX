@@ -1,4 +1,4 @@
-﻿//
+//
 //  GFileReader.h
 //  GX
 //
@@ -11,6 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GReader.h"
+#include "GXFile.h"
 
 #include "GXGObject.h"
 
@@ -29,7 +30,7 @@ public:
     virtual gint getLength();
     
 private:
-    FILE* m_FILE;
+    GX::File m_File;
     gint  m_Length;
 };
 

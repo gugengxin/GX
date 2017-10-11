@@ -1,9 +1,8 @@
-﻿#ifndef GArray_h
+#ifndef GArray_h
 #define GArray_h
 
 #include "GXPrefix.h"
-#include <string.h>
-#include "GXData.h"
+#include "GXPieceData.h"
 #include "GObject.h"
 
 #include "GXGObject.h"
@@ -84,7 +83,7 @@ public:
 		if (!changeCount(dc + 1)) {
 			return false;
 		}
-		memmove((void*)&(GX_CAST_R(T**, m_Data.getPtr())[index + 1]),
+        GX::gmemmove((void*)&(GX_CAST_R(T**, m_Data.getPtr())[index + 1]),
 			(void*)&(GX_CAST_R(T**, m_Data.getPtr())[index]),
 			(size_t)(dc - index)*sizeof(T*));
 		GX_CAST_R(T**, m_Data.getPtr())[index] = v;
@@ -96,7 +95,7 @@ public:
 		gint dc = getCount();
 		if (index >= 0 && index<dc) {
 			GO::release(GX_CAST_R(T**, m_Data.getPtr())[index]);
-			memmove((void*)&(GX_CAST_R(T**, m_Data.getPtr())[index]),
+			GX::gmemmove((void*)&(GX_CAST_R(T**, m_Data.getPtr())[index]),
 				(void*)&(GX_CAST_R(T**, m_Data.getPtr())[index + 1]),
 				(size_t)(dc - index - 1)*sizeof(T*));
 			if (changeCount(dc - 1)) {
@@ -125,7 +124,7 @@ public:
 		for (gint i = indexFrom; i < indexFrom + indexCount; i++) {
 			GO::release(GX_CAST_R(T**, m_Data.getPtr())[i]);
 		}
-		memmove((void*)&(GX_CAST_R(T**, m_Data.getPtr())[indexFrom]),
+		GX::gmemmove((void*)&(GX_CAST_R(T**, m_Data.getPtr())[indexFrom]),
 			(void*)&(GX_CAST_R(T**, m_Data.getPtr())[indexFrom + indexCount]),
 			(dc - indexFrom - indexCount)*sizeof(T*));
 		return changeCount(dc - indexCount);
@@ -178,10 +177,10 @@ public:
         
         T* obj=((T**)m_Data.getPtr())[fromIdx];
         if (fromIdx<toIdx) {
-            memmove((void*)&(((T**)m_Data.getPtr())[fromIdx]),(const void*)&(((T**)m_Data.getPtr())[fromIdx+1]),(toIdx-fromIdx)*sizeof(T*));
+            GX::gmemmove((void*)&(((T**)m_Data.getPtr())[fromIdx]),(const void*)&(((T**)m_Data.getPtr())[fromIdx+1]),(toIdx-fromIdx)*sizeof(T*));
         }
         else {
-            memmove((void*)&(((T**)m_Data.getPtr())[toIdx+1]),(const void*)&(((T**)m_Data.getPtr())[toIdx]),(fromIdx-toIdx)*sizeof(T*));
+            GX::gmemmove((void*)&(((T**)m_Data.getPtr())[toIdx+1]),(const void*)&(((T**)m_Data.getPtr())[toIdx]),(fromIdx-toIdx)*sizeof(T*));
         }
         ((T**)m_Data.getPtr())[toIdx]=obj;
         return true;
@@ -193,12 +192,7 @@ protected:
 		return m_Data.changeBytes(GX_CAST_S(guint, toCount)*sizeof(T*));
 	}
 private:
-#if !defined(GX_OS_DESKTOP)
-	GX::PieceData<sizeof(void*) * 8> m_Data;
-#else
-	GX::PieceData<sizeof(void*) * 16> m_Data;
-#endif
-	
+    GX::PieceData m_Data;
 };
 
 GX_GOBJECT_TEMPLATE_IMPLEMENT(class T, GArray<T>, GArrayBase);

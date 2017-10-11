@@ -1,4 +1,4 @@
-﻿//
+//
 //  GRBReader.cpp
 //  GX
 //
@@ -8,7 +8,7 @@
 
 #include "GRBReader.h"
 //Down include other h file
-
+#include "GXMemory.h"
 //Up include other h file
 #include "GXGObject.h"
 
@@ -63,7 +63,7 @@ gint GRBReader::read(void* buf, guint len)
         if (lenTemp>len) {
             lenTemp=len;
         }
-        memcpy(((guint8*)buf)+lenRes, m_Data.getPtr(m_Cursor), lenTemp);
+        GX::gmemcpy(((guint8*)buf)+lenRes, m_Data.getPtr(m_Cursor), lenTemp);
         m_Cursor+=lenTemp;
         lenRes+=(gint)lenTemp;
         len-=lenTemp;
@@ -79,7 +79,7 @@ gint GRBReader::read(void* buf, guint len)
                 if (!m_Data.changeBytes(m_Cursor+nTemp)) {
                     return -1;
                 }
-                memcpy(m_Data.getPtr(m_Cursor), ((guint8*)buf)+lenRes, nTemp);
+                GX::gmemcpy(m_Data.getPtr(m_Cursor), ((guint8*)buf)+lenRes, nTemp);
             }
             
             lenRes+=nTemp;

@@ -1,4 +1,4 @@
-﻿//
+//
 //  GFileReader.cpp
 //  GX
 //
@@ -8,7 +8,6 @@
 
 #include "GFileReader.h"
 #include "GXGObject.h"
-#include "GXFILE.h"
 #include "GLog.h"
 
 GX_GOBJECT_IMPLEMENT(GFileReader, GReader);
@@ -16,55 +15,44 @@ GX_GOBJECT_IMPLEMENT(GFileReader, GReader);
 
 GFileReader::GFileReader()
 {
-    m_FILE=NULL;
     m_Length=-1;
 }
 
 GFileReader::~GFileReader()
 {
-    if (m_FILE) {
-        fclose(m_FILE);
-    }
+
 }
 
 bool GFileReader::open(const gtchar* path)
 {
-	m_FILE = GX::fopen(path, GX_T("rb"));
-    return m_FILE!=NULL;
+    return m_File.open(path, GX::File::ModeRead);
 }
 
 void GFileReader::close()
 {
-    if (m_FILE) {
-        fclose(m_FILE);
-        m_FILE=NULL;
-    }
+    m_File.close();
 }
 bool GFileReader::hasData()
 {
-	guint8 eofData;
-	size_t bytes = fread(&eofData, 1, 1, m_FILE);
-	if (bytes >= 1) {
-		fseek(m_FILE, -1, SEEK_CUR);
-		return true;
-	}
-	return false;
+    guint8 eofData;
+    gint res=m_File.read(&eofData, 1);
+    if (res>=1) {
+        m_File.seek(-1, GX::File::SeekCur);
+        return true;
+    }
+    return false;
 }
 gint GFileReader::read(void* buf,guint len)
 {
-    size_t res=fread(buf, 1, len, m_FILE);
-    if (res<len && ferror(m_FILE)!=0) {
-        return -1;
-    }
-    return GX_CAST_S(gint, res);
+    return m_File.read(buf, len);
 }
 bool GFileReader::skip(guint len)
 {
-	return GX::fseek(m_FILE, GX_CAST_S(gint, len), SEEK_CUR);
+    return m_File.seek(GX_CAST_S(guint, len), GX::File::SeekCur);
 }
 gint GFileReader::getBytes()
 {
-	return GX::ftell(m_FILE);
+    return m_File.tell();
 }
 bool GFileReader::canRollback()
 {
@@ -72,7 +60,7 @@ bool GFileReader::canRollback()
 }
 bool GFileReader::rollback(guint len)
 {
-    return GX::fseek(m_FILE, -GX_CAST_S(gint, len), SEEK_CUR);
+    return m_File.seek(-GX_CAST_S(gint, len), GX::File::SeekCur);
 }
 bool GFileReader::canGetLength()
 {
@@ -81,12 +69,12 @@ bool GFileReader::canGetLength()
 gint GFileReader::getLength()
 {
     if (m_Length<0) {
-        gint cur=GX::ftell(m_FILE);
-        if(!GX::fseek(m_FILE, 0, SEEK_END)) {
+        gint cur=m_File.tell();
+        if(!m_File.seek(0, GX::File::SeekEnd)) {
             return -1;
         }
-        m_Length=GX::ftell(m_FILE);
-        if(!GX::fseek(m_FILE, cur, SEEK_SET)) {
+        m_Length=m_File.tell();
+        if(!m_File.seek(cur, GX::File::SeekSet)) {
 			m_Length = -1;
             return -1;
         }

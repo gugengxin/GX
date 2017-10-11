@@ -1,8 +1,8 @@
-﻿#include "GLog.h"
+#include "GLog.h"
 #ifdef GX_DEBUG
+#include <stdarg.h>
 
 #if defined(GX_OS_WINDOWS)
-#include <stdarg.h>
 #include <stdio.h>
 #include <consoleapi.h>
 #include <tchar.h>

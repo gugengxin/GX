@@ -1,4 +1,4 @@
-﻿//
+//
 //  GString.cpp
 //  GX
 //
@@ -1047,7 +1047,7 @@ void GString::setChars(const gchar* v, gint len, gint count)
     if (m_Buffer.changeCount(utf16Len*count + 1)) {
         GX::strUTF8toUTF16(v, len, (guchar*)m_Buffer.getPtr(0), utf16Len);
         for (gint j=1; j<count; j++) {
-            memcpy((void*)m_Buffer.getPtr(0+j*utf16Len), (const void*)m_Buffer.getPtr(0), utf16Len*sizeof(guchar));
+            GX::gmemcpy((void*)m_Buffer.getPtr(0+j*utf16Len), (const void*)m_Buffer.getPtr(0), utf16Len*sizeof(guchar));
         }
         setCStringEnd();
         modifyDone();
@@ -1069,7 +1069,7 @@ void GString::appendChars(const gchar* v, gint len, gint count)
     if (m_Buffer.changeCount(lenCur + utf16Len*count + 1)) {
         GX::strUTF8toUTF16(v, len, (guchar*)m_Buffer.getPtr(lenCur), utf16Len);
         for (gint j=1; j<count; j++) {
-            memcpy((void*)m_Buffer.getPtr(lenCur+j*utf16Len), (const void*)m_Buffer.getPtr(lenCur), utf16Len*sizeof(guchar));
+            GX::gmemcpy((void*)m_Buffer.getPtr(lenCur+j*utf16Len), (const void*)m_Buffer.getPtr(lenCur), utf16Len*sizeof(guchar));
         }
         setCStringEnd();
         modifyDone();
@@ -1101,7 +1101,7 @@ void GString::replaceChars(gint idx, gint lenR, const gchar* v, gint len, gint c
     if (m_Buffer.expand(idx, lenR, utf16Len*count)) {
         GX::strUTF8toUTF16(v, len, (guchar*)m_Buffer.getPtr(idx), utf16Len);
         for (gint j=1; j<count; j++) {
-            memcpy((void*)m_Buffer.getPtr(idx+j*utf16Len), (const void*)m_Buffer.getPtr(idx), utf16Len*sizeof(guchar));
+            GX::gmemcpy((void*)m_Buffer.getPtr(idx+j*utf16Len), (const void*)m_Buffer.getPtr(idx), utf16Len*sizeof(guchar));
         }
         setCStringEnd();
         modifyDone();
@@ -1137,7 +1137,7 @@ void GString::replaceChars(gint idx, gint lenR,
         start += preCount;
         GX::strUTF8toUTF16(v, len, (guchar*)m_Buffer.getPtr(start), utf16Len);
         for (gint j=1; j<count; j++) {
-            memcpy((void*)m_Buffer.getPtr(start+j*utf16Len), (const void*)m_Buffer.getPtr(start), utf16Len*sizeof(guchar));
+            GX::gmemcpy((void*)m_Buffer.getPtr(start+j*utf16Len), (const void*)m_Buffer.getPtr(start), utf16Len*sizeof(guchar));
         }
         start += utf16Len*count;
         for (gint i=0; i<sufCount; i++) {
@@ -1161,7 +1161,7 @@ void GString::setChars(const guchar* v, gint len, gint count)
 	}
 	if (m_Buffer.changeCount(len*count + 1)) {
 		for (gint j = 0; j<count; j++) {
-			memcpy((void*)m_Buffer.getPtr(j*len), (const void*)v, len*sizeof(guchar));
+			GX::gmemcpy((void*)m_Buffer.getPtr(j*len), (const void*)v, len*sizeof(guchar));
 		}
 		setCStringEnd();
 		modifyDone();
@@ -1178,7 +1178,7 @@ void GString::appendChars(const guchar* v, gint len, gint count)
 	gint lenCur = getLength();
 	if (m_Buffer.changeCount(lenCur + len*count + 1)) {
 		for (gint j = 0; j<count; j++) {
-			memcpy((void*)m_Buffer.getPtr(lenCur + j*len), (const void*)v, len*sizeof(guchar));
+			GX::gmemcpy((void*)m_Buffer.getPtr(lenCur + j*len), (const void*)v, len*sizeof(guchar));
 		}
 		setCStringEnd();
 		modifyDone();
@@ -1205,7 +1205,7 @@ void GString::replaceChars(gint idx, gint lenR, const guchar* v, gint len, gint 
 	}
 	if (m_Buffer.expand(idx, lenR, len*count)) {
 		for (gint j = 0; j<count; j++) {
-			memcpy((void*)m_Buffer.getPtr(idx + j*len), (const void*)v, len*sizeof(guchar));
+			GX::gmemcpy((void*)m_Buffer.getPtr(idx + j*len), (const void*)v, len*sizeof(guchar));
 		}
 		setCStringEnd();
 		modifyDone();
@@ -1236,7 +1236,7 @@ void GString::replaceChars(gint idx, gint lenR,
 		}
 		start += preCount;
 		for (gint j = 0; j<count; j++) {
-			memcpy((void*)m_Buffer.getPtr(start + j*len), (const void*)v, len*sizeof(guchar));
+			GX::gmemcpy((void*)m_Buffer.getPtr(start + j*len), (const void*)v, len*sizeof(guchar));
 		}
 		start += len*count;
 		for (gint i = 0; i<sufCount; i++) {
@@ -1384,7 +1384,7 @@ void GString::setString(GString* v, gint count)
     if (m_Buffer.changeCount(lenV*count+1)) {
         const void* src=(const void*)v->m_Buffer.getPtr(0);
         for (gint j=0; j<count; j++) {
-            memcpy((void*)m_Buffer.getPtr(0+j*lenV), src, lenV*sizeof(guchar));
+            GX::gmemcpy((void*)m_Buffer.getPtr(0+j*lenV), src, lenV*sizeof(guchar));
         }
         setCStringEnd();
         modifyDone();
@@ -1401,7 +1401,7 @@ void GString::appendString(GString* v, gint count)
     if (m_Buffer.changeCount(lenCur + lenV*count + 1)) {
         const void* src=(const void*)v->m_Buffer.getPtr(0);
         for (gint j=0; j<count; j++) {
-            memcpy((void*)m_Buffer.getPtr(lenCur+j*lenV), src, lenV*sizeof(guchar));
+            GX::gmemcpy((void*)m_Buffer.getPtr(lenCur+j*lenV), src, lenV*sizeof(guchar));
         }
         setCStringEnd();
         modifyDone();
@@ -1428,7 +1428,7 @@ void GString::replaceString(gint idx, gint lenR, GString* v, gint count)
     if (m_Buffer.expand(idx, lenR, lenV*count)) {
         const void* src=(const void*)v->m_Buffer.getPtr(0);
         for (gint j=0; j<count; j++) {
-            memcpy((void*)m_Buffer.getPtr(idx+j*lenV), src, lenV*sizeof(guchar));
+            GX::gmemcpy((void*)m_Buffer.getPtr(idx+j*lenV), src, lenV*sizeof(guchar));
         }
         setCStringEnd();
         modifyDone();

@@ -7,7 +7,7 @@
 //
 
 #include "GXMemory.h"
-
+#include <memory.h>
 
 namespace GX {
 
@@ -47,6 +47,24 @@ namespace GX {
             return buf != NULL;
         }
         return true;
+    }
+
+    void* gmemset(void* buf, gint32 v, guint len)
+    {
+        return memset(buf, v, len);
+    }
+
+    gint32 gmemcmp(const void *buf1, const void *buf2, guint len)
+    {
+        return memcmp(buf1, buf2, len);
+    }
+    void* gmemcpy(void *dst, const void *src, guint len)
+    {
+        return memcpy(dst, src, len);
+    }
+    void* gmemmove(void *dst, const void *src, guint len)
+    {
+        return memmove(dst, src, len);
     }
 
 }

@@ -100,7 +100,7 @@ bool GData::robOther(GData* other)
 
 void GData::zeroSelf()
 {
-    memset(m_Buffer, 0, m_Bytes);
+    GX::gmemset(m_Buffer, 0, m_Bytes);
 }
 
 

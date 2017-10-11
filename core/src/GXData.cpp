@@ -7,8 +7,6 @@
 //
 
 #include "GXData.h"
-#include <stdlib.h>
-#include <string.h>
 
 namespace GX {
 	Data::Data()
@@ -25,11 +23,11 @@ namespace GX {
 	Data::~Data()
 	{
 		if (!m_IsStatic && m_Buffer) {
-			::free(m_Buffer);
+			GX::gfree(m_Buffer);
 		}
 	}
 
-	bool Data::changeBytes(UNT toSize)
+	bool Data::changeBytes(guint toSize)
 	{
 		if (m_IsStatic) {
 			return (toSize == m_Bytes);
@@ -56,7 +54,7 @@ namespace GX {
 		return false;
 	}
 
-	bool Data::changeBytesIfNeed(UNT toSize)
+	bool Data::changeBytesIfNeed(guint toSize)
 	{
 		if (toSize <= m_Bytes) {
 			return true;
@@ -64,7 +62,7 @@ namespace GX {
 		return changeBytes(toSize);
 	}
 
-	void Data::setStatic(const void* data, UNT bytes)
+	void Data::setStatic(const void* data, guint bytes)
 	{
 		freeSelf();
 		m_Buffer = (void*)data;
@@ -75,7 +73,7 @@ namespace GX {
 	void Data::freeSelf()
 	{
 		if (!m_IsStatic && m_Buffer) {
-			::free(m_Buffer);
+			GX::gfree(m_Buffer);
 		}
 		m_Buffer = NULL;
 		m_Bytes = 0;
@@ -84,7 +82,7 @@ namespace GX {
 
 	void Data::zeroSelf()
 	{
-		memset(m_Buffer, 0, m_Bytes);
+        GX::gmemset(m_Buffer, 0, m_Bytes);
 	}
 
 }

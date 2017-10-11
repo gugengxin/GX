@@ -1,4 +1,4 @@
-﻿//
+//
 //  GJpeg.cpp
 //  GX
 //
@@ -8,6 +8,8 @@
 
 #include "GJpeg.h"
 #include "GReader.h"
+#include "GXMemory.h"
+#include <stdio.h>
 #include "jpeglib.h"
 #include <setjmp.h>
 
@@ -21,12 +23,12 @@ static bool _cmpHeader(unsigned char* header)
 	}
 	//*/
 	unsigned char JFIF[] = { 0x4a, 0x46, 0x49, 0x46, 0x0 };
-	if (memcmp(header + 6, JFIF, sizeof(JFIF)) == 0) {
+    if (GX::gmemcmp(header + 6, JFIF, sizeof(JFIF)) == 0) {
 		return true;
 	}
 	else {
 		unsigned char Exif[] = { 0x45, 0x78, 0x69, 0x66, 0x0 };
-		if (memcmp(header + 6, Exif, sizeof(Exif)) == 0) {
+		if (GX::gmemcmp(header + 6, Exif, sizeof(Exif)) == 0) {
 			return true;
 		}
 	}

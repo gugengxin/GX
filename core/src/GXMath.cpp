@@ -1,5 +1,6 @@
-﻿#include "GXMath.h"
+#include "GXMath.h"
 #include "GSystem.h"
+#include "GXMemory.h"
 
 static guint64 s[2] = {
 	GX_CAST_S(guint64, GSystem::currentTimeMS()),
@@ -138,7 +139,7 @@ namespace GX
 		product[14] = m1[2] * m2[12] + m1[6] * m2[13] + m1[10] * m2[14] + m1[14] * m2[15];
 		product[15] = m1[3] * m2[12] + m1[7] * m2[13] + m1[11] * m2[14] + m1[15] * m2[15];
 
-		memcpy(dst, product, GX_MATRIX_SIZE);
+        GX::gmemcpy(dst, product, GX_MATRIX_SIZE);
 	}
 
 	void matrixNegate(const float* m, float* dst)
@@ -169,7 +170,7 @@ namespace GX
 			m[2], m[6], m[10], m[14],
 			m[3], m[7], m[11], m[15]
 		};
-		memcpy(dst, t, GX_MATRIX_SIZE);
+		GX::gmemcpy(dst, t, GX_MATRIX_SIZE);
 	}
 
 	void vector3Cross(const float* v1, const float* v2, float* dst)

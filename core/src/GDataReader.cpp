@@ -1,4 +1,4 @@
-﻿//
+//
 //  GDataReader.cpp
 //  GX
 //
@@ -54,7 +54,7 @@ gint GDataReader::read(void* buf,guint len)
 	else {
 		res = len;
 	}
-	memcpy(buf, m_Data->getPtr(GX_CAST_S(guint, m_Cursor)), res);
+	GX::gmemcpy(buf, m_Data->getPtr(GX_CAST_S(guint, m_Cursor)), res);
 	m_Cursor += res;
     return GX_CAST_S(gint,res);
 }

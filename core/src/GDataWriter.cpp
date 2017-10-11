@@ -1,4 +1,4 @@
-﻿//
+//
 //  GDataWriter.cpp
 //  GX
 //
@@ -80,12 +80,12 @@ gint GDataWriter::write(const void* buf,guint len)
         }
         else if (m_Bytes+len>m_Data->getBytes()) {
             guint tempLen=m_Data->getBytes()-len;
-            memcpy(m_Data->getPtr(m_Bytes), buf, tempLen);
+            GX::gmemcpy(m_Data->getPtr(m_Bytes), buf, tempLen);
             m_Bytes+=tempLen;
             return (gint)tempLen;
         }
         else {
-            memcpy(m_Data->getPtr(m_Bytes), buf, len);
+            GX::gmemcpy(m_Data->getPtr(m_Bytes), buf, len);
             m_Bytes+=len;
             return (gint)len;
         }
@@ -94,7 +94,7 @@ gint GDataWriter::write(const void* buf,guint len)
         if (m_Bytes+len>m_Data->getBytes() && !m_Data->changeBytes(m_Bytes+len)) {
             return -1;
         }
-        memcpy(m_Data->getPtr(m_Bytes), buf, len);
+        GX::gmemcpy(m_Data->getPtr(m_Bytes), buf, len);
         m_Bytes+=len;
         return (gint)len;
     }

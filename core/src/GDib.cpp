@@ -1,4 +1,4 @@
-﻿//
+//
 //  GDib.cpp
 //  GX
 //
@@ -700,7 +700,7 @@ static void _DrawFTDib(GDib* context,_DrawState ds,GDib* dib,gint32 x,gint32 y,c
         case GX::PixelFormatA8:
         {
             for (gint32 j=0; j<rowNum; j++) {
-                memcpy(dstData, srcData, rowWide);
+                GX::gmemcpy(dstData, srcData, rowWide);
                 srcData+=srcPitch;
                 dstData+=dstPitch;
             }

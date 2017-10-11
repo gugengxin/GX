@@ -1,4 +1,4 @@
-﻿//
+//
 //  GXPrefix.h
 //  GX
 //
@@ -16,12 +16,6 @@
 #elif defined(GX_OS_WINDOWS)
 #define _CRT_SECURE_NO_WARNINGS
 #endif
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <memory.h>
-#include <stdio.h>
-#include <string.h>
 #include <assert.h>
 
 #ifndef va_copy

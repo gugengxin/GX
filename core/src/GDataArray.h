@@ -1,9 +1,9 @@
-﻿#ifndef GDataArray_h
+#ifndef GDataArray_h
 #define GDataArray_h
 
 #include "GXPrefix.h"
-#include <string.h>
 #include "GXData.h"
+#include "GXPieceData.h"
 #include "GObject.h"
 
 #include "GXGObject.h"
@@ -85,7 +85,7 @@ public:
         }
         gint dc = getCount();
         if (changeCount(dc + oc)) {
-            memcpy((void*)&GX_CAST_R(T*, m_Data.getPtr())[dc], other->getPtr(0), other->getBytes());
+            GX::gmemcpy((void*)&GX_CAST_R(T*, m_Data.getPtr())[dc], other->getPtr(0), other->getBytes());
             return true;
         }
         return false;
@@ -187,9 +187,9 @@ protected:
 		return m_Data.changeBytes(GX_CAST_S(guint,toCount)*GX_CAST_S(guint,sizeof(T)));
 	}
     inline void move(gint idxTo, gint idx, gint len) {
-        memmove((void*)&(GX_CAST_R(T*, m_Data.getPtr())[idxTo]),
-                (void*)&(GX_CAST_R(T*, m_Data.getPtr())[idx]),
-                len*sizeof(T));
+        GX::gmemmove((void*)&(GX_CAST_R(T*, m_Data.getPtr())[idxTo]),
+                     (void*)&(GX_CAST_R(T*, m_Data.getPtr())[idx]),
+                     len*sizeof(T));
     }
     bool expand(gint idx, gint len, gint lenTo) {
         gint cntCur=getCount();
@@ -247,16 +247,17 @@ GDArray<T>::~GDArray()
 
 
 template <typename T,guint32 N>
-class GPieceDataArray : public GDataArray<T, GX::PieceData<(guint32)(sizeof(T)*N)> > {
+class GPieceDataArray : public GDataArray<T, GX::PieceData> {
     friend class GString;
     GX_GOBJECT(GPieceDataArray);
 };
 
-GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA guint32 N, GPieceDataArray<T GX_COMMA N>, GDataArray< T GX_COMMA GX::PieceData<(guint32)(sizeof(T)*N)> >);
+GX_GOBJECT_TEMPLATE_IMPLEMENT(typename T GX_COMMA guint32 N, GPieceDataArray<T GX_COMMA N>, GDataArray< T GX_COMMA GX::PieceData>);
 
 template <typename T,guint32 N>
 GPieceDataArray<T,N>::GPieceDataArray()
 {
+    this->getData().setPieceSize(GX_CAST_S(guint32, N*sizeof(T)));
 }
 template <typename T,guint32 N>
 GPieceDataArray<T,N>::~GPieceDataArray()

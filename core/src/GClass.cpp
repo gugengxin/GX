@@ -1,4 +1,4 @@
-﻿//
+//
 //  GClass.cpp
 //  GX
 //
@@ -7,6 +7,7 @@
 //
 
 #include "GClass.h"
+#include "GXMemory.h"
 
 GClass* GClass::map[]={NULL};
 #define M_MAP_COUNT (sizeof(map)/sizeof(map[0]))
@@ -81,7 +82,7 @@ GObject* GClass::allocObject(const char* name, gint len)
 GClass::GClass(guint size,Alloc alloc,GClass* parent)
 {
     m_Name=NULL;
-    memset(&m_NameCode, 0, sizeof(m_NameCode));
+    GX::gmemset(&m_NameCode, 0, sizeof(m_NameCode));
     m_Size=size;
     m_Alloc=alloc;
     m_Parent=parent;

@@ -1,4 +1,4 @@
-﻿//
+//
 //  GFileWriter.h
 //  GX
 //
@@ -11,6 +11,7 @@
 
 #include "GXPrefix.h"
 #include "GWriter.h"
+#include "GXFile.h"
 
 
 
@@ -34,7 +35,7 @@ public:
     virtual bool rollback(guint len);
 
 private:
-    FILE* m_FILE;
+    GX::File m_File;
     guint m_BytesStart;
 };
 

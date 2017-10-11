@@ -1,5 +1,6 @@
-﻿#include "GAction.h"
+#include "GAction.h"
 #include "GXGObject.h"
+#include "GXMemory.h"
 
 
 GX_GOBJECT_IMPLEMENT(GAction, GObject);
@@ -7,7 +8,7 @@ GX_GOBJECT_IMPLEMENT(GAction, GObject);
 GAction::GAction()
 {
 	m_Target = NULL;
-	memset(&m_Action, 0, sizeof(m_Action));
+	GX::gmemset(&m_Action, 0, sizeof(m_Action));
 	m_Obj = NULL;
 }
 

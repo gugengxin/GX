@@ -1,4 +1,4 @@
-﻿//
+//
 //  GThread.cpp
 //  GX
 //
@@ -29,7 +29,7 @@ GX_GOBJECT_IMPLEMENT(GThread::Holder, GObject);
 
 GThread::Holder::Holder()
 {
-	memset(&m_TID, 0, sizeof(m_TID));
+    GX::gmemset(&m_TID, 0, sizeof(m_TID));
 	m_Thread=NULL;
 }
 
@@ -233,7 +233,7 @@ bool GThread::isMain()
         return false;
     }
     GX::pthread_t mID=g_MT->getID();
-    return memcmp(&m_ID,&mID,sizeof(m_ID))==0;
+    return GX::gmemcmp(&m_ID,&mID,sizeof(m_ID))==0;
 }
 
 void GThread::pushARObj(GObject* v)
