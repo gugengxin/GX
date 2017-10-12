@@ -1,4 +1,4 @@
-//
+﻿//
 //  GFileReader.h
 //  GX
 //

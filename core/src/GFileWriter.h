@@ -1,4 +1,4 @@
-//
+﻿//
 //  GFileWriter.h
 //  GX
 //

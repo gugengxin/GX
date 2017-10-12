@@ -11,18 +11,18 @@ vis:\
     cls();\
     virtual ~cls();\
 public:\
-    static GClass   gclass;\
-    virtual GClass* getClass() {\
+    static const GClass   gclass;\
+    virtual const GClass* getClass() {\
 		return &gclass;\
 	}\
 private:\
     static GClass::Initializer gclassInitializer;\
 public:\
 	void* operator new(size_t size) {\
-		return GObject::gmalloc(size);\
+		return GObject::gnew(size);\
 	}\
 	void operator delete(void* p) {\
-		GObject::gfree(p);\
+		GObject::gdel(p);\
 	}
 
 #define GX_GOBJECT_DECLARE(cls,vis,avis) \
@@ -72,12 +72,12 @@ avis:\
 #define GX_VIRTUAL_GOBJECT(cls)  GX_VIRTUAL_GOBJECT_DECLARE(cls,protected,public)
 
 #define GX_GOBJECT_IMPLEMENT(cls,pc) \
-GClass cls::gclass(#cls,sizeof(cls),GX_CAST_R(GClass::Alloc,cls::alloc),&(pc::gclass));\
+const GClass cls::gclass(#cls,sizeof(cls),GX_CAST_R(GClass::Alloc,cls::alloc),&(pc::gclass));\
 GClass::Initializer cls::gclassInitializer(&cls::gclass)
 
 #define GX_GOBJECT_TEMPLATE_IMPLEMENT(T,cls,pc) \
 template <T> \
-GClass cls::gclass(sizeof(cls),reinterpret_cast<GClass::Alloc>(cls::alloc),&(pc::gclass))
+const GClass cls::gclass(sizeof(cls),reinterpret_cast<GClass::Alloc>(cls::alloc),&(pc::gclass))
 
 
 

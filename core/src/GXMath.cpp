@@ -1,4 +1,4 @@
-#include "GXMath.h"
+﻿#include "GXMath.h"
 #include "GSystem.h"
 #include "GXMemory.h"
 

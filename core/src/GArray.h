@@ -1,4 +1,4 @@
-#ifndef GArray_h
+﻿#ifndef GArray_h
 #define GArray_h
 
 #include "GXPrefix.h"

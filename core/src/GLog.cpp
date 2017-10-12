@@ -1,4 +1,4 @@
-#include "GLog.h"
+﻿#include "GLog.h"
 #ifdef GX_DEBUG
 #include <stdarg.h>
 

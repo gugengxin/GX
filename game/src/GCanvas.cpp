@@ -21,7 +21,7 @@ GCanvas::GCanvas()
     for (gint i=0; i<sizeof(m_ColorMul)/sizeof(m_ColorMul[0]); i++) {
         m_ColorMul[i].set(1.0f, 1.0f, 1.0f, 1.0f);
     }
-    memset(m_MatrixID, 0, sizeof(m_MatrixID));
+    GX::gmemset(m_MatrixID, 0, sizeof(m_MatrixID));
 }
 
 GCanvas::~GCanvas()

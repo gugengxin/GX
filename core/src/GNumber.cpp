@@ -1,4 +1,4 @@
-#include "GNumber.h"
+﻿#include "GNumber.h"
 #include "GXGObject.h"
 #include "GXMemory.h"
 

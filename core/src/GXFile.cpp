@@ -1,4 +1,4 @@
-//
+﻿//
 //  GXFile.cpp
 //  GXCore
 //

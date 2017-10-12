@@ -1,4 +1,4 @@
-//
+﻿//
 //  GXPieceData.h
 //  GXCore
 //
@@ -9,7 +9,7 @@
 #ifndef GXPieceData_h
 #define GXPieceData_h
 
-#include "GXCoder.h"
+#include "GXPrefix.h"
 #include "GXMemory.h"
 
 namespace GX {

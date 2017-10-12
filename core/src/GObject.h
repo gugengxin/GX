@@ -34,8 +34,8 @@ public:
 protected:
     static GObject* gretain(GObject* obj);
     static GObject* gautorelease(GObject* obj);
-	static void* gmalloc(size_t size);
-	static void gfree(void* p);
+	static void* gnew(size_t size);
+	static void gdel(void* p);
 protected:
     GObject();
     virtual ~GObject();
@@ -43,17 +43,17 @@ protected:
     virtual void init();
     virtual void dealloc();
 public:
-    static GClass   gclass;
-    virtual GClass* getClass();
+    static const GClass gclass;
+    virtual const GClass* getClass();
     static GObject* alloc();
     static GObject* autoAlloc();
 	void* operator new(size_t size);
 	void operator delete(void* p);
     
-    bool  isMemberOfClass(GClass* pClass);
-    bool  isMemberOfClass(GClass& cls);
-    bool  isKindOfClass(GClass* pClass);
-    bool  isKindOfClass(GClass& cls);
+    bool isMemberOfClass(const GClass* pClass);
+    bool isMemberOfClass(const GClass& cls);
+    bool isKindOfClass(const GClass* pClass);
+    bool isKindOfClass(const GClass& cls);
 public:
     virtual guint getHash();
     virtual bool isEqual(GObject* obj);

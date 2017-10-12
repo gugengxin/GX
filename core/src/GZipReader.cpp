@@ -1,4 +1,4 @@
-//
+﻿//
 //  GZipReader.cpp
 //  GX
 //

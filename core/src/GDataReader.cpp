@@ -1,4 +1,4 @@
-//
+﻿//
 //  GDataReader.cpp
 //  GX
 //

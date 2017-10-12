@@ -10,6 +10,7 @@
 #include "GThread.h"
 #include <pthread.h>
 #include "GString.h"
+#include "GXMemory.h"
 
 
 static pthread_mutex_t g_Mutex;
@@ -99,22 +100,22 @@ GObject* GObject::gautorelease(GObject* obj)
     return obj;
 }
 
-void* GObject::gmalloc(size_t size)
+void* GObject::gnew(size_t size)
 {
-	void* p = malloc(size + sizeof(_ObjExData));
+	void* p = GX::gcalloc(size + sizeof(_ObjExData));
 	_ObjExDataInit(GX_CAST_R(_ObjExData*,p));
 	return GX_CAST_R(guint8*, p) + sizeof(_ObjExData);
 }
-void GObject::gfree(void* p)
+void GObject::gdel(void* p)
 {
 	_ObjExData* exData = GX_CAST_R(_ObjExData*, p) - 1;
 	_ObjExDataFina(exData);
-	free(exData);
+	GX::gfree(exData);
 }
 
 
-GClass GObject::gclass(sizeof(GObject),GX_CAST_R(GClass::Alloc,GObject::alloc),NULL);
-GClass* GObject::getClass()
+const GClass GObject::gclass(sizeof(GObject),GX_CAST_R(GClass::Alloc,GObject::alloc),NULL);
+const GClass* GObject::getClass()
 {
     return &gclass;
 }
@@ -130,11 +131,11 @@ GObject* GObject::autoAlloc()
 }
 void* GObject::operator new(size_t size)
 {
-	return gmalloc(size);
+	return gnew(size);
 }
 void GObject::operator delete(void* p)
 {
-	gfree(p);
+	gdel(p);
 }
 
 GObject::GObject()
@@ -155,20 +156,20 @@ void GObject::dealloc()
     //不能做事情，因为引擎内部类没有调用init
 }
 
-bool  GObject::isMemberOfClass(GClass* pClass)
+bool  GObject::isMemberOfClass(const GClass* pClass)
 {
     return getClass()->isMemberOf(pClass);
 }
-bool  GObject::isMemberOfClass(GClass& cls)
+bool  GObject::isMemberOfClass(const GClass& cls)
 {
     return getClass()->isMemberOf(&cls);
 }
-bool  GObject::isKindOfClass(GClass* pClass)
+bool  GObject::isKindOfClass(const GClass* pClass)
 {
     return getClass()->isKindOf(pClass);
 }
 
-bool  GObject::isKindOfClass(GClass& cls)
+bool  GObject::isKindOfClass(const GClass& cls)
 {
     return getClass()->isKindOf(&cls);
 }

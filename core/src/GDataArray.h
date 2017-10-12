@@ -1,4 +1,4 @@
-#ifndef GDataArray_h
+﻿#ifndef GDataArray_h
 #define GDataArray_h
 
 #include "GXPrefix.h"

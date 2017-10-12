@@ -1,4 +1,4 @@
-
+﻿
 #ifndef GXFILE_h
 #define GXFILE_h
 

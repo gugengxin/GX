@@ -618,7 +618,7 @@ GWindow::~GWindow()
 
 void GWindow::startGame(const char* gameClassName)
 {
-    GClass* gameClass=GClass::findInMap(gameClassName);
+    const GClass* gameClass=GClass::findInMap(gameClassName);
     GX_ASSERT(gameClass!=NULL);
     m_Game=GX_CAST_R(GGame*,gameClass->allocObject());
     GX_ASSERT(m_Game->isKindOfClass(GGame::gclass));

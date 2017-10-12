@@ -1,4 +1,4 @@
-//
+﻿//
 //  GDataWriter.cpp
 //  GX
 //
