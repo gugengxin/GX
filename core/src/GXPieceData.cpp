@@ -64,16 +64,16 @@ namespace GX {
         return true;
     }
 
-    bool PieceData::changeBytes(UNT toSize)
+    bool PieceData::changeBytes(guint toSize)
     {
         if (toSize == m_Bytes) {
             return true;
         }
 
-        U32 toBCount = GX_CAST_S(U32, (toSize + m_PieceSize - 1) / m_PieceSize);
-        UNT toSizeReal = toBCount*(UNT)m_PieceSize;
+        guint32 toBCount = GX_CAST_S(guint32, (toSize + m_PieceSize - 1) / m_PieceSize);
+        guint toSizeReal = toBCount*(guint)m_PieceSize;
         if (toBCount > m_PieceCount || toBCount + 1<m_PieceCount) {
-            if (!GX::grealloc(m_Buffer, m_PieceSize*(UNT)m_PieceCount, toSizeReal)) {
+            if (!GX::grealloc(m_Buffer, m_PieceSize*(guint)m_PieceCount, toSizeReal)) {
                 return false;
             }
         }
@@ -81,7 +81,7 @@ namespace GX {
         m_PieceCount = toBCount;
         return true;
     }
-    bool PieceData::changeBytesIfNeed(UNT toSize)
+    bool PieceData::changeBytesIfNeed(guint toSize)
     {
         if (toSize <= m_Bytes) {
             return true;

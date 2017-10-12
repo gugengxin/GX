@@ -1,4 +1,4 @@
-﻿//
+//
 //  GCoder.cpp
 //  GX
 //
@@ -19,7 +19,7 @@ GEncoder::~GEncoder()
 
 }
 
-GX::INT GEncoder::encode(const void* buf,GX::UNT len)
+gint GEncoder::encode(const void* buf,guint len)
 {
     gint res=getWriter()->write(buf, len);
     return res<(gint)len?-1:res;
@@ -41,7 +41,7 @@ GDecoder::~GDecoder()
 {
 }
 
-GX::INT GDecoder::decode(void* buf,GX::UNT len)
+gint GDecoder::decode(void* buf,guint len)
 {
     return getReader()->read(buf, len);
 }

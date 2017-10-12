@@ -1,4 +1,4 @@
-﻿//
+//
 //  GXCoder.h
 //  GX
 //
@@ -9,80 +9,29 @@
 #ifndef GXCoder_h
 #define GXCoder_h
 
-
-#if !defined(GX_PTR_32BIT) && !defined(GX_PTR_64BIT)
-#if defined (__LP64__) || defined (__64BIT__) || defined (_LP64) || (__WORDSIZE == 64) || defined(_WIN64) || defined(WIN64)
-#define GX_PTR_32BIT  0
-#define GX_PTR_64BIT  1
-#else
-#define GX_PTR_32BIT  1
-#define GX_PTR_64BIT  0
-#endif
-#endif
-
-#ifndef GX_CAST_C
-#define GX_CAST_C(t,o)       const_cast<t>(o)
-#endif
-#ifndef GX_CAST_S
-#define GX_CAST_S(t,o)       static_cast<t>(o)
-#endif
-#ifndef GX_CAST_R
-#define GX_CAST_R(t,o)       reinterpret_cast<t>(o)
-#endif
-#ifndef GX_CAST_D
-#define GX_CAST_D(t,o)       GX_CAST_R(t,o)//dynamic_cast<t>(o)
-#endif
-#ifndef GX_CAST_PO
-#define GX_CAST_PO(t,p,ot)   GX_CAST_R(t*, GX_CAST_R(unsigned char*,p)+ot)
-#endif
+#include "GXPrefix.h"
 
 
 namespace GX {
 
-    typedef bool                B8;
-    typedef char                I8;
-    typedef unsigned char       U8;
-    typedef short               I16;
-    typedef unsigned short      U16;
-    typedef int                 I32;
-    typedef unsigned int        U32;
-    typedef long long           I64;
-    typedef unsigned long long  U64;
-    typedef float               F32;
-    typedef double              F64;
-
-#if GX_PTR_32BIT
-    typedef I32 INT;
-    typedef U32 UNT;
-#elif GX_PTR_64BIT
-    typedef I64 INT;
-    typedef U64 UNT;
-#endif
-
-    typedef I32 VI32;
-    typedef U32 VU32;
-    typedef I64 VI64;
-    typedef U64 VU64;
-
-    INT bytesOfVI32(VI32 value);//不会返回-1，即不会出错
-    INT bytesOfVU32(VU32 value);//不会返回-1，即不会出错
-    INT bytesOfVI64(VI64 value);//不会返回-1，即不会出错
-    INT bytesOfVU64(VU64 value);//不会返回-1，即不会出错
-
+    gint bytesOfVI32(gint32 value);//不会返回-1，即不会出错
+    gint bytesOfVU32(guint32 value);//不会返回-1，即不会出错
+    gint bytesOfVI64(gint64 value);//不会返回-1，即不会出错
+    gint bytesOfVU64(guint64 value);//不会返回-1，即不会出错
 
     class UUID {
     public:
 		UUID();
 		UUID(const UUID& other);
-        UUID(U32 u0, U32 u1, U32 u2, U32 u3);
-		UUID(U64 u0, U64 u1);
+        UUID(guint32 u0, guint32 u1, guint32 u2, guint32 u3);
+		UUID(guint64 u0, guint64 u1);
         ~UUID();
 
-		inline const U8* getPtr() {
+		inline const guint8* getPtr() {
 			return m_Bytes.u8;
 		}
-		inline UNT getBytes() {
-			return sizeof(U64) * 2;
+		inline guint getBytes() {
+			return sizeof(m_Bytes);
 		}
 
 		inline bool operator == (const UUID& other) const {
@@ -95,10 +44,10 @@ namespace GX {
 
     private:
         union {
-            U8  u8[16];
-            U16 u16[8];
-            U32 u32[4];
-            U64 u64[2];
+            guint8  u8[16];
+            guint16 u16[8];
+            guint32 u32[4];
+            guint64 u64[2];
         } m_Bytes;
     };
 
@@ -120,41 +69,41 @@ namespace GX {
         Encoder(void* tagPtr);
         ~Encoder();
 
-        virtual INT encode(const void* buf,UNT len)=0;//小于len的值都算失败，返回-1
+        virtual gint encode(const void* buf,guint len)=0;//小于len的值都算失败，返回-1
     public:
-        INT encodeB8(B8 value);
-        INT encodeB8s(const B8* values,UNT count);
-        INT encodeI8(I8 value);
-        INT encodeI8s(const I8* values,UNT count);
-        INT encodeU8(U8 value);
-        INT encodeU8s(const U8* values,UNT count);
-        INT encodeI16(I16 value);
-        INT encodeI16s(const I16* values,UNT count);
-        INT encodeU16(U16 value);
-        INT encodeU16s(const U16* values,UNT count);
-        INT encodeI32(I32 value);
-        INT encodeI32s(const I32* values,UNT count);
-        INT encodeU32(U32 value);
-        INT encodeU32s(const U32* values,UNT count);
-        INT encodeI64(I64 value);
-        INT encodeI64s(const I64* values,UNT count);
-        INT encodeU64(U64 value);
-        INT encodeU64s(const U64* values,UNT count);
-        INT encodeF32(F32 value);
-        INT encodeF32s(const F32* values,UNT count);
-        INT encodeF64(F64 value);
-        INT encodeF64s(const F64* values,UNT count);
+        gint encodeB8(bool value);
+        gint encodeB8s(const bool* values,guint count);
+        gint encodeI8(gint8 value);
+        gint encodeI8s(const gint8* values,guint count);
+        gint encodeU8(guint8 value);
+        gint encodeU8s(const guint8* values,guint count);
+        gint encodeI16(gint16 value);
+        gint encodeI16s(const gint16* values,guint count);
+        gint encodeU16(guint16 value);
+        gint encodeU16s(const guint16* values,guint count);
+        gint encodeI32(gint32 value);
+        gint encodeI32s(const gint32* values,guint count);
+        gint encodeU32(guint32 value);
+        gint encodeU32s(const guint32* values,guint count);
+        gint encodeI64(gint64 value);
+        gint encodeI64s(const gint64* values,guint count);
+        gint encodeU64(guint64 value);
+        gint encodeU64s(const guint64* values,guint count);
+        gint encodeF32(gfloat32 value);
+        gint encodeF32s(const gfloat32* values,guint count);
+        gint encodeF64(gfloat64 value);
+        gint encodeF64s(const gfloat64* values,guint count);
 
-        INT encodeVI32(VI32 value);//不会出错
-        INT encodeVI32s(const VI32* values,UNT count);//不会出错
-        INT encodeVU32(VU32 value);//不会出错
-        INT encodeVU32s(const VU32* values,UNT count);//不会出错
-        INT encodeVI64(VI64 value);//不会出错
-        INT encodeVI64s(const VI64* values,UNT count);//不会出错
-        INT encodeVU64(VU64 value);//不会出错
-        INT encodeVU64s(const VU64* values,UNT count);//不会出错
+        gint encodeVI32(gint32 value);//不会出错
+        gint encodeVI32s(const gint32* values,guint count);//不会出错
+        gint encodeVU32(guint32 value);//不会出错
+        gint encodeVU32s(const guint32* values,guint count);//不会出错
+        gint encodeVI64(gint64 value);//不会出错
+        gint encodeVI64s(const gint64* values,guint count);//不会出错
+        gint encodeVU64(guint64 value);//不会出错
+        gint encodeVU64s(const guint64* values,guint count);//不会出错
 
-		INT encodeUUID(UUID& value);
+		gint encodeUUID(UUID& value);
     };
 
     class Decoder : public Coder {
@@ -162,41 +111,41 @@ namespace GX {
         Decoder(void* tagPtr);
         ~Decoder();
         
-        virtual INT decode(void* buf,UNT len)=0;//小于len的值都算失败，返回-1
+        virtual gint decode(void* buf,guint len)=0;//小于len的值都算失败，返回-1
     public:
-        INT decodeB8(B8& valueOut);
-        INT decodeB8s(B8* valuesOut,UNT count);
-        INT decodeI8(I8& valueOut);
-        INT decodeI8s(I8* valuesOut,UNT count);
-        INT decodeU8(U8& valueOut);
-        INT decodeU8s(U8* valuesOut,UNT count);
-        INT decodeI16(I16& valueOut);
-        INT decodeI16s(I16* valuesOut,UNT count);
-        INT decodeU16(U16& valueOut);
-        INT decodeU16s(U16* valuesOut,UNT count);
-        INT decodeI32(I32& valueOut);
-        INT decodeI32s(I32* valuesOut,UNT count);
-        INT decodeU32(U32& valueOut);
-        INT decodeU32s(U32* valuesOut,UNT count);
-        INT decodeI64(I64& valueOut);
-        INT decodeI64s(I64* valuesOut,UNT count);
-        INT decodeU64(U64& valueOut);
-        INT decodeU64s(U64* valuesOut,UNT count);
-        INT decodeF32(F32& valueOut);
-        INT decodeF32s(F32* valuesOut,UNT count);
-        INT decodeF64(F64& valueOut);
-        INT decodeF64s(F64* valuesOut,UNT count);
+        gint decodeB8(bool& valueOut);
+        gint decodeB8s(bool* valuesOut,guint count);
+        gint decodeI8(gint8& valueOut);
+        gint decodeI8s(gint8* valuesOut,guint count);
+        gint decodeU8(guint8& valueOut);
+        gint decodeU8s(guint8* valuesOut,guint count);
+        gint decodeI16(gint16& valueOut);
+        gint decodeI16s(gint16* valuesOut,guint count);
+        gint decodeU16(guint16& valueOut);
+        gint decodeU16s(guint16* valuesOut,guint count);
+        gint decodeI32(gint32& valueOut);
+        gint decodeI32s(gint32* valuesOut,guint count);
+        gint decodeU32(guint32& valueOut);
+        gint decodeU32s(guint32* valuesOut,guint count);
+        gint decodeI64(gint64& valueOut);
+        gint decodeI64s(gint64* valuesOut,guint count);
+        gint decodeU64(guint64& valueOut);
+        gint decodeU64s(guint64* valuesOut,guint count);
+        gint decodeF32(gfloat32& valueOut);
+        gint decodeF32s(gfloat32* valuesOut,guint count);
+        gint decodeF64(gfloat64& valueOut);
+        gint decodeF64s(gfloat64* valuesOut,guint count);
 
-        INT decodeVI32(VI32& valueOut);
-        INT decodeVI32s(VI32* valuesOut,UNT count);
-        INT decodeVU32(VU32& valueOut);
-        INT decodeVU32s(VU32* valuesOut,UNT count);
-        INT decodeVI64(VI64& valueOut);
-        INT decodeVI64s(VI64* valuesOut,UNT count);
-        INT decodeVU64(VU64& valueOut);
-        INT decodeVU64s(VU64* valuesOut,UNT count);
+        gint decodeVI32(gint32& valueOut);
+        gint decodeVI32s(gint32* valuesOut,guint count);
+        gint decodeVU32(guint32& valueOut);
+        gint decodeVU32s(guint32* valuesOut,guint count);
+        gint decodeVI64(gint64& valueOut);
+        gint decodeVI64s(gint64* valuesOut,guint count);
+        gint decodeVU64(guint64& valueOut);
+        gint decodeVU64s(guint64* valuesOut,guint count);
 
-		INT decodeUUID(UUID& valueOut);
+		gint decodeUUID(UUID& valueOut);
     };
 
 }

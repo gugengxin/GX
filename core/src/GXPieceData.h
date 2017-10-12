@@ -31,8 +31,8 @@ namespace GX {
         }
 
         bool setPieceSize(guint32 v);
-        bool changeBytes(UNT toSize);
-        bool changeBytesIfNeed(UNT toSize);
+        bool changeBytes(guint toSize);
+        bool changeBytesIfNeed(guint toSize);
         void freeSelf();
         void zeroSelf();
 

@@ -1,4 +1,4 @@
-﻿//
+//
 //  GXCoder.cpp
 //  GX
 //
@@ -10,7 +10,7 @@
 
 namespace GX {
 
-    INT bytesOfVI32(VI32 value)
+    gint bytesOfVI32(gint32 value)
     {
         if (value<0) {
             value=-value;
@@ -32,7 +32,7 @@ namespace GX {
         }
         return -1;
     }
-    INT bytesOfVU32(VU32 value)
+    gint bytesOfVU32(guint32 value)
     {
         if (value<=0x7F) {
             return 1;
@@ -51,7 +51,7 @@ namespace GX {
         }
         return -1;
     }
-    INT bytesOfVI64(VI64 value)
+    gint bytesOfVI64(gint64 value)
     {
         if (value<0) {
             value=-value;
@@ -88,7 +88,7 @@ namespace GX {
         }
         return -1;
     }
-    INT bytesOfVU64(VU64 value)
+    gint bytesOfVU64(guint64 value)
     {
         if (value<=0x7F) {
             return 1;
@@ -143,7 +143,7 @@ namespace GX {
 		m_Bytes.u64[1] = other.m_Bytes.u64[1];
 	}
 
-	UUID::UUID(U32 u0, U32 u1, U32 u2, U32 u3)
+	UUID::UUID(guint32 u0, guint32 u1, guint32 u2, guint32 u3)
     {
 		m_Bytes.u32[0] = u0;
 		m_Bytes.u32[1] = u1;
@@ -151,7 +151,7 @@ namespace GX {
 		m_Bytes.u32[3] = u3;
     }
 
-	UUID::UUID(U64 u0, U64 u1)
+	UUID::UUID(guint64 u0, guint64 u1)
 	{
 		m_Bytes.u64[0] = u0;
 		m_Bytes.u64[1] = u1;
@@ -186,46 +186,46 @@ namespace GX {
     {
     }
 
-#define M_ENCODE(t) \
-    INT Encoder::encode##t(t value)\
+#define M_ENCODE(t,rt) \
+    gint Encoder::encode##t(rt value)\
     {\
-        return encode(&value, sizeof(t));\
+        return encode(&value, sizeof(rt));\
     }\
-    INT Encoder::encode##t##s(const t* values,UNT count)\
+    gint Encoder::encode##t##s(const rt* values,guint count)\
     {\
-        return encode(values, count*sizeof(t));\
+        return encode(values, count*sizeof(rt));\
     }
 
-    M_ENCODE(B8);
-    M_ENCODE(I8);
-    M_ENCODE(U8);
-    M_ENCODE(I16);
-    M_ENCODE(U16);
-    M_ENCODE(I32);
-    M_ENCODE(U32);
-    M_ENCODE(I64);
-    M_ENCODE(U64);
-    M_ENCODE(F32);
-    M_ENCODE(F64);
+    M_ENCODE(B8,bool);
+    M_ENCODE(I8,gint8);
+    M_ENCODE(U8,guint8);
+    M_ENCODE(I16,gint16);
+    M_ENCODE(U16,guint16);
+    M_ENCODE(I32,gint32);
+    M_ENCODE(U32,guint32);
+    M_ENCODE(I64,gint64);
+    M_ENCODE(U64,guint64);
+    M_ENCODE(F32,gfloat32);
+    M_ENCODE(F64,gfloat64);
 
 #undef M_ENCODE
 
-    INT Encoder::encodeVI32(VI32 value)
+    gint Encoder::encodeVI32(gint32 value)
     {
-        U8 neg=0x0;
+        guint8 neg=0x0;
         if (value<0) {
             neg=0x40;
             value=-value;
         }
-        for (INT i=0; i<5; i++) {
+        for (gint i=0; i<5; i++) {
             if(value<=0x3F) {
-                if(encodeU8((U8)(neg|(value&0x3F)))<0) {
+                if(encodeU8((guint8)(neg|(value&0x3F)))<0) {
                     return -1;
                 }
                 return (i+1);
             }
             else {
-                if(encodeU8((U8)(0x80|(value&0x7F)))<0) {
+                if(encodeU8((guint8)(0x80|(value&0x7F)))<0) {
                     return -1;
                 }
             }
@@ -233,11 +233,11 @@ namespace GX {
         }
         return -1;
     }
-    INT Encoder::encodeVI32s(const VI32* values,UNT count)
+    gint Encoder::encodeVI32s(const gint32* values,guint count)
     {
-        INT res=0;
-        for (UNT i=0; i<count; i++) {
-            INT nTemp=encodeVI32(values[i]);
+        gint res=0;
+        for (guint i=0; i<count; i++) {
+            gint nTemp=encodeVI32(values[i]);
             if (nTemp<0) {
                 return -1;
             }
@@ -246,17 +246,17 @@ namespace GX {
         return res;
     }
     
-    INT Encoder::encodeVU32(VU32 value)
+    gint Encoder::encodeVU32(guint32 value)
     {
-        for (UNT i=0; i<5; i++) {
+        for (guint i=0; i<5; i++) {
             if (value<=0x7F) {
-                if(encodeU8((U8)((value&0x7F)))<0) {
+                if(encodeU8((guint8)((value&0x7F)))<0) {
                     return -1;
                 }
                 return (i+1);
             }
             else {
-                if(encodeU8((U8)(0x80|(value&0x7F)))<0) {
+                if(encodeU8((guint8)(0x80|(value&0x7F)))<0) {
                     return -1;
                 }
             }
@@ -264,11 +264,11 @@ namespace GX {
         }
         return -1;
     }
-    INT Encoder::encodeVU32s(const VU32* values,UNT count)
+    gint Encoder::encodeVU32s(const guint32* values,guint count)
     {
-        INT res=0;
-        for (UNT i=0; i<count; i++) {
-            INT nTemp=encodeVU32(values[i]);
+        gint res=0;
+        for (guint i=0; i<count; i++) {
+            gint nTemp=encodeVU32(values[i]);
             if (nTemp<0) {
                 return -1;
             }
@@ -277,22 +277,22 @@ namespace GX {
         return res;
     }
 
-    INT Encoder::encodeVI64(VI64 value)
+    gint Encoder::encodeVI64(gint64 value)
     {
-        U8 neg=0x0;
+        guint8 neg=0x0;
         if (value<0) {
             neg=0x40;
             value=-value;
         }
-        for (INT i=0; i<10; i++) {
+        for (gint i=0; i<10; i++) {
             if(value<=0x3F) {
-                if(encodeU8((U8)(neg|(value&0x3F)))<0) {
+                if(encodeU8((guint8)(neg|(value&0x3F)))<0) {
                     return -1;
                 }
                 return (i+1);
             }
             else {
-                if(encodeU8((U8)(0x80|(value&0x7F)))<0) {
+                if(encodeU8((guint8)(0x80|(value&0x7F)))<0) {
                     return -1;
                 }
             }
@@ -301,11 +301,11 @@ namespace GX {
         }
         return -1;
     }
-    INT Encoder::encodeVI64s(const VI64* values,UNT count)
+    gint Encoder::encodeVI64s(const gint64* values,guint count)
     {
-        INT res=0;
-        for (UNT i=0; i<count; i++) {
-            INT nTemp=encodeVI64(values[i]);
+        gint res=0;
+        for (guint i=0; i<count; i++) {
+            gint nTemp=encodeVI64(values[i]);
             if (nTemp<0) {
                 return -1;
             }
@@ -314,17 +314,17 @@ namespace GX {
         return res;
     }
 
-    INT Encoder::encodeVU64(VU64 value)
+    gint Encoder::encodeVU64(guint64 value)
     {
-        for (UNT i=0; i<10; i++) {
+        for (guint i=0; i<10; i++) {
             if (value<=0x7F) {
-                if(encodeU8((U8)((value&0x7F)))<0) {
+                if(encodeU8((guint8)((value&0x7F)))<0) {
                     return -1;
                 }
                 return (i+1);
             }
             else {
-                if(encodeU8((U8)(0x80|(value&0x7F)))<0) {
+                if(encodeU8((guint8)(0x80|(value&0x7F)))<0) {
                     return -1;
                 }
             }
@@ -332,11 +332,11 @@ namespace GX {
         }
         return -1;
     }
-    INT Encoder::encodeVU64s(const VU64* values,UNT count)
+    gint Encoder::encodeVU64s(const guint64* values,guint count)
     {
-        INT res=0;
-        for (UNT i=0; i<count; i++) {
-            INT nTemp=encodeVU64(values[i]);
+        gint res=0;
+        for (guint i=0; i<count; i++) {
+            gint nTemp=encodeVU64(values[i]);
             if (nTemp<0) {
                 return -1;
             }
@@ -345,7 +345,7 @@ namespace GX {
         return res;
     }
 
-	INT Encoder::encodeUUID(UUID& value)
+	gint Encoder::encodeUUID(UUID& value)
 	{
 		return encode(value.getPtr(), value.getBytes());
 	}
@@ -360,43 +360,43 @@ namespace GX {
     {
     }
 
-#define M_DECODE(t) \
-    INT Decoder::decode##t(t& valueOut)\
+#define M_DECODE(t,rt) \
+    gint Decoder::decode##t(rt& valueOut)\
     {\
-        return decode(&valueOut, sizeof(t));\
+        return decode(&valueOut, sizeof(rt));\
     }\
-    INT Decoder::decode##t##s(t* valuesOut,UNT count)\
+    gint Decoder::decode##t##s(rt* valuesOut,guint count)\
     {\
-        return decode(valuesOut, sizeof(t)*count);\
+        return decode(valuesOut, sizeof(rt)*count);\
     }
 
-    M_DECODE(B8);
-    M_DECODE(I8);
-    M_DECODE(U8);
-    M_DECODE(I16);
-    M_DECODE(U16);
-    M_DECODE(I32);
-    M_DECODE(U32);
-    M_DECODE(I64);
-    M_DECODE(U64);
-    M_DECODE(F32);
-    M_DECODE(F64);
+    M_DECODE(B8,bool);
+    M_DECODE(I8,gint8);
+    M_DECODE(U8,guint8);
+    M_DECODE(I16,gint16);
+    M_DECODE(U16,guint16);
+    M_DECODE(I32,gint32);
+    M_DECODE(U32,guint32);
+    M_DECODE(I64,gint64);
+    M_DECODE(U64,guint64);
+    M_DECODE(F32,gfloat32);
+    M_DECODE(F64,gfloat64);
 
 #undef M_DECODE
 
-    INT Decoder::decodeVI32(VI32& valueOut)
+    gint Decoder::decodeVI32(gint32& valueOut)
     {
         valueOut=0;
-        for (INT i=0; i<5; i++) {
-            U8 uTemp;
+        for (gint i=0; i<5; i++) {
+            guint8 uTemp;
             if (decodeU8(uTemp)<0) {
                 return -1;
             }
             if (uTemp&0x80) {
-                valueOut|=(((VI32)uTemp&0x7F)<<(i*7));
+                valueOut|=(((gint32)uTemp&0x7F)<<(i*7));
             }
             else {
-                valueOut|=(((VI32)uTemp&0x3F)<<(i*7));
+                valueOut|=(((gint32)uTemp&0x3F)<<(i*7));
                 if (uTemp&0x40) {
                     valueOut=-valueOut;
                 }
@@ -405,11 +405,11 @@ namespace GX {
         }
         return -1;
     }
-    INT Decoder::decodeVI32s(VI32* valuesOut,UNT count)
+    gint Decoder::decodeVI32s(gint32* valuesOut,guint count)
     {
-        INT res=0;
-        for (UNT i=0; i<count; i++) {
-            INT nTemp=decodeVI32(valuesOut[i]);
+        gint res=0;
+        for (guint i=0; i<count; i++) {
+            gint nTemp=decodeVI32(valuesOut[i]);
             if (nTemp<0) {
                 return -1;
             }
@@ -418,15 +418,15 @@ namespace GX {
         return res;
     }
 
-    INT Decoder::decodeVU32(VU32& valueOut)
+    gint Decoder::decodeVU32(guint32& valueOut)
     {
         valueOut=0;
-        for (INT i=0; i<5; i++) {
-            U8 uTemp;
+        for (gint i=0; i<5; i++) {
+            guint8 uTemp;
             if (decodeU8(uTemp)<0) {
                 return -1;
             }
-            valueOut|=(((VU32)uTemp&0x7F)<<(i*7));
+            valueOut|=(((guint32)uTemp&0x7F)<<(i*7));
 
             if (!(uTemp&0x80)) {
                 return (i+1);
@@ -434,11 +434,11 @@ namespace GX {
         }
         return -1;
     }
-    INT Decoder::decodeVU32s(VU32* valuesOut,UNT count)
+    gint Decoder::decodeVU32s(guint32* valuesOut,guint count)
     {
-        INT res=0;
-        for (UNT i=0; i<count; i++) {
-            INT nTemp=decodeVU32(valuesOut[i]);
+        gint res=0;
+        for (guint i=0; i<count; i++) {
+            gint nTemp=decodeVU32(valuesOut[i]);
             if (nTemp<0) {
                 return -1;
             }
@@ -447,19 +447,19 @@ namespace GX {
         return res;
     }
 
-    INT Decoder::decodeVI64(VI64& valueOut)
+    gint Decoder::decodeVI64(gint64& valueOut)
     {
         valueOut=0;
-        for (INT i=0; i<10; i++) {
-            U8 uTemp;
+        for (gint i=0; i<10; i++) {
+            guint8 uTemp;
             if (decodeU8(uTemp)<0) {
                 return -1;
             }
             if (uTemp&0x80) {
-                valueOut|=(((VI64)uTemp&0x7F)<<(i*7));
+                valueOut|=(((gint64)uTemp&0x7F)<<(i*7));
             }
             else {
-                valueOut|=(((VI64)uTemp&0x3F)<<(i*7));
+                valueOut|=(((gint64)uTemp&0x3F)<<(i*7));
                 if (uTemp&0x40) {
                     valueOut=-valueOut;
                 }
@@ -468,11 +468,11 @@ namespace GX {
         }
         return -1;
     }
-    INT Decoder::decodeVI64s(VI64* valuesOut,UNT count)
+    gint Decoder::decodeVI64s(gint64* valuesOut,guint count)
     {
-        INT res=0;
-        for (UNT i=0; i<count; i++) {
-            INT nTemp=decodeVI64(valuesOut[i]);
+        gint res=0;
+        for (guint i=0; i<count; i++) {
+            gint nTemp=decodeVI64(valuesOut[i]);
             if (nTemp<0) {
                 return -1;
             }
@@ -480,15 +480,15 @@ namespace GX {
         }
         return res;
     }
-    INT Decoder::decodeVU64(VU64& valueOut)
+    gint Decoder::decodeVU64(guint64& valueOut)
     {
         valueOut=0;
-        for (INT i=0; i<10; i++) {
-            U8 uTemp;
+        for (gint i=0; i<10; i++) {
+            guint8 uTemp;
             if (decodeU8(uTemp)<0) {
                 return -1;
             }
-            valueOut|=(((VU64)uTemp&0x7F)<<(i*7));
+            valueOut|=(((guint64)uTemp&0x7F)<<(i*7));
 
             if (!(uTemp&0x80)) {
                 return (i+1);
@@ -496,11 +496,11 @@ namespace GX {
         }
         return -1;
     }
-    INT Decoder::decodeVU64s(VU64* valuesOut,UNT count)
+    gint Decoder::decodeVU64s(guint64* valuesOut,guint count)
     {
-        INT res=0;
-        for (UNT i=0; i<count; i++) {
-            INT nTemp=decodeVU64(valuesOut[i]);
+        gint res=0;
+        for (guint i=0; i<count; i++) {
+            gint nTemp=decodeVU64(valuesOut[i]);
             if (nTemp<0) {
                 return -1;
             }
@@ -509,7 +509,7 @@ namespace GX {
         return res;
     }
 
-	INT Decoder::decodeUUID(UUID& valueOut)
+	gint Decoder::decodeUUID(UUID& valueOut)
 	{
 		return decode((void*)valueOut.getPtr(), valueOut.getBytes());
 	}

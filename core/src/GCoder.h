@@ -1,4 +1,4 @@
-﻿//
+//
 //  GCoder.h
 //  GX
 //
@@ -21,7 +21,7 @@ public:
     GEncoder(GWriter* writer);
     ~GEncoder();
 
-    virtual GX::INT encode(const void* buf,GX::UNT len);
+    virtual gint encode(const void* buf,guint len);
 private:
     inline GWriter* getWriter() {
         return GX_CAST_R(GWriter*, getTagPtr());
@@ -34,7 +34,7 @@ public:
     GDecoder(GReader* reader);
     ~GDecoder();
 
-    virtual GX::INT decode(void* buf,GX::UNT len);
+    virtual gint decode(void* buf,guint len);
 private:
     inline GReader* getReader() {
         return GX_CAST_R(GReader*, getTagPtr());
