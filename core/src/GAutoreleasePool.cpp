@@ -12,7 +12,7 @@
 
 GAutoreleasePool::GAutoreleasePool()
 {
-    m_KeyCount=GThread::current()->m_ARObjs.getCount();
+    m_KeyCount=GThread::current()->getARObjCount();
 }
 
 GAutoreleasePool::~GAutoreleasePool()

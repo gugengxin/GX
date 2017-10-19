@@ -276,8 +276,6 @@ namespace GX { class MetalBufferCache; };
 template <typename T>
 class GPDArray : public GPieceDataArray<T, GX_PDARRAY_N> {
 	friend class GApplication;
-    friend class GAutoreleasePool;
-    friend class GThread;
 	friend class GCanvas;
 	friend class GOGLContext;
     friend class GX::MetalBufferCache;

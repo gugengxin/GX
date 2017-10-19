@@ -209,8 +209,9 @@ GThread::GThread()
 
 GThread::~GThread()
 {
-    for (gint i=m_ARObjs.getCount()-1; i>=0; i--) {
-        GO::release(m_ARObjs.get(i));
+    GObject* obj=NULL;
+    while (m_ARObjs.pop(&obj)) {
+        GO::release(obj);
     }
     delete m_RunLoop;
 	delete m_NoteCenter;
@@ -236,17 +237,27 @@ bool GThread::isMain()
     return GX::gmemcmp(&m_ID,&mID,sizeof(m_ID))==0;
 }
 
+gint GThread::getARObjCount()
+{
+    return 0;
+}
+
 void GThread::pushARObj(GObject* v)
 {
-    m_ARObjs.add(v);
+    m_ARObjs.push(v);
 }
 
 void GThread::popARObj(gint toCount)
 {
-    for (gint i=m_ARObjs.getCount()-1; i>=toCount; i--) {
-        GO::release(m_ARObjs.get(i));
+    while (m_ARObjs.getCount()>toCount) {
+        GObject* res=NULL;
+        if (m_ARObjs.pop(&res)) {
+            GO::release(res);
+        }
+        else {
+            break;
+        }
     }
-    m_ARObjs.removeFrom(toCount);
 }
 
 GRunLoop* GThread::getRunLoop()

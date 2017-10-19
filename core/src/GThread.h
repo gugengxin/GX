@@ -13,7 +13,7 @@
 #include "GXPthread.h"
 #include "GObject.h"
 #include "GAutoreleasePool.h"
-#include "GDataArray.h"
+#include "GDataStack.h"
 #include "GRunLoop.h"
 #include "GNoticeCenter.h"
 #include "GAction.h"
@@ -73,12 +73,13 @@ private:
     ~GThread();
     void setMain();
 
+    gint getARObjCount();
     void pushARObj(GObject* v);
     void popARObj(gint toCount);
     
 private:
 	GX::pthread_t m_ID;
-    GPDArray<GObject*> m_ARObjs;
+    GDataStack<GObject*,32> m_ARObjs;
     GRunLoop* m_RunLoop;
 	GNoticeCenter* m_NoteCenter;
 };

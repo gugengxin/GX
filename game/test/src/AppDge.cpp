@@ -20,9 +20,18 @@ void AppDge::dealloc()
     GApplication::Delegate::dealloc();
 }
 
+static void _test_thread_main(GObject* )
+{
+
+    GThread::current();
+}
+
 void AppDge::appDidFinishLaunching(GApplication* application,int argc, char *argv[])
 {
     GX_UNUSED(application);
     GX_UNUSED(argc);
     GX_UNUSED(argv);
+
+
+    GThread::detch(_test_thread_main, NULL);
 }

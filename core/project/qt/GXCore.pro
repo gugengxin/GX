@@ -52,6 +52,7 @@ SOURCES += \
 	../../src/GDataArray.cpp\
 	../../src/GDataList.cpp\
 	../../src/GDataReader.cpp\
+	../../src/GDataStack.cpp\
 	../../src/GDataWriter.cpp\
 	../../src/GDib.cpp\
 	../../src/GError.cpp\
@@ -91,10 +92,15 @@ SOURCES += \
 	../../src/GVector.cpp\
 	../../src/GWriter.cpp\
 	#../../src/GXCWnd.cpp\
+	../../src/GXChunkData.cpp\
 	../../src/GXCoder.cpp\
 	../../src/GXData.cpp\
+	../../src/GXFile.cpp\
 	../../src/GXML.cpp\
 	../../src/GXMath.cpp\
+	../../src/GXMemory.cpp\
+	../../src/GXPieceData.cpp\
+	../../src/GXStackData.cpp\
 	../../src/GZipBundle.cpp\
 	../../src/GZipReader.cpp\
 	../../src/GZipWriter.cpp\
@@ -121,6 +127,7 @@ HEADERS += \
 	../../src/GDataArray.h\
 	../../src/GDataList.h\
 	../../src/GDataReader.h\
+	../../src/GDataStack.h\
 	../../src/GDataWriter.h\
 	../../src/GDib.h\
 	../../src/GError.h\
@@ -160,20 +167,24 @@ HEADERS += \
 	../../src/GVector.h\
 	../../src/GWriter.h\
 	../../src/GXCWnd.h\
+	../../src/GXChunkData.h\
 	../../src/GXCoder.h\
 	../../src/GXCore.h\
 	../../src/GXData.h\
 	../../src/GXEncoding.h\
-	../../src/GXFILE.h\
+	../../src/GXFile.h\
 	../../src/GXGObject.h\
 	../../src/GXGObjectUD.h\
 	../../src/GXML.h\
 	../../src/GXMath.h\
+	../../src/GXMemory.h\
 	../../src/GXOS.h\
 	../../src/GXObject.h\
+	../../src/GXPieceData.h\
 	../../src/GXPixel.h\
 	../../src/GXPrefix.h\
 	../../src/GXPthread.h\
+	../../src/GXStackData.h\
 	../../src/GXTypes.h\
 	../../src/GZipBundle.h\
 	../../src/GZipReader.h\
