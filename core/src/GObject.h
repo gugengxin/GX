@@ -1,4 +1,4 @@
-﻿//
+//
 //  GObject.h
 //  GX
 //
@@ -34,8 +34,8 @@ public:
 protected:
     static GObject* gretain(GObject* obj);
     static GObject* gautorelease(GObject* obj);
-	static void* gnew(size_t size);
-	static void gdel(void* p);
+	static void* gnew(size_t size,const GClass* gclass);
+	static void gdel(void* p,const GClass* gclass);
 protected:
     GObject();
     virtual ~GObject();

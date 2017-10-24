@@ -1,4 +1,4 @@
-﻿//
+//
 //  GObject.cpp
 //  GX
 //
@@ -100,21 +100,21 @@ GObject* GObject::gautorelease(GObject* obj)
     return obj;
 }
 
-void* GObject::gnew(size_t size)
+void* GObject::gnew(size_t size,const GClass* gclass)
 {
-	void* p = GX::gcalloc(size + sizeof(_ObjExData));
+    void* p = GX_CAST_C(GClass*, gclass)->gnew(size + sizeof(_ObjExData));
 	_ObjExDataInit(GX_CAST_R(_ObjExData*,p));
 	return GX_CAST_R(guint8*, p) + sizeof(_ObjExData);
 }
-void GObject::gdel(void* p)
+void GObject::gdel(void* p,const GClass* gclass)
 {
 	_ObjExData* exData = GX_CAST_R(_ObjExData*, p) - 1;
 	_ObjExDataFina(exData);
-	GX::gfree(exData);
+	GX_CAST_C(GClass*, gclass)->gdel(exData);
 }
 
 
-const GClass GObject::gclass(sizeof(GObject),GX_CAST_R(GClass::Alloc,GObject::alloc),NULL);
+const GClass GObject::gclass(sizeof(GObject),GX_CAST_R(GClass::Alloc,GObject::alloc),NULL,GClass::GNewTypeDefault);
 const GClass* GObject::getClass()
 {
     return &gclass;
@@ -131,11 +131,11 @@ GObject* GObject::autoAlloc()
 }
 void* GObject::operator new(size_t size)
 {
-	return gnew(size);
+	return gnew(size,&gclass);
 }
 void GObject::operator delete(void* p)
 {
-	gdel(p);
+	gdel(p,&gclass);
 }
 
 GObject::GObject()

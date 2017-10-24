@@ -1,4 +1,4 @@
-﻿//
+//
 //  GClass.h
 //  GX
 //
@@ -11,10 +11,13 @@
 
 #include "GXPrefix.h"
 #include "GOWHash.h"
+#include "GXChunkData.h"
+#include "GXPthread.h"
 
 class GObject;
 
 class GClass {
+    friend class GObject;
 public:
     typedef GObject* (*Alloc)();
 public:
@@ -37,8 +40,12 @@ public:
     static GObject* allocObject(const char* name);
     static GObject* allocObject(const char* name, gint len);
 public:
-    GClass(guint size,Alloc alloc,const GClass* parent);
-    GClass(const char* name,guint size,Alloc alloc,const GClass* parent);
+    typedef enum _GNewType {
+        GNewTypeDefault,
+        GNewTypeSmallObj,
+    } GNewType;
+    GClass(guint size,Alloc alloc,const GClass* parent,GNewType suggestGNT);
+    GClass(const char* name,guint size,Alloc alloc,const GClass* parent,GNewType suggestGNT);
     ~GClass();
     
     const char* getName() const {
@@ -56,12 +63,29 @@ public:
 public:
     GObject* allocObject() const;
 private:
+    class SmallObjAllocator {
+    public:
+        SmallObjAllocator(guint objSize, guint8 objCount);
+        ~SmallObjAllocator();
+
+        void* allocObj();
+        void deallocObj(void* p);
+    private:
+        GX::pthread_mutex_t m_Mutex;
+        GX::ChunkData m_Data;
+    };
+    
+    void* gnew(guint size);
+    void gdel(void* p);
+private:
     const char*     m_Name;
     GOWHash::Code   m_NameCode;
     guint           m_Size;
     Alloc           m_Alloc;
     const GClass*   m_Parent;
     const GClass*   m_Next;
+    GNewType        m_SuggestGNT;
+    SmallObjAllocator* m_SOAllocator;
 };
 
 #endif /* GClass_h */

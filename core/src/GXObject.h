@@ -1,4 +1,4 @@
-﻿//
+//
 //  GXObject.h
 //  GX
 //
@@ -27,10 +27,10 @@ private:\
     static GClass::Initializer gclassInitializer;\
 public:\
 	void* operator new(size_t size) {\
-		return GObject::gnew(size);\
+        return GObject::gnew(size,&gclass);\
 	}\
 	void operator delete(void* p) {\
-		GObject::gdel(p);\
+        GObject::gdel(p,&gclass);\
 	}
 
 #define GX_OBJECT_DECLARE(cls,vis,avis,it) \
@@ -83,13 +83,21 @@ avis:\
 #define GX_PRIVATE_OBJECT_DIT(cls)  GX_PRIVATE_OBJECT_DECLARE(cls,private,private,GX_OBJECT_INIT_DECLARE)
 #define GX_VIRTUAL_OBJECT_DIT(cls)  GX_VIRTUAL_OBJECT_DECLARE(cls,protected,public,GX_OBJECT_INIT_DECLARE)
 
+#define GX_OBJECT_IMPLEMENT_SUGGEST_GNT(cls,pc,suggestGNT) \
+const GClass cls::gclass(#cls,sizeof(cls),GX_CAST_R(GClass::Alloc,cls::alloc),&(pc::gclass),suggestGNT);\
+GClass::Initializer cls::gclassInitializer(&cls::gclass)
+
+#define GX_OBJECT_TEMPLATE_IMPLEMENT_SUGGEST_GNT(T,cls,pc,suggestGNT) \
+template <T> \
+const GClass cls::gclass(sizeof(cls),reinterpret_cast<GClass::Alloc>(cls::alloc),&(pc::gclass),suggestGNT)
+
 #define GX_OBJECT_IMPLEMENT(cls,pc) \
-const GClass cls::gclass(#cls,sizeof(cls),GX_CAST_R(GClass::Alloc,cls::alloc),&(pc::gclass));\
+const GClass cls::gclass(#cls,sizeof(cls),GX_CAST_R(GClass::Alloc,cls::alloc),&(pc::gclass),GClass::GNewTypeSmallObj);\
 GClass::Initializer cls::gclassInitializer(&cls::gclass)
 
 #define GX_OBJECT_TEMPLATE_IMPLEMENT(T,cls,pc) \
 template <T> \
-const GClass cls::gclass(sizeof(cls),reinterpret_cast<GClass::Alloc>(cls::alloc),&(pc::gclass))
+const GClass cls::gclass(sizeof(cls),reinterpret_cast<GClass::Alloc>(cls::alloc),&(pc::gclass),GClass::GNewTypeSmallObj)
 
 
 
