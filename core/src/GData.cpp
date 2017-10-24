@@ -27,7 +27,7 @@ GData::GData()
 GData::~GData()
 {
     if (!m_IsStatic && m_Buffer) {
-        ::free(m_Buffer);
+        GX::gfree(m_Buffer);
     }
 }
 
@@ -77,7 +77,7 @@ void GData::setStatic(const void* data,guint bytes)
 void GData::freeSelf()
 {
     if(!m_IsStatic && m_Buffer) {
-        ::free(m_Buffer);
+        GX::gfree(m_Buffer);
     }
     m_Buffer=NULL;
     m_Bytes=0;

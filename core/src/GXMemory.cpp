@@ -8,6 +8,7 @@
 
 #include "GXMemory.h"
 #include <memory.h>
+#include <stdlib.h>
 
 namespace GX {
 

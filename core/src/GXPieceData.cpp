@@ -21,14 +21,14 @@ namespace GX {
     PieceData::PieceData()
     {
         m_Buffer=NULL;
-        m_Bytes=NULL;
+        m_Bytes=0;
         m_PieceSize=GX_PIECE_DATA_PS_DEFAULT;
         m_PieceCount=0;
     }
     PieceData::PieceData(guint32 pieceSize)
     {
         m_Buffer=NULL;
-        m_Bytes=NULL;
+        m_Bytes=0;
         m_PieceSize=pieceSize<=0?GX_PIECE_DATA_PS_DEFAULT:pieceSize;
         m_PieceCount=0;
     }

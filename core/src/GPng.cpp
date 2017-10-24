@@ -134,14 +134,14 @@ GDib* GPng::read(GReader* reader)
         if(res->changeDataBytes(pngWidth*pngHeight*bits)) {
             
             png_byte* pixels = (png_byte*)res->getDataPtr();
-            png_byte** row_ptrs = (png_byte**)malloc(pngHeight * sizeof(png_bytep));
+            png_byte** row_ptrs = (png_byte**)GX::gmalloc(pngHeight * sizeof(png_bytep));
             
             for (int i = 0; i<(int)pngHeight; i++)
                 row_ptrs[i] = pixels + i*pngWidth*bits;
             
             png_read_image(png_ptr, row_ptrs);
-            
-            free(row_ptrs);
+
+			GX::gfree(row_ptrs);
             
             res->setPixelFormat(pf);
             res->setWidth(pngWidth);

@@ -1,4 +1,4 @@
-//
+﻿//
 //  GXChunkData.cpp
 //  GX
 //

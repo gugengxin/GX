@@ -1,4 +1,4 @@
-#include "AppDge.h"
+﻿#include "AppDge.h"
 #include "Game.h"
 
 static gint32 g_I=0;

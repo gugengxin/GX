@@ -201,7 +201,7 @@ GDib* GJpeg::read(GReader* reader)
             res->setHeight(cinfo.output_height);
             res->setStride(cinfo.output_width * 3);
             
-            unsigned char* bufRow = (unsigned char*)malloc(row_stride);
+            unsigned char* bufRow = (unsigned char*)GX::gmalloc(row_stride);
             unsigned char* pData = (unsigned char*)res->getDataPtr();
             
             JSAMPROW buffer = ((JSAMPROW)bufRow);
@@ -215,8 +215,8 @@ GDib* GJpeg::read(GReader* reader)
                     pData += 3;
                 }
             }
-            
-            free(bufRow);
+
+            GX::gfree(bufRow);
         }
         else {
             GO::release(res);
