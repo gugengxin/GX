@@ -21,11 +21,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-macx {
-    #QMAKE_MAC_SDK = macosx10.12
-    #QMAKE_CXXFLAGS_WARN_ON += -Wno-overloaded-virtual
-    #QMAKE_CXXFLAGS += -Wno-overloaded-virtual
-}
+#QMAKE_MAC_SDK = macosx10.13
 
 DEFINES += GX_OS_QT
 win32:DEFINES += _UNICODE
@@ -210,7 +206,12 @@ else:macx {
     INCLUDEPATH += $$PWD/../../../external/libjpeg/include/mac
 }
 #freetype
-INCLUDEPATH += $$PWD/../../../external/freetype/include
+win32 {
+    INCLUDEPATH += $$PWD/../../../external/freetype/include/win
+}
+else:macx {
+    INCLUDEPATH += $$PWD/../../../external/freetype/include/mac
+}
 #harfbuzz
 INCLUDEPATH += $$PWD/../../../external/harfbuzz/include
 #expat

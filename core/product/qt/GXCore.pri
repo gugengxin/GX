@@ -1,9 +1,5 @@
 
-macx {
-    QMAKE_MAC_SDK = macosx10.12
-    #QMAKE_CXXFLAGS_WARN_ON += -Wno-overloaded-virtual
-    #QMAKE_CXXFLAGS += -Wno-overloaded-virtual
-}
+#QMAKE_MAC_SDK = macosx10.13
 DEFINES += GX_OS_QT
 win32:DEFINES += _UNICODE
 
