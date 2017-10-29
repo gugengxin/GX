@@ -1,4 +1,4 @@
-﻿//
+//
 //  GTex2DFont.cpp
 //  GX
 //
@@ -109,7 +109,23 @@ void GTex2DFont::Glyph::render()
         m_Tex2D->create(m_FTGlyph->getDib(), NULL);
     }
     else {
-        
+        GDib* dib=m_FTGlyph->getDib();
+        GDib* dibOL=m_FTGlyph->getOutlineDib();
+        GDib* dibTo=GDib::autoAlloc();
+        dibTo->changeData(dibOL->getPixelFormat(), dibOL->getWidth(), dibOL->getHeight(), dibOL->getStride());
+
+        gint32 olSize=font->getOutlineSize();
+        guint8* pS=GX_CAST_R(guint8*, dib->getDataPtr());
+        guint8* pD=GX_CAST_R(guint8*, dibTo->getDataPtr(olSize, olSize));
+        for (gint i=0; i<dib->getHeight(); i++) {
+            GX::gmemcpy(pD, pS, dib->getStride());
+            pS+=dib->getStride();
+            pD+=dibTo->getStride();
+        }
+        m_Tex2D=GTexture2D::alloc();
+        m_Tex2D->create(dibTo, NULL);
+        m_OLTex2D=GTexture2D::alloc();
+        m_OLTex2D->create(dibOL, NULL);
     }
 }
 
