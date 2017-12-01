@@ -1,4 +1,4 @@
-//
+﻿//
 //  GTex2DFont.cpp
 //  GX
 //

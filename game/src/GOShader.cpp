@@ -3,6 +3,7 @@
 #include "GLog.h"
 #include "GString.h"
 #include "GOGLContext.h"
+#include <string.h>
 
 
 void GOShader::ready()

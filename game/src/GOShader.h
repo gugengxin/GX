@@ -120,7 +120,7 @@ typedef GOShader GShaderBase;
 private:\
 	virtual GLint* getUs() { return (GLint*)&m_Uniforms; }\
 	GLint m_Uniforms[OU]
-#define GX_SHADER_INPUT_INIT() memset(m_Uniforms,0,sizeof(m_Uniforms))
+#define GX_SHADER_INPUT_INIT() GX::gmemset(m_Uniforms,0,sizeof(m_Uniforms))
 #define GX_SHADER_INPUT_FINA() 
 
 #endif

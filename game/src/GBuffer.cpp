@@ -43,7 +43,7 @@ bool GBuffer::create(guint toSize, Usage usage, const void* pInitData)
     GX_UNUSED(usage);
     if (m_Data.changeBytes(toSize)) {
         if (pInitData) {
-            memcpy(m_Data.getPtr(), pInitData, toSize);
+            GX::gmemcpy(m_Data.getPtr(), pInitData, toSize);
         }
         return true;
     }
@@ -245,7 +245,7 @@ void GBuffer::Writer::start(guint offset)
 
 GBuffer::Writer& GBuffer::Writer::write(const void * data, guint bytes)
 {
-	memcpy(m_MapData, data, bytes);
+    GX::gmemcpy(m_MapData, data, bytes);
 	m_MapData= GX_CAST_R(guint8*, m_MapData) + bytes;
 	return *this;
 }
