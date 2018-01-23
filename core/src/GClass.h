@@ -78,14 +78,14 @@ private:
     void* gnew(guint size);
     void gdel(void* p);
 private:
-    const char*     m_Name;
-    GOWHash::Code   m_NameCode;
-    guint           m_Size;
-    Alloc           m_Alloc;
-    const GClass*   m_Parent;
-    const GClass*   m_Next;
-    GNewType        m_SuggestGNT;
-    SmallObjAllocator* m_SOAllocator;
+    const char*     m_Name;//类名称
+    GOWHash::Code   m_NameCode;//哈希值，唯一定位一个名称
+    guint           m_Size;//类大小
+    Alloc           m_Alloc;//类实例生成函数
+    const GClass*   m_Parent;//父类
+    const GClass*   m_Next;//下一个类
+    GNewType        m_SuggestGNT;//建议生成方式
+    SmallObjAllocator* m_SOAllocator;//小对象分配器
 };
 
 #endif /* GClass_h */
